@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class ArticleTag extends Model
 {
     use HasFactory;
+
+    protected $table = 'article_tags';
+    protected $fillable = ['tags'];
+
+    protected $casts = [
+        'tags' => 'json',
+    ];
+    
 }

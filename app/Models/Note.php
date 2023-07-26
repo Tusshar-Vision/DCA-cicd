@@ -8,4 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 class Note extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'article_id',
+        'content',
+        'highlight_start_offset',
+        'highlight_end_offset',
+    ];
+
+    // Define the relationships with other models
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function article()
+    {
+        return $this->belongsTo(Article::class, 'article_id');
+    }
 }

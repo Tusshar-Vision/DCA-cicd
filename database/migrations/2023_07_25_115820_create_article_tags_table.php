@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('article_tags', function (Blueprint $table) {
             $table->id();
+            $table->json('tags')->nullable(); // * JSON column to store all the tags for an article            
             $table->timestamps();
         });
     }

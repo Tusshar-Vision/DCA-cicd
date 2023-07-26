@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('article_sources', function (Blueprint $table) {
+        Schema::create('initiatives', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('article_id');
-            $table->json('sources')->nullable();
-
-            // * Define foreign key relationship with the 'articles' table
-            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
+            $table->string('name');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('article_sources');
+        Schema::dropIfExists('initiatives');
     }
 };
