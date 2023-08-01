@@ -45,6 +45,9 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+        'cognito' => [
+            'driver' => 'cognito',
+        ],
     ],
 
     /*
