@@ -48,7 +48,7 @@ class Article extends Model
 
     public function author()
     {
-        return $this->belongsTo(Author::class, 'author_id');
+        return $this->belongsTo(User::class, 'author_id');
     }
 
     public function initiative()

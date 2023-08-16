@@ -40,7 +40,7 @@ return new class extends Migration
             // * Define foreign key relationship with the above tables
             $table->foreign('tag_id')->references('id')->on('article_tags');
             $table->foreign('comment_id')->references('id')->on('comments');
-            $table->foreign('author_id')->references('id')->on('authors');
+            $table->foreign('author_id')->references('id')->on('users');
             $table->foreign('initiative_id')->references('id')->on('initiatives');
         });
     }

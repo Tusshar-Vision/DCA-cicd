@@ -7,14 +7,15 @@ use Illuminate\Support\Facades\Password;
 
 class CognitoClient
 {
-    const NEW_PASSWORD_CHALLENGE = 'NEW_PASSWORD_REQUIRED';
-    const FORCE_PASSWORD_STATUS  = 'FORCE_CHANGE_PASSWORD';
-    const RESET_REQUIRED         = 'PasswordResetRequiredException';
-    const USER_NOT_FOUND         = 'UserNotFoundException';
-    const USERNAME_EXISTS        = 'UsernameExistsException';
-    const INVALID_PASSWORD       = 'InvalidPasswordException';
-    const CODE_MISMATCH          = 'CodeMismatchException';
-    const EXPIRED_CODE           = 'ExpiredCodeException';
+    const NEW_PASSWORD_CHALLENGE    = 'NEW_PASSWORD_REQUIRED';
+    const FORCE_PASSWORD_STATUS     = 'FORCE_CHANGE_PASSWORD';
+    const RESET_REQUIRED            = 'PasswordResetRequiredException';
+    const USER_NOT_FOUND            = 'UserNotFoundException';
+    const USERNAME_EXISTS           = 'UsernameExistsException';
+    const INVALID_PASSWORD          = 'InvalidPasswordException';
+    const CODE_MISMATCH             = 'CodeMismatchException';
+    const EXPIRED_CODE              = 'ExpiredCodeException';
+    const NOT_AUTHORIZED_EXCEPTION  = 'NotAuthorizedException';
 
     /**
      * @var CognitoIdentityProviderClient
@@ -80,15 +81,18 @@ class CognitoClient
         }
         catch (CognitoIdentityProviderException $exception)
         {
-            if ($exception->getAwsErrorCode() === self::RESET_REQUIRED ||
-                $exception->getAwsErrorCode() === self::USER_NOT_FOUND) {
-                return false;
-            }
+            if (
+                ($exception->getAwsErrorCode() === self::RESET_REQUIRED) ||
+                ($exception->getAwsErrorCode() === self::USER_NOT_FOUND)  ||
+                ($exception->getAwsErrorCode() === self::NOT_AUTHORIZED_EXCEPTION)
+            ) {
+                return $exception->getAwsErrorCode();
+            } 
 
             throw $exception;
         }
 
-        return $response;
+        return $response['AuthenticationResult'];
     }
 
     /**
@@ -149,7 +153,7 @@ class CognitoClient
             throw $exception;
         }
 
-        return (bool) $response['UserConfirmed'];
+        return true;
     }
 
     /**
@@ -173,7 +177,7 @@ class CognitoClient
             throw $exception;
         }
 
-        return (bool) $response['UserConfirmed'];
+        return true;
     }
 
     /**

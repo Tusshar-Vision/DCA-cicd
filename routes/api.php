@@ -4,7 +4,6 @@ use App\Http\Controllers\Auth\ClientAuthController;
 use App\Http\Controllers\Auth\UserAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Laravel\Passport\Http\Controllers\AccessTokenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,24 +16,21 @@ use Laravel\Passport\Http\Controllers\AccessTokenController;
 |
 */
 
-Route::middleware('guest')->group(function () {
-
-    //!Important, This route generates the access token to access the api from the client.
-    Route::post('/oauth/token', [AccessTokenController::class, 'issueToken']);
-
-    Route::get('/test', function() {
-        dd("This is a test endpoint");
-    });
+Route::get('/test', function() {
+    return response([
+        "message" => "This is a test endpoint"
+    ], 200);
 });
 
-Route::middleware('client')->group(function () {
+Route::post('/register', [UserAuthController::class, 'signup'])->name('register');
+Route::post('/login', [UserAuthController::class, 'login'])->name('login');
 
-    //These routes will only be accessed by a valid client
 
+//These routes will only be accessed by a valid client
+
+Route::middleware('auth:sanctum')->group(function() {
     Route::controller(UserAuthController::class)->prefix('/user')->group(function() {
-        Route::post('/', 'getUser');
-        Route::post('/register', 'signup');
-        Route::post('/login', 'login');
+        Route::get('/', 'getUser');
         Route::post('/confirm', 'confirmSignup');
         Route::post('/reset-password', 'resetPassword');
         Route::post('/resend-confirmation', 'resendConfirmationCode');
