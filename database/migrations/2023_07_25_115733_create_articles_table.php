@@ -31,15 +31,16 @@ return new class extends Migration
             $table->boolean('featured')->default(false);
             $table->decimal('rating', 3, 2)->nullable();
             $table->timestamp('last_updated')->nullable();
+            $table->timestamps();
             
-            $table->unsignedBigInteger('tag_id'); // * Foreign key column for the article tag relationship
-            $table->unsignedBigInteger('comment_id'); // * Foreign key column for the comment relationship
+            $table->unsignedBigInteger('tag_id')->nullable(); // * Foreign key column for the article tag relationship
+            // $table->unsignedBigInteger('comment_id'); // * Foreign key column for the comment relationship
             $table->unsignedBigInteger('author_id'); // * Foreign key column for the author relationship
             $table->unsignedBigInteger('initiative_id'); // * Foreign key column for the initiative / category relationship
 
             // * Define foreign key relationship with the above tables
             $table->foreign('tag_id')->references('id')->on('article_tags');
-            $table->foreign('comment_id')->references('id')->on('comments');
+            // $table->foreign('comment_id')->references('id')->on('comments');
             $table->foreign('author_id')->references('id')->on('users');
             $table->foreign('initiative_id')->references('id')->on('initiatives');
         });
