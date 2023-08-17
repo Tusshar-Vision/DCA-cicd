@@ -15,13 +15,14 @@ class InitiativeController extends Controller
 
     public function getArticles($initiative) {
 
+        $initiatives = Initiative::get(['name', 'description', 'path']);   
         $initiativePath = '/' . $initiative;
         $initiativeID = Initiative::where('path', '=', $initiativePath)->get('id');
         
         if(!$initiativeID->isEmpty()) {
             $articles = Article::where('initiative_id', '=', $initiativeID[0]->id)->get();
 
-            return view('articles', ['articles' => $articles]);
+            return view('articles', ['articles' => $articles, 'initiatives' => $initiatives]);
         }
 
         return response(404);

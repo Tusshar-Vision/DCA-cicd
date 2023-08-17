@@ -55,4 +55,9 @@ class Article extends Model
     {
         return $this->belongsTo(Initiative::class, 'initiative_id');
     }
+
+    public function tableOfContents()
+    {
+        return $this->hasOne(TableOfContents::class);
+    }
 }

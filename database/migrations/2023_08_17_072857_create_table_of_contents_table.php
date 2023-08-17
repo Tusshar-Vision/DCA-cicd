@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('initiative_topics', function (Blueprint $table) {
+        Schema::create('table_of_contents', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('article_id');
-            $table->unsignedBigInteger('initiative_id');
-            $table->string('name');
-
-            // * Define foreign key relationship with the 'articles' table
-            $table->foreign('article_id')->references('id')->on('articles');
-            $table->foreign('initiative_id')->references('id')->on('initiatives');
+            $table->string('title');
             $table->timestamps();
+
+            $table->foreign('article_id')->references('id')->on('articles');
         });
     }
 
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('initiative_topics');
+        Schema::dropIfExists('table_of_contents');
     }
 };
