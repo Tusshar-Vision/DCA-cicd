@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PublishedInitiative extends Model
+class RelatedTag extends Model
 {
     use HasFactory;
 
-    public function initiative()
+    public function article()
     {
-        return $this->belongsTo(Initiative::class);
+        return $this->belongsTo(Article::class);
     }
 }

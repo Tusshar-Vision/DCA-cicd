@@ -13,4 +13,9 @@ class Initiative extends Model
         'name',
         'description',
     ];
+
+    public function publishedVersions()
+    {
+        return $this->hasMany(PublishedInitiative::class, 'initiative_id');
+    }
 }

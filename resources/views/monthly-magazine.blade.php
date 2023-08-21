@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Monthly Magazine | Current Affairs')
 
 @section('content')
     @if( !empty($articles) && count($articles) !== 0 ) 
@@ -13,4 +14,5 @@
     @else
         <h1>No articles</h1>
     @endif
+
 @endsection

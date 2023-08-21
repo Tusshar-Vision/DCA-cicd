@@ -60,4 +60,19 @@ class Article extends Model
     {
         return $this->hasOne(TableOfContents::class);
     }
+
+    public function relatedTerms()
+    {
+        return $this->belongsToMany(RelatedTerm::class);
+    }
+
+    public function relatedTags()
+    {
+        return $this->hasMany(RelatedTag::class);
+    }
+
+    public function relatedVideos()
+    {
+        return $this->hasMany(RelatedVideo::class);
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\InitiativeController;
+use App\Http\Controllers\NavigationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [InitiativeController::class, 'index']);
-Route::get('/{initiative}', [InitiativeController::class, 'getArticles']);
+// Route::get('/', [InitiativeController::class, 'index'])->name('home');
+// Route::get('/{initiative}', [InitiativeController::class, 'getArticles']);
+
+Route::controller(NavigationController::class)->group(function() {
+    Route::get('/', 'renderHomePage')->name('home');
+    Route::get('/news-today', 'renderNewsTodayPage')->name('news-today');
+    Route::get('/monthly-magazine', 'renderMonthlyMagazinePage')->name('monthly-magazine');
+    Route::get('/weekly-focus', 'renderWeeklyFocusPage')->name('weekly-focus');
+    Route::get('/mains-365', 'renderMains365Page')->name('mains-365');
+    Route::get('/pt-365', 'renderPT365Page')->name('pt-365');
+    Route::get('/downloads', 'renderDownloadsPage')->name('downloads');
+});
