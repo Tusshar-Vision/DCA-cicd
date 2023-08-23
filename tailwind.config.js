@@ -10,7 +10,8 @@ export default {
       colors: {
         visionRed: "#ED1C24",
         visionGray: "#F9F9F9",
-        visionBlue: "#005faf"
+        visionBlue: "#005faf",
+        visionSelectedGray: "#EFEFEF"
       },
     },
   },

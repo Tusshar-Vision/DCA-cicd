@@ -32,4 +32,16 @@ class NavigationController extends Controller
     public function renderDownloadsPage() {
         return View('downloads');
     }
+
+    public function renderMonthlyMagazineArchivesPage() {
+        return View('archives.monthly-magazine');
+    }
+
+    public function renderWeeklyFocusArchivesPage() {
+        return View('archives.weekly-focus');
+    }
+
+    public function renderDailyNewsArchivesPage() {
+        return View('archives.daily-news');
+    }
 }

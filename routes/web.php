@@ -26,4 +26,11 @@ Route::controller(NavigationController::class)->group(function() {
     Route::get('/mains-365', 'renderMains365Page')->name('mains-365');
     Route::get('/pt-365', 'renderPT365Page')->name('pt-365');
     Route::get('/downloads', 'renderDownloadsPage')->name('downloads');
+
+
+    Route::prefix('/archives')->group(function() {
+        Route::get('/monthly-magazine', 'renderMonthlyMagazineArchivesPage')->name('archive.monthly-magazine');
+        Route::get('/weekly-focus', 'renderWeeklyFocusArchivesPage')->name('archive.weekly-focus');
+        Route::get('/daily-news', 'renderDailyNewsArchivesPage')->name('archive.daily-news');
+    });
 });
