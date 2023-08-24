@@ -26,7 +26,9 @@ class NavigationController extends Controller
     }
 
     public function renderPT365Page() {
-        return View('pt-365');
+        return View('pt-365', [
+            "title" => "PT 365"
+        ]);
     }
 
     public function renderDownloadsPage() {
@@ -34,14 +36,20 @@ class NavigationController extends Controller
     }
 
     public function renderMonthlyMagazineArchivesPage() {
-        return View('archives.monthly-magazine');
+        return View('archives.monthly-magazine', [
+            "title" => "Monthly Magazine Archives"
+        ]);
     }
 
     public function renderWeeklyFocusArchivesPage() {
-        return View('archives.weekly-focus');
+        return View('archives.weekly-focus', [
+            "title" => "Weekly Focus Archive"
+        ]);
     }
 
     public function renderDailyNewsArchivesPage() {
-        return View('archives.daily-news');
+        return View('archives.daily-news', [
+            "title" => "Daily News Archive"
+        ]);
     }
 }

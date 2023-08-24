@@ -6,13 +6,13 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class ArchivesHeader extends Component
+class SideDropDownMenu extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public $title
+        public $publishedInitiative
     )
     {}
 
@@ -21,6 +21,6 @@ class ArchivesHeader extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.archives-header');
+        return view('components.side-drop-down-menu');
     }
 }

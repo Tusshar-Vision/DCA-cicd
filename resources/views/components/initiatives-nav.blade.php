@@ -26,9 +26,12 @@
                             <x-drop-down-menu 
                                 x-show="isNewsOpen"
                                 @click.away="isNewsOpen = false" 
+                                x-transition:enter="transition ease-out duration-100"
+                                x-transition:enter-start="transform opacity-0 scale-95"
                                 button-text="Today's News"
                                 button-link="{{ $initiative->path }}"
                                 archive-link="{{ route('archive.daily-news') }}"
+                                :publishedInitiatives="$publishedInitiatives->where('initiative_id', $initiative->id)"
                             />
                         </div>
                     @elseif ($initiative->path === '/monthly-magazine')
@@ -46,9 +49,12 @@
                             <x-drop-down-menu 
                                 x-show="isMagazineOpen"
                                 @click.away="isMagazineOpen = false" 
+                                x-transition:enter="transition ease-out duration-100"
+                                x-transition:enter-start="transform opacity-0 scale-95"
                                 button-text="This Month's Magazine"
                                 button-link="{{ $initiative->path }}"
                                 archive-link="{{ route('archive.monthly-magazine') }}"
+                                :publishedInitiatives="$publishedInitiatives->where('initiative_id', $initiative->id)"
                             />
                         </div>
                     @elseif ($initiative->path === '/weekly-focus')
@@ -66,9 +72,12 @@
                             <x-drop-down-menu 
                                 x-show="isWeeklyFocusOpen"
                                 @click.away="isWeeklyFocusOpen = false" 
+                                x-transition:enter="transition ease-out duration-100"
+                                x-transition:enter-start="transform opacity-0 scale-95"
                                 button-text="This Week's Focus"
                                 button-link="{{ $initiative->path }}"
                                 archive-link="{{ route('archive.weekly-focus') }}"
+                                :publishedInitiatives="$publishedInitiatives->where('initiative_id', $initiative->id)"
                             />
                         </div>
                     @else

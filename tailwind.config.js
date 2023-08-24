@@ -11,7 +11,8 @@ export default {
         visionRed: "#ED1C24",
         visionGray: "#F9F9F9",
         visionBlue: "#005faf",
-        visionSelectedGray: "#EFEFEF"
+        visionSelectedGray: "#EFEFEF",
+        visionLineGray: "#8F93A3",
       },
     },
   },

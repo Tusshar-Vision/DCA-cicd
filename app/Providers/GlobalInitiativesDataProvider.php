@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Initiative;
+use App\Models\PublishedInitiative;
 use Illuminate\Support\ServiceProvider;
 
 class GlobalInitiativesDataProvider extends ServiceProvider
@@ -21,7 +22,11 @@ class GlobalInitiativesDataProvider extends ServiceProvider
     public function boot(): void
     {
         $initiatives = Initiative::get(['id', 'name', 'path']);
+        $publishedInitiatives = PublishedInitiative::get(['initiative_id', 'published_at']);
 
-        view()->share('initiatives', $initiatives);
+        view()->share([
+            'initiatives' => $initiatives,
+            'publishedInitiatives' => $publishedInitiatives
+        ]);
     }
 }
