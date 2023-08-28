@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0bc7f3f50337aa4a428bec3fa2a407e",
+    "content-hash": "9f10b53752025a5a97852d472b54ec36",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -651,6 +651,77 @@
                 }
             ],
             "time": "2023-01-14T14:17:03+00:00"
+        },
+        {
+            "name": "ellaisys/aws-cognito",
+            "version": "v1.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ellaisys/aws-cognito.git",
+                "reference": "8b77225dd2c04fc750507d795477b66f6d40fe0d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ellaisys/aws-cognito/zipball/8b77225dd2c04fc750507d795477b66f6d40fe0d",
+                "reference": "8b77225dd2c04fc750507d795477b66f6d40fe0d",
+                "shasum": ""
+            },
+            "require": {
+                "aws/aws-sdk-php": ">=3.0",
+                "guzzlehttp/guzzle": "^6.0|^7.0",
+                "php": "^7.0|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Ellaisys\\Cognito\\Providers\\AwsCognitoServiceProvider"
+                    ],
+                    "aliases": []
+                },
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ellaisys\\Cognito\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "EllaiSys",
+                    "email": "support@ellaisys.com",
+                    "homepage": "https://ellaisys.github.io/",
+                    "role": "owner"
+                }
+            ],
+            "description": "AWS Cognito package that allows Auth and other related features using the AWS SDK for PHP",
+            "homepage": "https://ellaisys.github.io/aws-cognito/",
+            "keywords": [
+                "Authentication",
+                "Cognito",
+                "auth",
+                "aws",
+                "ellaisys",
+                "laravel",
+                "oauth",
+                "php",
+                "user pool"
+            ],
+            "support": {
+                "email": "support@ellaisys.com",
+                "issues": "https://github.com/ellaisys/aws-cognito/issues",
+                "source": "https://github.com/ellaisys/aws-cognito/tree/v1.1.5"
+            },
+            "time": "2023-07-25T09:14:34+00:00"
         },
         {
             "name": "facade/ignition-contracts",

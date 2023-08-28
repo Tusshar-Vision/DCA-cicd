@@ -1,6 +1,11 @@
-<div class="flex flex-col w-1/4 rounded" style="background-color: #f9f9f9;">
+<div class="flex flex-col rounded bg-visionGray">
     <div class="my-8 mx-6">
-        <div>Articles</div>
-        <div>Article 2</div>
+        <div x-data="{ expanded: false }">
+            <button @click="expanded = ! expanded">Article</button>
+        
+            <p x-show="expanded" x-collapse>
+                ...
+            </p>
+        </div>
     </div>
 </div>

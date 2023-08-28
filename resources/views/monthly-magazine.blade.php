@@ -9,8 +9,13 @@
             :updatedAt="$articles[0]->updated_at"
         />
     </div>
+    <x-side-notes-and-highlights-menu />
     <div class="flex space-x-8">
-        <livewire:articles-side-bar />
+
+        <div class="flex w-2/5 flex-col space-y-6">
+            <livewire:articles-side-bar />
+            <x-side-bar-download-menu />
+        </div>
         
         <div class="flex flex-col">
             @if( !empty($articles) && count($articles) !== 0 ) 
@@ -26,6 +31,7 @@
                 <h1>No articles</h1>
             @endif
         </div>
+    
     </div>
 
 @endsection
