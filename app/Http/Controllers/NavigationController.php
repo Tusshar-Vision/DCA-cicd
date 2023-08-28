@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 
 class NavigationController extends Controller
 {
@@ -14,7 +15,10 @@ class NavigationController extends Controller
     }
 
     public function renderMonthlyMagazinePage() {
-        return View('monthly-magazine');
+        $articles = Article::where('initiative_id', '=' , 2)->get();
+        return View('monthly-magazine', [
+            'articles' => $articles
+        ]);
     }
 
     public function renderWeeklyFocusPage() {

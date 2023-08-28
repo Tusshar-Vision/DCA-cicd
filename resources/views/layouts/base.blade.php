@@ -9,9 +9,8 @@
   </style>
   @vite('resources/sass/app.scss')
 </head>
-<body>
+<body x-data="{ isModalOpen: false }">
   <div class="mx-auto max-w-[90%]">
-    
     <header>
       <x-header />
       <x-initiatives-nav :initiatives="$initiatives" />
@@ -21,10 +20,14 @@
     <main>
         @yield('content')
     </main>
-
   </div>
+
   <footer>
     <x-footer />
   </footer>
+  
+  <x-modal-box x-show="isModalOpen">
+    <livewire:login-form />
+  </x-modal-box>
 </body>
 </html>

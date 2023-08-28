@@ -1,5 +1,5 @@
 <div class="flex h-10 items-center justify-between">
-    <div>
+    <div class="-ml-4">
         {{ Breadcrumbs::render('home') }}
     </div>
 

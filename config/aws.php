@@ -4,7 +4,7 @@ return [
 
     'access_key' => [
         'id' =>  env('AWS_ACCESS_KEY_ID'),
-        'secret' => env('AWS_ACCESS_KEY_SECRET'),
+        'secret' => env('AWS_SECRET_ACCESS_KEY'),
     ],
 
     'cognito' => [

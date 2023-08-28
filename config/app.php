@@ -169,7 +169,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\CognitoAuthServiceProvider::class,
-        Ellaisys\Cognito\Providers\AwsCognitoServiceProvider::class,
         App\Providers\GlobalInitiativesDataProvider::class,
     ])->toArray(),
 

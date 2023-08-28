@@ -22,10 +22,18 @@
                             <path d="M12.1717 12.0005L9.34326 9.17203L10.7575 7.75781L15.0001 12.0005L10.7575 16.2431L9.34326 14.8289L12.1717 12.0005Z" fill="#8F93A3"/>
                         </svg>
                     </a>
-                    <x-side-drop-down-menu 
-                        x-show="isMenuOpen === 'menu{{ $initiative->initiative_id . $key }}'" 
-                        :publishedInitiative="$initiative"
-                    />
+
+                    @if ($initiative->initiative_id === 1)
+                        <x-side-drop-down-calender 
+                            x-show="isMenuOpen === 'menu{{ $initiative->initiative_id . $key }}'" 
+                            :publishedInitiative="$initiative"
+                        />
+                    @else
+                        <x-side-drop-down-menu 
+                            x-show="isMenuOpen === 'menu{{ $initiative->initiative_id . $key }}'" 
+                            :publishedInitiative="$initiative"
+                        />
+                    @endif
                 </li>
             @endforeach  
         <x-menu-button button-text="View All" button-link="{{ $archiveLink }}"/>
