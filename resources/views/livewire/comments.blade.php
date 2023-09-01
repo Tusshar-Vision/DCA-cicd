@@ -1,3 +1,23 @@
-<div>
-    {{-- Because she competes with no one, no one can compete with her. --}}
+<div x-data="{ expanded: false }" @click="expanded = ! expanded" :class="{ 'items-center': !expanded }" class="border-2 border-visionSelectedGray rounded px-4 py-2 flex items-center justify-between cursor-pointer" x-transition>
+        <div class="space-y-5">
+            <div>
+                <h1 class="text-lg font-bold">Comments</h1>
+                <p class="text-visionLineGray text-sm">34 comments</p>
+            </div>
+            <div class="text-visionLineGray text-sm font-light italic flex flex-col space-y-2" x-show="expanded" x-collapse>
+                <p>...</p>
+            </div>
+        </div>
+    <div>
+        <template x-if="expanded === true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 11V13H19V11H5Z" fill="#8F93A3"/>
+            </svg>
+        </template>
+        <template x-if="expanded === false">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z" fill="#8F93A3"/>
+            </svg>
+        </template>
+    </div>
 </div>
