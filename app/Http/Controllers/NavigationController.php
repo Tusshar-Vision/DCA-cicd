@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use Illuminate\Http\Request;
 
 class NavigationController extends Controller
 {
@@ -54,6 +55,17 @@ class NavigationController extends Controller
     public function renderDailyNewsArchivesPage() {
         return View('archives.daily-news', [
             "title" => "Daily News Archive"
+        ]);
+    }
+
+    public function renderSearchPage(Request $request) {
+        $query = $request->get('query');
+
+        $searchResults = Article::search($query)->paginate(10);
+
+        return View('search', [
+            'query' => $query,
+            'searchResults' => $searchResults
         ]);
     }
 }

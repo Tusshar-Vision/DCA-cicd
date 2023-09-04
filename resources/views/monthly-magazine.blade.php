@@ -39,11 +39,9 @@
                 
                     <x-article-header readTime="{{ $articles[0]->read_time }}" />
                     <x-article-author-header :authorId="$articles[0]->author_id" />
-                    @foreach ($articles as $article)
-                        <h1>{{$article->title}}</h1>
-                        <p>{{$article->content}}</p>
-                    @endforeach
-
+                        <x-custom-context-menu>
+                            <p>{{$articles[0]->content}}</p>
+                        </x-custom-context-menu>
                     <div class="mt-12">
                         <x-article-pagination />
                     </div>
@@ -55,10 +53,11 @@
         </div>
 
         <div class="flex flex-col justify-center items-center w-full">
-            <div class="w-5/6 space-y-12">
+            <div class="flex flex-col w-5/6 space-y-12">
                 <div class="flex space-x-4">
                     <x-related-terms />
                     <x-related-articles />
+                    <x-related-videos />
                 </div>
 
                 <div>
@@ -67,10 +66,6 @@
 
                 <div>
                     <x-article-sources />
-                </div>
-
-                <div>
-                    <x-related-videos />
                 </div>
             </div>
         </div>

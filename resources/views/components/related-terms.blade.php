@@ -10,7 +10,7 @@
                     <h2 class="font-bold text-lg">Lorem Ipsum</h2>
                 </div>
                 <div>
-                    <p class="text-visionLineGray">
+                    <p class="text-visionLineGray text-sm">
                         Amet luctus venenatis lectus magna fringilla urna porttitor rhoncus. Id diam vel quam elementum pulvinar. Rhoncus dolor purus non enim praesent.
                     </p>
                 </div>

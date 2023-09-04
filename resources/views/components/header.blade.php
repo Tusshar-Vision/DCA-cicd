@@ -1,7 +1,7 @@
 <header class="h-20 border-b border-visionLineGray">
     <div class="flex items-center justify-between">
         <div class="py-4">
-            <a href="/">
+            <a href="/" wire:navigate>
                 <img width="200px" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
             </a>
         </div>

@@ -26,6 +26,7 @@ Route::controller(NavigationController::class)->group(function() {
     Route::get('/mains-365', 'renderMains365Page')->name('mains-365');
     Route::get('/pt-365', 'renderPT365Page')->name('pt-365');
     Route::get('/downloads', 'renderDownloadsPage')->name('downloads');
+    Route::get('/search', 'renderSearchPage')->name('search');
 
 
     Route::prefix('/archives')->group(function() {

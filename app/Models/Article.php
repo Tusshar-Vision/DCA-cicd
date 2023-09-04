@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Article extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $fillable = [
         'title',
@@ -33,6 +34,14 @@ class Article extends Model
         'author_id',
         'initiative_id',
     ];
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'title' => $this->title,
+            'content' => $this->content,
+        ];
+    }
 
     // Define the relationships with other models
 
