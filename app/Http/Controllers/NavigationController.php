@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\InitiativesHelper;
 use App\Models\Article;
+use App\Models\Initiative;
+use App\Models\PublishedInitiative;
 use Illuminate\Http\Request;
 
 class NavigationController extends Controller
@@ -12,25 +15,54 @@ class NavigationController extends Controller
     }
 
     public function renderNewsTodayPage() {
+        $news_published_today = PublishedInitiative::where(
+            'initiative_id', '=', InitiativesHelper::getInitiativeID('NEWS_TODAY')
+        )->whereDate('published_at', '=', date('Y-m-d'))->orderBy('updated_at')->get();
+
+        dd($news_published_today);
+
         return View('news-today');
     }
 
     public function renderMonthlyMagazinePage() {
-        $articles = Article::where('initiative_id', '=' , 2)->get();
+        $monthly_magazine_published_today = PublishedInitiative::where(
+            'initiative_id', '=', InitiativesHelper::getInitiativeID('MONTHLY_MAGAZINE')
+        )->whereDate('published_at', '=', date('Y-m-d'))->orderBy('updated_at')->get();
+        
+        dd($monthly_magazine_published_today);
+
         return View('monthly-magazine', [
             'articles' => $articles
         ]);
     }
 
     public function renderWeeklyFocusPage() {
+        $weekly_focus_published_today = PublishedInitiative::where(
+            'initiative_id', '=', InitiativesHelper::getInitiativeID('WEEKLY_FOCUS')
+        )->whereDate('published_at', '=', date('Y-m-d'))->orderBy('updated_at')->get();
+
+        dd($weekly_focus_published_today);
+
         return View('weekly-focus');
     }
 
     public function renderMains365Page() {
+        $mains_365_published_today = PublishedInitiative::where(
+            'initiative_id', '=', InitiativesHelper::getInitiativeID('MAINS_365')
+        )->whereDate('published_at', '=', date('Y-m-d'))->orderBy('updated_at')->get();
+        
+        dd($mains_365_published_today);
+
         return View('mains-365');
     }
 
     public function renderPT365Page() {
+        $pt_365_published_today = PublishedInitiative::where(
+            'initiative_id', '=', InitiativesHelper::getInitiativeID('PT_365')
+        )->whereDate('published_at', '=', date('Y-m-d'))->orderBy('updated_at')->get();
+        
+        dd($pt_365_published_today);
+
         return View('pt-365', [
             "title" => "PT 365"
         ]);

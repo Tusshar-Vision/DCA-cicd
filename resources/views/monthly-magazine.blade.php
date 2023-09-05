@@ -10,7 +10,7 @@
     <div class="space-y-4">
         <h1 class="text-7xl">{{$articles[0]->title}}</h1>
         <x-articles-nav 
-            :createdAt="$articles[0]->created_at"
+            :created At="$articles[0]->created_at"
             :updatedAt="$articles[0]->updated_at"
         />
     </div>
@@ -39,9 +39,11 @@
                 
                     <x-article-header readTime="{{ $articles[0]->read_time }}" />
                     <x-article-author-header :authorId="$articles[0]->author_id" />
-                        <x-custom-context-menu>
-                            <p>{{$articles[0]->content}}</p>
-                        </x-custom-context-menu>
+                        <div class="printable-area">
+                            <!-- <x-custom-context-menu> -->
+                                <p>{{$articles[0]->content}}</p>
+                            <!-- </x-custom-context-menu> -->
+                        </div>
                     <div class="mt-12">
                         <x-article-pagination />
                     </div>

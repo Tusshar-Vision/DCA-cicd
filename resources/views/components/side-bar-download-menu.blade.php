@@ -1,6 +1,6 @@
 <div class="flex flex-col rounded bg-visionGray">
     <div class="my-8 mx-6">
-        <a href="">
+        <a @click.prevent="printDiv('printable-area')" href="#">
             <div class="flex items-center justify-between">
                 <div class="flex space-x-2">
                     <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,4 +40,16 @@
             </div>
         </a>
     </div>
+    <script>
+        function printDiv(divName) {
+            var printContents = document.getElementsByClassName(divName)[0]?.innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
+    </script>
 </div>

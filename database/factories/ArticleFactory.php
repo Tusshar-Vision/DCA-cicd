@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\PublishedInitiative;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,7 +22,8 @@ class ArticleFactory extends Factory
             'content' => fake()->paragraph(3, true),
             'url_slug' => fake()->url(),
             'author_id' => 1,
-            'initiative_id' => rand(1, 6)
+            'initiative_id' => rand(1, 6),  
+            'published_initiative_id' => PublishedInitiative::all()->random()->id
         ];
     }
 }
