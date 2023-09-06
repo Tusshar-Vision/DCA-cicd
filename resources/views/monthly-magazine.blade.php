@@ -7,10 +7,11 @@
 @endphp
 
 @section('content')
+
     <div class="space-y-4">
         <h1 class="text-7xl">{{$articles[0]->title}}</h1>
         <x-articles-nav 
-            :created At="$articles[0]->created_at"
+            :createdAt="$articles[0]->created_at"
             :updatedAt="$articles[0]->updated_at"
         />
     </div>
@@ -29,12 +30,12 @@
     <div class="space-y-12">
         <div class="flex space-x-8">
 
-            <div class="flex w-2/5 flex-col space-y-6">
+            <div class="flex w-auto flex-col space-y-6">
                 <livewire:articles-side-bar />
                 <x-side-bar-download-menu />
             </div>
             
-            <div class="flex flex-col">
+            <div class="flex flex-col w-full">
                 @if( !empty($articles) && count($articles) !== 0 ) 
                 
                     <x-article-header readTime="{{ $articles[0]->read_time }}" />

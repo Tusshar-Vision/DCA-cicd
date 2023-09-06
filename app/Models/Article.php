@@ -84,4 +84,9 @@ class Article extends Model
     {
         return $this->hasMany(RelatedVideo::class);
     }
+
+    public function topic() 
+    {
+        return $this->belongsTo(InitiativeTopic::class, 'initiative_topic_id');
+    }
 }

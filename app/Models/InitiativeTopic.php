@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class InitiativeTopic extends Model
 {
     use HasFactory;
+
+    public function articles() {
+        $this->hasMany(Article::class);
+    }
 }

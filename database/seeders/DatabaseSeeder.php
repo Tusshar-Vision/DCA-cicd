@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             InitiativeSeeder::class,
             PublishedInitiativeSeeder::class,
+            InitiativeTopicSeeder::class,
             ArticleSeeder::class,
         ]);
     }
