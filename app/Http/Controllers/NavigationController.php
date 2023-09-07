@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
 use App\Models\PublishedInitiative;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class NavigationController extends Controller
@@ -29,24 +30,44 @@ class NavigationController extends Controller
 
     public function renderMonthlyMagazinePage() {
         
-        $publishedDate = date('Y-m-d');
+        $publishedDate = Carbon::parse(date('Y-m'));
 
         $monthly_magazine_published_today = PublishedInitiative::where(
             'initiative_id', '=', InitiativesHelper::getInitiativeID('MONTHLY_MAGAZINE')
-        )->whereDate('published_at', '=', $publishedDate)->orderBy('updated_at')->first();
+        )->whereYear(
+            'published_at', '=', $publishedDate->format('Y')
+        )->whereMonth(
+            'published_at', '=', $publishedDate->format('m')
+        )->orderBy('updated_at')->first();
+
+        if($monthly_magazine_published_today === null) {
+            return View('monthly-magazine', [
+                'articles' => [],
+                'topics' => [],
+                'publishedDate' => $publishedDate->format('Y-m')
+            ]);    
+        }
         
         $published_articles = Article::where(
             'published_initiative_id', '=', $monthly_magazine_published_today->id
         )->with('topic')->get();
 
-        $published_articles_topics = $published_articles->map(function($item, $key) {
+        $published_articles_topics = $published_articles->map(function($item) {
             return $item->topic;
         });
 
+        $published_articles_topics = $published_articles_topics->unique();
+
+        $published_articles_topics = $published_articles_topics->sortBy(function($item) {
+            $tempKey = str_replace('&', 'AND', str_replace(' ', '_', strtoupper($item['name']))); // To convert topic name into topic code.
+
+            return InitiativesHelper::getInitiativeTopicID($tempKey);
+        });
+        
         return View('monthly-magazine', [
             'articles' => $published_articles,
             'topics' => $published_articles_topics,
-            'publishedDate' => $publishedDate
+            'publishedDate' => $publishedDate->format('Y-m')
         ]);
     }
 
