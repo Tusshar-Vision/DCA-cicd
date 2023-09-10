@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\InitiativeController;
 use App\Http\Controllers\NavigationController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,8 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', [InitiativeController::class, 'index'])->name('home');
-// Route::get('/{initiative}', [InitiativeController::class, 'getArticles']);
+Auth::routes();
 
 Route::controller(NavigationController::class)->group(function() {
     Route::get('/', 'renderHomePage')->name('home');
@@ -35,3 +35,4 @@ Route::controller(NavigationController::class)->group(function() {
         Route::get('/daily-news', 'renderDailyNewsArchivesPage')->name('archive.daily-news');
     });
 });
+

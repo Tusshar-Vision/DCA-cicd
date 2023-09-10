@@ -170,6 +170,7 @@ return [
         App\Providers\Filament\AdminPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\GlobalInitiativesDataProvider::class,
+        Ellaisys\Cognito\Providers\AwsCognitoServiceProvider::class,
     ])->toArray(),
 
     /*
