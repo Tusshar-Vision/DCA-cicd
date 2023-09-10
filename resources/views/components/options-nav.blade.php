@@ -1,5 +1,5 @@
-<div class="flex h-10 items-center justify-between">
-    <div class="-ml-4">
+<div  class="flex h-14 items-center justify-between text-base">
+    <div class="-ml-4 text-visionLineGray">
         {{ Breadcrumbs::render('home') }}
     </div>
 
@@ -9,7 +9,7 @@
                 <svg width="16" height="21" viewBox="0 0 16 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1 0H15C15.5523 0 16 0.44772 16 1V20.1433C16 20.4194 15.7761 20.6434 15.5 20.6434C15.4061 20.6434 15.314 20.6168 15.2344 20.5669L8 16.0313L0.76559 20.5669C0.53163 20.7136 0.22306 20.6429 0.0763698 20.4089C0.0264698 20.3293 0 20.2373 0 20.1433V1C0 0.44772 0.44772 0 1 0ZM14 2H2V17.4324L8 13.6707L14 17.4324V2Z" fill="#8F93A3"/>
                 </svg>
-                <span class="pl-2">Bookmark</span>
+                <span class="pl-2 text-visionLineGray">Bookmark</span>
             </button>
         </div>
         <div class="flex mr-6">
@@ -21,16 +21,27 @@
                     <path d="M13 8V10H5V8H13Z" fill="#8F93A3"/>
                     <path d="M13 12V14H5V12H13Z" fill="#8F93A3"/>
                 </svg>
-                <span class="pl-2">Mark as Read</span>
+                <span class="pl-2 text-visionLineGray">Mark as Read</span>
             </button>
         </div>
-        <div class="flex">
-            <button class="flex items-center">
+        <div x-data="{ isFullScreen: false }"  class="flex">
+            <button class="flex items-center" @click="toggleFullScreen()">
                 <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M6 0V2H2V6H0V0H6ZM0 18V12H2V16H6V18H0ZM20 18H14V16H18V12H20V18ZM20 6H18V2H14V0H20V6Z" fill="#8F93A3"/>
                 </svg>
-                <span class="pl-2">Fullscreen</span>
+                <span class="pl-2 text-visionLineGray">Fullscreen</span>
             </button>
         </div>
     </div>
+    <script>
+        function toggleFullScreen() {
+            const isFullScreen = document.fullscreenElement !== null;
+
+            if (isFullScreen) {
+                document.exitFullscreen(); // Exit fullscreen mode
+            } else {
+                document.documentElement.requestFullscreen(); // Enter fullscreen mode
+            }
+        }
+    </script>
 </div>

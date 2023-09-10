@@ -5,10 +5,6 @@
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
         </svg>
     </div>
- 
-    <input
-        type="text"
-        placeholder="Search"
-        class="w-full py-1 text-gray-700 border-none rounded-l-full focus:outline-none focus:ring-0"
-    >
+    
+    <livewire:search-box />
 </div>

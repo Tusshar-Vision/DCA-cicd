@@ -18,7 +18,7 @@ class PublishedInitiativeFactory extends Factory
     {
         return [
             'initiative_id' => rand(1,6),
-            'published_at' => fake()->date,
+            'published_at' => today(),
         ];
     }
 }

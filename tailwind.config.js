@@ -13,6 +13,7 @@ export default {
         visionBlue: "#005faf",
         visionSelectedGray: "#EFEFEF",
         visionLineGray: "#8F93A3",
+        visionToolTip: "#04040499"
       },
     },
   },
