@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\InitiativeController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\NavigationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +33,13 @@ Route::controller(NavigationController::class)->group(function() {
         Route::get('/monthly-magazine', 'renderMonthlyMagazineArchivesPage')->name('archive.monthly-magazine');
         Route::get('/weekly-focus', 'renderWeeklyFocusArchivesPage')->name('archive.weekly-focus');
         Route::get('/daily-news', 'renderDailyNewsArchivesPage')->name('archive.daily-news');
+    });
+});
+
+Route::middleware('auth')->group(function() {
+    Route::prefix('user')->group(function() {
+        // Route::get('/dashboard', )
+        Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
     });
 });
 

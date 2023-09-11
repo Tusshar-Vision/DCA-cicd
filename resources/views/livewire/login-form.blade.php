@@ -25,8 +25,17 @@
         </div>
       </div>
 
+      @if(session('error'))
+        <div>
+          <p class="text-sm text-visionRed text-center">{{ session('error') }}</p>
+        </div>
+      @endif
+
       <div>
-        <button type="submit" class="flex w-full justify-center rounded-md bg-visionBlue px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-visionRed focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+        <button type="submit" class="flex w-full justify-center items-center rounded-md bg-visionBlue px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-visionRed focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+          <div class="w-4 h-4 border-t-2 border-white border-solid rounded-full mr-4 animate-spin" wire:loading></div>
+          Sign in
+        </button>
       </div>
     </form>
 

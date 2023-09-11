@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Ellaisys\Cognito\Auth\AuthenticatesUsers; //Added for AWS Cognito
 use App\Providers\RouteServiceProvider;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
@@ -72,4 +73,9 @@ class LoginController extends Controller
         } //Try-catch ends
 
     } //Function ends
+
+    public function logout() {
+        Auth::guard('web')->logout(true);
+        return redirect(RouteServiceProvider::HOME);
+    }
 }
