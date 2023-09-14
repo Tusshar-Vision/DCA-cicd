@@ -5,10 +5,18 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ArticleResource\Pages;
 use App\Filament\Resources\ArticleResource\RelationManagers;
 use App\Models\Article;
+use App\Models\InitiativeTopic;
+use Filament\Actions\SelectAction;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -23,7 +31,17 @@ class ArticleResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('title')->required()->columnSpanFull(),
+                Select::make('initiative_topic_id')->options(
+                    InitiativeTopic::all()->pluck('name', 'id')->toArray()
+                )->required()->label('Subject'),
+                Select::make('language')->options([
+                    "hindi" => "Hindi",
+                    "english" => "English",
+                ])->required()->default('english'),
+                FileUpload::make('featured_image'),
+                TagsInput::make('tag.tags'),
+                RichEditor::make('content')->columnSpanFull(),
             ]);
     }
 
@@ -31,7 +49,11 @@ class ArticleResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('id')->label('Article ID'),
+                TextColumn::make('updated_at')->dateTime('d M Y h:m')->label('Last Updated'),
+                TextColumn::make('title'),
+                TextColumn::make('status'),
+                TextColumn::make('topic.name')->label('Subject')
             ])
             ->filters([
                 //
