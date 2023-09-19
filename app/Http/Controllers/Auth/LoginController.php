@@ -74,6 +74,10 @@ class LoginController extends Controller
 
     } //Function ends
 
+    public function showLoginForm() {
+        // return 
+    }
+
     public function logout() {
         Auth::guard('web')->logout(true);
         return redirect(RouteServiceProvider::HOME);

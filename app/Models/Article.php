@@ -33,6 +33,11 @@ class Article extends Model
         'comment_id',
         'author_id',
         'initiative_id',
+        'tags'
+    ];
+
+    protected $casts = [
+        'tags' => 'array'
     ];
 
     public function toSearchableArray(): array

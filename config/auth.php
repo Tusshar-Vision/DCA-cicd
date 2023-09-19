@@ -44,6 +44,10 @@ return [
             'driver' => 'cognito-token', // This line is important for using AWS Cognito as API Driver
             'provider' => 'users',
         ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'users'
+        ]
     ],
 
     /*

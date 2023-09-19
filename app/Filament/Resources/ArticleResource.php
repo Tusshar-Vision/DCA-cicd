@@ -9,6 +9,7 @@ use App\Models\InitiativeTopic;
 use Filament\Actions\SelectAction;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
@@ -33,15 +34,24 @@ class ArticleResource extends Resource
             ->schema([
                 TextInput::make('title')->required()->columnSpanFull(),
                 Select::make('initiative_topic_id')->options(
-                    InitiativeTopic::all()->pluck('name', 'id')->toArray()
-                )->required()->label('Subject'),
+                    InitiativeTopic::all()->pluck('name', 'id')
+                )->required()->label('Topic'),
                 Select::make('language')->options([
                     "hindi" => "Hindi",
                     "english" => "English",
                 ])->required()->default('english'),
                 FileUpload::make('featured_image'),
-                TagsInput::make('tag.tags'),
-                RichEditor::make('content')->columnSpanFull(),
+                TagsInput::make('tags')->required()->suggestions(
+                    Article::whereNotNull('tags') // Filter out articles with NULL tags
+                    ->get()
+                    ->flatMap(function ($article) {
+                        return $article->tags;
+                    })
+                    ->unique()
+                    ->values()
+                    ->toArray()  
+                ),
+                MarkdownEditor::make('content')->columnSpanFull(),
             ]);
     }
 
@@ -53,7 +63,8 @@ class ArticleResource extends Resource
                 TextColumn::make('updated_at')->dateTime('d M Y h:m')->label('Last Updated'),
                 TextColumn::make('title'),
                 TextColumn::make('status'),
-                TextColumn::make('topic.name')->label('Subject')
+                TextColumn::make('topic.name')->label('Topic'),
+                TextColumn::make('tags')
             ])
             ->filters([
                 //

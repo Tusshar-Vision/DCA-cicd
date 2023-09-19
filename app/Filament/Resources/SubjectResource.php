@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class SubjectResource extends Resource
 {
     protected static ?string $model = InitiativeTopic::class;
-    protected static ?string $navigationLabel = 'Subjects';
+    protected static ?string $modelLabel = 'Article Topic';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
