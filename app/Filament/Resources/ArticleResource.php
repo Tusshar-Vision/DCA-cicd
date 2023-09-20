@@ -28,19 +28,25 @@ class ArticleResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $recordTitleAttribute = 'title';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 TextInput::make('title')->required()->columnSpanFull(),
+
                 Select::make('initiative_topic_id')->options(
                     InitiativeTopic::all()->pluck('name', 'id')
                 )->required()->label('Topic'),
+                
                 Select::make('language')->options([
                     "hindi" => "Hindi",
                     "english" => "English",
                 ])->required()->default('english'),
+                
                 FileUpload::make('featured_image'),
+                
                 TagsInput::make('tags')->required()->suggestions(
                     Article::whereNotNull('tags') // Filter out articles with NULL tags
                     ->get()
@@ -51,6 +57,7 @@ class ArticleResource extends Resource
                     ->values()
                     ->toArray()  
                 ),
+                
                 MarkdownEditor::make('content')->columnSpanFull(),
             ]);
     }
@@ -60,9 +67,10 @@ class ArticleResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id')->label('Article ID'),
-                TextColumn::make('updated_at')->dateTime('d M Y h:m')->label('Last Updated'),
+                TextColumn::make('updated_at')->dateTime('d M Y h:m')->label('Last Updated')->sortable(),
                 TextColumn::make('title'),
                 TextColumn::make('status'),
+                TextColumn::make('initiative.name'),
                 TextColumn::make('topic.name')->label('Topic'),
                 TextColumn::make('tags')
             ])

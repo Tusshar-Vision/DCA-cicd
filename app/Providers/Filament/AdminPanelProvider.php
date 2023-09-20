@@ -54,6 +54,6 @@ class AdminPanelProvider extends PanelProvider
             ->authGuard('admin')
             ->authMiddleware([
                 Authenticate::class,
-            ])->spa();
+            ]);
     }
 }
