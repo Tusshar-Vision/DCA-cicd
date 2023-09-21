@@ -26,14 +26,20 @@ class InitiativesHelper {
     ];
 
     public static function getInitiativeID($initiative) : int {
+        $initiative = self::formatString($initiative);
         if(!array_key_exists($initiative, self::Initiatives)) return 0;
 
         return self::Initiatives[$initiative];
     }
 
     public static function getInitiativeTopicID($initiativeTopic) : int {
+        $initiativeTopic = self::formatString($initiativeTopic);
         if(!array_key_exists($initiativeTopic, self::InitiativeTopics)) return 0;
 
         return self::InitiativeTopics[$initiativeTopic];
+    }
+
+    protected static function formatString($string) {
+        return str_replace('&', 'AND', str_replace(' ', '_', strtoupper($string))); // To convert topic name into topic code.
     }
 }

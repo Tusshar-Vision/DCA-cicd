@@ -6,18 +6,27 @@ use App\Filament\Resources\ArticleResource\Pages;
 use App\Filament\Resources\ArticleResource\RelationManagers;
 use App\Models\Article;
 use App\Models\InitiativeTopic;
+use Carbon\Carbon;
 use Filament\Actions\SelectAction;
 use Filament\Forms;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -26,57 +35,162 @@ class ArticleResource extends Resource
 {
     protected static ?string $model = Article::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $recordTitleAttribute = 'title';
+
+    protected static ?string $navigationGroup = 'Articles';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('title')->required()->columnSpanFull(),
 
-                Select::make('initiative_topic_id')->options(
-                    InitiativeTopic::all()->pluck('name', 'id')
-                )->required()->label('Topic'),
+                Section::make('Create article')->schema([
+                    TextInput::make('title')->required()->columnSpanFull(),
+
+                    Select::make('initiative_topic_id')
+                        ->relationship('topic', 'name')
+                        ->required()->label('Topic'),
+
+                    Select::make('initiative_id')
+                        ->relationship('initiative', 'name')
+                        ->required(),
+
+                    MarkdownEditor::make('content')->columnSpanFull(),
+                ])->columnSpan(2),
                 
-                Select::make('language')->options([
-                    "hindi" => "Hindi",
-                    "english" => "English",
-                ])->required()->default('english'),
+
+                Section::make('meta')->schema([
+                    Checkbox::make('featured'),
+
+                    FileUpload::make('featured_image'),
+
+                    Select::make('language')->options([
+                        "hindi" => "Hindi",
+                        "english" => "English",
+                    ])->required()->default('english'),
                 
-                FileUpload::make('featured_image'),
+                    TagsInput::make('tags')->required()->suggestions(
+                        Article::whereNotNull('tags') // Filter out articles with NULL tags
+                        ->get()
+                        ->flatMap(function ($article) {
+                            return $article->tags;
+                        })
+                        ->unique()
+                        ->values()
+                        ->toArray()  
+                    ),
+
+                    TextInput::make('url_slug')->label('URL Slug'),
+                    Textarea::make('excerpt'),
+
+                    Select::make('status')->options([
+                        1 => 'draft',
+                        2 => 'published',
+                        3 => 'archived'
+                    ])->required()->default(1),
+
+                ])->columnSpan(1),
                 
-                TagsInput::make('tags')->required()->suggestions(
-                    Article::whereNotNull('tags') // Filter out articles with NULL tags
-                    ->get()
-                    ->flatMap(function ($article) {
-                        return $article->tags;
-                    })
-                    ->unique()
-                    ->values()
-                    ->toArray()  
-                ),
-                
-                MarkdownEditor::make('content')->columnSpanFull(),
-            ]);
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('id')->label('Article ID'),
-                TextColumn::make('updated_at')->dateTime('d M Y h:m')->label('Last Updated')->sortable(),
-                TextColumn::make('title'),
-                TextColumn::make('status'),
-                TextColumn::make('initiative.name'),
-                TextColumn::make('topic.name')->label('Topic'),
-                TextColumn::make('tags')
+                TextColumn::make('id')->label('Article ID')->sortable()->toggleable(),
+                TextColumn::make('updated_at')->dateTime('d M Y h:m')->label('Last Updated')->sortable()->toggleable(),
+                TextColumn::make('title')->sortable()->searchable(),
+                TextColumn::make('status')->toggleable(),
+                TextColumn::make('initiative.name')->searchable()->toggleable(),
+                TextColumn::make('topic.name')->label('Topic')->searchable()->toggleable(),
+                TextColumn::make('tags')->searchable()->toggleable()
             ])
             ->filters([
-                //
-            ])
+                Filter::make('created_at')
+                    ->form([
+                        DatePicker::make('created_from'),
+                        DatePicker::make('created_until'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            );
+                })->indicateUsing(function (array $data): array {
+                    $indicators = [];
+             
+                    if ($data['from'] ?? null) {
+                        $indicators['from'] = 'Created from ' . Carbon::parse($data['from'])->toFormattedDateString();
+                    }
+             
+                    if ($data['until'] ?? null) {
+                        $indicators['until'] = 'Created until ' . Carbon::parse($data['until'])->toFormattedDateString();
+                    }
+             
+                    return $indicators;
+                }),
+
+                SelectFilter::make('status')
+                    ->multiple()
+                    ->options([
+                        'draft' => 'Draft',
+                        'reviewing' => 'Reviewing',
+                        'published' => 'Published',
+                    ]),
+
+                SelectFilter::make('Topic')
+                    ->multiple()
+                    ->options([
+                        1 => "Polity",
+                        2 => "International Relations",
+                        3 => "Economy",
+                        4 => "Security",
+                        5 => "Environment",
+                        6 => "Social",
+                        7 => "Science & Tech",
+                        8 => "Culture",
+                        9 => "Ethics"
+                    ])->attribute('initiative_topic_id'),
+
+                SelectFilter::make('Initiative')
+                    ->multiple()
+                    ->options([
+                        1 => "News Today",
+                        2 => "Monthly Magazine",
+                        3 => "Weekly Focus",
+                        4 => "Mains 365",
+                        5 => "PT 365",
+                        6 => "Downloads" 
+                    ])->attribute('initiative_id'),
+                
+                SelectFilter::make('Tags')
+                    ->multiple()
+                    ->options([
+                        Article::whereNotNull('tags') // Filter out articles with NULL tags
+                        ->get()
+                        ->flatMap(function ($article) {
+                            return $article->tags;
+                        })
+                        ->unique()
+                        ->values()
+                        ->toArray()  
+                    ])->attribute('tags'),
+
+            ], layout: FiltersLayout::AboveContentCollapsible)->filtersTriggerAction(
+                fn (Action $action) => $action
+                    ->button()
+                    ->label('Filters'),
+            )
+            ->filtersFormColumns(5)
+            ->filtersFormMaxHeight('400px')
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

@@ -13,14 +13,16 @@ class InitiativesPublishedChart extends ChartWidget
 
     protected function getData(): array
     {
-        $data = Trend::query(PublishedInitiative::groupBy('initiative_id'))
-                    ->between(
-                        start: now()->startOfYear(),
-                        end: now()->endOfYear(),
-                    )
-                    ->perMonth()->count();
 
-        dd($data);
+        // $data = Trend::query(PublishedInitiative::selectRaw('initiative_id, COUNT(*) as count')
+        //         ->groupBy('initiative_id'))
+        //         ->between(
+        //             start: now()->startOfYear(),
+        //             end: now()->endOfYear(),
+        //         )
+        //         ->perMonth()->count();
+
+        // dd($data);
 
         return [
             //

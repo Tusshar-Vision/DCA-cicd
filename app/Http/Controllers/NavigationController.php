@@ -69,9 +69,7 @@ class NavigationController extends Controller
         $published_articles_topics = $published_articles_topics->unique();
 
         $published_articles_topics = $published_articles_topics->sortBy(function($item) {
-            $tempKey = str_replace('&', 'AND', str_replace(' ', '_', strtoupper($item['name']))); // To convert topic name into topic code.
-
-            return InitiativesHelper::getInitiativeTopicID($tempKey);
+            return InitiativesHelper::getInitiativeTopicID($item['name']);
         });
 
         $published_articles = $published_articles->map(function($article) {

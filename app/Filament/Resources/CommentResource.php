@@ -2,35 +2,33 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SubjectResource\Pages;
-use App\Filament\Resources\SubjectResource\RelationManagers;
-use App\Models\InitiativeTopic;
+use App\Filament\Resources\CommentResource\Pages;
+use App\Filament\Resources\CommentResource\RelationManagers;
+use App\Models\Comment;
 use Filament\Forms;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class SubjectResource extends Resource
+class CommentResource extends Resource
 {
-    protected static ?string $model = InitiativeTopic::class;
-    protected static ?string $modelLabel = 'Topic';
+    protected static ?string $model = Comment::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-hashtag';
+    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-oval-left-ellipsis';
+
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $navigationGroup = 'Articles';
+
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('name')->required(),
+                //
             ]);
     }
 
@@ -38,11 +36,10 @@ class SubjectResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')->label('Topic ID'),
-                TextColumn::make('name')
+                //
             ])
             ->filters([
-                
+                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -51,9 +48,6 @@ class SubjectResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ])
-            ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
             ]);
     }
     
@@ -67,9 +61,9 @@ class SubjectResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSubjects::route('/'),
-            'create' => Pages\CreateSubject::route('/create'),
-            'edit' => Pages\EditSubject::route('/{record}/edit'),
+            'index' => Pages\ListComments::route('/'),
+            'create' => Pages\CreateComment::route('/create'),
+            'edit' => Pages\EditComment::route('/{record}/edit'),
         ];
     }    
 }
