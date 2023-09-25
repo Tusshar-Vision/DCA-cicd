@@ -3,11 +3,14 @@
 @endphp
 
 <div class="flex flex-col rounded bg-visionGray pb-4">
-    <div class="my-4 mx-6" x-data="{ expanded: false }">
+    <div class="my-4 mx-6" x-data="{ expanded: null }">
         @foreach ($topics as $topic)
             <div class="mt-4">
-                <button class="flex justify-between items-center w-full" @click="expanded = ! expanded">
-                    <div x-show="expanded === true" class="flex justify-between items-center w-full">
+                <button class="flex justify-between items-center w-full" @click="
+                    if(expanded === 'topic-{{ $topic }}') expanded = false;
+                    else expanded = 'topic-{{ $topic }}'
+                ">
+                    <div x-show="expanded === 'topic-{{ $topic }}'" class="flex justify-between items-center w-full">
                         <div class="flex">
                             <div class="w-6">
                                 <strong>
@@ -24,7 +27,7 @@
                             <path d="M5 11V13H19V11H5Z" fill="#8F93A3"/>
                         </svg>
                     </div>
-                    <div x-show="expanded === false" class="flex justify-between items-center w-full">
+                    <div x-show="expanded !== 'topic-{{ $topic }}'" class="flex justify-between items-center w-full">
                         <div class="flex">
                             <div class="w-6">
                                 {{ $counter++ . '.' }}
@@ -39,7 +42,7 @@
                     </div>
                 </button>
             
-                <div x-show="expanded" x-collapse>
+                <div x-show="expanded === 'topic-{{ $topic }}'" x-collapse>
                     <ul class="space-y-4">
                         @foreach ($articles as $article)
                             @if($article->topic === $topic)
