@@ -42,7 +42,7 @@
                     <x-article-author-header :authorId="$articles[0]->author_id" />
                         <div class="printable-area">
                             <!-- <x-custom-context-menu> -->
-                                <p>{{$articles[0]->content}}</p>
+                                {!! $articles[0]->content !!}
                             <!-- </x-custom-context-menu> -->
                         </div>
                     <div class="mt-12">

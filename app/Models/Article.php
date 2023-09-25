@@ -33,6 +33,11 @@ class Article extends Model
         'comment_id',
         'author_id',
         'initiative_id',
+        'tags'
+    ];
+
+    protected $casts = [
+        'tags' => 'array'
     ];
 
     public function toSearchableArray(): array
@@ -63,6 +68,10 @@ class Article extends Model
     public function initiative()
     {
         return $this->belongsTo(Initiative::class, 'initiative_id');
+    }
+
+    public function publishedInitiative() {
+        return $this->belongsTo(PublishedInitiative::class, 'published_initiative_id');
     }
 
     public function tableOfContents()

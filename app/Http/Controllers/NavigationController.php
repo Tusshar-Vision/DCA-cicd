@@ -7,9 +7,19 @@ use App\Models\Article;
 use App\Models\PublishedInitiative;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use League\CommonMark\GithubFlavoredMarkdownConverter;
 
 class NavigationController extends Controller
 {
+    public $converter;
+
+    public function __construct() {
+        $this->converter = new GithubFlavoredMarkdownConverter([
+            'html_input' => 'strip',
+            'allow_unsafe_links' => false,
+        ]);
+    }
+
     public function renderHomePage() {
         return View('home');
     }
@@ -59,9 +69,13 @@ class NavigationController extends Controller
         $published_articles_topics = $published_articles_topics->unique();
 
         $published_articles_topics = $published_articles_topics->sortBy(function($item) {
-            $tempKey = str_replace('&', 'AND', str_replace(' ', '_', strtoupper($item['name']))); // To convert topic name into topic code.
+            return InitiativesHelper::getInitiativeTopicID($item['name']);
+        });
 
-            return InitiativesHelper::getInitiativeTopicID($tempKey);
+        $published_articles = $published_articles->map(function($article) {
+            $article->content = $this->converter->convert($article->content);
+
+            return $article;
         });
         
         return View('monthly-magazine', [
