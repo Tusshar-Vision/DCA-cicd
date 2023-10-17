@@ -3,13 +3,18 @@
 
 @section('content')
 
-    <div>
+    <div class="mt-14">
         <div>
-            <livewire:highlights />
+            <h3 class="text-4xl">Highlights</h3>
         </div>
+        <div class="flex">
+            <div>
+                <livewire:highlights />
+            </div>
 
-        <div>
-            <x-whats-new-side-bar />
+            <div>
+                <x-whats-new-side-bar />
+            </div>
         </div>
     </div>
 
