@@ -10,28 +10,27 @@
             </li>
             <div class="flex" x-data="{ isNewsOpen: false, isMagazineOpen: false, isWeeklyFocusOpen: false }">
                 @foreach ($initiatives as $initiative)
-
                     @if ($initiative->path === '/news-today')
                         <div class="relative">
                             <li class="font-semibold pr-6"
                                 @mouseenter="isNewsOpen = true;
                                              isMagazineOpen = false;
                                              isWeeklyFocusOpen = false;
-                                             " 
-                                @mouseleaves="isNewsOpen = false" 
+                                             "
+                                @mouseleaves="isNewsOpen = false"
                             >
                                 <a class="hover:text-visionRed {{ request()->is(trim($initiative->path, '/')) ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}" wire:navigate>{{ $initiative->name }}</a>
-                            </li>  
+                            </li>
 
-                            <x-drop-down-menu 
+                            <x-drop-down-menu
                                 x-show="isNewsOpen"
-                                @click.away="isNewsOpen = false" 
+                                @click.away="isNewsOpen = false"
                                 x-transition:enter="transition ease-out duration-100"
                                 x-transition:enter-start="transform opacity-0 scale-95"
                                 button-text="Today's News"
                                 button-link="{{ $initiative->path }}"
                                 archive-link="{{ route('archive.daily-news') }}"
-                                :publishedInitiatives="$publishedInitiatives->where('initiative_id', $initiative->id)"
+                                :menuData="$menuData['newsToday']"
                             />
                         </div>
                     @elseif ($initiative->path === '/monthly-magazine')
@@ -40,21 +39,21 @@
                                 @mouseenter="isMagazineOpen = true;
                                              isNewsOpen = false;
                                              isWeeklyFocusOpen = false;
-                                             " 
-                                @mouseleaves="isMagazineOpen = false" 
+                                             "
+                                @mouseleaves="isMagazineOpen = false"
                             >
                                 <a class="hover:text-visionRed {{ request()->is(trim($initiative->path, '/')) ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}" wire:navigate>{{ $initiative->name }}</a>
-                            </li>  
+                            </li>
 
-                            <x-drop-down-menu 
+                            <x-drop-down-menu
                                 x-show="isMagazineOpen"
-                                @click.away="isMagazineOpen = false" 
+                                @click.away="isMagazineOpen = false"
                                 x-transition:enter="transition ease-out duration-100"
                                 x-transition:enter-start="transform opacity-0 scale-95"
                                 button-text="This Month's Magazine"
                                 button-link="{{ $initiative->path }}"
                                 archive-link="{{ route('archive.monthly-magazine') }}"
-                                :publishedInitiatives="$publishedInitiatives->where('initiative_id', $initiative->id)"
+                                :menuData="$menuData['monthlyMagazine']"
                             />
                         </div>
                     @elseif ($initiative->path === '/weekly-focus')
@@ -63,29 +62,29 @@
                                 @mouseenter="isWeeklyFocusOpen = true;
                                              isMagazineOpen = false;
                                              isNewsOpen = false;
-                                             " 
-                                @mouseleaves="isWeeklyFocusOpen = false" 
+                                             "
+                                @mouseleaves="isWeeklyFocusOpen = false"
                             >
                                 <a class="hover:text-visionRed {{ request()->is(trim($initiative->path, '/')) ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}" wire:navigate>{{ $initiative->name }}</a>
-                            </li>  
+                            </li>
 
-                            <x-drop-down-menu 
+                            <x-drop-down-menu
                                 x-show="isWeeklyFocusOpen"
-                                @click.away="isWeeklyFocusOpen = false" 
+                                @click.away="isWeeklyFocusOpen = false"
                                 x-transition:enter="transition ease-out duration-100"
                                 x-transition:enter-start="transform opacity-0 scale-95"
-                                button-text="This Week's Focus"
+                                button-text="Latest Edition"
                                 button-link="{{ $initiative->path }}"
                                 archive-link="{{ route('archive.weekly-focus') }}"
-                                :publishedInitiatives="$publishedInitiatives->where('initiative_id', $initiative->id)"
+                                :menuData="$menuData['weeklyFocus']"
                             />
                         </div>
                     @else
                         <li class="font-semibold pr-6">
                             <a class="hover:text-visionRed {{ request()->is(trim($initiative->path, '/')) ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}" wire:navigate>{{ $initiative->name }}</a>
-                        </li>    
+                        </li>
                     @endif
-                    
+
                 @endforeach
             </div>
         </ul>

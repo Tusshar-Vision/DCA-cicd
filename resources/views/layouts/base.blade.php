@@ -12,7 +12,7 @@
 <body x-data="{ isModalOpen: false }">
   <div class="mx-auto max-w-[90%]">
     <header>
-      <x-header />
+      <x-ui.header.header />
       <x-initiatives-nav :initiatives="$initiatives" />
       @yield('header')
     </header>
@@ -23,7 +23,7 @@
   </div>
 
   <footer>
-    <x-footer />
+    <x-ui.footer.footer />
   </footer>
   
   <x-modal-box x-show="isModalOpen">

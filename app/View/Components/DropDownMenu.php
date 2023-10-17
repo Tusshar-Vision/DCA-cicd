@@ -15,13 +15,9 @@ class DropDownMenu extends Component
         public $buttonText,
         public $buttonLink,
         public $archiveLink,
-        public $publishedInitiatives
+        public $menuData
     )
     {}
-
-    public function formatPublishedDate() {
-        dd("hello");
-    }
 
     /**
      * Get the view / contents that represent the component.

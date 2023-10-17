@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\NavigationController;
 use Illuminate\Support\Facades\Auth;
@@ -35,6 +36,9 @@ Route::controller(NavigationController::class)->group(function() {
         Route::get('/daily-news', 'renderDailyNewsArchivesPage')->name('archive.daily-news');
     });
 });
+
+
+Route::get('{initiative}/{topic}/{article_id}/{article_slug?}', [ArticleController::class, 'show']);
 
 Route::middleware('auth')->group(function() {
     Route::prefix('user')->group(function() {

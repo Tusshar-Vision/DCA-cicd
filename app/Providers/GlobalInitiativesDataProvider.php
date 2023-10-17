@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Initiative;
 use App\Models\PublishedInitiative;
+use App\Services\InitiativeService;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,16 +20,20 @@ class GlobalInitiativesDataProvider extends ServiceProvider
 
     /**
      * Bootstrap services.
+     * @throws \Throwable
      */
-    public function boot(): void
+    public function boot(InitiativeService $initiativeService): void
     {
         if(Schema::hasTable('initiatives')) {
             $initiatives = Initiative::get(['id', 'name', 'path']);
-            $publishedInitiatives = PublishedInitiative::get(['initiative_id', 'published_at']);
 
             view()->share([
                 'initiatives' => $initiatives,
-                'publishedInitiatives' => $publishedInitiatives
+                'menuData' => [
+                    'newsToday' => $initiativeService->getMenuData('NEWS_TODAY'),
+                    'monthlyMagazine' => $initiativeService->getMenuData('MONTHLY_MAGAZINE'),
+                    'weeklyFocus' => $initiativeService->getMenuData('WEEKLY_FOCUS'),
+                ]
             ]);
         }
     }
