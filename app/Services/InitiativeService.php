@@ -12,7 +12,7 @@ use Throwable;
 
 class InitiativeService {
 
-    public function __construct(protected PublishedInitiative $publishedInitiative)
+    public function __construct()
     {
     }
 
@@ -42,16 +42,16 @@ class InitiativeService {
 
         $dateData = $mainMenuData->pluck('published_at')->toArray();
 
-        $combinedData = [];
+        $menuData = [];
 
         foreach ($dateData as $date) {
             $carbonDate = Carbon::createFromFormat('Y-m', $date);
-            $combinedData[$date] = $carbonDate->daysInMonth;
+            $menuData[$date] = $carbonDate->daysInMonth;
         }
 
         return [
             'initiative_id' => $initiativeId,
-            'data' => $combinedData
+            'data' => $menuData
         ];
     }
 
@@ -73,17 +73,17 @@ class InitiativeService {
             ->get()
             ->toArray();
 
-        $combinedData = [];
+        $menuData = [];
 
         foreach ($yearsData as $year) {
-            $combinedData[$year] = array_values(array_filter($sideDropDownMenuData, function ($item) use ($year) {
+            $menuData[$year] = array_values(array_filter($sideDropDownMenuData, function ($item) use ($year) {
                 return str_contains($item['published_at'], $year);
             }));
         }
 
         return [
             'initiative_id' => $initiativeId,
-            'data' => $combinedData
+            'data' => $menuData
         ];
     }
 
@@ -103,17 +103,17 @@ class InitiativeService {
             ->toArray();
 
 
-        $combinedData = [];
+        $menuData = [];
 
         foreach ($dateData as $date) {
-            $combinedData[$date] = array_values(array_filter($sideDropDownMenuData, function ($item) use ($date) {
+            $menuData[$date] = array_values(array_filter($sideDropDownMenuData, function ($item) use ($date) {
                 return str_contains($item['publication_date'], $date);
             }));
         }
 
         return [
             'initiative_id' => $initiativeId,
-            'data' => $combinedData
+            'data' => $menuData
         ];
     }
 }
