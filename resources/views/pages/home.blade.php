@@ -9,11 +9,10 @@
         </div>
         <div class="flex">
             <div>
-                <livewire:highlights />
+                <livewire:widgets.highlights />
             </div>
 
             <div>
-                <x-whats-new-side-bar />
             </div>
         </div>
     </div>
