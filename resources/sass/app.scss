@@ -2,6 +2,131 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .vi-primary-button {
+        padding: 8px 18px;
+        background-color: #005FAF;
+        font-size: 14px;
+        color: #FFFFFF;
+        font-weight: 600;
+        width: 100%;
+        transition: all 0.2s ease-in-out;
+    }
+    .vi-primary-button:hover {
+        opacity: 0.9;
+    }
+    .vi-search-wrap {
+        text-align: center;
+    }
+    .vi-search-wrap .vi-search-bar-wrapper {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-width: 537px;
+        margin: 24px auto 0;
+    }
+    .vi-search-wrap .vi-search-bar-wrapper .search {
+        position: absolute;
+        left: 9px;
+        top: 6px;
+    }
+    .vi-search-wrap .vi-search-bar-wrapper .vi-search-btn {
+        max-width: 110px;
+        border: 0;
+        padding: 10px 18px;
+        border-radius: 0 4px 4px 0;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+    }
+    .vi-search-wrap .vi-search-bar-wrapper .vi-search-btn:hover {
+        opacity: 0.9;
+    }
+    .vi-search-wrap .vi-search-bar {
+        width: 100%;
+        padding: 8px 40px 8px;
+        font-size: 16px;
+        border: 1px solid #8F93A3;
+        border-radius: 4px 0 0 4px;
+        transition: all 0.2s ease-in-out;
+        border-right: none;
+    }
+    .vi-search-wrap .vi-search-bar:hover {
+        border-color: #1d1e1e;
+    }
+    .vi-grid-wide {
+        width: 100%;
+        margin: 0 auto;
+    }
+    .vi-grid-compact {
+        max-width: 1084px;
+        padding: 0 30px;
+        width: 100%;
+        margin: 0 auto;
+    }
+    .swiper-nav-button {
+        background-color: #04040499;
+        backdrop-filter: blur(9px);
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        height: 48px !important;
+        width: 48px !important;
+        padding: 11px;
+    }
+    .swiper-nav-button:hover {
+        opacity: 0.9;
+    }
+    .swiper-button-next::after, .swiper-button-prev::after {
+        content: "";
+        display: none;
+    }
+    .swiper-wrapper {
+        height: 500px !important;
+    }
+    .vi-announcement-wrap {
+        width: 258px;
+        padding: 16px;
+        border: 1px solid #E9E9E9;
+        border-radius: 4px;
+    }
+    .vi-sidebar-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #040404;
+        line-height: 28px;
+        margin-top: 0;
+    }
+    .vi-announcement-card {
+        border-top: 1px solid #8F93A3;
+        padding-top: 12px;
+        margin-top: 12px;
+    }
+    .vi-announcement-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #8F93A3;
+        line-height: 20px;
+        margin-top: 0;
+    }
+    .vi-highlights-sidebar .vi-announcement-card ul {
+        margin: 0;
+        padding-left: 0;
+    }
+    .vi-highlights-sidebar .vi-announcement-card ul li {
+        list-style: none;
+        font-size: 14px;
+        font-weight: 400;
+        color: #040404;
+        line-height: 20px;
+        margin: 12px 0;
+    }
+    .vi-highlights-sidebar .vi-announcement-card ul li:before {
+        content: '✦';
+        display: inline-block;
+        margin-right: 5px;
+    }
+}
+
 .printable-area {
     font-size: 1rem;
     font-style: normal;

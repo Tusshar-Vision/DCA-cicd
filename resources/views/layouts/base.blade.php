@@ -8,6 +8,7 @@
             @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&display=swap');
         </style>
         @vite('resources/sass/app.scss')
+        @vite('resources/js/app.js')
     </head>
     <body x-data="{ isModalOpen: false }">
         <div class="mx-auto max-w-[90%]">

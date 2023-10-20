@@ -3,18 +3,25 @@
 
 @section('content')
 
-    <div class="mt-14">
-        <div>
-            <h3 class="text-4xl">Highlights</h3>
-        </div>
-        <div class="flex">
-            <div>
-                <livewire:widgets.highlights />
-            </div>
+    <x-containers.grid-wide class="mt-6">
+        <x-common.section-heading>Highlights</x-common.section-heading>
+        <livewire:widgets.highlights-section />
+    </x-containers.grid-wide>
 
-            <div>
-            </div>
-        </div>
-    </div>
+    <x-containers.grid-wide class="mt-12">
+        <x-common.section-heading>Latest News</x-common.section-heading>
+        <livewire:widgets.news-section />
+    </x-containers.grid-wide>
+
+    <x-containers.grid-wide class="mt-12 flex flex-col items-center">
+        <x-common.section-heading class="text-center">What do you need to learn today?</x-common.section-heading>
+        <livewire:widgets.search-bar-with-button />
+    </x-containers.grid-wide>
+
+    <x-containers.grid-wide class="mt-12">
+        <livewire:widgets.latest-videos />
+        <livewire:widgets.latest-downloads />
+        <livewire:widgets.leaderboard />
+    </x-containers.grid-wide>
 
 @endsection

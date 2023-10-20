@@ -91,6 +91,6 @@
     </div>
 
     <div class="flex-grow">
-        <x-widgets.search-box />
+        <x-widgets.search-bar :show-search-button="false" />
     </div>
 </div>

@@ -4,10 +4,10 @@ namespace App\Livewire\Widgets;
 
 use Livewire\Component;
 
-class Highlights extends Component
+class Leaderboard extends Component
 {
     public function render()
     {
-        return view('livewire.widgets.highlights');
+        return view('livewire.widgets.leaderboard');
     }
 }

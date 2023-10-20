@@ -6,5 +6,7 @@
         </svg>
     </div>
 
-    <livewire:widgets.search-box />
+    <div class="flex-grow">
+        <livewire:widgets.search-box />
+    </div>
 </div>

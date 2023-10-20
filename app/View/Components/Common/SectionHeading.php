@@ -1,12 +1,12 @@
 <?php
 
-namespace App\View\Components\Widgets;
+namespace App\View\Components\Common;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class SearchBox extends Component
+class SectionHeading extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class SearchBox extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.widgets.search-box');
+        return view('components.common.section-heading');
     }
 }
