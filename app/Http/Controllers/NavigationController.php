@@ -21,7 +21,7 @@ class NavigationController extends Controller
     }
 
     public function renderHomePage() {
-        return View('home');
+        return View('pages.home');
     }
 
     public function renderNewsTodayPage() {
@@ -51,7 +51,7 @@ class NavigationController extends Controller
         )->orderBy('updated_at')->first();
 
         if($monthly_magazine_published_today === null) {
-            return View('monthly-magazine', [
+            return View('pages.monthly-magazine', [
                 'articles' => [],
                 'topics' => [],
                 'publishedDate' => $publishedDate->format('Y-m')
@@ -156,7 +156,7 @@ class NavigationController extends Controller
 
         $searchResults = Article::search($query)->paginate(10);
 
-        return View('search', [
+        return View('pages.search', [
             'query' => $query,
             'searchResults' => $searchResults
         ]);

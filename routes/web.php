@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\NavigationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Pages;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +20,9 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::get('/', [Pages\HomeController::class, 'index'])->name('home');
+
 Route::controller(NavigationController::class)->group(function() {
-    Route::get('/', 'renderHomePage')->name('home');
     Route::get('/news-today', 'renderNewsTodayPage')->name('news-today');
     Route::get('/monthly-magazine', 'renderMonthlyMagazinePage')->name('monthly-magazine');
     Route::get('/weekly-focus', 'renderWeeklyFocusPage')->name('weekly-focus');
@@ -35,6 +38,9 @@ Route::controller(NavigationController::class)->group(function() {
         Route::get('/daily-news', 'renderDailyNewsArchivesPage')->name('archive.daily-news');
     });
 });
+
+
+Route::get('{initiative}/{topic}/{article_id}/{article_slug?}', [ArticleController::class, 'show']);
 
 Route::middleware('auth')->group(function() {
     Route::prefix('user')->group(function() {

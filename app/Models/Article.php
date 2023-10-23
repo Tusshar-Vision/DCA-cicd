@@ -2,9 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
+
+/**
+ * @method isFeatured()
+ */
 
 class Article extends Model
 {
@@ -94,8 +99,12 @@ class Article extends Model
         return $this->hasMany(RelatedVideo::class);
     }
 
-    public function topic() 
+    public function topic()
     {
         return $this->belongsTo(InitiativeTopic::class, 'initiative_topic_id');
+    }
+
+    public function scopeIsFeatured(Builder $query) {
+        return $query->where('featured', true);
     }
 }

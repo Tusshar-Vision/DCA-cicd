@@ -1,5 +1,5 @@
 @extends('layouts.base')
 
 @section('header')
-    <x-archives-header title="{{ $title }}" />
+    <x-ui.header.archives title="{{ $title }}" />
 @endsection
