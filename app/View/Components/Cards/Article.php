@@ -12,7 +12,8 @@ class Article extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public $article
+        public $article,
+        public $type=""
     )
     {}
 

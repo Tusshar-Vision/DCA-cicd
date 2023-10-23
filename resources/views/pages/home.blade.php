@@ -5,7 +5,7 @@
 
     <x-containers.grid-wide class="mt-6">
         <x-common.section-heading>Highlights</x-common.section-heading>
-        <livewire:widgets.highlights-section />
+        <livewire:widgets.highlights-section :featured-articles="$featuredArticles"/>
     </x-containers.grid-wide>
 
     <x-containers.grid-wide class="mt-12">
@@ -24,4 +24,8 @@
         <livewire:widgets.leaderboard />
     </x-containers.grid-wide>
 
+    <script>
+        // This event is dispatched to reinitialize swiper slider, otherwise it will stop working due to livewire navigation being used in the app.
+        window.dispatchEvent(new Event('onHomePage'));
+    </script>
 @endsection

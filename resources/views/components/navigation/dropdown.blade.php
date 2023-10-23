@@ -3,7 +3,7 @@
 @endphp
 
 <div {{ $attributes }} x-cloak>
-    <ul x-data="{ isMenuOpen: null }" class="absolute font-normal bg-visionGray shadow rounded-sm w-72 border mt-2 py-1 z-20">
+    <ul x-data="{ isMenuOpen: null }" class="absolute font-normal bg-visionGray shadow rounded-sm w-72 border mt-2 py-1 z-50">
         <x-buttons.primary button-text="{!! $buttonText !!}" button-link="{{ $buttonLink }}" />
             @foreach ($menuData['data'] as $mainMenu => $subMenu)
                 @if(!empty($subMenu))

@@ -25,8 +25,6 @@
                             <x-navigation.dropdown
                                 x-show="isNewsOpen"
                                 @click.away="isNewsOpen = false"
-                                x-transition:enter="transition ease-out duration-100"
-                                x-transition:enter-start="transform opacity-0 scale-95"
                                 button-text="Today's News"
                                 button-link="{{ $initiative->path }}"
                                 archive-link="{{ route('archive.daily-news') }}"
@@ -48,8 +46,6 @@
                             <x-navigation.dropdown
                                 x-show="isMagazineOpen"
                                 @click.away="isMagazineOpen = false"
-                                x-transition:enter="transition ease-out duration-100"
-                                x-transition:enter-start="transform opacity-0 scale-95"
                                 button-text="This Month's Magazine"
                                 button-link="{{ $initiative->path }}"
                                 archive-link="{{ route('archive.monthly-magazine') }}"
@@ -71,8 +67,6 @@
                             <x-navigation.dropdown
                                 x-show="isWeeklyFocusOpen"
                                 @click.away="isWeeklyFocusOpen = false"
-                                x-transition:enter="transition ease-out duration-100"
-                                x-transition:enter-start="transform opacity-0 scale-95"
                                 button-text="Latest Edition"
                                 button-link="{{ $initiative->path }}"
                                 archive-link="{{ route('archive.weekly-focus') }}"
@@ -91,6 +85,6 @@
     </div>
 
     <div class="flex-grow">
-        <x-widgets.search-bar :show-search-button="false" />
+        <x-widgets.search-bar />
     </div>
 </div>

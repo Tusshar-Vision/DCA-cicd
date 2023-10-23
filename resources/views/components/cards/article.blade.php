@@ -2,9 +2,9 @@
     use Carbon\Carbon;
 @endphp
 
-<div class="flex flex-col w-auto space-y-2">
+<div class="cursor-pointer flex-col w-auto space-y-2">
     <div>
-        <img src="{{ $article->featured_image ?? 'https://placehold.co/600x400' }}"  alt=""/>
+        <img src="{{ $article->featured_image ?? 'https://placehold.co/687x400' }}"  alt=""/>
     </div>
     <div class="text-visionLineGray flex space-x-3 items-center text-sm">
         <p>{{ $article->author->name }}</p>

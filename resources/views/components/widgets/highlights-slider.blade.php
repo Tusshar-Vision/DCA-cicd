@@ -3,9 +3,11 @@
     <!-- Additional required wrapper -->
     <div class="swiper-wrapper">
         <!-- Slides -->
-        <div class="swiper-slide">Slide 1</div>
-        <div class="swiper-slide">Slide 2</div>
-        <div class="swiper-slide">Slide 3</div>
+        @foreach($featuredArticles as $article)
+            <div class="swiper-slide">
+                <x-cards.article :article="$article" />
+            </div>
+        @endforeach
     </div>
     <!-- If we need navigation buttons -->
     <div class="swiper-button-prev swiper-nav-button">

@@ -12,9 +12,11 @@ use Throwable;
 
 class InitiativeService {
 
-    public function __construct()
-    {
-    }
+    public function __construct(
+        private readonly PublishedInitiative $publishedInitiatives,
+        private readonly Article $articles
+    )
+    {}
 
     /**
      * @throws Throwable
@@ -34,10 +36,11 @@ class InitiativeService {
 
     protected function getMenuDataForNewsToday($initiativeId) : array {
 
-        $mainMenuData = PublishedInitiative::where('initiative_id', '=', $initiativeId)
+        $mainMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
             ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as published_at')
             ->groupBy('published_at')
             ->limit(10)
+            ->orderByDesc('published_at')
             ->get();
 
         $dateData = $mainMenuData->pluck('published_at')->toArray();
@@ -57,7 +60,7 @@ class InitiativeService {
 
     protected function getMenuDataForMonthlyMagazine($initiativeId) : array {
 
-        $mainMenuData = PublishedInitiative::where('initiative_id', '=', $initiativeId)
+        $mainMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
             ->selectRaw('DATE_FORMAT(published_at, "%Y") as published_at')
             ->groupBy('published_at')
             ->orderByDesc('published_at')
@@ -66,7 +69,7 @@ class InitiativeService {
 
         $yearsData = $mainMenuData->pluck('published_at')->toArray();
 
-        $sideDropDownMenuData = PublishedInitiative::where('initiative_id', '=', $initiativeId)
+        $sideDropDownMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
             ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as published_at')
             ->whereIn(DB::raw('YEAR(published_at)'), $yearsData)
             ->groupBy('published_at')
@@ -89,15 +92,16 @@ class InitiativeService {
 
     protected function getMenuDataForWeeklyFocus($initiativeId) : array {
 
-        $mainMenuData = PublishedInitiative::where('initiative_id', '=', $initiativeId)
+        $mainMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
             ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as published_at')
             ->groupBy('published_at')
             ->limit(10)
+            ->orderByDesc('published_at')
             ->get();
 
         $dateData = $mainMenuData->pluck('published_at')->toArray();
 
-        $sideDropDownMenuData = Article::where('initiative_id', '=', $initiativeId)
+        $sideDropDownMenuData = $this->articles->where('initiative_id', '=', $initiativeId)
             ->whereIn(DB::raw('DATE_FORMAT(publication_date, "%Y-%m")'), $dateData)
             ->get(['title', 'publication_date'])
             ->toArray();

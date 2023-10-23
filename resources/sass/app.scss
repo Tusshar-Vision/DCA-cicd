@@ -72,6 +72,7 @@
         height: 48px !important;
         width: 48px !important;
         padding: 11px;
+        top: 40% !important;
     }
     .swiper-nav-button:hover {
         opacity: 0.9;
@@ -79,9 +80,6 @@
     .swiper-button-next::after, .swiper-button-prev::after {
         content: "";
         display: none;
-    }
-    .swiper-wrapper {
-        height: 500px !important;
     }
     .vi-announcement-wrap {
         width: 258px;

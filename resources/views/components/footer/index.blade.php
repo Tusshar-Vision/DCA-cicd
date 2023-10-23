@@ -54,7 +54,7 @@
                         </svg>
                     </span>
                 </a>
-                
+
                 <a href="https://t.me/VisionIAS_UPSC" target="_blank">
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
@@ -62,7 +62,7 @@
                         </svg>
                     </span>
                 </a>
-                
+
                 <a href="https://www.facebook.com/pages/Vision-IAS/233212040049021" target="_blank">
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
@@ -112,17 +112,17 @@
             </div>
         </div>
         <div class="flex space-x-28">
-        <div class="space-y-2">
-                <h5 class="font-bold">Resources</h5>
+{{--            <div class="space-y-2">--}}
+{{--                <h5 class="font-bold">Resources</h5>--}}
 
-                <ul class="space-y-2 text-sm">
-                    <li><a href="">News Today</a></li>
-                    <li><a href="">Weekly Focus</a></li>
-                    <li><a href="">Monthly Current Affairs</a></li>
-                    <li><a href="">Mains 365</a></li>
-                    <li><a href="">PT 365</a></li>
-                </ul>
-            </div>
+{{--                <ul class="space-y-2 text-sm">--}}
+{{--                    <li><a href="">News Today</a></li>--}}
+{{--                    <li><a href="">Weekly Focus</a></li>--}}
+{{--                    <li><a href="">Monthly Current Affairs</a></li>--}}
+{{--                    <li><a href="">Mains 365</a></li>--}}
+{{--                    <li><a href="">PT 365</a></li>--}}
+{{--                </ul>--}}
+{{--            </div>--}}
             <div class="space-y-2">
                 <h5 class="font-bold">Policy</h5>
 
@@ -145,6 +145,6 @@
         </div>
     </div>
     <div class="flex flex-col justify-center items-center h-1/3">
-        <h6 class="italic text-center">© 2023 Ajayvision Education Pvt Ltd. All rights reserved</h6>   
+        <h6 class="italic text-center">© 2023 Ajayvision Education Pvt Ltd. All rights reserved</h6>
     </div>
 </div>
