@@ -10,7 +10,7 @@
 
     <x-containers.grid-wide class="mt-12">
         <x-common.section-heading>Latest News</x-common.section-heading>
-        <livewire:widgets.news-section />
+        <livewire:widgets.news-section :latest-news-articles="$latestNewsArticles"/>
     </x-containers.grid-wide>
 
     <x-containers.grid-wide class="mt-12 flex flex-col items-center">
