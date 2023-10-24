@@ -9,12 +9,16 @@ use Illuminate\View\View;
 
 class HomeController extends Controller
 {
-    public function index(ArticleService $articleService) {
+    public function __construct(private readonly ArticleService $articleService)
+    {}
+    public function index() {
 
-        $featuredArticles = $articleService->getFeatured();
+        $featuredArticles = $this->articleService->getFeatured();
+        $latestNewsArticles = $this->articleService->getLatestNews();
 
         return View('pages.home', [
-            'featuredArticles' => $featuredArticles
+            'featuredArticles' => $featuredArticles,
+            'latestNewsArticles' => $latestNewsArticles
         ]);
     }
 }

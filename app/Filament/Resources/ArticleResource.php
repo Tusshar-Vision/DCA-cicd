@@ -30,6 +30,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 
 class ArticleResource extends Resource
 {
@@ -57,9 +58,9 @@ class ArticleResource extends Resource
                         ->relationship('initiative', 'name')
                         ->required(),
 
-                    MarkdownEditor::make('content')->columnSpanFull(),
+                    TinyEditor::make('content')->columnSpanFull(),
                 ])->columnSpan(2),
-                
+
 
                 Section::make('meta')->schema([
                     Checkbox::make('featured'),
@@ -70,7 +71,7 @@ class ArticleResource extends Resource
                         "hindi" => "Hindi",
                         "english" => "English",
                     ])->required()->default('english'),
-                
+
                     TagsInput::make('tags')->required()->suggestions(
                         Article::whereNotNull('tags') // Filter out articles with NULL tags
                         ->get()
@@ -79,7 +80,7 @@ class ArticleResource extends Resource
                         })
                         ->unique()
                         ->values()
-                        ->toArray()  
+                        ->toArray()
                     ),
 
                     TextInput::make('url_slug')->label('URL Slug'),
@@ -92,7 +93,7 @@ class ArticleResource extends Resource
                     ])->required()->default(1),
 
                 ])->columnSpan(1),
-                
+
             ])->columns(3);
     }
 
@@ -126,15 +127,15 @@ class ArticleResource extends Resource
                             );
                 })->indicateUsing(function (array $data): array {
                     $indicators = [];
-             
+
                     if ($data['from'] ?? null) {
                         $indicators['from'] = 'Created from ' . Carbon::parse($data['from'])->toFormattedDateString();
                     }
-             
+
                     if ($data['until'] ?? null) {
                         $indicators['until'] = 'Created until ' . Carbon::parse($data['until'])->toFormattedDateString();
                     }
-             
+
                     return $indicators;
                 }),
 
@@ -168,9 +169,9 @@ class ArticleResource extends Resource
                         3 => "Weekly Focus",
                         4 => "Mains 365",
                         5 => "PT 365",
-                        6 => "Downloads" 
+                        6 => "Downloads"
                     ])->attribute('initiative_id'),
-                
+
                 SelectFilter::make('Tags')
                     ->multiple()
                     ->options([
@@ -181,7 +182,7 @@ class ArticleResource extends Resource
                         })
                         ->unique()
                         ->values()
-                        ->toArray()  
+                        ->toArray()
                     ])->attribute('tags'),
 
             ], layout: FiltersLayout::AboveContentCollapsible)->filtersTriggerAction(
@@ -203,14 +204,14 @@ class ArticleResource extends Resource
                 Tables\Actions\CreateAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -218,5 +219,5 @@ class ArticleResource extends Resource
             'create' => Pages\CreateArticle::route('/create'),
             'edit' => Pages\EditArticle::route('/{record}/edit'),
         ];
-    }    
+    }
 }

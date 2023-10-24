@@ -4,6 +4,6 @@
     </div>
     <div class="flex items-center space-x-4">
         <p>Filter</p>
-        <livewire:filter />
+        <livewire:widgets.filter />
     </div>
 </div>

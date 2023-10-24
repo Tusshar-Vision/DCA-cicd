@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class VideoService
+class NotificationService
 {
     public function __construct() {
 

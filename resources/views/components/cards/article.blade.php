@@ -1,10 +1,28 @@
 @php
     use Carbon\Carbon;
+
+    $width = '';
+    $height = '';
+
+    switch($type) {
+        case 'medium':
+            $width = '459px';
+            $height = '285px';
+            break;
+        case 'large':
+            $width = '700px';
+            $height = '285px';
+            break;
+        default:
+            $width = '292px';
+            $height = '186px';
+            break;
+    }
 @endphp
 
-<div class="cursor-pointer flex-col w-auto space-y-2">
+<div class="group cursor-pointer flex-col w-auto space-y-2">
     <div>
-        <img src="{{ $article->featured_image ?? 'https://placehold.co/687x400' }}"  alt=""/>
+        <img src="{{ $article->featured_image ?? 'https://placehold.co/1596x930' }}" width="{{ $width }}" height="{{ $height }}"  alt=""/>
     </div>
     <div class="text-visionLineGray flex space-x-3 items-center text-sm">
         <p>{{ $article->author->name }}</p>
@@ -20,6 +38,6 @@
     </div>
     <div class="max-w-prose">
         <p class="text-visionLineGray line-clamp-3 text-sm">{{ $article->content }}</p>
-        <a href="#" class="text-visionBlue text-sm">Read More</a>
+        <a href="#" class="group-hover:underline text-visionBlue text-sm">Read More</a>
     </div>
 </div>

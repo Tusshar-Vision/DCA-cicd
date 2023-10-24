@@ -5,7 +5,7 @@
         <!-- Slides -->
         @foreach($featuredArticles as $article)
             <div class="swiper-slide">
-                <x-cards.article :article="$article" />
+                <x-cards.article :article="$article" type="large"/>
             </div>
         @endforeach
     </div>

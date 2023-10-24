@@ -13,7 +13,7 @@ class Article extends Component
      */
     public function __construct(
         public $article,
-        public $type=""
+        public string $type="medium"
     )
     {}
 
