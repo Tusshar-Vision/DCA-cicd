@@ -14,7 +14,6 @@ class InitiativeService {
 
     public function __construct(
         private readonly PublishedInitiative $publishedInitiatives,
-        private readonly Article $articles
     )
     {}
 
@@ -101,9 +100,9 @@ class InitiativeService {
 
         $dateData = $mainMenuData->pluck('published_at')->toArray();
 
-        $sideDropDownMenuData = $this->articles->where('initiative_id', '=', $initiativeId)
-            ->whereIn(DB::raw('DATE_FORMAT(publication_date, "%Y-%m")'), $dateData)
-            ->get(['title', 'publication_date'])
+        $sideDropDownMenuData = $this->publishedInitiatives->articles()
+            ->whereIn(DB::raw('DATE_FORMAT(published_at, "%Y-%m")'), $dateData)
+            ->get(['title', 'published_at'])
             ->toArray();
 
 
@@ -111,7 +110,7 @@ class InitiativeService {
 
         foreach ($dateData as $date) {
             $menuData[$date] = array_values(array_filter($sideDropDownMenuData, function ($item) use ($date) {
-                return str_contains($item['publication_date'], $date);
+                return str_contains($item['published_at'], $date);
             }));
         }
 

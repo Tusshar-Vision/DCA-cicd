@@ -13,7 +13,7 @@
         <livewire:widgets.news-section :latest-news-articles="$latestNewsArticles"/>
     </x-containers.grid-wide>
 
-    <x-containers.grid-wide class="mt-12 flex flex-col items-center">
+    <x-containers.grid-wide class="mt-20 flex flex-col items-center">
         <x-common.section-heading class="text-center">What do you need to learn today?</x-common.section-heading>
         <livewire:widgets.search-bar-with-button />
     </x-containers.grid-wide>

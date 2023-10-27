@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Initiative extends Model
 {
@@ -14,7 +15,7 @@ class Initiative extends Model
         'description',
     ];
 
-    public function publishedVersions()
+    public function published(): HasMany
     {
         return $this->hasMany(PublishedInitiative::class, 'initiative_id');
     }

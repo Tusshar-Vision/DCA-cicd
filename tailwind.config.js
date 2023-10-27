@@ -5,6 +5,7 @@ export default {
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
         "./resources/**/*.vue",
+        './vendor/awcodes/overlook/resources/**/*.blade.php',
     ],
     theme: {
         extend: {

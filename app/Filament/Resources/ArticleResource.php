@@ -5,31 +5,27 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ArticleResource\Pages;
 use App\Filament\Resources\ArticleResource\RelationManagers;
 use App\Models\Article;
-use App\Models\InitiativeTopic;
 use Carbon\Carbon;
-use Filament\Actions\SelectAction;
 use Filament\Forms;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\MarkdownEditor;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 
 class ArticleResource extends Resource
@@ -72,16 +68,7 @@ class ArticleResource extends Resource
                         "english" => "English",
                     ])->required()->default('english'),
 
-                    TagsInput::make('tags')->required()->suggestions(
-                        Article::whereNotNull('tags') // Filter out articles with NULL tags
-                        ->get()
-                        ->flatMap(function ($article) {
-                            return $article->tags;
-                        })
-                        ->unique()
-                        ->values()
-                        ->toArray()
-                    ),
+                    SpatieTagsInput::make('tags')->required(),
 
                     TextInput::make('url_slug')->label('URL Slug'),
                     Textarea::make('excerpt'),
@@ -107,7 +94,7 @@ class ArticleResource extends Resource
                 TextColumn::make('status')->toggleable(),
                 TextColumn::make('initiative.name')->searchable()->toggleable(),
                 TextColumn::make('topic.name')->label('Topic')->searchable()->toggleable(),
-                TextColumn::make('tags')->searchable()->toggleable()
+                SpatieTagsColumn::make('tags')->searchable()->toggleable()
             ])
             ->filters([
                 Filter::make('created_at')
