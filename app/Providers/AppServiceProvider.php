@@ -21,15 +21,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Filament::serving(function () {
-            Filament::registerNavigationItems([
-                NavigationItem::make('System Logs')
-                    ->url(config('app.url') . '/' . config('log-viewer.route_path'), shouldOpenInNewTab: true)
-                    ->icon('heroicon-o-exclamation-circle')
-                    ->activeIcon('heroicon-s-exclamation-circle')
-                    ->group('Reports')
-                    ->sort(3),
-            ]);
-        });
     }
 }

@@ -30,12 +30,7 @@ class UserResource extends Resource
             ->schema([
                 TextInput::make('name')->required(),
                 TextInput::make('email')->email()->required(),
-                Select::make('type')->options([
-                    'ADMIN' => 'Admin',
-                    'REVIEWER' => 'Reviewer',
-                    'EXPERT' => 'Expert',
-                    'USER' => 'User'
-                ])->required(),
+                Select::make('roles')->multiple()->relationship('roles', 'name')
             ]);
     }
 
@@ -46,7 +41,6 @@ class UserResource extends Resource
                 TextColumn::make('id')->label('User ID'),
                 TextColumn::make('name'),
                 TextColumn::make('email'),
-                TextColumn::make('type')
             ])
             ->filters([
                 //
@@ -63,14 +57,14 @@ class UserResource extends Resource
                 Tables\Actions\CreateAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -78,5 +72,5 @@ class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
-    }    
+    }
 }

@@ -10,7 +10,7 @@
         @vite('resources/sass/app.scss')
         @vite('resources/js/app.js')
     </head>
-    <body x-data="{ isModalOpen: false }">
+    <body x-data="{ isLoginFormOpen: false, isRegisterFormOpen: false, isResetFormOpen: false }">
         <div class="mx-auto max-w-[90%]">
             <header>
                 <x-header />
@@ -28,8 +28,16 @@
             <x-footer />
         </footer>
 
-        <x-modals.modal-box x-show="isModalOpen">
+        <x-modals.modal-box x-show="isLoginFormOpen">
             <livewire:forms.login />
+        </x-modals.modal-box>
+
+        <x-modals.modal-box x-show="isRegisterFormOpen">
+            <livewire:forms.register />
+        </x-modals.modal-box>
+
+        <x-modals.modal-box x-show="isResetFormOpen">
+            <livewire:forms.reset-password />
         </x-modals.modal-box>
     </body>
 </html>
