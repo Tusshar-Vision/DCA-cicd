@@ -14,7 +14,7 @@ class DownloadsController extends Controller
     public function index() {
 
         return View('pages.downloads', [
-
+            'title' => 'Downloads'
         ]);
     }
 }

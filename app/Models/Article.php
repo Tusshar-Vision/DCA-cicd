@@ -7,6 +7,9 @@ use Guava\FilamentDrafts\Concerns\HasDrafts;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Scout\Searchable;
 use RalphJSmit\Laravel\SEO\Support\HasSEO;
 use Spatie\MediaLibrary\HasMedia;
@@ -98,12 +101,13 @@ class Article extends Model implements HasMedia
 
     // Define the relationships with other models
 
-    public function author()
+    public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function publishedInitiative() {
+    public function publishedInitiative(): BelongsTo
+    {
         return $this->belongsTo(PublishedInitiative::class, 'published_initiative_id');
     }
 
@@ -127,22 +131,23 @@ class Article extends Model implements HasMedia
         });
     }
 
-    public function relatedTerms()
+    public function relatedTerms(): BelongsToMany
     {
         return $this->belongsToMany(RelatedTerm::class);
     }
 
-    public function relatedVideos()
+    public function relatedVideos(): HasMany
     {
         return $this->hasMany(RelatedVideo::class);
     }
 
-    public function topic()
+    public function topic(): BelongsTo
     {
         return $this->belongsTo(InitiativeTopic::class, 'initiative_topic_id');
     }
 
-    public function scopeIsFeatured(Builder $query) {
+    public function scopeIsFeatured(Builder $query): Builder
+    {
         return $query->where('featured', true);
     }
 }

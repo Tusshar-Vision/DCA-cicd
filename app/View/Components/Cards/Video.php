@@ -6,14 +6,14 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class UserScore extends Component
+class Video extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public int $index,
-        public int $score
+        public string $source,
+        public string $videoTitle
     )
     {}
 
@@ -22,6 +22,6 @@ class UserScore extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.cards.user-score');
+        return view('components.cards.video');
     }
 }

@@ -1,4 +1,4 @@
-<div x-data="{ isYearOpen: false, isMonthOpen: false }" class="relative flex text-left space-x-4">
+<div x-data="{ isYearOpen: false, isMonthOpen: false }" class="relative flex text-left space-x-4" x-cloak>
   <div>
     <button @click="isYearOpen = !isYearOpen" type="button" class="inline-flex w-full justify-center gap-x-1.5 rounded-sm bg-white px-3 py-2 text-sm font-semibold text-visionLineGray shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
       Year

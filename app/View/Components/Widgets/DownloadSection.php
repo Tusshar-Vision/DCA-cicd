@@ -1,19 +1,18 @@
 <?php
 
-namespace App\View\Components\Cards;
+namespace App\View\Components\Widgets;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class UserScore extends Component
+class DownloadSection extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public int $index,
-        public int $score
+        public int $year
     )
     {}
 
@@ -22,6 +21,6 @@ class UserScore extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.cards.user-score');
+        return view('components.widgets.download-section');
     }
 }
