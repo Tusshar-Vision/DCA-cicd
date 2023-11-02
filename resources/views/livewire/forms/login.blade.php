@@ -17,7 +17,10 @@
         <div class="flex items-center justify-between">
           <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
           <div class="text-sm">
-            <a href="#" class="font-semibold text-visionBlue hover:text-visionRed">Forgot password?</a>
+            <a @click="isLoginFormOpen = false;
+                 isRegisterFormOpen = false;
+                 isResetFormOpen = true"
+               class="font-semibold text-visionBlue hover:text-visionRed cursor-pointer">Forgot password?</a>
           </div>
         </div>
         <div class="mt-2">
@@ -41,7 +44,10 @@
 
     <p class="mt-10 text-center text-sm text-gray-500">
       Not a member?
-      <a href="#" class="font-semibold leading-6 text-visionBlue hover:text-visionRed">Create a new account</a>
+      <a @click="isLoginFormOpen = false;
+                 isRegisterFormOpen = true;
+                 isResetFormOpen = false"
+         class="font-semibold leading-6 text-visionBlue hover:text-visionRed cursor-pointer">Create a new account</a>
     </p>
   </div>
 </div>

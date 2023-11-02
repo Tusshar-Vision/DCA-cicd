@@ -20,6 +20,8 @@ class NewsTodayController extends Controller
 
     public function archive() {
 
+
+
         return View('pages.archives.daily-news', [
             "title" => "Daily News Archive"
         ]);

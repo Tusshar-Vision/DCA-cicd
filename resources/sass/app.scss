@@ -123,6 +123,277 @@
         display: inline-block;
         margin-right: 5px;
     }
+    .vi-title-wrap {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+    .vi-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #040404;
+        margin-top: 0;
+        line-height: 28px;
+    }
+    .vi-view-all {
+        font-size: 16px;
+        font-weight: 400;
+        color: #005FAF;
+        line-height: 24px;
+    }
+    .vi-pdf-card {
+        border: 1px solid #E9E9E9;
+        padding: 12px 16px;
+        margin-bottom: 16px;
+        border-radius: 4px;
+    }
+    .vi-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+    }
+    .vi-category {
+        font-size: 14px;
+        font-weight: 400;
+        color: #8F93A3;
+        line-height: 20px;
+        border-bottom: 1px solid #8F93A3;
+    }
+    .vi-card-body-text {
+        font-size: 14px;
+        font-weight: 400;
+        color: #040404;
+        line-height: 20px;
+        margin-top: 10px;
+    }
+    .vi-card-footer {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid #8F93A3;
+    }
+    .vi-downloads-links {
+        font-size: 14px;
+        font-weight: 400;
+        color: #8F93A3;
+        line-height: 20px;
+        transition: all 0.2s ease-in-out;
+    }
+    .vi-divider {
+        display: inline-block;
+        width: 1px;
+        height: 24px;
+        background-color: #8F93A3;
+    }
+    .vi-quiz-wrap {
+        padding: 34px 28px;
+        border-radius: 4px;
+        background: linear-gradient(156deg, #FDF0D5 11%, #F8D169 82.91%);
+        position: relative;
+    }
+    .vi-quiz-label {
+        font-size: 16px;
+        font-weight: 700;
+        color: #040404;
+        line-height: 24px;
+        margin-top: 0;
+        max-width: 183px;
+    }
+    .vi-quiz-btn {
+        font-size: 14px;
+        font-weight: 600;
+        color: #040404;
+        line-height: 24px;
+        background-color: #ffffff;
+        padding: 8px 14px;
+        border-radius: 4px;
+        margin-top: 14px;
+        display: inline-block;
+    }
+    .vi-quiz-background {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+    .vi-score-card {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 6px 16px;
+        background-color: #F4F4F6;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .vi-index {
+        font-size: 16px;
+        font-weight: 400;
+        color: #8F93A3;
+        line-height: 24px;
+    }
+    .vi-user-img {
+        width: 36px;
+        height: 36px;
+    }
+    .vi-user-name {
+        flex: 1 0 0;
+        font-size: 16px;
+        font-weight: 400;
+        color: #040404;
+        line-height: 24px;
+    }
+    .vi-user-score {
+        font-size: 16px;
+        font-weight: 400;
+        color: #040404;
+        line-height: 24px;
+    }
+    .vi-cal-card {
+        border: 1px solid #E9E9E9;
+        border-radius: 4px;
+        padding: 8px 16px;
+        max-width: max-content;
+    }
+    .vi-cal-month {
+        font-size: 14px;
+        font-weight: 700;
+    }
+    .vi-calender-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 32px);
+        gap: 6px;
+        font-size: 12px;
+        max-width: max-content;
+        margin-top: 10px;
+    }
+    .vi-calender-grid a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        font-size: 16px;
+        color: #040404;
+        text-align: center;
+        padding: 2px 0;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        transition: all 0.2s ease-in-out;
+    }
+    .vi-calender-grid a:hover {
+        border-color: #8F93A3;
+    }
+    .vi-calender-grid a::after {
+        content: '';
+        width: 12px;
+        height: 4px;
+    }
+    .vi-calender-grid a[data-status="lvl-0"]::after {
+        background-color: #FFE58E;
+    }
+    .vi-calender-grid a[data-status="lvl-1"]::after {
+        background-color: #8F93A3;
+    }
+    .vi-calender-grid a[data-status="lvl-2"]::after {
+        background-color: #55C786;
+    }
+    .monthly-focus-single-card {
+        border: 1px solid #E9E9E9;
+        border-radius: 4px;
+        padding: 12px 16px;
+    }
+
+    .vi-progress-bar-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .vi-progress-bar-round {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+        display: inline-flex;
+        min-width: 24px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        font-weight: 600;
+        background: radial-gradient(closest-side, #f9f9f9 80%, transparent 90% 100%), conic-gradient(#EFC73A 72%, #f9f9f9 0);
+    }
+    .vi-progress-bar-round:before {
+        content: attr(data-progress);
+        color: #8F93A3;
+    }
+    .monthly-focus-progress-list {
+        margin-top: 18px;
+        display: grid;
+        grid-gap: 18px;
+    }
+    .monthly-focus-progress-bar {
+        cursor: pointer;
+    }
+    .progress-bar {
+        padding: 0;
+        width: 100%;
+        height: 4px;
+        overflow: hidden;
+        border-radius: 6px;
+        margin-top: 10px;
+    }
+    .progress-bar .bar {
+        position: relative;
+        float: left;
+        min-width: 1%;
+        height: 100%;
+    }
+    .weekly-focus-single-card {
+        border: 1px solid #E9E9E9;
+        border-radius: 4px;
+        padding: 12px 16px;
+        margin-bottom: 24px;
+        -webkit-column-break-inside: avoid;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    .weekly-focus-single-card span {
+        color: #8F93A3;
+    }
+    .weekly-focus-month-name {
+        font-size: 14px;
+        font-weight: 700;
+        color: #000000;
+    }
+    .weekly-focus-progress-list {
+        display: grid;
+        grid-gap: 26px;
+        margin-top: 10px;
+    }
+    .weekly-focus-progress-single-bar {
+        cursor: pointer;
+    }
+    .vi-download-card {
+        padding: 8px 16px;
+        border: 1px solid #E9E9E9;
+        border-radius: 4px;
+        -webkit-column-break-inside: avoid;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin-bottom: 12px;
+        cursor: pointer;
+    }
+    .vi-download-card p {
+        font-size: 14px;
+        color: #040404;
+        margin: 0;
+    }
+    .card-listing {
+        column-count: 4;
+        column-fill: initial;
+        column-gap: 24px;
+    }
 }
 
 .printable-area {

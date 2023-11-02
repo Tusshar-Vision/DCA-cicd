@@ -22,9 +22,7 @@ class ArticleFactory extends Factory
         return [
             'title' => fake()->sentence,
             'content' => fake()->paragraph(100, true),
-            'url_slug' => fake()->url(),
             'author_id' => 1,
-            'initiative_id' => rand(1, 6),
             'published_initiative_id' => PublishedInitiative::all()->random()->id,
             'initiative_topic_id' => InitiativeTopic::all()->random()->id
         ];

@@ -13,7 +13,7 @@ class Mains365Controller extends Controller
     public function index() {
 
         return View('pages.mains-365', [
-
+            'title' => 'Mains 365'
         ]);
     }
 }
