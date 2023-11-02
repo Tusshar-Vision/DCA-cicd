@@ -22,8 +22,9 @@ class InitiativeTopicSeeder extends Seeder
             ['name' => 'Social'],
             ['name' => 'Science & Tech'],
             ['name' => 'Culture'],
-            ['name' => 'Ethics']
-        ]; 
+            ['name' => 'Ethics'],
+            ['name' => 'Govt Schemes']
+        ];
 
         DB::table('initiative_topics')->insert($initiativeTopics);
     }

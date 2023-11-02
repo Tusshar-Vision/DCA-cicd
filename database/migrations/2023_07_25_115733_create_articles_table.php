@@ -32,11 +32,16 @@ return new class extends Migration
             $table->unsignedBigInteger('author_id'); // * Foreign key column for the author relationship
             $table->unsignedBigInteger('published_initiative_id');
             $table->unsignedBigInteger('initiative_topic_id'); // * Foreign key column for the initiative topic relationship
+            $table->unsignedBigInteger('topic_section_id')->nullable();
+            $table->unsignedBigInteger('topic_sub_section_id')->nullable();
+
 
             // * Define foreign key relationship with the above tables
             $table->foreign('author_id')->references('id')->on('users');
             $table->foreign('published_initiative_id')->references('id')->on('published_initiatives');
             $table->foreign('initiative_topic_id')->references('id')->on('initiative_topics');
+            $table->foreign('topic_section_id')->references('id')->on('topic_sections');
+            $table->foreign('topic_sub_section_id')->references('id')->on('topic_sub_sections');
         });
     }
 
