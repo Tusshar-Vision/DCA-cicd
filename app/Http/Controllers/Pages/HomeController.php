@@ -9,6 +9,7 @@ use App\Services\MediaService;
 use App\Services\UserService;
 use App\Services\VideoService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class HomeController extends Controller

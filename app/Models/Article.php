@@ -47,7 +47,9 @@ class Article extends Model implements HasMedia
         'updated_at',
         'author_id',
         'published_initiative_id',
-        'initiative_topic_id'
+        'initiative_topic_id',
+        'topic_section_id',
+        'topic_sub_section_id'
     ];
 
     // This method will automatically be called when creating or updating an article.
@@ -144,6 +146,16 @@ class Article extends Model implements HasMedia
     public function topic(): BelongsTo
     {
         return $this->belongsTo(InitiativeTopic::class, 'initiative_topic_id');
+    }
+
+    public function topicSection(): BelongsTo
+    {
+        return $this->belongsTo(TopicSection::class, 'topic_section_id');
+    }
+
+    public function topicSubSection(): BelongsTo
+    {
+        return $this->belongsTo(TopicSubSection::class, 'topic_sub_section_id');
     }
 
     public function scopeIsFeatured(Builder $query): Builder

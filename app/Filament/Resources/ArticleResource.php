@@ -159,19 +159,6 @@ class ArticleResource extends Resource
                         6 => "Downloads"
                     ])->attribute('initiative_id'),
 
-                SelectFilter::make('Tags')
-                    ->multiple()
-                    ->options([
-                        Article::whereNotNull('tags') // Filter out articles with NULL tags
-                        ->get()
-                        ->flatMap(function ($article) {
-                            return $article->tags;
-                        })
-                        ->unique()
-                        ->values()
-                        ->toArray()
-                    ])->attribute('tags'),
-
             ], layout: FiltersLayout::AboveContentCollapsible)->filtersTriggerAction(
                 fn (Action $action) => $action
                     ->button()
