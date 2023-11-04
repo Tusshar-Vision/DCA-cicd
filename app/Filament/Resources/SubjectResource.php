@@ -20,11 +20,12 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class SubjectResource extends Resource
 {
     protected static ?string $model = InitiativeTopic::class;
-    protected static ?string $modelLabel = 'Topic';
+    protected static ?string $modelLabel = 'Subject';
 
     protected static ?string $navigationIcon = 'heroicon-o-hashtag';
 
-    protected static ?string $navigationGroup = 'Articles';
+    protected static ?string $navigationGroup = 'Categories';
+
 
     public static function form(Form $form): Form
     {
@@ -42,7 +43,7 @@ class SubjectResource extends Resource
                 TextColumn::make('name')
             ])
             ->filters([
-                
+
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -56,14 +57,14 @@ class SubjectResource extends Resource
                 Tables\Actions\CreateAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\SectionsRelationManager::class
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -71,5 +72,5 @@ class SubjectResource extends Resource
             'create' => Pages\CreateSubject::route('/create'),
             'edit' => Pages\EditSubject::route('/{record}/edit'),
         ];
-    }    
+    }
 }
