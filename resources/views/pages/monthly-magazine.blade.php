@@ -9,10 +9,10 @@
 @section('content')
 
     <div class="space-y-4">
-        <h1 class="text-7xl">{{$articles[0]->title}}</h1>
+        <h1 class="text-7xl">{{$article->title}}</h1>
         <x-widgets.articles-nav
-            :createdAt="$articles[0]->created_at"
-            :updatedAt="$articles[0]->updated_at"
+            :createdAt="$article->created_at"
+            :updatedAt="$article->updated_at"
         />
     </div>
 
@@ -38,9 +38,9 @@
             <div class="flex flex-col w-full">
                 @if( !empty($articles) && count($articles) !== 0 )
 
-                    <x-header.article readTime="{{ $articles[0]->read_time }}" />
-                        <div class="printable-area">
-                                {!! $articles[0]->content !!}
+                    <x-header.article readTime="{{ $article->read_time }}" />
+                        <div class="mt-4 printable-area">
+                                {!! $article->content !!}
                         </div>
                     <div class="mt-12">
                         <x-widgets.article-pagination />

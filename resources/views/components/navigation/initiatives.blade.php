@@ -19,7 +19,7 @@
                                              "
                                 @mouseleaves="isNewsOpen = false"
                             >
-                                <a class="hover:text-visionRed {{ request()->is(trim($initiative->path, '/')) ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}" wire:navigate>{{ $initiative->name }}</a>
+                                <a class="hover:text-visionRed {{ request()->is('news-today*') ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}" wire:navigate>{{ $initiative->name }}</a>
                             </li>
 
                             <x-navigation.dropdown
@@ -27,7 +27,7 @@
                                 @click.away="isNewsOpen = false"
                                 button-text="Today's News"
                                 button-link="{{ $initiative->path }}"
-                                archive-link="{{ route('archive.daily-news') }}"
+                                archive-link="{{ route('news-today.archive') }}"
                                 :menuData="$menuData['newsToday']"
                             />
                         </div>
@@ -40,7 +40,7 @@
                                              "
                                 @mouseleaves="isMagazineOpen = false"
                             >
-                                <a class="hover:text-visionRed {{ request()->is(trim($initiative->path, '/')) ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}" wire:navigate>{{ $initiative->name }}</a>
+                                <a class="hover:text-visionRed {{ request()->is('monthly-magazine*') ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}" wire:navigate>{{ $initiative->name }}</a>
                             </li>
 
                             <x-navigation.dropdown
@@ -48,7 +48,7 @@
                                 @click.away="isMagazineOpen = false"
                                 button-text="This Month's Magazine"
                                 button-link="{{ $initiative->path }}"
-                                archive-link="{{ route('archive.monthly-magazine') }}"
+                                archive-link="{{ route('monthly-magazine.archive') }}"
                                 :menuData="$menuData['monthlyMagazine']"
                             />
                         </div>
@@ -61,7 +61,7 @@
                                              "
                                 @mouseleaves="isWeeklyFocusOpen = false"
                             >
-                                <a class="hover:text-visionRed {{ request()->is(trim($initiative->path, '/')) ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}" wire:navigate>{{ $initiative->name }}</a>
+                                <a class="hover:text-visionRed {{ request()->is('weekly-focus*') ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}" wire:navigate>{{ $initiative->name }}</a>
                             </li>
 
                             <x-navigation.dropdown
@@ -69,7 +69,7 @@
                                 @click.away="isWeeklyFocusOpen = false"
                                 button-text="Latest Edition"
                                 button-link="{{ $initiative->path }}"
-                                archive-link="{{ route('archive.weekly-focus') }}"
+                                archive-link="{{ route('weekly-focus.archive') }}"
                                 :menuData="$menuData['weeklyFocus']"
                             />
                         </div>

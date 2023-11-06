@@ -14,9 +14,10 @@ class PublishedInitiativeService
     public function getLatestById($initiativeId) {
         return $this->publishedInitiatives
             ->where('initiative_id', '=', $initiativeId)
-            ->latest()
+            ->latest('published_at')
             ->limit(1)
-            ->with('articles')
-            ->get();
+            ->with('articles', function ($article) {
+                $article->with('topic');
+            })->get();
     }
 }

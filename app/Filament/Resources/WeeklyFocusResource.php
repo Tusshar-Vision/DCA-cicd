@@ -12,10 +12,12 @@ use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -38,10 +40,11 @@ class WeeklyFocusResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('initiative_id')
-                ->relationship('initiative', 'name')->required(),
-                DatePicker::make('published_at')->label('Published At'),
-                FileUpload::make('magazine_pdf_url')->label('Magazine PDF')
+                Forms\Components\Section::make('controls')->schema([
+                    Select::make('initiative_id')
+                        ->relationship('initiative', 'name')->required(),
+                    Toggle::make('is_published')
+                ]),
             ]);
     }
 
@@ -51,8 +54,8 @@ class WeeklyFocusResource extends Resource
             ->columns([
                 TextColumn::make('id')->label('ID')->sortable(),
                 TextColumn::make('published_at')->dateTime('d M Y h:m')->label('Published At')->sortable(),
+                ToggleColumn::make('is_published')->label('Is Published')->sortable(),
                 TextColumn::make('updated_at')->dateTime('d M Y h:m')->label('Last Updated')->sortable(),
-                TextColumn::make('magazine_pdf_url')->label('Magazine PDF URL')
             ])
             ->filters([
                 //
@@ -66,14 +69,14 @@ class WeeklyFocusResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             ArticlesRelationManager::class
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -81,7 +84,7 @@ class WeeklyFocusResource extends Resource
             'create' => Pages\CreateWeeklyFocus::route('/create'),
             'edit' => Pages\EditWeeklyFocus::route('/{record}/edit'),
         ];
-    }    
+    }
 
     public static function getEloquentQuery(): Builder
     {

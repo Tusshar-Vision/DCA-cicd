@@ -41,7 +41,7 @@
                         </svg>
                     </div>
                 </button>
-            
+
                 <div x-show="expanded === 'topic-{{ $topic }}'" x-collapse>
                     <ul class="space-y-4">
                         @foreach ($articles as $article)
@@ -51,7 +51,7 @@
                         @endforeach
                     </ul>
                 </div>
-                
+
                 @if(!$loop->last)
                     <svg class="mt-4" width="296" height="2" viewBox="0 0 296 2" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path opacity="0.2" d="M0 1H296" stroke="#8F93A3"/>

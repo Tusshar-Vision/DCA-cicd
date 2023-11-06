@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\NavigationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Pages;
@@ -22,23 +20,28 @@ Auth::routes();
 
 // Routes for all the pages
 Route::get('/', [Pages\HomeController::class, 'index'])->name('home');
-Route::get('/news-today', [Pages\NewsTodayController::class, 'index'])->name('news-today');
-Route::get('/monthly-magazine', [Pages\MonthlyMagazineController::class, 'index'])->name('monthly-magazine');
-Route::get('/weekly-focus', [Pages\WeeklyFocusController::class, 'index'])->name('weekly-focus');
 Route::get('/mains-365', [Pages\Mains365Controller::class, 'index'])->name('mains-365');
 Route::get('/pt-365', [Pages\PT365Controller::class, 'index'])->name('pt-365');
 Route::get('/downloads', [Pages\DownloadsController::class, 'index'])->name('downloads');
 Route::get('/search', [Pages\SearchController::class, 'index'])->name('search');
 
-// Routes for all the archives
-Route::prefix('/archives')->group(function() {
-    Route::get('/monthly-magazine', [Pages\MonthlyMagazineController::class, 'archive'])->name('archive.monthly-magazine');
-    Route::get('/weekly-focus', [Pages\WeeklyFocusController::class, 'archive'])->name('archive.weekly-focus');
-    Route::get('/daily-news', [Pages\NewsTodayController::class, 'archive'])->name('archive.daily-news');
+Route::controller(Pages\NewsTodayController::class)->group(function() {
+    Route::get('/news-today', 'index')->name('news-today');
+    Route::get('/archive/daily-news', 'archive')->name('news-today.archive');
+    Route::get('/news-today/{topic}/{article_slug}', 'renderArticle')->name('news-today.article');
 });
 
-// Route to render any article
-Route::get('{initiative}/{topic}/{article_id}/{article_slug?}', [ArticleController::class, 'show']);
+Route::controller(Pages\MonthlyMagazineController::class)->group(function() {
+    Route::get('/monthly-magazine', 'index')->name('monthly-magazine');
+    Route::get('/archive/monthly-magazine', 'archive')->name('monthly-magazine.archive');
+    Route::get('/monthly-magazine/{topic}/{article_slug}', 'renderArticle')->name('monthly-magazine.article');
+});
+
+Route::controller(Pages\WeeklyFocusController::class)->group(function() {
+    Route::get('/weekly-focus', 'index')->name('weekly-focus');
+    Route::get('/archive/weekly-focus', 'archive')->name('weekly-focus.archive');
+    Route::get('/weekly-focus/{topic}/{article_slug}', 'renderArticle')->name('weekly-focus.article');
+});
 
 Route::middleware('auth')->group(function() {
     Route::prefix('user')->group(function() {

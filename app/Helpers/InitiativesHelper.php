@@ -30,7 +30,8 @@ class InitiativesHelper {
         "SOCIAL" => 6,
         "SCIENCE_AND_TECH" => 7,
         "CULTURE" => 8,
-        "ETHICS" => 9
+        "ETHICS" => 9,
+        "GOVT_SCHEMES" => 10
     ];
 
     public static function getInitiativeID(string $initiative) : int {
@@ -60,7 +61,7 @@ class InitiativesHelper {
         return self::InitiativeTopics[$initiativeTopic];
     }
 
-    protected static function formatString($string) : string {
+    public static function formatString($string) : string {
         return strtoupper(str_replace('&', 'AND', str_replace(' ', '_', $string))); // To convert name into code.
     }
 

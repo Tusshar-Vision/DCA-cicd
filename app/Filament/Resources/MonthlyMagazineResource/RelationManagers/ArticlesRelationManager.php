@@ -32,7 +32,9 @@ class ArticlesRelationManager extends RelationManager
             ->columns([
                 TextColumn::make('id')->label('Article ID'),
                 TextColumn::make('title'),
-                TextColumn::make('topic.name'),
+                TextColumn::make('topic.name')->label('Subject'),
+                TextColumn::make('topicSection.name')->label('Section'),
+                TextColumn::make('topicSubSection.name')->label('Sub-Section'),
                 TextColumn::make('author.name')
             ])
             ->filters([

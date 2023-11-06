@@ -14,6 +14,10 @@ class ArticleService
     )
     {}
 
+    public function getArticleBySlug($slug) {
+        return $this->articles->findBySlug($slug);
+    }
+
     public function getFeatured(int $limit = 12): Collection|array {
         return $this->articles->isFeatured()->latest('published_at')->limit($limit)->with('author')->get();
     }

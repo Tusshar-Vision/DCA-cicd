@@ -18,6 +18,17 @@ class PublishedInitiative extends Model implements HasMedia
         'published_at',
     ];
 
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::saving(function ($publishedInitiative) {
+            if ($publishedInitiative->is_published) {
+                $publishedInitiative->published_at = now();
+            }
+        });
+    }
+
     public function initiative(): BelongsTo
     {
         return $this->belongsTo(Initiative::class);
