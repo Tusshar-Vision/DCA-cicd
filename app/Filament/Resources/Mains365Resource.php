@@ -26,7 +26,7 @@ class Mains365Resource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-bolt';
 
-    protected static ?string $navigationGroup = 'Initiatives';
+    protected static ?string $navigationGroup = 'Other Uploads';
 
     protected static ?int $navigationSort = 4;
 
@@ -66,14 +66,14 @@ class Mains365Resource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             ArticlesRelationManager::class
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -81,7 +81,7 @@ class Mains365Resource extends Resource
             'create' => Pages\CreateMains365::route('/create'),
             'edit' => Pages\EditMains365::route('/{record}/edit'),
         ];
-    }    
+    }
 
     public static function getEloquentQuery(): Builder
     {

@@ -6,6 +6,7 @@ use App\Filament\Resources\ArticleResource\Pages;
 use App\Filament\Resources\ArticleResource\RelationManagers;
 use App\Models\Article;
 use Carbon\Carbon;
+use Coolsam\FilamentFlatpickr\Forms\Components\Flatpickr;
 use Filament\Forms;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
@@ -50,9 +51,9 @@ class ArticleResource extends Resource
                         ->relationship('topic', 'name')
                         ->required()->label('Topic'),
 
-                    Select::make('initiative_id')
-                        ->relationship('initiative', 'name')
-                        ->required(),
+//                    Select::make('initiative_id')
+//                        ->relationship('initiative', 'name')
+//                        ->required(),
 
                     TinyEditor::make('content')->columnSpanFull(),
                 ])->columnSpan(2),
@@ -99,17 +100,16 @@ class ArticleResource extends Resource
             ->filters([
                 Filter::make('created_at')
                     ->form([
-                        DatePicker::make('created_from'),
-                        DatePicker::make('created_until'),
+                        Flatpickr::make('filter_range')->range()
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
                             ->when(
-                                $data['created_from'],
+                                $data['filter_range'],
                                 fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
                             )
                             ->when(
-                                $data['created_until'],
+                                $data['filter_range'],
                                 fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
                             );
                 })->indicateUsing(function (array $data): array {

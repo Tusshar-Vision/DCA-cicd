@@ -26,7 +26,7 @@ class PT365Resource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rocket-launch';
 
-    protected static ?string $navigationGroup = 'Initiatives';
+    protected static ?string $navigationGroup = 'Other Uploads';
 
     protected static ?int $navigationSort = 5;
 
@@ -66,14 +66,14 @@ class PT365Resource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             ArticlesRelationManager::class
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -81,7 +81,7 @@ class PT365Resource extends Resource
             'create' => Pages\CreatePT365::route('/create'),
             'edit' => Pages\EditPT365::route('/{record}/edit'),
         ];
-    }    
+    }
 
     public static function getEloquentQuery(): Builder
     {

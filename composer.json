@@ -26,6 +26,7 @@
         "graham-campbell/markdown": "^15.0",
         "guava/filament-drafts": "^2.1",
         "guzzlehttp/guzzle": "^7.2",
+        "joshembling/image-optimizer": "^1.2",
         "kenepa/resource-lock": "^2.0",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",

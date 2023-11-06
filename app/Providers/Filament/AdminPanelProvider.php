@@ -14,6 +14,7 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
+use FilipFonal\FilamentLogManager\FilamentLogManager;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -21,6 +22,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use ShuvroRoy\FilamentSpatieLaravelHealth\FilamentSpatieLaravelHealthPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -38,7 +40,19 @@ class AdminPanelProvider extends PanelProvider
                         'xl' => 5,
                         '2xl' => null,
                     ]),
-                FilamentSpatieRolesPermissionsPlugin::make()
+                FilamentSpatieRolesPermissionsPlugin::make(),
+                FilamentSpatieLaravelHealthPlugin::make(),
+                FilamentLogManager::make(),
+                \Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin::make()
+                    ->label('Job')
+                    ->pluralLabel('Jobs')
+                    ->enableNavigation(true)
+                    ->navigationIcon('heroicon-o-cpu-chip')
+                    ->navigationGroup('System')
+                    ->navigationSort(5)
+                    ->navigationCountBadge(true)
+                    ->enablePruning(true)
+                    ->pruningRetention(7)
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->default()
@@ -77,7 +91,9 @@ class AdminPanelProvider extends PanelProvider
             ->tenantMiddleware([
                 SyncSpatiePermissionsWithFilamentTenants::class,
             ], isPersistent: true)
-            ->sidebarCollapsibleOnDesktop()
-            ->spa();
+            ->resources([
+                config('filament-logger.activity_resource')
+            ])
+            ->sidebarCollapsibleOnDesktop();
     }
 }

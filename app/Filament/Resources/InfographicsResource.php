@@ -2,9 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\VideoResource\Pages;
-use App\Filament\Resources\VideoResource\RelationManagers;
-use App\Models\Video;
+use App\Filament\Resources\InfographicsResource\Pages;
+use App\Filament\Resources\InfographicsResource\RelationManagers;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,15 +13,16 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class VideoResource extends Resource
+class InfographicsResource extends Resource
 {
     protected static ?string $model = Media::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-video-camera';
+    protected static ?string $navigationIcon = 'heroicon-o-photo';
 
     protected static ?string $navigationGroup = 'Media';
 
-    protected static ?string $label = 'Video';
+    protected static ?string $label = 'Infographic';
+
 
     public static function form(Form $form): Form
     {
@@ -61,9 +61,9 @@ class VideoResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListVideos::route('/'),
-            'create' => Pages\CreateVideo::route('/create'),
-            'edit' => Pages\EditVideo::route('/{record}/edit'),
+            'index' => Pages\ListInfographics::route('/'),
+            'create' => Pages\CreateInfographics::route('/create'),
+            'edit' => Pages\EditInfographics::route('/{record}/edit'),
         ];
     }
 }

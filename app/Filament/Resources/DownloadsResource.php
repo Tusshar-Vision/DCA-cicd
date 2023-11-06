@@ -27,7 +27,7 @@ class DownloadsResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-arrow-down-tray';
 
-    protected static ?string $navigationGroup = 'Initiatives';
+    protected static ?string $navigationGroup = 'Other Uploads';
 
     protected static ?int $navigationSort = 6;
 
@@ -65,14 +65,14 @@ class DownloadsResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             ArticlesRelationManager::class
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -80,8 +80,8 @@ class DownloadsResource extends Resource
             'create' => Pages\CreateDownloads::route('/create'),
             'edit' => Pages\EditDownloads::route('/{record}/edit'),
         ];
-    }   
-    
+    }
+
     public static function getEloquentQuery(): Builder
     {
         $query = static::getModel()::query()->where('initiative_id', InitiativesHelper::getInitiativeID(static::getModelLabel()));
