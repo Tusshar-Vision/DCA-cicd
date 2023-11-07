@@ -15,6 +15,10 @@ class MonthlyMagazineController extends Controller
     protected $latestMonthlyMagazine;
     protected $articles;
     protected $topics;
+
+    protected  $article_topic;
+    protected $article_slug;
+
     public function __construct(
         private readonly PublishedInitiativeService $publishedInitiativeService,
         private readonly ArticleService $articleService
@@ -27,10 +31,10 @@ class MonthlyMagazineController extends Controller
 
         $this->getData();
 
-        $article_slug = $this->articles[0]->slug;
-        $article_topic = $this->articles[0]->topic->name;
+        $this->article_slug = $this->articles[0]->slug;
+        $this->article_topic = $this->articles[0]->topic->name;
 
-        return redirect()->route('monthly-magazine.article', ['topic' => $article_topic, 'article_slug' => $article_slug]);
+        return redirect()->route('monthly-magazine.article', ['topic' => $this->article_topic, 'article_slug' => $this->article_slug]);
     }
 
     public function renderArticle($topic, $article_slug) {

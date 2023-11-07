@@ -3,7 +3,7 @@
 @endphp
 
 <div class="flex flex-col rounded bg-visionGray pb-4">
-    <div class="my-4 mx-6" x-data="{ expanded: null }">
+    <div class="my-4 mx-6" x-data="{ expanded: @entangle('current_topic') }">
         @foreach ($topics as $topic)
             <div class="mt-4">
                 <button class="flex justify-between items-center w-full" @click="
@@ -46,7 +46,9 @@
                     <ul class="space-y-4">
                         @foreach ($articles as $article)
                             @if($article->topic === $topic)
-                                <li class="text-clip text-sm">{{ $article->title }}</li>
+                                <li class="text-clip text-sm">
+                                    <a href="{{ \App\Services\ArticleService::getArticleURL($article) }}" class="cursor-pointer hover:underline">{{ $article->title }}</a>
+                                </li>
                             @endif
                         @endforeach
                     </ul>

@@ -20,9 +20,9 @@
     }
 @endphp
 
-<div class="group cursor-pointer flex-col w-auto space-y-2">
+<div class="group cursor-pointer flex-col space-y-2 max-w-2xl">
     <div>
-        <img src="{{ $article->featured_image ?? 'https://placehold.co/1596x930' }}" width="{{ $width }}" height="{{ $height }}"  alt=""/>
+        <img src="{{ ($article->featured_image === null) ? 'https://placehold.co/1596x930' : route('image.display', ['filename' => $article->featured_image]) }}" width="{{ $width }}" height="{{ $height }}"  alt=""/>
     </div>
     <div class="text-visionLineGray flex space-x-3 items-center text-sm">
         <p>{{ $article->author->name }}</p>
@@ -37,7 +37,7 @@
         <h2 class="text-xl font-bold">{{ $article->title }}</h2>
     </div>
     <div class="max-w-prose">
-        <p class="text-visionLineGray line-clamp-3 text-sm">{{ $article->content }}</p>
-        <a href="#" class="group-hover:underline text-visionBlue text-sm">Read More</a>
+        <p class="text-visionLineGray line-clamp-3 text-sm">{{ $article->excerpt }}</p>
+        <a href="{{ \App\Services\ArticleService::getArticleURL($article) }}" class="group-hover:underline text-visionBlue text-sm">Read More</a>
     </div>
 </div>

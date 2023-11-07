@@ -40,11 +40,14 @@ class WeeklyFocusResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('controls')->schema([
+                Forms\Components\Section::make('New Initiative')->schema([
                     Select::make('initiative_id')
-                        ->relationship('initiative', 'name')->required(),
-                    Toggle::make('is_published')
-                ]),
+                        ->relationship('initiative', 'name')
+                        ->required()
+                        ->default(InitiativesHelper::getInitiativeID(static::getModelLabel())),
+                    DatePicker::make('published_at')->default(today()),
+                    Toggle::make('is_published')->inline(false)
+                ])->columns(2),
             ]);
     }
 

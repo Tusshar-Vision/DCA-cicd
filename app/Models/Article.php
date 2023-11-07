@@ -49,7 +49,8 @@ class Article extends Model implements HasMedia
         'published_initiative_id',
         'initiative_topic_id',
         'topic_section_id',
-        'topic_sub_section_id'
+        'topic_sub_section_id',
+        'reviewer_id'
     ];
 
     // This method will automatically be called when creating or updating an article.
@@ -124,6 +125,16 @@ class Article extends Model implements HasMedia
         return null;
     }
 
+    public function getInitiativeAttribute() {
+        if ($this->publishedInitiative) {
+            $publishedInitiative = $this->publishedInitiative;
+            if ($publishedInitiative->initiative) {
+                return $publishedInitiative->initiative->name;
+            }
+        }
+        return null;
+    }
+
     public static function getByInitiativeId($initiativeId): Article|Builder
     {
         return self::whereHas('publishedInitiative', function ($query) use ($initiativeId) {
@@ -156,6 +167,11 @@ class Article extends Model implements HasMedia
     public function topicSubSection(): BelongsTo
     {
         return $this->belongsTo(TopicSubSection::class, 'topic_sub_section_id');
+    }
+
+    public function reviewer(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'reviewer_id');
     }
 
     public function scopeIsFeatured(Builder $query): Builder

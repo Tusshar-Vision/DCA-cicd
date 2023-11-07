@@ -19,16 +19,28 @@ class ArticleService
     }
 
     public function getFeatured(int $limit = 12): Collection|array {
-        return $this->articles->isFeatured()->latest('published_at')->limit($limit)->with('author')->get();
+        return $this->articles->isFeatured()->latest()->limit($limit)->with('author')->get();
     }
 
-    public function getLatestNews(int $limit = 6): Collection|array
+    public function getLatestNews(int $limit = 2): Collection|array
     {
         return $this->articles->getByInitiativeId(InitiativesHelper::getInitiativeID('NEWS_TODAY'))
-            ->latest('published_at')->limit($limit)->with('author')->get();
+            ->latest()->limit($limit)->with('author')->get();
     }
 
     public function search(string $query, int $perPage = 10): Collection|array|LengthAwarePaginator {
         return $this->articles->search($query)->paginate($perPage);
+    }
+
+    public static function getArticleURL($article): string
+    {
+        $initiative = $article->initiative;
+        $topic = $article->topic->name;
+        $slug = $article->slug;
+
+        $url = '/' . $initiative . '/' . $topic . '/' . $slug;
+
+        return strtolower(str_replace('&', 'AND', str_replace(' ', '-', $url))); // To convert name into code.
+
     }
 }

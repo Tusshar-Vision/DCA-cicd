@@ -15,12 +15,12 @@ class InitiativeSeeder extends Seeder
     {
         $initiatives = [
             ['name' => 'News Today','description' => null, 'path' => '/news-today'],
-            ['name' => 'Monthy Magazine','description' => null, 'path' => '/monthly-magazine'],
+            ['name' => 'Monthly Magazine','description' => null, 'path' => '/monthly-magazine'],
             ['name' => 'Weekly Focus','description' => null, 'path' => '/weekly-focus'],
             ['name' => 'Mains 365','description' => null, 'path' => '/mains-365'],
             ['name' => 'PT 365','description' => null, 'path' => '/pt-365'],
             ['name' => 'Downloads', 'description' => null, 'path' => '/downloads']
-        ]; 
+        ];
 
         DB::table('initiatives')->insert($initiatives);
     }

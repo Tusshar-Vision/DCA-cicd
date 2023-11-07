@@ -400,13 +400,13 @@
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
-    line-height: 1.5rem; /* 150% */
+    //line-height: 1.5rem; /* 150% */
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: 2rem;
+    //gap: 2rem;
     align-self: stretch;
 }
 .printable-area h1 {
@@ -434,49 +434,54 @@
     padding-left: 1.5rem;
 }
 
-.printable-area th, td {
-    border: 1px solid;
+.printable-area ul ul {
+    list-style: circle;
+    padding-left: 1.5rem;
 }
 
-.printable-area table {
-    border-spacing: 0;
-    border-collapse: separate;
-    border-radius: 5px;
-    border: 1px solid black;
-}
+//.printable-area th, td {
+//    border: 1px solid;
+//}
 
-.printable-area table tr {
-    will-change: color;
-}
+//.printable-area table {
+//    border-spacing: 0;
+//    border-collapse: separate;
+//    border-radius: 5px;
+//    border: 1px solid black;
+//}
+//
+//.printable-area table tr {
+//    will-change: color;
+//}
+//
+//.printable-area table td, table th {
+//    padding: 5px;
+//}
 
-.printable-area table td, table th {
-    padding: 5px;
-}
+//.printable-area table th {
+//    min-width: 100px;
+//    background: #005faf;
+//    color: white;
+//    border: black;
+//}
 
-.printable-area table th {
-    min-width: 100px;
-    background: #005faf;
-    color: white;
-    border: black;
-}
+//.printable-area table td {
+//    background: inherit;
+//}
+//
+//.printable-area table tr td{
+//    transition: all 1s;
+//}
+//
+//.printable-area table:has(:hover) tr td{
+//    filter: blur(1px);
+//    color:gray;
+//}
 
-.printable-area table td {
-    background: inherit;
-}
-
-.printable-area table tr td{
-    transition: all 1s;
-}
-
-.printable-area table:has(:hover) tr td{
-    filter: blur(1px);
-    color:gray;
-}
-
-.printable-area table tr:hover td{
-    background: white;
-    filter: blur(0px);
-    color:black;
-}
+//.printable-area table tr:hover td{
+//    background: white;
+//    filter: blur(0px);
+//    color:black;
+//}
 
 [x-cloak] { display: none !important; }

@@ -8,6 +8,7 @@
 
 @section('content')
 
+{{--    @dd($current_topic)--}}
     <div class="space-y-4">
         <h1 class="text-7xl">{{$article->title}}</h1>
         <x-widgets.articles-nav

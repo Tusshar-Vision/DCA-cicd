@@ -41,6 +41,7 @@ class UserResource extends Resource
                 TextColumn::make('id')->label('User ID'),
                 TextColumn::make('name'),
                 TextColumn::make('email'),
+                TextColumn::make('roles.name')
             ])
             ->filters([
                 //

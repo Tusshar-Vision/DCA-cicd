@@ -15,7 +15,7 @@ class NewsSection extends Component
 
     public function getData(ArticleService $articleService): void
     {
-        $this->latestNewsArticles = $articleService->getLatestNews();
+        $this->latestNewsArticles = $articleService->getLatestNews(2);
     }
     public function render()
     {
