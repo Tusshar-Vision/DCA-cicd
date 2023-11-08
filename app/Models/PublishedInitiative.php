@@ -16,6 +16,7 @@ class PublishedInitiative extends Model implements HasMedia
     protected $fillable = [
         'initiative_id',
         'published_at',
+        'is_published'
     ];
 
     protected static function boot(): void

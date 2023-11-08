@@ -93,7 +93,6 @@ class AdminPanelProvider extends PanelProvider
             ], isPersistent: true)
             ->resources([
                 config('filament-logger.activity_resource')
-            ])
-            ->sidebarCollapsibleOnDesktop();
+            ]);
     }
 }

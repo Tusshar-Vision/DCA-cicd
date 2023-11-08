@@ -50,7 +50,8 @@ class Article extends Model implements HasMedia
         'initiative_topic_id',
         'topic_section_id',
         'topic_sub_section_id',
-        'reviewer_id'
+        'reviewer_id',
+        'initiative_id'
     ];
 
     // This method will automatically be called when creating or updating an article.
@@ -114,34 +115,9 @@ class Article extends Model implements HasMedia
         return $this->belongsTo(PublishedInitiative::class, 'published_initiative_id');
     }
 
-    public function getInitiativeIdAttribute()
+    public function initiative(): BelongsTo
     {
-        if ($this->publishedInitiative) {
-            $publishedInitiative = $this->publishedInitiative;
-            if ($publishedInitiative->initiative) {
-                return $publishedInitiative->initiative->id;
-            }
-        }
-        return null;
-    }
-
-    public function getInitiativeAttribute() {
-        if ($this->publishedInitiative) {
-            $publishedInitiative = $this->publishedInitiative;
-            if ($publishedInitiative->initiative) {
-                return $publishedInitiative->initiative->name;
-            }
-        }
-        return null;
-    }
-
-    public static function getByInitiativeId($initiativeId): Article|Builder
-    {
-        return self::whereHas('publishedInitiative', function ($query) use ($initiativeId) {
-            $query->whereHas('initiative', function ($query) use ($initiativeId) {
-                $query->where('id', $initiativeId);
-            });
-        });
+        return $this->belongsTo(Initiative::class, 'initiative_id');
     }
 
     public function relatedTerms(): BelongsToMany

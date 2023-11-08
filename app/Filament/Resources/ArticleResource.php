@@ -5,11 +5,9 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ArticleResource\Pages;
 use App\Filament\Resources\ArticleResource\RelationManagers;
 use App\Models\Article;
+use App\Models\User;
 use Carbon\Carbon;
 use Coolsam\FilamentFlatpickr\Forms\Components\Flatpickr;
-use Filament\Forms;
-use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -21,7 +19,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
-use Filament\Tables\Columns\SpatieTagsColumn;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
@@ -30,6 +28,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
+use Spatie\Tags\Tag;
 
 class ArticleResource extends Resource
 {
@@ -112,13 +111,19 @@ class ArticleResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')->label('Article ID'),
-                TextColumn::make('title'),
+                TextColumn::make('id')->label('id'),
+                TextColumn::make('title')->limit(40)
+                    ->tooltip(fn (Article $article): string => $article->title),
+                TextColumn::make('initiative.name'),
+                IconColumn::make('featured')
+                    ->boolean()->trueIcon('heroicon-o-check-badge')
+                    ->falseIcon('heroicon-o-x-mark'),
                 TextColumn::make('topic.name')->label('Subject'),
                 TextColumn::make('topicSection.name')->label('Section'),
                 TextColumn::make('topicSubSection.name')->label('Sub-Section'),
+                Tables\Columns\SpatieTagsColumn::make('tags'),
                 TextColumn::make('author.name')->label('Expert'),
-                TextColumn::make('reviewer.name')->label('Reviewer')
+                TextColumn::make('reviewer.name')->label('Reviewer'),
             ])
             ->filters([
                 Filter::make('created_at')
@@ -149,45 +154,71 @@ class ArticleResource extends Resource
                     return $indicators;
                 }),
 
-                SelectFilter::make('status')
-                    ->multiple()
-                    ->options([
-                        'draft' => 'Draft',
-                        'reviewing' => 'Reviewing',
-                        'published' => 'Published',
-                    ]),
+                SelectFilter::make('Initiative')->options([
+                    1 => 'News Today',
+                    2 => 'Monthly Magazine',
+                    3 => 'Weekly Focus'
+                ])->attribute('initiative_id'),
 
-                SelectFilter::make('Topic')
-                    ->multiple()
-                    ->options([
-                        1 => "Polity",
-                        2 => "International Relations",
-                        3 => "Economy",
-                        4 => "Security",
-                        5 => "Environment",
-                        6 => "Social",
-                        7 => "Science & Tech",
-                        8 => "Culture",
-                        9 => "Ethics"
-                    ])->attribute('initiative_topic_id'),
+                Filter::make('Section')
+                    ->form([
+                        Select::make('initiative_topic_id')
+                            ->relationship('topic', 'name')
+                            ->reactive()
+                            ->label('Subject'),
+                        Select::make('topic_section_id')
+                            ->relationship('topicSection', 'name', function ($query, callable $get) {
+                                $topic = $get('initiative_topic_id');
 
-                SelectFilter::make('Initiative')
-                    ->multiple()
-                    ->options([
-                        1 => "News Today",
-                        2 => "Monthly Magazine",
-                        3 => "Weekly Focus",
-                        4 => "Mains 365",
-                        5 => "PT 365",
-                        6 => "Downloads"
-                    ])->attribute('initiative_id'),
+                                return $query->where('topic_id', '=', $topic);
+                            })
+                            ->label('Section'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['initiative_topic_id'],
+                                fn (Builder $query, $topic_id): Builder => $query->where('initiative_topic_id', '=', $topic_id),
+                            )
+                            ->when(
+                                $data['topic_section_id'],
+                                fn (Builder $query, $section_id): Builder => $query->whereDate('topic_section_id', '=', $section_id),
+                            );
+                    }),
 
-            ], layout: FiltersLayout::AboveContentCollapsible)->filtersTriggerAction(
+                SelectFilter::make('tags')
+                    ->multiple()
+                    ->options(Tag::all()->pluck('name', 'name'))
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query->when($data['values'], function (Builder $query, $data): Builder {
+                            return $query->withAnyTags(array_values($data));
+                        });
+                    }),
+
+                SelectFilter::make('Expert')
+                    ->options(function (User $users) {
+                        $experts = $users->whereHas('roles', function($query) {
+                            return $query->whereIn('name', ['Admin', 'Expert']);
+                        })->get();
+
+                        return $experts->pluck('name', 'id');
+                    })->attribute('author_id'),
+
+                SelectFilter::make('Reviewer')
+                    ->options(function (User $users) {
+                        $experts = $users->whereHas('roles', function($query) {
+                            return $query->whereIn('name', ['Admin', 'Reviewer']);
+                        })->get();
+
+                        return $experts->pluck('name', 'id');
+                    })->attribute('reviewer_id'),
+
+            ], layout: FiltersLayout::AboveContent)->filtersTriggerAction(
                 fn (Action $action) => $action
                     ->button()
                     ->label('Filters'),
             )
-            ->filtersFormColumns(5)
+            ->filtersFormColumns(6)
             ->filtersFormMaxHeight('400px')
             ->actions([
                 Tables\Actions\EditAction::make(),

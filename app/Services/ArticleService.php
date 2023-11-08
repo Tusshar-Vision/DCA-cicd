@@ -24,7 +24,7 @@ class ArticleService
 
     public function getLatestNews(int $limit = 2): Collection|array
     {
-        return $this->articles->getByInitiativeId(InitiativesHelper::getInitiativeID('NEWS_TODAY'))
+        return $this->articles->where('initiative_id', '=', InitiativesHelper::getInitiativeID('NEWS_TODAY'))
             ->latest()->limit($limit)->with('author')->get();
     }
 
@@ -34,7 +34,7 @@ class ArticleService
 
     public static function getArticleURL($article): string
     {
-        $initiative = $article->initiative;
+        $initiative = $article->initiative->name;
         $topic = $article->topic->name;
         $slug = $article->slug;
 
