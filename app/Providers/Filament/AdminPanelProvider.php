@@ -23,6 +23,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use ShuvroRoy\FilamentSpatieLaravelHealth\FilamentSpatieLaravelHealthPlugin;
+use Filament\Notifications\Livewire\DatabaseNotifications;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -93,6 +94,7 @@ class AdminPanelProvider extends PanelProvider
             ], isPersistent: true)
             ->resources([
                 config('filament-logger.activity_resource')
-            ]);
+            ])
+            ->databaseNotifications();
     }
 }

@@ -1,16 +1,19 @@
 <?php
+    use Illuminate\Support\Str;
     $counter = 1;
+    $currentTopic = request()->segment(2);
+    $currentArticle = request()->segment(3);
 ?>
 
 <div class="flex flex-col rounded bg-visionGray pb-4">
-    <div class="my-4 mx-6" x-data="{ expanded: <?php if ((object) ('current_topic') instanceof \Livewire\WireDirective) : ?>window.Livewire.find('<?php echo e($__livewire->getId()); ?>').entangle('<?php echo e('current_topic'->value()); ?>')<?php echo e('current_topic'->hasModifier('live') ? '.live' : ''); ?><?php else : ?>window.Livewire.find('<?php echo e($__livewire->getId()); ?>').entangle('<?php echo e('current_topic'); ?>')<?php endif; ?> }">
+    <div class="my-4 mx-6" x-data="{ expanded: null }" x-init="expanded = 'topic-<?php echo e(Str::slug($currentTopic)); ?>'">
         <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $topics; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $topic): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="mt-4">
                 <button class="flex justify-between items-center w-full" @click="
-                    if(expanded === 'topic-<?php echo e($topic); ?>') expanded = false;
-                    else expanded = 'topic-<?php echo e($topic); ?>'
+                    if(expanded === 'topic-<?php echo e(Str::slug($topic->name)); ?>') expanded = false;
+                    else expanded = 'topic-<?php echo e(Str::slug($topic->name)); ?>'
                 ">
-                    <div x-show="expanded === 'topic-<?php echo e($topic); ?>'" class="flex justify-between items-center w-full">
+                    <div x-show="expanded === 'topic-<?php echo e(Str::slug($topic->name)); ?>'" class="flex justify-between items-center w-full">
                         <div class="flex">
                             <div class="w-6">
                                 <strong>
@@ -29,7 +32,7 @@
                             <path d="M5 11V13H19V11H5Z" fill="#8F93A3"/>
                         </svg>
                     </div>
-                    <div x-show="expanded !== 'topic-<?php echo e($topic); ?>'" class="flex justify-between items-center w-full">
+                    <div x-show="expanded !== 'topic-<?php echo e(Str::slug($topic->name)); ?>'" class="flex justify-between items-center w-full">
                         <div class="flex">
                             <div class="w-6">
                                 <?php echo e($counter++ . '.'); ?>
@@ -46,12 +49,15 @@
                     </div>
                 </button>
 
-                <div x-show="expanded === 'topic-<?php echo e($topic); ?>'" x-collapse>
-                    <ul class="space-y-4">
+                <div x-show="expanded === 'topic-<?php echo e(Str::slug($topic->name)); ?>'" x-collapse>
+                    <ul class="mt-2 space-y-4 ml-6">
                         <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $articles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $article): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <!--[if BLOCK]><![endif]--><?php if($article->topic === $topic): ?>
                                 <li class="text-clip text-sm">
-                                    <a href="<?php echo e(\App\Services\ArticleService::getArticleURL($article)); ?>" class="cursor-pointer hover:underline"><?php echo e($article->title); ?></a>
+                                    <a href="<?php echo e(\App\Services\ArticleService::getArticleURL($article)); ?>" class="cursor-pointer hover:underline <?php echo e(($article->slug === $currentArticle) ? 'font-bold' : ''); ?>" wire:navigate>
+                                        <?php echo e($article->title); ?>
+
+                                    </a>
                                 </li>
                             <?php endif; ?> <!--[if ENDBLOCK]><![endif]-->
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> <!--[if ENDBLOCK]><![endif]-->

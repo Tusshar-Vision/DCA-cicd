@@ -4,16 +4,16 @@
         <div class="vi-announcement-card">
             <p class="vi-announcement-title">Announcements</p>
             <ul>
-                <li>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</li>
-                <li>Sit amet aliquam id diam maecenas ultricies mi eget mauris.</li>
-                <li>Eu volutpat odio facilisis mauris sit amet.</li>
+                <li>Read October Current affairs monthly magazine.</li>
+                <li>Register for CSAT Open Mock Test 1.</li>
+                <li>Lakshya Prelims 2024 begins from 5th December.</li>
             </ul>
         </div>
         <div class="vi-announcement-card">
             <p class="vi-announcement-title">News Updates</p>
             <ul>
-                <li>Role of External State and Non-state Actors in Creating Challenges to Internal Security</li>
-                <li>Role of External State and Non-state Actors in Creating Challenges to Internal Security</li>
+                <li>Global Multidimensional Poverty Index (MPI) 2023 unveiled by United Nations Development Program (UNDP)</li>
+                <li>Roadmap for Green Hydrogen Ecosystem in India by Ministry of New and Renewable Energy</li>
             </ul>
         </div>
     </div>

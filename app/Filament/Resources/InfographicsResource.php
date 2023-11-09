@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\InfographicsResource\Pages;
 use App\Filament\Resources\InfographicsResource\RelationManagers;
+use App\Helpers\InitiativesHelper;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -66,4 +68,15 @@ class InfographicsResource extends Resource
             'edit' => Pages\EditInfographics::route('/{record}/edit'),
         ];
     }
+
+//    public static function getEloquentQuery(): Builder
+//    {
+//        $query = static::getModel()::query()->where('initiative_id', InitiativesHelper::getInitiativeID(static::getModelLabel()));
+//
+//        if ($tenant = Filament::getTenant()) {
+//            static::scopeEloquentQueryToTenant($query, $tenant);
+//        }
+//
+//        return $query;
+//    }
 }

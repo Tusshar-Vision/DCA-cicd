@@ -59,7 +59,7 @@ class WeeklyFocusResource extends Resource
                 TextColumn::make('published_at')->dateTime('d M Y h:m')->label('Published At')->sortable(),
                 ToggleColumn::make('is_published')->label('Is Published')->sortable(),
                 TextColumn::make('updated_at')->dateTime('d M Y h:m')->label('Last Updated')->sortable(),
-            ])
+            ])->defaultSort('published_at', 'desc')
             ->filters([
                 //
             ])
