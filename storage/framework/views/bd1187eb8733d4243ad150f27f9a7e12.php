@@ -13,7 +13,7 @@ $__split = function ($name, $params = []) {
 };
 [$__name, $__params] = $__split('widgets.search-box', []);
 
-$__html = app('livewire')->mount($__name, $__params, 'UHmmmqG', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, 'pIeDZFY', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 

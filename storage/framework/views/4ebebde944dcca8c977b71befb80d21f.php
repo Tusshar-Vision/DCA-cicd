@@ -164,8 +164,8 @@
             ])); ?>
 
 >
-    <!--[if BLOCK]><![endif]--><?php if($iconPosition === IconPosition::Before): ?>
-        <!--[if BLOCK]><![endif]--><?php if($icon): ?>
+    <?php if($iconPosition === IconPosition::Before): ?>
+        <?php if($icon): ?>
             <?php if (isset($component)) { $__componentOriginal71c6471fa76ce19017edc287b6f4508c = $component; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'filament::components.icon','data' => ['attributes' => 
                     \Filament\Support\prepare_inherited_attributes(
@@ -199,9 +199,9 @@
 <?php $component = $__componentOriginal71c6471fa76ce19017edc287b6f4508c; ?>
 <?php unset($__componentOriginal71c6471fa76ce19017edc287b6f4508c); ?>
 <?php endif; ?>
-        <?php endif; ?> <!--[if ENDBLOCK]><![endif]-->
+        <?php endif; ?>
 
-        <!--[if BLOCK]><![endif]--><?php if($hasLoadingIndicator): ?>
+        <?php if($hasLoadingIndicator): ?>
             <?php if (isset($component)) { $__componentOriginal71c6471fa76ce19017edc287b6f4508c = $component; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'filament::components.loading-indicator','data' => ['attributes' => 
                     \Filament\Support\prepare_inherited_attributes(
@@ -231,8 +231,8 @@
 <?php $component = $__componentOriginal71c6471fa76ce19017edc287b6f4508c; ?>
 <?php unset($__componentOriginal71c6471fa76ce19017edc287b6f4508c); ?>
 <?php endif; ?>
-        <?php endif; ?> <!--[if ENDBLOCK]><![endif]-->
-    <?php endif; ?> <!--[if ENDBLOCK]><![endif]-->
+        <?php endif; ?>
+    <?php endif; ?>
 
     <span class="grid">
         <span class="truncate">
@@ -241,7 +241,7 @@
         </span>
     </span>
 
-    <!--[if BLOCK]><![endif]--><?php if($isDeletable): ?>
+    <?php if($isDeletable): ?>
         <button
             type="button"
             <?php echo e($deleteButton
@@ -272,15 +272,15 @@
 <?php unset($__componentOriginal71c6471fa76ce19017edc287b6f4508c); ?>
 <?php endif; ?>
 
-            <!--[if BLOCK]><![endif]--><?php if(filled($label = $deleteButton->attributes->get('label'))): ?>
+            <?php if(filled($label = $deleteButton->attributes->get('label'))): ?>
                 <span class="sr-only">
                     <?php echo e($label); ?>
 
                 </span>
-            <?php endif; ?> <!--[if ENDBLOCK]><![endif]-->
+            <?php endif; ?>
         </button>
     <?php elseif($iconPosition === IconPosition::After): ?>
-        <!--[if BLOCK]><![endif]--><?php if($icon): ?>
+        <?php if($icon): ?>
             <?php if (isset($component)) { $__componentOriginal71c6471fa76ce19017edc287b6f4508c = $component; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'filament::components.icon','data' => ['attributes' => 
                     \Filament\Support\prepare_inherited_attributes(
@@ -314,9 +314,9 @@
 <?php $component = $__componentOriginal71c6471fa76ce19017edc287b6f4508c; ?>
 <?php unset($__componentOriginal71c6471fa76ce19017edc287b6f4508c); ?>
 <?php endif; ?>
-        <?php endif; ?> <!--[if ENDBLOCK]><![endif]-->
+        <?php endif; ?>
 
-        <!--[if BLOCK]><![endif]--><?php if($hasLoadingIndicator): ?>
+        <?php if($hasLoadingIndicator): ?>
             <?php if (isset($component)) { $__componentOriginal71c6471fa76ce19017edc287b6f4508c = $component; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'filament::components.loading-indicator','data' => ['attributes' => 
                     \Filament\Support\prepare_inherited_attributes(
@@ -346,7 +346,7 @@
 <?php $component = $__componentOriginal71c6471fa76ce19017edc287b6f4508c; ?>
 <?php unset($__componentOriginal71c6471fa76ce19017edc287b6f4508c); ?>
 <?php endif; ?>
-        <?php endif; ?> <!--[if ENDBLOCK]><![endif]-->
-    <?php endif; ?> <!--[if ENDBLOCK]><![endif]-->
+        <?php endif; ?>
+    <?php endif; ?>
 </<?php echo e($tag); ?>>
 <?php /**PATH /home/yash/vision-ca-api/vendor/filament/support/src/../resources/views/components/badge.blade.php ENDPATH**/ ?>

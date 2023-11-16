@@ -85,7 +85,7 @@ $__split = function ($name, $params = []) {
 };
 [$__name, $__params] = $__split('forms.login', []);
 
-$__html = app('livewire')->mount($__name, $__params, 'yVPwDvK', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, 'CGwHvKA', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 
@@ -117,7 +117,7 @@ $__split = function ($name, $params = []) {
 };
 [$__name, $__params] = $__split('forms.register', []);
 
-$__html = app('livewire')->mount($__name, $__params, 'KGKk1IL', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, 'tp39r1f', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 
@@ -149,7 +149,7 @@ $__split = function ($name, $params = []) {
 };
 [$__name, $__params] = $__split('forms.reset-password', []);
 
-$__html = app('livewire')->mount($__name, $__params, 'v7Ex83d', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, '0UqKQn3', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 

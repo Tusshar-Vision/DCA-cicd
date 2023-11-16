@@ -119,7 +119,7 @@
     $hasTooltip = filled($tooltip);
 ?>
 
-<!--[if BLOCK]><![endif]--><?php if($tag === 'button'): ?>
+<?php if($tag === 'button'): ?>
     <button
         <?php if($keyBindings || $hasTooltip): ?>
             x-data="{}"
@@ -145,7 +145,7 @@
                 ->style([$buttonStyles])); ?>
 
     >
-        <!--[if BLOCK]><![endif]--><?php if($icon): ?>
+        <?php if($icon): ?>
             <?php if (isset($component)) { $__componentOriginal71c6471fa76ce19017edc287b6f4508c = $component; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'filament::components.icon','data' => ['attributes' => 
                     \Filament\Support\prepare_inherited_attributes(
@@ -179,16 +179,16 @@
 <?php $component = $__componentOriginal71c6471fa76ce19017edc287b6f4508c; ?>
 <?php unset($__componentOriginal71c6471fa76ce19017edc287b6f4508c); ?>
 <?php endif; ?>
-        <?php endif; ?> <!--[if ENDBLOCK]><![endif]-->
+        <?php endif; ?>
 
-        <!--[if BLOCK]><![endif]--><?php if($image): ?>
+        <?php if($image): ?>
             <div
                 class="<?php echo e($imageClasses); ?>"
                 style="background-image: url('<?php echo e($image); ?>')"
             ></div>
-        <?php endif; ?> <!--[if ENDBLOCK]><![endif]-->
+        <?php endif; ?>
 
-        <!--[if BLOCK]><![endif]--><?php if($hasLoadingIndicator): ?>
+        <?php if($hasLoadingIndicator): ?>
             <?php if (isset($component)) { $__componentOriginal71c6471fa76ce19017edc287b6f4508c = $component; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'filament::components.loading-indicator','data' => ['attributes' => 
                     \Filament\Support\prepare_inherited_attributes(
@@ -218,14 +218,14 @@
 <?php $component = $__componentOriginal71c6471fa76ce19017edc287b6f4508c; ?>
 <?php unset($__componentOriginal71c6471fa76ce19017edc287b6f4508c); ?>
 <?php endif; ?>
-        <?php endif; ?> <!--[if ENDBLOCK]><![endif]-->
+        <?php endif; ?>
 
         <span class="<?php echo e($labelClasses); ?>">
             <?php echo e($slot); ?>
 
         </span>
 
-        <!--[if BLOCK]><![endif]--><?php if(filled($badge)): ?>
+        <?php if(filled($badge)): ?>
             <?php if (isset($component)) { $__componentOriginal71c6471fa76ce19017edc287b6f4508c = $component; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'filament::components.badge','data' => ['color' => $badgeColor,'size' => 'sm']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
 <?php $component->withName('filament::badge'); ?>
@@ -243,7 +243,7 @@
 <?php $component = $__componentOriginal71c6471fa76ce19017edc287b6f4508c; ?>
 <?php unset($__componentOriginal71c6471fa76ce19017edc287b6f4508c); ?>
 <?php endif; ?>
-        <?php endif; ?> <!--[if ENDBLOCK]><![endif]-->
+        <?php endif; ?>
     </button>
 <?php elseif($tag === 'a'): ?>
     <a
@@ -267,7 +267,7 @@
                 ->style([$buttonStyles])); ?>
 
     >
-        <!--[if BLOCK]><![endif]--><?php if($icon): ?>
+        <?php if($icon): ?>
             <?php if (isset($component)) { $__componentOriginal71c6471fa76ce19017edc287b6f4508c = $component; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'filament::components.icon','data' => ['alias' => $iconAlias,'icon' => $icon,'class' => $iconClasses]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
 <?php $component->withName('filament::icon'); ?>
@@ -283,21 +283,21 @@
 <?php $component = $__componentOriginal71c6471fa76ce19017edc287b6f4508c; ?>
 <?php unset($__componentOriginal71c6471fa76ce19017edc287b6f4508c); ?>
 <?php endif; ?>
-        <?php endif; ?> <!--[if ENDBLOCK]><![endif]-->
+        <?php endif; ?>
 
-        <!--[if BLOCK]><![endif]--><?php if($image): ?>
+        <?php if($image): ?>
             <div
                 class="<?php echo e($imageClasses); ?>"
                 style="background-image: url('<?php echo e($image); ?>')"
             ></div>
-        <?php endif; ?> <!--[if ENDBLOCK]><![endif]-->
+        <?php endif; ?>
 
         <span class="<?php echo e($labelClasses); ?>">
             <?php echo e($slot); ?>
 
         </span>
 
-        <!--[if BLOCK]><![endif]--><?php if(filled($badge)): ?>
+        <?php if(filled($badge)): ?>
             <?php if (isset($component)) { $__componentOriginal71c6471fa76ce19017edc287b6f4508c = $component; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'filament::components.badge','data' => ['color' => $badgeColor,'size' => 'sm']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
 <?php $component->withName('filament::badge'); ?>
@@ -315,7 +315,7 @@
 <?php $component = $__componentOriginal71c6471fa76ce19017edc287b6f4508c; ?>
 <?php unset($__componentOriginal71c6471fa76ce19017edc287b6f4508c); ?>
 <?php endif; ?>
-        <?php endif; ?> <!--[if ENDBLOCK]><![endif]-->
+        <?php endif; ?>
     </a>
 <?php elseif($tag === 'form'): ?>
     <form
@@ -345,7 +345,7 @@
                     ->style([$buttonStyles])); ?>
 
         >
-            <!--[if BLOCK]><![endif]--><?php if($icon): ?>
+            <?php if($icon): ?>
                 <?php if (isset($component)) { $__componentOriginal71c6471fa76ce19017edc287b6f4508c = $component; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'filament::components.icon','data' => ['alias' => $iconAlias,'icon' => $icon,'class' => $iconClasses]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
 <?php $component->withName('filament::icon'); ?>
@@ -361,14 +361,14 @@
 <?php $component = $__componentOriginal71c6471fa76ce19017edc287b6f4508c; ?>
 <?php unset($__componentOriginal71c6471fa76ce19017edc287b6f4508c); ?>
 <?php endif; ?>
-            <?php endif; ?> <!--[if ENDBLOCK]><![endif]-->
+            <?php endif; ?>
 
             <span class="<?php echo e($labelClasses); ?>">
                 <?php echo e($slot); ?>
 
             </span>
 
-            <!--[if BLOCK]><![endif]--><?php if(filled($badge)): ?>
+            <?php if(filled($badge)): ?>
                 <?php if (isset($component)) { $__componentOriginal71c6471fa76ce19017edc287b6f4508c = $component; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'filament::components.badge','data' => ['color' => $badgeColor,'size' => 'sm']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
 <?php $component->withName('filament::badge'); ?>
@@ -386,8 +386,8 @@
 <?php $component = $__componentOriginal71c6471fa76ce19017edc287b6f4508c; ?>
 <?php unset($__componentOriginal71c6471fa76ce19017edc287b6f4508c); ?>
 <?php endif; ?>
-            <?php endif; ?> <!--[if ENDBLOCK]><![endif]-->
+            <?php endif; ?>
         </button>
     </form>
-<?php endif; ?> <!--[if ENDBLOCK]><![endif]-->
+<?php endif; ?>
 <?php /**PATH /home/yash/vision-ca-api/vendor/filament/support/src/../resources/views/components/dropdown/list/item.blade.php ENDPATH**/ ?>

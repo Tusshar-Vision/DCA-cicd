@@ -6,6 +6,7 @@ use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugi
 use Althinect\FilamentSpatieRolesPermissions\Middleware\SyncSpatiePermissionsWithFilamentTenants;
 use Awcodes\Overlook\OverlookPlugin;
 use Awcodes\Overlook\Widgets\OverlookWidget;
+use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -42,14 +43,13 @@ class AdminPanelProvider extends PanelProvider
                         '2xl' => null,
                     ]),
                 FilamentSpatieRolesPermissionsPlugin::make(),
-                FilamentSpatieLaravelHealthPlugin::make(),
                 FilamentLogManager::make(),
-                \Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin::make()
+                FilamentJobsMonitorPlugin::make()
                     ->label('Job')
                     ->pluralLabel('Jobs')
                     ->enableNavigation(true)
                     ->navigationIcon('heroicon-o-cpu-chip')
-                    ->navigationGroup('System')
+                    ->navigationGroup('Settings')
                     ->navigationSort(5)
                     ->navigationCountBadge(true)
                     ->enablePruning(true)
@@ -64,7 +64,7 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::hex('#005faf'),
             ])
             ->brandLogo(asset('images/LightLogo.svg'))
-            ->darkModeBrandLogo('images/DarkLogo.svg')
+            ->darkModeBrandLogo(asset('images/LightLogo.svg'))
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([

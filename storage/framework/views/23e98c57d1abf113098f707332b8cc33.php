@@ -31,7 +31,7 @@ $__split = function ($name, $params = []) {
 };
 [$__name, $__params] = $__split('widgets.highlights-section', ['featuredArticles' => $featuredArticles]);
 
-$__html = app('livewire')->mount($__name, $__params, 'TFncawR', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, 'WSh4u54', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 
@@ -77,7 +77,7 @@ $__split = function ($name, $params = []) {
 };
 [$__name, $__params] = $__split('widgets.news-section', ['latestNewsArticles' => $latestNewsArticles]);
 
-$__html = app('livewire')->mount($__name, $__params, 'bES8Kax', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, 'xMW0YSg', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 
@@ -123,7 +123,7 @@ $__split = function ($name, $params = []) {
 };
 [$__name, $__params] = $__split('widgets.search-bar-with-button', []);
 
-$__html = app('livewire')->mount($__name, $__params, 'l2axwh5', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, '4kG9gGt', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 
@@ -155,7 +155,7 @@ $__split = function ($name, $params = []) {
 };
 [$__name, $__params] = $__split('widgets.latest-videos', ['latestVideos' => $latestVideos]);
 
-$__html = app('livewire')->mount($__name, $__params, 'wxYHY2c', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, 'TVKjyio', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 
@@ -171,7 +171,7 @@ $__split = function ($name, $params = []) {
 };
 [$__name, $__params] = $__split('widgets.latest-downloads', ['latestDownloads' => $latestDownloads]);
 
-$__html = app('livewire')->mount($__name, $__params, 'hPHSX9G', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, 'uug3Pwc', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 
@@ -187,7 +187,7 @@ $__split = function ($name, $params = []) {
 };
 [$__name, $__params] = $__split('widgets.leaderboard', ['scoreBoard' => $scoreBoard]);
 
-$__html = app('livewire')->mount($__name, $__params, 'TSgYhfQ', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, '22NsciS', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 
