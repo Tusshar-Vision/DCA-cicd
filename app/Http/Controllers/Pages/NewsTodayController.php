@@ -17,12 +17,12 @@ class NewsTodayController extends Controller
     public function __construct(
         private readonly PublishedInitiativeService $publishedInitiativeService,
         private readonly ArticleService $articleService
-    )
-    {
+    ) {
         $this->initiativeId = InitiativesHelper::getInitiativeID('NEWS_TODAY');
     }
 
-    public function index() {
+    public function index()
+    {
 
         $this->getData();
 
@@ -30,10 +30,10 @@ class NewsTodayController extends Controller
         $article_topic = $this->articles[0]->topic->name;
 
         return redirect()->route('news-today.article', ['topic' => $article_topic, 'article_slug' => $article_slug]);
-
     }
 
-    public function renderArticle($topic, $article_slug) {
+    public function renderArticle($topic, $article_slug)
+    {
 
         $this->getData();
 
@@ -46,18 +46,25 @@ class NewsTodayController extends Controller
         ]);
     }
 
-    public function archive() {
+    public function archive()
+    {
 
         return View('pages.archives.daily-news', [
             "title" => "Daily News Archive"
         ]);
     }
 
-    protected function getData($publishedAt = null) {
+    protected function getData($publishedAt = null)
+    {
 
         $this->latestNewsToday = $this->publishedInitiativeService->getLatestById($this->initiativeId);
 
         $this->articles = $this->latestNewsToday[0]->articles;
+    }
 
+    public function getArticlesDateWise($date)
+    {
+        $articles = $this->articleService->getArticlesByDate($date);
+        print_r($articles);
     }
 }

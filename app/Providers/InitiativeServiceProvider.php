@@ -23,15 +23,19 @@ class InitiativeServiceProvider extends ServiceProvider
      */
     public function boot(InitiativeService $initiativeService): void
     {
-        if(Schema::hasTable('initiatives')) {
+        if (Schema::hasTable('initiatives')) {
+
             $initiatives = Initiative::get(['id', 'name', 'path']);
+            $newsTodayData = $initiativeService->getMenuData('NEWS_TODAY');
+            $monthlyMagazineData = $initiativeService->getMenuData('MONTHLY_MAGAZINE');
+            $weeklyFocusData = $initiativeService->getMenuData('WEEKLY_FOCUS');
 
             view()->share([
                 'initiatives' => $initiatives,
                 'menuData' => [
-                    'newsToday' => $initiativeService->getMenuData('NEWS_TODAY'),
-                    'monthlyMagazine' => $initiativeService->getMenuData('MONTHLY_MAGAZINE'),
-                    'weeklyFocus' => $initiativeService->getMenuData('WEEKLY_FOCUS'),
+                    'newsToday' => $newsTodayData,
+                    'monthlyMagazine' => $monthlyMagazineData,
+                    'weeklyFocus' => $weeklyFocusData,
                 ]
             ]);
         }

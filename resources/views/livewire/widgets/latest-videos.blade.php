@@ -4,7 +4,7 @@
 @endphp
 <div>
     <div class="vi-title-wrap">
-        <h5 class="vi-title">Latest Videos</h5>
+        <h5 class="vi-title">Feature Videos</h5>
         <a href="#" class="vi-view-all">View All</a>
     </div>
 

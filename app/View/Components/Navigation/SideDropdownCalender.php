@@ -12,14 +12,16 @@ class SideDropdownCalender extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public $menuData, public $initiativeId
-    )
-    {}
+        public $menuData,
+        public $initiativeId
+    ) {
+    }
 
-    public function getDataToRender() : array {
+    public function getDataToRender(): array
+    {
         //Checking if the Initiative is Monthly Magazine
 
-        return range(1, $this->menuData);
+        return range(1, $this->menuData[1]);
     }
 
     /**

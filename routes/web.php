@@ -25,26 +25,27 @@ Route::get('/pt-365', [Pages\PT365Controller::class, 'index'])->name('pt-365');
 Route::get('/downloads', [Pages\DownloadsController::class, 'index'])->name('downloads');
 Route::get('/search', [Pages\SearchController::class, 'index'])->name('search');
 
-Route::controller(Pages\NewsTodayController::class)->group(function() {
+Route::controller(Pages\NewsTodayController::class)->group(function () {
     Route::get('/news-today', 'index')->name('news-today');
     Route::get('/archive/daily-news', 'archive')->name('news-today.archive');
     Route::get('/news-today/{topic}/{article_slug}', 'renderArticle')->name('news-today.article');
+    Route::get('/news-on/{date}', 'getArticlesDateWise')->name('news-today-date-wise');
 });
 
-Route::controller(Pages\MonthlyMagazineController::class)->group(function() {
+Route::controller(Pages\MonthlyMagazineController::class)->group(function () {
     Route::get('/monthly-magazine', 'index')->name('monthly-magazine');
     Route::get('/archive/monthly-magazine', 'archive')->name('monthly-magazine.archive');
     Route::get('/monthly-magazine/{topic}/{article_slug}', 'renderArticle')->name('monthly-magazine.article');
 });
 
-Route::controller(Pages\WeeklyFocusController::class)->group(function() {
+Route::controller(Pages\WeeklyFocusController::class)->group(function () {
     Route::get('/weekly-focus', 'index')->name('weekly-focus');
     Route::get('/archive/weekly-focus', 'archive')->name('weekly-focus.archive');
     Route::get('/weekly-focus/{topic}/{article_slug}', 'renderArticle')->name('weekly-focus.article');
 });
 
-Route::middleware('auth')->group(function() {
-    Route::prefix('user')->group(function() {
+Route::middleware('auth')->group(function () {
+    Route::prefix('user')->group(function () {
         // Route::get('/dashboard', )
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
     });

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -11,14 +12,21 @@ class ArticleService
 {
     public function __construct(
         private readonly Article $articles
-    )
-    {}
+    ) {
+    }
 
-    public function getArticleBySlug($slug) {
+    public function getArticleBySlug($slug)
+    {
         return $this->articles->findBySlug($slug);
     }
 
-    public function getFeatured(int $limit = 12): Collection|array {
+    public function getArticlesByDate($date)
+    {
+        return $this->articles->whereDate('created_at', Carbon::parse($date))->get();
+    }
+
+    public function getFeatured(int $limit = 12): Collection|array
+    {
         return $this->articles->isFeatured()->latest()->limit($limit)->with('author')->get();
     }
 
@@ -28,7 +36,8 @@ class ArticleService
             ->latest()->limit($limit)->with('author')->get();
     }
 
-    public function search(string $query, int $perPage = 10): Collection|array|LengthAwarePaginator {
+    public function search(string $query, int $perPage = 10): Collection|array|LengthAwarePaginator
+    {
         return $this->articles->search($query)->paginate($perPage);
     }
 

@@ -27,7 +27,7 @@
                         @if ($menuData['initiative_id'] === 1)
                             <x-navigation.side-dropdown-calender
                                 x-show="isMenuOpen === 'menu{{ $menuData['initiative_id'] . $loop->iteration }}'"
-                                :menuData="$subMenu"
+                                :menuData="[$mainMenu,$subMenu]"
                                 :initiativeId="$menuData['initiative_id']"
                             />
                         @else
