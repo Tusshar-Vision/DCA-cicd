@@ -43,7 +43,6 @@ class AdminPanelProvider extends PanelProvider
                         '2xl' => null,
                     ]),
                 FilamentSpatieRolesPermissionsPlugin::make(),
-                FilamentLogManager::make(),
                 FilamentJobsMonitorPlugin::make()
                     ->label('Job')
                     ->pluralLabel('Jobs')
