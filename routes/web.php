@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\MediaController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Pages;
@@ -50,18 +51,4 @@ Route::middleware('auth')->group(function() {
     });
 });
 
-Route::get('/images/{filename}', function ($filename) {
-    $path = storage_path('app/public/' . $filename);
-
-    if (!File::exists($path)) {
-        abort(404);
-    }
-
-    $file = File::get($path);
-    $type = File::mimeType($path);
-
-    $response = Response::make($file, 200);
-    $response->header("Content-Type", $type);
-
-    return $response;
-})->name('image.display');
+Route::get('/images/{filename}', [MediaController::class, 'renderImage'])->name('image.display');
