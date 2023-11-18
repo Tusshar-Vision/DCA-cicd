@@ -30,6 +30,12 @@
                                 :menuData="[$mainMenu,$subMenu]"
                                 :initiativeId="$menuData['initiative_id']"
                             />
+                        @elseif ($menuData['initiative_id'] === 2) 
+                        <x-navigation.side-dropdown
+                        x-show="isMenuOpen === 'menu{{ $menuData['initiative_id'] . $loop->iteration }}'"
+                        :menuData="[$mainMenu,$subMenu]"
+                        :initiativeId="$menuData['initiative_id']"
+                    />
                         @else
                             <x-navigation.side-dropdown
                                 x-show="isMenuOpen === 'menu{{ $menuData['initiative_id'] . $loop->iteration }}'"

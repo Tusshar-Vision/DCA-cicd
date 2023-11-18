@@ -65,6 +65,37 @@ class NewsTodayController extends Controller
     public function getArticlesDateWise($date)
     {
         $articles = $this->articleService->getArticlesByDate($date);
-        print_r($articles);
+        $article = $articles[0];
+
+        $topics = [];
+
+        foreach ($articles as $article) {
+            $topics[] = $article->topic;
+        }
+
+        $topics = array_unique($topics);
+
+        usort($topics, function ($a, $b) {
+            return $a->id - $b->id;
+        });
+
+        $sortedArticles = [];
+
+        foreach ($topics as $topic) {
+            foreach ($articles as $article) {
+                if ($article->topic === $topic) {
+                    $sortedArticles[] = $article;
+                }
+            }
+        }
+
+        $articles = $sortedArticles;
+
+        return View('pages.news-today', [
+            "date_wise_page" => true,
+            "topics" => $topics,
+            "articles" => $articles,
+            "article" => $article,
+        ]);
     }
 }

@@ -22,12 +22,12 @@ class MonthlyMagazineController extends Controller
     public function __construct(
         private readonly PublishedInitiativeService $publishedInitiativeService,
         private readonly ArticleService $articleService
-    )
-    {
+    ) {
         $this->initiativeId = InitiativesHelper::getInitiativeID('MONTHLY_MAGAZINE');
     }
 
-    public function index() {
+    public function index()
+    {
 
         $this->getData();
 
@@ -37,7 +37,8 @@ class MonthlyMagazineController extends Controller
         return redirect()->route('monthly-magazine.article', ['topic' => $this->article_topic, 'article_slug' => $this->article_slug]);
     }
 
-    public function renderArticle($topic, $article_slug) {
+    public function renderArticle($topic, $article_slug)
+    {
 
         $this->getData();
 
@@ -51,14 +52,16 @@ class MonthlyMagazineController extends Controller
         ]);
     }
 
-    public function archive() {
+    public function archive()
+    {
 
         return View('pages.archives.monthly-magazine', [
             "title" => "Monthly Magazine Archives"
         ]);
     }
 
-    protected function getData($publishedAt = null) {
+    protected function getData($publishedAt = null)
+    {
 
         $this->latestMonthlyMagazine = $this->publishedInitiativeService->getLatestById($this->initiativeId);
 
@@ -72,7 +75,7 @@ class MonthlyMagazineController extends Controller
 
         $this->topics = array_unique($this->topics);
 
-        usort($this->topics, function($a, $b) {
+        usort($this->topics, function ($a, $b) {
             return $a->id - $b->id;
         });
 
@@ -80,12 +83,57 @@ class MonthlyMagazineController extends Controller
 
         foreach ($this->topics as $topic) {
             foreach ($this->articles as $article) {
-                if($article->topic === $topic) {
+                if ($article->topic === $topic) {
                     $sortedArticles[] = $article;
                 }
             }
         }
 
         $this->articles = $sortedArticles;
+    }
+
+    public function renderByMonth($month)
+    {
+        // $this->latestMonthlyMagazine = $this->publishedInitiativeService->getLatestById($this->initiativeId);
+
+        $magazines = $this->publishedInitiativeService->getByMonthAndYear($month);
+
+        $articles = [];
+        $topics = [];
+
+
+        foreach ($magazines as $magazine) {
+            $magazineArticles = $magazine->articles;
+            foreach ($magazineArticles as $article) {
+                $articles[] = $article;
+                $topics[] = $article->topic;
+            }
+        }
+
+        $topics = array_unique($topics);
+
+        usort($topics, function ($a, $b) {
+            return $a->id - $b->id;
+        });
+
+        $sortedArticles = [];
+
+        foreach ($topics as $topic) {
+            foreach ($articles as $article) {
+                if ($article->topic === $topic) {
+                    $sortedArticles[] = $article;
+                }
+            }
+        }
+
+        $articles = $sortedArticles;
+        $article = $articles[0];
+
+        return View('pages.monthly-magazine', [
+            "publishedDate" => $magazines[0]->published_at,
+            "articles" => $articles,
+            "article" => $article,
+            "topics" => $topics
+        ]);
     }
 }

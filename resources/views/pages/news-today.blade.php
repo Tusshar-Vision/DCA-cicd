@@ -31,6 +31,9 @@
         <div class="flex space-x-8">
 
             <div class="flex w-auto flex-col space-y-6">
+                @if (isset($date_wise_page))
+                <livewire:widgets.articles-side-bar :topics="$topics" :articles="$articles" />
+                @endif
                 <x-widgets.side-bar-download-menu />
             </div>
 

@@ -36,6 +36,7 @@ Route::controller(Pages\MonthlyMagazineController::class)->group(function () {
     Route::get('/monthly-magazine', 'index')->name('monthly-magazine');
     Route::get('/archive/monthly-magazine', 'archive')->name('monthly-magazine.archive');
     Route::get('/monthly-magazine/{topic}/{article_slug}', 'renderArticle')->name('monthly-magazine.article');
+    Route::get('/monthly-magazine/{month}', 'renderByMonth')->name('monthly-magazine-of-month.article');
 });
 
 Route::controller(Pages\WeeklyFocusController::class)->group(function () {

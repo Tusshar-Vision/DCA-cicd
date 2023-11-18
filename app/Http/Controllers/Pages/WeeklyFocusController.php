@@ -13,15 +13,16 @@ class WeeklyFocusController extends Controller
     private int $initiativeId;
     protected $latestWeeklyFocus;
     protected $articles;
+
     public function __construct(
         private readonly ArticleService $articleService,
         private readonly PublishedInitiativeService $publishedInitiativeService
-    )
-    {
+    ) {
         $this->initiativeId = InitiativesHelper::getInitiativeID('WEEKLY_FOCUS');
     }
 
-    public function index() {
+    public function index()
+    {
 
         $this->getData();
 
@@ -31,7 +32,8 @@ class WeeklyFocusController extends Controller
         return redirect()->route('weekly-focus.article', ['topic' => $article_topic, 'article_slug' => $article_slug]);
     }
 
-    public function renderArticle($topic, $article_slug) {
+    public function renderArticle($topic, $article_slug)
+    {
 
         $this->getData();
 
@@ -44,14 +46,16 @@ class WeeklyFocusController extends Controller
         ]);
     }
 
-    public function archive() {
+    public function archive()
+    {
 
         return View('pages.archives.weekly-focus', [
             "title" => "Weekly Focus Archive"
         ]);
     }
 
-    protected function getData($publishedAt = null) {
+    protected function getData($publishedAt = null)
+    {
 
         $this->latestWeeklyFocus = $this->publishedInitiativeService->getLatestById($this->initiativeId);
 

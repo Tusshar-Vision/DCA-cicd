@@ -10,17 +10,19 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
-class InitiativeService {
+class InitiativeService
+{
 
     public function __construct(
         private readonly PublishedInitiative $publishedInitiatives,
-    )
-    {}
+    ) {
+    }
 
     /**
      * @throws Throwable
      */
-    public function getMenuData(string $initiativeName) : array {
+    public function getMenuData(string $initiativeName): array
+    {
         $initiativeId = InitiativesHelper::getInitiativeID($initiativeName);
 
         throw_unless($initiativeId, new InitiativeNotFoundException($initiativeName . ' not present in database'));
@@ -33,7 +35,8 @@ class InitiativeService {
         };
     }
 
-    protected function getMenuDataForNewsToday($initiativeId) : array {
+    protected function getMenuDataForNewsToday($initiativeId): array
+    {
 
         $mainMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
             ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as published_at')
@@ -57,7 +60,8 @@ class InitiativeService {
         ];
     }
 
-    protected function getMenuDataForMonthlyMagazine($initiativeId) : array {
+    protected function getMenuDataForMonthlyMagazine($initiativeId): array
+    {
 
         $mainMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
             ->selectRaw('DATE_FORMAT(published_at, "%Y") as published_at')
@@ -84,13 +88,16 @@ class InitiativeService {
             }));
         }
 
-        return [
+        $returnData =  [
             'initiative_id' => $initiativeId,
             'data' => $menuData
         ];
+
+        return $returnData;
     }
 
-    protected function getMenuDataForWeeklyFocus($initiativeId) : array {
+    protected function getMenuDataForWeeklyFocus($initiativeId): array
+    {
 
         $mainMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
             ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as published_at')
@@ -102,13 +109,15 @@ class InitiativeService {
         $dateData = $mainMenuData->pluck('published_at')->toArray();
 
         $sideDropDownMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
-            ->with('articles')
+            ->with('articles', function ($article) {
+                $article->with('topic');
+            })
             ->whereIn(DB::raw('DATE_FORMAT(published_at, "%Y-%m")'), $dateData)
             ->get();
 
         $articles = [];
 
-        foreach($sideDropDownMenuData as $data) {
+        foreach ($sideDropDownMenuData as $data) {
             foreach ($data->articles as $article) {
                 $articles[] = $article->toArray();
             }
@@ -122,9 +131,11 @@ class InitiativeService {
             }));
         }
 
-        return [
+        $returnData =  [
             'initiative_id' => $initiativeId,
             'data' => $menuData
         ];
+
+        return $returnData;
     }
 }

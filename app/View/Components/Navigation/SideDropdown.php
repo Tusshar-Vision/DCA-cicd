@@ -13,25 +13,27 @@ class SideDropdown extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public $menuData, public $initiativeId
-    )
-    {}
+        public $menuData,
+        public $initiativeId
+    ) {
+    }
 
-    public function getDataToRender() : array {
+    public function getDataToRender(): array
+    {
 
         $dataToRender = [];
 
         //Checking if the Initiative is Monthly Magazine
 
-        if($this->initiativeId === 2) {
-            foreach ($this->menuData as $key => $value) {
+        if ($this->initiativeId === 2) {
+            foreach ($this->menuData[1] as $key => $value) {
                 $dataToRender[] = Carbon::parse($value['published_at'])->monthName;
             }
         }
 
-        if($this->initiativeId === 3) {
+        if ($this->initiativeId === 3) {
             foreach ($this->menuData as $key => $value) {
-                $dataToRender[] = $value['title'];
+                $dataToRender[] = ['title' => $value['title'], 'topic' => $value['topic']['name'], 'slug' => $value['slug']];
             }
         }
 
