@@ -6,6 +6,7 @@ use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugi
 use Althinect\FilamentSpatieRolesPermissions\Middleware\SyncSpatiePermissionsWithFilamentTenants;
 use Awcodes\Overlook\OverlookPlugin;
 use Awcodes\Overlook\Widgets\OverlookWidget;
+use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -13,8 +14,6 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets;
-use FilipFonal\FilamentLogManager\FilamentLogManager;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -22,8 +21,6 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use ShuvroRoy\FilamentSpatieLaravelHealth\FilamentSpatieLaravelHealthPlugin;
-use Filament\Notifications\Livewire\DatabaseNotifications;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -42,14 +39,12 @@ class AdminPanelProvider extends PanelProvider
                         '2xl' => null,
                     ]),
                 FilamentSpatieRolesPermissionsPlugin::make(),
-                FilamentSpatieLaravelHealthPlugin::make(),
-                FilamentLogManager::make(),
-                \Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin::make()
+                FilamentJobsMonitorPlugin::make()
                     ->label('Job')
                     ->pluralLabel('Jobs')
                     ->enableNavigation(true)
                     ->navigationIcon('heroicon-o-cpu-chip')
-                    ->navigationGroup('System')
+                    ->navigationGroup('Settings')
                     ->navigationSort(5)
                     ->navigationCountBadge(true)
                     ->enablePruning(true)
@@ -64,7 +59,7 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::hex('#005faf'),
             ])
             ->brandLogo(asset('images/LightLogo.svg'))
-            ->darkModeBrandLogo('images/DarkLogo.svg')
+            ->darkModeBrandLogo(asset('images/LightLogo.svg'))
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
