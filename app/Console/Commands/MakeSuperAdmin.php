@@ -12,7 +12,7 @@ class MakeSuperAdmin extends Command
      *
      * @var string
      */
-    protected $signature = 'app:make-super-admin {user}';
+    protected $signature = 'app:make-super-admin {user_id}';
 
     /**
      * The console command description.

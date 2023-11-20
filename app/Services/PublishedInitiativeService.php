@@ -27,13 +27,18 @@ class PublishedInitiativeService
     public function getByMonthAndYear($month)
     {
 
-        // $year =  (int) Carbon::parse($month)->year;
-        // $month = (int) Carbon::parse($month)->month;
-        // logger("monthyear", [$year, $month]);
+        $year =  Carbon::parse($month)->year;
+        $month = Carbon::parse($month)->month;
+        logger("monthyear", [$year, $month]);
 
-        $magazines = PublishedInitiative::whereYear('published_at', '2023')
-            ->whereMonth('published_at', '11')
-            ->get();
+        $magazines = PublishedInitiative::whereYear('published_at', '=', $year)
+            ->whereMonth('published_at', '=', 11)
+            // ->whereRaw('extract(month from published_at) = ?', ["$month"])
+            ->latest('published_at')
+            ->with('articles', function ($article) {
+                $article->with('topic');
+            })
+            ->first();
 
         return $magazines;
     }
