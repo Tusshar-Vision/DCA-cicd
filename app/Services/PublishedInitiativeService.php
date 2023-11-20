@@ -29,7 +29,6 @@ class PublishedInitiativeService
 
         $year =  Carbon::parse($month)->year;
         $month = Carbon::parse($month)->month;
-        logger("monthyear", [$year, $month]);
 
         $magazines = PublishedInitiative::whereYear('published_at', '=', $year)
             ->whereMonth('published_at', '=', 11)
