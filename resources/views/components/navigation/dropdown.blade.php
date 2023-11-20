@@ -6,9 +6,6 @@
     <ul x-data="{ isMenuOpen: null }" class="absolute font-normal bg-visionGray shadow rounded-sm w-72 border mt-2 py-1 z-50">
         <x-buttons.primary button-text="{!! $buttonText !!}" button-link="{{ $buttonLink }}" />
             @foreach ($menuData['data'] as $mainMenu => $subMenu)
-            <?php logger("mainMenui");
-            logger("here", [$menuData['initiative_id'], $menuData['initiative_id']==2?$subMenu[0]['published_at']: 34]); 
-            ?>
                 @if(!empty($subMenu))
                     <li class="relative">
                         <a  href="#"

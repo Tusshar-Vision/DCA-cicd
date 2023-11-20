@@ -26,7 +26,6 @@ class SideDropdown extends Component
         //Checking if the Initiative is Monthly Magazine
 
         if ($this->initiativeId === 2) {
-            logger("from sidedropdown class", [$this->menuData[1]]);
             foreach ($this->menuData[1] as $key => $value) {
                 $dataToRender[] = Carbon::parse($value['published_at'])->monthName;
             }
