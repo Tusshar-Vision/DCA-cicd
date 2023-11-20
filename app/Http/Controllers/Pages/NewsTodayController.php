@@ -6,6 +6,7 @@ use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
 use App\Services\ArticleService;
 use App\Services\PublishedInitiativeService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -28,8 +29,9 @@ class NewsTodayController extends Controller
 
         $article_slug = $this->articles[0]->slug;
         $article_topic = $this->articles[0]->topic->name;
+        $date =  Carbon::parse($this->articles[0]->published_at)->format('Y-m-d');
 
-        return redirect()->route('news-today.article', ['topic' => $article_topic, 'article_slug' => $article_slug]);
+        return redirect()->route('news-today-date-wise.article', ['date' => $date, 'topic' => $article_topic, 'article_slug' => $article_slug, 'page' => 'home_page']);
     }
 
     public function renderArticle($topic, $article_slug)
@@ -64,6 +66,15 @@ class NewsTodayController extends Controller
 
     public function getArticlesDateWise($date)
     {
+        $articles = $this->articleService->getArticlesByDate($date);
+        $article = $articles[0];
+
+        return redirect()->route('news-today-date-wise.article', ['date' => $date, 'topic' => $article->topic->name, 'article_slug' => $article->slug]);
+    }
+
+    public function renderArticles($date, $topic, $slug, $page = null)
+    {
+        logger("pageee", [$page]);
         $articles = $this->articleService->getArticlesByDate($date);
         $article = $articles[0];
 
