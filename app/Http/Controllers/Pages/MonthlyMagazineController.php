@@ -94,20 +94,13 @@ class MonthlyMagazineController extends Controller
 
     public function renderByMonth($month)
     {
-        // $this->latestMonthlyMagazine = $this->publishedInitiativeService->getLatestById($this->initiativeId);
+        $magazine = $this->publishedInitiativeService->getByMonthAndYear($month);
 
-        $magazines = $this->publishedInitiativeService->getByMonthAndYear($month);
-
-        $articles = [];
+        $articles = $magazine->articles;
         $topics = [];
 
-
-        foreach ($magazines as $magazine) {
-            $magazineArticles = $magazine->articles;
-            foreach ($magazineArticles as $article) {
-                $articles[] = $article;
-                $topics[] = $article->topic;
-            }
+        foreach ($articles as $article) {
+            $topics[] = $article->topic;
         }
 
         $topics = array_unique($topics);
@@ -130,7 +123,7 @@ class MonthlyMagazineController extends Controller
         $article = $articles[0];
 
         return View('pages.monthly-magazine', [
-            "publishedDate" => $magazines[0]->published_at,
+            "publishedDate" => $magazine->published_at,
             "articles" => $articles,
             "article" => $article,
             "topics" => $topics
