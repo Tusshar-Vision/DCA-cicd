@@ -12,16 +12,17 @@ class PublishedInitiativeService
     ) {
     }
 
-    public function getLatestById($initiativeId)
+    public function getLatestById($initiativeId, $date)
     {
         return $this->publishedInitiatives
             ->where('initiative_id', '=', $initiativeId)
+            ->whereDate('published_at', $date)
             ->where('is_published', '=', true)
             ->latest('published_at')
             ->limit(1)
             ->with('articles', function ($article) {
                 $article->with('topic');
-            })->get();
+            })->first();
     }
 
     public function getByMonthAndYear($month)
