@@ -33,7 +33,7 @@ class SideDropdown extends Component
 
         if ($this->initiativeId === 3) {
             foreach ($this->menuData as $key => $value) {
-                $dataToRender[] = ['title' => $value['title'], 'topic' => $value['topic']['name'], 'slug' => $value['slug']];
+                $dataToRender[] = ['date' => $value['published_at'] ?? $value['created_at'], 'title' => $value['title'], 'topic' => $value['topic']['name'], 'slug' => $value['slug']];
             }
         }
 

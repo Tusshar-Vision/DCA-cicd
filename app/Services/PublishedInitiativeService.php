@@ -12,33 +12,39 @@ class PublishedInitiativeService
     ) {
     }
 
-    public function getLatestById($initiativeId, $date)
+    public function getLatestById($initiativeId, $date = null)
     {
-        return $this->publishedInitiatives
+        $query =  $this->publishedInitiatives
             ->where('initiative_id', '=', $initiativeId)
-            ->whereDate('published_at', $date)
-            ->where('is_published', '=', true)
-            ->latest('published_at')
+            ->where('is_published', '=', true);
+
+        if ($date) {
+            $query->whereDate('published_at', $date);
+        }
+
+        return $query->latest('published_at')
             ->limit(1)
             ->with('articles', function ($article) {
                 $article->with('topic');
             })->first();
     }
 
-    public function getByMonthAndYear($month)
+    public function getByMonthAndYear($initiativeId, $month)
     {
-
+        logger("mongh", [$month]);
         $year =  Carbon::parse($month)->year;
         $month = Carbon::parse($month)->month;
 
-        $magazines = PublishedInitiative::whereYear('published_at', '=', $year)
-            ->whereMonth('published_at', '=', 11)
-            // ->whereRaw('extract(month from published_at) = ?', ["$month"])
+        $magazines = $this->publishedInitiatives
+            ->where('initiative_id', '=', $initiativeId)
+            ->whereRaw("YEAR(published_at) = $year && MONTH(published_at) = $month")
             ->latest('published_at')
             ->with('articles', function ($article) {
                 $article->with('topic');
             })
             ->first();
+
+        logger("magaziness", [$magazines]);
 
         return $magazines;
     }

@@ -40,7 +40,7 @@
                                              "
                                 @mouseleaves="isMagazineOpen = false"
                             >
-                                <a class="hover:text-visionRed {{ request()->is('monthly-magazine*') ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}" wire:navigate>{{ $initiative->name }}</a>
+                                <a class="hover:text-visionRed {{ request()->is('monthly-magazine*') ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}">{{ $initiative->name }}</a>
                             </li>
 
                             <x-navigation.dropdown
