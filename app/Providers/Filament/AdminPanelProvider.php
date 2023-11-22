@@ -2,7 +2,6 @@
 
 namespace App\Providers\Filament;
 
-use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
 use Althinect\FilamentSpatieRolesPermissions\Middleware\SyncSpatiePermissionsWithFilamentTenants;
 use Awcodes\Overlook\OverlookPlugin;
 use Awcodes\Overlook\Widgets\OverlookWidget;
@@ -38,7 +37,6 @@ class AdminPanelProvider extends PanelProvider
                         'xl' => 5,
                         '2xl' => null,
                     ]),
-                FilamentSpatieRolesPermissionsPlugin::make(),
                 FilamentJobsMonitorPlugin::make()
                     ->label('Job')
                     ->pluralLabel('Jobs')

@@ -22,6 +22,8 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
+    protected static ?string $navigationGroup = 'Users and Roles';
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
@@ -64,6 +66,11 @@ class UserResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()->hasRole(['Super Admin', 'Admin']);
     }
 
     public static function getPages(): array
