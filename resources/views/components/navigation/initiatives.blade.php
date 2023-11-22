@@ -13,13 +13,13 @@
                     @if ($initiative->path === '/news-today')
                         <div class="relative">
                             <li class="font-semibold pr-6"
-                                @mouseenter="isNewsOpen = true;
-                                             isMagazineOpen = false;
-                                             isWeeklyFocusOpen = false;
-                                             "
-                                @mouseleaves="isNewsOpen = false"
+                                @click="
+                                        isNewsOpen = !isNewsOpen;
+                                        isMagazineOpen = false;
+                                        isWeeklyFocusOpen = false;
+                                       "
                             >
-                                <a class="hover:text-visionRed {{ request()->is('news-today*') ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}">{{ $initiative->name }}</a>
+                                <a class="hover:text-visionRed {{ request()->is('news-today*') ? 'text-visionRed' : '' }}" href="#">{{ $initiative->name }}</a>
                             </li>
 
                             <x-navigation.dropdown
@@ -34,13 +34,13 @@
                     @elseif ($initiative->path === '/monthly-magazine')
                         <div class="relative">
                             <li class="font-semibold pr-6"
-                                @mouseenter="isMagazineOpen = true;
-                                             isNewsOpen = false;
-                                             isWeeklyFocusOpen = false;
-                                             "
-                                @mouseleaves="isMagazineOpen = false"
+                                @click="
+                                        isMagazineOpen = !isMagazineOpen;
+                                        isNewsOpen = false;
+                                        isWeeklyFocusOpen = false;
+                                       "
                             >
-                                <a class="hover:text-visionRed {{ request()->is('monthly-magazine*') ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}">{{ $initiative->name }}</a>
+                                <a class="hover:text-visionRed {{ request()->is('monthly-magazine*') ? 'text-visionRed' : '' }}" href="#">{{ $initiative->name }}</a>
                             </li>
 
                             <x-navigation.dropdown
@@ -55,13 +55,13 @@
                     @elseif ($initiative->path === '/weekly-focus')
                         <div class="relative">
                             <li class="font-semibold pr-6"
-                                @mouseenter="isWeeklyFocusOpen = true;
-                                             isMagazineOpen = false;
-                                             isNewsOpen = false;
-                                             "
-                                @mouseleaves="isWeeklyFocusOpen = false"
+                                @click="
+                                        isWeeklyFocusOpen = !isWeeklyFocusOpen;
+                                        isMagazineOpen = false;
+                                        isNewsOpen = false;
+                                       "
                             >
-                                <a class="hover:text-visionRed {{ request()->is('weekly-focus*') ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}" wire:navigate>{{ $initiative->name }}</a>
+                                <a class="hover:text-visionRed {{ request()->is('weekly-focus*') ? 'text-visionRed' : '' }}" href="#">{{ $initiative->name }}</a>
                             </li>
 
                             <x-navigation.dropdown
