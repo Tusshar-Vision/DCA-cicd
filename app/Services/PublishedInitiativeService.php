@@ -14,7 +14,7 @@ class PublishedInitiativeService
 
     public function getLatestById($initiativeId, $date = null)
     {
-        $query =  $this->publishedInitiatives
+        $query = $this->publishedInitiatives
             ->where('initiative_id', '=', $initiativeId)
             ->where('is_published', '=', true);
 
@@ -31,20 +31,18 @@ class PublishedInitiativeService
 
     public function getByMonthAndYear($initiativeId, $month)
     {
-        logger("mongh", [$month]);
         $year =  Carbon::parse($month)->year;
         $month = Carbon::parse($month)->month;
 
         $magazines = $this->publishedInitiatives
             ->where('initiative_id', '=', $initiativeId)
+            ->where('is_published', '=', true)
             ->whereRaw("YEAR(published_at) = $year && MONTH(published_at) = $month")
             ->latest('published_at')
             ->with('articles', function ($article) {
                 $article->with('topic');
             })
             ->first();
-
-        logger("magaziness", [$magazines]);
 
         return $magazines;
     }

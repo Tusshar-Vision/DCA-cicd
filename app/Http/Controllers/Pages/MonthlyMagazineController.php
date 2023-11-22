@@ -29,7 +29,6 @@ class MonthlyMagazineController extends Controller
 
     public function index()
     {
-
         $publishedAt = Carbon::now()->format('Y-m');
         $this->getData($publishedAt);
 
@@ -96,7 +95,6 @@ class MonthlyMagazineController extends Controller
 
     public function archive()
     {
-
         return View('pages.archives.monthly-magazine', [
             "title" => "Monthly Magazine Archives"
         ]);
