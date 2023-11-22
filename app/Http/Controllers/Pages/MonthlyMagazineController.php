@@ -8,6 +8,7 @@ use App\Models\Article;
 use App\Models\User;
 use App\Services\ArticleService;
 use App\Services\PublishedInitiativeService;
+use Carbon\Carbon;
 
 class MonthlyMagazineController extends Controller
 {
@@ -29,43 +30,44 @@ class MonthlyMagazineController extends Controller
     public function index()
     {
 
-        $this->getData();
+        $publishedAt = Carbon::now()->format('Y-m');
+        $this->getData($publishedAt);
 
         $this->article_slug = $this->articles[0]->slug;
         $this->article_topic = $this->articles[0]->topic->name;
 
-        return redirect()->route('monthly-magazine.article', ['topic' => $this->article_topic, 'article_slug' => $this->article_slug]);
+        return redirect()->route('monthly-magazine.article', ['month' => $publishedAt, 'topic' => $this->article_topic, 'article_slug' => $this->article_slug]);
     }
 
-    public function renderArticle($topic, $article_slug)
+
+    public function renderByMonth($month)
+    {
+        $this->getData($month);
+        $this->article_slug = $this->articles[0]->slug;
+        $this->article_topic = $this->articles[0]->topic->name;
+        return redirect()->route('monthly-magazine.article', ['month' => $month, 'topic' => $this->article_topic, 'article_slug' => $this->article_slug]);
+    }
+
+    public function renderArticles($month, $topic, $article_slug)
     {
 
-        $this->getData();
+        $this->getData($month);
 
         $article = $this->articleService->getArticleBySlug($article_slug);
 
         return View('pages.monthly-magazine', [
-            "publishedDate" => $this->latestMonthlyMagazine[0]->published_at,
+            "publishedDate" => $this->latestMonthlyMagazine->published_at,
             "articles" => $this->articles,
             "article" => $article,
             "topics" => $this->topics
         ]);
     }
 
-    public function archive()
-    {
-
-        return View('pages.archives.monthly-magazine', [
-            "title" => "Monthly Magazine Archives"
-        ]);
-    }
-
     protected function getData($publishedAt = null)
     {
+        $this->latestMonthlyMagazine = $this->publishedInitiativeService->getByMonthAndYear($this->initiativeId, $publishedAt);
 
-        $this->latestMonthlyMagazine = $this->publishedInitiativeService->getLatestById($this->initiativeId);
-
-        $this->articles = $this->latestMonthlyMagazine[0]->articles;
+        $this->articles = $this->latestMonthlyMagazine->articles;
 
         $this->topics = [];
 
@@ -92,41 +94,11 @@ class MonthlyMagazineController extends Controller
         $this->articles = $sortedArticles;
     }
 
-    public function renderByMonth($month)
+    public function archive()
     {
-        $magazine = $this->publishedInitiativeService->getByMonthAndYear($month);
 
-        $articles = $magazine->articles;
-        $topics = [];
-
-        foreach ($articles as $article) {
-            $topics[] = $article->topic;
-        }
-
-        $topics = array_unique($topics);
-
-        usort($topics, function ($a, $b) {
-            return $a->id - $b->id;
-        });
-
-        $sortedArticles = [];
-
-        foreach ($topics as $topic) {
-            foreach ($articles as $article) {
-                if ($article->topic === $topic) {
-                    $sortedArticles[] = $article;
-                }
-            }
-        }
-
-        $articles = $sortedArticles;
-        $article = $articles[0];
-
-        return View('pages.monthly-magazine', [
-            "publishedDate" => $magazine->published_at,
-            "articles" => $articles,
-            "article" => $article,
-            "topics" => $topics
+        return View('pages.archives.monthly-magazine', [
+            "title" => "Monthly Magazine Archives"
         ]);
     }
 }

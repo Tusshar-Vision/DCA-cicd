@@ -22,7 +22,7 @@ class ArticleService
 
     public function getArticlesByDate($date)
     {
-        return $this->articles->whereDate('created_at', Carbon::parse($date))->get();
+        return $this->articles->whereDate('created_at', Carbon::parse($date))->orderBy('published_at')->get();
     }
 
     public function getFeatured(int $limit = 12): Collection|array

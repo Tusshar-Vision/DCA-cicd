@@ -6,6 +6,7 @@ use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
 use App\Services\ArticleService;
 use App\Services\PublishedInitiativeService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class WeeklyFocusController extends Controller
@@ -26,13 +27,15 @@ class WeeklyFocusController extends Controller
 
         $this->getData();
 
-        $article_slug = $this->articles[0]->slug;
-        $article_topic = $this->articles[0]->topic->name;
+        $article = $this->articles[0];
+        $article_slug = $article->slug;
+        $article_topic = $article->topic->name;
+        $publishedAt = Carbon::parse($article->published_at)->format('Y-m-d');
 
-        return redirect()->route('weekly-focus.article', ['topic' => $article_topic, 'article_slug' => $article_slug]);
+        return redirect()->route('weekly-focus.article', ['date' => $publishedAt, 'topic' => $article_topic, 'article_slug' => $article_slug]);
     }
 
-    public function renderArticle($topic, $article_slug)
+    public function renderArticles($date, $topic, $article_slug)
     {
 
         $this->getData();
@@ -40,11 +43,18 @@ class WeeklyFocusController extends Controller
         $article = $this->articleService->getArticleBySlug($article_slug);
 
         return View('pages.weekly-focus', [
-            "publishedDate" => $this->latestWeeklyFocus[0]->published_at,
+            "publishedDate" => $this->latestWeeklyFocus->published_at,
             "articles" => $this->articles,
             "article" => $article,
         ]);
     }
+
+    protected function getData($publishedAt = null)
+    {
+        $this->latestWeeklyFocus = $this->publishedInitiativeService->getLatestById($this->initiativeId);
+        $this->articles = $this->latestWeeklyFocus->articles;
+    }
+
 
     public function archive()
     {
@@ -52,13 +62,5 @@ class WeeklyFocusController extends Controller
         return View('pages.archives.weekly-focus', [
             "title" => "Weekly Focus Archive"
         ]);
-    }
-
-    protected function getData($publishedAt = null)
-    {
-
-        $this->latestWeeklyFocus = $this->publishedInitiativeService->getLatestById($this->initiativeId);
-
-        $this->articles = $this->latestWeeklyFocus[0]->articles;
     }
 }

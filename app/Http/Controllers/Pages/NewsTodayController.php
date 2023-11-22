@@ -6,6 +6,7 @@ use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
 use App\Services\ArticleService;
 use App\Services\PublishedInitiativeService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -14,6 +15,7 @@ class NewsTodayController extends Controller
     private int $initiativeId;
     protected $latestNewsToday;
     protected $articles;
+
     public function __construct(
         private readonly PublishedInitiativeService $publishedInitiativeService,
         private readonly ArticleService $articleService
@@ -23,48 +25,38 @@ class NewsTodayController extends Controller
 
     public function index()
     {
+        $latestNewsToday = $this->publishedInitiativeService->getLatestById($this->initiativeId, Carbon::now());
 
-        $this->getData();
+        if (!$latestNewsToday) {
+            return View('pages.no-news-today');
+        }
 
-        $article_slug = $this->articles[0]->slug;
-        $article_topic = $this->articles[0]->topic->name;
+        $articles = $latestNewsToday->articles;
+        $article_slug = $articles[0]->slug;
+        $article_topic = $articles[0]->topic->name;
+        $date =  Carbon::parse($articles[0]->published_at)->format('Y-m-d');
 
-        return redirect()->route('news-today.article', ['topic' => $article_topic, 'article_slug' => $article_slug]);
-    }
-
-    public function renderArticle($topic, $article_slug)
-    {
-
-        $this->getData();
-
-        $article = $this->articleService->getArticleBySlug($article_slug);
-
-        return View('pages.news-today', [
-            "publishedDate" => $this->latestNewsToday[0]->published_at,
-            "articles" => $this->articles,
-            "article" => $article,
-        ]);
-    }
-
-    public function archive()
-    {
-
-        return View('pages.archives.daily-news', [
-            "title" => "Daily News Archive"
-        ]);
-    }
-
-    protected function getData($publishedAt = null)
-    {
-
-        $this->latestNewsToday = $this->publishedInitiativeService->getLatestById($this->initiativeId);
-
-        $this->articles = $this->latestNewsToday[0]->articles;
+        return redirect()->route('news-today-date-wise.article', ['date' => $date, 'topic' => $article_topic, 'article_slug' => $article_slug]);
     }
 
     public function getArticlesDateWise($date)
     {
-        $articles = $this->articleService->getArticlesByDate($date);
+        $latestPublishedInitiative = $this->publishedInitiativeService->getLatestById($this->initiativeId, $date);
+
+        if (!$latestPublishedInitiative) {
+            return View('pages.no-news-today');
+        }
+
+        $articles = $latestPublishedInitiative->articles;
+        $article = $articles[0];
+
+        return redirect()->route('news-today-date-wise.article', ['date' => $date, 'topic' => $article->topic->name, 'article_slug' => $article->slug]);
+    }
+
+    public function renderArticles($date, $topic, $slug)
+    {
+        $latestPublishedInitiative = $this->publishedInitiativeService->getLatestById($this->initiativeId, $date);
+        $articles = $latestPublishedInitiative->articles;
         $article = $articles[0];
 
         $topics = [];
@@ -96,6 +88,13 @@ class NewsTodayController extends Controller
             "topics" => $topics,
             "articles" => $articles,
             "article" => $article,
+        ]);
+    }
+
+    public function archive()
+    {
+        return View('pages.archives.daily-news', [
+            "title" => "Daily News Archive"
         ]);
     }
 }
