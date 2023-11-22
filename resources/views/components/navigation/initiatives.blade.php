@@ -10,75 +10,81 @@
             </li>
             <div class="flex" x-data="{ isNewsOpen: false, isMagazineOpen: false, isWeeklyFocusOpen: false }">
                 @foreach ($initiatives as $initiative)
-                    @if ($initiative->path === '/news-today')
-                        <div class="relative">
-                            <li class="font-semibold pr-6"
-                                @click="
+                    @switch($initiative->path)
+                        @case('/news-today')
+                            <div class="relative">
+                                <li class="font-semibold pr-6"
+                                    @click="
                                         isNewsOpen = !isNewsOpen;
                                         isMagazineOpen = false;
                                         isWeeklyFocusOpen = false;
                                        "
-                            >
-                                <a class="hover:text-visionRed {{ request()->is('news-today*') ? 'text-visionRed' : '' }}" href="#">{{ $initiative->name }}</a>
-                            </li>
+                                >
+                                    <a class="hover:text-visionRed {{ request()->is('news-today*') ? 'text-visionRed' : '' }}" href="#">{{ $initiative->name }}</a>
+                                </li>
 
-                            <x-navigation.dropdown
-                                x-show="isNewsOpen"
-                                @click.away="isNewsOpen = false"
-                                button-text="Today's News"
-                                button-link="{{ $initiative->path }}"
-                                archive-link="{{ route('news-today.archive') }}"
-                                :menuData="$menuData['newsToday']"
-                            />
-                        </div>
-                    @elseif ($initiative->path === '/monthly-magazine')
-                        <div class="relative">
-                            <li class="font-semibold pr-6"
-                                @click="
+                                <x-navigation.dropdown
+                                    x-show="isNewsOpen"
+                                    @click.away="isNewsOpen = false"
+                                    button-text="Today's News"
+                                    button-link="{{ $initiative->path }}"
+                                    archive-link="{{ route('news-today.archive') }}"
+                                    :menuData="$menuData['newsToday']"
+                                />
+                            </div>
+                        @break
+
+                        @case('/monthly-magazine')
+                            <div class="relative">
+                                <li class="font-semibold pr-6"
+                                    @click="
                                         isMagazineOpen = !isMagazineOpen;
                                         isNewsOpen = false;
                                         isWeeklyFocusOpen = false;
                                        "
-                            >
-                                <a class="hover:text-visionRed {{ request()->is('monthly-magazine*') ? 'text-visionRed' : '' }}" href="#">{{ $initiative->name }}</a>
-                            </li>
+                                >
+                                    <a class="hover:text-visionRed {{ request()->is('monthly-magazine*') ? 'text-visionRed' : '' }}" href="#">{{ $initiative->name }}</a>
+                                </li>
 
-                            <x-navigation.dropdown
-                                x-show="isMagazineOpen"
-                                @click.away="isMagazineOpen = false"
-                                button-text="This Month's Magazine"
-                                button-link="{{ $initiative->path }}"
-                                archive-link="{{ route('monthly-magazine.archive') }}"
-                                :menuData="$menuData['monthlyMagazine']"
-                            />
-                        </div>
-                    @elseif ($initiative->path === '/weekly-focus')
-                        <div class="relative">
-                            <li class="font-semibold pr-6"
-                                @click="
+                                <x-navigation.dropdown
+                                    x-show="isMagazineOpen"
+                                    @click.away="isMagazineOpen = false"
+                                    button-text="This Month's Magazine"
+                                    button-link="{{ $initiative->path }}"
+                                    archive-link="{{ route('monthly-magazine.archive') }}"
+                                    :menuData="$menuData['monthlyMagazine']"
+                                />
+                            </div>
+                        @break
+
+                        @case('/weekly-focus')
+                            <div class="relative">
+                                <li class="font-semibold pr-6"
+                                    @click="
                                         isWeeklyFocusOpen = !isWeeklyFocusOpen;
                                         isMagazineOpen = false;
                                         isNewsOpen = false;
                                        "
-                            >
-                                <a class="hover:text-visionRed {{ request()->is('weekly-focus*') ? 'text-visionRed' : '' }}" href="#">{{ $initiative->name }}</a>
+                                >
+                                    <a class="hover:text-visionRed {{ request()->is('weekly-focus*') ? 'text-visionRed' : '' }}" href="#">{{ $initiative->name }}</a>
+                                </li>
+
+                                <x-navigation.dropdown
+                                    x-show="isWeeklyFocusOpen"
+                                    @click.away="isWeeklyFocusOpen = false"
+                                    button-text="Latest Edition"
+                                    button-link="{{ $initiative->path }}"
+                                    archive-link="{{ route('weekly-focus.archive') }}"
+                                    :menuData="$menuData['weeklyFocus']"
+                                />
+                            </div>
+                        @break
+
+                        @default
+                            <li class="font-semibold pr-6">
+                                <a class="hover:text-visionRed {{ request()->is(trim($initiative->path, '/')) ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}" wire:navigate>{{ $initiative->name }}</a>
                             </li>
-
-                            <x-navigation.dropdown
-                                x-show="isWeeklyFocusOpen"
-                                @click.away="isWeeklyFocusOpen = false"
-                                button-text="Latest Edition"
-                                button-link="{{ $initiative->path }}"
-                                archive-link="{{ route('weekly-focus.archive') }}"
-                                :menuData="$menuData['weeklyFocus']"
-                            />
-                        </div>
-                    @else
-                        <li class="font-semibold pr-6">
-                            <a class="hover:text-visionRed {{ request()->is(trim($initiative->path, '/')) ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}" wire:navigate>{{ $initiative->name }}</a>
-                        </li>
-                    @endif
-
+                    @endswitch
                 @endforeach
             </div>
         </ul>
