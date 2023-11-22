@@ -43,6 +43,7 @@ class ArticleService
 
     public static function getArticleURL($article): string
     {
+//        dd(Carbon::parse($article->publishedInitiative->published_at));
         $initiative = $article->initiative->name;
         $topic = $article->topic->name;
         $slug = $article->slug;
