@@ -31,9 +31,7 @@
         <div class="flex space-x-8">
 
             <div class="flex w-auto flex-col space-y-6">
-                @if (isset($date_wise_page))
                 <livewire:widgets.articles-side-bar :topics="$topics" :articles="$articles" />
-                @endif
                 <x-widgets.side-bar-download-menu />
             </div>
 
@@ -41,11 +39,11 @@
                 @if( !empty($articles) && count($articles) !== 0 )
 
                     <x-header.article readTime="{{ $article->read_time }}" />
-                    <div class="mt-4 printable-area">
+                    <div id="article-content" class="mt-4 printable-area">
                         {!! $article->content !!}
                     </div>
                     <div class="mt-12">
-                        <x-widgets.article-pagination />
+                        <x-widgets.article-pagination :totalArticles="$totalArticles" :baseUrl="$baseUrl" />
                     </div>
                 @else
                     <h1>No articles</h1>

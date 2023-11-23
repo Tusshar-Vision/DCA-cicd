@@ -44,7 +44,7 @@
                                 {!! $article->content !!}
                         </div>
                     <div class="mt-12">
-                        <x-widgets.article-pagination />
+                        <x-widgets.article-pagination :totalArticles="$totalArticles" :baseUrl="$baseUrl"/>
                     </div>
                 @else
                     <h1>No articles</h1>

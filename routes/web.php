@@ -27,7 +27,7 @@ Route::get('/search', [Pages\SearchController::class, 'index'])->name('search');
 
 Route::controller(Pages\NewsTodayController::class)->group(function () {
     Route::get('/news-today', 'index')->name('news-today');
-    Route::get('/news-today/{date}', 'getArticlesDateWise')->name('news-today-date-wise');
+    Route::get('/news-today/{date}/{article_no?}', 'getArticlesDateWise')->name('news-today-date-wise');
     Route::get('/news-today/{date}/{topic}/{article_slug}', 'renderArticles')->name('news-today-date-wise.article');
     Route::get('/archive/daily-news', 'archive')->name('news-today.archive');
 });

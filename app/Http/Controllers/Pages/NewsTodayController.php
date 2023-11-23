@@ -9,6 +9,7 @@ use App\Services\PublishedInitiativeService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Redirect;
 
 class NewsTodayController extends Controller
 {
@@ -47,22 +48,26 @@ class NewsTodayController extends Controller
             return View('pages.no-news-today');
         }
 
+        $article_no = 1;
+        if($page_no = request()->query('page')) $article_no = $page_no;
+        
         $articles = $latestPublishedInitiative->articles;
-        $article = $articles[0];
+        $article = $articles[$article_no-1];
 
-        return redirect()->route('news-today-date-wise.article', ['date' => $date, 'topic' => $article->topic->name, 'article_slug' => $article->slug]);
+        if($page_no) return Redirect::to(route('news-today-date-wise.article', ['date' => $date, 'topic' => $article->topic->name, 'article_slug' => $article->slug])."?page=$page_no");
+        else return Redirect::to(route('news-today-date-wise.article', ['date' => $date, 'topic' => $article->topic->name, 'article_slug' => $article->slug]));
     }
 
     public function renderArticles($date, $topic, $slug)
     {
         $latestPublishedInitiative = $this->publishedInitiativeService->getLatestById($this->initiativeId, $date);
         $articles = $latestPublishedInitiative->articles;
-        $article = $articles[0];
+        $article = $this->articleService->getArticleBySlug($slug);
 
         $topics = [];
 
-        foreach ($articles as $article) {
-            $topics[] = $article->topic;
+        foreach ($articles as $a) {
+            $topics[] = $a->topic;
         }
 
         $topics = array_unique($topics);
@@ -74,9 +79,9 @@ class NewsTodayController extends Controller
         $sortedArticles = [];
 
         foreach ($topics as $topic) {
-            foreach ($articles as $article) {
-                if ($article->topic === $topic) {
-                    $sortedArticles[] = $article;
+            foreach ($articles as $a) {
+                if ($a->topic === $topic) {
+                    $sortedArticles[] = $a;
                 }
             }
         }
@@ -84,10 +89,11 @@ class NewsTodayController extends Controller
         $articles = $sortedArticles;
 
         return View('pages.news-today', [
-            "date_wise_page" => true,
             "topics" => $topics,
             "articles" => $articles,
             "article" => $article,
+            "totalArticles" => count($articles),
+            "baseUrl" => url('news-today')."/".$date
         ]);
     }
 
