@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Services\ArticleService;
 use App\Services\PublishedInitiativeService;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Redirect;
+
 
 class MonthlyMagazineController extends Controller
 {
@@ -43,9 +45,13 @@ class MonthlyMagazineController extends Controller
     public function renderByMonth($month)
     {
         $this->getData($month);
-        $this->article_slug = $this->articles[0]->slug;
-        $this->article_topic = $this->articles[0]->topic->name;
-        return redirect()->route('monthly-magazine.article', ['month' => $month, 'topic' => $this->article_topic, 'article_slug' => $this->article_slug]);
+
+        $article_no = 1;
+        if($page_no = request()->query('page')) $article_no = $page_no;
+        $article = $this->articles[$article_no-1];
+
+        if($page_no) return Redirect::to(route('monthly-magazine.article', ['month' => $month, 'topic' => $article->topic->name, 'article_slug' => $article->slug])."?page=$page_no");
+        else return Redirect::to(route('monthly-magazine.article', ['month' => $month, 'topic' => $article->topic->name, 'article_slug' => $article->slug]));
     }
 
     public function renderArticles($month, $topic, $article_slug)
@@ -59,7 +65,9 @@ class MonthlyMagazineController extends Controller
             "publishedDate" => $this->latestMonthlyMagazine->published_at,
             "articles" => $this->articles,
             "article" => $article,
-            "topics" => $this->topics
+            "topics" => $this->topics,
+            "totalArticles" => count($this->articles),
+            "baseUrl" => url('monthly-magazine')."/".$month
         ]);
     }
 
