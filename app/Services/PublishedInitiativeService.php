@@ -15,8 +15,8 @@ class PublishedInitiativeService
     public function getLatestById($initiativeId, $date = null)
     {
         $query = $this->publishedInitiatives
-            ->where('initiative_id', '=', $initiativeId)
-            ->where('is_published', '=', true);
+            ->where('initiative_id', '=', $initiativeId);
+//            ->where('is_published', '=', true);
 
         if ($date) {
             $query->whereDate('published_at', $date);
