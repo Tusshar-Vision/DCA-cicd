@@ -25,12 +25,11 @@ class PublishedInitiativeService
             $query->whereDate('published_at', $date);
         }
 
-          return  $query->latest('published_at')
+        return $query->latest('published_at')
             ->limit(1)
             ->with('articles', function ($article) {
                 $article->with('topic');
             })->first();
-         
     }
 
     public function getByMonthAndYear($initiativeId, $month)
