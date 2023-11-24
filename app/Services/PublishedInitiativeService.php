@@ -16,17 +16,21 @@ class PublishedInitiativeService
     {
         $query = $this->publishedInitiatives
             ->where('initiative_id', '=', $initiativeId)
-            ->where('is_published', '=', true);
+            ->where('is_published', '=', true)
+            ->whereHas('articles', function ($articleQuery) {
+                    $articleQuery->where('is_published', '=', true);
+            });
 
         if ($date) {
             $query->whereDate('published_at', $date);
         }
 
-        return $query->latest('published_at')
+          return  $query->latest('published_at')
             ->limit(1)
             ->with('articles', function ($article) {
                 $article->with('topic');
             })->first();
+         
     }
 
     public function getByMonthAndYear($initiativeId, $month)
