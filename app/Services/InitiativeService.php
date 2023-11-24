@@ -12,7 +12,6 @@ use Throwable;
 
 class InitiativeService
 {
-
     public function __construct(
         private readonly PublishedInitiative $publishedInitiatives,
     ) {

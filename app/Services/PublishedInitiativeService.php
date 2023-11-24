@@ -15,11 +15,12 @@ class PublishedInitiativeService
     public function getLatestById($initiativeId, $date = null)
     {
         $query = $this->publishedInitiatives
-            ->where('initiative_id', '=', $initiativeId)
-            ->where('is_published', '=', true)
-            ->whereHas('articles', function ($articleQuery) {
-                    $articleQuery->where('is_published', '=', true);
-            });
+            ->where('initiative_id', '=', $initiativeId);
+        // The is_published check will be enabled once the publish flow from the admin panel is working
+//            ->where('is_published', '=', true)
+//            ->whereHas('articles', function ($articleQuery) {
+//                    $articleQuery->where('is_published', '=', true);
+//            });
 
         if ($date) {
             $query->whereDate('published_at', $date);
