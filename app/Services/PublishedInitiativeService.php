@@ -14,23 +14,23 @@ class PublishedInitiativeService
 
     public function getLatestById($initiativeId, $date = null)
     {
-        $query =  $this->publishedInitiatives
-            ->where('initiative_id', '=', $initiativeId)
-            ->where('is_published', '=', true)
-            ->whereHas('articles', function ($articleQuery) {
-                    $articleQuery->where('is_published', '=', true);
-            });
+        $query = $this->publishedInitiatives
+            ->where('initiative_id', '=', $initiativeId);
+        // The is_published check will be enabled once the publish flow from the admin panel is working
+//            ->where('is_published', '=', true)
+//            ->whereHas('articles', function ($articleQuery) {
+//                    $articleQuery->where('is_published', '=', true);
+//            });
 
         if ($date) {
             $query->whereDate('published_at', $date);
         }
 
-          return  $query->latest('published_at')
+        return $query->latest('published_at')
             ->limit(1)
             ->with('articles', function ($article) {
                 $article->with('topic');
             })->first();
-         
     }
 
     public function getByMonthAndYear($initiativeId, $month)
@@ -40,6 +40,7 @@ class PublishedInitiativeService
 
         $magazines = $this->publishedInitiatives
             ->where('initiative_id', '=', $initiativeId)
+            ->where('is_published', '=', true)
             ->whereRaw("YEAR(published_at) = $year && MONTH(published_at) = $month")
             ->latest('published_at')
             ->with('articles', function ($article) {

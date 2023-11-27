@@ -31,7 +31,7 @@
     <div class="space-y-12">
         <div class="flex space-x-8">
 
-            <div class="flex w-auto flex-col space-y-6">
+            <div class="flex w-2/6 flex-col space-y-6">
                 <livewire:widgets.articles-side-bar :topics="$topics" :articles="$articles" />
                 <x-widgets.side-bar-download-menu />
             </div>

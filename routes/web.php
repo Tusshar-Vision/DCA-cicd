@@ -18,7 +18,7 @@ use App\Http\Controllers\Pages;
 |
 */
 
-Auth::routes();
+//Auth::routes();
 
 // Routes for all the pages
 Route::get('/{lang?}', [Pages\HomeController::class, 'index'])->name('home');

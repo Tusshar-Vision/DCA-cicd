@@ -44,10 +44,11 @@ class ArticleService
     public static function getArticleURL($article): string
     {
         $initiative = $article->initiative->name;
+        $date = Carbon::parse($article->publishedInitiative->published_at)->format('Y-m-d');
         $topic = $article->topic->name;
         $slug = $article->slug;
 
-        $url = '/' . $initiative . '/' . $topic . '/' . $slug;
+        $url = '/' . $initiative . '/' . $date . '/' . $topic . '/' . $slug;
 
         return strtolower(str_replace('&', 'AND', str_replace(' ', '-', $url))); // To convert name into code.
 
