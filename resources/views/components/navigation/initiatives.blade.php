@@ -19,7 +19,7 @@
                                              "
                                 @mouseleaves="isNewsOpen = false"
                             >
-                                <a class="hover:text-visionRed {{ request()->is('news-today*') ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}">{{ $initiative->name }}</a>
+                                <a class="hover:text-visionRed {{ request()->is('news-today*') ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}">{{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}</a>
                             </li>
 
                             <x-navigation.dropdown
@@ -40,7 +40,7 @@
                                              "
                                 @mouseleaves="isMagazineOpen = false"
                             >
-                                <a class="hover:text-visionRed {{ request()->is('monthly-magazine*') ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}">{{ $initiative->name }}</a>
+                                <a class="hover:text-visionRed {{ request()->is('monthly-magazine*') ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}">{{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}</a>
                             </li>
 
                             <x-navigation.dropdown
@@ -61,7 +61,7 @@
                                              "
                                 @mouseleaves="isWeeklyFocusOpen = false"
                             >
-                                <a class="hover:text-visionRed {{ request()->is('weekly-focus*') ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}" wire:navigate>{{ $initiative->name }}</a>
+                                <a class="hover:text-visionRed {{ request()->is('weekly-focus*') ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}" wire:navigate>{{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}</a>
                             </li>
 
                             <x-navigation.dropdown
@@ -75,7 +75,7 @@
                         </div>
                     @else
                         <li class="font-semibold pr-6">
-                            <a class="hover:text-visionRed {{ request()->is(trim($initiative->path, '/')) ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}" wire:navigate>{{ $initiative->name }}</a>
+                            <a class="hover:text-visionRed {{ request()->is(trim($initiative->path, '/')) ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}" wire:navigate>{{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}</a>
                         </li>
                     @endif
 

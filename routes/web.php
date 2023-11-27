@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MediaController;
+use App\Http\Controllers\LocalizationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Pages;
@@ -20,7 +21,7 @@ use App\Http\Controllers\Pages;
 Auth::routes();
 
 // Routes for all the pages
-Route::get('/', [Pages\HomeController::class, 'index'])->name('home');
+Route::get('/{lang?}', [Pages\HomeController::class, 'index'])->name('home');
 Route::get('/mains-365', [Pages\Mains365Controller::class, 'index'])->name('mains-365');
 Route::get('/pt-365', [Pages\PT365Controller::class, 'index'])->name('pt-365');
 Route::get('/downloads', [Pages\DownloadsController::class, 'index'])->name('downloads');
@@ -54,3 +55,4 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/images/{filename}', [MediaController::class, 'renderImage'])->name('image.display');
+Route::get('change/lang', [LocalizationController::class, 'changeLang'])->name('lang.change');

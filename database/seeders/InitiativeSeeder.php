@@ -14,12 +14,12 @@ class InitiativeSeeder extends Seeder
     public function run(): void
     {
         $initiatives = [
-            ['name' => 'News Today','description' => null, 'path' => '/news-today'],
-            ['name' => 'Monthly Magazine','description' => null, 'path' => '/monthly-magazine'],
-            ['name' => 'Weekly Focus','description' => null, 'path' => '/weekly-focus'],
-            ['name' => 'Mains 365','description' => null, 'path' => '/mains-365'],
-            ['name' => 'PT 365','description' => null, 'path' => '/pt-365'],
-            ['name' => 'Downloads', 'description' => null, 'path' => '/downloads']
+            ['name' => 'News Today', 'name_hindi' => "न्यूज टुडे", 'description' => null, 'path' => '/news-today'],
+            ['name' => 'Monthly Magazine', 'name_hindi' => "मासिक पत्रिका", 'description' => null, 'path' => '/monthly-magazine'],
+            ['name' => 'Weekly Focus', 'name_hindi' => "साप्ताहिक फोकस", 'description' => null, 'path' => '/weekly-focus'],
+            ['name' => 'Mains 365', 'name_hindi' => "मेन्स 365", 'description' => null, 'path' => '/mains-365'],
+            ['name' => 'PT 365', 'name_hindi' => "पीटी 365", 'description' => null, 'path' => '/pt-365'],
+            ['name' => 'Downloads', 'name_hindi' => "डाउनलोड", 'description' => null, 'path' => '/downloads']
         ];
 
         DB::table('initiatives')->insert($initiatives);

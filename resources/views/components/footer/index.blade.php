@@ -97,7 +97,7 @@
             </div>
             <div class="flex space-x-10 text-sm pb-4">
                 <span>
-                    <h5 class="text-gray-400">Call Us</h5>
+                    <h5 class="text-gray-400">{{ __('footer.call_us') }}</h5>
                     <p>+91 8468022022, +91 9013066066</p>
                 </span>
                 <span>
@@ -106,7 +106,7 @@
                     </svg>
                 </span>
                 <span>
-                    <h5 class="text-gray-400">Email Us</h5>
+                    <h5 class="text-gray-400">{{ __('footer.email_us') }}</h5>
                     <p>enquiry@visionias.in</p>
                 </span>
             </div>
@@ -124,27 +124,27 @@
 {{--                </ul>--}}
 {{--            </div>--}}
             <div class="space-y-2">
-                <h5 class="font-bold">Policy</h5>
+                <h5 class="font-bold">{{__('footer.policy')}}</h5>
 
                 <ul class="space-y-2 text-sm">
-                    <li><a href="">Privacy Policy</a></li>
-                    <li><a href="">Refund Policy</a></li>
-                    <li><a href="">Terms of Use</a></li>
+                    <li><a href="">{{__('footer.privacy_policy')}}</a></li>
+                    <li><a href="">{{__('footer.refund_policy')}}</a></li>
+                    <li><a href="">{{__('footer.terms_of_use')}}</a></li>
                 </ul>
             </div>
             <div class="space-y-2">
-                <h5 class="font-bold">Pages</h5>
+                <h5 class="font-bold">{{__('footer.pages')}}</h5>
 
                 <ul class="space-y-2 text-sm">
-                    <li><a href="">About Us</a></li>
-                    <li><a href="">Locations</a></li>
-                    <li><a href="">Contact Us</a></li>
-                    <li><a href="">Careers</a></li>
+                    <li><a href="">{{__('footer.about_us')}}</a></li>
+                    <li><a href="">{{__('footer.locations')}}</a></li>
+                    <li><a href="">{{__('footer.contact_us')}}</a></li>
+                    <li><a href="">{{__('footer.careers')}}</a></li>
                 </ul>
             </div>
         </div>
     </div>
     <div class="flex flex-col justify-center items-center h-1/3">
-        <h6 class="italic text-center">© 2023 Ajayvision Education Pvt Ltd. All rights reserved</h6>
+        <h6 class="italic text-center">© 2023 {{__('footer.copy_right')}}</h6>
     </div>
 </div>
