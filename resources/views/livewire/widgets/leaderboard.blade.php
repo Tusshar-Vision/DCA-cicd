@@ -1,6 +1,6 @@
 <div>
     <div class="vi-title-wrap">
-        <h5 class="vi-title">Test Yourself</h5>
+        <h5 class="vi-title">{{__('home_page.test_yourself')}}</h5>
     </div>
 
     <x-cards.quiz-banner />

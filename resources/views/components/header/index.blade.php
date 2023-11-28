@@ -70,10 +70,18 @@
 
     function switchLang() {
         let ele = document.getElementById("lang");
-        let toConvertLang;
+        let toConvertLang, msg;
         if(ele.innerText.toLowerCase() === "english") {
+            msg = "क्या आप वेबसाइट की भाषा को हिंदी में बदलना चाहते हैं ?";
             toConvertLang = "hi";
-        } else toConvertLang = "en";
-        window.location.href = url + "?lang="+ toConvertLang;
+        } else {
+            toConvertLang = "en";
+            msg = "Do you want to change the website language to English ?";
+        }
+
+        if(confirm(msg)) {
+           window.location.href = url + "?lang="+ toConvertLang;
+        };
+        
     } 
 </script>

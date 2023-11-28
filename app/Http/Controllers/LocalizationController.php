@@ -10,6 +10,6 @@ class LocalizationController extends Controller
     public function changeLang(Request $request)
     {
         session()->put('locale', $request->lang);
-        return redirect()->route('home', ['lang' => $request->lang]);
+        return redirect()->route('home');
     }
 }

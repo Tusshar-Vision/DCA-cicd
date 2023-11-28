@@ -4,8 +4,8 @@
 @endphp
 <div>
     <div class="vi-title-wrap">
-        <h5 class="vi-title">Featured Videos</h5>
-        <a href="#" class="vi-view-all">View All</a>
+        <h5 class="vi-title">{{__('home_page.feature_videos')}}</h5>
+        <a href="#" class="vi-view-all">{{__('home_page.view_all')}}</a>
     </div>
 
     <div class="grid gap-6">

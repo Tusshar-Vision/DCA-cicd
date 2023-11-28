@@ -21,7 +21,7 @@ use App\Http\Controllers\Pages;
 //Auth::routes();
 
 // Routes for all the pages
-Route::get('/{lang?}', [Pages\HomeController::class, 'index'])->name('home');
+Route::get('/', [Pages\HomeController::class, 'index'])->name('home');
 Route::get('/mains-365', [Pages\Mains365Controller::class, 'index'])->name('mains-365');
 Route::get('/pt-365', [Pages\PT365Controller::class, 'index'])->name('pt-365');
 Route::get('/downloads', [Pages\DownloadsController::class, 'index'])->name('downloads');

@@ -27,13 +27,13 @@ class ArticleService
 
     public function getFeatured(int $limit = 12): Collection|array
     {
-        return $this->articles->isFeatured()->latest()->limit($limit)->with('author')->get();
+        return $this->articles->isFeatured()->where('language', config("settings.language." . app()->getLocale()))->latest()->limit($limit)->with('author')->get();
     }
 
     public function getLatestNews(int $limit = 2): Collection|array
     {
         return $this->articles->where('initiative_id', '=', InitiativesHelper::getInitiativeID('NEWS_TODAY'))
-            ->latest()->limit($limit)->with('author')->get();
+            ->where('language', config("settings.language." . app()->getLocale()))->latest()->limit($limit)->with('author')->get();
     }
 
     public function search(string $query, int $perPage = 10): Collection|array|LengthAwarePaginator

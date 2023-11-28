@@ -20,9 +20,8 @@ class HomeController extends Controller
         private readonly UserService $userService
     ) {
     }
-    public function index($lang = 'en')
+    public function index()
     {
-        app()->setLocale($lang);
         $featuredArticles = $this->articleService->getFeatured();
         $latestNewsArticles = $this->articleService->getLatestNews();
         $latestVideos = $this->mediaService->getLatestVideos();
