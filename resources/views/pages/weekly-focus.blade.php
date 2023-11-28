@@ -63,7 +63,7 @@
                 </div>
 
                 <div>
-                    <x-widgets.article-sources />
+                    <x-widgets.article-sources :sources="$article->sources"/>
                 </div>
             </div>
         </div>

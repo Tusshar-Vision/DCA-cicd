@@ -2,16 +2,14 @@
     <div class="space-y-5">
         <div>
             <h1 class="text-lg font-bold">Sources</h1>
-            <p class="text-visionLineGray text-sm">5 sources</p>
+            <p class="text-visionLineGray text-sm">{{ count($sources) }} sources</p>
         </div>
         <div class="text-visionLineGray text-sm font-light italic flex flex-col space-y-2" x-show="expanded" x-collapse>
-            <a href="https://en.wikipedia.org/wiki/Politics_of_India" target="_blank">
-                https://en.wikipedia.org/wiki/Politics_of_India
-            </a>
-            <a href="https://en.wikipedia.org/wiki/Parliamentary_republic">https://en.wikipedia.org/wiki/Parliamentary_republic</a>
-            <a href="https://en.wikipedia.org/wiki/Constitutional_monarchy">https://en.wikipedia.org/wiki/Constitutional_monarchy</a>
-            <a href="https://en.wikipedia.org/wiki/Monarchy_in_ancient_India">https://en.wikipedia.org/wiki/Monarchy_in_ancient_India</a>
-            <a href="https://en.wikipedia.org/wiki/Panchayati_raj">https://en.wikipedia.org/wiki/Panchayati_raj</a>
+            @foreach($sources as $url)
+                <a class="hover:underline" href="{{ $url }}" target="_blank">
+                    {{ $url }}
+                </a>
+            @endforeach
         </div>
     </div>
     <div>

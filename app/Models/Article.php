@@ -73,6 +73,13 @@ class Article extends Model implements HasMedia
         });
     }
 
+    protected static function booted(): void
+    {
+        static::retrieved(function ($article) {
+            $article->sources = explode(',', $article->sources);
+        });
+    }
+
     // Calculate reading time based on content length and average reading speed
     private static function calculateReadingTime($content, $readingSpeed = 200): int
     {

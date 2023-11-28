@@ -97,7 +97,7 @@ class ArticlesRelationManager extends RelationManager
                     ])->required()->default('english'),
 
                     SpatieTagsInput::make('tags')->required(),
-                    TagsInput::make('sources')->separator(',')->required(),
+                    TagsInput::make('sources')->separator(','),
                     Textarea::make('excerpt'),
                 ]),
             ]);
