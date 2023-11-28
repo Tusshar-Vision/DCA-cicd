@@ -20,7 +20,9 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
@@ -113,15 +115,21 @@ class ArticleResource extends Resource
             ->columns([
                 TextColumn::make('id')->label('id'),
                 TextColumn::make('title')->limit(40)
-                    ->tooltip(fn (Article $article): string => $article->title),
-                TextColumn::make('initiative.name'),
+                    ->tooltip(fn (Article $article): string => $article->title)
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('initiative.name')
+                    ->searchable(),
                 IconColumn::make('featured')
                     ->boolean()->trueIcon('heroicon-o-check-badge')
                     ->falseIcon('heroicon-o-x-mark'),
-                TextColumn::make('topic.name')->label('Subject'),
-                TextColumn::make('topicSection.name')->label('Section'),
-                TextColumn::make('topicSubSection.name')->label('Sub-Section'),
-                Tables\Columns\SpatieTagsColumn::make('tags'),
+                TextColumn::make('topic.name')->label('Subject')
+                    ->searchable(),
+                TextColumn::make('topicSection.name')->label('Section')
+                    ->searchable(),
+                TextColumn::make('topicSubSection.name')->label('Sub-Section')
+                    ->searchable(),
+                SpatieTagsColumn::make('tags'),
                 TextColumn::make('author.name')->label('Expert'),
                 TextColumn::make('reviewer.name')->label('Reviewer'),
             ])
@@ -222,7 +230,7 @@ class ArticleResource extends Resource
             ->filtersFormMaxHeight('400px')
             ->actions([
                 Tables\Actions\EditAction::make(),
-            ])
+            ], position: ActionsPosition::BeforeColumns)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
