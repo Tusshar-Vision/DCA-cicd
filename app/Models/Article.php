@@ -51,7 +51,12 @@ class Article extends Model implements HasMedia
         'topic_section_id',
         'topic_sub_section_id',
         'reviewer_id',
-        'initiative_id'
+        'initiative_id',
+        'sources'
+    ];
+
+    protected $casts = [
+        'sources' => 'array',
     ];
 
     // This method will automatically be called when creating or updating an article.
