@@ -13,6 +13,7 @@ use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -37,10 +38,18 @@ class DownloadsResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('initiative_id')
-                ->relationship('initiative', 'name')->required(),
-                DatePicker::make('published_at')->label('Published At'),
-                FileUpload::make('magazine_pdf_url')->label('Magazine PDF')
+                Forms\Components\Section::make('New Initiative')->schema([
+                    Select::make('initiative_id')
+                        ->options([
+                            4 => 'Mains 365',
+                            5 => 'PT 365',
+                            6 => 'Downloads'
+                        ])
+                        ->required()
+                        ->default(InitiativesHelper::getInitiativeID(static::getModelLabel())),
+                    DatePicker::make('published_at')->default(today()),
+                    Toggle::make('is_published')->inline(false)
+                ])->columns(2),
             ]);
     }
 

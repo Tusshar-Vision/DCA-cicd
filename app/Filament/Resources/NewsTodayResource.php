@@ -45,8 +45,13 @@ class NewsTodayResource extends Resource
             ->schema([
                 Forms\Components\Section::make('New Initiative')->schema([
                     Select::make('initiative_id')
-                        ->relationship('initiative', 'name')
+                        ->options([
+                            1 => 'News Today',
+                            2 => 'Monthly Magazine',
+                            3 => 'Weekly Focus'
+                        ])
                         ->required()
+                        ->label('Initiative')
                         ->default(InitiativesHelper::getInitiativeID(static::getModelLabel())),
                     DatePicker::make('published_at')->default(today()),
                     Toggle::make('is_published')->inline(false)

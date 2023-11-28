@@ -12,6 +12,8 @@ use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -29,19 +31,25 @@ class Mains365Resource extends Resource
     protected static ?string $navigationGroup = 'Other Uploads';
 
     protected static ?int $navigationSort = 4;
-
     protected static ?string $modelLabel = 'Mains 365';
-
     protected static ?string $pluralLabel = 'Mains 365';
-
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Select::make('initiative_id')
-                ->relationship('initiative', 'name')->required(),
-                DatePicker::make('published_at')->label('Published At'),
-                FileUpload::make('magazine_pdf_url')->label('Magazine PDF')
+                Forms\Components\Section::make('New Initiative')->schema([
+                    Select::make('initiative_id')
+                        ->options([
+                            4 => 'Mains 365',
+                            5 => 'PT 365',
+                            6 => 'Downloads'
+                        ])
+                        ->required()
+                        ->default(InitiativesHelper::getInitiativeID(static::getModelLabel())),
+                    DatePicker::make('published_at')->default(today()),
+                    SpatieMediaLibraryFileUpload::make('file'),
+                    Toggle::make('is_published')->inline(false)
+                ])->columns(2),
             ]);
     }
 
@@ -52,7 +60,6 @@ class Mains365Resource extends Resource
                 TextColumn::make('id')->label('ID')->sortable(),
                 TextColumn::make('published_at')->dateTime('d M Y h:m')->label('Published At')->sortable(),
                 TextColumn::make('updated_at')->dateTime('d M Y h:m')->label('Last Updated')->sortable(),
-                TextColumn::make('magazine_pdf_url')->label('Magazine PDF URL')
             ])
             ->filters([
                 //
@@ -70,7 +77,7 @@ class Mains365Resource extends Resource
     public static function getRelations(): array
     {
         return [
-            ArticlesRelationManager::class
+//            ArticlesRelationManager::class
         ];
     }
 
