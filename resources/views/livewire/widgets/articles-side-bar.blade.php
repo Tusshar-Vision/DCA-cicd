@@ -1,8 +1,8 @@
 @php
     use Illuminate\Support\Str;
     $counter = 1;
-    $currentTopic = request()->segment(2);
-    $currentArticle = request()->segment(3);
+    $currentTopic = request()->segment(3);
+    $currentArticle = request()->segment(4);
 @endphp
 
 <div class="flex flex-col rounded bg-visionGray pb-4">
