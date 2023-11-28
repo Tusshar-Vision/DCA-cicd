@@ -46,10 +46,10 @@ class MonthlyMagazineController extends Controller
         $this->getData($month);
 
         $article_no = 1;
-        if($page_no = request()->query('page')) $article_no = $page_no;
-        $article = $this->articles[$article_no-1];
+        if ($page_no = request()->query('page')) $article_no = $page_no;
+        $article = $this->articles[$article_no - 1];
 
-        if($page_no) return Redirect::to(route('monthly-magazine.article', ['month' => $month, 'topic' => $article->topic->name, 'article_slug' => $article->slug])."?page=$page_no");
+        if ($page_no) return Redirect::to(route('monthly-magazine.article', ['month' => $month, 'topic' => $article->topic->name, 'article_slug' => $article->slug]) . "?page=$page_no");
         else return Redirect::to(route('monthly-magazine.article', ['month' => $month, 'topic' => $article->topic->name, 'article_slug' => $article->slug]));
     }
 
@@ -66,7 +66,7 @@ class MonthlyMagazineController extends Controller
             "article" => $article,
             "topics" => $this->topics,
             "totalArticles" => count($this->articles),
-            "baseUrl" => url('monthly-magazine')."/".$month
+            "baseUrl" => url('monthly-magazine') . "/" . $month
         ]);
     }
 
@@ -74,7 +74,7 @@ class MonthlyMagazineController extends Controller
     {
         $this->latestMonthlyMagazine = $this->publishedInitiativeService->getByMonthAndYear($this->initiativeId, $publishedAt);
 
-        $this->articles = $this->latestMonthlyMagazine->articles;
+        $this->articles = $this->latestMonthlyMagazine->articles->where('language', config("settings.language." . app()->getLocale()));
 
         $this->topics = [];
 

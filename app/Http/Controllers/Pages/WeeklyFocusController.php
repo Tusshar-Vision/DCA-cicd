@@ -30,18 +30,18 @@ class WeeklyFocusController extends Controller
         $this->getData();
 
         $article_no = 1;
-        if($page_no = request()->query('page')){ 
+        if ($page_no = request()->query('page')) {
             $article_no = $page_no;
-            $article = $this->articles[$article_no-1];
+            $article = $this->articles[$article_no - 1];
         } else  $article = $this->articles[0];
-           
+
         $article_slug = $article->slug;
         $publishedAt = Carbon::parse($article->published_at)->format('Y-m-d');
         $article_topic = $article->topic->name;
 
-        if($page_no) 
-            return Redirect::to(route('weekly-focus.article', ['date' => $publishedAt, 'topic' => $article_topic, 'article_slug' => $article_slug])."?page=$page_no");
-        else 
+        if ($page_no)
+            return Redirect::to(route('weekly-focus.article', ['date' => $publishedAt, 'topic' => $article_topic, 'article_slug' => $article_slug]) . "?page=$page_no");
+        else
             return Redirect::to(route('weekly-focus.article', ['date' => $publishedAt, 'topic' => $article_topic, 'article_slug' => $article_slug]));
     }
 
@@ -57,14 +57,14 @@ class WeeklyFocusController extends Controller
             "articles" => $this->articles,
             "article" => $article,
             "totalArticles" => count($this->articles),
-            "baseUrl" => url('weekly-focus')."/".$date
+            "baseUrl" => url('weekly-focus') . "/" . $date
         ]);
     }
 
     protected function getData($publishedAt = null)
     {
         $this->latestWeeklyFocus = $this->publishedInitiativeService->getLatestById($this->initiativeId);
-        $this->articles = $this->latestWeeklyFocus->articles;
+        $this->articles = $this->latestWeeklyFocus->articles->where('language', config("settings.language." . app()->getLocale()));
     }
 
 
