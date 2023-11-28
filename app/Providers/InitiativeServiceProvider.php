@@ -30,8 +30,6 @@ class InitiativeServiceProvider extends ServiceProvider
             $monthlyMagazineData = $initiativeService->getMenuData('MONTHLY_MAGAZINE');
             $weeklyFocusData = $initiativeService->getMenuData('WEEKLY_FOCUS');
 
-//            dd([$newsTodayData, $monthlyMagazineData, $weeklyFocusData]);
-
             view()->share([
                 'initiatives' => $initiatives,
                 'menuData' => [
