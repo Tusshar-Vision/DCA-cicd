@@ -32,7 +32,7 @@ class NewsTodayController extends Controller
             return View('pages.no-news-today');
         }
 
-        $articles = $latestNewsToday->articles;
+        $articles = $latestNewsToday->articles->where('language', config("settings.language." . app()->getLocale()));
         $article_slug = $articles[0]->slug;
         $article_topic = $articles[0]->topic->name;
         $date =  Carbon::parse($articles[0]->published_at)->format('Y-m-d');
@@ -49,19 +49,20 @@ class NewsTodayController extends Controller
         }
 
         $article_no = 1;
-        if($page_no = request()->query('page')) $article_no = $page_no;
-        
-        $articles = $latestPublishedInitiative->articles;
-        $article = $articles[$article_no-1];
+        if ($page_no = request()->query('page')) $article_no = $page_no;
 
-        if($page_no) return Redirect::to(route('news-today-date-wise.article', ['date' => $date, 'topic' => $article->topic->name, 'article_slug' => $article->slug])."?page=$page_no");
+        $articles = $latestPublishedInitiative->articles->where('language', config("settings.language." . app()->getLocale()));
+        logger("articles", [$articles]);
+        $article = $articles[$article_no - 1];
+
+        if ($page_no) return Redirect::to(route('news-today-date-wise.article', ['date' => $date, 'topic' => $article->topic->name, 'article_slug' => $article->slug]) . "?page=$page_no");
         else return Redirect::to(route('news-today-date-wise.article', ['date' => $date, 'topic' => $article->topic->name, 'article_slug' => $article->slug]));
     }
 
     public function renderArticles($date, $topic, $slug)
     {
         $latestPublishedInitiative = $this->publishedInitiativeService->getLatestById($this->initiativeId, $date);
-        $articles = $latestPublishedInitiative->articles;
+        $articles = $latestPublishedInitiative->articles->where('language', config("settings.language." . app()->getLocale()));
         $article = $this->articleService->getArticleBySlug($slug);
 
         $topics = [];
@@ -93,7 +94,7 @@ class NewsTodayController extends Controller
             "articles" => $articles,
             "article" => $article,
             "totalArticles" => count($articles),
-            "baseUrl" => url('news-today')."/".$date
+            "baseUrl" => url('news-today') . "/" . $date
         ]);
     }
 
