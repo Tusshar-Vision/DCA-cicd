@@ -15,6 +15,7 @@ class PublishedInitiative extends Model implements HasMedia
 
     protected $fillable = [
         'initiative_id',
+        'name',
         'published_at',
         'is_published'
     ];
