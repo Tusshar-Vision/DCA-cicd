@@ -23,11 +23,13 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Guava\FilamentDrafts\Admin\Resources\Concerns\Draftable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
@@ -35,6 +37,8 @@ use Spatie\Tags\Tag;
 
 class ArticleResource extends Resource
 {
+//    use Draftable;
+
     protected static ?string $model = Article::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
@@ -114,14 +118,17 @@ class ArticleResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->deferLoading()
             ->columns([
                 TextColumn::make('id')->label('id'),
                 TextColumn::make('title')->limit(40)
                     ->tooltip(fn (Article $article): string => $article->title)
                     ->sortable()
                     ->searchable(),
+                TextColumn::make('updated_at')->label('Last Modified')->sortable(),
                 TextColumn::make('initiative.name')
                     ->searchable(),
+                ToggleColumn::make('is_published')->label('Published'),
                 IconColumn::make('featured')
                     ->boolean()->trueIcon('heroicon-o-check-badge')
                     ->falseIcon('heroicon-o-x-mark'),
@@ -232,7 +239,7 @@ class ArticleResource extends Resource
             ->filtersFormMaxHeight('400px')
             ->actions([
                 Tables\Actions\EditAction::make(),
-            ], position: ActionsPosition::BeforeColumns)
+            ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

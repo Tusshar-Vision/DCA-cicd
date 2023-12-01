@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class MediaController extends Controller
 {
@@ -22,5 +23,9 @@ class MediaController extends Controller
         $response->header("Content-Type", $type);
 
         return $response;
+    }
+
+    public function download(Media $media) {
+        return $media;
     }
 }

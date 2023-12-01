@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\PublishedInitiative;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class PublishedInitiativeService
 {
@@ -33,10 +34,10 @@ class PublishedInitiativeService
             })->first();
     }
 
-    public function getByMonthAndYear($initiativeId, $month)
+    public function getByMonthAndYear($initiativeId, $date)
     {
-        $year =  Carbon::parse($month)->year;
-        $month = Carbon::parse($month)->month;
+        $year =  Carbon::parse($date)->year;
+        $month = Carbon::parse($date)->month;
 
         $magazines = $this->publishedInitiatives
             ->where('initiative_id', '=', $initiativeId)
@@ -49,5 +50,16 @@ class PublishedInitiativeService
             ->first();
 
         return $magazines;
+    }
+
+    public function getDownloads($initiative_id, $year = null, $month = null) : array | Collection
+    {
+        $query = $this->publishedInitiatives->where('initiative_id', '=', $initiative_id)->where('is_published', '=', true);
+
+        if ($year) {
+            $query->whereRaw("YEAR(published_at) = $year");
+        }
+
+        return $query->with('media')->groupByYear();
     }
 }

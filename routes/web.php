@@ -56,3 +56,4 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/images/{filename}', [MediaController::class, 'renderImage'])->name('image.display');
 Route::get('change/lang', [LocalizationController::class, 'changeLang'])->name('lang.change');
+Route::get('/download/{media}', [MediaController::class, 'download'])->name('download');

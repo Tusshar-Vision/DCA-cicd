@@ -49,8 +49,7 @@ class InitiativeService
         $menuData = [];
 
         foreach ($dateData as $date) {
-            $carbonDate = Carbon::createFromFormat('Y-m', $date);
-            $menuData[$date] = $carbonDate->daysInMonth;
+            $menuData[$date->format('Y-m')] = $date->daysInMonth;
         }
 
         return [
@@ -82,6 +81,7 @@ class InitiativeService
         $menuData = [];
 
         foreach ($yearsData as $year) {
+            $year = $year->format('Y');
             $menuData[$year] = array_values(array_filter($sideDropDownMenuData, function ($item) use ($year) {
                 return str_contains($item['published_at'], $year);
             }));
@@ -97,7 +97,6 @@ class InitiativeService
 
     protected function getMenuDataForWeeklyFocus($initiativeId): array
     {
-
         $mainMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
             ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as published_at')
             ->groupBy('published_at')
@@ -108,10 +107,14 @@ class InitiativeService
         $dateData = $mainMenuData->pluck('published_at')->toArray();
 
         $sideDropDownMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
-            ->with('articles', function ($article) {
-                $article->with('topic');
+            ->where('initiative_id', '=', $initiativeId)
+            ->with(['articles.topic'])
+            ->where(function ($query) use ($dateData) {
+                foreach ($dateData as $date) {
+                    $query->orWhereYear('published_at', '=', $date->year);
+                    $query->orWhereMonth('published_at', '=', $date->month);
+                }
             })
-            ->whereIn(DB::raw('DATE_FORMAT(published_at, "%Y-%m")'), $dateData)
             ->get();
 
         $articles = [];
@@ -125,8 +128,10 @@ class InitiativeService
         $menuData = [];
 
         foreach ($dateData as $date) {
-            $menuData[$date] = array_values(array_filter($articles, function ($item) use ($date) {
-                return str_contains(Carbon::parse($item['published_at'])->format('Y-m'), $date);
+            $date = $date->format('Y-m');
+            $menuData[$date] = array_values(array_filter($articles, function ($article) use ($date) {
+////                dd($item);
+//                return str_contains($article['published_at']->format('Y-m'), $date);
             }));
         }
 

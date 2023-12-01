@@ -76,7 +76,7 @@ class Article extends Model implements HasMedia
     protected static function booted(): void
     {
         static::retrieved(function ($article) {
-            $article->sources = explode(',', $article->sources);
+            $article->sources = is_string($article->sources) ? explode(',', $article->sources) : $article->sources;
         });
     }
 

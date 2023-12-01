@@ -11,7 +11,6 @@ class InitiativesHelper {
     /**
      * List of initiatives and initiative topics
      */
-
     private const Initiatives = [
         "NEWS_TODAY" => 1,
         "MONTHLY_MAGAZINE" => 2,
@@ -20,7 +19,6 @@ class InitiativesHelper {
         "PT_365" => 5,
         "DOWNLOADS" => 6
     ];
-
     private const InitiativeTopics = [
         "POLITY" => 1,
         "INTERNATIONAL_RELATIONS" => 2,

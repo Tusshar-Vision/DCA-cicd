@@ -20,6 +20,7 @@ use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
@@ -30,10 +31,12 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 use Spatie\Tags\Tag;
+use Guava\FilamentDrafts\Admin\Resources\Concerns\Draftable;
 
 class ArticlesRelationManager extends RelationManager
 {
     protected static string $relationship = 'articles';
+    protected $listeners = ['updatedPublishedStatus' => '$refresh'];
 
     public function form(Form $form): Form
     {
@@ -97,7 +100,7 @@ class ArticlesRelationManager extends RelationManager
                     ])->required()->default('english'),
 
                     SpatieTagsInput::make('tags')->required(),
-                    TagsInput::make('sources')->separator(','),
+                    TagsInput::make('sources')->separator(',')->placeholder('Add Sources'),
                     Textarea::make('excerpt'),
                 ]),
             ]);
@@ -112,6 +115,7 @@ class ArticlesRelationManager extends RelationManager
                 TextColumn::make('title')->limit(40)
                     ->tooltip(fn (Article $article): string => $article->title),
                 TextColumn::make('initiative.name'),
+                ToggleColumn::make('is_published')->label('Published'),
                 IconColumn::make('featured')
                     ->boolean()->trueIcon('heroicon-o-check-badge')
                     ->falseIcon('heroicon-o-x-mark'),

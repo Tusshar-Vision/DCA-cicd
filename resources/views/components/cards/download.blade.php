@@ -1,3 +1,5 @@
 <div class="vi-download-card">
-    <p>{{ $title }}</p>
+    <a href="{{ $url }}">
+        <p>{{ $title }}</p>
+    </a>
 </div>

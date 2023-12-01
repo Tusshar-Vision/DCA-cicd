@@ -5,8 +5,8 @@
     </div>
 
     <div class="columns-2 gap-4">
-        @foreach([1,2,3,4,5,6] as $file)
-            <x-cards.file-download />
+        @foreach($latestDownloads as $file)
+            <x-cards.file-download :file="$file" />
         @endforeach
     </div>
 </div>
