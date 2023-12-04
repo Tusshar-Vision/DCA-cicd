@@ -5,10 +5,10 @@
 					<blockquote contenteditable="true">
 						<p>Pardoning Power</p>
 					</blockquote>
-					<a href="#"><img src=""><img src="assets/images/edit.png"></a>
+					<a href="#"><img src="{{URL::asset('images/edit.png')}}"></a>
 				</div>
 				<div class="vi-tinymce-editor">
-					<img src="./assets/images/tinymce.png" alt="">
+	                <textarea style="width: 100%; resize: none;"></textarea>
 				</div>
 				<div class="added-tags">
 					<span>Article asdhkashd askhdask dakjshdask dh 72<a href="#">x</a></span>

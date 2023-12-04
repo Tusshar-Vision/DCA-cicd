@@ -568,20 +568,7 @@
 
   /* add note */
 
-  .vi-modal-wrap {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 99;
-    background-color: #00000088;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
-  .vi-modal-wrap .vi-modal-inner {
+  .vi-modal-inner {
     max-width: 567px;
     width: 100%;
     padding: 16px 20px;
@@ -590,35 +577,35 @@
     max-height: 90vh;
     overflow-y: scroll;
   }
-  .vi-modal-wrap .vi-modal-inner::-webkit-scrollbar {
+   .vi-modal-inner::-webkit-scrollbar {
     display: none;
   }
-  .vi-modal-wrap .vi-modal-inner .vi-modal-header {
+   .vi-modal-inner .vi-modal-header {
     display: flex;
     justify-content: space-between;
     gap: 16px;
     padding-bottom: 20px;
     border-bottom: 1px solid #8F93A3;
   }
-  .vi-modal-wrap .vi-modal-inner .vi-modal-header .vi-modal-title {
+   .vi-modal-inner .vi-modal-header .vi-modal-title {
     font-size: 16px;
     font-weight: 700;
     color: #040404;
     margin-top: 0;
   }
-  .vi-modal-wrap .vi-modal-inner .vi-modal-header .vi-icons {
+   .vi-modal-inner .vi-modal-header .vi-icons {
     display: inline-block;
     cursor: pointer;
   }
-  .vi-modal-wrap .vi-modal-inner .vi-modal-content {
+   .vi-modal-inner .vi-modal-content {
     margin-top: 20px;
   }
-  .vi-modal-wrap .vi-modal-inner .vi-modal-content .edit-text,
-  .vi-modal-wrap .vi-modal-inner .vi-modal-content .tag-wrap{
+   .vi-modal-inner .vi-modal-content .edit-text,
+   .vi-modal-inner .vi-modal-content .tag-wrap{
     display: flex;
     justify-content: space-between;
   }
-  .vi-modal-wrap .vi-modal-inner .vi-modal-content .added-tags{
+   .vi-modal-inner .vi-modal-content .added-tags{
     min-height: 40px;
     border-radius: 4px;
     border: 1px solid #D4D4D4;
@@ -639,7 +626,7 @@
     font-size: 14px;
     margin: 0 0 0 10px;
   }
-  .vi-modal-wrap .vi-modal-inner .vi-modal-content .tag-wrap .tags span{
+   .vi-modal-inner .vi-modal-content .tag-wrap .tags span{
     color: #183B56;
     display: inline-block;
     padding: 9px 10px;
@@ -647,14 +634,14 @@
     font-size: 10px;
   }
   
-  .vi-modal-wrap .vi-modal-inner .vi-modal-content .tag-wrap .search-tags input[type="search"]{
+   .vi-modal-inner .vi-modal-content .tag-wrap .search-tags input[type="search"]{
     border-radius: 4px;
     border: 1px solid #8F93A3; 
     width: 130px;
     padding: 5px 12px;
   }
   
-  .vi-modal-wrap .vi-modal-inner .vi-modal-content p {
+   .vi-modal-inner .vi-modal-content p {
     font-size: 14px;
     font-weight: 400;
     color: #000000;
@@ -662,23 +649,23 @@
     margin-top: 0;
     opacity: 0.5;
   }
-  .vi-modal-wrap .vi-modal-inner .vi-modal-content .vi-tinymce-editor {
+   .vi-modal-inner .vi-modal-content .vi-tinymce-editor {
     margin-top: 10px;
   }
-  .vi-modal-wrap .vi-modal-inner .vi-modal-content .vi-modal-action {
+   .vi-modal-inner .vi-modal-content .vi-modal-action {
     margin-top: 10px;
     text-align: right;
   }
-  .vi-modal-wrap .vi-modal-inner .vi-modal-content .vi-modal-action a {
+   .vi-modal-inner .vi-modal-content .vi-modal-action a {
     display: inline-block;
     width: auto;
   }
-  .vi-modal-wrap .vi-modal-inner .vi-modal-content .vi-modal-action a.vi-secondary-button {
+   .vi-modal-inner .vi-modal-content .vi-modal-action a.vi-secondary-button {
     margin-right: 12px;
   }
-  .vi-modal-wrap .vi-modal-inner .vi-modal-header {
+   .vi-modal-inner .vi-modal-header {
     padding-bottom: 10px;
   }
-  .vi-modal-wrap .vi-modal-inner .vi-modal-content {
+   .vi-modal-inner .vi-modal-content {
     margin-top: 10px;
   }
