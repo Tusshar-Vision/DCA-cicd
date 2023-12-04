@@ -52,7 +52,6 @@ class NewsTodayController extends Controller
         if ($page_no = request()->query('page')) $article_no = $page_no;
 
         $articles = $latestPublishedInitiative->articles->where('language', config("settings.language." . app()->getLocale()));
-        logger("articles", [$articles]);
         $article = $articles[$article_no - 1];
 
         if ($page_no) return Redirect::to(route('news-today-date-wise.article', ['date' => $date, 'topic' => $article->topic->name, 'article_slug' => $article->slug]) . "?page=$page_no");
