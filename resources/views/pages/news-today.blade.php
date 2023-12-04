@@ -39,9 +39,9 @@
                 @if( !empty($articles) && count($articles) !== 0 )
 
                     <x-header.article readTime="{{ $article->read_time }}" />
-                    <div id="article-content" class="mt-4 printable-area">
-                        {!! $article->content !!}
-                    </div>
+
+                    <x-article-content :article="$article" />
+                    
                     <div class="mt-12">
                         <x-widgets.article-pagination :totalArticles="$totalArticles" :baseUrl="$baseUrl" />
                     </div>
