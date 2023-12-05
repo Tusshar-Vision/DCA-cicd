@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\HighlightController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\NoteController;
@@ -58,4 +59,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/images/{filename}', [MediaController::class, 'renderImage'])->name('image.display');
 Route::get('change/lang', [LocalizationController::class, 'changeLang'])->name('lang.change');
 
+Route::get('/highlights', [HighlightController::class, 'index'])->name('highlights');
+Route::get('/highlight-serialized/{article_id}', [HighlightController::class, 'serializedData'])->name('highlights.serialized');
+Route::post('/add-highlight', [HighlightController::class, 'addHighlight'])->name("highlights.add");
 Route::post('/add-notes', [NoteController::class, 'addNote'])->name("notes.add");
+Route::get('/all-notes', [NoteController::class, 'index'])->name("notes.all");

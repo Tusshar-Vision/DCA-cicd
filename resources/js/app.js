@@ -46,3 +46,5 @@ const swiper = initializeSwiper();
 window.addEventListener('onHomePage', () => {
     initializeSwiper();
 });
+
+

@@ -6,11 +6,6 @@
     window.onload = function() {
         rangy.init();
 
-
-        if(localStorage.getItem('serializedData')) {
-            serializedHighlights = JSON.parse(localStorage.getItem('serializedData'));
-        }
-
         highlighter = rangy.createHighlighter();
 
         highlighter.addClassApplier(rangy.createClassApplier("highlight", {
@@ -38,9 +33,7 @@
                         else{
                             notes = [];
                             notes.push({id: highlight.id, highlight_text: highlight.getText() ,notes: [note]});
-                        }
-                        
-                        localStorage.setItem("notes", JSON.stringify(notes));
+                        }                        
                     }
 
 
@@ -52,12 +45,12 @@
                 }
             }
         }));
-
-
-        if (serializedHighlights) {
-            highlighter.deserialize(serializedHighlights);
-        }
     };
+
+    function showHighlights(serialized) {
+        let data = serialized.replaceAll('"', '');
+        highlighter.deserialize(data)
+    }
 
 
     function highlightSelectedText() {

@@ -15,6 +15,7 @@
     <script type="text/javascript" src="{{ URL::asset('js/rangy/rangy-classapplier.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('js/rangy/rangy-highlighter.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('js/rangy/highlighter.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
 </head>
 
 <body x-data="{ isLoginFormOpen: false, isRegisterFormOpen: false, isResetFormOpen: false }">
@@ -47,7 +48,6 @@
         <livewire:forms.reset-password />
     </x-modals.modal-box>
 
-    <script type="text/javascript" src="{{ URL::asset('js/app.js') }}" defer></script>
 </body>
 
 </html>

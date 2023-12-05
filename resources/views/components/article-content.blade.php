@@ -140,4 +140,54 @@
         highlightSelectedText('highlight');
         document.getElementById("tooltip-box").style.display = "none"
     }
+
+    function addHighlight({
+        highlight,
+        serializedData
+    }) {
+        saveData("{{ route('highlights.add') }}", {
+            highlight,
+            serializedData,
+            user_id: "{{ Auth::user()->id }}",
+            article_id: {{ $article->id }},
+            _token: '{{ csrf_token() }}'
+        });
+    }
+
+    // function addSerializedData(serializedData) {
+    //     saveData("{{ route('highlights.add') }}", {
+    //         serializedData,
+    //         user_id: "{{ Auth::user()->id }}",
+    //         article_id: {{ $article->id }},
+    //         _token: '{{ csrf_token() }}'
+    //     });
+    // }
+
+    async function postHighlight(data) {
+        try {
+            const response = await fetch("{{ route('highlights.add') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
+
+    async function loadHighlights() {
+        const serrializedData = await getData(
+            "{{ route('highlights.serialized', ['article_id' => $article->id]) }}", 'text');
+        const serial = serrializedData.data?.serialized;
+        if (serial) showHighlights(serial);
+    }
+
+
+    setTimeout(() => {
+        loadHighlights()
+    }, 4000);
 </script>
