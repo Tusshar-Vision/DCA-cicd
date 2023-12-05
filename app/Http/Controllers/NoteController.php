@@ -8,6 +8,11 @@ use Illuminate\Http\Response;
 
 class NoteController extends Controller
 {
+    public function index()
+    {
+        return Note::all();
+    }
+
     public function addNote(Request $request)
     {
         $params = $request->all();

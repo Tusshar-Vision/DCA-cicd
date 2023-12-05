@@ -122,22 +122,26 @@
 
 
     <script>
-        let highlights = localStorage.getItem('highlights');
-        if (highlights != null) {
-            highlights = JSON.parse(highlights);
-            let html = "";
-            for (let i = 0; i < highlights.length; i++) {
-                html += `<div class="vi-note highlights">
+        getHighlights();
+
+        async function getHighlights() {
+            let highlights = await getData("{{ route('highlights') }}");
+            highlights = highlights.data
+            if (highlights) {
+                let html = "";
+                for (let i = 0; i < highlights.length; i++) {
+                    html += `<div class="vi-note highlights">
             <div class="vi-note-title-wrap">
                 <p class="vi-note-title">Highlight ${i+1}</p>
                 <a href="#" class="vi-icons note-delete"></a>
             </div>
             <div class="note-content">
-                <p class="vi-text-dark">${highlights[i]}</p>
+                <p class="vi-text-dark">${highlights[i].highlight}</p>
             </div>
         </div>`
-            }
+                }
 
-            document.getElementById('highlights-container').innerHTML = html;
+                document.getElementById('highlights-container').innerHTML = html;
+            }
         }
     </script>

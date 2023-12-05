@@ -488,19 +488,14 @@
                     exclusive: exclusive
                 });
 
-                if(localStorage.getItem('highlights')) {
-                    let data = JSON.parse(localStorage.getItem('highlights'));
-                    data.push(newHighlights[0].getText());
-                    localStorage.setItem('highlights', JSON.stringify(data));
-                } else {
-                    localStorage.setItem('highlights',JSON.stringify([newHighlights[0].getText()]))
-                }
-
                 // Restore selection
                 converter.restoreSelection(selection, serializedSelection, containerElement);
 
                 var serializedData = this.serialize();
-                localStorage.setItem("serializedData", JSON.stringify(serializedData));
+                addHighlight({highlight: newHighlights[0].getText(), serializedData: JSON.stringify(serializedData)});
+                getHighlights();
+                // addSerializedData(JSON.stringify(serializedData));
+                // localStorage.setItem("serializedData", JSON.stringify(serializedData));
                 return newHighlights;
             },
 
