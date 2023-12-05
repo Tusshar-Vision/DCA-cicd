@@ -44,7 +44,7 @@
         display: inline-block;
         font-size: 14px;
         color: #fff;
-        border-right: 1px solid #8F93A3;
+        border-left: 1px solid #8F93A3;
         padding: 0 6px;
         line-height: 20px;
         cursor: pointer;
@@ -54,7 +54,7 @@
         color: #CCE3CC;
     }
 
-    .text-tooltip-comp button:last-child {
+    .text-tooltip-comp button:first-child {
         border: 0;
     }
 

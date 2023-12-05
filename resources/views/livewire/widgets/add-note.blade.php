@@ -5,12 +5,12 @@
                 <blockquote contenteditable="true">
                     <p id="note-title">{{ $article->title }}</p>
                 </blockquote>
-                <a href="#"><img src="{{ URL::asset('images/edit.png') }}"></a>
+                <a href="#" class="edit-title"><img src="{{ URL::asset('images/edit.png') }}"></a>
             </div>
             <div class="vi-tinymce-editor">
                 <textarea id="notes-text-area" style="width: 100%; resize: none;"></textarea>
             </div>
-            <div class="added-tags">
+            <div class="added-tags my-3">
                 <span>Article 72<a href="#">x</a></span>
             </div>
             <div class="tag-wrap">
@@ -21,6 +21,11 @@
                 </div>
                 <div class="search-tags">
                     <input type="search" placeholder="Search">
+					<div class="search-list" style="display: none;">
+						<p>Search 1</p>
+						<p>Search 2</p>
+						<p>Search 3</p>
+					</div>
                 </div>
             </div>
             <div class="vi-modal-action">
@@ -33,7 +38,7 @@
 
 <script>
     function saveNote() {
-        const user_id = {{Auth::user()->id}};
+        const user_id =  {{Auth::user()->id}};
         const article_id = "{{ $article->id }}";
         const topic_id = "{{ $article->topic->id }}";
         const topic_section_id = "{{ $article->topic_section_id }}";
