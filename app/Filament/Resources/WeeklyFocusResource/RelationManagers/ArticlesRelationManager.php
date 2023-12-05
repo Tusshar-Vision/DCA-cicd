@@ -18,7 +18,9 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
@@ -33,6 +35,8 @@ use Spatie\Tags\Tag;
 class ArticlesRelationManager extends RelationManager
 {
     protected static string $relationship = 'articles';
+    protected $listeners = ['updatedPublishedStatus' => '$refresh'];
+
 
     public function form(Form $form): Form
     {
@@ -40,7 +44,9 @@ class ArticlesRelationManager extends RelationManager
             ->schema([
                 Section::make()->schema([
                     TextInput::make('title')->required()->columnSpanFull(),
-
+                    TextInput::make('initiative_id')->default(function ($livewire) {
+                        return $livewire->ownerRecord->initiative_id;
+                    })->hidden(),
                     Select::make('initiative_topic_id')
                         ->relationship('topic', 'name')
                         ->required()->label('Subject')
@@ -96,7 +102,7 @@ class ArticlesRelationManager extends RelationManager
                     ])->required()->default('english'),
 
                     SpatieTagsInput::make('tags')->required(),
-                    TagsInput::make('sources')->separator(',')->required(),
+                    TagsInput::make('sources')->separator(',')->placeholder('Add Sources'),
                     Textarea::make('excerpt'),
                 ]),
             ]);
@@ -105,19 +111,26 @@ class ArticlesRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
+            ->reorderable('sort')
+            ->reorderRecordsTriggerAction(
+                fn (Action $action, bool $isReordering) => $action
+                    ->button()
+                    ->label($isReordering ? 'Disable reordering' : 'Enable reordering'),
+            )
+            ->defaultSort('sort')
             ->recordTitleAttribute('title')
             ->columns([
                 TextColumn::make('id')->label('id'),
-                TextColumn::make('title')->limit(40)
-                    ->tooltip(fn (Article $article): string => $article->title),
-                TextColumn::make('initiative.name'),
+                ToggleColumn::make('is_published')->label('Published'),
                 IconColumn::make('featured')
                     ->boolean()->trueIcon('heroicon-o-check-badge')
                     ->falseIcon('heroicon-o-x-mark'),
+                TextColumn::make('title')->limit(40)
+                    ->tooltip(fn (Article $article): string => $article->title),
                 TextColumn::make('topic.name')->label('Subject'),
                 TextColumn::make('topicSection.name')->label('Section'),
                 TextColumn::make('topicSubSection.name')->label('Sub-Section'),
-                Tables\Columns\SpatieTagsColumn::make('tags'),
+                SpatieTagsColumn::make('tags'),
                 TextColumn::make('author.name')->label('Expert'),
                 TextColumn::make('reviewer.name')->label('Reviewer'),
             ])

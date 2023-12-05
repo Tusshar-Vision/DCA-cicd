@@ -38,19 +38,18 @@ class InitiativeService
     {
 
         $mainMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
-            ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as published_at')
-            ->groupBy('published_at')
+            ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as date')
+            ->groupBy('date')
             ->limit(10)
-            ->orderByDesc('published_at')
+            ->orderByDesc('date')
             ->get();
 
-        $dateData = $mainMenuData->pluck('published_at')->toArray();
+        $dateData = $mainMenuData->pluck('date')->toArray();
 
         $menuData = [];
 
         foreach ($dateData as $date) {
-            $carbonDate = Carbon::createFromFormat('Y-m', $date);
-            $menuData[$date] = $carbonDate->daysInMonth;
+            $menuData[$date] = Carbon::parse($date)->daysInMonth;
         }
 
         return [
@@ -63,54 +62,49 @@ class InitiativeService
     {
 
         $mainMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
-            ->selectRaw('DATE_FORMAT(published_at, "%Y") as published_at')
-            ->groupBy('published_at')
-            ->orderByDesc('published_at')
+            ->selectRaw('DATE_FORMAT(published_at, "%Y") as year')
+            ->groupBy('year')
+            ->orderByDesc('year')
             ->limit(10)
             ->get();
 
-        $yearsData = $mainMenuData->pluck('published_at')->unique()->toArray();
+        $yearsData = $mainMenuData->pluck('year')->toArray();
 
         $sideDropDownMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
-            ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as published_at')
-            ->whereIn(DB::raw('YEAR(published_at)'), $yearsData)
-            ->groupBy('published_at')
+            ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as year')
+            ->whereIn(DB::raw('DATE_FORMAT(published_at, "%Y")'), $yearsData)
+            ->groupBy('year')
             ->get()
-            ->unique()
             ->toArray();
 
         $menuData = [];
 
         foreach ($yearsData as $year) {
             $menuData[$year] = array_values(array_filter($sideDropDownMenuData, function ($item) use ($year) {
-                return str_contains($item['published_at'], $year);
+                return str_contains($item['year'], $year);
             }));
         }
 
-        $returnData =  [
+        return [
             'initiative_id' => $initiativeId,
             'data' => $menuData
         ];
-
-        return $returnData;
     }
 
     protected function getMenuDataForWeeklyFocus($initiativeId): array
     {
-
         $mainMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
-            ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as published_at')
-            ->groupBy('published_at')
+            ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as date')
+            ->groupBy('date')
             ->limit(10)
-            ->orderByDesc('published_at')
+            ->orderByDesc('date')
             ->get();
 
-        $dateData = $mainMenuData->pluck('published_at')->toArray();
+        $dateData = $mainMenuData->pluck('date')->toArray();
 
-        $sideDropDownMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
-            ->with('articles', function ($article) {
-                $article->with('topic');
-            })
+        $sideDropDownMenuData = $this->publishedInitiatives
+            ->where('initiative_id', '=', $initiativeId)
+            ->with(['articles.topic'])
             ->whereIn(DB::raw('DATE_FORMAT(published_at, "%Y-%m")'), $dateData)
             ->get();
 
@@ -125,16 +119,14 @@ class InitiativeService
         $menuData = [];
 
         foreach ($dateData as $date) {
-            $menuData[$date] = array_values(array_filter($articles, function ($item) use ($date) {
-                return str_contains(Carbon::parse($item['published_at'])->format('Y-m'), $date);
+            $menuData[$date] = array_values(array_filter($articles, function ($article) use ($date) {
+                return str_contains(Carbon::parse($article['published_at'])->format('Y-m'), $date);
             }));
         }
 
-        $returnData =  [
+        return [
             'initiative_id' => $initiativeId,
             'data' => $menuData
         ];
-
-        return $returnData;
     }
 }

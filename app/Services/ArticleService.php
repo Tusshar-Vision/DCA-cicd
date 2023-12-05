@@ -10,9 +10,11 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ArticleService
 {
+    private $language;
     public function __construct(
         private readonly Article $articles
     ) {
+        $this->language = config("settings.language." . app()->getLocale());
     }
 
     public function getArticleBySlug($slug)
@@ -22,23 +24,23 @@ class ArticleService
 
     public function getArticlesByDate($date)
     {
-        return $this->articles->whereDate('created_at', Carbon::parse($date))->orderBy('published_at')->get();
+        return $this->articles->isPublished()->whereDate('created_at', Carbon::parse($date))->orderBy('published_at')->get();
     }
 
     public function getFeatured(int $limit = 12): Collection|array
     {
-        return $this->articles->isFeatured()->where('language', config("settings.language." . app()->getLocale()))->latest()->limit($limit)->with('author')->get();
+        return $this->articles->isPublished()->isFeatured()->where('language', $this->language)->latest()->limit($limit)->get();
     }
 
     public function getLatestNews(int $limit = 2): Collection|array
     {
-        return $this->articles->where('initiative_id', '=', InitiativesHelper::getInitiativeID('NEWS_TODAY'))
-            ->where('language', config("settings.language." . app()->getLocale()))->latest()->limit($limit)->with('author')->get();
+        return $this->articles->where('initiative_id', '=', InitiativesHelper::getInitiativeID('NEWS_TODAY'))->isPublished()
+            ->where('language', $this->language)->latest()->limit($limit)->with('author')->get();
     }
 
     public function search(string $query, int $perPage = 10): Collection|array|LengthAwarePaginator
     {
-        return $this->articles->search($query)->paginate($perPage);
+        return $this->articles->search($query)->where('is_published', true)->where('language', $this->language)->paginate($perPage);
     }
 
     public static function getArticleURL($article): string
@@ -51,6 +53,5 @@ class ArticleService
         $url = '/' . $initiative . '/' . $date . '/' . $topic . '/' . $slug;
 
         return strtolower(str_replace('&', 'AND', str_replace(' ', '-', $url))); // To convert name into code.
-
     }
 }

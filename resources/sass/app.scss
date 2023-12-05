@@ -167,6 +167,7 @@
         color: #040404;
         line-height: 20px;
         margin-top: 10px;
+        min-height: 40px;
     }
     .vi-card-footer {
         display: flex;
@@ -390,9 +391,9 @@
         margin: 0;
     }
     .card-listing {
-        column-count: 4;
-        column-fill: initial;
-        column-gap: 24px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 5px 24px;
     }
 }
 

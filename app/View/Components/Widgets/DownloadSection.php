@@ -12,7 +12,8 @@ class DownloadSection extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public int $year
+        public int $year,
+        public $downloadableFiles
     )
     {}
 

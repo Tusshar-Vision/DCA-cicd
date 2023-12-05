@@ -2,5 +2,7 @@
 @section('title', 'Mains 365 | Current Affairs')
 
 @section('content')
-    <x-widgets.download-section year="2023"/>
+    @foreach($downloadableFiles as $year => $data)
+        <x-widgets.download-section year="{{ $year }}" :downloadableFiles="$data" />
+    @endforeach
 @endsection
