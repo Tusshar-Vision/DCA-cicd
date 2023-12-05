@@ -33,7 +33,7 @@
 
 <script>
     function saveNote() {
-        const user_id = "{{ Auth::user()->id }}";
+        const user_id = 1;
         const article_id = "{{ $article->id }}";
         const topic_id = "{{ $article->topic->id }}";
         const topic_section_id = "{{ $article->topic_section_id }}";
