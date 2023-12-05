@@ -571,7 +571,7 @@
   .vi-modal-inner {
     max-width: 567px;
     width: 100%;
-    padding: 16px 20px;
+    padding: 12px;
     background-color: #ffffff;
     border-radius: 4px;
     max-height: 90vh;
@@ -681,4 +681,16 @@
   }
    .vi-modal-inner .vi-modal-content {
     margin-top: 10px;
+  }
+
+  .vi-note-wrap{
+
+  }
+
+  .vi-note .vi-note-action {
+    text-align: right;
+    padding: 9px 12px;
+  }
+  .vi-note .vi-note-action .vi-icons:not(:last-child) {
+    margin-right: 10px;
   }
