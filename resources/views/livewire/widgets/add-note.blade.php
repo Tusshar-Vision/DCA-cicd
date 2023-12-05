@@ -3,7 +3,7 @@
         <div class="vi-modal-content">
             <div class="edit-text">
                 <blockquote contenteditable="true">
-                    <p id="note-title">{{ $article->title }}</p>
+                    <p id="note-title"></p>
                 </blockquote>
                 <a href="#"><img src="{{ URL::asset('images/edit.png') }}"></a>
             </div>
@@ -15,9 +15,9 @@
             </div>
             <div class="tag-wrap">
                 <div class="tags">
-                    <span>Article 72</span>
-                    <span>Article 72</span>
-                    <span>Article 72</span>
+                    @foreach($article->tags as $tag)
+                        <span>{{ $tag->name }}</span>
+                    @endforeach
                 </div>
                 <div class="search-tags">
                     <input type="search" placeholder="Search">
