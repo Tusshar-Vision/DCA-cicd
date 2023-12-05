@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -16,12 +17,11 @@ class PublishedInitiativeService
     public function getLatestById($initiativeId, $date = null)
     {
         $query = $this->publishedInitiatives
-            ->where('initiative_id', '=', $initiativeId);
-        // The is_published check will be enabled once the publish flow from the admin panel is working
-//            ->where('is_published', '=', true)
-//            ->whereHas('articles', function ($articleQuery) {
-//                    $articleQuery->where('is_published', '=', true);
-//            });
+            ->where('initiative_id', '=', $initiativeId)
+            ->isPublished()
+            ->whereHas('articles', function ($articleQuery) {
+                    $articleQuery->isPublished();
+            });
 
         if ($date) {
             $query->whereDate('published_at', $date);
@@ -41,7 +41,7 @@ class PublishedInitiativeService
 
         $magazines = $this->publishedInitiatives
             ->where('initiative_id', '=', $initiativeId)
-            ->where('is_published', '=', true)
+            ->isPublished()
             ->whereRaw("YEAR(published_at) = $year && MONTH(published_at) = $month")
             ->latest('published_at')
             ->with('articles', function ($article) {
@@ -52,9 +52,16 @@ class PublishedInitiativeService
         return $magazines;
     }
 
-    public function getDownloads($initiative_id, $year = null, $month = null) : array | Collection
+    public function getDownloads($initiative_id = null, $year = null, $month = null) : array | Collection
     {
-        $query = $this->publishedInitiatives->where('initiative_id', '=', $initiative_id)->where('is_published', '=', true);
+        if($initiative_id)
+            $query = $this->publishedInitiatives->where('initiative_id', '=', $initiative_id)->isPublished();
+        else
+            $query = $this->publishedInitiatives->whereIn('initiative_id', [
+                InitiativesHelper::getInitiativeID('MAINS_365'),
+                InitiativesHelper::getInitiativeID('PT_365'),
+                InitiativesHelper::getInitiativeID('DOWNLOADS')
+                ])->isPublished();
 
         if ($year) {
             $query->whereRaw("YEAR(published_at) = $year");

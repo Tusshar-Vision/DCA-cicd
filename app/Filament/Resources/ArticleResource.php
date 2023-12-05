@@ -45,7 +45,9 @@ class ArticleResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    protected static ?string $navigationGroup = 'Articles';
+    protected static ?string $navigationGroup = 'Reports';
+
+    protected static ?string $modelLabel = 'All Article';
 
     public static function form(Form $form): Form
     {
@@ -119,19 +121,19 @@ class ArticleResource extends Resource
     {
         return $table
             ->deferLoading()
+            ->defaultSort('updated_at', 'desc')
             ->columns([
                 TextColumn::make('id')->label('id'),
-                TextColumn::make('title')->limit(40)
-                    ->tooltip(fn (Article $article): string => $article->title)
-                    ->sortable()
-                    ->searchable(),
-                TextColumn::make('updated_at')->label('Last Modified')->sortable(),
-                TextColumn::make('initiative.name')
-                    ->searchable(),
                 ToggleColumn::make('is_published')->label('Published'),
                 IconColumn::make('featured')
                     ->boolean()->trueIcon('heroicon-o-check-badge')
                     ->falseIcon('heroicon-o-x-mark'),
+                TextColumn::make('initiative.name')
+                    ->searchable(),
+                TextColumn::make('title')->limit(40)
+                    ->tooltip(fn (Article $article): string => $article->title)
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('topic.name')->label('Subject')
                     ->searchable(),
                 TextColumn::make('topicSection.name')->label('Section')
@@ -141,6 +143,7 @@ class ArticleResource extends Resource
                 SpatieTagsColumn::make('tags'),
                 TextColumn::make('author.name')->label('Expert'),
                 TextColumn::make('reviewer.name')->label('Reviewer'),
+                TextColumn::make('updated_at')->label('Last Modified')->date()->sortable(),
             ])
             ->filters([
                 Filter::make('created_at')
@@ -239,7 +242,7 @@ class ArticleResource extends Resource
             ->filtersFormMaxHeight('400px')
             ->actions([
                 Tables\Actions\EditAction::make(),
-            ])
+            ], ActionsPosition::BeforeColumns)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

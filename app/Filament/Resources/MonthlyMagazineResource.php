@@ -72,13 +72,12 @@ class MonthlyMagazineResource extends Resource
             ->columns([
                 TextColumn::make('id')->label('ID')->sortable(),
                 TextColumn::make('published_at')->dateTime('d M Y h:m')->label('Published At')->sortable(),
-                ToggleColumn::make('is_published')->label('Is Published')->sortable()->afterStateUpdated(function ($state, ?Model $record, Article $articles, callable $get) {
+                ToggleColumn::make('is_published')->label('Is Published')->sortable()->afterStateUpdated(function ($state, ?Model $record, Article $articles) {
                     $publishedInitiativeId = $record->id;
-                    $publishedAt = $get('published_at');
 
                     $articles->where('published_initiative_id', '=', $publishedInitiativeId)->update([
                         'is_published' => $state,
-                        'published_at' => $publishedAt,
+                        'published_at' => $record->published_at,
                         'publisher_id' => Auth::user()->id
                     ]);
                 }),

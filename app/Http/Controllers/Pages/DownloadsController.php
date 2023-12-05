@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pages;
 
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
+use App\Services\MediaService;
 use App\Services\PublishedInitiativeService;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class DownloadsController extends Controller
 
     private int $initiativeId;
     public function __construct(
-        private readonly PublishedInitiativeService $publishedInitiativeService
+        private readonly PublishedInitiativeService $publishedInitiativeService,
     )
     {
         $this->initiativeId = InitiativesHelper::getInitiativeID('DOWNLOADS');
@@ -20,7 +21,7 @@ class DownloadsController extends Controller
 
     public function index() {
 
-        $downloadableFiles = $this->publishedInitiativeService->getDownloads($this->initiativeId);
+        $downloadableFiles = $this->publishedInitiativeService->getDownloads();
 
         return View('pages.downloads', [
             'title' => 'Downloads',

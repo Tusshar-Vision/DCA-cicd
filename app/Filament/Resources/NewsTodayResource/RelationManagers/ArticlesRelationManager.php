@@ -5,8 +5,8 @@ namespace App\Filament\Resources\NewsTodayResource\RelationManagers;
 use App\Models\Article;
 use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Livewire;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieTagsInput;
@@ -19,6 +19,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Enums\ActionsPosition;
@@ -27,11 +28,9 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 use Spatie\Tags\Tag;
-use Guava\FilamentDrafts\Admin\Resources\Concerns\Draftable;
 
 class ArticlesRelationManager extends RelationManager
 {
@@ -44,7 +43,9 @@ class ArticlesRelationManager extends RelationManager
             ->schema([
                 Section::make()->schema([
                     TextInput::make('title')->required()->columnSpanFull(),
-
+                    TextInput::make('initiative_id')->default(function ($livewire) {
+                        return $livewire->ownerRecord->initiative_id;
+                    })->hidden(),
                     Select::make('initiative_topic_id')
                         ->relationship('topic', 'name')
                         ->required()->label('Subject')
@@ -66,7 +67,7 @@ class ArticlesRelationManager extends RelationManager
                         })->reactive()
                         ->label('Sub Section'),
 
-                    TinyEditor::make('content')->columnSpanFull(),
+                    TinyEditor::make('content')->required()->columnSpanFull(),
                 ])->columnSpan(2),
 
                 Section::make('meta')->schema([
@@ -109,20 +110,26 @@ class ArticlesRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
+            ->reorderable('sort')
+            ->reorderRecordsTriggerAction(
+                fn (Action $action, bool $isReordering) => $action
+                    ->button()
+                    ->label($isReordering ? 'Disable reordering' : 'Enable reordering'),
+            )
+            ->defaultSort('sort')
             ->recordTitleAttribute('title')
             ->columns([
                 TextColumn::make('id')->label('id'),
-                TextColumn::make('title')->limit(40)
-                    ->tooltip(fn (Article $article): string => $article->title),
-                TextColumn::make('initiative.name'),
                 ToggleColumn::make('is_published')->label('Published'),
                 IconColumn::make('featured')
                     ->boolean()->trueIcon('heroicon-o-check-badge')
                     ->falseIcon('heroicon-o-x-mark'),
+                TextColumn::make('title')->limit(40)
+                    ->tooltip(fn (Article $article): string => $article->title),
                 TextColumn::make('topic.name')->label('Subject'),
                 TextColumn::make('topicSection.name')->label('Section'),
                 TextColumn::make('topicSubSection.name')->label('Sub-Section'),
-                Tables\Columns\SpatieTagsColumn::make('tags'),
+                SpatieTagsColumn::make('tags'),
                 TextColumn::make('author.name')->label('Expert'),
                 TextColumn::make('reviewer.name')->label('Reviewer'),
             ])

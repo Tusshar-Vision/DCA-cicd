@@ -52,11 +52,13 @@ class Article extends Model implements HasMedia
         'topic_sub_section_id',
         'reviewer_id',
         'initiative_id',
-        'sources'
+        'sources',
+        'sort'
     ];
 
     protected $casts = [
         'sources' => 'array',
+        'is_published' => 'bool'
     ];
 
     // This method will automatically be called when creating or updating an article.
@@ -76,6 +78,7 @@ class Article extends Model implements HasMedia
     protected static function booted(): void
     {
         static::retrieved(function ($article) {
+            $article->sources = $article->sources ?? [];
             $article->sources = is_string($article->sources) ? explode(',', $article->sources) : $article->sources;
         });
     }
@@ -165,5 +168,10 @@ class Article extends Model implements HasMedia
     public function scopeIsFeatured(Builder $query): Builder
     {
         return $query->where('featured', true);
+    }
+
+    public function scopeIsPublished(Builder $query): Builder
+    {
+        return $query->where('is_published', true);
     }
 }

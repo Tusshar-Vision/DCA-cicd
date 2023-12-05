@@ -15,6 +15,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -75,13 +76,12 @@ class WeeklyFocusResource extends Resource
             ->columns([
                 TextColumn::make('id')->label('ID')->sortable(),
                 TextColumn::make('published_at')->dateTime('d M Y h:m')->label('Published At')->sortable(),
-                ToggleColumn::make('is_published')->label('Is Published')->sortable()->afterStateUpdated(function ($state, ?Model $record, Article $articles, callable $get) {
+                ToggleColumn::make('is_published')->label('Is Published')->sortable()->afterStateUpdated(function ($state, ?Model $record, Article $articles) {
                     $publishedInitiativeId = $record->id;
-                    $publishedAt = $get('published_at');
 
                     $articles->where('published_initiative_id', '=', $publishedInitiativeId)->update([
                         'is_published' => $state,
-                        'published_at' => $publishedAt,
+                        'published_at' => $record->published_at,
                         'publisher_id' => Auth::user()->id
                     ]);
                 }),
