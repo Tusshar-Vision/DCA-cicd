@@ -6,7 +6,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 function initializeSwiper() {
-    return new Swiper('.swiper', {
+    new Swiper('.swiper', {
         // configure Swiper to use modules
         modules: [Navigation],
         direction: 'horizontal',
@@ -38,6 +38,8 @@ function initializeSwiper() {
             prevEl: '.swiper-button-prev',
         },
     });
+
+
 }
 
 // init Swiper:

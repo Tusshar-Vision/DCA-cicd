@@ -28,7 +28,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('notes', function (Blueprint $table) {
-            //
+            $table->dropConstrainedForeignId('topic_id');
+            $table->dropConstrainedForeignId('topic_section_id');
+            $table->dropConstrainedForeignId('topic_sub_section_id');
         });
     }
 };

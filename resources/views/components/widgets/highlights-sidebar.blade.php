@@ -4,9 +4,9 @@
         <div class="vi-announcement-card">
             <p class="vi-announcement-title">Announcements</p>
             <ul>
-                <li>Read October Current affairs monthly magazine.</li>
-                <li>Register for CSAT Open Mock Test 1.</li>
-                <li>Lakshya Prelims 2024 begins from 5th December.</li>
+                @foreach($announcements as $announcement)
+                    <li>{!! $announcement->content !!}</li>
+                @endforeach
             </ul>
         </div>
         <div class="vi-announcement-card">
