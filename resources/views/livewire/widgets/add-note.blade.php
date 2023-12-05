@@ -3,7 +3,7 @@
         <div class="vi-modal-content">
             <div class="edit-text">
                 <blockquote contenteditable="true">
-                    <p id="note-title"></p>
+                    <p id="note-title">{{ $article->title }}</p>
                 </blockquote>
                 <a href="#"><img src="{{ URL::asset('images/edit.png') }}"></a>
             </div>
@@ -15,9 +15,9 @@
             </div>
             <div class="tag-wrap">
                 <div class="tags">
-                    @foreach($article->tags as $tag)
-                        <span>{{ $tag->name }}</span>
-                    @endforeach
+                    <span>Article 72</span>
+                    <span>Article 72</span>
+                    <span>Article 72</span>
                 </div>
                 <div class="search-tags">
                     <input type="search" placeholder="Search">
@@ -33,7 +33,7 @@
 
 <script>
     function saveNote() {
-        const user_id = 1;
+        const user_id = {{Auth::user()->id}};
         const article_id = "{{ $article->id }}";
         const topic_id = "{{ $article->topic->id }}";
         const topic_section_id = "{{ $article->topic_section_id }}";
