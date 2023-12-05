@@ -21,8 +21,12 @@
                 </div>
                 <div class="search-tags">
                     <input type="search" placeholder="Search">
-					<div class="search-list" style="display: none;">
+					<div class="search-list overflow-scroll" style="display: none;">
 						<p>Search 1</p>
+						<p>Search 2</p>
+						<p>Search 3</p>
+						<p>Search 2</p>
+						<p>Search 3</p>
 						<p>Search 2</p>
 						<p>Search 3</p>
 					</div>

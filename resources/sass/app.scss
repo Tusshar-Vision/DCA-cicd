@@ -668,13 +668,14 @@
   .vi-modal-inner .vi-modal-content .tag-wrap .search-tags .search-list{
     position: absolute;
     left: 0;
-    top: 25px;
+    bottom: 34px;
     border: 1px solid #D4D4D4;
     border-radius: 4px;
     max-height: 100px;
     width: 100%;
     background-color: #fff;
     padding: 10px;
+    z-index: 1;
   }
 
   .vi-modal-inner .vi-modal-content .tag-wrap .search-tags .search-list p{
