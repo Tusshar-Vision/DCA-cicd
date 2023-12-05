@@ -626,6 +626,19 @@
     font-size: 14px;
     margin: 0 0 0 10px;
   }
+
+  .tag-gap{
+    margin-top: 13px;
+  }
+
+  .copylink-row{
+    border-radius: 4px;
+    border: 1px solid #D4D4D4;
+    color: #D4D4D4;
+    display: flex;
+    justify-content: space-between; 
+    padding: 9px 15px;
+  }
    .vi-modal-inner .vi-modal-content .tag-wrap .tags span{
     color: #183B56;
     display: inline-block;
