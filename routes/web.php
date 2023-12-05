@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\LocalizationController;
+use App\Http\Controllers\NoteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Pages;
@@ -56,3 +57,5 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/images/{filename}', [MediaController::class, 'renderImage'])->name('image.display');
 Route::get('change/lang', [LocalizationController::class, 'changeLang'])->name('lang.change');
+
+Route::post('/add-notes', [NoteController::class, 'addNote']);
