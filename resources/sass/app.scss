@@ -486,3 +486,200 @@
 //}
 
 [x-cloak] { display: none !important; }
+
+
+/* comments section */
+
+.vi-comment-content .create-comment{
+    display: flex;
+    margin: 20px 0 16px;
+  }
+  
+  .vi-comment-content .create-comment.create-comment-first{
+    margin-bottom: 55px;
+  }
+  
+  .vi-comment-content .create-comment .comment-text{
+    margin-left: 12px;
+    width: 100%;
+  }
+  
+  .vi-comment-content .create-comment .comment-text textarea{
+    width: 100%;
+    resize: none;
+    border-radius: 5px;
+    border: 1px solid #D4D4D4;
+    padding: 10px 12px;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .vi-comment-content .create-comment .comment-text button{
+    color: #FFF;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 20px;
+    border-radius: 4px;
+    border: 1px solid #005FAF;
+    background: #005FAF; 
+    padding: 8px 20px;
+  }
+  
+  .vi-comment-content .create-comment .comment-text.submitted-comment h4{
+    margin: 0;
+    color: #000;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 110%;
+  }
+  
+  .vi-comment-content .create-comment .comment-text.submitted-comment em{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #8F93A3; 
+    font-style: italic;
+  }
+  
+  .vi-comment-content .create-comment .comment-text.submitted-comment p{
+    margin: 8px 0 0 0;
+    font-size: 16px;
+    color: #8F93A3; 
+  }
+  
+  .vi-comment-content .create-comment.submitted-secondlabel{
+    padding: 0 0 0 24px;
+    border-left: 1px solid #8F93A3;
+  }
+  
+  .vi-comment-content .sources-link{
+    margin: 24px 0 0 0;
+  }
+  
+  .vi-comment-content .sources-link a{
+    color: #8F93A3;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 20px;
+    display: block; 
+    margin: 0 0 12px;
+  }
+
+  /* add note */
+
+  .vi-modal-inner {
+    max-width: 567px;
+    width: 100%;
+    padding: 16px 20px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    max-height: 90vh;
+    overflow-y: scroll;
+  }
+   .vi-modal-inner::-webkit-scrollbar {
+    display: none;
+  }
+   .vi-modal-inner .vi-modal-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #8F93A3;
+  }
+   .vi-modal-inner .vi-modal-header .vi-modal-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #040404;
+    margin-top: 0;
+  }
+   .vi-modal-inner .vi-modal-header .vi-icons {
+    display: inline-block;
+    cursor: pointer;
+  }
+   .vi-modal-inner .vi-modal-content {
+    margin-top: 20px;
+  }
+   .vi-modal-inner .vi-modal-content .edit-text,
+   .vi-modal-inner .vi-modal-content .tag-wrap{
+    display: flex;
+    justify-content: space-between;
+  }
+   .vi-modal-inner .vi-modal-content .added-tags{
+    min-height: 40px;
+    border-radius: 4px;
+    border: 1px solid #D4D4D4;
+    margin: 15px 0;
+    padding: 10px;
+  }
+  .added-tags span{
+    position: relative;
+    background-color: #3362CC;
+    color: #fff;
+    display: inline-block;
+    padding: 9px 10px;
+    font-size: 10px;
+    border-radius: 2px;
+  }
+  .added-tags span a{
+    color: #fff;
+    font-size: 14px;
+    margin: 0 0 0 10px;
+  }
+
+  .tag-gap{
+    margin-top: 13px;
+  }
+
+  .copylink-row{
+    border-radius: 4px;
+    border: 1px solid #D4D4D4;
+    color: #D4D4D4;
+    display: flex;
+    justify-content: space-between; 
+    padding: 9px 15px;
+  }
+   .vi-modal-inner .vi-modal-content .tag-wrap .tags span{
+    color: #183B56;
+    display: inline-block;
+    padding: 9px 10px;
+    background-color: rgba(229, 234, 244, 0.50);
+    font-size: 10px;
+  }
+  
+   .vi-modal-inner .vi-modal-content .tag-wrap .search-tags input[type="search"]{
+    border-radius: 4px;
+    border: 1px solid #8F93A3; 
+    width: 130px;
+    padding: 5px 12px;
+  }
+  
+   .vi-modal-inner .vi-modal-content p {
+    font-size: 14px;
+    font-weight: 400;
+    color: #000000;
+    line-height: 19px;
+    margin-top: 0;
+    opacity: 0.5;
+  }
+   .vi-modal-inner .vi-modal-content .vi-tinymce-editor {
+    margin-top: 10px;
+  }
+   .vi-modal-inner .vi-modal-content .vi-modal-action {
+    margin-top: 10px;
+    text-align: right;
+  }
+   .vi-modal-inner .vi-modal-content .vi-modal-action a {
+    display: inline-block;
+    width: auto;
+  }
+   .vi-modal-inner .vi-modal-content .vi-modal-action a.vi-secondary-button {
+    margin-right: 12px;
+  }
+   .vi-modal-inner .vi-modal-header {
+    padding-bottom: 10px;
+  }
+   .vi-modal-inner .vi-modal-content {
+    margin-top: 10px;
+  }
