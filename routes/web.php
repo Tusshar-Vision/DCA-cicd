@@ -58,4 +58,4 @@ Route::middleware('auth')->group(function () {
 Route::get('/images/{filename}', [MediaController::class, 'renderImage'])->name('image.display');
 Route::get('change/lang', [LocalizationController::class, 'changeLang'])->name('lang.change');
 
-Route::post('/add-notes', [NoteController::class, 'addNote']);
+Route::post('/add-notes', [NoteController::class, 'addNote'])->name("notes.add");

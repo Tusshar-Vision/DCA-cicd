@@ -86,7 +86,7 @@
     <button @click="isNoteOpen=true">Add Note</button>
     <div>
         <x-modals.modal-box x-show="isNoteOpen" heading="Add Note">
-            <livewire:widgets.add-note />
+            <livewire:widgets.add-note :article="$article" />
         </x-modals.modal-box>
     </div>
 </div>

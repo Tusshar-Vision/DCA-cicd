@@ -8,6 +8,7 @@ use Spatie\Tags\HasTags;
 
 class Note extends Model
 {
+
     use HasFactory, HasTags;
 
     protected $fillable = [
@@ -16,6 +17,10 @@ class Note extends Model
         'content',
         'highlight_start_offset',
         'highlight_end_offset',
+        'title',
+        'topic_id',
+        'topic_section_id',
+        'topic_sub_section_id'
     ];
 
     // Define the relationships with other models
