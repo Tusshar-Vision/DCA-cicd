@@ -34,7 +34,7 @@
             </div>
             <div class="vi-modal-action">
                 <a href="#" class="vi-secondary-button">Cancel</a>
-                <a href="#" class="vi-primary-button" onclick="saveNote()">Save Note</a>
+                <a href="#" class="vi-primary-button" @click="isNoteOpen=false" onclick="saveNote()">Save Note</a>
             </div>
         </div>
     </div>
@@ -47,7 +47,7 @@
         const topic_id = "{{ $article->topic->id }}";
         const topic_section_id = "{{ $article->topic_section_id }}";
         const topic_sub_section_id = "{{ $article->topic_sub_section_id }}";
-        const note = document.getElementById("notes-text-area").innerText;
+        const note = document.getElementById("notes-text-area").value;
         const note_title = document.getElementById("note-title").innerHTML
 
         postJSON({

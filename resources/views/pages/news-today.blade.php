@@ -20,12 +20,11 @@
             <x-widgets.article-highlights />
         </x-modals.modal-box>
         <x-modals.modal-box x-show="isNotesOpen" :heading="$notesHeading">
-            {{-- <x-widgets.article-notes /> --}}
             <livewire:widgets.edit-note />
         </x-modals.modal-box>
-        {{-- <x-modals.modal-box x-show="isNoteOpen" heading="Add Note">
+        <x-modals.modal-box x-show="isNoteOpen" heading="Add Note">
             <livewire:widgets.add-note :article="$article" />
-        </x-modals.modal-box> --}}
+        </x-modals.modal-box>
     </div>
 
     <div class="space-y-12">
