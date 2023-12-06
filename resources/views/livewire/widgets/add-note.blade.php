@@ -15,9 +15,9 @@
             </div>
             <div class="tag-wrap">
                 <div class="tags">
-                    <span>Article 72</span>
-                    <span>Article 72</span>
-                    <span>Article 72</span>
+                    @foreach ($article->tags as $tag)
+                        <span>{{ $tag->name }}</span>
+                    @endforeach
                 </div>
                 <div class="search-tags">
                     <input type="search" placeholder="Search">
