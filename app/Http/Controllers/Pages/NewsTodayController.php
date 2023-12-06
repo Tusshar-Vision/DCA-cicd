@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Redirect;
 class NewsTodayController extends Controller
 {
     private int $initiativeId;
-    protected $latestNewsToday;
     protected $articles;
 
     public function __construct(

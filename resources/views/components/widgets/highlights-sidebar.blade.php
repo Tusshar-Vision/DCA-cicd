@@ -1,3 +1,7 @@
+@php
+    use App\Services\ArticleService;
+@endphp
+
 <div class="vi-highlights-sidebar">
     <div class="vi-announcement-wrap">
         <h5 class="vi-sidebar-title">What’s New</h5>
@@ -12,8 +16,11 @@
         <div class="vi-announcement-card">
             <p class="vi-announcement-title">News Updates</p>
             <ul>
-                <li>Global Multidimensional Poverty Index (MPI) 2023 unveiled by United Nations Development Program (UNDP)</li>
-                <li>Roadmap for Green Hydrogen Ecosystem in India by Ministry of New and Renewable Energy</li>
+                @foreach($newsUpdates as $news)
+                    <li>
+                        <a href="{{ ArticleService::getArticleUrlFromSlug($news->slug) }}">{{ $news->title }}</a>
+                    </li>
+                @endforeach
             </ul>
         </div>
     </div>
