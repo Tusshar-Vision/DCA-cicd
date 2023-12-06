@@ -34,7 +34,7 @@
             </div>
             <div class="vi-modal-action">
                 <a href="#" class="vi-secondary-button">Cancel</a>
-                <a href="#" class="vi-primary-button" onclick="saveNote()">Save Note</a>
+                <a href="#" class="vi-primary-button" @click="isNoteOpen=false" onclick="saveNote()">Save Note</a>
             </div>
         </div>
     </div>
@@ -73,6 +73,8 @@
                 },
                 body: JSON.stringify(data),
             });
+
+            console.log("Response", response);
 
             const result = await response.json();
             console.log("Success:", result);
