@@ -31,6 +31,8 @@ class NoteController extends Controller
             'topic_sub_section_id' => $params['topic_sub_section_id'],
         ]);
 
+        logger("notee", [$note]);
+
         return response()->json(['data' => $note], 200);
     }
 }

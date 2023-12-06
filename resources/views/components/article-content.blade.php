@@ -80,12 +80,12 @@
     /***/
 </style>
 
-<div class="text-tooltip-comp" id="tooltip-box" x-data="{ isNoteOpen: false }">
+<div x-data class="text-tooltip-comp" id="tooltip-box">
     <button>Copy</button>
     <button onclick="highlightText()" id="btn">Highlight</button>
-    <button @click="isNoteOpen=true">Add Note</button>
+    <button @click="$store.isNoteOpen=true">Add Note</button>
     <div>
-        <x-modals.modal-box x-show="isNoteOpen" heading="Add Note">
+        <x-modals.modal-box x-show="$store.isNoteOpen" heading="Add Note">
             <livewire:widgets.add-note :article="$article" />
         </x-modals.modal-box>
     </div>

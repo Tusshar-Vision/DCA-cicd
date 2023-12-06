@@ -13,7 +13,7 @@
         <x-widgets.articles-nav :createdAt="$article->created_at" :updatedAt="$article->updated_at" />
     </div>
 
-    <div x-data="{ isHighlightsOpen: false, isNotesOpen: false, isNoteOpen: false }">
+    <div x-data="{ isHighlightsOpen: false, isNotesOpen: false }">
         <x-widgets.side-notes-and-highlights-menu :noteAvailable="$noteAvailable" />
 
         <x-modals.modal-box x-show="isHighlightsOpen" :heading="$highlightsHeading">
@@ -23,9 +23,9 @@
             {{-- <x-widgets.article-notes /> --}}
             <livewire:widgets.edit-note />
         </x-modals.modal-box>
-        <x-modals.modal-box x-show="isNoteOpen" heading="Add Note">
+        {{-- <x-modals.modal-box x-show="isNoteOpen" heading="Add Note">
             <livewire:widgets.add-note :article="$article" />
-        </x-modals.modal-box>
+        </x-modals.modal-box> --}}
     </div>
 
     <div class="space-y-12">

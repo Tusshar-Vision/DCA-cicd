@@ -47,7 +47,7 @@
         const topic_id = "{{ $article->topic->id }}";
         const topic_section_id = "{{ $article->topic_section_id }}";
         const topic_sub_section_id = "{{ $article->topic_sub_section_id }}";
-        const note = document.getElementById("notes-text-area").value;
+        const note = document.getElementById("notes-text-area").innerText;
         const note_title = document.getElementById("note-title").innerHTML
 
         postJSON({
@@ -73,6 +73,8 @@
                 },
                 body: JSON.stringify(data),
             });
+
+            console.log("Response", response);
 
             const result = await response.json();
             console.log("Success:", result);

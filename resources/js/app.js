@@ -49,4 +49,7 @@ window.addEventListener('onHomePage', () => {
     initializeSwiper();
 });
 
+document.addEventListener('alpine:init', () => {
+    Alpine.store('isNoteOpen', false)
+})
 
