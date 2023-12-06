@@ -117,6 +117,37 @@
         color: #040404;
         line-height: 20px;
         margin: 12px 0;
+        // overflow: hidden;
+        // white-space: nowrap;
+        // text-overflow: ellipsis;
+        position: relative;
+    }
+    .vi-highlights-sidebar .vi-announcement-card ul li .hidden-text{
+      width: 100%;
+      min-height: 50px;
+      background-color: rgba(229, 234, 244, 1);
+      top: 50%;
+      left: 0;
+      width: 100%;
+      position: absolute;
+      display: none;
+      padding: 15px;
+      border-radius: 5px;
+      z-index: 1;
+    }
+    .vi-highlights-sidebar .vi-announcement-card ul li .hidden-text::after{
+      content: "";
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      margin-left: -3px;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-bottom: 5px solid rgba(229, 234, 244, 0.8);
+    }
+
+    .vi-highlights-sidebar .vi-announcement-card ul li:hover .hidden-text{
+      display: block;
     }
     .vi-highlights-sidebar .vi-announcement-card ul li a:hover{
         text-decoration: underline;
@@ -838,7 +869,7 @@
 
   /* ecosysten style header menu style */
 
-  .vi-search-bar {
+  .ecosystem-wrap .vi-search-bar {
     width: 100%;
     padding: 8px 40px 8px;
     font-size: 16px;
