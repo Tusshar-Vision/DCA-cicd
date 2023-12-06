@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieTagsInput;
@@ -37,16 +38,15 @@ class ArticlesRelationManager extends RelationManager
     protected static string $relationship = 'articles';
     protected $listeners = ['updatedPublishedStatus' => '$refresh'];
 
-
     public function form(Form $form): Form
     {
         return $form
             ->schema([
                 Section::make()->schema([
                     TextInput::make('title')->required()->columnSpanFull(),
-                    TextInput::make('initiative_id')->default(function ($livewire) {
+                    Hidden::make('initiative_id')->default(function ($livewire) {
                         return $livewire->ownerRecord->initiative_id;
-                    })->hidden(),
+                    }),
                     Select::make('initiative_topic_id')
                         ->relationship('topic', 'name')
                         ->required()->label('Subject')

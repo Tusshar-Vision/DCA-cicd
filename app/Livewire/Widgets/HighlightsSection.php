@@ -3,6 +3,7 @@
 namespace App\Livewire\Widgets;
 
 use App\Services\ArticleService;
+use App\Services\NotificationService;
 use Livewire\Component;
 
 class HighlightsSection extends Component
