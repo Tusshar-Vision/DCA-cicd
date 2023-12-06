@@ -52,8 +52,8 @@ window.addEventListener('onHomePage', () => {
 // text lenght for whats new section
 
 function truncateText(selector, maxLength = 50) {
-    var elements = document.querySelectorAll(selector);
-    for(let i=0; i<elements.length; i++) {
+    let elements = document.querySelectorAll(selector);
+    for(let i= 0; i < elements.length; i++) {
         elements[i].innerText = elements[i].innerText.substr(0, maxLength) + '...';
     }
     return truncated;
