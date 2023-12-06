@@ -12,17 +12,16 @@
         <div class="vi-announcement-card">
             <p class="vi-announcement-title">News Updates</p>
             <ul>
-                <li><span class="limited-text">Global Multidimensional Poverty Index (MPI) 2023 unveiled by United Nations Development Program (UNDP)</span>
-                    <div class="hidden-text">Global Multidimensional Poverty Index (MPI) 2023 unveiled by Unit Global Multidimensional Poverty Index (MPI) 2023 unveiled by Unit</div>
-                </li>
-                <li><span class="limited-text">Global Multidimensional Poverty Index (MPI) 2023 unveiled by United Nations Development Program (UNDP)</span>
-                    <div class="hidden-text">Global Multidimensional Poverty Index (MPI) 2023 unveiled by Unit Global Multidimensional Poverty Index (MPI) 2023 unveiled by Unit</div>
-                </li>
-                <li><span class="limited-text">Global Multidimensional Poverty Index (MPI) 2023 unveiled by United Nations Development Program (UNDP)</span>
-                    <div class="hidden-text">Global Multidimensional Poverty Index (MPI) 2023 unveiled by Unit Global Multidimensional Poverty Index (MPI) 2023 unveiled by Unit</div>
-                </li>
+                @foreach($newsUpdates as $news)
+                    <li>
+                        <a href="{{ ArticleService::getArticleUrlFromSlug($news->slug) }}">
+                            {{ $news->title }}
+                            <span class="limited-text">Global Multidimensional Poverty Index (MPI) 2023 unveiled by United Nations Development Program (UNDP)</span>
+                            <div class="hidden-text">Global Multidimensional Poverty Index (MPI) 2023 unveiled by Unit Global Multidimensional Poverty Index (MPI) 2023 unveiled by Unit</div>
+                        </a>
+                    </li>
+                @endforeach
             </ul>
         </div>
     </div>
 </div>
-
