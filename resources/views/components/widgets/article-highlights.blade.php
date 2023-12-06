@@ -53,7 +53,7 @@
 
         .vi-note .note-content p {
             font-size: 14px;
-            display: inline;
+            display: block;
         }
 
         .vi-note .note-content p:not(:first-child) {

@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class NoteController extends Controller
 {
     public function index()
     {
-        return Note::all();
+        $notes = Note::where('user_id', Auth::user()->id)->get();
+        return $notes;
     }
 
     public function addNote(Request $request)
@@ -28,6 +30,8 @@ class NoteController extends Controller
             'topic_section_id' => $params['topic_section_id'],
             'topic_sub_section_id' => $params['topic_sub_section_id'],
         ]);
+
+        logger("notee", [$note]);
 
         return response()->json(['data' => $note], 200);
     }

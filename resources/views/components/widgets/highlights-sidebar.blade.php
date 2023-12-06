@@ -12,9 +12,17 @@
         <div class="vi-announcement-card">
             <p class="vi-announcement-title">News Updates</p>
             <ul>
-                <li>Global Multidimensional Poverty Index (MPI) 2023 unveiled by United Nations Development Program (UNDP)</li>
-                <li>Roadmap for Green Hydrogen Ecosystem in India by Ministry of New and Renewable Energy</li>
+                <li><span class="limited-text">Global Multidimensional Poverty Index (MPI) 2023 unveiled by United Nations Development Program (UNDP)</span>
+                    <div class="hidden-text">Global Multidimensional Poverty Index (MPI) 2023 unveiled by Unit Global Multidimensional Poverty Index (MPI) 2023 unveiled by Unit</div>
+                </li>
+                <li><span class="limited-text">Global Multidimensional Poverty Index (MPI) 2023 unveiled by United Nations Development Program (UNDP)</span>
+                    <div class="hidden-text">Global Multidimensional Poverty Index (MPI) 2023 unveiled by Unit Global Multidimensional Poverty Index (MPI) 2023 unveiled by Unit</div>
+                </li>
+                <li><span class="limited-text">Global Multidimensional Poverty Index (MPI) 2023 unveiled by United Nations Development Program (UNDP)</span>
+                    <div class="hidden-text">Global Multidimensional Poverty Index (MPI) 2023 unveiled by Unit Global Multidimensional Poverty Index (MPI) 2023 unveiled by Unit</div>
+                </li>
             </ul>
         </div>
     </div>
 </div>
+
