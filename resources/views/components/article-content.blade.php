@@ -91,10 +91,6 @@
     </div>
 </div>
 
-<button onclick="noteSelectedText()">
-    Add Note
-</button>
-
 <div id="article-content" onmouseup="handleSelection()" class="mt-4 printable-area">
     {!! $article->content !!}
 </div>

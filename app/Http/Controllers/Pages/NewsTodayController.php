@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Pages;
 
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
+use App\Models\Note;
 use App\Services\ArticleService;
 use App\Services\PublishedInitiativeService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Redirect;
 
@@ -97,11 +99,15 @@ class NewsTodayController extends Controller
 
         $articles = $sortedArticles;
 
+        $noteAvailable = Note::where("user_id", Auth::user()->id)->count() > 0 ? true : false;
+        logger("notesaav", [$noteAvailable]);
+
         return View('pages.news-today', [
             "topics" => $topics,
             "articles" => $articles,
             "article" => $article,
             "totalArticles" => count($articles),
+            "noteAvailable"  => $noteAvailable,
             "baseUrl" => url('news-today') . "/" . $date
         ]);
     }
