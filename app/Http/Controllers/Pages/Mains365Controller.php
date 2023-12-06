@@ -2,18 +2,29 @@
 
 namespace App\Http\Controllers\Pages;
 
+use App\Enums\Initiatives;
+use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
+use App\Services\PublishedInitiativeService;
 use Illuminate\Http\Request;
 
 class Mains365Controller extends Controller
 {
-    public function __construct()
-    {}
+    private int $initiativeId;
+    public function __construct(
+        private readonly PublishedInitiativeService $publishedInitiativeService
+    )
+    {
+        $this->initiativeId = InitiativesHelper::getInitiativeID('MAINS_365');
+    }
 
     public function index() {
 
+        $downloadableFiles = $this->publishedInitiativeService->getDownloads($this->initiativeId);
+
         return View('pages.mains-365', [
-            'title' => 'Mains 365'
+            'title' => 'Mains 365',
+            'downloadableFiles' => $downloadableFiles
         ]);
     }
 }

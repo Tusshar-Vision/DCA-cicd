@@ -49,13 +49,22 @@ class NewsTodayController extends Controller
         }
 
         $article_no = 1;
-        if ($page_no = request()->query('page')) $article_no = $page_no;
+
+        if ($page_no = request()->query('page'))
+            $article_no = $page_no;
 
         $articles = $latestPublishedInitiative->articles->where('language', config("settings.language." . app()->getLocale()));
+
+        if ($articles->isEmpty()) {
+            return View('pages.no-news-today');
+        }
+
         $article = $articles[$article_no - 1];
 
-        if ($page_no) return Redirect::to(route('news-today-date-wise.article', ['date' => $date, 'topic' => $article->topic->name, 'article_slug' => $article->slug]) . "?page=$page_no");
-        else return Redirect::to(route('news-today-date-wise.article', ['date' => $date, 'topic' => $article->topic->name, 'article_slug' => $article->slug]));
+        if ($page_no)
+            return Redirect::to(route('news-today-date-wise.article', ['date' => $date, 'topic' => $article->topic->name, 'article_slug' => $article->slug]) . "?page=$page_no");
+        else
+            return Redirect::to(route('news-today-date-wise.article', ['date' => $date, 'topic' => $article->topic->name, 'article_slug' => $article->slug]));
     }
 
     public function renderArticles($date, $topic, $slug)

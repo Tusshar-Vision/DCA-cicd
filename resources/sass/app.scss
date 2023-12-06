@@ -167,6 +167,7 @@
         color: #040404;
         line-height: 20px;
         margin-top: 10px;
+        min-height: 40px;
     }
     .vi-card-footer {
         display: flex;
@@ -390,9 +391,9 @@
         margin: 0;
     }
     .card-listing {
-        column-count: 4;
-        column-fill: initial;
-        column-gap: 24px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 5px 24px;
     }
 }
 
@@ -571,8 +572,6 @@
   .vi-modal-inner {
     max-width: 567px;
     width: 100%;
-    padding: 16px 20px;
-    background-color: #ffffff;
     border-radius: 4px;
     max-height: 90vh;
     overflow-y: scroll;
@@ -597,19 +596,22 @@
     display: inline-block;
     cursor: pointer;
   }
-   .vi-modal-inner .vi-modal-content {
-    margin-top: 20px;
-  }
+
    .vi-modal-inner .vi-modal-content .edit-text,
    .vi-modal-inner .vi-modal-content .tag-wrap{
     display: flex;
     justify-content: space-between;
   }
+  .edit-text blockquote{
+    margin-right: 10px;
+  }
+  .edit-text .edit-title{
+    margin: 10px;
+  }
    .vi-modal-inner .vi-modal-content .added-tags{
     min-height: 40px;
     border-radius: 4px;
     border: 1px solid #D4D4D4;
-    margin: 15px 0;
     padding: 10px;
   }
   .added-tags span{
@@ -638,6 +640,7 @@
     display: flex;
     justify-content: space-between; 
     padding: 9px 15px;
+    background-color: #fff;
   }
    .vi-modal-inner .vi-modal-content .tag-wrap .tags span{
     color: #183B56;
@@ -646,14 +649,40 @@
     background-color: rgba(229, 234, 244, 0.50);
     font-size: 10px;
   }
+
+  .vi-modal-inner .vi-modal-content .tag-wrap .search-tags{
+    position: relative;
+  }
   
    .vi-modal-inner .vi-modal-content .tag-wrap .search-tags input[type="search"]{
     border-radius: 4px;
     border: 1px solid #8F93A3; 
     width: 130px;
-    padding: 5px 12px;
+    height: 30px;
+    padding: 0 12px;
+    line-height: 110%;
+    font-size: 14px;
+    color: #8F93A3;
   }
   
+  .vi-modal-inner .vi-modal-content .tag-wrap .search-tags .search-list{
+    position: absolute;
+    left: 0;
+    bottom: 34px;
+    border: 1px solid #D4D4D4;
+    border-radius: 4px;
+    max-height: 100px;
+    width: 100%;
+    background-color: #fff;
+    padding: 10px;
+    z-index: 1;
+  }
+
+  .vi-modal-inner .vi-modal-content .tag-wrap .search-tags .search-list p{
+    cursor: pointer;
+    margin-bottom: 5px;
+  }
+
    .vi-modal-inner .vi-modal-content p {
     font-size: 14px;
     font-weight: 400;
@@ -676,9 +705,53 @@
    .vi-modal-inner .vi-modal-content .vi-modal-action a.vi-secondary-button {
     margin-right: 12px;
   }
+  .vi-modal-inner .vi-modal-content .vi-modal-action a.vi-secondary-button{
+    padding: 7px 17px;
+    background-color: transparent;
+    font-size: 14px;
+    color: #005FAF;
+    font-weight: 600;
+    border: 1px solid #005FAF;
+    border-radius: 4px;
+    width: 100%;
+    transition: all 0.2s ease-in-out;
+  }
+
    .vi-modal-inner .vi-modal-header {
     padding-bottom: 10px;
   }
-   .vi-modal-inner .vi-modal-content {
-    margin-top: 10px;
+   
+  .vi-note {
+    border: 1px solid #E9E9E9;
+    position: relative;
+    font-size: 14px;
+    border-radius: 4px;
+    background-color: #fff;
+  }
+
+  .vi-note .vi-note-title{
+    padding: 10px;
+    border-bottom: 1px solid #E9E9E9;
+  }
+
+  .vi-note .note-content{
+    padding: 10px;
+  }
+
+  .vi-note .vi-note-action {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+  }
+  
+  .vi-note .vi-note-action a{
+    margin-left: 10px;
+  }
+  .vi-note .vi-note-action .vi-icons:not(:last-child) {
+    margin-right: 10px;
+  }
+
+  .vi-modal-inner .vi-modal-content .added-tags.list-tags{
+    padding: 0;
+    border: 0;
   }

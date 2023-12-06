@@ -20,14 +20,12 @@ class SideDropdown extends Component
 
     public function getDataToRender(): array
     {
-
         $dataToRender = [];
-
         //Checking if the Initiative is Monthly Magazine
 
         if ($this->initiativeId === 2) {
             foreach ($this->menuData[1] as $key => $value) {
-                $dataToRender[] = Carbon::parse($value['published_at'])->monthName;
+                $dataToRender[] = Carbon::parse($value['year'])->monthName;
             }
         }
 
@@ -36,7 +34,6 @@ class SideDropdown extends Component
                 $dataToRender[] = ['date' => $value['published_at'] ?? $value['created_at'], 'title' => $value['title'], 'topic' => $value['topic']['name'], 'slug' => $value['slug']];
             }
         }
-
         return $dataToRender;
     }
 

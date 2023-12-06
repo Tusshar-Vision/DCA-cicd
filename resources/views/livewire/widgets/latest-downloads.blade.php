@@ -4,9 +4,9 @@
         <a href="{{ route('downloads') }}" class="vi-view-all">{{__('home_page.view_all')}}l</a>
     </div>
 
-    <div class="columns-2 gap-4">
-        @foreach([1,2,3,4,5,6] as $file)
-            <x-cards.file-download />
+    <div class="grid grid-cols-1fr md:grid-cols-2 gap-4">
+        @foreach($latestDownloads as $file)
+            <x-cards.file-download :file="$file" />
         @endforeach
     </div>
 </div>

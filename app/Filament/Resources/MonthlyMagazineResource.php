@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\MonthlyMagazineResource\Pages;
 use App\Filament\Resources\MonthlyMagazineResource\RelationManagers\ArticlesRelationManager;
 use App\Helpers\InitiativesHelper;
+use App\Models\Article;
 use App\Models\PublishedInitiative;
 use Filament\Facades\Filament;
 use Filament\Forms;
@@ -19,7 +20,9 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class MonthlyMagazineResource extends Resource
 {
@@ -47,8 +50,18 @@ class MonthlyMagazineResource extends Resource
                         ->required()
                         ->label('Initiative')
                         ->default(InitiativesHelper::getInitiativeID(static::getModelLabel())),
-                    DatePicker::make('published_at')->default(today()),
-                    Toggle::make('is_published')->inline(false)
+                    DatePicker::make('published_at')->default(today())->reactive(),
+                    Toggle::make('is_published')->inline(false)->afterStateUpdated(function ($state, $livewire, ?Model $record, Article $articles, callable $get) {
+                        $publishedInitiativeId = $record->id;
+                        $publishedAt = $get('published_at');
+
+                        $articles->where('published_initiative_id', '=', $publishedInitiativeId)->update([
+                            'is_published' => $state,
+                            'published_at' => $publishedAt,
+                            'publisher_id' => Auth::user()->id
+                        ]);
+                        $livewire->dispatch('updatedPublishedStatus');
+                    }),
                 ])->columns(2),
             ]);
     }
@@ -59,7 +72,15 @@ class MonthlyMagazineResource extends Resource
             ->columns([
                 TextColumn::make('id')->label('ID')->sortable(),
                 TextColumn::make('published_at')->dateTime('d M Y h:m')->label('Published At')->sortable(),
-                ToggleColumn::make('is_published')->label('Is Published')->sortable(),
+                ToggleColumn::make('is_published')->label('Is Published')->sortable()->afterStateUpdated(function ($state, ?Model $record, Article $articles) {
+                    $publishedInitiativeId = $record->id;
+
+                    $articles->where('published_initiative_id', '=', $publishedInitiativeId)->update([
+                        'is_published' => $state,
+                        'published_at' => $record->published_at,
+                        'publisher_id' => Auth::user()->id
+                    ]);
+                }),
                 TextColumn::make('updated_at')->dateTime('d M Y h:m')->label('Last Updated')->sortable(),
             ])->defaultSort('published_at', 'desc')
             ->filters([

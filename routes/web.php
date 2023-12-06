@@ -24,8 +24,8 @@ use App\Http\Controllers\Pages;
 
 // Routes for all the pages
 Route::get('/', [Pages\HomeController::class, 'index'])->name('home');
-Route::get('/mains-365', [Pages\Mains365Controller::class, 'index'])->name('mains-365');
-Route::get('/pt-365', [Pages\PT365Controller::class, 'index'])->name('pt-365');
+Route::get('/mains-365', [Pages\Mains365Controller::class, 'index'])->name('mains365');
+Route::get('/pt-365', [Pages\PT365Controller::class, 'index'])->name('pt365');
 Route::get('/downloads', [Pages\DownloadsController::class, 'index'])->name('downloads');
 Route::get('/search', [Pages\SearchController::class, 'index'])->name('search');
 
@@ -62,5 +62,6 @@ Route::get('change/lang', [LocalizationController::class, 'changeLang'])->name('
 Route::get('/highlights', [HighlightController::class, 'index'])->name('highlights');
 Route::get('/highlight-serialized/{article_id}', [HighlightController::class, 'serializedData'])->name('highlights.serialized');
 Route::post('/add-highlight', [HighlightController::class, 'addHighlight'])->name("highlights.add");
+Route::get('/download/{media}', [MediaController::class, 'download'])->name('download');
 Route::post('/add-notes', [NoteController::class, 'addNote'])->name("notes.add");
 Route::get('/all-notes', [NoteController::class, 'index'])->name("notes.all");

@@ -10,7 +10,7 @@
                 <a href="{{ ($initiativeId == InitiativesHelper::getInitiativeID('WEEKLY_FOCUS'))
                                 ? route('weekly-focus.article', ['date'=> Carbon::parse($value['date'])->format('Y-m-d'),'topic' => $value['topic'], 'article_slug' => $value['slug']])
                                 : ($initiativeId == InitiativesHelper::getInitiativeID('MONTHLY_MAGAZINE')
-                                ? route('monthly-magazine-of-month.article', ['month' => $menuData[1][0]['published_at']])
+                                ? route('monthly-magazine-of-month.article', ['month' => $menuData[1][$key]['year']])
                                 : '#')
                          }}"
                    class="flex items-center justify-between px-3 py-3 hover:bg-visionSelectedGray"
