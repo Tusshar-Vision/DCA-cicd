@@ -73,3 +73,6 @@ truncateText(".limited-text");
 // onfocus.addEventListener("blur", () => {
 //   showlist.style.display = 'none';
 // });
+
+
+// copy link js
