@@ -60,3 +60,16 @@ function truncateText(selector, maxLength = 50) {
 }
 
 truncateText(".limited-text");
+
+// search dropdown js
+
+// const onfocus = document.querySelector('.focus');
+// const showlist = document.querySelector('.updatedText');
+
+// onfocus.addEventListener("focus", () => {
+//   showlist.style.display = 'block';
+// });
+
+// onfocus.addEventListener("blur", () => {
+//   showlist.style.display = 'none';
+// });
