@@ -26,7 +26,7 @@
             @yield('header')
         </header>
 
-        <main>
+        <main x-data="{ isNoteOpen: false }">
             @yield('content')
         </main>
     </div>

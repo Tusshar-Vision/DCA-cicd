@@ -1,4 +1,4 @@
-<div class="vi-modal-inner mt-[20px]" x-data="{ isNoteOpen: false }">
+<div class="vi-modal-inner mt-[20px]">
     <div class="vi-modal-content">
         <div class="overflow-auto max-h-60 mb-2" id="notes-container">
             <!-- loop area -->
