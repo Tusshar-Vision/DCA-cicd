@@ -63,5 +63,6 @@ Route::get('/highlights', [HighlightController::class, 'index'])->name('highligh
 Route::get('/highlight-serialized/{article_id}', [HighlightController::class, 'serializedData'])->name('highlights.serialized');
 Route::post('/add-highlight', [HighlightController::class, 'addHighlight'])->name("highlights.add");
 Route::get('/download/{media}', [MediaController::class, 'download'])->name('download');
+Route::get('/view-file/{media}', [MediaController::class, 'viewFile'])->name('view-file');
 Route::post('/add-notes', [NoteController::class, 'addNote'])->name("notes.add");
 Route::get('/all-notes', [NoteController::class, 'index'])->name("notes.all");
