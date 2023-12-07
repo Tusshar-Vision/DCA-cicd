@@ -54,4 +54,9 @@ class ArticleService
 
         return strtolower(str_replace('&', 'AND', str_replace(' ', '-', $url))); // To convert name into code.
     }
+
+    public static function getArticleUrlFromSlug($slug): string
+    {
+        return self::getArticleURL(Article::findBySlug($slug));
+    }
 }

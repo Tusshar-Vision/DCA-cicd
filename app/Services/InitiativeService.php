@@ -36,7 +36,6 @@ class InitiativeService
 
     protected function getMenuDataForNewsToday($initiativeId): array
     {
-
         $mainMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
             ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as date')
             ->groupBy('date')

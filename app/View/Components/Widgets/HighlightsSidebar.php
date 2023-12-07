@@ -13,12 +13,14 @@ class HighlightsSidebar extends Component
      * Create a new component instance.
      */
     public $announcements;
+    public $newsUpdates;
 
     public function __construct(
         private readonly NotificationService $notificationService
     )
     {
         $this->announcements = $this->notificationService->getAnnouncementsForToday();
+        $this->newsUpdates = $this->notificationService->getNewsUpdatesForToday();
     }
 
     /**
