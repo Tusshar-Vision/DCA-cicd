@@ -35,4 +35,12 @@ class NoteController extends Controller
 
         return response()->json(['data' => $note], 200);
     }
+
+    public function getNotesByArticleId($article_id)
+    {
+        $notes = Note::where('user_id', Auth::user()->id)
+            ->where('article_id', $article_id)->get();
+
+        return $notes;
+    }
 }

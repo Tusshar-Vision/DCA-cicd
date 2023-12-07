@@ -99,7 +99,7 @@ class NewsTodayController extends Controller
 
         $articles = $sortedArticles;
 
-        $noteAvailable = Note::where("user_id", Auth::user()->id)->count() > 0 ? true : false;
+        $noteAvailable = Note::where("user_id", Auth::user()->id)->where('article_id', $article->id)->count() > 0 ? true : false;
         logger("notesaav", [$noteAvailable]);
 
         return View('pages.news-today', [

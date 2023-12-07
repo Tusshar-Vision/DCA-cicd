@@ -36,7 +36,7 @@
     getNotes();
 
     async function getNotes() {
-        const response = await fetch("{{ route('notes.all') }}");
+        const response = await fetch("{{ route('notes.of-article', ['article_id' => $articleId]) }}");
         const notes = await response.json();
         if (notes) {
             const notesGroupBy = Object.groupBy(notes, ({

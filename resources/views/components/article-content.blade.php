@@ -83,7 +83,7 @@
 <div class="text-tooltip-comp" id="tooltip-box">
     <button>Copy</button>
     <button onclick="highlightText()" id="btn">Highlight</button>
-    <button @click="isNoteOpen=true">Add Note</button>
+    <button @click="isNoteOpen=true" onclick="hidePopup()">Add Note</button>
 
     {{-- <x-modals.modal-box x-show="isNoteOpen" heading="Add Note">
         <livewire:widgets.add-note :article="$article" />
@@ -99,6 +99,10 @@
     const doc = document.getElementById("article-content");
     doc.addEventListener('mouseup', handleSelection);
     var pageX, pageY;
+
+    function hidePopup() {
+        document.getElementById("tooltip-box").style.display = "none"
+    }
 
     function showModal() {
         document.getElementById("add-note-modal").style.display = "block"
