@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Pages;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\Note;
 use App\Models\User;
 use App\Services\ArticleService;
 use App\Services\PublishedInitiativeService;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 
@@ -60,12 +62,15 @@ class MonthlyMagazineController extends Controller
 
         $article = $this->articleService->getArticleBySlug($article_slug);
 
+        $noteAvailable = Note::where("user_id", Auth::user()->id)->where('article_id', $article->id)->count() > 0 ? true : false;
+
         return View('pages.monthly-magazine', [
             "publishedDate" => $this->latestMonthlyMagazine->published_at,
             "articles" => $this->articles,
             "article" => $article,
             "topics" => $this->topics,
             "totalArticles" => count($this->articles),
+            "noteAvailable"  => $noteAvailable,
             "baseUrl" => url('monthly-magazine') . "/" . $month
         ]);
     }
