@@ -54,20 +54,39 @@
                 }
 
                 html += `</div>
-                         <div class="vi-note-action">
-                        <a href="#"><img src="{{ URL::asset('images/delete-note.png') }}"></a>
-                        <a href="#"><img src="{{ URL::asset('images/edit-note.png') }}"></a>
+                            <div class="vi-note-action">
+                                <a href="#"><img src="{{ URL::asset('images/delete-note.png') }}"></a>
+                                <a href="#"><img src="{{ URL::asset('images/edit-note.png') }}"></a>
+                            </div>
                         </div>
-                        </div>
-                        <div class="copylink-row tag-gap">
-                        <p>Current Affairs / blog-note4</p>
-                        <a href="#"><img src="{{ URL::asset('images/copylink.png') }}"></a>
-                        </div>
+                        <div class="copylink-row copy-link tag-gap">
+                            <input type="text" class="copy-link-input" value="Current Affairs / blog-article1" readonly>
+                            <button type="button" class="copy-link-button">
+                                <span><img src="{{ URL::asset('images/copy-link.png') }}"></span>
+                            </button>
+                        </div>   
                         </div>`;
             }
 
             document.getElementById("notes-container").innerHTML = html;
         }
+
+        document.querySelectorAll(".copy-link").forEach((copyLinkParent) => {
+        const inputField = copyLinkParent.querySelector(".copy-link-input");
+        const copyButton = copyLinkParent.querySelector(".copy-link-button");
+        const text = inputField.value;
+
+        inputField.addEventListener("focus", () => inputField.select());
+
+        copyButton.addEventListener("click", () => {
+        console.log("Hi");
+        inputField.select();
+        navigator.clipboard.writeText(text);
+
+        inputField.value = "Copied!";
+        setTimeout(() => (inputField.value = text), 2000);
+        });
+    });
 
         // let html = ""
         // for (let i = 0; i < notes.length; i++) {
