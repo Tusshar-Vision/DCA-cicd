@@ -59,6 +59,7 @@ class MonthlyMagazineController extends Controller
         $this->getData($month);
 
         $article = $this->articleService->getArticleBySlug($article_slug);
+        $relatedArticles = $this->articleService->getRelatedArticles($article);
 
         return View('pages.monthly-magazine', [
             "publishedDate" => $this->latestMonthlyMagazine->published_at,
@@ -66,7 +67,8 @@ class MonthlyMagazineController extends Controller
             "article" => $article,
             "topics" => $this->topics,
             "totalArticles" => count($this->articles),
-            "baseUrl" => url('monthly-magazine') . "/" . $month
+            "baseUrl" => url('monthly-magazine') . "/" . $month,
+            "relatedArticles" => $relatedArticles
         ]);
     }
 

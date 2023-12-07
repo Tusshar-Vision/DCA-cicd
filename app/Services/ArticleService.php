@@ -59,4 +59,8 @@ class ArticleService
     {
         return self::getArticleURL(Article::findBySlug($slug));
     }
+
+    public function getRelatedArticles($article) {
+        return $this->articles->withAnyTags($article->tags)->get();
+    }
 }

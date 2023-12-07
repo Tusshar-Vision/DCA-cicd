@@ -51,13 +51,15 @@ class WeeklyFocusController extends Controller
         $this->getData();
 
         $article = $this->articleService->getArticleBySlug($article_slug);
+        $relatedArticles = $this->articleService->getRelatedArticles($article);
 
         return View('pages.weekly-focus', [
             "publishedDate" => $this->latestWeeklyFocus->published_at,
             "articles" => $this->articles,
             "article" => $article,
             "totalArticles" => count($this->articles),
-            "baseUrl" => url('weekly-focus') . "/" . $date
+            "baseUrl" => url('weekly-focus') . "/" . $date,
+            "relatedArticles" => $relatedArticles
         ]);
     }
 
