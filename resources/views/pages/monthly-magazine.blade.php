@@ -9,7 +9,7 @@
 @section('content')
 
     <div class="space-y-4">
-        <h1 class="text-7xl">{{ $article->title }}</h1>
+        <x-common.article-heading :title="$article->title" />
         <x-widgets.articles-nav :createdAt="$article->created_at" :updatedAt="$article->updated_at" />
     </div>
 

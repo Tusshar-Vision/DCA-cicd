@@ -51,16 +51,6 @@ window.addEventListener('onHomePage', () => {
 
 // text lenght for whats new section
 
-function truncateText(selector, maxLength = 50) {
-    let elements = document.querySelectorAll(selector);
-    for(let i= 0; i < elements.length; i++) {
-        elements[i].innerText = elements[i].innerText.substr(0, maxLength) + '...';
-    }
-    return truncated;
-}
-
-truncateText(".limited-text");
-
 // search dropdown js
 
 // const onfocus = document.querySelector('.focus');
