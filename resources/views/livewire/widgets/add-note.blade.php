@@ -8,7 +8,9 @@
                 <a href="#" class="edit-title"><img src="{{ URL::asset('images/edit.png') }}"></a>
             </div>
             <div class="vi-tinymce-editor">
-                <textarea id="notes-text-area" style="width: 100%; resize: none;"></textarea>
+                <textarea id="notes-text-area" style="width: 100%; resize: none;">
+                    {!! $note->content !!}
+                </textarea>
             </div>
             <div class="added-tags my-3">
                 <span>Article 72<a href="#">x</a></span>
@@ -40,14 +42,23 @@
     </div>
 </div>
 
+<script src="{{ asset('js/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
+
 <script>
+    tinymce.init({
+        selector: 'textarea#notes-text-area', // Replace this CSS selector to match the placeholder element for TinyMCE
+        plugins: 'code table lists',
+        menubar: false,
+        toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table'
+    });
+
     function saveNote() {
         const user_id = {{ Auth::user()->id }};
         const article_id = "{{ $article->id }}";
         const topic_id = "{{ $article->topic->id }}";
         const topic_section_id = "{{ $article->topic_section_id }}";
         const topic_sub_section_id = "{{ $article->topic_sub_section_id }}";
-        const note = document.getElementById("notes-text-area").value;
+        const note = tinyMCE.activeEditor.getContent();
         const note_title = document.getElementById("note-title").innerHTML
 
         postJSON({
@@ -61,7 +72,7 @@
             _token: '{{ csrf_token() }}'
         });
 
-        getNotes()
+        // getNotes()
     }
 
     async function postJSON(data) {
@@ -82,4 +93,33 @@
             console.error("Error:", error);
         }
     }
+
+    // getNotes();
+    // tinymce.get('notes-text-area').setContent('<p>adsf</p>');
+    // async function getNotes() {
+    //     const response = await fetch("{{ route('notes.of-article', ['article_id' => $article->id]) }}");
+    //     const notes = await response.json();
+    //     console.log("notes from add note", notes);
+    //     if (notes) {
+    //         console.log("here");
+    //         tinymce.get('notes-text-area').setContent('<p>adsf</p>');
+    //     }
+
+    //     document.querySelectorAll(".copy-link").forEach((copyLinkParent) => {
+    //         const inputField = copyLinkParent.querySelector(".copy-link-input");
+    //         const copyButton = copyLinkParent.querySelector(".copy-link-button");
+    //         const text = inputField.value;
+
+    //         inputField.addEventListener("focus", () => inputField.select());
+
+    //         copyButton.addEventListener("click", () => {
+    //             console.log("Hi");
+    //             inputField.select();
+    //             navigator.clipboard.writeText(text);
+
+    //             inputField.value = "Copied!";
+    //             setTimeout(() => (inputField.value = text), 2000);
+    //         });
+    //     });
+    // }
 </script>

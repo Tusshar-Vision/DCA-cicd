@@ -34,4 +34,9 @@ class Note extends Model
     {
         return $this->belongsTo(Article::class, 'article_id');
     }
+
+    public function noteContents()
+    {
+        return $this->hasMany(NoteContent::class);
+    }
 }
