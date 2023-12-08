@@ -47,7 +47,7 @@
             for (const title in notesGroupBy) {
                 html += `<div class="vi-note-wrap mb-4">
                          <div class="vi-note">
-                         <p class="vi-note-title">${title}</p>
+                         <p class="vi-note-title" style="font-weight:bold">${title}</p>
                          <div class="note-content">`;
                 for (let i = 0; i < notesGroupBy[title].length; i++) {
                     html += ` <p class="vi-text-light">${notesGroupBy[title][i].content}</p>`
@@ -60,8 +60,8 @@
                             </div>
                         </div>
                         <div class="copylink-row copy-link tag-gap">
-                            <input type="text" class="copy-link-input" value="Current Affairs / blog-article1" readonly>
-                            <button type="button" class="copy-link-button">
+                            <p type="text" class="copy-link-input">Current Affairs / blog-article1</p>
+                            <button type="button" class="copy-link-button" onclick="copy()">
                                 <span><img src="{{ URL::asset('images/copy-link.png') }}"></span>
                             </button>
                         </div>   
@@ -70,42 +70,14 @@
 
             document.getElementById("notes-container").innerHTML = html;
         }
+    }
 
-        document.querySelectorAll(".copy-link").forEach((copyLinkParent) => {
-        const inputField = copyLinkParent.querySelector(".copy-link-input");
-        const copyButton = copyLinkParent.querySelector(".copy-link-button");
-        const text = inputField.value;
-
-        inputField.addEventListener("focus", () => inputField.select());
-
-        copyButton.addEventListener("click", () => {
-        console.log("Hi");
-        inputField.select();
-        navigator.clipboard.writeText(text);
-
-        inputField.value = "Copied!";
-        setTimeout(() => (inputField.value = text), 2000);
-        });
-    });
-
-        // let html = ""
-        // for (let i = 0; i < notes.length; i++) {
-        //     html += `<div class="vi-note-wrap mb-4">
-        //         <div class="vi-note">
-        //             <p class="vi-note-title">${notes[i].title}</p>
-        //             <div class="note-content">
-        //                 <p class="vi-text-light">${notes[i].content}</p>
-        //             </div>
-        //             <div class="vi-note-action">
-        //                 <a href="#"><img src="{{ URL::asset('images/delete-note.png') }}"></a>
-        //                 <a href="#"><img src="{{ URL::asset('images/edit-note.png') }}"></a>
-        //             </div>
-        //         </div>
-        //         <div class="copylink-row tag-gap">
-        //             <p>Current Affairs / blog-note4</p>
-        //             <a href="#"><img src="{{ URL::asset('images/copylink.png') }}"></a>
-        //         </div>
-        //     </div>`
-        // }
+    function copy() {
+        const inputField = document.querySelector(".copy-link-input");
+        const copyButton = document.querySelector(".copy-link-button");
+        const text = inputField.innerText;
+        navigator.clipboard.writeText("text", text);
+        inputField.innerText = "Copied!";
+        setTimeout(() => (inputField.innerText = text), 2000);
     }
 </script>
