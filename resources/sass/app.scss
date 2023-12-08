@@ -1209,6 +1209,7 @@
     transition: all 0.25s ease-in-out;
     background: rgba(244,246,252,1);
     cursor: pointer;
+    background: url("/images/search.svg") left center no-repeat;
   }
   .search-field:focus{ width: 200px; background: #fff; cursor: inherit;}
 
@@ -1251,4 +1252,12 @@
     color: #fff;
     font-weight: 500;
     display: block;  
+  }
+
+  .user-style p{
+    color: #7A8699;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 110%;
+    display: block;
   }
