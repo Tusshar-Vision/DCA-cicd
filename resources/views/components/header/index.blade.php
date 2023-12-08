@@ -7,7 +7,7 @@
         </div>
 
         <div class="flex space-x-5 items-center">
-            <button class="flex" onclick="switchLang()">
+            <!-- <button class="flex" onclick="switchLang()">
                 <svg class="mr-2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2 11.0196L2.98039 7.45923M8.86273 11.0196L7.93394 7.45923M2.98039 7.45923L4.48366 2H6.5098L7.93394 7.45923M2.98039 7.45923H7.93394" stroke="#8F93A3" stroke-width="2"/>
                     <path d="M12.2617 14.2875C15.8565 10.6273 19.2226 17 14.2226 17.5556M14.2226 17.5556C19.2226 18.6667 15.3993 24.5979 12.2617 20.5127M14.2226 17.5556L19.8434 17.4902M19.8434 17.4902V13.307H22.0003M19.8434 17.4902V22.0002" stroke="#8F93A3" stroke-width="2"/>
@@ -40,9 +40,9 @@
 
             <svg width="2" height="32" viewBox="0 0 2 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path opacity="0.5" d="M1 0V32" stroke="#8F93A3"/>
-            </svg>
+            </svg> -->
 
-            @guest
+            <!-- @guest
                 <button @click="isLoginFormOpen = !isLoginFormOpen"  class="flex items-center">
                     <svg class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" fill="#040404"/>
@@ -60,7 +60,36 @@
 
                     <x-auth.user-dropdown-menu x-show="isUserMenuOpen" />
                 </div>
-            @endauth
+            @endauth -->
+            <div>
+                <ul class="flex">
+                    <li class="ml-[15px]"><a href="#"><img src="{{ asset('images/whtsapp.svg') }}"></a></li>
+                    <li class="ml-[15px]"><a href="#"><img src="{{ asset('images/fb.svg') }}"></a></li>
+                    <li class="ml-[15px]"><a href="#"><img src="{{ asset('images/youtube.svg') }}"></a></li>
+                    <li class="ml-[15px]"><a href="#"><img src="{{ asset('images/twitter.svg') }}"></a></li>
+                    <li class="ml-[15px]"><a href="#"><img src="{{ asset('images/insta.svg') }}"></a></li>
+                    <li class="ml-[15px]"><a href="#"><img src="{{ asset('images/telegram.svg') }}"></a></li>
+                </ul>
+            </div>
+            <div>
+                <ul class="flex items-center connect-us">
+                    <li class="pl-[20px]"><a href="#"><img src="{{ asset('images/mode.svg') }}"></a></li>
+                    <li class="pl-[20px] pr-[20px] flex items-center">
+                        <img src="{{ asset('images/call.svg') }}">
+                        <div class="ml-[8px]">
+                            <span>Call Us</span>
+                            <p>+91 846 802 2022, +91 901 906 6066</p>
+                        </div>
+                    </li>
+                    <li class="pl-[20px] flex items-center">
+                        <img src="{{ asset('images/mail.svg') }}">
+                        <div class="ml-[8px]">
+                            <span>Email Us</span>
+                            <p>Enquiry@visionias.in</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </header>
