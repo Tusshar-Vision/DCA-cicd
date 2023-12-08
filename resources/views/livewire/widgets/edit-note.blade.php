@@ -38,10 +38,13 @@
     async function getNotes() {
         const response = await fetch("{{ route('notes.of-article', ['article_id' => $articleId]) }}");
         const notes = await response.json();
+        console.log("notes", notes);
         if (notes) {
             const notesGroupBy = Object.groupBy(notes, ({
                 title
             }) => title);
+
+            console.log("notesgroupby", notesGroupBy)
 
             let html = "";
             for (const title in notesGroupBy) {
@@ -50,7 +53,10 @@
                          <p class="vi-note-title">${title}</p>
                          <div class="note-content">`;
                 for (let i = 0; i < notesGroupBy[title].length; i++) {
-                    html += ` <p class="vi-text-light">${notesGroupBy[title][i].content}</p>`
+                    for (let j = 0; j < notesGroupBy[title][i].note_contents.length; j++) {
+                        html +=
+                            ` <p class="vi-text-light">${notesGroupBy[title][i].note_contents[j].content}</p>`
+                    }
                 }
 
                 html += `</div>
@@ -72,21 +78,21 @@
         }
 
         document.querySelectorAll(".copy-link").forEach((copyLinkParent) => {
-        const inputField = copyLinkParent.querySelector(".copy-link-input");
-        const copyButton = copyLinkParent.querySelector(".copy-link-button");
-        const text = inputField.value;
+            const inputField = copyLinkParent.querySelector(".copy-link-input");
+            const copyButton = copyLinkParent.querySelector(".copy-link-button");
+            const text = inputField.value;
 
-        inputField.addEventListener("focus", () => inputField.select());
+            inputField.addEventListener("focus", () => inputField.select());
 
-        copyButton.addEventListener("click", () => {
-        console.log("Hi");
-        inputField.select();
-        navigator.clipboard.writeText(text);
+            copyButton.addEventListener("click", () => {
+                console.log("Hi");
+                inputField.select();
+                navigator.clipboard.writeText(text);
 
-        inputField.value = "Copied!";
-        setTimeout(() => (inputField.value = text), 2000);
+                inputField.value = "Copied!";
+                setTimeout(() => (inputField.value = text), 2000);
+            });
         });
-    });
 
         // let html = ""
         // for (let i = 0; i < notes.length; i++) {
