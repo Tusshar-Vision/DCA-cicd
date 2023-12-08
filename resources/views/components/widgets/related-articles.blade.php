@@ -5,7 +5,7 @@
 
     <div class="space-y-5">
         @foreach($relatedArticles as $article)
-            <div class="group flex justify-center items-center h-full">
+            <div class="group flex items-center h-full">
                 <a href="{{ \App\Services\ArticleService::getArticleUrlFromSlug($article->slug) }}">
                     <div class="flex space-y-1 items-center space-x-2">
                         <div class="w-2/5">
