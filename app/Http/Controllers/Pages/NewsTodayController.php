@@ -73,6 +73,7 @@ class NewsTodayController extends Controller
         $latestPublishedInitiative = $this->publishedInitiativeService->getLatestById($this->initiativeId, $date);
         $articles = $latestPublishedInitiative->articles->where('language', config("settings.language." . app()->getLocale()));
         $article = $this->articleService->getArticleBySlug($slug);
+        $relatedArticles = $this->articleService->getRelatedArticles($article);
 
         $topics = [];
 
@@ -106,7 +107,8 @@ class NewsTodayController extends Controller
             "article" => $article,
             "totalArticles" => count($articles),
             "noteAvailable"  => $noteAvailable,
-            "baseUrl" => url('news-today') . "/" . $date
+            "baseUrl" => url('news-today') . "/" . $date,
+            "relatedArticles" => $relatedArticles
         ]);
     }
 
