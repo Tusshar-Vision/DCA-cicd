@@ -111,7 +111,8 @@
     // }, false)
 
     function hidePopup() {
-        let editorContent = document.getElementById("notes-text-area").value
+        // let editorContent = document.getElementById("notes-text-area").value
+        let editorContent = tinymce.get('notes-text-area').getContent()
         var selectedText = getSelectionText()
         if (selectedText.length > 0) {
             console.log(selectedText)

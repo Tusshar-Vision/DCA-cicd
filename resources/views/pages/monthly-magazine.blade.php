@@ -23,7 +23,7 @@
             <livewire:widgets.edit-note :articleId="$article->id" />
         </x-modals.modal-box>
         <x-modals.modal-box x-show="isNoteOpen" heading="Add Note">
-            <livewire:widgets.add-note :article="$article" />
+            <livewire:widgets.add-note :article="$article" :note="$note" />
         </x-modals.modal-box>
     </div>
 
