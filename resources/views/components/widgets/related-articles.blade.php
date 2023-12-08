@@ -14,7 +14,7 @@
                         <div>
                             <div>
                                 <p class="group-hover:underline text-black text-sm">
-                                    {{ $article->excerpt }}
+                                    {{ $article->title }}
                                 </p>
                             </div>
                         </div>
