@@ -53,7 +53,7 @@
 
         <div class="flex flex-col justify-center items-center w-full">
             <div class="flex flex-col w-5/6 space-y-12">
-                <div class="flex space-x-4">
+                <div class="grid grid-cols-3 gap-3">
                     <x-widgets.related-terms />
                     <x-widgets.related-articles :related-articles="$relatedArticles" />
                     <x-widgets.related-videos />
