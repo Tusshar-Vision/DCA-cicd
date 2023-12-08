@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Pages;
 
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
+use App\Models\Note;
 use App\Services\ArticleService;
 use App\Services\PublishedInitiativeService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 
@@ -52,11 +54,14 @@ class WeeklyFocusController extends Controller
 
         $article = $this->articleService->getArticleBySlug($article_slug);
 
+        $noteAvailable = Note::where("user_id", Auth::user()->id)->where('article_id', $article->id)->count() > 0 ? true : false;
+
         return View('pages.weekly-focus', [
             "publishedDate" => $this->latestWeeklyFocus->published_at,
             "articles" => $this->articles,
             "article" => $article,
             "totalArticles" => count($this->articles),
+            "noteAvailable"  => $noteAvailable,
             "baseUrl" => url('weekly-focus') . "/" . $date
         ]);
     }
