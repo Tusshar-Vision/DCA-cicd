@@ -84,11 +84,6 @@
     <button>Copy</button>
     <button onclick="highlightText()" id="btn">Highlight</button>
     <button @click="isNoteOpen=true" onclick="hidePopup()">Add Note</button>
-
-    {{-- <x-modals.modal-box x-show="isNoteOpen" heading="Add Note">
-        <livewire:widgets.add-note :article="$article" />
-    </x-modals.modal-box> --}}
-
 </div>
 
 <div id="article-content" onmouseup="handleSelection()" class="mt-4 printable-area">
@@ -100,7 +95,29 @@
     doc.addEventListener('mouseup', handleSelection);
     var pageX, pageY;
 
+    function getSelectionText() {
+        var selectedText = ""
+        if (window.getSelection) { // all modern browsers and IE9+
+            selectedText = window.getSelection().toString()
+        }
+        return selectedText
+    }
+
+    // document.addEventListener('mouseup', function() {
+    //     var thetext = getSelectionText()
+    //     if (thetext.length > 0) { // check there's some text selected
+    //         console.log(thetext) // logs whatever textual content the user has selected on the page
+    //     }
+    // }, false)
+
     function hidePopup() {
+        let editorContent = document.getElementById("notes-text-area").value
+        var selectedText = getSelectionText()
+        if (selectedText.length > 0) {
+            console.log(selectedText)
+            editorContent += selectedText;
+            tinymce.activeEditor.setContent(editorContent)
+        }
         document.getElementById("tooltip-box").style.display = "none"
     }
 

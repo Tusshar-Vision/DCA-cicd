@@ -7,10 +7,12 @@ use Livewire\Component;
 class AddNote extends Component
 {
     public $article;
+    public $note;
 
-    public function mount($article)
+    public function mount($article, $note)
     {
         $this->article = $article;
+        $this->note = $note;
     }
 
     public function render()
