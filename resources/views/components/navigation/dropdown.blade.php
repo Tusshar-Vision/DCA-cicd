@@ -3,17 +3,17 @@
 @endphp
 
 <div {{ $attributes }} x-cloak>
-    <ul x-data="{ isMenuOpen: null }" class="absolute font-normal bg-visionGray shadow rounded-sm w-72 border mt-2 py-1 z-50">
-        <x-buttons.primary button-text="{!! $buttonText !!}" button-link="{{ $buttonLink }}" />
+    <ul x-data="{ isMenuOpen: null }" class="absolute font-normal bgcolor-FFF shadow w-72 border rounded-md mt-2 py-1 z-50">
+        <x-buttons.primary button-text="{!! $buttonText !!}" button-link="{{ $buttonLink }}" class="border-bottom" />
             @foreach ($menuData['data'] as $mainMenu => $subMenu)
                 @if(!empty($subMenu))
                     <li class="relative">
                         <a  href="#"
-                            class="flex items-center justify-between px-3 py-3 hover:bg-visionSelectedGray"
+                            class="flex items-center justify-between mx-4 py-3 hover:brand-color hover:bgcolor-gray-F4F6FC"
                             @mouseenter="isMenuOpen = 'menu{{ $menuData['initiative_id'] . $loop->iteration }}'"
                             @click.outside="isMenuOpen = null"
                         >
-                            <span class="ml-2 font-medium">
+                            <span class="px-4 font-medium">
                                 {{ ($menuData['initiative_id'] != 2)
                                     ? Carbon::parse($mainMenu)->format('F Y')
                                     : $mainMenu
@@ -46,6 +46,6 @@
                     </li>
                 @endif
             @endforeach
-        <x-buttons.primary button-text="View All" button-link="{{ $archiveLink }}"/>
+        <x-buttons.primary button-text="View All" button-link="{{ $archiveLink }}" class="border-top text-sm"/>
     </ul>
 </div>
