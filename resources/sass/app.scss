@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* colors variable */
+
+$brandblue: #3362CC;
+$baseblack: #040404;
+
+/* colors variable */
+
 @layer components {
     .vi-primary-button {
         padding: 8px 18px;

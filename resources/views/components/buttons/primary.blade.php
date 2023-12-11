@@ -1,3 +1,3 @@
-<a href="{{ $buttonLink }}"  class="text-white px-6 py-2 flex bg-visionBlue rounded justify-center m-4">
+<a href="{{ $buttonLink }}"  class="flex px-4 py-2 underline rounded m-4">
     {{ $buttonText }}
 </a>
