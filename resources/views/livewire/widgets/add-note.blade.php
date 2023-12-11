@@ -74,7 +74,7 @@
 
     function addTagToNote(tag, click_from = null) {
         const tagContainer = document.getElementById("note-tag");
-        saveData("{{ route('notes.add-tag', ['note_id' => $note->id]) }}", {
+        saveData("{{ $note && route('notes.add-tag', ['note_id' => $note->id]) }}", {
             tag,
             _token: '{{ csrf_token() }}'
         }).then(data => {
