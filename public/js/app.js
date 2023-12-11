@@ -14,6 +14,7 @@ async function saveData(url, data) {
             body: JSON.stringify(data),
         });
         const result = await response.json();
+        return result;
     } catch (error) {
         console.error("Error:", error);
     }
