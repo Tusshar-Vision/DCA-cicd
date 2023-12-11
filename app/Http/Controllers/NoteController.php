@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Note;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class NoteController extends Controller
 {
@@ -60,5 +62,31 @@ class NoteController extends Controller
             ->first();
 
         return $notes;
+    }
+
+    public function addTag($note_id)
+    {
+        $inputs = request()->all();
+
+        $tag = $inputs['tag'];
+        $note = Note::find($note_id);
+        $isAlreadPresentTag =  $note->tags->where('name', $tag)->count();
+        if ($isAlreadPresentTag > 0) {
+            return response()->json(['status' => 200]);
+        } else {
+            $note->attachTag($tag);
+            return response()->json(['data' => $tag, 'status' => 201]);
+        }
+    }
+
+    public function searchTagsLike($search)
+    {
+        $tags = Tag::where(DB::raw('lower(name)'), 'like', '%' . strtolower($search) . '%')->get();
+        $data = [];
+        foreach ($tags as $tag) {
+            $name = json_decode($tag->name);
+            $data[] = $name->en;
+        }
+        return response()->json(['data' => $data, 'status' => 200]);
     }
 }

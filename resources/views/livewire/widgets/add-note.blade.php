@@ -12,25 +12,24 @@
                     {!! $note?->content !!}
                 </textarea>
             </div>
-            <div class="added-tags my-3">
-                <span>Article 72<a href="#">x</a></span>
+            <div class="added-tags my-3" id="note-tag">
+                @isset($note)
+                    @foreach ($note->tags as $tag)
+                        <span class="tag-name">{{ $tag->name }}<a href="#">x</a></span>
+                    @endforeach
+                @endisset
             </div>
             <div class="tag-wrap">
-                <div class="tags">
+                <div class="tags" id="article-tag">
                     @foreach ($article->tags as $tag)
-                        <span>{{ $tag->name }}</span>
+                        <span
+                            onclick="{{ isset($note) ? "addTagToNote('$tag->name')" : '' }}">{{ $tag->name }}</span>
                     @endforeach
                 </div>
                 <div class="search-tags">
-                    <input type="search" placeholder="Search">
-                    <div class="search-list overflow-scroll" style="display: none;">
+                    <input type="search" placeholder="Search" oninput="searchTags(this)">
+                    <div id="search-item-container" class="search-list overflow-scroll" style="display: none;">
                         <p>Search 1</p>
-                        <p>Search 2</p>
-                        <p>Search 3</p>
-                        <p>Search 2</p>
-                        <p>Search 3</p>
-                        <p>Search 2</p>
-                        <p>Search 3</p>
                     </div>
                 </div>
             </div>
@@ -44,7 +43,7 @@
 
 <script>
     tinymce.init({
-        selector: 'textarea#notes-text-area', // Replace this CSS selector to match the placeholder element for TinyMCE
+        selector: 'textarea#notes-text-area',
         plugins: 'code table lists',
         menubar: false,
         toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table'
@@ -59,7 +58,7 @@
         const note = tinyMCE.activeEditor.getContent();
         const note_title = document.getElementById("note-title").innerHTML
 
-        postJSON({
+        saveData("{{ route('notes.add') }}", {
             user_id,
             article_id,
             topic_id,
@@ -71,28 +70,30 @@
         }).then(data => {
             tinymce.get('notes-text-area').setContent(data.data.content)
         })
-        // getNotes()
     }
 
+    function addTagToNote(tag, click_from = null) {
+        const tagContainer = document.getElementById("note-tag");
+        saveData("{{ route('notes.add-tag', ['note_id' => $note->id]) }}", {
+            tag,
+            _token: '{{ csrf_token() }}'
+        }).then(data => {
+            if (data.status === 201) tagContainer.innerHTML +=
+                `<span class="mr-2">${data.data}<a href="#">x</a></span>`
+        })
 
-    async function postJSON(data) {
-        try {
-            const response = await fetch("{{ route('notes.add') }}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            });
-
-            console.log("Response", response);
-
-            const result = await response.json();
-            console.log("Success:", result);
-            return result;
-        } catch (error) {
-            console.error("Error:", error);
-        }
+        if (click_from == 'search') document.getElementById("search-item-container").style.display = "none"
     }
 
+    function searchTags(el) {
+        const url = "{{ url('tags') }}" + "/" + el.value;
+        getData(url).then(data => {
+            let html = "";
+            data.data.map(item => {
+                html += `<p onclick="addTagToNote('${item}', 'search')">${item}</p>`
+            })
+            document.getElementById("search-item-container").innerHTML = html;
+            document.getElementById("search-item-container").style.display = "block"
+        })
+    }
 </script>
