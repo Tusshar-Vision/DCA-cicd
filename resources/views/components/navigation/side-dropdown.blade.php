@@ -4,7 +4,7 @@
 @endphp
 
 <div {{ $attributes }} x-cloak>
-    <ul class="absolute ml-2 font-normal bg-visionGray shadow rounded-sm w-72 border mt-2 py-1 z-20 -top-2 left-full">
+    <ul class="absolute ml-2 font-normal bgcolor-FFF shadow rounded-sm w-72 border mt-2 py-1 z-20 -top-2 left-full">
         @foreach ($getDataToRender as $key => $value)
             <li>
                 <a href="{{ ($initiativeId == InitiativesHelper::getInitiativeID('WEEKLY_FOCUS'))
@@ -13,7 +13,7 @@
                                 ? route('monthly-magazine-of-month.article', ['month' => $menuData[1][$key]['year']])
                                 : '#')
                          }}"
-                   class="flex items-center justify-between px-3 py-3 hover:brand-color hover:bgcolor-gray-F4F6FC"
+                   class="flex items-center justify-between px-3 py-2 hover:brand-color hover:bgcolor-gray-F4F6FC"
                 >
                     <span class="ml-2 font-medium">{{ $initiativeId == InitiativesHelper::getInitiativeID('WEEKLY_FOCUS') ? $value['title'] : $value }}</span>
                 </a>
