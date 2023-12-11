@@ -56,6 +56,7 @@ class WeeklyFocusController extends Controller
         $relatedArticles = $this->articleService->getRelatedArticles($article);
 
         $noteAvailable = Note::where("user_id", Auth::user()->id)->where('article_id', $article->id)->count() > 0 ? true : false;
+        $note = Note::where("user_id", Auth::user()->id)->where('article_id', $article->id)->first();
 
         return View('pages.weekly-focus', [
             "publishedDate" => $this->latestWeeklyFocus->published_at,
@@ -63,6 +64,7 @@ class WeeklyFocusController extends Controller
             "article" => $article,
             "totalArticles" => count($this->articles),
             "noteAvailable"  => $noteAvailable,
+            "note" => $note,
             "baseUrl" => url('weekly-focus') . "/" . $date,
             "relatedArticles" => $relatedArticles
         ]);

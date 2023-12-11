@@ -109,7 +109,8 @@ class NewsTodayController extends Controller
             "totalArticles" => count($articles),
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
-            "baseUrl" => url('news-today') . "/" . $date
+            "baseUrl" => url('news-today') . "/" . $date,
+            "relatedArticles" => $relatedArticles
         ]);
     }
 
