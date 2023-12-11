@@ -4,12 +4,47 @@
 
 /* colors variable */
 
-$brandblue: #3362CC;
-$baseblack: #040404;
+$color-3362CC: #3362CC;
+
+$black-040404: #040404;
+
+$gray-E5EAF4: #E5EAF4;
+$gray-F4F6FC: #F4F6FC;
 
 /* colors variable */
 
 @layer components {
+
+  /* mixins */
+
+  /* text color class start*/
+    .brand-color{
+      color: $color-3362CC;
+    }
+
+  /* text color class end */
+    
+    /* border class start */
+    
+    .border-top{
+      border-bottom: 1px solid $gray-E5EAF4;
+    }
+
+    .border-bottom{
+      border-bottom: 1px solid $gray-E5EAF4;
+    }
+
+    /* border class end */
+
+    /* bg color class start */
+
+    .bgcolor-gray-F4F6FC{
+      background-color: $gray-F4F6FC;
+    }
+
+    /* bg color class start */
+
+
     .vi-primary-button {
         padding: 8px 18px;
         background-color: #005FAF;

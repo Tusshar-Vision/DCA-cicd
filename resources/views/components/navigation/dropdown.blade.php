@@ -9,11 +9,11 @@
                 @if(!empty($subMenu))
                     <li class="relative">
                         <a  href="#"
-                            class="flex items-center justify-between px-3 py-3 hover:bg-visionSelectedGray"
+                            class="flex items-center justify-between mx-4 py-3 hover:brand-color hover:bgcolor-gray-F4F6FC"
                             @mouseenter="isMenuOpen = 'menu{{ $menuData['initiative_id'] . $loop->iteration }}'"
                             @click.outside="isMenuOpen = null"
                         >
-                            <span class="ml-2 font-medium">
+                            <span class="px-4 font-medium">
                                 {{ ($menuData['initiative_id'] != 2)
                                     ? Carbon::parse($mainMenu)->format('F Y')
                                     : $mainMenu
