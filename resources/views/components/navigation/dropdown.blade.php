@@ -46,6 +46,6 @@
                     </li>
                 @endif
             @endforeach
-        <x-buttons.primary button-text="View All" button-link="{{ $archiveLink }}" class="border-top"/>
+        <x-buttons.primary button-text="View All" button-link="{{ $archiveLink }}" class="border-top text-sm"/>
     </ul>
 </div>

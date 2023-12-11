@@ -13,7 +13,7 @@
                                 ? route('monthly-magazine-of-month.article', ['month' => $menuData[1][$key]['year']])
                                 : '#')
                          }}"
-                   class="flex items-center justify-between px-3 py-3 hover:bg-visionSelectedGray"
+                   class="flex items-center justify-between px-3 py-3 hover:brand-color hover:bgcolor-gray-F4F6FC"
                 >
                     <span class="ml-2 font-medium">{{ $initiativeId == InitiativesHelper::getInitiativeID('WEEKLY_FOCUS') ? $value['title'] : $value }}</span>
                 </a>
