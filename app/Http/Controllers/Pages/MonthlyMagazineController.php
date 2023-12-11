@@ -64,6 +64,8 @@ class MonthlyMagazineController extends Controller
         $relatedArticles = $this->articleService->getRelatedArticles($article);
 
         $noteAvailable = Note::where("user_id", Auth::user()->id)->where('article_id', $article->id)->count() > 0 ? true : false;
+        $note = Note::where("user_id", Auth::user()->id)->where('article_id', $article->id)->first();
+
 
         return View('pages.monthly-magazine', [
             "publishedDate" => $this->latestMonthlyMagazine->published_at,
@@ -72,6 +74,7 @@ class MonthlyMagazineController extends Controller
             "topics" => $this->topics,
             "totalArticles" => count($this->articles),
             "noteAvailable"  => $noteAvailable,
+            "note" => $note,
             "baseUrl" => url('monthly-magazine') . "/" . $month,
             "relatedArticles" => $relatedArticles
         ]);

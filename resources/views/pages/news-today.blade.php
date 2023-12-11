@@ -32,6 +32,7 @@
 
             <div class="flex w-2/6 flex-col space-y-6">
                 <livewire:widgets.articles-side-bar :topics="$topics" :articles="$articles" />
+{{--                <x-widgets.news-today-side-bar :articles="$articles" :topics="$topics" />--}}
                 <x-widgets.side-bar-download-menu />
             </div>
 
@@ -53,7 +54,7 @@
 
         <div class="flex flex-col justify-center items-center w-full">
             <div class="flex flex-col w-5/6 space-y-12">
-                <div class="flex space-x-4">
+                <div class="grid grid-cols-3 gap-3">
                     <x-widgets.related-terms />
                     <x-widgets.related-articles :related-articles="$relatedArticles" />
                     <x-widgets.related-videos />

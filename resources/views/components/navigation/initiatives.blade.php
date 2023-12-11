@@ -89,7 +89,7 @@
             <li>
                 <!-- <x-widgets.search-bar /> -->
                 <div class="search-field-container">
-                    <input type="text" class="search-field" placeholder="Search..." />
+                    <input type="text" class="search-field" placeholder="" />
                 </div>
             </li>
             @guest
@@ -108,7 +108,7 @@
             @auth
                 <div class="flex items-center font-bold cursor-pointer user-style" x-data="{ isUserMenuOpen: false }" @click="isUserMenuOpen = true">
                 <div class="user-greet">
-                    <p>Welcome,</p>    
+                    <p>Welcome,</p>
                     <div>{{ Auth::user()->name ?? 'No Name' }}</div>
                 </div>
                     <span>Y</span>
