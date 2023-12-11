@@ -27,7 +27,7 @@ $gray-F4F6FC: #F4F6FC;
     /* border class start */
     
     .border-top{
-      border-bottom: 1px solid $gray-E5EAF4;
+      border-top: 1px solid $gray-E5EAF4;
     }
 
     .border-bottom{
@@ -40,6 +40,10 @@ $gray-F4F6FC: #F4F6FC;
 
     .bgcolor-gray-F4F6FC{
       background-color: $gray-F4F6FC;
+    }
+
+    .bgcolor-FFF{
+      background: #fff;
     }
 
     /* bg color class start */

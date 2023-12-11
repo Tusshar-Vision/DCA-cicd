@@ -1,3 +1,3 @@
-<a href="{{ $buttonLink }}"  class="flex px-4 pt-2 pb-4 underline brand-color font-medium rounded m-4 border-bottom">
+<a href="{{ $buttonLink }}" {{ $attributes->merge(['class' => 'flex px-4 pt-[25px] pb-[15px] underline brand-color font-medium rounded mx-[16px]']) }}>
     {{ $buttonText }}
 </a>

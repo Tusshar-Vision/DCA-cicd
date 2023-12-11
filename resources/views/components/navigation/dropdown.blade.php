@@ -3,8 +3,8 @@
 @endphp
 
 <div {{ $attributes }} x-cloak>
-    <ul x-data="{ isMenuOpen: null }" class="absolute font-normal bg-visionGray shadow rounded-sm w-72 border mt-2 py-1 z-50">
-        <x-buttons.primary button-text="{!! $buttonText !!}" button-link="{{ $buttonLink }}" />
+    <ul x-data="{ isMenuOpen: null }" class="absolute font-normal bgcolor-FFF shadow w-72 border rounded-md mt-2 py-1 z-50">
+        <x-buttons.primary button-text="{!! $buttonText !!}" button-link="{{ $buttonLink }}" class="border-bottom" />
             @foreach ($menuData['data'] as $mainMenu => $subMenu)
                 @if(!empty($subMenu))
                     <li class="relative">
@@ -46,6 +46,6 @@
                     </li>
                 @endif
             @endforeach
-        <x-buttons.primary button-text="View All" button-link="{{ $archiveLink }}"/>
+        <x-buttons.primary button-text="View All" button-link="{{ $archiveLink }}" class="border-top"/>
     </ul>
 </div>
