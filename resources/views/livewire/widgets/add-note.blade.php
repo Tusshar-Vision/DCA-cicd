@@ -9,7 +9,7 @@
             </div>
             <div class="vi-tinymce-editor">
                 <textarea id="notes-text-area" style="width: 100%; resize: none;">
-                    {!! $note->content !!}
+                    {!! $note?->content !!}
                 </textarea>
             </div>
             <div class="added-tags my-3">
