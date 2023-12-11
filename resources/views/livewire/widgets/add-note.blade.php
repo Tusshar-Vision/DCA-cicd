@@ -15,15 +15,15 @@
             <div class="added-tags my-3" id="note-tag">
                 @isset($note)
                     @foreach ($note->tags as $tag)
-                        <span class="tag-name">{{ $tag->name }}<a href="#">x</a></span>
+                        <span class="mr-2 tag-name">{{ $tag->name }}<a href="#">x</a></span>
                     @endforeach
                 @endisset
             </div>
             <div class="tag-wrap">
                 <div class="tags" id="article-tag">
                     @foreach ($article->tags as $tag)
-                        <span
-                            onclick="{{ isset($note) ? "addTagToNote('$tag->name')" : '' }}">{{ $tag->name }}</span>
+                        <span class="note-tag-name"
+                            onclick="addTagToNote('{{ $tag->name }}')">{{ $tag->name }}</span>
                     @endforeach
                 </div>
                 <div class="search-tags">
@@ -50,6 +50,9 @@
     });
 
     function saveNote() {
+        const tagsNodes = document.querySelectorAll('.tag-name');
+        let tags = [];
+        for (let i = 0; i < tagsNodes.length; i++) tags.push(tagsNodes[i].innerText)
         const user_id = {{ Auth::user()->id }};
         const article_id = "{{ $article->id }}";
         const topic_id = "{{ $article->topic->id }}";
@@ -66,6 +69,7 @@
             topic_sub_section_id,
             note_title,
             note,
+            tags,
             _token: '{{ csrf_token() }}'
         }).then(data => {
             tinymce.get('notes-text-area').setContent(data.data.content)
@@ -74,14 +78,7 @@
 
     function addTagToNote(tag, click_from = null) {
         const tagContainer = document.getElementById("note-tag");
-        saveData("{{ $note && route('notes.add-tag', ['note_id' => $note->id]) }}", {
-            tag,
-            _token: '{{ csrf_token() }}'
-        }).then(data => {
-            if (data.status === 201) tagContainer.innerHTML +=
-                `<span class="mr-2">${data.data}<a href="#">x</a></span>`
-        })
-
+        tagContainer.innerHTML += `<span class="mr-2 tag-name">${tag}<a href="#">x</a></span>`;
         if (click_from == 'search') document.getElementById("search-item-container").style.display = "none"
     }
 

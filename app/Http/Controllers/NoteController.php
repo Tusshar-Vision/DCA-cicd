@@ -6,6 +6,7 @@ use App\Models\Note;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -50,6 +51,11 @@ class NoteController extends Controller
         }
 
         // $note->noteContents()->create(['content' => $content]);
+
+        if ($tags = Arr::get($params, 'tags')) {
+            logger("tags", [$tags]);
+            foreach ($tags as $tag) $note->attachTag($tag);
+        }
 
         return response()->json(['data' => $note], 200);
     }
