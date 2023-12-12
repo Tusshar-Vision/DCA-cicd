@@ -111,15 +111,59 @@
     // }, false)
 
     function hidePopup() {
-        // let editorContent = document.getElementById("notes-text-area").value
         let editorContent = tinymce.get('notes-text-area').getContent()
-        var selectedText = getSelectionText()
-        if (selectedText.length > 0) {
-            console.log(selectedText)
-            editorContent += selectedText;
-            tinymce.activeEditor.setContent(editorContent)
+        var selectedHTML = getSelectedHTML();
+
+        if (selectedHTML.trim() !== "") {
+            var tempTextarea = document.createElement("textarea");
+            tempTextarea.style.position = "absolute";
+            tempTextarea.style.left = "-9999px";
+            tempTextarea.value = selectedHTML;
+            document.body.appendChild(tempTextarea);
+            tempTextarea.select();
+
+            try {
+                // Use document.execCommand to copy to the clipboard
+                document.execCommand('copy');
+                // console.log('HTML content has been copied to the clipboard:', selectedHTML);
+                editorContent += selectedHTML;
+                tinymce.activeEditor.setContent(editorContent)
+            } catch (error) {
+                console.error('Unable to copy HTML content to the clipboard:', error);
+            } finally {
+                document.body.removeChild(tempTextarea);
+            }
+        } else {
+            console.warn("Nothing selected to copy.");
         }
+
         document.getElementById("tooltip-box").style.display = "none"
+    }
+
+    // function hidePopup() {
+    //     let editorContent = tinymce.get('notes-text-area').getContent()
+    //     var selectedText = getSelectionText()
+    //     if (selectedText.length > 0) {
+    //         console.log(selectedText)
+    //         editorContent += selectedText;
+    //         tinymce.activeEditor.setContent(editorContent)
+    //     }
+    //     document.getElementById("tooltip-box").style.display = "none"
+    // }
+
+    function getSelectedHTML() {
+        var selectedHTML = "";
+        var selection = window.getSelection();
+
+        if (selection.rangeCount > 0) {
+            var range = selection.getRangeAt(0);
+            var clonedSelection = range.cloneContents();
+            var div = document.createElement('div');
+            div.appendChild(clonedSelection);
+            selectedHTML = div.innerHTML;
+        }
+
+        return selectedHTML;
     }
 
     function showModal() {

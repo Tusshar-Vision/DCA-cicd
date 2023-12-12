@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="vi-modal-action">
-                <a href="#" class="vi-secondary-button">Cancel</a>
+                <a href="#" class="vi-secondary-button" @click="isNoteOpen=false">Cancel</a>
                 <a href="#" class="vi-primary-button" @click="isNoteOpen=false" onclick="saveNote()">Save Note</a>
             </div>
         </div>
