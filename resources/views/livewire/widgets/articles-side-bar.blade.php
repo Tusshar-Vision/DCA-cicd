@@ -7,9 +7,15 @@
 
 <div class="flex flex-col rounded bg-visionGray pb-4">
     <div class="my-4 mx-6" x-data="{ expanded: null }" x-init="expanded = 'topic-{{ Str::slug($currentTopic) }}'">
-        @foreach ($topics as $topic)
-            <div class="mt-4">
-                <button class="flex justify-between items-center w-full" @click="
+        <!-- @foreach ($topics as $topic) -->
+            <h4 class="font-bold text-base[16px] py-[16px] border-bottom">Table of Content</h4>
+            <div class="">
+                <ol class="ml-[24px] list-decimal">
+                    <li class="py-[15px] border-bottom hover:brand-color"><a href="#" class="block text-base[16px] font-medium black-040404 hover:brand-color">What Is Ethereum 2.0?</a></li>
+                    <li class="py-[15px] border-bottom hover:brand-color"><a href="#" class="block text-base[16px] font-medium black-040404 hover:brand-color">What Is Ethereum 2.0?</a></li>
+                    <li class="py-[15px] border-bottom hover:brand-color"><a href="#" class="block text-base[16px] font-medium black-040404 hover:brand-color">What Is Ethereum 2.0?</a></li>
+                </ol>
+                <!-- <button class="flex justify-between items-center w-full" @click="
                     if(expanded === 'topic-{{ Str::slug($topic->name) }}') expanded = false;
                     else expanded = 'topic-{{ Str::slug($topic->name) }}'
                 ">
@@ -63,7 +69,7 @@
                     <svg class="mt-4" width="296" height="2" viewBox="0 0 296 2" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path opacity="0.2" d="M0 1H296" stroke="#8F93A3"/>
                     </svg>
-                @endif
+                @endif -->
             </div>
         @endforeach
     </div>
