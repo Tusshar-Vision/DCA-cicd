@@ -55,7 +55,7 @@ $gray-C3CAD9: #C3CAD9;
         color: $gray-8F93A3;
         border-radius: 4px;
         &::-webkit-calendar-picker-indicator{
-          background: $gray-8F93A3;
+          background: url("/images/calendar-icon.png") center no-repeat;
         }
       }
     }
