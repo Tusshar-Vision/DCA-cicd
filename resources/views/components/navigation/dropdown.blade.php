@@ -9,7 +9,7 @@
                 @if(!empty($subMenu))
                     <li class="relative">
                         <a  href="#"
-                            class="flex items-center justify-between mx-4 py-3 hover:brand-color hover:bgcolor-gray-F4F6FC"
+                            class="flex items-center justify-between mx-4 py-3 hover:brand-color hover:bgcolor-gray-F4F6FC firstlabelMenu"
                             @mouseenter="isMenuOpen = 'menu{{ $menuData['initiative_id'] . $loop->iteration }}'"
                             @click.outside="isMenuOpen = null"
                         >
