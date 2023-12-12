@@ -15,7 +15,8 @@
             <div class="added-tags my-3" id="note-tag">
                 @isset($note)
                     @foreach ($note->tags as $tag)
-                        <span class="mr-2 tag-name">{{ $tag->name }}<a href="#">x</a></span>
+                        <span class="mr-2 mb-2"><span class=" tag-name">{{ $tag->name }}</span><a
+                                href="#">x</a></span>
                     @endforeach
                 @endisset
             </div>
@@ -77,8 +78,14 @@
     }
 
     function addTagToNote(tag, click_from = null) {
-        const tagContainer = document.getElementById("note-tag");
-        tagContainer.innerHTML += `<span class="mr-2 tag-name">${tag}<a href="#">x</a></span>`;
+        const tagsNodes = document.querySelectorAll('.tag-name');
+        let tags = [];
+        for (let i = 0; i < tagsNodes.length; i++) tags.push(tagsNodes[i].innerText)
+        if (!tags.includes(tag)) {
+            const tagContainer = document.getElementById("note-tag");
+            tagContainer.innerHTML +=
+                `<span class="mr-2 mb-2"><span class="tag-name">${tag}</span><a href="#">x</a></span>`;
+        }
         if (click_from == 'search') document.getElementById("search-item-container").style.display = "none"
     }
 
