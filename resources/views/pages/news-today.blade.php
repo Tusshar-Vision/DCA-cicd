@@ -29,10 +29,12 @@
 
     <div class="space-y-12">
         <div class="flex space-x-8">
-
-            <div class="flex w-2/6 flex-col space-y-6">
-                <livewire:widgets.articles-side-bar :topics="$topics" :articles="$articles" />
-{{--                <x-widgets.news-today-side-bar :articles="$articles" :topics="$topics" />--}}
+            <div class="flex w-2/6 flex-col space-y-4">
+                <h2 class="text-[20px] font-bold pb-[15px] border-b border-color">News Today</h2>
+                <div class="calendar-wrapper border-1 border-color-C3CAD9 border rounded">
+                    <input type="date" class="w-full border-0">
+                </div>
+                <x-widgets.news-today-side-bar :articles="$articles" :topics="$topics" />
                 <x-widgets.side-bar-download-menu />
             </div>
 
