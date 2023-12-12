@@ -49,6 +49,13 @@ window.addEventListener('onHomePage', () => {
     initializeSwiper();
 });
 
+// remove tag function
+var container = document.getElementById('note-tag');
+container.addEventListener('click', function (event) {
+    const span = document.getElementById(event.target.id + "span");
+    span.remove()
+});
+
 // text lenght for whats new section
 
 // search dropdown js

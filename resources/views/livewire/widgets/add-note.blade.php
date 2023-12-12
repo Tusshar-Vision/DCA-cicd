@@ -2,7 +2,7 @@
     <div class="vi-modal-inner">
         <div class="vi-modal-content">
             <div class="edit-text">
-                <blockquote contenteditable="true">
+                <blockquote contenteditable="false">
                     <p id="note-title">{{ $article->title }}</p>
                 </blockquote>
                 <a href="#" class="edit-title"><img src="{{ URL::asset('images/edit.png') }}"></a>
@@ -15,8 +15,8 @@
             <div class="added-tags my-3" id="note-tag">
                 @isset($note)
                     @foreach ($note->tags as $tag)
-                        <span class="mr-2 mb-2"><span class=" tag-name">{{ $tag->name }}</span><a
-                                href="#">x</a></span>
+                        <span id="{{$tag->name}}span" class="mr-2 mb-2"><span class="tag-name">{{ $tag->name }}<a
+                                href="javascript:void(0)"><img id="{{$tag->name}}" src="{{ URL::asset('images/remove-tag.png') }}"></a></span></span>
                     @endforeach
                 @endisset
             </div>
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="vi-modal-action">
-                <a href="#" class="vi-secondary-button">Cancel</a>
+                <a href="#" class="vi-secondary-button" @click="isNoteOpen=false">Cancel</a>
                 <a href="#" class="vi-primary-button" @click="isNoteOpen=false" onclick="saveNote()">Save Note</a>
             </div>
         </div>
@@ -84,7 +84,8 @@
         if (!tags.includes(tag)) {
             const tagContainer = document.getElementById("note-tag");
             tagContainer.innerHTML +=
-                `<span class="mr-2 mb-2"><span class="tag-name">${tag}</span><a href="#">x</a></span>`;
+                `<span id="{{$tag->name}}span" class="mr-2 mb-2"><span class="tag-name">${tag}</span><a href="#">
+                <img id="{{$tag->name}}" src="{{ URL::asset('images/remove-tag.png') }}"></a></span>`;
         }
         if (click_from == 'search') document.getElementById("search-item-container").style.display = "none"
     }
@@ -100,4 +101,5 @@
             document.getElementById("search-item-container").style.display = "block"
         })
     }
+
 </script>
