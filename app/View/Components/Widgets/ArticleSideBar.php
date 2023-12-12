@@ -6,14 +6,13 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class NewsTodaySideBar extends Component
+class ArticleSideBar extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public $articles,
-        public $topics
+        public $tableOfContent
     )
     {}
 
@@ -22,6 +21,6 @@ class NewsTodaySideBar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.widgets.news-today-side-bar');
+        return view('components.widgets.article-side-bar');
     }
 }
