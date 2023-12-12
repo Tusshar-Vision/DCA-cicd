@@ -54,9 +54,9 @@ $gray-C3CAD9: #C3CAD9;
       input{
         color: $gray-8F93A3;
         border-radius: 4px;
-        // &::-webkit-calendar-picker-indicator{
-        //   background: DarkSlateGray;
-        // }
+        &::-webkit-calendar-picker-indicator{
+          background: $gray-8F93A3;
+        }
       }
     }
 
