@@ -82,8 +82,10 @@
 
 <div class="text-tooltip-comp" id="tooltip-box">
     <button>Copy</button>
-    <button onclick="highlightText()" id="btn">Highlight</button>
-    <button @click="isNoteOpen=true" onclick="hidePopup()">Add Note</button>
+    <button onclick="highlightText()" @click="{{ Auth::check() ? '' : 'isLoginFormOpen=true' }}"
+        id="btn">Highlight</button>
+    <button @click="{{ Auth::check() ? 'isNoteOpen=true' : 'isLoginFormOpen=true' }}" onclick="hidePopup()">Add
+        Note</button>
 </div>
 
 <div id="article-content" onmouseup="handleSelection()" class="mt-4 printable-area">
@@ -199,8 +201,10 @@
     }
 
     function highlightText() {
-        highlightSelectedText('highlight');
-        document.getElementById("tooltip-box").style.display = "none"
+        @if (Auth::check())
+            highlightSelectedText('highlight');
+            document.getElementById("tooltip-box").style.display = "none"
+        @endif
     }
 
     function addHighlight({
@@ -210,7 +214,7 @@
         saveData("{{ route('highlights.add') }}", {
             highlight,
             serializedData,
-            user_id: "{{ Auth::user()->id }}",
+            user_id: "{{ Auth::check() ? Auth::user()->id : '' }}",
             article_id: {{ $article->id }},
             _token: '{{ csrf_token() }}'
         });
