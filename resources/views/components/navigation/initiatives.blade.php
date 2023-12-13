@@ -95,7 +95,7 @@
                 </div>
             </li>
             @guest
-                <li class="pl-[20px] pr-[20px]"><a href="#" class="register">Register</a></li>
+                <li class="pr-[20px]"><a href="#" class="register">Register</a></li>
             @endguest
             <li class="pl-[20px]" style="border-left: 1px solid #E5EAF4;">
             @guest
