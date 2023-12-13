@@ -15,8 +15,9 @@
             <div class="added-tags my-3" id="note-tag">
                 @isset($note)
                     @foreach ($note->tags as $tag)
-                        <span id="{{$tag->name}}span" class="mr-2 mb-2"><span class="tag-name">{{ $tag->name }}<a
-                                href="javascript:void(0)"><img id="{{$tag->name}}" src="{{ URL::asset('images/remove-tag.png') }}"></a></span></span>
+                        <span id="{{ $tag->name }}span" class="mr-2 mb-2"><span class="tag-name">{{ $tag->name }}<a
+                                    href="javascript:void(0)"><img id="{{ $tag->name }}"
+                                        src="{{ URL::asset('images/remove-tag.png') }}"></a></span></span>
                     @endforeach
                 @endisset
             </div>
@@ -54,7 +55,7 @@
         const tagsNodes = document.querySelectorAll('.tag-name');
         let tags = [];
         for (let i = 0; i < tagsNodes.length; i++) tags.push(tagsNodes[i].innerText)
-        const user_id = {{ Auth::user()->id }};
+        const user_id = "{{ Auth::check() ? Auth::user()->id : '' }}";
         const article_id = "{{ $article->id }}";
         const topic_id = "{{ $article->topic->id }}";
         const topic_section_id = "{{ $article->topic_section_id }}";
@@ -84,8 +85,8 @@
         if (!tags.includes(tag)) {
             const tagContainer = document.getElementById("note-tag");
             tagContainer.innerHTML +=
-                `<span id="{{$tag->name}}span" class="mr-2 mb-2"><span class="tag-name">${tag}</span><a href="#">
-                <img id="{{$tag->name}}" src="{{ URL::asset('images/remove-tag.png') }}"></a></span>`;
+                `<span id="{{ $tag->name }}span" class="mr-2 mb-2"><span class="tag-name">${tag}</span><a href="#">
+                <img id="{{ $tag->name }}" src="{{ URL::asset('images/remove-tag.png') }}"></a></span>`;
         }
         if (click_from == 'search') document.getElementById("search-item-container").style.display = "none"
     }
@@ -101,5 +102,4 @@
             document.getElementById("search-item-container").style.display = "block"
         })
     }
-
 </script>
