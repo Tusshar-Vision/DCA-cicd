@@ -55,7 +55,7 @@ $gray-C3CAD9: #C3CAD9;
         color: $gray-8F93A3;
         border-radius: 4px;
         &::-webkit-calendar-picker-indicator{
-          background: $gray-8F93A3;
+          background: url("/images/calendar-icon.png") center no-repeat;
         }
       }
     }
@@ -90,6 +90,7 @@ $gray-C3CAD9: #C3CAD9;
         color: #FFFFFF;
         font-weight: 600;
         width: 100%;
+        border-radius: 4px;
         transition: all 0.2s ease-in-out;
         &:hover{
           opacity: 0.9;
@@ -698,7 +699,7 @@ $gray-C3CAD9: #C3CAD9;
     background-color: #3362CC;
     color: #fff;
     display: inline-block;
-    padding: 5px 10px 5px 5px;
+    padding: 3px 5px 2px 5px;
     font-size: 10px;
     border-radius: 2px;
   }
@@ -706,7 +707,7 @@ $gray-C3CAD9: #C3CAD9;
     display: inline-block;
     color: #fff;
     font-size: 14px;
-    margin: 0 0 0 0px;
+    margin: 0 0 0 10px;
   }
 
   .tag-gap{

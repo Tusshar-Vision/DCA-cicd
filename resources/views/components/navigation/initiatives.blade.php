@@ -13,23 +13,25 @@
                     @if ($initiative->path === '/news-today')
                         <div class="relative">
                             <li class="font-semibold pr-6"
-                                @click="
-                                        isNewsOpen = !isNewsOpen;
-                                        isMagazineOpen = false;
-                                        isWeeklyFocusOpen = false;
-                                       "
+{{--                                @click="--}}
+{{--                                        isNewsOpen = !isNewsOpen;--}}
+{{--                                        isMagazineOpen = false;--}}
+{{--                                        isWeeklyFocusOpen = false;--}}
+{{--                                       "--}}
                             >
-                                <a class="hover:text-visionRed {{ request()->is('news-today*') ? 'text-visionRed' : '' }}" href="#">{{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}</a>
+                                <a class="hover:text-visionRed {{ request()->is('news-today*') ? 'text-visionRed' : '' }}" href="{{ route('news-today') }}">
+                                    {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
+                                </a>
                             </li>
 
-                            <x-navigation.dropdown
-                                x-show="isNewsOpen"
-                                @click.away="isNewsOpen = false"
-                                button-text="Today's News"
-                                button-link="{{ $initiative->path }}"
-                                archive-link="{{ route('news-today.archive') }}"
-                                :menuData="$menuData['newsToday']"
-                            />
+{{--                            <x-navigation.dropdown--}}
+{{--                                x-show="isNewsOpen"--}}
+{{--                                @click.away="isNewsOpen = false"--}}
+{{--                                button-text="Today's News"--}}
+{{--                                button-link="{{ $initiative->path }}"--}}
+{{--                                archive-link="{{ route('news-today.archive') }}"--}}
+{{--                                :menuData="$menuData['newsToday']"--}}
+{{--                            />--}}
                         </div>
                     @elseif ($initiative->path === '/monthly-magazine')
                         <div class="relative">
