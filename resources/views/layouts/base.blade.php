@@ -38,17 +38,17 @@
         <x-footer />
     </footer>
 
-    <x-modals.modal-box x-show="isLoginFormOpen">
+    <x-modals.login-modal x-show="isLoginFormOpen">
         <livewire:forms.login />
-    </x-modals.modal-box>
+    </x-modals.login-modal>
 
-    <x-modals.modal-box x-show="isRegisterFormOpen">
-        <livewire:forms.register />
-    </x-modals.modal-box>
+{{--    <x-modals.login-modal x-show="isRegisterFormOpen">--}}
+{{--        <livewire:forms.register />--}}
+{{--    </x-modals.login-modal>--}}
 
-    <x-modals.modal-box x-show="isResetFormOpen">
+    <x-modals.login-modal x-show="isResetFormOpen">
         <livewire:forms.reset-password />
-    </x-modals.modal-box>
+    </x-modals.login-modal>
 
 </body>
 

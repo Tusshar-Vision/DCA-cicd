@@ -1,4 +1,4 @@
-<style type="text/css">
+<style>
     .highlight {
         background-color: yellow;
     }

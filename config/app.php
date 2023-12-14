@@ -168,6 +168,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\Filament\AdminPanelProvider::class,
+        App\Providers\Filament\ReviewerPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\InitiativeServiceProvider::class,
         Ellaisys\Cognito\Providers\AwsCognitoServiceProvider::class,
