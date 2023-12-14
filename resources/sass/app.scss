@@ -1419,6 +1419,14 @@ $gray-686E70: #686E70;
     input:focus + label{
       color: blue
     }
+    .show-password{
+      position: absolute;
+      right: 17px;
+      top: 17px;
+      z-index: 1;
+      display: inline-block;
+      cursor: pointer;
+    }
   }
   .forgetpass{
     font-size: 12px;

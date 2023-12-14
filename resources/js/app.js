@@ -72,4 +72,12 @@ container.addEventListener('click', function (event) {
 // });
 
 
-// copy link js
+// show hide function
+// function showPassword(targetID) {
+//     var x = document.getElementById(targetID);
+//         if (x.type === "password") {
+//         x.type = "text";
+//         } else {
+//         x.type = "password";
+//         }
+// }
