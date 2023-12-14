@@ -1,6 +1,9 @@
 <div class="flex min-h-full flex-col justify-center px-[20px] py-[20px] bg-white">
   <div class="flex items-center loginwrap">
     <div class="w-full text-center">
+      
+    </div>
+    <div class="w-full text-center">
       <h2 class="font-medium text-base mb-5">Welcome Back !</h2>
       <p class="text-sm	font-normal mb-[40px]">Please log-in to your account for a personalised experience.</p>
       <form>
@@ -45,6 +48,7 @@
 </div>
 
 <script>
+
   // show hide function
   function showPassword(targetID) {
     var x = document.getElementById(targetID);

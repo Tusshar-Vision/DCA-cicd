@@ -89,10 +89,6 @@ $gray-686E70: #686E70;
 
     /* menu style */
 
-    // .svgHover svg{
-    //   fill: red !important;
-    // }
-
 
     .vi-primary-button {
         padding: 8px 18px;
@@ -201,17 +197,21 @@ $gray-686E70: #686E70;
         line-height: 20px;
         margin-top: 0;
     }
-    .vi-highlights-sidebar .vi-announcement-card ul {
-        margin: 0;
-        padding-left: 0;
-        li {
-          list-style: none;
-          font-size: 14px;
-          font-weight: 400;
-          color: #040404;
-          line-height: 20px;
-          margin: 12px 0;
-          position: relative;
+    .vi-highlights-sidebar {
+        .vi-announcement-card {
+        ul {
+          margin: 0;
+          padding-left: 0;
+            li {
+              list-style: none;
+              font-size: 14px;
+              font-weight: 400;
+              color: #040404;
+              line-height: 20px;
+              margin: 12px 0;
+              position: relative;
+          }
+        }
       }
     }
     .vi-highlights-sidebar .vi-announcement-card ul li .hidden-text{
