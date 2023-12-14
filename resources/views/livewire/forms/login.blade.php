@@ -1,9 +1,12 @@
 <div class="flex min-h-full flex-col justify-center px-[20px] py-[20px] bg-white">
   <div class="flex items-center loginwrap">
-    <div class="w-full text-center">
-      
+    <div class="w-6/12 text-center">
+      <div class="ml-2">
+        <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+        <dotlottie-player src="https://lottie.host/efd12853-25b1-4c36-bf27-3d0efb0eea46/mtnAb2oVRI.json" background="transparent" speed="1" style="width: 300px; height: 300px; margin: 0 auto;" loop autoplay></dotlottie-player>
+      </div>
     </div>
-    <div class="w-full text-center">
+    <div class="w-6/12 text-center">
       <h2 class="font-medium text-base mb-5">Welcome Back !</h2>
       <p class="text-sm	font-normal mb-[40px]">Please log-in to your account for a personalised experience.</p>
       <form>
