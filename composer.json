@@ -10,6 +10,7 @@
     "require": {
         "php": "^8.2",
         "althinect/filament-spatie-roles-permissions": "^2.1",
+        "amidesfahani/filament-tinyeditor": "^1.1",
         "assada/laravel-achievements": "^2.6",
         "awcodes/overlook": "^2.0",
         "aws/aws-sdk-php": "^3.0",
@@ -36,12 +37,10 @@
         "laravel/ui": "^4.2",
         "livewire/livewire": "^3.0",
         "maize-tech/laravel-markable": "^2.1",
-        "mohamedsabil83/filament-forms-tinyeditor": "^2.0",
         "ralphjsmit/laravel-filament-seo": "^1.2",
         "shuvroroy/filament-spatie-laravel-health": "^2.0",
         "spatie/laravel-model-status": "^1.14",
         "spatie/laravel-sluggable": "^3.5",
-        "tinymce/tinymce": "^6.8",
         "z3d0x/filament-logger": "^0.6.1"
     },
     "require-dev": {

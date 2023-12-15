@@ -16,8 +16,7 @@
     <script type="text/javascript" src="{{ URL::asset('js/rangy/rangy-highlighter.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('js/rangy/highlighter.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
-
+    <script src="{{ asset('vendor/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
 </head>
 
 <body x-data="{ isLoginFormOpen: false, isRegisterFormOpen: false, isResetFormOpen: false }">
