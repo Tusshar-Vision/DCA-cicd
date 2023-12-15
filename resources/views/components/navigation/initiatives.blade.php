@@ -48,7 +48,7 @@
                             <x-navigation.dropdown
                                 x-show="isMagazineOpen"
                                 @click.away="isMagazineOpen = false"
-                                button-text="This Month's Magazine"
+                                button-text="Latest Edition"
                                 button-link="{{ $initiative->path }}"
                                 archive-link="{{ route('monthly-magazine.archive') }}"
                                 :menuData="$menuData['monthlyMagazine']"
