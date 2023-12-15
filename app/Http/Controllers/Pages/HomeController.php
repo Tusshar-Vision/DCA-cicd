@@ -22,7 +22,7 @@ class HomeController extends Controller
     }
     public function index()
     {
-        $featuredArticles = $this->articleService->getFeatured();
+        $featuredArticles = $this->articleService->getFeatured(10);
         $latestNewsArticles = $this->articleService->getLatestNews();
         $latestVideos = $this->mediaService->getLatestVideos();
         $latestDownloads = $this->mediaService->getLatestDownloads();
