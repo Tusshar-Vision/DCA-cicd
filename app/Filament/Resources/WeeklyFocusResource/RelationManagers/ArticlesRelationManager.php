@@ -30,7 +30,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
-use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
+use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use Spatie\Tags\Tag;
 
 class ArticlesRelationManager extends RelationManager
@@ -68,7 +68,7 @@ class ArticlesRelationManager extends RelationManager
                         })->reactive()
                         ->label('Sub Section'),
 
-                    TinyEditor::make('content')->columnSpanFull(),
+                    TinyEditor::make('content')->columnSpanFull()->profile('full'),
                 ])->columnSpan(2),
 
                 Section::make('meta')->schema([

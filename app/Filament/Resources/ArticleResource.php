@@ -29,10 +29,9 @@ use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Guava\FilamentDrafts\Admin\Resources\Concerns\Draftable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
-use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
+use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use Spatie\Tags\Tag;
 
 class ArticleResource extends Resource
@@ -77,7 +76,7 @@ class ArticleResource extends Resource
                         })->reactive()
                         ->label('Sub Section'),
 
-                    TinyEditor::make('content')->columnSpanFull(),
+                    TinyEditor::make('content')->columnSpanFull()->profile('full')->toolbarSticky(true),
                 ])->columnSpan(2),
 
                 Section::make('meta')->schema([

@@ -13,6 +13,8 @@ class Initiative extends Model
     protected $fillable = [
         'name',
         'description',
+        'path',
+        'name_hindi'
     ];
 
     public function published(): HasMany

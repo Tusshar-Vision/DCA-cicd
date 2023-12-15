@@ -30,7 +30,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
-use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
+use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use Spatie\Tags\Tag;
 
 class ArticlesRelationManager extends RelationManager
@@ -68,7 +68,7 @@ class ArticlesRelationManager extends RelationManager
                         })->reactive()
                         ->label('Sub Section'),
 
-                    TinyEditor::make('content')->required()->columnSpanFull(),
+                    TinyEditor::make('content')->required()->columnSpanFull()->profile('full'),
                 ])->columnSpan(2),
 
                 Section::make('meta')->schema([
