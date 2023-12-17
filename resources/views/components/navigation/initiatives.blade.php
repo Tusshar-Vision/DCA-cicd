@@ -1,3 +1,8 @@
+@php
+    use App\Helpers\InitiativesHelper;
+    use App\Enums\Initiatives;
+@endphp
+
 <div class="flex h-20 items-center justify-between">
     <div class="w-3/4">
         <ul class="flex">
@@ -8,76 +13,79 @@
                     </svg>
                 </a>
             </li>
-            <div class="flex" x-data="{ isNewsOpen: false, isMagazineOpen: false, isWeeklyFocusOpen: false }">
+            <div class="flex" x-data="{ isMagazineDropdownOpen: false, isWeeklyDropdownOpen: false, isMoreDropdownOpen: false }">
                 @foreach ($initiatives as $initiative)
-                    @if ($initiative->path === '/news-today')
+                    @if ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE))
                         <div class="relative">
                             <li class="font-semibold pr-6"
-{{--                                @click="--}}
-{{--                                        isNewsOpen = !isNewsOpen;--}}
-{{--                                        isMagazineOpen = false;--}}
-{{--                                        isWeeklyFocusOpen = false;--}}
-{{--                                       "--}}
+                                @click="
+                                        isMagazineDropdownOpen = !isMagazineDropdownOpen;
+                                        isMoreDropdownOpen = false;
+                                        isWeeklyDropdownOpen = false;
+                                       "
                             >
-                                <a class="hover:text-visionRed {{ request()->is('news-today*') ? 'text-visionRed' : '' }}" href="{{ route('news-today') }}">
+                                <a class="hover:text-visionRed {{ request()->is('monthly-magazine*') ? 'text-visionRed' : '' }}" href="#">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                                 </a>
                             </li>
 
-{{--                            <x-navigation.dropdown--}}
-{{--                                x-show="isNewsOpen"--}}
-{{--                                @click.away="isNewsOpen = false"--}}
-{{--                                button-text="Today's News"--}}
-{{--                                button-link="{{ $initiative->path }}"--}}
-{{--                                archive-link="{{ route('news-today.archive') }}"--}}
-{{--                                :menuData="$menuData['newsToday']"--}}
-{{--                            />--}}
-                        </div>
-                    @elseif ($initiative->path === '/monthly-magazine')
-                        <div class="relative">
-                            <li class="font-semibold pr-6"
-                                @click="
-                                        isMagazineOpen = !isMagazineOpen;
-                                        isNewsOpen = false;
-                                        isWeeklyFocusOpen = false;
-                                       "
-                            >
-                                <a class="hover:text-visionRed {{ request()->is('monthly-magazine*') ? 'text-visionRed' : '' }}" href="#">{{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}</a>
-                            </li>
-
                             <x-navigation.dropdown
-                                x-show="isMagazineOpen"
-                                @click.away="isMagazineOpen = false"
+                                x-show="isMagazineDropdownOpen"
+                                @click.away="isMagazineDropdownOpen = false"
                                 button-text="Latest Edition"
                                 button-link="{{ $initiative->path }}"
                                 archive-link="{{ route('monthly-magazine.archive') }}"
                                 :menuData="$menuData['monthlyMagazine']"
                             />
                         </div>
-                    @elseif ($initiative->path === '/weekly-focus')
+                    @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
                         <div class="relative">
                             <li class="font-semibold pr-6"
                                 @click="
-                                        isWeeklyFocusOpen = !isWeeklyFocusOpen;
-                                        isMagazineOpen = false;
-                                        isNewsOpen = false;
+                                        isWeeklyDropdownOpen = !isWeeklyDropdownOpen;
+                                        isMagazineDropdownOpen = false;
+                                        isMoreDropdownOpen = false;
                                        "
                             >
-                                <a class="hover:text-visionRed {{ request()->is('weekly-focus*') ? 'text-visionRed' : '' }}" href="#">{{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}</a>
+                                <a class="hover:text-visionRed {{ request()->is('weekly-focus*') ? 'text-visionRed' : '' }}" href="#">
+                                    {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
+                                </a>
                             </li>
 
                             <x-navigation.dropdown
-                                x-show="isWeeklyFocusOpen"
-                                @click.away="isWeeklyFocusOpen = false"
+                                x-show="isWeeklyDropdownOpen"
+                                @click.away="isWeeklyDropdownOpen = false"
                                 button-text="Latest Edition"
                                 button-link="{{ $initiative->path }}"
                                 archive-link="{{ route('weekly-focus.archive') }}"
                                 :menuData="$menuData['weeklyFocus']"
                             />
                         </div>
+                    @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::MORE))
+                        <div class="relative">
+                            <li class="font-semibold pr-6"
+                                @click="
+                                        isMoreDropdownOpen = !isMoreDropdownOpen;
+                                        isWeeklyDropdownOpen = false;
+                                        isMagazineDropdownOpen = false;
+                                       "
+                            >
+                                <a class="hover:text-visionRed {{ request()->is('more*') ? 'text-visionRed' : '' }}" href="#">
+                                    {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
+                                </a>
+                            </li>
+
+                            <x-navigation.more-drop-down
+                                x-show="isMoreDropdownOpen"
+                                @click.away="isMoreDropdownOpen = false"
+                                :menuData="$menuData['more']"
+                            />
+                        </div>
                     @else
                         <li class="font-semibold pr-6">
-                            <a class="hover:text-visionRed {{ request()->is(trim($initiative->path, '/')) ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}" wire:navigate>{{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}</a>
+                            <a class="hover:text-visionRed {{ request()->is(trim($initiative->path, '/')) ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}" wire:navigate>
+                                {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
+                            </a>
                         </li>
                     @endif
 

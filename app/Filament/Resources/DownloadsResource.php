@@ -2,14 +2,13 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Initiatives;
 use App\Filament\Resources\DownloadsResource\Pages;
 use App\Helpers\InitiativesHelper;
-use App\Models\Article;
 use App\Models\PublishedInitiative;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
@@ -21,7 +20,6 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class DownloadsResource extends Resource
 {
@@ -32,7 +30,6 @@ class DownloadsResource extends Resource
     protected static ?string $navigationGroup = 'Other Uploads';
 
     protected static ?int $navigationSort = 6;
-
     protected static ?string $modelLabel = 'Downloads';
 
     public static function form(Form $form): Form
@@ -48,7 +45,7 @@ class DownloadsResource extends Resource
                         ])
                         ->label('Initiative')
                         ->required()
-                        ->default(InitiativesHelper::getInitiativeID(static::getModelLabel())),
+                        ->default(InitiativesHelper::getInitiativeID(Initiatives::DOWNLOADS)),
                     DatePicker::make('published_at')->default(today()),
                     SpatieMediaLibraryFileUpload::make('file')
                         ->name('file')
@@ -101,7 +98,7 @@ class DownloadsResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $query = static::getModel()::query()->where('initiative_id', InitiativesHelper::getInitiativeID(static::getModelLabel()));
+        $query = static::getModel()::query()->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::DOWNLOADS));
 
         if ($tenant = Filament::getTenant()) {
             static::scopeEloquentQueryToTenant($query, $tenant);

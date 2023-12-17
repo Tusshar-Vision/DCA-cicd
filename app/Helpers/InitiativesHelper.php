@@ -2,9 +2,10 @@
 
 namespace App\Helpers;
 
+use App\Enums\Initiatives;
+use App\Enums\InitiativeTopics;
 use App\Models\Initiative;
 use App\Models\InitiativeTopic;
-use Illuminate\Database\Eloquent\Model;
 
 class InitiativesHelper {
 
@@ -17,7 +18,8 @@ class InitiativesHelper {
         "WEEKLY_FOCUS" => 3,
         "MAINS_365" => 4,
         "PT_365" => 5,
-        "DOWNLOADS" => 6
+        "DOWNLOADS" => 6,
+        "MORE" => 7
     ];
     private const InitiativeTopics = [
         "POLITY" => 1,
@@ -32,39 +34,26 @@ class InitiativesHelper {
         "GOVT_SCHEMES" => 10
     ];
 
-    public static function getInitiativeID(string $initiative) : int {
-        $initiative = self::formatString($initiative);
-        if(!array_key_exists($initiative, self::Initiatives)) {
+    public static function getInitiativeID(Initiatives $initiative) : int {
 
-            $initiative = self::reverseFormatString($initiative);
-            $initiativeData = Initiative::where('name', '=', $initiative)->first(['id']);
-
+        if(!array_key_exists($initiative->name, self::Initiatives)) {
+            $initiativeData = Initiative::where('name', '=', $initiative->value)->first(['id']);
             /* 0 is returned if we can't find the id for the initiative */
             return is_null($initiativeData) ? false : $initiativeData->id;
         }
 
-        return self::Initiatives[$initiative];
+        return self::Initiatives[$initiative->name];
     }
 
-    public static function getInitiativeTopicID(string $initiativeTopic) : int {
-        $initiativeTopic = self::formatString($initiativeTopic);
-        if(!array_key_exists($initiativeTopic, self::InitiativeTopics)) {
+    public static function getInitiativeTopicID(InitiativeTopics $initiativeTopic) : int {
 
-            $initiativeTopic = self::reverseFormatString($initiativeTopic);
-            $initiativeTopicData = InitiativeTopic::where('name', '=', $initiativeTopic)->first(['id']);
+        if(!array_key_exists($initiativeTopic->name, self::InitiativeTopics)) {
+
+            $initiativeTopicData = InitiativeTopic::where('name', '=', $initiativeTopic->value)->first(['id']);
 
             return is_null($initiativeTopicData) ? false : $initiativeTopicData->id;
         }
 
-        return self::InitiativeTopics[$initiativeTopic];
-    }
-
-    public static function formatString($string) : string {
-        return strtoupper(str_replace('&', 'AND', str_replace(' ', '_', $string))); // To convert name into code.
-    }
-
-    protected static function reverseFormatString($formattedString) : string {
-        // Revert the conversion done by the original function.
-        return strtolower(str_replace('_', ' ', str_replace('AND', '&', $formattedString)));
+        return self::InitiativeTopics[$initiativeTopic->name];
     }
 }

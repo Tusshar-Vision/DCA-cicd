@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Pages;
 
+use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
 use App\Services\PublishedInitiativeService;
@@ -15,7 +16,7 @@ class PT365Controller extends Controller
         private readonly PublishedInitiativeService $publishedInitiativeService
     )
     {
-        $this->initiativeId = InitiativesHelper::getInitiativeID('PT_365');
+        $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::PT_365);
     }
 
     public function index() {

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Pages;
 
+use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
-use App\Models\Article;
 use App\Models\Note;
-use App\Models\User;
 use App\Services\ArticleService;
 use App\Services\PublishedInitiativeService;
 use Carbon\Carbon;
@@ -28,7 +27,7 @@ class MonthlyMagazineController extends Controller
         private readonly PublishedInitiativeService $publishedInitiativeService,
         private readonly ArticleService $articleService
     ) {
-        $this->initiativeId = InitiativesHelper::getInitiativeID('MONTHLY_MAGAZINE');
+        $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE);
     }
 
     public function index()
@@ -70,7 +69,6 @@ class MonthlyMagazineController extends Controller
             $noteAvailable = Note::where("user_id", Auth::user()->id)->where('article_id', $article->id)->count() > 0 ? true : false;
             $note = Note::where("user_id", Auth::user()->id)->where('article_id', $article->id)->first();
         }
-
 
         return View('pages.monthly-magazine', [
             "publishedDate" => $this->latestMonthlyMagazine->published_at,

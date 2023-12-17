@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Initiatives;
 use App\Filament\Resources\PT365Resource\Pages;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
@@ -45,7 +46,7 @@ class PT365Resource extends Resource
                         ])
                         ->label('Initiative')
                         ->required()
-                        ->default(InitiativesHelper::getInitiativeID(static::getModelLabel())),
+                        ->default(InitiativesHelper::getInitiativeID(Initiatives::PT_365)),
                     DatePicker::make('published_at')->default(today()),
                     SpatieMediaLibraryFileUpload::make('file')
                         ->name('file')
@@ -98,7 +99,7 @@ class PT365Resource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $query = static::getModel()::query()->where('initiative_id', InitiativesHelper::getInitiativeID(static::getModelLabel()));
+        $query = static::getModel()::query()->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::PT_365));
 
         if ($tenant = Filament::getTenant()) {
             static::scopeEloquentQueryToTenant($query, $tenant);

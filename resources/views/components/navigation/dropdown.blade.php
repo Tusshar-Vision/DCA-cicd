@@ -1,8 +1,11 @@
 @php
     use Carbon\Carbon;
+    use App\Helpers\InitiativesHelper;
+    use App\Enums\Initiatives;
 @endphp
 
 <div {{ $attributes }} x-cloak>
+
     <ul x-data="{ isMenuOpen: null }" class="absolute font-normal bgcolor-FFF shadow w-72 border rounded-md mt-2 py-1 z-50">
         <x-buttons.primary button-text="{!! $buttonText !!}" button-link="{{ $buttonLink }}" class="border-bottom" />
             @foreach ($menuData['data'] as $mainMenu => $subMenu)
@@ -14,7 +17,7 @@
                             @click.outside="isMenuOpen = null"
                         >
                             <span class="px-4 font-medium">
-                                {{ ($menuData['initiative_id'] != 2)
+                                {{ ($menuData['initiative_id'] != InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE))
                                     ? Carbon::parse($mainMenu)->format('F Y')
                                     : $mainMenu
                                 }}
@@ -24,18 +27,12 @@
                             </svg>
                         </a>
 
-                        @if ($menuData['initiative_id'] === 1)
-                            <x-navigation.side-dropdown-calender
+                        @if ($menuData['initiative_id'] === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE))
+                            <x-navigation.side-dropdown
                                 x-show="isMenuOpen === 'menu{{ $menuData['initiative_id'] . $loop->iteration }}'"
                                 :menuData="[$mainMenu,$subMenu]"
                                 :initiativeId="$menuData['initiative_id']"
                             />
-                        @elseif ($menuData['initiative_id'] === 2)
-                        <x-navigation.side-dropdown
-                        x-show="isMenuOpen === 'menu{{ $menuData['initiative_id'] . $loop->iteration }}'"
-                        :menuData="[$mainMenu,$subMenu]"
-                        :initiativeId="$menuData['initiative_id']"
-                    />
                         @else
                             <x-navigation.side-dropdown
                                 x-show="isMenuOpen === 'menu{{ $menuData['initiative_id'] . $loop->iteration }}'"

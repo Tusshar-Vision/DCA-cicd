@@ -2,15 +2,16 @@
 
 namespace App\Services;
 
+use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Models\Announcement;
 use App\Models\Article;
 
-class NotificationService
+readonly class NotificationService
 {
     public function __construct(
-        private readonly Announcement $announcement,
-        private readonly Article $article
+        private Announcement $announcement,
+        private Article      $article
     )
     {}
 
@@ -22,7 +23,7 @@ class NotificationService
     public function getNewsUpdatesForToday($limit = 6)
     {
         return $this->article
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID('NEWS_TODAY'))
+            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
             ->isPublished()
             ->latest()
             ->limit($limit)
