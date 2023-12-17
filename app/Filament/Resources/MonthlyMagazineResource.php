@@ -11,7 +11,6 @@ use App\Models\PublishedInitiative;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
@@ -22,7 +21,6 @@ use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
 class MonthlyMagazineResource extends Resource
@@ -31,8 +29,7 @@ class MonthlyMagazineResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
-    protected static ?string $navigationGroup = 'Initiatives';
-
+    protected static ?string $navigationGroup = 'Create Articles';
     protected static ?string $modelLabel = 'Monthly Magazine';
 
     protected static ?int $navigationSort = 2;
