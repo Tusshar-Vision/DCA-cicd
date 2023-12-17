@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\SectionResource\Pages;
+namespace App\Filament\Resources\SubSectionResource\Pages;
 
-use App\Filament\Resources\SectionResource;
+use App\Filament\Resources\SubSectionResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Guava\Filament\NestedResources\Pages\NestedListRecords;
 
-class ListSections extends NestedListRecords
+class ListSubSections extends NestedListRecords
 {
-    protected static string $resource = SectionResource::class;
+    protected static string $resource = SubSectionResource::class;
 
     protected function getHeaderActions(): array
     {

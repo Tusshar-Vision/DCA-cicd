@@ -31,6 +31,8 @@ class AnnouncementResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-megaphone';
 
+    protected static ?int $navigationSort = 2;
+
     public static function form(Form $form): Form
     {
         return $form

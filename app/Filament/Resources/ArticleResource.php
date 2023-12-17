@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ArticleResource\Pages;
-use App\Filament\Resources\ArticleResource\RelationManagers;
 use App\Models\Article;
 use App\Models\User;
 use Carbon\Carbon;
@@ -41,12 +40,11 @@ class ArticleResource extends Resource
     protected static ?string $model = Article::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
-
     protected static ?string $recordTitleAttribute = 'title';
 
-    protected static ?string $navigationGroup = 'Reports';
-
+    protected static ?string $navigationGroup = 'Create Articles';
     protected static ?string $modelLabel = 'All Article';
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {
