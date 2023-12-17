@@ -73,6 +73,7 @@ readonly class InitiativeService
         $sideDropDownMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
             ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as year')
             ->whereIn(DB::raw('DATE_FORMAT(published_at, "%Y")'), $yearsData)
+            ->orderByDesc('year')
             ->groupBy('year')
             ->get()
             ->toArray();
