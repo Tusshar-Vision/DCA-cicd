@@ -3,6 +3,14 @@
 namespace App\Providers\Filament;
 
 use Althinect\FilamentSpatieRolesPermissions\Middleware\SyncSpatiePermissionsWithFilamentTenants;
+use App\Filament\Resources\ArticleResource;
+use App\Filament\Resources\CommentResource;
+use App\Filament\Resources\MonthlyMagazineResource;
+use App\Filament\Resources\NewsTodayResource;
+use App\Filament\Resources\SectionResource;
+use App\Filament\Resources\SubjectResource;
+use App\Filament\Resources\SubSectionResource;
+use App\Filament\Resources\WeeklyFocusResource;
 use Awcodes\Overlook\OverlookPlugin;
 use Awcodes\Overlook\Widgets\OverlookWidget;
 use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
@@ -28,6 +36,13 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->plugins([
                 OverlookPlugin::make()
+                    ->includes([
+                        ArticleResource::class,
+                        NewsTodayResource::class,
+                        WeeklyFocusResource::class,
+                        MonthlyMagazineResource::class,
+                        CommentResource::class
+                    ])
                     ->sort(2)
                     ->columns([
                         'default' => 1,
