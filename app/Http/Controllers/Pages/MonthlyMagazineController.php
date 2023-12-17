@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Pages;
 
+use App\Actions\Contents;
 use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
@@ -18,6 +19,7 @@ class MonthlyMagazineController extends Controller
     private int $initiativeId;
     protected $latestMonthlyMagazine;
     protected $articles;
+    protected $sortedArticlesWithTopics;
     protected $topics;
 
     protected  $article_topic;
@@ -54,7 +56,7 @@ class MonthlyMagazineController extends Controller
         else return Redirect::to(route('monthly-magazine.article', ['month' => $month, 'topic' => $article->topic->name, 'article_slug' => $article->slug]));
     }
 
-    public function renderArticles($month, $topic, $article_slug)
+    public function renderArticles($month, $topic, $article_slug, Contents $contents)
     {
 
         $this->getData($month);
@@ -70,6 +72,13 @@ class MonthlyMagazineController extends Controller
             $note = Note::where("user_id", Auth::user()->id)->where('article_id', $article->id)->first();
         }
 
+        $temporaryContent = $contents->fromText($article->content)->getHandledText();
+        $tableOfContent = $contents->getContentsArray();
+
+        if(!empty($tableOfContent)) {
+            $article->content = $temporaryContent;
+        }
+
         return View('pages.monthly-magazine', [
             "publishedDate" => $this->latestMonthlyMagazine->published_at,
             "articles" => $this->articles,
@@ -79,7 +88,9 @@ class MonthlyMagazineController extends Controller
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
             "baseUrl" => url('monthly-magazine') . "/" . $month,
-            "relatedArticles" => $relatedArticles
+            "relatedArticles" => $relatedArticles,
+            "sortedArticlesWithTopics" => $this->sortedArticlesWithTopics,
+            "tableOfContent" => $tableOfContent
         ]);
     }
 
@@ -102,16 +113,20 @@ class MonthlyMagazineController extends Controller
         });
 
         $sortedArticles = [];
+        $sortedArticlesWithTopic = [];
 
         foreach ($this->topics as $topic) {
+            $sortedArticlesWithTopic[$topic['name']] = [];
             foreach ($this->articles as $article) {
                 if ($article->topic === $topic) {
                     $sortedArticles[] = $article;
+                    $sortedArticlesWithTopic[$topic['name']][] = $article;
                 }
             }
         }
 
         $this->articles = $sortedArticles;
+        $this->sortedArticlesWithTopics = $sortedArticlesWithTopic;
     }
 
     public function archive()

@@ -29,7 +29,7 @@
     <div class="space-y-12">
         <div class="flex justify-between">
 
-            <div class="flex flex-col space-y-6 w-[470px]" id="sideBar">
+            <div class="flex flex-col space-y-6 w-[350px]" id="sideBar">
                 <x-widgets.article-side-bar :table-of-content="$tableOfContent" />
                 <x-widgets.side-bar-download-menu />
             </div>

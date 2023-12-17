@@ -1,6 +1,6 @@
 @php
     use Illuminate\Support\Str;
-    $counter = 1;
+    use App\Services\ArticleService;
     $currentTopic = request()->segment(3);
     $currentArticle = request()->segment(4);
 @endphp
@@ -17,7 +17,7 @@
                         <div class="flex">
                             <div class="w-6">
                                 <strong>
-                                    {{ $counter . '.' }}
+                                    {{ $loop->iteration . '.' }}
                                 </strong>
                             </div>
                             <div>
@@ -30,10 +30,11 @@
                             <path d="M5 11V13H19V11H5Z" fill="#8F93A3"/>
                         </svg>
                     </div>
+
                     <div x-show="expanded !== 'topic-{{ Str::slug($topic->name) }}'" class="flex justify-between items-center w-full">
                         <div class="flex">
                             <div class="w-6">
-                                {{ $counter++ . '.' }}
+                                {{ $loop->iteration . '.' }}
                             </div>
                             <div>
                                 {{ $topic->name }}
@@ -43,17 +44,28 @@
                             <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z" fill="#8F93A3"/>
                         </svg>
                     </div>
+
                 </button>
 
                 <div x-show="expanded === 'topic-{{ Str::slug($topic->name) }}'" x-collapse>
                     <ul class="mt-2 space-y-4 ml-6">
-                        @foreach ($articles as $article)
-                            @if($article->topic === $topic)
-                                <li class="text-clip text-sm">
-                                    <a href="{{ \App\Services\ArticleService::getArticleURL($article) }}" class="cursor-pointer hover:underline {{ ($article->slug === $currentArticle) ? 'font-bold' : '' }}" wire:navigate>
-                                        {{ $article->title }}
-                                    </a>
-                                </li>
+                        @foreach ($articles[$topic->name] as $article)
+                            <li class="text-clip text-sm">
+                                <a href="{{ ArticleService::getArticleURL($article) }}" class="cursor-pointer hover:underline {{ ($article->slug === $currentArticle) ? 'font-bold' : '' }}" wire:navigate>
+                                    {{ $loop->parent->iteration }}.{{ $loop->iteration }} {{ $article->title }}
+                                </a>
+                            </li>
+                            @if($article->slug === $currentArticle)
+                                @foreach($tableOfContent as $key => $header)
+                                    <ul class="ml-6">
+                                        <li class="text-clip text-sm">
+                                            <a href="#header-{{$header['id']}}"
+                                               class="cursor-pointer hover:underline">
+                                                    {{ $loop->parent->parent->iteration }}.{{ $loop->parent->iteration }}.{{ $loop->iteration }} {{ strip_tags($header['header']) }}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                @endforeach
                             @endif
                         @endforeach
                     </ul>
