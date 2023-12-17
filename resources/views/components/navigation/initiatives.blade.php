@@ -24,41 +24,21 @@
                                         isMagazineDropdownOpen = !isMagazineDropdownOpen;
                                         isMoreDropdownOpen = false;
                                         isWeeklyDropdownOpen = false;
-                                       ">
-                                <a class="hover:text-visionRed {{ request()->is('monthly-magazine*') ? 'text-visionRed' : '' }}"
-                                    href="#">
+                                       "
+                            >
+                                <a class="hover:text-visionRed {{ request()->is('monthly-magazine*') ? 'text-visionRed' : '' }}" href="#">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                                 </a>
                             </li>
 
-                            {{--                            <x-navigation.dropdown --}}
-                            {{--                                x-show="isNewsOpen" --}}
-                            {{--                                @click.away="isNewsOpen = false" --}}
-                            {{--                                button-text="Today's News" --}}
-                            {{--                                button-link="{{ $initiative->path }}" --}}
-                            {{--                                archive-link="{{ route('news-today.archive') }}" --}}
-                            {{--                                :menuData="$menuData['newsToday']" --}}
-                            {{--                            /> --}}
-                        </div>
-                    @elseif ($initiative->path === '/monthly-magazine')
-                        <div class="relative">
-                            <li class="font-semibold pr-6"
-                                @click="
-                                        isMagazineOpen = !isMagazineOpen;
-                                        isNewsOpen = false;
-                                        isWeeklyFocusOpen = false;
-                                       ">
-                                <a class="hover:text-visionRed {{ request()->is('monthly-magazine*') ? 'text-visionRed' : '' }}"
-                                    href="#">{{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}</a>
-                            </li>
-
-                            <x-navigation.dropdown x-show="isMagazineOpen" @click.away="isMagazineOpen = false"
-                                button-text="This Month's Magazine" button-link="{{ $initiative->path }}"
-                                archive-link="{{ route('monthly-magazine.archive') }}" :menuData="$menuData['monthlyMagazine']" />
-                            <x-navigation.dropdown x-show="isMagazineDropdownOpen"
-                                @click.away="isMagazineDropdownOpen = false" button-text="Latest Edition"
+                            <x-navigation.dropdown
+                                x-show="isMagazineDropdownOpen"
+                                @click.away="isMagazineDropdownOpen = false"
+                                button-text="Latest Edition"
                                 button-link="{{ $initiative->path }}"
-                                archive-link="{{ route('monthly-magazine.archive') }}" :menuData="$menuData['monthlyMagazine']" />
+                                archive-link="{{ route('monthly-magazine.archive') }}"
+                                :menuData="$menuData['monthlyMagazine']"
+                            />
                         </div>
                     @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
                         <div class="relative">
