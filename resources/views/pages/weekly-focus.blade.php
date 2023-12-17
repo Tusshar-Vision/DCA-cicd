@@ -27,14 +27,14 @@
     </div>
 
     <div class="space-y-12">
-        <div class="flex justify-between space-x-8">
+        <div class="flex justify-between">
 
-            <div class="flex w-2/6 flex-col space-y-6 float-left" id="sideBar">
+            <div class="flex flex-col space-y-6 w-[470px]" id="sideBar">
                 <x-widgets.article-side-bar :table-of-content="$tableOfContent" />
                 <x-widgets.side-bar-download-menu />
             </div>
 
-            <div class="flex w-4/6 flex-col float-right">
+            <div class="flex flex-col leftcalcwidth" id="rightcontent">
                 @if (!empty($articles) && count($articles) !== 0)
                     <x-header.article readTime="{{ $article->read_time }}" />
                     <x-article-content :article="$article" />
