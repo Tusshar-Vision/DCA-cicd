@@ -33,7 +33,9 @@
             <div class="flex w-2/6 flex-col space-y-4">
                 <h2 class="text-[20px] font-bold pb-[15px] border-b border-color">News Today</h2>
                 <div class="calendar-wrapper border-1 border-color-C3CAD9 border rounded">
-                    <input type="date" class="w-full border-0" value="{{ Carbon::parse($article->published_at)->format('Y-m-d') }}">
+                    <label>
+                        <input id="news-today-calendar" type="date" class="w-full border-0" value="{{ Carbon::parse($article->published_at)->format('Y-m-d') }}">
+                    </label>
                 </div>
                 <x-widgets.article-side-bar :table-of-content="$articles"/>
                 <x-widgets.side-bar-download-menu/>
@@ -72,5 +74,21 @@
                 </div>
             </div>
         </div>
-        <div>
+    <div>
+    <script>
+        let newsTodayCalendar = document.getElementById('news-today-calendar');
+
+        newsTodayCalendar.addEventListener('change', function (event) {
+            let selectedDate = event.target.value;
+
+            // Get the current URL
+            const currentURL = new URL(window.location.href);
+
+            // Update the date part of the URL
+            currentURL.pathname = `/news-today/${selectedDate}/`;
+
+            // Navigate to the updated URL
+            window.location.href = currentURL.href;
+        })
+    </script>
 @endsection

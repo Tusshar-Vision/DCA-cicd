@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
 use Carbon\Carbon;
@@ -58,9 +59,9 @@ class PublishedInitiativeService
             $query = $this->publishedInitiatives->where('initiative_id', '=', $initiative_id)->isPublished();
         else
             $query = $this->publishedInitiatives->whereIn('initiative_id', [
-                InitiativesHelper::getInitiativeID('MAINS_365'),
-                InitiativesHelper::getInitiativeID('PT_365'),
-                InitiativesHelper::getInitiativeID('DOWNLOADS')
+                InitiativesHelper::getInitiativeID(Initiatives::MAINS_365),
+                InitiativesHelper::getInitiativeID(Initiatives::PT_365),
+                InitiativesHelper::getInitiativeID(Initiatives::DOWNLOADS)
                 ])->isPublished();
 
         if ($year) {

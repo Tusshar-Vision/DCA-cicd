@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Actions\Contents;
+use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Note;
@@ -24,7 +25,7 @@ class WeeklyFocusController extends Controller
         private readonly ArticleService $articleService,
         private readonly PublishedInitiativeService $publishedInitiativeService
     ) {
-        $this->initiativeId = InitiativesHelper::getInitiativeID('WEEKLY_FOCUS');
+        $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS);
     }
 
     public function index()

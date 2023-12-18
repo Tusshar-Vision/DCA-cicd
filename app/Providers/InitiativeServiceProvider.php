@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Enums\Initiatives;
 use App\Models\Initiative;
 use App\Services\InitiativeService;
 use Illuminate\Support\Facades\Schema;
@@ -25,10 +26,11 @@ class InitiativeServiceProvider extends ServiceProvider
     {
         if (Schema::hasTable('initiatives')) {
 
-            $initiatives = Initiative::get(['id', 'name', 'name_hindi', 'path']);
-            $newsTodayData = $initiativeService->getMenuData('NEWS_TODAY');
-            $monthlyMagazineData = $initiativeService->getMenuData('MONTHLY_MAGAZINE');
-            $weeklyFocusData = $initiativeService->getMenuData('WEEKLY_FOCUS');
+            $initiatives = Initiative::orderBy('sort')->get(['id', 'name', 'name_hindi', 'path']);
+            $newsTodayData = $initiativeService->getMenuData(Initiatives::NEWS_TODAY);
+            $monthlyMagazineData = $initiativeService->getMenuData(Initiatives::MONTHLY_MAGAZINE);
+            $weeklyFocusData = $initiativeService->getMenuData(Initiatives::WEEKLY_FOCUS);
+            $moreData = $initiativeService->getMenuData(Initiatives::MORE);
 
             view()->share([
                 'initiatives' => $initiatives,
@@ -36,6 +38,7 @@ class InitiativeServiceProvider extends ServiceProvider
                     'newsToday' => $newsTodayData,
                     'monthlyMagazine' => $monthlyMagazineData,
                     'weeklyFocus' => $weeklyFocusData,
+                    'more' => $moreData
                 ]
             ]);
         }

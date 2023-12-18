@@ -16,8 +16,7 @@
     <script type="text/javascript" src="{{ URL::asset('js/rangy/rangy-highlighter.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('js/rangy/highlighter.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
-
+    <script src="{{ asset('vendor/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
 </head>
 
 <body x-data="{ isLoginFormOpen: false, isRegisterFormOpen: false, isResetFormOpen: false }">
@@ -38,17 +37,17 @@
         <x-footer />
     </footer>
 
-    <x-modals.modal-box x-show="isLoginFormOpen">
+    <x-modals.login-modal x-show="isLoginFormOpen">
         <livewire:forms.login />
-    </x-modals.modal-box>
+    </x-modals.login-modal>
 
-    <x-modals.modal-box x-show="isRegisterFormOpen">
-        <livewire:forms.register />
-    </x-modals.modal-box>
+{{--    <x-modals.login-modal x-show="isRegisterFormOpen">--}}
+{{--        <livewire:forms.register />--}}
+{{--    </x-modals.login-modal>--}}
 
-    <x-modals.modal-box x-show="isResetFormOpen">
+    <x-modals.login-modal x-show="isResetFormOpen">
         <livewire:forms.reset-password />
-    </x-modals.modal-box>
+    </x-modals.login-modal>
 
 </body>
 

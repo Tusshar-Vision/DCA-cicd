@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Pages;
 
+use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Note;
@@ -22,7 +23,7 @@ class NewsTodayController extends Controller
         private readonly PublishedInitiativeService $publishedInitiativeService,
         private readonly ArticleService $articleService
     ) {
-        $this->initiativeId = InitiativesHelper::getInitiativeID('NEWS_TODAY');
+        $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY);
     }
 
     public function index()
