@@ -38,9 +38,16 @@ class ArticleService
             ->where('language', $this->language)->latest()->limit($limit)->with('author')->get();
     }
 
-    public function search(string $query, int $perPage = 10): Collection|array|LengthAwarePaginator
+    public function search(string $query, int $initiative_id = null, int $perPage = 10): Collection|array|LengthAwarePaginator
     {
-        return $this->articles->search($query)->where('is_published', true)->where('language', $this->language)->paginate($perPage);
+        $query = $this->articles->search($query)->where('is_published', true)->where('language', $this->language);
+
+        if ($initiative_id) {
+            logger("achaa");
+            $query->where('initiative_id', $initiative_id);
+        }
+
+        return $query->paginate($perPage);
     }
 
     public static function getArticleURL($article): string
@@ -60,7 +67,8 @@ class ArticleService
         return self::getArticleURL(Article::findBySlug($slug));
     }
 
-    public function getRelatedArticles($article) {
+    public function getRelatedArticles($article)
+    {
         return $this->articles->withAnyTags($article->tags)->get();
     }
 }

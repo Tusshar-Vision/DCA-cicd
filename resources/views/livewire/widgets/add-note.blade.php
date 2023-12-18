@@ -3,7 +3,7 @@
         <div class="vi-modal-content">
             <div class="edit-text">
                 <blockquote contenteditable="false">
-                    <p id="note-title">{{ $article->title }}</p>
+                    <p id="note-title" class="font-black">{{ $article->title }}</p>
                 </blockquote>
                 <a href="#" class="edit-title"><img src="{{ URL::asset('images/edit.png') }}"></a>
             </div>
