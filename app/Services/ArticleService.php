@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
 use Carbon\Carbon;
@@ -34,7 +35,7 @@ class ArticleService
 
     public function getLatestNews(int $limit = 2): Collection|array
     {
-        return $this->articles->where('initiative_id', '=', InitiativesHelper::getInitiativeID('NEWS_TODAY'))->isPublished()
+        return $this->articles->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))->isPublished()
             ->where('language', $this->language)->latest()->limit($limit)->with('author')->get();
     }
 

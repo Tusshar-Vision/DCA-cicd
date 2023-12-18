@@ -15,7 +15,7 @@ class Mains365Controller extends Controller
         private readonly PublishedInitiativeService $publishedInitiativeService
     )
     {
-        $this->initiativeId = InitiativesHelper::getInitiativeID('MAINS_365');
+        $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::MAINS_365);
     }
 
     public function index() {

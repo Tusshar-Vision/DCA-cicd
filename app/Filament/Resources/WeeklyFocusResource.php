@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Initiatives;
 use App\Filament\Resources\WeeklyFocusResource\RelationManagers\ArticlesRelationManager;
 use App\Filament\Resources\WeeklyFocusResource\Pages;
 use App\Filament\Resources\WeeklyFocusResource\RelationManagers;
@@ -53,7 +54,7 @@ class WeeklyFocusResource extends Resource
                         ])
                         ->required()
                         ->label('Initiative')
-                        ->default(InitiativesHelper::getInitiativeID(static::getModelLabel())),
+                        ->default(InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)),
                     DatePicker::make('published_at')->default(today())->reactive(),
                     Toggle::make('is_published')->inline(false)->afterStateUpdated(function ($state, $livewire, ?Model $record, Article $articles, callable $get) {
                         $publishedInitiativeId = $record->id;
@@ -118,7 +119,7 @@ class WeeklyFocusResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $query = static::getModel()::query()->where('initiative_id', InitiativesHelper::getInitiativeID(static::getModelLabel()));
+        $query = static::getModel()::query()->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS));
 
         if ($tenant = Filament::getTenant()) {
             static::scopeEloquentQueryToTenant($query, $tenant);

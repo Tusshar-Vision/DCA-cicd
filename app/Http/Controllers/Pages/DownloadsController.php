@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Pages;
 
+use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
-use App\Services\MediaService;
 use App\Services\PublishedInitiativeService;
-use Illuminate\Http\Request;
 
 class DownloadsController extends Controller
 {
@@ -16,7 +15,7 @@ class DownloadsController extends Controller
         private readonly PublishedInitiativeService $publishedInitiativeService,
     )
     {
-        $this->initiativeId = InitiativesHelper::getInitiativeID('DOWNLOADS');
+        $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::DOWNLOADS);
     }
 
     public function index() {

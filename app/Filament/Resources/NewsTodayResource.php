@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Initiatives;
 use App\Filament\Resources\NewsTodayResource\Pages;
 use App\Filament\Resources\NewsTodayResource\RelationManagers;
 use App\Filament\Resources\NewsTodayResource\RelationManagers\ArticlesRelationManager;
@@ -53,7 +54,7 @@ class NewsTodayResource extends Resource
                         ])
                         ->required()
                         ->label('Initiative')
-                        ->default(InitiativesHelper::getInitiativeID(static::getModelLabel())),
+                        ->default(InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)),
                     DatePicker::make('published_at')->default(today())->reactive(),
                     Toggle::make('is_published')->inline(false)->afterStateUpdated(function ($state, $livewire, ?Model $record, Article $articles, callable $get) {
                         $publishedInitiativeId = $record->id;
@@ -119,7 +120,7 @@ class NewsTodayResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         $query = static::getModel()::query()
-            ->where('initiative_id', InitiativesHelper::getInitiativeID(static::getModelLabel()));
+            ->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY));
 
         if ($tenant = Filament::getTenant()) {
             static::scopeEloquentQueryToTenant($query, $tenant);

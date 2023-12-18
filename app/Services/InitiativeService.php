@@ -2,34 +2,35 @@
 
 namespace App\Services;
 
+use App\Enums\Initiatives;
 use App\Exceptions\InitiativeNotFoundException;
 use App\Helpers\InitiativesHelper;
-use App\Models\Article;
 use App\Models\PublishedInitiative;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
-class InitiativeService
+readonly class InitiativeService
 {
     public function __construct(
-        private readonly PublishedInitiative $publishedInitiatives,
+        private PublishedInitiative $publishedInitiatives,
     ) {
     }
 
     /**
      * @throws Throwable
      */
-    public function getMenuData(string $initiativeName): array
+    public function getMenuData(Initiatives $initiative): array
     {
-        $initiativeId = InitiativesHelper::getInitiativeID($initiativeName);
+        $initiativeId = InitiativesHelper::getInitiativeID($initiative);
 
-        throw_unless($initiativeId, new InitiativeNotFoundException($initiativeName . ' not present in database'));
+        throw_unless($initiativeId, new InitiativeNotFoundException($initiative->name . ' not present in database'));
 
-        return match ($initiativeName) {
-            'NEWS_TODAY' => $this->getMenuDataForNewsToday($initiativeId),
-            'MONTHLY_MAGAZINE' => $this->getMenuDataForMonthlyMagazine($initiativeId),
-            'WEEKLY_FOCUS' => $this->getMenuDataForWeeklyFocus($initiativeId),
+        return match ($initiative->name) {
+            Initiatives::NEWS_TODAY->name => $this->getMenuDataForNewsToday($initiativeId),
+            Initiatives::MONTHLY_MAGAZINE->name => $this->getMenuDataForMonthlyMagazine($initiativeId),
+            Initiatives::WEEKLY_FOCUS->name => $this->getMenuDataForWeeklyFocus($initiativeId),
+            Initiatives::MORE->name => $this->getMenuDataForMore($initiativeId),
             default => throw (new InitiativeNotFoundException('Initiative get data function does not exist')),
         };
     }
@@ -72,6 +73,7 @@ class InitiativeService
         $sideDropDownMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
             ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as year')
             ->whereIn(DB::raw('DATE_FORMAT(published_at, "%Y")'), $yearsData)
+            ->orderByDesc('year')
             ->groupBy('year')
             ->get()
             ->toArray();
@@ -122,6 +124,24 @@ class InitiativeService
                 return str_contains(Carbon::parse($article['published_at'])->format('Y-m'), $date);
             }));
         }
+
+        return [
+            'initiative_id' => $initiativeId,
+            'data' => $menuData
+        ];
+    }
+
+    protected function getMenuDataForMore($initiativeId): array
+    {
+
+        $menuData = [
+            "Economic Survey and Budget",
+            "Weekly Round Table",
+            "Animated Shorts",
+            "PYQs",
+            "Value Added Material",
+            "Value Added Material Optional"
+        ];
 
         return [
             'initiative_id' => $initiativeId,
