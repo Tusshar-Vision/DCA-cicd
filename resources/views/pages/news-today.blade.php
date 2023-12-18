@@ -30,7 +30,7 @@
 
     <div class="space-y-12">
         <div class="flex space-x-8">
-            <div class="flex w-2/6 flex-col space-y-4">
+            <div class="flex w-2/6 flex-col space-y-4 leftsticky">
                 <h2 class="text-[20px] font-bold pb-[15px] border-b border-color">News Today</h2>
                 <div class="calendar-wrapper border-1 border-color-C3CAD9 border rounded">
                     <label>

@@ -1654,3 +1654,10 @@ $gray-686E70: #686E70;
 .leftauto {
   margin-left: auto !important;
 }
+
+.leftsticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+}
