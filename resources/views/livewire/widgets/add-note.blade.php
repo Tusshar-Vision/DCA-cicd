@@ -48,14 +48,36 @@
         selector: 'textarea#notes-text-area',
         plugins: 'code table lists',
         menubar: false,
-        toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table'
+        toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table',
+        setup: function(editor) {
+            editor.on('init', function() {
+                loadForLocalStorage()
+            });
+        }
     });
+
+    window.onload = loadForLocalStorage;
+
+    function loadForLocalStorage() {
+        const article_id = "{{ $article->id }}";
+        <?php if(!Auth::check()) { ?>
+        if (localStorage.getItem('notes')) {
+            const notes = JSON.parse(localStorage.getItem('notes'));
+            const note = notes.find(note => note.article_id == article_id)
+            if (note) {
+                tinymce.get('notes-text-area').setContent(note.note);
+            }
+        }
+        <?php } ?>
+    }
 
     function saveNote() {
         const tagsNodes = document.querySelectorAll('.tag-name');
         let tags = [];
         for (let i = 0; i < tagsNodes.length; i++) tags.push(tagsNodes[i].innerText)
-        const user_id = "{{ Auth::check() ? Auth::user()->id : '' }}";
+        @if (Auth::check())
+            const user_id = "{{ Auth::check() ? Auth::user()->id : '' }}";
+        @endif
         const article_id = "{{ $article->id }}";
         const topic_id = "{{ $article->topic->id }}";
         const topic_section_id = "{{ $article->topic_section_id }}";
@@ -63,19 +85,47 @@
         const note = tinyMCE.activeEditor.getContent();
         const note_title = document.getElementById("note-title").innerHTML
 
-        saveData("{{ route('notes.add') }}", {
-            user_id,
-            article_id,
-            topic_id,
-            topic_section_id,
-            topic_sub_section_id,
-            note_title,
-            note,
-            tags,
-            _token: '{{ csrf_token() }}'
-        }).then(data => {
-            tinymce.get('notes-text-area').setContent(data.data.content)
-        })
+        @if (Auth::check())
+            saveData("{{ route('notes.add') }}", {
+                user_id,
+                article_id,
+                topic_id,
+                topic_section_id,
+                topic_sub_section_id,
+                note_title,
+                note,
+                tags,
+                _token: '{{ csrf_token() }}'
+            }).then(data => {
+                tinymce.get('notes-text-area').setContent(data.data.content)
+            })
+        @else
+            console.log("unauthenticated");
+            let notes;
+            if (localStorage.getItem('notes')) {
+                notes = JSON.parse(localStorage.getItem('notes'));
+                const idx = notes.findIndex(note => note.article_id = article_id)
+                if (idx != -1) {
+                    notes[idx].note += note;
+                    tinymce.get('notes-text-area').setContent(notes[idx].note)
+                } else {
+                    tinymce.get('notes-text-area').setContent(note)
+                }
+            } else {
+                notes = []
+                tinymce.get('notes-text-area').setContent(note)
+            }
+            notes.push({
+                article_id,
+                topic_id,
+                topic_section_id,
+                topic_sub_section_id,
+                note_title,
+                note,
+                tags
+            })
+            localStorage.setItem("notes", JSON.stringify(notes));
+        @endif
     }
 
     function addTagToNote(tag, click_from = null) {

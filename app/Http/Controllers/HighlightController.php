@@ -15,7 +15,6 @@ class HighlightController extends Controller
     {
         $highlights = Highlight::where('user_id', Auth::user()->id)
             ->where('highlight', '!=', null)->get();
-        logger("highiligh", [$highlights]);
         return response()->json(['status' => 200, 'data' => $highlights], 200);
     }
 
