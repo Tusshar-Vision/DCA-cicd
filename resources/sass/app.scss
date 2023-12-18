@@ -1493,19 +1493,6 @@ $gray-686E70: #686E70;
   }
 }
 
-.sticky{
-  position: fixed;
-  top: 0;
-}
-
-.leftcalcwidth{
-  width: calc(100% - 500px);
-}
-.leftauto{
-  margin-left: auto !important;
-}
-
-
 .leftsticky {
   position: -webkit-sticky;
   position: sticky;
