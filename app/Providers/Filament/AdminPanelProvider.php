@@ -13,6 +13,7 @@ use App\Filament\Resources\SubSectionResource;
 use App\Filament\Resources\WeeklyFocusResource;
 use Awcodes\Overlook\OverlookPlugin;
 use Awcodes\Overlook\Widgets\OverlookWidget;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -61,7 +62,8 @@ class AdminPanelProvider extends PanelProvider
                     ->navigationSort(5)
                     ->navigationCountBadge(true)
                     ->enablePruning(true)
-                    ->pruningRetention(7)
+                    ->pruningRetention(7),
+                FilamentShieldPlugin::make()
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->default()
@@ -97,13 +99,10 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->tenantMiddleware([
-                SyncSpatiePermissionsWithFilamentTenants::class,
-            ], isPersistent: true)
             ->databaseNotifications()
             ->navigationGroups([
                 'System',
-                'User and Roles',
+                'Users and Roles',
                 'Create Articles',
                 'Other Uploads',
                 'Media'

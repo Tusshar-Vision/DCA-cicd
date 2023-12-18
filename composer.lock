@@ -4,71 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "928b982c96fb3a4c2d4a46c84558f621",
+    "content-hash": "dae580f1cbea16ece911d37456bb8287",
     "packages": [
-        {
-            "name": "althinect/filament-spatie-roles-permissions",
-            "version": "v2.2.9",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Althinect/filament-spatie-roles-permissions.git",
-                "reference": "963357fa5d4e7ed6bb9805b3f1372bc122b50a9e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Althinect/filament-spatie-roles-permissions/zipball/963357fa5d4e7ed6bb9805b3f1372bc122b50a9e",
-                "reference": "963357fa5d4e7ed6bb9805b3f1372bc122b50a9e",
-                "shasum": ""
-            },
-            "require": {
-                "filament/filament": "^3.0",
-                "illuminate/support": "^9|^10",
-                "php": "^8.1|^8.2",
-                "spatie/laravel-permission": "^5.4|^6.0"
-            },
-            "require-dev": {
-                "laravel/pint": "^1.10",
-                "orchestra/testbench": "^7.0",
-                "phpunit/phpunit": "^9.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Althinect\\FilamentSpatieRolesPermissions\\FilamentSpatieRolesPermissionsServiceProvider"
-                    ],
-                    "aliases": {
-                        "FilamentSpatieRolesPermissions": "Althinect\\FilamentSpatieRolesPermissions\\FilamentSpatieRolesPermissionsFacade"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Althinect\\FilamentSpatieRolesPermissions\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Tharinda Rodrigo",
-                    "email": "tharindarodrigo@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "homepage": "https://github.com/althinect/filament-spatie-roles-permissions",
-            "keywords": [
-                "althinect",
-                "filament-spatie-roles-permissions"
-            ],
-            "support": {
-                "issues": "https://github.com/Althinect/filament-spatie-roles-permissions/issues",
-                "source": "https://github.com/Althinect/filament-spatie-roles-permissions/tree/v2.2.9"
-            },
-            "time": "2023-12-03T18:06:42+00:00"
-        },
         {
             "name": "amidesfahani/filament-tinyeditor",
             "version": "v1.1.1",
@@ -401,6 +338,91 @@
                 "source": "https://github.com/aws/aws-sdk-php/tree/3.294.1"
             },
             "time": "2023-12-15T19:25:52+00:00"
+        },
+        {
+            "name": "bezhansalleh/filament-shield",
+            "version": "3.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bezhanSalleh/filament-shield.git",
+                "reference": "919856a29f76ce73eec417dcfd564c93994df0fd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bezhanSalleh/filament-shield/zipball/919856a29f76ce73eec417dcfd564c93994df0fd",
+                "reference": "919856a29f76ce73eec417dcfd564c93994df0fd",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^3.0",
+                "php": "^8.1",
+                "spatie/laravel-package-tools": "^1.9",
+                "spatie/laravel-permission": "^6.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^7.0",
+                "nunomaduro/larastan": "^2.1",
+                "orchestra/testbench": "^8.0",
+                "pestphp/pest": "^2.10",
+                "phpstan/extension-installer": "^1.3",
+                "phpstan/phpstan-deprecation-rules": "^1.1",
+                "phpstan/phpstan-phpunit": "^1.3",
+                "phpunit/phpunit": "^10.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "BezhanSalleh\\FilamentShield\\FilamentShieldServiceProvider"
+                    ],
+                    "aliases": {
+                        "FilamentShield": "BezhanSalleh\\FilamentShield\\Facades\\FilamentShield"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "BezhanSalleh\\FilamentShield\\": "src",
+                    "BezhanSalleh\\FilamentShield\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bezhan Salleh",
+                    "email": "bezhan_salleh@yahoo.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Filament support for `spatie/laravel-permission`.",
+            "homepage": "https://github.com/bezhansalleh/filament-shield",
+            "keywords": [
+                "acl",
+                "bezhanSalleh",
+                "filament",
+                "filament-shield",
+                "laravel",
+                "permission",
+                "permissions",
+                "rbac",
+                "roles",
+                "security"
+            ],
+            "support": {
+                "issues": "https://github.com/bezhanSalleh/filament-shield/issues",
+                "source": "https://github.com/bezhanSalleh/filament-shield/tree/3.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/bezhanSalleh",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-12-06T17:28:54+00:00"
         },
         {
             "name": "blade-ui-kit/blade-heroicons",
@@ -2969,6 +2991,67 @@
                 }
             ],
             "time": "2023-09-30T12:00:26+00:00"
+        },
+        {
+            "name": "guava/filament-nested-resources",
+            "version": "1.0.0-alpha.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GuavaCZ/filament-nested-resources.git",
+                "reference": "38000451bdc0a4e881253d190638d4af5ffd02c2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GuavaCZ/filament-nested-resources/zipball/38000451bdc0a4e881253d190638d4af5ffd02c2",
+                "reference": "38000451bdc0a4e881253d190638d4af5ffd02c2",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^3.0.0",
+                "livewire/livewire": "^3.0",
+                "spatie/laravel-package-tools": "^1.15"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.11",
+                "orchestra/testbench": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Guava\\Filament\\NestedResources\\NestedResourcesServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Guava\\Filament\\NestedResources\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lukas Frey",
+                    "email": "lukas.frey@guava.cz"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/GuavaCZ/filament-nested-resources/issues",
+                "source": "https://github.com/GuavaCZ/filament-nested-resources/tree/1.0.0-alpha.8"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/GuavaCZ",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-11-18T18:55:56+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -13954,7 +14037,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "guava/filament-nested-resources": 15
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

@@ -9,11 +9,11 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "althinect/filament-spatie-roles-permissions": "^2.1",
         "amidesfahani/filament-tinyeditor": "^1.1",
         "assada/laravel-achievements": "^2.6",
         "awcodes/overlook": "^2.0",
         "aws/aws-sdk-php": "^3.0",
+        "bezhansalleh/filament-shield": "^3.1",
         "coolsam/flatpickr": "^3.0",
         "croustibat/filament-jobs-monitor": "^2.0",
         "darkaonline/l5-swagger": "^8.5",
@@ -27,6 +27,7 @@
         "flowframe/laravel-trend": "^0.1.5",
         "graham-campbell/markdown": "^15.0",
         "guava/filament-drafts": "^2.1",
+        "guava/filament-nested-resources": "1.0.0-alpha.8",
         "guzzlehttp/guzzle": "^7.2",
         "joshembling/image-optimizer": "^1.2",
         "kenepa/resource-lock": "^2.0",
@@ -41,8 +42,7 @@
         "shuvroroy/filament-spatie-laravel-health": "^2.0",
         "spatie/laravel-model-status": "^1.14",
         "spatie/laravel-sluggable": "^3.5",
-        "z3d0x/filament-logger": "^0.6.1",
-        "guava/filament-nested-resources": "1.0.0-alpha.8"
+        "z3d0x/filament-logger": "^0.6.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.9",
