@@ -82,9 +82,8 @@
 
 <div class="text-tooltip-comp" id="tooltip-box">
     <button>Copy</button>
-    <button onclick="highlightText()" @click="{{ Auth::check() ? '' : 'isLoginFormOpen=true' }}"
-        id="btn">Highlight</button>
-    <button @click="{{ Auth::check() ? 'isNoteOpen=true' : 'isLoginFormOpen=true' }}" onclick="hidePopup()">Add
+    <button onclick="highlightText()" id="btn">Highlight</button>
+    <button @click='isNoteOpen=true' onclick="hidePopup()">Add
         Note</button>
 </div>
 
@@ -104,13 +103,6 @@
         }
         return selectedText
     }
-
-    // document.addEventListener('mouseup', function() {
-    //     var thetext = getSelectionText()
-    //     if (thetext.length > 0) { // check there's some text selected
-    //         console.log(thetext) // logs whatever textual content the user has selected on the page
-    //     }
-    // }, false)
 
     function hidePopup() {
         let editorContent = tinymce.get('notes-text-area').getContent()
@@ -141,17 +133,6 @@
 
         document.getElementById("tooltip-box").style.display = "none"
     }
-
-    // function hidePopup() {
-    //     let editorContent = tinymce.get('notes-text-area').getContent()
-    //     var selectedText = getSelectionText()
-    //     if (selectedText.length > 0) {
-    //         console.log(selectedText)
-    //         editorContent += selectedText;
-    //         tinymce.activeEditor.setContent(editorContent)
-    //     }
-    //     document.getElementById("tooltip-box").style.display = "none"
-    // }
 
     function getSelectedHTML() {
         var selectedHTML = "";
@@ -201,23 +182,31 @@
     }
 
     function highlightText() {
-        @if (Auth::check())
-            highlightSelectedText('highlight');
-            document.getElementById("tooltip-box").style.display = "none"
-        @endif
+        highlightSelectedText('highlight');
+        document.getElementById("tooltip-box").style.display = "none"
     }
 
     function addHighlight({
         highlight,
         serializedData
     }) {
-        saveData("{{ route('highlights.add') }}", {
-            highlight,
-            serializedData,
-            user_id: "{{ Auth::check() ? Auth::user()->id : '' }}",
-            article_id: {{ $article->id }},
-            _token: '{{ csrf_token() }}'
-        });
+        @if (Auth::check())
+            saveData("{{ route('highlights.add') }}", {
+                highlight,
+                serializedData,
+                user_id: "{{ Auth::check() ? Auth::user()->id : '' }}",
+                article_id: {{ $article->id }},
+                _token: '{{ csrf_token() }}'
+            });
+        @else
+            if (localStorage.getItem('highlights')) {
+                let highlights = JSON.parse(localStorage.getItem('highlights'));
+                highlights.push({
+                    highligh,
+                    serializedData,
+                })
+            }
+        @endif
     }
 
     async function postHighlight(data) {
@@ -242,7 +231,6 @@
         const serial = serrializedData.data?.serialized;
         if (serial) showHighlights(serial);
     }
-
 
     setTimeout(() => {
         loadHighlights()
