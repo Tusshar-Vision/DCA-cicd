@@ -32,7 +32,7 @@ class MonthlyMagazineResource extends Resource
     protected static ?string $navigationGroup = 'Create Articles';
     protected static ?string $modelLabel = 'Monthly Magazine';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
