@@ -56,20 +56,6 @@ container.addEventListener('click', function (event) {
     span.remove()
 });
 
-// sticky navbar
-const navbar = document.querySelector('#sideBar');
-const contright = document.querySelector('#rightcontent')
-let top = navbar.offsetTop;
-function stickynavbar() {
-  if (window.scrollY >= top) {    
-    navbar.classList.add('sticky');
-    contright.classList.add('leftauto');
-  } else {
-    navbar.classList.remove('sticky');
-    contright.classList.remove('leftauto');    
-  }
-}
-window.addEventListener('scroll', stickynavbar);
 
 // text lenght for whats new section
 
