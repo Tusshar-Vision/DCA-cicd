@@ -232,7 +232,11 @@
         if (serial) showHighlights(serial);
     }
 
-    setTimeout(() => {
-        loadHighlights()
-    }, 4000);
+    @if (Auth::check())
+        {
+            setTimeout(() => {
+                loadHighlights()
+            }, 4000);
+        }
+    @endif
 </script>

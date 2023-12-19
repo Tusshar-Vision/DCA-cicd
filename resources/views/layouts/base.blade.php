@@ -41,9 +41,9 @@
         <livewire:forms.login />
     </x-modals.login-modal>
 
-{{--    <x-modals.login-modal x-show="isRegisterFormOpen">--}}
-{{--        <livewire:forms.register />--}}
-{{--    </x-modals.login-modal>--}}
+    <x-modals.login-modal x-show="isRegisterFormOpen">
+        <livewire:forms.register />
+    </x-modals.login-modal>
 
     <x-modals.login-modal x-show="isResetFormOpen">
         <livewire:forms.reset-password />
