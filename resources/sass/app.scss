@@ -1200,6 +1200,12 @@ $gray-686E70: #686E70;
   top: 6px;
 }
 
+.vi-icons.vi-drop-arrow:before {
+  width: 14px;
+  height: 10px;
+  background-position: -59px -95px;
+}
+
 .vi-icons::before {
   content: '';
   background-image: url("/images/main-sprite.svg");
@@ -1391,35 +1397,6 @@ $gray-686E70: #686E70;
 }
 
 /* search CSS */
-
-// .search-field-container {
-//   position: relative;
-//   display: block;
-//   float: left;
-//   width: 80%; 
-//   margin-right: 40px;  
-//   height: 35px;
-
-//   .search-field {
-//     font-size: 14px;
-//     padding: 8px 20px 8px;
-//     border: 0;
-//     outline: none;
-//     -moz-border-radius: 4px;
-//     border-radius: 4px;
-//     width: 32px;
-//     height: 40px;
-//     outline: none;
-//     position: absolute;
-//     right: 0;
-//     top: 0;
-//     width: 32px;
-//     height: 40px;
-//     background: url("/images/search.svg") no-repeat;
-//     background-position: 0;
-//   }
-
-
 .search-field-container {
   position: relative;
   display: block;
@@ -2084,14 +2061,18 @@ li[data-level="4"] {
 }
 .vi-search-bar {
   width: 100%;
-  padding: 8px 40px 8px;
+  padding: 8px 10px;
   font-size: 16px;
-  border: 1px solid #8F93A3;
+  // border: 1px solid #8F93A3;
   border-radius: 4px;
   transition: all 0.2s ease-in-out;
 }
 .vi-search-bar:hover {
   border-color: #434141;
+}
+
+.vi-search-bar:focus{
+  outline: none;
 }
 .section-weekly-focus-archive,
 .section-monthly-focus-archive,
@@ -2471,7 +2452,6 @@ li[data-level="4"] {
   background-color: #f1f1f1;
 }
 
-
 /* grid vue */
 
 .change-view-wrap{
@@ -2495,6 +2475,7 @@ li[data-level="4"] {
   background-image: url("/images/main-sprite.svg");
   background-repeat: no-repeat;
   background-position: -54px -62px;
+  transition: none;
 }
 
 .my-content-tab-wrapper .vi-acrticle-highligh-coll {
