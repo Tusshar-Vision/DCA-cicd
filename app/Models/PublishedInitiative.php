@@ -43,7 +43,7 @@ class PublishedInitiative extends Model implements HasMedia
      * @param  Builder  $query
      * @return Collection
      */
-    public static function scopeGroupByYear(Builder $query)
+    public static function scopeGroupByYear(Builder $query): Collection
     {
         return $query->get()->groupBy(function ($item) {
             return $item->published_at->format('Y');
