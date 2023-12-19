@@ -1,13 +1,13 @@
 <div class="vi-modal-wrap">
     <div class="vi-modal-inner">
         <div class="vi-modal-content">
-            <div class="edit-text">
+            <div class="edit-text border p-[15px] bg-white">
                 <blockquote contenteditable="false">
-                    <p id="note-title" class="font-black">{{ $article->title }}</p>
+                    <p id="note-title" class="font-black active">{{ $article->title }}</p>
                 </blockquote>
-                <a href="#" class="edit-title"><img src="{{ URL::asset('images/edit.png') }}"></a>
+                <img onclick="editTitle()" src="{{ URL::asset('images/edit.png') }}">
             </div>
-            <div class="vi-tinymce-editor">
+            <div class="vi-tinymce-editor border border-t-0 p-[15px] bg-white">
                 <textarea id="notes-text-area" style="width: 100%; resize: none;">
                     {!! $note?->content !!}
                 </textarea>
@@ -69,6 +69,10 @@
             }
         }
         <?php } ?>
+    }
+
+    function editTitle() {
+        document.querySelector("[contenteditable=false]").setAttribute('contenteditable', true)
     }
 
     function saveNote() {

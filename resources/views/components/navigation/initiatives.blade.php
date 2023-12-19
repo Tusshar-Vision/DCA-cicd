@@ -24,21 +24,17 @@
                                         isMagazineDropdownOpen = !isMagazineDropdownOpen;
                                         isMoreDropdownOpen = false;
                                         isWeeklyDropdownOpen = false;
-                                       "
-                            >
-                                <a class="hover:text-visionRed {{ request()->is('monthly-magazine*') ? 'text-visionRed' : '' }}" href="#">
+                                       ">
+                                <a class="hover:text-visionRed {{ request()->is('monthly-magazine*') ? 'text-visionRed' : '' }}"
+                                    href="#">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                                 </a>
                             </li>
 
-                            <x-navigation.dropdown
-                                x-show="isMagazineDropdownOpen"
-                                @click.away="isMagazineDropdownOpen = false"
-                                button-text="Latest Edition"
+                            <x-navigation.dropdown x-show="isMagazineDropdownOpen"
+                                @click.away="isMagazineDropdownOpen = false" button-text="Latest Edition"
                                 button-link="{{ $initiative->path }}"
-                                archive-link="{{ route('monthly-magazine.archive') }}"
-                                :menuData="$menuData['monthlyMagazine']"
-                            />
+                                archive-link="{{ route('monthly-magazine.archive') }}" :menuData="$menuData['monthlyMagazine']" />
                         </div>
                     @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
                         <div class="relative">
@@ -56,8 +52,8 @@
 
                             <x-navigation.dropdown x-show="isWeeklyDropdownOpen"
                                 @click.away="isWeeklyDropdownOpen = false" button-text="Latest Edition"
-                                button-link="{{ $initiative->path }}"
-                                archive-link="{{ route('weekly-focus.archive') }}" :menuData="$menuData['weeklyFocus']" />
+                                button-link="{{ $initiative->path }}" archive-link="{{ route('weekly-focus.archive') }}"
+                                :menuData="$menuData['weeklyFocus']" />
                         </div>
                     @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::MORE))
                         <div class="relative">
@@ -94,14 +90,27 @@
             <li>
                 <!-- <x-widgets.search-bar /> -->
                 <div class="search-field-container">
-                    <input type="text" class="search-field" placeholder="" onchange="redirect(this)" />
+                    <input type="search" class="search-field" placeholder="Search" onchange="redirect(this)" />
                 </div>
             </li>
-            @guest
-                <li class="pr-[20px]"><a href="#" class="register">Register</a></li>
-            @endguest
-            <li class="pl-[20px]" style="border-left: 1px solid #E5EAF4;">
-                @guest
+            @auth('cognito')
+                <div class="flex items-center font-bold cursor-pointer user-style" x-data="{ isUserMenuOpen: false }"
+                    @click="isUserMenuOpen = true">
+                    <div class="user-greet">
+                        <p>Welcome,</p>
+                        <div>{{ auth('cognito')->user()->name ?? 'No Name' }}</div>
+                    </div>
+                    <span>Y</span>
+                    <!-- <svg class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <path d="M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" fill="#040404"/>
+                                                                        </svg> -->
+
+                    <x-auth.user-dropdown-menu x-show="isUserMenuOpen" />
+                </div>
+            @else
+                <li class="pr-[20px]"><a href="#" class="register" @click="isRegisterFormOpen = true;">Register</a>
+                </li>
+                <li class="pl-[20px]" style="border-left: 1px solid #E5EAF4;">
                     <button @click="isLoginFormOpen = !isLoginFormOpen" class="flex items-center">
                         <svg class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -111,24 +120,8 @@
                         </svg>
                         {{ __('header.login') }}
                     </button>
-                @endguest
-
-                @auth
-                    <div class="flex items-center font-bold cursor-pointer user-style" x-data="{ isUserMenuOpen: false }"
-                        @click="isUserMenuOpen = true">
-                        <div class="user-greet">
-                            <p>Welcome,</p>
-                            <div>{{ Auth::user()->name ?? 'No Name' }}</div>
-                        </div>
-                        <span>Y</span>
-                        <!-- <svg class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" fill="#040404"/>
-                                    </svg> -->
-
-                        <x-auth.user-dropdown-menu x-show="isUserMenuOpen" />
-                    </div>
-                @endauth
-            </li>
+                </li>
+            @endauth
         </ul>
     </div>
 </div>

@@ -70,7 +70,7 @@
                     wire:model="password">
                 <label for="password">Enter Password</label>
             </div>
-            <button type="submit" class="login-btn">Sign up</button>
+            <button type="submit" class="login-btn" @click="isEmailVerificationFormOpen = true">Sign up</button>
 
             <span class="divider-or mt-[20px]">OR</span>
             <ul class="flex justify-center items-center my-[20px]">
@@ -100,9 +100,24 @@
                         </svg>
                         Facebook</a></li>
             </ul>
-            <h5 class="text-base text-[#3D3D3D]">Already Registered? Login.</h5>
+            <h5 class="text-base text-[#3D3D3D]" @click="isLoginFormOpen = true;isRegisterFormOpen = false;">Already
+                Registered? Login.</h5>
             <p class="text-[12px] text-[#3D3D3D]">By signing in, you confirm that you have read and agree to our <a
                     href="#" class="text-[#3362CC] block">Trems and Conditions</a></p>
         </form>
     </div>
 </div>
+<script>
+    // show hide function
+    function showPassword(targetID) {
+        var x = document.getElementById(targetID);
+        var img = document.querySelector('.eye')
+        if (x.type === "password") {
+            x.type = "text";
+            img.style.opacity = "0.5";
+        } else {
+            x.type = "password";
+            img.style.opacity = "1";
+        }
+    }
+</script>
