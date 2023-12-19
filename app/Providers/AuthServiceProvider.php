@@ -2,12 +2,17 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
-use App\Models\Article;
-use App\Models\User;
-use App\Policies\ArticlePolicy;
-use Gate;
+use App\Policies\ActivityPolicy;
+use App\Policies\MediaPolicy;
+use App\Policies\QueueMonitorPolicy;
+use App\Policies\RolePolicy;
+use App\Policies\TagPolicy;
+use Croustibat\FilamentJobsMonitor\Models\QueueMonitor;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Spatie\Activitylog\Models\Activity;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Permission\Models\Role;
+use Spatie\Tags\Tag;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -17,7 +22,11 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        Article::class => ArticlePolicy::class,
+        Role::class => RolePolicy::class,
+        Activity::class => ActivityPolicy::class,
+        Tag::class => TagPolicy::class,
+        Media::class => MediaPolicy::class,
+        QueueMonitor::class => QueueMonitorPolicy::class
     ];
 
     /**
@@ -26,8 +35,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
-//        Gate::before(function (User $user, string $ability) {
-//            return $user->isSuperAdmin() ? true: null;
-//        });
     }
 }

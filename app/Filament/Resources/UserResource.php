@@ -19,7 +19,7 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
-    protected static ?string $navigationGroup = 'Users and Roles';
+    protected static ?string $navigationGroup = 'User Management';
 
     protected static ?int $navigationSort = -2;
 
@@ -29,7 +29,7 @@ class UserResource extends Resource
             ->schema([
                 TextInput::make('name')->required(),
                 TextInput::make('email')->email()->required(),
-                Select::make('roles')->multiple()->relationship('roles', 'name')
+                Select::make('roles')->multiple()->relationship('roles', 'name')->preload()
             ]);
     }
 
@@ -65,10 +65,10 @@ class UserResource extends Resource
         ];
     }
 
-//    public static function shouldRegisterNavigation(): bool
-//    {
-//        return auth()->user()->hasRole(['Super Admin', 'Admin']);
-//    }
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function getPages(): array
     {
