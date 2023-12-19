@@ -42,8 +42,7 @@
         "shuvroroy/filament-spatie-laravel-health": "^2.0",
         "spatie/laravel-model-status": "^1.14",
         "spatie/laravel-sluggable": "^3.5",
-        "z3d0x/filament-logger": "^0.6.1",
-        "guava/filament-nested-resources": "1.0.0-alpha.8"
+        "z3d0x/filament-logger": "^0.6.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.9",
