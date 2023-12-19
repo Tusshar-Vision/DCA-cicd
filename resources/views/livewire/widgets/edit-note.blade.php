@@ -33,7 +33,9 @@
 
 
 <script>
-    getNotes();
+    @if (Auth::check())
+        getNotes();
+    @endif
 
     async function getNotes() {
         const response = await fetch("{{ route('notes.of-article', ['article_id' => $articleId]) }}");

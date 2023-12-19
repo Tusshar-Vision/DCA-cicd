@@ -69,3 +69,8 @@ Route::get('/all-notes', [NoteController::class, 'index'])->name("notes.all");
 Route::get('/notes/{article_id}', [NoteController::class, 'getNotesByArticleId'])->name('notes.of-article');
 Route::post('notes/add-tag/{note_id}', [NoteController::class, 'addTag'])->name('notes.add-tag');
 Route::get('/tags/{search}', [NoteController::class, 'searchTagsLike'])->name('tags.search');
+
+
+Route::get('/test', function() {
+    return view('pages.user.home');
+});
