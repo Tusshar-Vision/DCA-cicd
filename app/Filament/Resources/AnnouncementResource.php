@@ -56,8 +56,9 @@ class AnnouncementResource extends Resource
             ->columns([
                 TextColumn::make('id'),
                 ToggleColumn::make('visible')->label('Is Visible'),
-                TextColumn::make('visible_till')->label('Will be Visible Till'),
-                TextColumn::make('published_at')
+                TextColumn::make('visible_till')->label('Will be Visible Till')->date(),
+                TextColumn::make('published_at')->date(),
+                TextColumn::make('updated_at')->date(),
             ])
             ->filters([
                 //

@@ -13,6 +13,6 @@ class PublishedInitiativeSeeder extends Seeder
      */
     public function run(): void
     {
-        PublishedInitiative::factory(20)->create();
+//        PublishedInitiative::factory(20)->create();
     }
 }

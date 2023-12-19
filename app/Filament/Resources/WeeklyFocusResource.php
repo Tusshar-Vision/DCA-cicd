@@ -121,4 +121,5 @@ class WeeklyFocusResource extends Resource
 
         return $query;
     }
+
 }
