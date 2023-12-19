@@ -5,11 +5,16 @@ namespace App\Providers\Filament;
 use Althinect\FilamentSpatieRolesPermissions\Middleware\SyncSpatiePermissionsWithFilamentTenants;
 use App\Filament\Resources\ArticleResource;
 use App\Filament\Resources\CommentResource;
+use App\Filament\Resources\DownloadsResource;
+use App\Filament\Resources\InfographicsResource;
+use App\Filament\Resources\Mains365Resource;
 use App\Filament\Resources\MonthlyMagazineResource;
 use App\Filament\Resources\NewsTodayResource;
+use App\Filament\Resources\PT365Resource;
 use App\Filament\Resources\SectionResource;
 use App\Filament\Resources\SubjectResource;
 use App\Filament\Resources\SubSectionResource;
+use App\Filament\Resources\VideoResource;
 use App\Filament\Resources\WeeklyFocusResource;
 use Awcodes\Overlook\OverlookPlugin;
 use Awcodes\Overlook\Widgets\OverlookWidget;
@@ -42,7 +47,12 @@ class AdminPanelProvider extends PanelProvider
                         NewsTodayResource::class,
                         WeeklyFocusResource::class,
                         MonthlyMagazineResource::class,
-                        CommentResource::class
+                        Mains365Resource::class,
+                        PT365Resource::class,
+                        DownloadsResource::class,
+                        InfographicsResource::class,
+                        VideoResource::class,
+                        CommentResource::class,
                     ])
                     ->sort(2)
                     ->columns([
@@ -56,7 +66,7 @@ class AdminPanelProvider extends PanelProvider
                 FilamentJobsMonitorPlugin::make()
                     ->label('Job')
                     ->pluralLabel('Jobs')
-                    ->enableNavigation(true)
+                    ->enableNavigation()
                     ->navigationIcon('heroicon-o-cpu-chip')
                     ->navigationGroup('System')
                     ->navigationSort(5)
@@ -102,7 +112,7 @@ class AdminPanelProvider extends PanelProvider
             ->databaseNotifications()
             ->navigationGroups([
                 'System',
-                'Users and Roles',
+                'User Management',
                 'Create Articles',
                 'Other Uploads',
                 'Media'
