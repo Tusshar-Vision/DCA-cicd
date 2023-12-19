@@ -7,10 +7,11 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Guava\Filament\NestedResources\RelationManagers\NestedRelationManager;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class SubSectionRelationManager extends RelationManager
+class SubSectionRelationManager extends NestedRelationManager
 {
     protected static string $relationship = 'subSection';
 

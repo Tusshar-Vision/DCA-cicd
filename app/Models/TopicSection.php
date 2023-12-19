@@ -16,7 +16,7 @@ class TopicSection extends Model
         'topic_id'
     ];
 
-    public function topic(): BelongsTo
+    public function subject(): BelongsTo
     {
         return $this->belongsTo(InitiativeTopic::class, 'topic_id');
     }

@@ -16,7 +16,7 @@ return array(
     ),
 
     'nav' => [
-      'group' => 'Settings'
+      'group' => ''
     ],
 
     'access' => array(

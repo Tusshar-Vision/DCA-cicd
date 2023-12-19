@@ -14,10 +14,12 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Guava\Filament\NestedResources\Ancestor;
+use Guava\Filament\NestedResources\Resources\NestedResource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class SectionResource extends Resource
+class SectionResource extends NestedResource
 {
     protected static ?string $model = TopicSection::class;
     protected static ?string $modelLabel = 'Section';
@@ -34,7 +36,7 @@ class SectionResource extends Resource
         return $form
             ->schema([
                 Select::make('topic_id')
-                    ->relationship('topic', 'name')
+                    ->relationship('subject', 'name')
                     ->required()->label('Subject'),
                 TextInput::make('name')->required(),
             ]);
@@ -70,10 +72,17 @@ class SectionResource extends Resource
         ];
     }
 
+    public static function getAncestor() : ?Ancestor
+    {
+        // This is just a simple configuration with a few helper methods
+        return Ancestor::make(
+            SubjectResource::class, // Parent Resource Class
+        );
+    }
+
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSections::route('/'),
             'create' => Pages\CreateSection::route('/create'),
             'edit' => Pages\EditSection::route('/{record}/edit'),
         ];

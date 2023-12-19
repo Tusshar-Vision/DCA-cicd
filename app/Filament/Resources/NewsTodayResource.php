@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Enums\Initiatives;
 use App\Filament\Resources\NewsTodayResource\Pages;
-use App\Filament\Resources\NewsTodayResource\RelationManagers;
 use App\Filament\Resources\NewsTodayResource\RelationManagers\ArticlesRelationManager;
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
@@ -12,9 +11,7 @@ use App\Models\PublishedInitiative;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -24,7 +21,6 @@ use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
 class NewsTodayResource extends Resource
@@ -33,10 +29,8 @@ class NewsTodayResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
 
-    protected static ?string $navigationGroup = 'Initiatives';
-
+    protected static ?string $navigationGroup = 'Create Articles';
     protected static ?string $modelLabel = 'News Today';
-
     protected static ?string $pluralLabel = 'News Today';
 
     protected static ?int $navigationSort = 1;

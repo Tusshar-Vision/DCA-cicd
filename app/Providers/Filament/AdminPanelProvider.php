@@ -42,7 +42,7 @@ class AdminPanelProvider extends PanelProvider
                     ->pluralLabel('Jobs')
                     ->enableNavigation(true)
                     ->navigationIcon('heroicon-o-cpu-chip')
-                    ->navigationGroup('Settings')
+                    ->navigationGroup('System')
                     ->navigationSort(5)
                     ->navigationCountBadge(true)
                     ->enablePruning(true)
@@ -85,9 +85,13 @@ class AdminPanelProvider extends PanelProvider
             ->tenantMiddleware([
                 SyncSpatiePermissionsWithFilamentTenants::class,
             ], isPersistent: true)
-            ->resources([
-                config('filament-logger.activity_resource')
-            ])
-            ->databaseNotifications();
+            ->databaseNotifications()
+            ->navigationGroups([
+                'System',
+                'User and Roles',
+                'Create Articles',
+                'Other Uploads',
+                'Media'
+            ]);
     }
 }
