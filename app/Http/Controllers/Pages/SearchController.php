@@ -11,13 +11,17 @@ class SearchController extends Controller
 {
 
     public function __construct(private readonly ArticleService $articleService)
-    {}
+    {
+    }
 
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
 
         $query = $request->get('query');
 
-        $searchResults = $this->articleService->search($query);
+        $initiative_id = $request->get('initiative');
+
+        $searchResults = $this->articleService->search($query, $initiative_id);
 
         return View('pages.search', [
             'query' => $query,

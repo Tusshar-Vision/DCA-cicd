@@ -5,18 +5,15 @@ namespace App\Filament\Resources;
 use App\Enums\Initiatives;
 use App\Filament\Resources\WeeklyFocusResource\RelationManagers\ArticlesRelationManager;
 use App\Filament\Resources\WeeklyFocusResource\Pages;
-use App\Filament\Resources\WeeklyFocusResource\RelationManagers;
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
 use App\Models\PublishedInitiative;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
-use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -24,7 +21,6 @@ use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
 class WeeklyFocusResource extends Resource
@@ -33,10 +29,8 @@ class WeeklyFocusResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
-    protected static ?string $navigationGroup = 'Initiatives';
-
+    protected static ?string $navigationGroup = 'Create Articles';
     protected static ?string $modelLabel = 'Weekly Focus';
-
     protected static ?string $pluralLabel = 'Weekly Focus';
 
     protected static ?int $navigationSort = 3;

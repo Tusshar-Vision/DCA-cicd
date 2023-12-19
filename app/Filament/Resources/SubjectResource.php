@@ -5,19 +5,14 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\SubjectResource\Pages;
 use App\Filament\Resources\SubjectResource\RelationManagers;
 use App\Models\InitiativeTopic;
-use Filament\Forms;
-use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Guava\Filament\NestedResources\Resources\NestedResource;
 
-class SubjectResource extends Resource
+class SubjectResource extends NestedResource
 {
     protected static ?string $model = InitiativeTopic::class;
     protected static ?string $modelLabel = 'Subject';
