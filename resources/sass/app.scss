@@ -1244,6 +1244,12 @@ $gray-686E70: #686E70;
   background-position: -186px -90px;
 }
 
+.vi-icons.note-edit:before {
+  width: 20px;
+  height: 20px;
+  background-position: -3px -116px;
+}
+
 .vi-icons {
   transition: all 0.2s ease-in-out;
 }
@@ -1386,6 +1392,34 @@ $gray-686E70: #686E70;
 
 /* search CSS */
 
+// .search-field-container {
+//   position: relative;
+//   display: block;
+//   float: left;
+//   width: 80%; 
+//   margin-right: 40px;  
+//   height: 35px;
+
+//   .search-field {
+//     font-size: 14px;
+//     padding: 8px 20px 8px;
+//     border: 0;
+//     outline: none;
+//     -moz-border-radius: 4px;
+//     border-radius: 4px;
+//     width: 32px;
+//     height: 40px;
+//     outline: none;
+//     position: absolute;
+//     right: 0;
+//     top: 0;
+//     width: 32px;
+//     height: 40px;
+//     background: url("/images/search.svg") no-repeat;
+//     background-position: 0;
+//   }
+
+
 .search-field-container {
   position: relative;
   display: block;
@@ -1393,7 +1427,6 @@ $gray-686E70: #686E70;
   // width: 80%; 
   margin-right: 20px;
   height: 35px;
-
   .search-field {
     font-size: 14px;
     padding: 8px 20px 8px;
@@ -1407,11 +1440,21 @@ $gray-686E70: #686E70;
     position: absolute;
     right: 0;
     top: 0;
-    width: 24px;
-    height: 24px;
-    background: url("/images/main-sprite.svg") no-repeat;
-    background-position: -53px -89px;
+    -webkit-transition: all 0.25s ease-in-out;
+    -moz-transition: all 0.25s ease-in-out;
+    -o-transition: all 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
+    background: rgba(244, 246, 252, 1);
+    cursor: pointer;
+    background: url("/images/search.svg") left center no-repeat;
+
+    &:focus {
+      width: 200px;
+      background: #fff;
+      cursor: inherit;
+    }
   }
+}
 
   .filter-row .filter-select-wrap ul{
     position: absolute;
@@ -1437,7 +1480,7 @@ $gray-686E70: #686E70;
       cursor: inherit;
     }
   }
-}
+
 
 .user-style {
   color: #242424;
@@ -2357,13 +2400,6 @@ li[data-level="4"] {
   cursor: pointer;
 }
 
-
-
-
-
-
-
-
 .breadcrumb-wrapper {
   ul{
     margin: 25px 0 0 0;
@@ -2499,6 +2535,13 @@ li[data-level="4"] {
   background-image: url("/images/main-sprite.svg");
   background-repeat: no-repeat;
   background-position: -54px -62px;
+}
+.my-content-tab-wrapper .vi-acrticle-highligh-coll .ci-tab-acc-content{
+  display: none;
+}
+
+.my-content-tab-wrapper .vi-acrticle-highligh-coll.active .ci-tab-acc-content{
+  display: block;
 }
 
 /* new list css */

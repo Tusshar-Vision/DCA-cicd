@@ -82,3 +82,15 @@ container.addEventListener('click', function (event) {
 //         x.type = "password";
 //         }
 // }
+
+// accordion toggle
+const accordionItems = document.querySelectorAll(".vi-acrticle-highligh-coll");
+    accordionItems.forEach(item =>
+    item.addEventListener("click", () => {
+        const isItemOpen = item.classList.contains("active");
+        accordionItems.forEach(item => item.classList.remove("active"));
+        if (!isItemOpen) {
+        item.classList.toggle("active");
+        }
+    })
+    );
