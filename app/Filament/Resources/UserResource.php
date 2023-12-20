@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
@@ -13,8 +12,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserResource extends Resource
 {
@@ -22,9 +19,9 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
-    protected static ?string $navigationGroup = 'Users and Roles';
+    protected static ?string $navigationGroup = 'User Management';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = -2;
 
     public static function form(Form $form): Form
     {
@@ -32,7 +29,7 @@ class UserResource extends Resource
             ->schema([
                 TextInput::make('name')->required(),
                 TextInput::make('email')->email()->required(),
-                Select::make('roles')->multiple()->relationship('roles', 'name')
+                Select::make('roles')->multiple()->relationship('roles', 'name')->preload()
             ]);
     }
 
@@ -68,9 +65,9 @@ class UserResource extends Resource
         ];
     }
 
-    public static function shouldRegisterNavigation(): bool
+    public static function getNavigationBadge(): ?string
     {
-        return auth()->user()->hasRole(['Super Admin', 'Admin']);
+        return static::getModel()::count();
     }
 
     public static function getPages(): array

@@ -5,6 +5,7 @@ namespace App\Filament\Resources\DownloadsResource\Pages;
 use App\Filament\Resources\DownloadsResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Contracts\Support\Htmlable;
 
 class EditDownloads extends EditRecord
 {
@@ -13,7 +14,12 @@ class EditDownloads extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+//            Actions\DeleteAction::make(),
         ];
+    }
+
+    public function getTitle(): Htmlable|string
+    {
+        return "";
     }
 }

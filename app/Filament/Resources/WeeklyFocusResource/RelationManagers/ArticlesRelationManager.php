@@ -28,6 +28,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 use AmidEsfahani\FilamentTinyEditor\TinyEditor;
@@ -126,10 +127,12 @@ class ArticlesRelationManager extends RelationManager
                     ->boolean()->trueIcon('heroicon-o-check-badge')
                     ->falseIcon('heroicon-o-x-mark'),
                 TextColumn::make('title')->limit(40)
-                    ->tooltip(fn (Article $article): string => $article->title),
+                    ->tooltip(fn (Model $record): string => $record->title),
                 TextColumn::make('topic.name')->label('Subject'),
-                TextColumn::make('topicSection.name')->label('Section'),
-                TextColumn::make('topicSubSection.name')->label('Sub-Section'),
+                TextColumn::make('topicSection.name')->label('Section')->limit(20)
+                    ->tooltip(fn (Model $record): string => $record->topicSection->name ?? ''),
+                TextColumn::make('topicSubSection.name')->label('Sub-Section')->limit(20)
+                    ->tooltip(fn (Model $record): string => $record->topicSubSection->name ?? ''),
                 SpatieTagsColumn::make('tags'),
                 TextColumn::make('author.name')->label('Expert'),
                 TextColumn::make('reviewer.name')->label('Reviewer'),
@@ -199,7 +202,7 @@ class ArticlesRelationManager extends RelationManager
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+//                Tables\Actions\DeleteAction::make(),
             ], position: ActionsPosition::BeforeColumns)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

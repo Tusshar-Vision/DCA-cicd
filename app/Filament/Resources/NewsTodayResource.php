@@ -8,6 +8,7 @@ use App\Filament\Resources\NewsTodayResource\RelationManagers\ArticlesRelationMa
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
 use App\Models\PublishedInitiative;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -23,7 +24,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class NewsTodayResource extends Resource
+class NewsTodayResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = PublishedInitiative::class;
 
@@ -121,5 +122,17 @@ class NewsTodayResource extends Resource
         }
 
         return $query;
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view_news_today',
+            'view_any_news_today',
+            'create_news_today',
+            'update_news_today',
+            'delete_news_today',
+            'delete_any_news_today',
+        ];
     }
 }

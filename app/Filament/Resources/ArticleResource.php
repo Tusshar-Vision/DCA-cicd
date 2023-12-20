@@ -29,6 +29,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use Spatie\Tags\Tag;
@@ -128,14 +129,16 @@ class ArticleResource extends Resource
                 TextColumn::make('initiative.name')
                     ->searchable(),
                 TextColumn::make('title')->limit(40)
-                    ->tooltip(fn (Article $article): string => $article->title)
+                    ->tooltip(fn (Model $record): string => $record->title)
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('topic.name')->label('Subject')
                     ->searchable(),
-                TextColumn::make('topicSection.name')->label('Section')
+                TextColumn::make('topicSection.name')->label('Section')->limit(20)
+                    ->tooltip(fn (Model $record): string => $record->topicSection->name ?? '')
                     ->searchable(),
-                TextColumn::make('topicSubSection.name')->label('Sub-Section')
+                TextColumn::make('topicSubSection.name')->label('Sub-Section')->limit(20)
+                    ->tooltip(fn (Model $record): string => $record->topicSubSection->name ?? '')
                     ->searchable(),
                 SpatieTagsColumn::make('tags'),
                 TextColumn::make('author.name')->label('Expert'),

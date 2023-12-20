@@ -5,6 +5,7 @@ namespace App\Filament\Resources\NewsTodayResource\Pages;
 use App\Filament\Resources\NewsTodayResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Contracts\Support\Htmlable;
 
 class EditNewsToday extends EditRecord
 {
@@ -13,7 +14,12 @@ class EditNewsToday extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+//            Actions\DeleteAction::make(),
         ];
+    }
+
+    public function getTitle(): Htmlable|string
+    {
+        return "";
     }
 }
