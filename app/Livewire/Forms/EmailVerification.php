@@ -18,7 +18,7 @@ class EmailVerification extends Component
     protected $user_pool_id;
 
     public $otp_first, $otp_sec, $otp_third, $otp_fourth, $otp_fifth, $otp_sixth;
-    public $email;
+    public $email, $user;
 
     #[On('signup')]
     public function updatePostList($email)
@@ -51,6 +51,8 @@ class EmailVerification extends Component
                 'Username' => $this->email,
                 'ConfirmationCode' => $verificationCode,
             ]);
+
+            redirect()->route('home');
         } catch (AwsException $e) {
             Log::info('Error: ' . $e->getAwsErrorMessage());
         }

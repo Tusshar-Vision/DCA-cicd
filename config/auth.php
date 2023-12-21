@@ -46,7 +46,7 @@ return [
         ],
         'cognito' => [
             'driver' => 'cognito-session', // This line is important for using AWS Cognito as Web Driver
-            'provider' => 'users',
+            'provider' => 'students',
         ],
     ],
 
@@ -72,11 +72,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'students' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Student::class
+        ]
     ],
 
     /*

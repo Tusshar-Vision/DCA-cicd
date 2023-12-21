@@ -100,7 +100,8 @@
                         </svg>
                         Facebook</a></li>
             </ul>
-            <h5 class="text-base text-[#3D3D3D]">Already Registered? Login.</h5>
+            <h5 class="text-base text-[#3D3D3D]" @click="isLoginFormOpen = true;isRegisterFormOpen = false;">Already
+                Registered? Login.</h5>
             <p class="text-[12px] text-[#3D3D3D]">By signing in, you confirm that you have read and agree to our <a
                     href="#" class="text-[#3362CC] block">Trems and Conditions</a></p>
         </form>
