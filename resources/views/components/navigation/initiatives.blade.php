@@ -94,7 +94,7 @@
             <li>
                 <!-- <x-widgets.search-bar /> -->
                 <div class="search-field-container">
-                    <input type="text" class="search-field" placeholder="" onchange="redirect(this)" />
+                    <input type="search" class="search-field" placeholder="" onchange="redirect(this)" />
                 </div>
             </li>
             @guest

@@ -1,4 +1,3 @@
-
 <!-- my content section -->
 <div class="vi-profile-tab-container">
     <div class="my-content-tab-wrapper">
