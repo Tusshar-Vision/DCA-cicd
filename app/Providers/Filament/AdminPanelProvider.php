@@ -116,6 +116,7 @@ class AdminPanelProvider extends PanelProvider
                 'Create Articles',
                 'Other Uploads',
                 'Media'
-            ]);
+            ])
+            ->sidebarCollapsibleOnDesktop();
     }
 }

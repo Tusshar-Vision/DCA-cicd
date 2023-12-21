@@ -19,7 +19,7 @@
     <script src="{{ asset('vendor/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
 </head>
 
-<body x-data="{ isLoginFormOpen: false, isRegisterFormOpen: false, isResetFormOpen: false }">
+<body x-data="{ isLoginFormOpen: false, isRegisterFormOpen: false, isResetFormOpen: false, isEmailVerificationFormOpen: false }">
     <div class="mx-auto max-w-[90%]">
         <header>
             <x-header />
@@ -47,6 +47,10 @@
 
     <x-modals.login-modal x-show="isResetFormOpen">
         <livewire:forms.reset-password />
+    </x-modals.login-modal>
+
+    <x-modals.login-modal x-show="isEmailVerificationFormOpen">
+        <livewire:forms.email-verification />
     </x-modals.login-modal>
 
 </body>

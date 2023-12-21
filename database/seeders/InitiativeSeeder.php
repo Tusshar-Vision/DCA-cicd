@@ -19,7 +19,8 @@ class InitiativeSeeder extends Seeder
             ['name' => 'Weekly Focus', 'name_hindi' => "साप्ताहिक फोकस", 'description' => null, 'path' => '/weekly-focus'],
             ['name' => 'Mains 365', 'name_hindi' => "मेन्स 365", 'description' => null, 'path' => '/mains-365'],
             ['name' => 'PT 365', 'name_hindi' => "पीटी 365", 'description' => null, 'path' => '/pt-365'],
-            ['name' => 'Downloads', 'name_hindi' => "डाउनलोड", 'description' => null, 'path' => '/downloads']
+            ['name' => 'Downloads', 'name_hindi' => "डाउनलोड", 'description' => null, 'path' => '/downloads'],
+            ['name' => 'More', 'name_hindi' => 'अधिक', 'description' => null, 'path' => '/more']
         ];
 
         DB::table('initiatives')->insert($initiatives);

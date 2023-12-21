@@ -8,6 +8,7 @@ use App\Filament\Resources\NewsTodayResource\RelationManagers\ArticlesRelationMa
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
 use App\Models\PublishedInitiative;
+use App\Models\User;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Facades\Filament;
 use Filament\Forms;
@@ -15,6 +16,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Models\Contracts\FilamentUser;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -24,7 +26,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class NewsTodayResource extends Resource implements HasShieldPermissions
+class NewsTodayResource extends Resource
 {
     protected static ?string $model = PublishedInitiative::class;
 
@@ -88,6 +90,7 @@ class NewsTodayResource extends Resource implements HasShieldPermissions
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -124,15 +127,75 @@ class NewsTodayResource extends Resource implements HasShieldPermissions
         return $query;
     }
 
-    public static function getPermissionPrefixes(): array
+    public static function canViewAny(): bool
     {
-        return [
-            'view_news_today',
-            'view_any_news_today',
-            'create_news_today',
-            'update_news_today',
-            'delete_news_today',
-            'delete_any_news_today',
-        ];
+        $user = Auth::user();
+        return $user->can('view_any_news::today');
+    }
+
+    public static function canView(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('view_news::today');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('update_news::today');
+    }
+
+    public static function canCreate(): bool
+    {
+        $user = Auth::user();
+        return $user->can('create_news::today');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('delete_news::today');
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        $user = Auth::user();
+        return $user->can('delete_any_news::today');
+    }
+
+    public static function canForceDelete(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('force_delete_news::today');
+    }
+
+    public static function canForceDeleteAny(): bool
+    {
+        $user = Auth::user();
+        return $user->can('delete_any_news::today');
+    }
+
+    public static function canReorder(): bool
+    {
+        $user = Auth::user();
+        return $user->can('reorder_news::today');
+    }
+
+    public static function canReplicate(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('replicate_news::today');
+    }
+
+    public static function canRestore(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('restore_news::today');
+    }
+
+    public static function canRestoreAny(): bool
+    {
+        $user = Auth::user();
+        return $user->can('restore_any_news::today');
     }
 }

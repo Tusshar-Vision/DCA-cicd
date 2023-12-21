@@ -12,7 +12,9 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class InfographicsResource extends Resource
@@ -69,14 +71,75 @@ class InfographicsResource extends Resource
         ];
     }
 
-//    public static function getEloquentQuery(): Builder
-//    {
-//        $query = static::getModel()::query()->where('initiative_id', InitiativesHelper::getInitiativeID(static::getModelLabel()));
-//
-//        if ($tenant = Filament::getTenant()) {
-//            static::scopeEloquentQueryToTenant($query, $tenant);
-//        }
-//
-//        return $query;
-//    }
+    public static function canViewAny(): bool
+    {
+        $user = Auth::user();
+        return $user->can('view_any_infographics');
+    }
+
+    public static function canView(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('view_infographics');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('update_infographics');
+    }
+
+    public static function canCreate(): bool
+    {
+        $user = Auth::user();
+        return $user->can('create_infographics');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('delete_infographics');
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        $user = Auth::user();
+        return $user->can('delete_any_infographics');
+    }
+
+    public static function canForceDelete(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('force_delete_infographics');
+    }
+
+    public static function canForceDeleteAny(): bool
+    {
+        $user = Auth::user();
+        return $user->can('delete_any_infographics');
+    }
+
+    public static function canReorder(): bool
+    {
+        $user = Auth::user();
+        return $user->can('reorder_infographics');
+    }
+
+    public static function canReplicate(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('replicate_infographics');
+    }
+
+    public static function canRestore(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('restore_infographics');
+    }
+
+    public static function canRestoreAny(): bool
+    {
+        $user = Auth::user();
+        return $user->can('restore_any_infographics');
+    }
 }
