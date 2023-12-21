@@ -49,7 +49,7 @@ Route::controller(Pages\WeeklyFocusController::class)->group(function () {
     Route::get('/archive/weekly-focus', 'archive')->name('weekly-focus.archive');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth:cognito')->group(function () {
     Route::prefix('user')->group(function () {
         // Route::get('/dashboard', )
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -71,6 +71,6 @@ Route::post('notes/add-tag/{note_id}', [NoteController::class, 'addTag'])->name(
 Route::get('/tags/{search}', [NoteController::class, 'searchTagsLike'])->name('tags.search');
 
 
-Route::get('/test', function() {
+Route::get('/test', function () {
     return view('pages.user.home');
 });

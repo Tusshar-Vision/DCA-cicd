@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Log;
 class LoginController extends Controller
 {
     use AuthenticatesUsers;
-    
+
     /**
      * Where to redirect users after login.
      *
@@ -46,13 +46,13 @@ class LoginController extends Controller
 
             //Authenticate with Cognito Package Trait (with 'web' as the auth guard)
             if ($response = $this->attemptLogin($collection, 'web')) {
-                if ($response===true) {
+                if ($response === true) {
                     $request->session()->regenerate();
 
                     return redirect(route('home'));
-    
-                       // ->intended('home');
-                } else if ($response===false) {
+
+                    // ->intended('home');
+                } else if ($response === false) {
                     return redirect()
                         ->back()
                         ->withInput($request->only('username', 'remember'))
@@ -67,19 +67,22 @@ class LoginController extends Controller
                     return $response;
                 } //End if
             } //End if
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             Log::error($e->getMessage());
             return $response->back()->withInput($request);
         } //Try-catch ends
 
     } //Function ends
 
-    public function showLoginForm() {
+    public function showLoginForm()
+    {
         // return 
     }
 
-    public function logout() {
-        Auth::guard('web')->logout(true);
-        return redirect(RouteServiceProvider::HOME);
+    public function logout()
+    {
+        logger("from logou ");
+        Auth::guard('cognito')->logout(true);
+        return redirect()->route('home');
     }
 }

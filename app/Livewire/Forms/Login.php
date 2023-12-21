@@ -60,7 +60,7 @@ class Login extends Component
             $refreshToken = $result['AuthenticationResult']['RefreshToken'];
 
             $user = Student::where('email', $this->email)->first();
-            if ($user)  auth('cognito')->login($user);
+            if ($user) auth('cognito')->login($user);
 
             // You can now use the tokens as needed
             // echo 'Access Token: ' . $accessToken . PHP_EOL;
