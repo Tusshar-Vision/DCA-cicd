@@ -5,7 +5,7 @@
                 <blockquote contenteditable="false">
                     <p id="note-title" class="font-black">{{ $article->title }}</p>
                 </blockquote>
-                <a href="#" class="edit-title"><img src="{{ URL::asset('images/edit.png') }}"></a>
+                <img onclick="editTitle()" src="{{ URL::asset('images/edit.png') }}">
             </div>
             <div class="vi-tinymce-editor">
                 <textarea id="notes-text-area" style="width: 100%; resize: none;">
@@ -69,6 +69,10 @@
             }
         }
         <?php } ?>
+    }
+
+    function editTitle() {
+        document.querySelector("[contenteditable=false]").setAttribute('contenteditable', true)
     }
 
     function saveNote() {

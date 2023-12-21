@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms;
 
+use App\Models\Student;
 use App\Models\User;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 use Aws\Credentials\Credentials;
@@ -80,7 +81,14 @@ class Register extends Component
                 'UserAttributes' => $userAttributes,
             ]);
 
+            logger("passwo", [$this->password]);
+
+            logger("result", [$result]);
+
+            $user = Student::create(['name' => $this->fname . " " . $this->lname, 'email' => $this->email, 'password' => bcrypt($this->password)]);
+
             $this->dispatch('signup', email: $this->email);
+            $this->dispatch('user-created', user: $user);
         } catch (AwsException $e) {
             Log::info('Error: ' . $e->getAwsErrorMessage());
         }

@@ -3,10 +3,10 @@
 
 @section('content')
     <!-- <div class="grid grid-cols-3 gap-4">
-                                                                                                                                                                                                                                                    @foreach ($searchResults as $result)
+                                                                                                                                                                                                                                                                @foreach ($searchResults as $result)
     <x-cards.article :article="$result"/>
     @endforeach
-                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                            </div> -->
     <!-- <section class="vi-magzin-header-section"> -->
     <!-- <div class="vigrid-wide"> -->
     <?php $query = $_GET['query']; ?>
@@ -51,7 +51,7 @@
     <!-- hybrid body section start -->
     <div class="hybrid-text-wrapper">
         <div class="hybrid-left-panel">
-            <div class="hybrid-img-wrapper">
+            {{-- <div class="hybrid-img-wrapper">
                 <div class="hybrid-img-row">
                     <h3>Images Section</h3>
                     <ul>
@@ -73,17 +73,24 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div> --}}
             @foreach ($searchResults as $result)
+                <?php $published_at = Carbon\Carbon::parse($result->published_at)->format('Y-m-d');
+                $topic = $result->topic->name;
+                $slug = $result->slug;
+                ?>
                 <div class="hybrid-text-row">
-                    <h3>{{ $result->title }}</h3>
+                    <a href="{{ url($result->initiative->path . '/' . $published_at . '/' . $topic . '/' . $slug) }}">
+                        <h3>
+                            {{ $result->title }}</h3>
+                    </a>
                     <p class="result-content"> {{ html_entity_decode(substr(strip_tags($result->content), 0, 500)) }}</p>
                     <span>{{ $result->initiative->name }} |
                         {{ Carbon\Carbon::parse($result->published_at)->format('Y-m-d') }}</span>
                 </div>
             @endforeach
         </div>
-        <div class="hybrid-right-panel">
+        {{-- <div class="hybrid-right-panel">
             <div class="video-cont-wrapper mb-6">
                 <h4>Hybrid Warfare</h4>
                 <p>Lorem ipsum dolor sit amet. Aut praesentium molestiae sit amet consectetur id consequuntur velit et enim
@@ -96,7 +103,7 @@
                     asperiores </p>
                 <div class="hybrid-video"></div>
             </div>
-        </div>
+        </div> --}}
     </div>
     <!-- </div> -->
     <!-- </section> -->

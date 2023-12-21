@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms;
 
+use App\Models\Student;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 use Aws\Credentials\Credentials;
 use Aws\Exception\AwsException;
@@ -58,6 +59,9 @@ class Login extends Component
             $idToken = $result['AuthenticationResult']['IdToken'];
             $refreshToken = $result['AuthenticationResult']['RefreshToken'];
 
+            $user = Student::where('email', $this->email)->first();
+            if ($user)  auth('cognito')->login($user);
+
             // You can now use the tokens as needed
             // echo 'Access Token: ' . $accessToken . PHP_EOL;
             // echo 'Id Token: ' . $idToken . PHP_EOL;
@@ -81,7 +85,7 @@ class Login extends Component
     //     try {
     //         $collection = collect(['email' => $this->email, 'password' => $this->password]);
 
-    //         $response = $this->attemptLogin($collection, 'web');
+    //         $response = $this->attemptLogin($collection, 'cognito');
     //         //Authenticate with Cognito Package Trait (with 'web' as the auth guard)
     //         if ($response) {
     //             if ($response === true) {
