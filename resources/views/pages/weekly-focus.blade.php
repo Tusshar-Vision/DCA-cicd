@@ -31,6 +31,7 @@
         <div class="flex space-x-8">
             <div class="flex w-2/6 flex-col space-y-6 leftsticky">
                 <x-widgets.article-side-bar :table-of-content="$tableOfContent" />
+                <x-widgets.topic-at-a-glance />
                 <x-widgets.side-bar-download-menu initiative="weekly-focus"/>
             </div>
 
