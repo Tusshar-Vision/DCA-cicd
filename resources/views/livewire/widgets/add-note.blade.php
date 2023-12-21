@@ -3,9 +3,9 @@
         <div class="vi-modal-content">
             <div class="edit-text border p-[15px] bg-white">
                 <blockquote contenteditable="false">
-                    <p id="note-title" class="font-black active">{{ $article->title }}</p>
+                    <p id="note-title" class="font-black">{{ $article->title }}</p>
                 </blockquote>
-                <a href="#" class="edit-title"><img src="{{ URL::asset('images/edit.png') }}"></a>
+                <a href="javascript:void(0)" class="edit-title"><img src="{{ URL::asset('images/edit.png') }}"></a>
             </div>
             <div class="vi-tinymce-editor border border-t-0 p-[15px] bg-white">
                 <textarea id="notes-text-area" style="width: 100%; resize: none;">
@@ -43,7 +43,8 @@
     </div>
 </div>
 
-<script>
+
+<script>    
     tinymce.init({
         selector: 'textarea#notes-text-area',
         plugins: 'code table lists',
@@ -55,6 +56,20 @@
             });
         }
     });
+
+        // edit content 
+    function toggleContentEditable() {
+        console.log('HI');
+        var blockquote = document.getElementById('myBlockquote');
+        var currentValue = blockquote.getAttribute('contenteditable');
+        
+        // Toggle the attribute value
+        if (currentValue === 'false') {
+            blockquote.setAttribute('contenteditable', 'true');
+        } else {
+            blockquote.setAttribute('contenteditable', 'false');
+        }
+    }
 
     window.onload = loadForLocalStorage;
 
@@ -127,6 +142,7 @@
             localStorage.setItem("notes", JSON.stringify(notes));
         @endif
     }
+    
 
     function addTagToNote(tag, click_from = null) {
         const tagsNodes = document.querySelectorAll('.tag-name');

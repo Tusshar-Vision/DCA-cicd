@@ -6,7 +6,7 @@
                 <p class="vi-tab-title">Reading History</p>
                 <div class="my-content-search w-[150px]">
                     <div class="search-bar-wrapper">
-                    <input type="text" class="vi-search-bar" placeholder="Search" required="">
+                    <input type="search" class="vi-search-bar" placeholder="Search" required="">
                         <span class="vi-icons search"></span>
                     </div>
                 </div>
