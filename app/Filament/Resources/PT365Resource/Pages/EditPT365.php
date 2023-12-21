@@ -5,6 +5,7 @@ namespace App\Filament\Resources\PT365Resource\Pages;
 use App\Filament\Resources\PT365Resource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Contracts\Support\Htmlable;
 
 class EditPT365 extends EditRecord
 {
@@ -13,7 +14,12 @@ class EditPT365 extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+//            Actions\DeleteAction::make(),
         ];
+    }
+
+    public function getTitle(): Htmlable|string
+    {
+        return "";
     }
 }

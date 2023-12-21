@@ -8,6 +8,7 @@ use App\Filament\Resources\MonthlyMagazineResource\RelationManagers\ArticlesRela
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
 use App\Models\PublishedInitiative;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -32,7 +33,7 @@ class MonthlyMagazineResource extends Resource
     protected static ?string $navigationGroup = 'Create Articles';
     protected static ?string $modelLabel = 'Monthly Magazine';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -119,5 +120,77 @@ class MonthlyMagazineResource extends Resource
         }
 
         return $query;
+    }
+
+    public static function canViewAny(): bool
+    {
+        $user = Auth::user();
+        return $user->can('view_any_monthly::magazine');
+    }
+
+    public static function canView(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('view_monthly::magazine');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('update_monthly::magazine');
+    }
+
+    public static function canCreate(): bool
+    {
+        $user = Auth::user();
+        return $user->can('create_monthly::magazine');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('delete_monthly::magazine');
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        $user = Auth::user();
+        return $user->can('delete_any_monthly::magazine');
+    }
+
+    public static function canForceDelete(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('force_delete_monthly::magazine');
+    }
+
+    public static function canForceDeleteAny(): bool
+    {
+        $user = Auth::user();
+        return $user->can('delete_any_monthly::magazine');
+    }
+
+    public static function canReorder(): bool
+    {
+        $user = Auth::user();
+        return $user->can('reorder_monthly::magazine');
+    }
+
+    public static function canReplicate(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('replicate_monthly::magazine');
+    }
+
+    public static function canRestore(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('restore_monthly::magazine');
+    }
+
+    public static function canRestoreAny(): bool
+    {
+        $user = Auth::user();
+        return $user->can('restore_any_monthly::magazine');
     }
 }

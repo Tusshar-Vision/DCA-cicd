@@ -20,6 +20,8 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class DownloadsResource extends Resource
 {
@@ -105,5 +107,77 @@ class DownloadsResource extends Resource
         }
 
         return $query;
+    }
+
+    public static function canViewAny(): bool
+    {
+        $user = Auth::user();
+        return $user->can('view_any_downloads');
+    }
+
+    public static function canView(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('view_downloads');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('update_downloads');
+    }
+
+    public static function canCreate(): bool
+    {
+        $user = Auth::user();
+        return $user->can('create_downloads');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('delete_downloads');
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        $user = Auth::user();
+        return $user->can('delete_any_downloads');
+    }
+
+    public static function canForceDelete(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('force_delete_downloads');
+    }
+
+    public static function canForceDeleteAny(): bool
+    {
+        $user = Auth::user();
+        return $user->can('delete_any_downloads');
+    }
+
+    public static function canReorder(): bool
+    {
+        $user = Auth::user();
+        return $user->can('reorder_downloads');
+    }
+
+    public static function canReplicate(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('replicate_downloads');
+    }
+
+    public static function canRestore(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('restore_downloads');
+    }
+
+    public static function canRestoreAny(): bool
+    {
+        $user = Auth::user();
+        return $user->can('restore_any_downloads');
     }
 }

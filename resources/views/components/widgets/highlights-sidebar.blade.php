@@ -7,12 +7,18 @@
         <div class="vi-announcement-card">
             <p class="vi-announcement-title">Announcements</p>
             <ul>
-                @foreach($announcements as $announcement)
+                @if($announcements->isNotEmpty())
+                    @foreach($announcements as $announcement)
+                        <li>
+                            <span class="limited-text text-xs">{!! $announcement->content !!}</span>
+                            <div class="hidden-text">{!! $announcement->content !!}</div>
+                        </li>
+                    @endforeach
+                @else
                     <li>
-                        <span class="limited-text text-xs">{!! $announcement->content !!}</span>
-                        <div class="hidden-text">{!! $announcement->content !!}</div>
+                        <span class="limited-text text-xs">No New Announcements</span>
                     </li>
-                @endforeach
+                @endif
             </ul>
         </div>
         <div class="vi-announcement-card">

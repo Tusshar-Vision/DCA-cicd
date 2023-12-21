@@ -23,6 +23,8 @@ class InitiativeResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationLabel = "Create Initiatives";
 
+    protected static ?string $navigationGroup = 'Categories';
+
     public static function form(Form $form): Form
     {
         return $form

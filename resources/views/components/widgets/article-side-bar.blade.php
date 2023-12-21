@@ -6,7 +6,7 @@
     <div class="my-4 mx-6">
         <h4 class="font-bold text-base[16px] py-[16px] border-bottom">Table of Content</h4>
         <div>
-            <ul class="list-decimal list-none ml-0">
+            <ul class="list-none ml-0">
                 @foreach($tableOfContent as $key => $header)
                     <li class="py-[15px] border-bottom last:border-0 hover:brand-color">
                         @if(is_array($header))

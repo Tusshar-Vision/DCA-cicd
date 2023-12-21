@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Althinect\FilamentSpatieRolesPermissions\Concerns\HasSuperAdmin;
+use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +14,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser
 {
-    use HasApiTokens, HasFactory, Notifiable, HasSuperAdmin, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasPanelShield;
 
     /**
      * The attributes that are mass assignable.
@@ -55,11 +55,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return str_ends_with($this->email, '@visionias.in') && $this->hasRole([
-            'Super Admin',
-            'Admin',
-            'Reviewer',
-            'Expert'
-        ]);
+        return str_ends_with($this->email, '@visionias.in');
     }
+
 }

@@ -8,7 +8,7 @@ return array(
     'resources' => array(
         'enabled' => true,
         'log_name' => 'Resource',
-        'logger' => \Z3d0X\FilamentLogger\Loggers\ResourceLogger::class,
+//        'logger' => \Z3d0X\FilamentLogger\Loggers\ResourceLogger::class,
         'color' => 'success',
         'exclude' => array(
             //App\Filament\Resources\UserResource::class,
