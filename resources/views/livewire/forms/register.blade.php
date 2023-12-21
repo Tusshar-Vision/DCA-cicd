@@ -70,7 +70,7 @@
                     wire:model="password">
                 <label for="password">Enter Password</label>
             </div>
-            <button type="submit" class="login-btn">Sign up</button>
+            <button type="submit" class="login-btn" @click="isEmailVerificationFormOpen = true">Sign up</button>
 
             <span class="divider-or mt-[20px]">OR</span>
             <ul class="flex justify-center items-center my-[20px]">
@@ -106,3 +106,17 @@
         </form>
     </div>
 </div>
+<script>
+    // show hide function
+    function showPassword(targetID) {
+        var x = document.getElementById(targetID);
+        var img = document.querySelector('.eye')
+        if (x.type === "password") {
+            x.type = "text";
+            img.style.opacity = "0.5";
+        } else {
+            x.type = "password";
+            img.style.opacity = "1";
+        }
+    }
+</script>
