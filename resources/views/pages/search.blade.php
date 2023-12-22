@@ -3,18 +3,18 @@
 
 @section('content')
     <!-- <div class="grid grid-cols-3 gap-4">
-                                                                                                                                                                                                                                                                @foreach ($searchResults as $result)
+                                                                                                                                                                                                                                                                                                            @foreach ($searchResults as $result)
     <x-cards.article :article="$result"/>
     @endforeach
-                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                        </div> -->
     <!-- <section class="vi-magzin-header-section"> -->
     <!-- <div class="vigrid-wide"> -->
     <?php $query = $_GET['query']; ?>
     <div class="ecosystem-wrap">
         <div class="search-bar-wrapper">
             <span class="vi-icons search"></span>
-            <input type="text" class="vi-search-bar" placeholder="Hydrid Warfare" required="" value="{{ $query }}"
-                onchange="redirect(this)">
+            <input id="searchInput" type="text" class="vi-search-bar" placeholder="Hydrid Warfare" required=""
+                value="{{ $query }}" onchange="redirect(this)">
         </div>
         <div class="eco-menu">
             <ul>
@@ -31,6 +31,7 @@
     </div>
     <div class="filter-row mt-2">
         <div class="filter-select-wrap">
+            {{-- <a href="{{ route('search') . "?query=$query&date=$past_24_hours" }}">past 24 hours</a> --}}
             <button>All Results</button>
             <ul>
                 <li value="">All Results 1</li>
@@ -116,5 +117,20 @@
             url += `?query=${val}`;
             window.location.href = url;
         }
+
+        document.getElementById('searchInput').addEventListener('input', function() {
+            let query = this.value;
+            console.log("valuee", query);
+
+            let url = "{{ url('search') }}";
+            url += `/${query}`
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Data", data)
+                })
+                .catch(error => console.error('Error fetching suggestions:', error));
+        });
     </script>
 @endsection

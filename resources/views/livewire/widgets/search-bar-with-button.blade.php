@@ -7,7 +7,10 @@
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
         </svg>
         <input type="text" class="w-full vi-search-bar h-8 border-none focus:ring-0" placeholder="Search"
-            wire:model="searchTerm" required>
+            id="searchInput" wire:model="searchTerm" required>
+        <div id="search-item-container" class="search-list overflow-scroll" style="display: none">
+            <p>Search 1</p>
+        </div>
     </div>
     <div>
         <button wire:click="search"
@@ -16,3 +19,29 @@
         </button>
     </div>
 </div>
+
+<script>
+    document.getElementById('searchInput').addEventListener('input', function() {
+        let query = this.value;
+        console.log("valuee", query);
+
+        let url = "{{ url('search') }}";
+        url += `/${query}`
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                console.log("data", data);
+                let html = ""
+                data.map(suggestion => {
+                    let url = "{{ url('') }}"
+                    url +=
+                        `${suggestion.path}/${suggestion.published_at}/${suggestion.name}/${suggestion.slug}`
+                    html += `<a href="${url}"><p>${suggestion.title}</p><a>`
+                })
+                document.getElementById("search-item-container").innerHTML = html;
+                document.getElementById("search-item-container").style.display = "block"
+            })
+            .catch(error => console.error('Error fetching suggestions:', error));
+    });
+</script>

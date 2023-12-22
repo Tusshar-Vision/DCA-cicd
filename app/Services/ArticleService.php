@@ -39,13 +39,33 @@ class ArticleService
             ->where('language', $this->language)->latest()->limit($limit)->with('author')->get();
     }
 
-    public function search(string $query, int $initiative_id = null, int $perPage = 10): Collection|array|LengthAwarePaginator
+    public function search(string $query, int $initiative_id = null, $date = null, int $perPage = 10): Collection|array|LengthAwarePaginator
     {
         $query = $this->articles->search($query)->where('is_published', true)->where('language', $this->language);
 
         if ($initiative_id) {
-            logger("achaa");
             $query->where('initiative_id', $initiative_id);
+        }
+
+        if ($date) {
+            if ($date == 'pas_24_hours') {
+                $date = Carbon::now()
+                    ->subDay()
+                    ->format('Y-m-d');
+                $query->where('published_at', '>=', Carbon::parse($date));
+            } else if ($date == 'past_week') {
+                $weekStartDate = Carbon::now()->subDays(7)->startOfDay();
+                $weekEndDate = Carbon::now()->endOfDay();
+                $query->whereBetween('published_at', [$weekStartDate, $weekEndDate]);
+            } else if ($date == 'past_month') {
+                $monthStartDate = Carbon::now()->subMonth()->startOfMonth();
+                $monthEndDate = Carbon::now()->endOfMonth();
+                $query->whereBetween('published_at', [$monthStartDate, $monthEndDate]);
+            } else if ($date == 'past_year') {
+                $yearStartDate = Carbon::now()->subYear()->startOfYear();
+                $yearEndDate = Carbon::now()->endOfYear();
+                $query->whereBetween('published_at', [$yearStartDate, $yearEndDate]);
+            }
         }
 
         return $query->paginate($perPage);
