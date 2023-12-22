@@ -53,7 +53,8 @@ Route::controller(Pages\WeeklyFocusController::class)->group(function () {
 
 Route::middleware('auth:cognito')->group(function () {
     Route::prefix('user')->group(function () {
-        // Route::get('/dashboard', )
+        Route::get('/dashboard', [Pages\UserController::class, 'dashboard'])->name('user.dashboard');
+        Route::post('/update/read-history', [Pages\UserController::class, 'updateReadHistory'])->name('user.read-history');
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
     });
 });

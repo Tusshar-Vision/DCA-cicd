@@ -1,4 +1,6 @@
 <!-- activity tab start -->
+
+{{-- <?php dd($readHistories); ?> --}}
 <div class="vi-profile-tab-container tabc-activity">
     <div class="activity-tab-wrapper">
         <div class="activity-tab-left-itmes">
@@ -6,22 +8,24 @@
                 <p class="vi-tab-title">Reading History</p>
                 <div class="my-content-search w-[150px]">
                     <div class="search-bar-wrapper">
-                    <input type="search" class="vi-search-bar" placeholder="Search" required="">
+                        <input type="search" class="vi-search-bar" placeholder="Search" required="">
                         <span class="vi-icons search"></span>
                     </div>
                 </div>
             </div>
             <div class="vi-left-child-item-list">
                 <!-- Single card -->
-                <div class="vi-article-card vi-inline">
-                    <a href="#" class="vi-article">
-                        <img src="{{ URL::asset('images/card-image-small.png') }}" alt="">
-                    </a>
-                    <a href="#" class="vi-article">
-                        <p class="vi-article-date-name">John Jacob - 11/11/23</p>
-                        <p>Amet luctus venenatis lectus magna fringilla urna porttitor rhoncus.</p>
-                    </a>
-                </div>
+                @foreach ($readHistories as $history)
+                    <div class="vi-article-card vi-inline">
+                        <a href="#" class="vi-article">
+                            <img src="{{ URL::asset('images/card-image-small.png') }}" alt="">
+                        </a>
+                        <a href="#" class="vi-article">
+                            <p class="vi-article-date-name">{{ $history->published_at }}</p>
+                            <p>{{ $history->title }}</p>
+                        </a>
+                    </div>
+                @endforeach
             </div>
         </div>
         <div class="activity-tab-right-itmes">
@@ -59,7 +63,8 @@
                                 const squares = document.querySelector('.con-squares');
                                 for (var i = 1; i < 365; i++) {
                                     const level = Math.floor(Math.random() * 5);
-                                    squares.insertAdjacentHTML('beforeend', `<li data-level="${level}" data-complete="98% Read" aria-label="Friday Feb 27, 2023"></li>`);
+                                    squares.insertAdjacentHTML('beforeend',
+                                        `<li data-level="${level}" data-complete="98% Read" aria-label="Friday Feb 27, 2023"></li>`);
                                 }
                             });
                         </script>
@@ -89,7 +94,8 @@
                                 const squares = document.querySelector('.weekly-con-graph .con-squares');
                                 for (var i = 1; i <= 52; i++) {
                                     const level = Math.floor(Math.random() * 5);
-                                    squares.insertAdjacentHTML('beforeend', `<li data-level="${level}" data-complete="98% Read" aria-label="Friday Feb 27, 2023"></li>`);
+                                    squares.insertAdjacentHTML('beforeend',
+                                        `<li data-level="${level}" data-complete="98% Read" aria-label="Friday Feb 27, 2023"></li>`);
                                 }
                             });
                         </script>
@@ -119,7 +125,8 @@
                                 const squares = document.querySelector('.monthly-con-graph .con-squares');
                                 for (var i = 1; i <= 12; i++) {
                                     const level = Math.floor(Math.random() * 5);
-                                    squares.insertAdjacentHTML('beforeend', `<li data-level="${level}" data-complete="98% Read" aria-label="Friday Feb 27, 2023"></li>`);
+                                    squares.insertAdjacentHTML('beforeend',
+                                        `<li data-level="${level}" data-complete="98% Read" aria-label="Friday Feb 27, 2023"></li>`);
                                 }
                             });
                         </script>
