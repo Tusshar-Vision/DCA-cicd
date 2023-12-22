@@ -15,12 +15,12 @@
             <span class="vi-icons search"></span>
             <input type="text" class="vi-search-bar" placeholder="Hydrid Warfare" required="" value="{{ $query }}"
                 onchange="redirect(this)">
-            <ul class="w-full absolute left-0 top-[40px] p-2">
+            <!-- <ul class="w-full absolute left-0 top-[40px] p-2 border-[]">
                 <li>Search 1</li>
                 <li>Search 2</li>
                 <li>Search 3</li>
                 <li>Search 4</li>
-            </ul>
+            </ul> -->
         </div>
         <div class="eco-menu">
             <ul>
