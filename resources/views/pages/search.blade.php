@@ -26,7 +26,7 @@
                 <li><a href="#">Images</a></li>
                 <li><a href="#">Others</a></li>
             </ul>
-            <a href="#" class="hybrid-filter" onclick="toggleFilter()">Filter</a>
+            <a href="javascript:void(0)" class="hybrid-filter" onclick="toggleFilter()">Filter</a>
         </div>
     </div>
     <div class="divider mt-[-2px]"></div>
