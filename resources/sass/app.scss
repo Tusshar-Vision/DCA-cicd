@@ -1124,7 +1124,7 @@ $gray-686E70: #686E70;
           padding-bottom: 20px;
           border-bottom: 2px solid transparent;
           display: block;
-          &:hover {
+          &:hover,&.active {
             border-color: #3362CC;
             color: #3362CC;
           }
@@ -1179,12 +1179,21 @@ $gray-686E70: #686E70;
     }
     ul {
       position: absolute;
+      width: 100%;
+      min-width: 150px;
+      max-height: 220px;
+      overflow-y: auto;
+      z-index: 1;
       left: 0;
       margin: 0;
       padding: 0;
-      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      box-shadow: 0px 5px 32px 0px rgba(15, 24, 44, 0.10);
       border-radius: 5px;
+      border: 1px solid #DDD;
       display: none;
+      &.show{
+        display: block;
+      }
       li {
         color: #8F93A3;
         line-height: 20px;
@@ -1192,6 +1201,9 @@ $gray-686E70: #686E70;
         padding: 5px 10px;
         cursor: pointer;
         background: #fff;
+        &:hover{
+          background-color: #F4F6FC;;
+        }
       }
     }
   }
@@ -1316,7 +1328,7 @@ $gray-686E70: #686E70;
 
 .vi-modal-wrap .vi-modal-inner .vi-modal-content p {
   font-size: 14px;
-  font-weight: 400;
+  font-weight: bold;
   color: #040404;
   line-height: 19px;
   margin-top: 0;
@@ -2327,7 +2339,10 @@ li[data-level="4"] {
 }
 
 .filter-row{
-  display: flex;
+  display: none;
+  &.show{
+    display: flex;
+  }
 }
 
 .filter-row .filter-select-wrap{
@@ -2549,4 +2564,30 @@ li[data-level="4"] {
 .my-content-tab-wrapper .vi-acrticle-highligh-coll .ci-tab-acc-content.grid-view .vi-note-and-high-list .vi-note
 .note-content .vi-text-dark{
   margin-top: 0;
+}
+
+
+/* search full width */
+
+#search-item-container{
+  width: 100%;
+  position: absolute;
+  top: 38px;
+  border: 1px solid #e5e7eb;
+  border-top: 0;
+  left: 0;
+  border-radius: 0 0 8px 8px;
+  min-height: 100px;
+  background: #fff;
+  overflow: auto;
+  a{
+    display: block;
+      p{
+        padding: 8px 15px;
+        &:hover{
+          background-color: #E5EAF4;
+          
+        }
+    }
+  }
 }

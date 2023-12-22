@@ -11,4 +11,9 @@ class Student extends User
     use HasFactory;
 
     protected $fillable = ['name', 'email', 'password', 'token'];
+
+    public function readHistories()
+    {
+        return $this->hasMany(ReadHistory::class);
+    }
 }

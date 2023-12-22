@@ -14,18 +14,18 @@
                 ID, vision@gmail.com</p>
             <form class="w-full" wire:submit="verify">
                 <div class="flex gap-2 otp-wrap mb-[15px]">
-                    <input type="number" maxlength="1" value=""
+                    <input type="number" maxlength="1" value="" onKeyPress="if(this.value.length==1) return false;"
                         class="otp-input w-2/12 border h-[56px] rounded appearance-none" wire:model="otp_first">
-                    <input type="number" maxlength="1" value=""
+                    <input type="number" maxlength="1" value="" onKeyPress="if(this.value.length==1) return false;"
                         class="otp-input w-2/12 border h-[56px] rounded appearance-none" wire:model="otp_sec">
-                    <input type="number" maxlength="1" value=""
+                    <input type="number" maxlength="1" value="" onKeyPress="if(this.value.length==1) return false;"
                         class="otp-input w-2/12 border h-[56px] rounded appearance-none" wire:model="otp_third">
-                    <input type="number" maxlength="1"
-                        value=""class="otp-input w-2/12 border h-[56px] rounded appearance-none"
+                    <input type="number" maxlength="1" value="" onKeyPress="if(this.value.length==1) return false;"
+                        class="otp-input w-2/12 border h-[56px] rounded appearance-none"
                         wire:model="otp_fourth">
-                    <input type="number" maxlength="1" value=""
+                    <input type="number" maxlength="1" value="" onKeyPress="if(this.value.length==1) return false;"
                         class="otp-input w-2/12 border h-[56px] rounded appearance-none" wire:model="otp_fifth">
-                    <input type="number" maxlength="1" value=""
+                    <input type="number" maxlength="1" value="" onKeyPress="if(this.value.length==1) return false;"
                         class="otp-input w-2/12 border h-[56px] rounded appearance-none" wire:model="otp_sixth">
                 </div>
                 <input type="text" wire:model="otp" />

@@ -8,6 +8,7 @@ use App\Http\Controllers\NoteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Pages;
+use App\Http\Controllers\Pages\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ Route::get('/mains-365', [Pages\Mains365Controller::class, 'index'])->name('main
 Route::get('/pt-365', [Pages\PT365Controller::class, 'index'])->name('pt365');
 Route::get('/downloads', [Pages\DownloadsController::class, 'index'])->name('downloads');
 Route::get('/search', [Pages\SearchController::class, 'index'])->name('search');
+Route::get('/search/{query}', [Pages\SearchController::class, 'searchQuery'])->name('search.query');
 
 Route::controller(Pages\NewsTodayController::class)->group(function () {
     Route::get('/news-today', 'index')->name('news-today');
@@ -51,7 +53,8 @@ Route::controller(Pages\WeeklyFocusController::class)->group(function () {
 
 Route::middleware('auth:cognito')->group(function () {
     Route::prefix('user')->group(function () {
-        // Route::get('/dashboard', )
+        Route::get('/dashboard', [Pages\UserController::class, 'dashboard'])->name('user.dashboard');
+        Route::post('/update/read-history', [Pages\UserController::class, 'updateReadHistory'])->name('user.read-history');
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
     });
 });

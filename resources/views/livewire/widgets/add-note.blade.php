@@ -28,7 +28,7 @@
                             onclick="addTagToNote('{{ $tag->name }}')">{{ $tag->name }}</span>
                     @endforeach
                 </div>
-                <div class="search-tags">
+                <div class="search-tags relative">
                     <input type="search" placeholder="Search" oninput="searchTags(this)">
                     <div id="search-item-container" class="search-list overflow-scroll" style="display: none;">
                         <p>Search 1</p>

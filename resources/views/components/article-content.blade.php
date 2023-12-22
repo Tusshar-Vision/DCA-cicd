@@ -82,8 +82,10 @@
 
 <div class="text-tooltip-comp" id="tooltip-box">
     <button>Copy</button>
-    <button onclick="highlightText()" id="btn">Highlight</button>
-    <button @click='isNoteOpen=true' onclick="hidePopup()">Add
+    <button onclick="highlightText()" id="btn"
+        @click="{{ !Auth::guard('cognito')->check() ? 'isLoginFormOpen = true' : '' }}">Highlight</button>
+    <button @click="{{ Auth::guard('cognito')->check() ? 'isNoteOpen = true' : 'isLoginFormOpen=true' }}"
+        onclick="hidePopup()">Add
         Note</button>
 </div>
 
@@ -92,6 +94,20 @@
 </div>
 
 <script>
+    window.onload = addReadArticle
+
+    function addReadArticle() {
+        console.log("add read article", "{{ Auth::guard('cognito')->user()->name }}");
+        const article_id = "{{ $article->id }}";
+        const student_id = "{{ Auth::guard('cognito')->user()->id }}"
+        saveData("{{ route('user.read-history') }}", {
+            article_id,
+            student_id,
+            read_percent: 0,
+            _token: "{{ csrf_token() }}"
+        })
+    }
+
     const doc = document.getElementById("article-content");
     doc.addEventListener('mouseup', handleSelection);
     var pageX, pageY;
@@ -182,8 +198,10 @@
     }
 
     function highlightText() {
-        highlightSelectedText('highlight');
-        document.getElementById("tooltip-box").style.display = "none"
+        @if (Auth::guard('cognito')->check())
+            highlightSelectedText('highlight');
+            document.getElementById("tooltip-box").style.display = "none"
+        @endif
     }
 
     function addHighlight({
@@ -232,7 +250,7 @@
         if (serial) showHighlights(serial);
     }
 
-    @if (Auth::check())
+    @if (Auth::guard('cognito')->check())
         {
             setTimeout(() => {
                 loadHighlights()
