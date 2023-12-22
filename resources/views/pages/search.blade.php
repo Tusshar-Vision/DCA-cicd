@@ -13,14 +13,14 @@
     <div class="ecosystem-wrap">
         <div class="search-bar-wrapper">
             <span class="vi-icons search"></span>
-            <input type="text" class="vi-search-bar" placeholder="Hydrid Warfare" required="" value="{{ $query }}"
+            <input type="text" class="vi-search-bar focus" placeholder="Hydrid Warfare" required="" value="{{ $query }}"
                 onchange="redirect(this)">
-            <!-- <ul class="w-full absolute left-0 top-[40px] p-2 border-[]">
-                <li>Search 1</li>
-                <li>Search 2</li>
-                <li>Search 3</li>
-                <li>Search 4</li>
-            </ul> -->
+            <ul class="w-full absolute left-0 top-[43px] py-2 border-[#ddd] border-2 rounded bg-white hidden updatedText">
+                <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 1</li>
+                <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 2</li>
+                <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 3</li>
+                <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 4</li>
+            </ul>
         </div>
         <div class="eco-menu">
             <ul>
@@ -137,6 +137,18 @@
             url += `?query=${val}`;
             window.location.href = url;
         }
+
+    /* on focus show dropdown */
+    const onfocus = document.querySelector('.focus');
+    const showlist = document.querySelector('.updatedText');
+
+    onfocus.addEventListener("focus", () => {
+      showlist.style.display = 'block';
+    });
+
+    onfocus.addEventListener("blur", () => {
+      showlist.style.display = 'none';
+    });
 
 
     /* toggle dropdown menu */   
