@@ -57,6 +57,7 @@ container.addEventListener('click', function (event) {
 });
 
 
+
 // text lenght for whats new section
 
 // search dropdown js
@@ -73,16 +74,6 @@ container.addEventListener('click', function (event) {
 // });
 
 
-// show hide function
-// function showPassword(targetID) {
-//     var x = document.getElementById(targetID);
-//         if (x.type === "password") {
-//         x.type = "text";
-//         } else {
-//         x.type = "password";
-//         }
-// }
-
 // accordion toggle
 const accordionItems = document.querySelectorAll(".vi-acrticle-highligh-coll");
     accordionItems.forEach(item =>
@@ -93,4 +84,4 @@ const accordionItems = document.querySelectorAll(".vi-acrticle-highligh-coll");
         item.classList.toggle("active");
         }
     })
-    );
+);
