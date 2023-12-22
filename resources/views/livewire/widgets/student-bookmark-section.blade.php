@@ -4,7 +4,7 @@
         <div class="my-contnet-tab-filter">
             <div class="my-content-search">
                 <div class="search-bar-wrapper">
-                <input type="text" class="vi-search-bar" placeholder="Search by article name" required="">
+                <input type="search" class="vi-search-bar" placeholder="Search by article name" required="">
                     <span class="vi-icons search"></span>
                 </div>
             </div>

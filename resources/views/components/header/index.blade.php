@@ -85,7 +85,7 @@
                         <img src="{{ asset('images/mail.svg') }}">
                         <div class="ml-[8px]">
                             <span>Email Us</span>
-                            <p>Enquiry@visionias.in</p>
+                            <p><a href="mailto:enquiry@visionias.in">Enquiry@visionias.in</a></p>
                         </div>
                     </li>
                 </ul>

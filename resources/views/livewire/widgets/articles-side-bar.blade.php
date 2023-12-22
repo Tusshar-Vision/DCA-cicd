@@ -30,7 +30,6 @@
                             <path d="M5 11V13H19V11H5Z" fill="#8F93A3"/>
                         </svg>
                     </div>
-
                     <div x-show="expanded !== 'topic-{{ Str::slug($topic->name) }}'" class="flex justify-between items-center w-full">
                         <div class="flex">
                             <div class="w-6">

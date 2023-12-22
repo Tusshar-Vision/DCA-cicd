@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\WeeklyFocusResource\RelationManagers;
+namespace App\Traits\Filament;
 
+use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use App\Models\User;
+use Carbon\Carbon;
+use Coolsam\FilamentFlatpickr\Forms\Components\Flatpickr;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieTagsInput;
@@ -13,9 +15,11 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
-use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\CreateAction;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -28,23 +32,17 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use Spatie\Tags\Tag;
 
-class ArticlesRelationManager extends RelationManager
+trait HasArticles
 {
-    protected static string $relationship = 'articles';
-    protected $listeners = ['updatedPublishedStatus' => '$refresh'];
-
-    public function form(Form $form): Form
+    public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Section::make()->schema([
                     TextInput::make('title')->required()->columnSpanFull(),
-                    Hidden::make('initiative_id')->default(function ($livewire) {
-                        return $livewire->ownerRecord->initiative_id;
-                    }),
+
                     Select::make('initiative_topic_id')
                         ->relationship('topic', 'name')
                         ->required()->label('Subject')
@@ -66,7 +64,7 @@ class ArticlesRelationManager extends RelationManager
                         })->reactive()
                         ->label('Sub Section'),
 
-                    TinyEditor::make('content')->columnSpanFull()->profile('full'),
+                    TinyEditor::make('content')->columnSpanFull()->profile('full')->toolbarSticky(true),
                 ])->columnSpan(2),
 
                 Section::make('meta')->schema([
@@ -100,41 +98,77 @@ class ArticlesRelationManager extends RelationManager
                     ])->required()->default('english'),
 
                     SpatieTagsInput::make('tags')->required(),
-                    TagsInput::make('sources')->separator(',')->placeholder('Add Sources'),
+                    TagsInput::make('sources')->separator(','),
                     Textarea::make('excerpt'),
                 ]),
             ]);
     }
 
-    public function table(Table $table): Table
+    public static function table(Table $table): Table
     {
         return $table
-            ->reorderable('sort')
-            ->reorderRecordsTriggerAction(
-                fn (Action $action, bool $isReordering) => $action
-                    ->button()
-                    ->label($isReordering ? 'Disable reordering' : 'Enable reordering'),
-            )
-            ->defaultSort('sort')
-            ->recordTitleAttribute('title')
+            ->deferLoading()
+            ->defaultSort('updated_at', 'desc')
             ->columns([
                 TextColumn::make('id')->label('id'),
                 ToggleColumn::make('is_published')->label('Published'),
                 IconColumn::make('featured')
                     ->boolean()->trueIcon('heroicon-o-check-badge')
                     ->falseIcon('heroicon-o-x-mark'),
+                TextColumn::make('initiative.name')
+                    ->searchable(),
                 TextColumn::make('title')->limit(40)
-                    ->tooltip(fn (Model $record): string => $record->title),
-                TextColumn::make('topic.name')->label('Subject'),
+                    ->tooltip(fn (Model $record): string => $record->title)
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('topic.name')->label('Subject')
+                    ->searchable(),
                 TextColumn::make('topicSection.name')->label('Section')->limit(20)
-                    ->tooltip(fn (Model $record): string => $record->topicSection->name ?? ''),
+                    ->tooltip(fn (Model $record): string => $record->topicSection->name ?? '')
+                    ->searchable(),
                 TextColumn::make('topicSubSection.name')->label('Sub-Section')->limit(20)
-                    ->tooltip(fn (Model $record): string => $record->topicSubSection->name ?? ''),
+                    ->tooltip(fn (Model $record): string => $record->topicSubSection->name ?? '')
+                    ->searchable(),
                 SpatieTagsColumn::make('tags'),
                 TextColumn::make('author.name')->label('Expert'),
                 TextColumn::make('reviewer.name')->label('Reviewer'),
+                TextColumn::make('updated_at')->label('Last Modified')->date()->sortable(),
             ])
             ->filters([
+                Filter::make('created_at')
+                    ->form([
+                        Flatpickr::make('filter_range')->range()
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['filter_range'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['filter_range'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            );
+                    })->indicateUsing(function (array $data): array {
+                        $indicators = [];
+
+                        if ($data['from'] ?? null) {
+                            $indicators['from'] = 'Created from ' . Carbon::parse($data['from'])->toFormattedDateString();
+                        }
+
+                        if ($data['until'] ?? null) {
+                            $indicators['until'] = 'Created until ' . Carbon::parse($data['until'])->toFormattedDateString();
+                        }
+
+                        return $indicators;
+                    }),
+
+                SelectFilter::make('Initiative')->options([
+                    1 => 'News Today',
+                    2 => 'Monthly Magazine',
+                    3 => 'Weekly Focus'
+                ])->attribute('initiative_id'),
+
                 Filter::make('Section')
                     ->form([
                         Select::make('initiative_topic_id')
@@ -187,24 +221,24 @@ class ArticlesRelationManager extends RelationManager
 
                         return $experts->pluck('name', 'id');
                     })->attribute('reviewer_id'),
-            ], layout: FiltersLayout::Dropdown)->filtersTriggerAction(
+
+            ], layout: FiltersLayout::AboveContent)->filtersTriggerAction(
                 fn (Action $action) => $action
                     ->button()
                     ->label('Filters'),
             )
-            ->filtersFormColumns(4)
+            ->filtersFormColumns(6)
             ->filtersFormMaxHeight('400px')
-            ->headerActions([
-                Tables\Actions\CreateAction::make(),
-            ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ], position: ActionsPosition::BeforeColumns)
+                EditAction::make(),
+            ], ActionsPosition::BeforeColumns)
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
+            ])
+            ->emptyStateActions([
+                CreateAction::make(),
             ]);
     }
 }

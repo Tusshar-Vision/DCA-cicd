@@ -5,7 +5,7 @@
             <div class="my-content-search">
                 <div class="search-bar-wrapper">
                     <span class="vi-icons search"></span>
-                    <input type="text" class="vi-search-bar" placeholder="Search by article name"
+                    <input type="search" class="vi-search-bar" placeholder="Search by article name"
                         required="">
                 </div>
             </div>
