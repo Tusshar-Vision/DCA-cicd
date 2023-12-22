@@ -6,8 +6,6 @@ use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use App\Livewire\Review\CreateReview;
 use App\Livewire\Review\ListReviews;
 use App\Models\User;
-use Carbon\Carbon;
-use Coolsam\FilamentFlatpickr\Forms\Components\Flatpickr;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Livewire;
 use Filament\Forms\Components\RichEditor;
@@ -20,7 +18,6 @@ use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Resources\Components\Tab;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\CreateAction;
@@ -40,9 +37,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Tags\Tag;
 
-trait HasArticles
+trait HasArticlesRelation
 {
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -160,11 +157,17 @@ trait HasArticles
             ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
-            ->deferLoading()
-            ->defaultSort('updated_at', 'desc')
+            ->reorderable('sort')
+            ->reorderRecordsTriggerAction(
+                fn (Action $action, bool $isReordering) => $action
+                    ->button()
+                    ->label($isReordering ? 'Disable reordering' : 'Enable reordering'),
+            )
+            ->defaultSort('sort')
+            ->recordTitleAttribute('title')
             ->columns([
                 TextColumn::make('id')->label('id'),
                 ToggleColumn::make('is_published')->label('Published'),
@@ -191,40 +194,6 @@ trait HasArticles
                 TextColumn::make('updated_at')->label('Last Modified')->date()->sortable(),
             ])
             ->filters([
-                Filter::make('created_at')
-                    ->form([
-                        Flatpickr::make('filter_range')->range()
-                    ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['filter_range'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
-                            )
-                            ->when(
-                                $data['filter_range'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
-                            );
-                    })->indicateUsing(function (array $data): array {
-                        $indicators = [];
-
-                        if ($data['from'] ?? null) {
-                            $indicators['from'] = 'Created from ' . Carbon::parse($data['from'])->toFormattedDateString();
-                        }
-
-                        if ($data['until'] ?? null) {
-                            $indicators['until'] = 'Created until ' . Carbon::parse($data['until'])->toFormattedDateString();
-                        }
-
-                        return $indicators;
-                    }),
-
-                SelectFilter::make('Initiative')->options([
-                    1 => 'News Today',
-                    2 => 'Monthly Magazine',
-                    3 => 'Weekly Focus'
-                ])->attribute('initiative_id'),
-
                 Filter::make('Section')
                     ->form([
                         Select::make('initiative_topic_id')
@@ -277,32 +246,35 @@ trait HasArticles
 
                         return $experts->pluck('name', 'id');
                     })->attribute('reviewer_id'),
-
-            ], layout: FiltersLayout::AboveContent)->filtersTriggerAction(
+            ], layout: FiltersLayout::AboveContentCollapsible)->filtersTriggerAction(
                 fn (Action $action) => $action
                     ->button()
                     ->label('Filters'),
             )
-            ->filtersFormColumns(6)
+            ->filtersFormColumns(4)
             ->filtersFormMaxHeight('400px')
+            ->headerActions([
+                CreateAction::make(),
+            ])
             ->actions([
                 EditAction::make()->button(),
                 Action::make('review')
                     ->form([
+                        Livewire::make(ListReviews::class)->hidden(fn (?Model $record): bool => $record === null),
+
                         TextInput::make('subject')->required(),
                         RichEditor::make('body')->required(),
                     ])
-                    ->action(function (array $data) {
-                        dd($data);
+                    ->action(function (array $data, Model $record) {
+                        $author = Auth::user();
+
+                        $record->review($data['body'], $author, 0, $data['subject']);
                     })->button()
             ], ActionsPosition::BeforeColumns)
             ->bulkActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ])
-            ->emptyStateActions([
-                CreateAction::make(),
             ]);
     }
 }

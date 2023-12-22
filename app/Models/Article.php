@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasComments;
-use Guava\FilamentDrafts\Concerns\HasDrafts;
+use Digikraaft\ReviewRating\Traits\HasReviewRating;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,7 +24,7 @@ use Spatie\Tags\HasTags;
 
 class Article extends Model implements HasMedia
 {
-    use HasFactory, Searchable, HasSlug, HasTags, HasSEO, HasComments, InteractsWithMedia;
+    use HasFactory, Searchable, HasSlug, HasTags, HasSEO, HasComments, InteractsWithMedia, HasReviewRating;
 
     protected $fillable = [
         'title',

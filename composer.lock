@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dae580f1cbea16ece911d37456bb8287",
+    "content-hash": "c97585da95256a099909480b76de6bac",
     "packages": [
         {
             "name": "amidesfahani/filament-tinyeditor",
@@ -1164,6 +1164,68 @@
                 "source": "https://github.com/dflydev/dflydev-dot-access-data/tree/v3.0.2"
             },
             "time": "2022-10-27T11:44:00+00:00"
+        },
+        {
+            "name": "digikraaft/laravel-review-rating",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/digikraaft/laravel-review-rating.git",
+                "reference": "f9069b6e72dfdaaa5632840a592fe267724c9604"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/digikraaft/laravel-review-rating/zipball/f9069b6e72dfdaaa5632840a592fe267724c9604",
+                "reference": "f9069b6e72dfdaaa5632840a592fe267724c9604",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^10.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^8.0",
+                "phpunit/phpunit": "^10.0",
+                "spatie/test-time": "^1.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Digikraaft\\ReviewRating\\ReviewRatingServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Digikraaft\\ReviewRating\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tim Oladoyinbo",
+                    "email": "hello@digikraaft.ng",
+                    "homepage": "https://digikraaft.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Review & Rating system for Laravel",
+            "homepage": "https://github.com/digikraaft/laravel-review-rating",
+            "keywords": [
+                "digikraaft",
+                "laravel",
+                "ratings",
+                "reviews"
+            ],
+            "support": {
+                "issues": "https://github.com/digikraaft/laravel-review-rating/issues",
+                "source": "https://github.com/digikraaft/laravel-review-rating/tree/v3.0.0"
+            },
+            "time": "2023-03-04T00:49:04+00:00"
         },
         {
             "name": "diglactic/laravel-breadcrumbs",
@@ -2353,7 +2415,7 @@
         },
         {
             "name": "filament/spatie-laravel-media-library-plugin",
-            "version": "v3.1.24",
+            "version": "v3.1.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/spatie-laravel-media-library-plugin.git",
@@ -6747,74 +6809,6 @@
                 "source": "https://github.com/ralouphie/getallheaders/tree/develop"
             },
             "time": "2019-03-08T08:55:37+00:00"
-        },
-        {
-            "name": "ralphjsmit/laravel-filament-seo",
-            "version": "1.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ralphjsmit/laravel-filament-seo.git",
-                "reference": "cba9cfa631ff5e0a29539da5d9a769595ef8d919"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ralphjsmit/laravel-filament-seo/zipball/cba9cfa631ff5e0a29539da5d9a769595ef8d919",
-                "reference": "cba9cfa631ff5e0a29539da5d9a769595ef8d919",
-                "shasum": ""
-            },
-            "require": {
-                "filament/filament": "^3.0",
-                "illuminate/contracts": "^8.73|^9.0|^10.0",
-                "php": "^8.0",
-                "ralphjsmit/laravel-seo": "^1.0.4",
-                "spatie/laravel-package-tools": "^1.9.2"
-            },
-            "require-dev": {
-                "nesbot/carbon": "^2.66",
-                "nunomaduro/collision": "^5.10|^6.1|^7.0",
-                "orchestra/testbench": "^6.22|^7.0|^8.0",
-                "pestphp/pest": "^1.21",
-                "pestphp/pest-plugin-laravel": "^1.1",
-                "phpunit/phpunit": "^9.5",
-                "spatie/laravel-ray": "^1.26"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "RalphJSmit\\Filament\\SEO\\FilamentSEOServiceProvider"
-                    ],
-                    "aliases": []
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "RalphJSmit\\Filament\\SEO\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ralph J. Smit",
-                    "email": "rjs@ralphjsmit.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A package to combine the power of Laravel SEO and Filament Admin.",
-            "homepage": "https://github.com/ralphjsmit/laravel-filament-seo",
-            "keywords": [
-                "laravel",
-                "laravel-filament-seo",
-                "ralphjsmit"
-            ],
-            "support": {
-                "issues": "https://github.com/ralphjsmit/laravel-filament-seo/issues",
-                "source": "https://github.com/ralphjsmit/laravel-filament-seo/tree/1.2.1"
-            },
-            "time": "2023-08-23T15:13:05+00:00"
         },
         {
             "name": "ralphjsmit/laravel-helpers",
@@ -12345,23 +12339,23 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "10.1.10",
+            "version": "10.1.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "599109c8ca6bae97b23482d557d2874c25a65e59"
+                "reference": "78c3b7625965c2513ee96569a4dbb62601784145"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/599109c8ca6bae97b23482d557d2874c25a65e59",
-                "reference": "599109c8ca6bae97b23482d557d2874c25a65e59",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/78c3b7625965c2513ee96569a4dbb62601784145",
+                "reference": "78c3b7625965c2513ee96569a4dbb62601784145",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-libxml": "*",
                 "ext-xmlwriter": "*",
-                "nikic/php-parser": "^4.15",
+                "nikic/php-parser": "^4.18 || ^5.0",
                 "php": ">=8.1",
                 "phpunit/php-file-iterator": "^4.0",
                 "phpunit/php-text-template": "^3.0",
@@ -12411,7 +12405,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
                 "security": "https://github.com/sebastianbergmann/php-code-coverage/security/policy",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/10.1.10"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/10.1.11"
             },
             "funding": [
                 {
@@ -12419,7 +12413,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-12-11T06:28:43+00:00"
+            "time": "2023-12-21T15:38:30+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -14049,5 +14043,5 @@
         "php": "^8.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }
