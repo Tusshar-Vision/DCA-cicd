@@ -2565,3 +2565,29 @@ li[data-level="4"] {
 .note-content .vi-text-dark{
   margin-top: 0;
 }
+
+
+/* search full width */
+
+#search-item-container{
+  width: 100%;
+  position: absolute;
+  top: 38px;
+  border: 1px solid #e5e7eb;
+  border-top: 0;
+  left: 0;
+  border-radius: 0 0 8px 8px;
+  min-height: 100px;
+  background: #fff;
+  overflow: auto;
+  a{
+    display: block;
+      p{
+        padding: 8px 15px;
+        &:hover{
+          background-color: #E5EAF4;
+          
+        }
+    }
+  }
+}
