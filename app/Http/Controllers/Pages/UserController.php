@@ -25,4 +25,15 @@ class UserController extends Controller
         if (!$history) ReadHistory::create($inputs);
         return response()->json(['status' => 201]);
     }
+
+    public function bookmarks()
+    {
+        // $read_histories = Auth::guard('cognito')->user()->readHistories()->join('articles', 'read_histories.article_id', '=', 'articles.id')->select('articles.title', DB::raw('DATE_FORMAT(articles.published_at, "%Y-%m-%d") as published_at'))->get();
+        return view('pages.user.bookmarks');
+    }
+
+    public function addBookmark()
+    {
+        //
+    }
 }
