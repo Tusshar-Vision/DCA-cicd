@@ -15,7 +15,7 @@
             <span class="vi-icons search"></span>
             <input type="text" class="vi-search-bar focus" placeholder="Hydrid Warfare" required="" value="{{ $query }}"
                 onchange="redirect(this)">
-            <ul class="w-full absolute left-0 top-[43px] py-2 border-[#ddd] border-2 rounded bg-white hidden updatedText">
+            <ul class="w-full absolute left-0 top-[40px] py-2 border-[#ddd] border-2 rounded bg-white hidden updatedText">
                 <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 1</li>
                 <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 2</li>
                 <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 3</li>
