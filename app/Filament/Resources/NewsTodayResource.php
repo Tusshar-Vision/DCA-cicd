@@ -62,6 +62,7 @@ class NewsTodayResource extends Resource
                             'published_at' => $publishedAt,
                             'publisher_id' => Auth::user()->id
                         ]);
+
                         $livewire->dispatch('updatedPublishedStatus');
                     }),
                 ])->columns(2),
@@ -73,7 +74,7 @@ class NewsTodayResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id')->label('ID')->sortable(),
-                TextColumn::make('published_at')->dateTime('d M Y h:m')->label('Published At')->sortable(),
+                TextColumn::make('published_at')->dateTime('d M Y h:m a')->label('Published At')->sortable(),
                 ToggleColumn::make('is_published')->label('Is Published')->sortable()->afterStateUpdated(function ($state, ?Model $record, Article $articles) {
                     $publishedInitiativeId = $record->id;
 
@@ -83,7 +84,7 @@ class NewsTodayResource extends Resource
                         'publisher_id' => Auth::user()->id
                     ]);
                 }),
-                TextColumn::make('updated_at')->dateTime('d M Y h:m')->label('Last Updated')->sortable(),
+                TextColumn::make('updated_at')->dateTime('d M Y h:m a')->label('Last Updated')->sortable(),
             ])->defaultSort('published_at', 'desc')
             ->filters([
                 //

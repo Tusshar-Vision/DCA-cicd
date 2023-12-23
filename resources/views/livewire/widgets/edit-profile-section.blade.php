@@ -4,7 +4,7 @@
             <div class="vi-user-detail">
                 <img src="{{ URL::asset('images/user-profile.png') }}" alt="Uaser Profile" title="Juhi Dutta" />
                 <div class="vi-user-name-wrapper">
-                    <p>Juhi Dutta</p>
+                    <p>Bawa Vikram</p>
                     <a class="" href="">Edit Profile</a>
                 </div>
             </div>

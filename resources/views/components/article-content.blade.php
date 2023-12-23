@@ -94,6 +94,22 @@
 </div>
 
 <script>
+    @if (Auth::guard('cognito')->check())
+        window.onload = addReadArticle
+
+        function addReadArticle() {
+            console.log("add read article", "{{ Auth::guard('cognito')->user()->name }}");
+            const article_id = "{{ $article->id }}";
+            const student_id = "{{ Auth::guard('cognito')->user()->id }}"
+            saveData("{{ route('user.read-history') }}", {
+                article_id,
+                student_id,
+                read_percent: 0,
+                _token: "{{ csrf_token() }}"
+            })
+        }
+    @endif
+
     const doc = document.getElementById("article-content");
     doc.addEventListener('mouseup', handleSelection);
     var pageX, pageY;
