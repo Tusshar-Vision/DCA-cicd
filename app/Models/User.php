@@ -25,7 +25,7 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
-        'type'
+        'is_disabled'
     ];
 
     /**
@@ -46,6 +46,7 @@ class User extends Authenticatable implements FilamentUser
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'is_disabled' => 'bool'
     ];
 
     public function score(): HasOne
@@ -55,7 +56,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return str_ends_with($this->email, '@visionias.in');
+        return str_ends_with($this->email, '@visionias.in') && $this->is_disabled === false ;
     }
 
 }

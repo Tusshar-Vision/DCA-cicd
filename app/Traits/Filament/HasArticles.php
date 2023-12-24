@@ -3,9 +3,11 @@
 namespace App\Traits\Filament;
 
 use AmidEsfahani\FilamentTinyEditor\TinyEditor;
+use App\Jobs\GenerateArticlePDF;
 use App\Livewire\Review\CreateReview;
 use App\Livewire\Review\ListReviews;
 use App\Models\User;
+use AymanAlhattami\FilamentDateScopesFilter\DateScopeFilter;
 use Carbon\Carbon;
 use Coolsam\FilamentFlatpickr\Forms\Components\Flatpickr;
 use Filament\Forms\Components\Group;
@@ -20,8 +22,12 @@ use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Components\Tab;
+use Filament\Support\Colors\Color;
+use Filament\Support\Colors\ColorManager;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteBulkAction;
@@ -37,7 +43,10 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Queue\Jobs\Job;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Spatie\ModelStatus\Status;
 use Spatie\Tags\Tag;
 
 trait HasArticles
@@ -141,7 +150,7 @@ trait HasArticles
 
                         ])->collapsible(),
 
-                        Section::make('Review')->schema([
+                        Section::make('Review Comments')->schema([
                             Livewire::make(CreateReview::class)->hidden(fn (?Model $record): bool => $record === null)
                         ])->collapsible(),
 
@@ -151,7 +160,7 @@ trait HasArticles
 
                     ]),
 
-                    Tabs\Tab::make('Reviews')->schema([
+                    Tabs\Tab::make('Review')->schema([
                         Livewire::make(ListReviews::class)->hidden(fn (?Model $record): bool => $record === null)
                     ]),
 
@@ -191,33 +200,17 @@ trait HasArticles
                 TextColumn::make('updated_at')->label('Last Modified')->date()->sortable(),
             ])
             ->filters([
-                Filter::make('created_at')
-                    ->form([
-                        Flatpickr::make('filter_range')->range()
-                    ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['filter_range'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
-                            )
-                            ->when(
-                                $data['filter_range'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
-                            );
-                    })->indicateUsing(function (array $data): array {
-                        $indicators = [];
+                DateScopeFilter::make('created_at'),
 
-                        if ($data['from'] ?? null) {
-                            $indicators['from'] = 'Created from ' . Carbon::parse($data['from'])->toFormattedDateString();
-                        }
-
-                        if ($data['until'] ?? null) {
-                            $indicators['until'] = 'Created until ' . Carbon::parse($data['until'])->toFormattedDateString();
-                        }
-
-                        return $indicators;
-                    }),
+                SelectFilter::make('status')->options([
+                    "D - Draft",
+                    "I - Improve",
+                    "C - Changes",
+                    "R - Reject",
+                    "F - Final",
+                    "P - Published",
+                    "FD - Final Database"
+                ]),
 
                 SelectFilter::make('Initiative')->options([
                     1 => 'News Today',
@@ -298,7 +291,26 @@ trait HasArticles
             ], ActionsPosition::BeforeColumns)
             ->bulkActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    BulkAction::make('Export as pdf File')
+                        ->icon('heroicon-s-arrow-top-right-on-square')
+                        ->requiresConfirmation()
+                        ->color(Color::hex('#00569e'))
+                        ->action(function (Collection $records) {
+
+                            GenerateArticlePDF::dispatch($records)->onQueue('pdf');
+
+                            Notification::make()
+                                ->title('Export has been started!')
+                                ->body('You will get a notification when your files are ready to download')
+                                ->success()
+                                ->send();
+                        })
+                        ->deselectRecordsAfterCompletion(),
+                    BulkAction::make('Export as Word File')
+                        ->icon('heroicon-s-arrow-top-right-on-square')
+                        ->color(Color::hex('#00569e')),
+
+                    DeleteBulkAction::make()
                 ]),
             ])
             ->emptyStateActions([

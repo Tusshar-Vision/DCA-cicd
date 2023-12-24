@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
             $table->text('content');
-            $table->date('published_at');
+            $table->dateTime('published_at')->nullable();
             $table->boolean('visible')->default(false);
-            $table->date('visible_till')->nullable();
+            $table->dateTime('visible_till')->nullable();
             $table->timestamps();
         });
     }

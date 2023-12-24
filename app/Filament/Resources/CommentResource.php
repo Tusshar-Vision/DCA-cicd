@@ -13,7 +13,9 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Collection;
 
 class CommentResource extends Resource
 {
@@ -35,19 +37,59 @@ class CommentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
-                TextColumn::make('content'),
-                ToggleColumn::make('is_approved'),
+                Tables\Columns\ImageColumn::make('Author')
+                    ->defaultImageUrl(function (Model $record) {
+                        $first_initial = mb_substr($record->user->name, 0, 1);
+                        return 'https://ui-avatars.com/api/?name=' . $first_initial . '&color=FFFFFF&background=09090b';
+                    })
+                    ->circular()
+                    ->tooltip(function (Model $record) {
+                        return $record->user->name;
+                    }),
+                TextColumn::make('content')->label('Comment'),
+                TextColumn::make('created_at')->date('M d, Y, h:i a'),
+                Tables\Columns\IconColumn::make('is_approved'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+
+                Tables\Actions\Action::make('View Comment')
+                    ->button()->form(function (Model $record) {
+                        return [
+                          Forms\Components\TextInput::make('Comment')->label('')->default($record->content)->disabled()
+                        ];
+                    }),
+
+                Tables\Actions\Action::make('Approve')
+                    ->button()
+                    ->hidden(function (Model $record) {
+                        return $record->is_approved;
+                    })
+                    ->action(function (Model $record) {
+                        $record->update(['is_approved' => true]);
+                    }),
+
+                Tables\Actions\Action::make('Disapprove')
+                    ->button()
+                    ->visible(function (Model $record) {
+                        return $record->is_approved;
+                    })
+                    ->action(function (Model $record) {
+                        $record->update(['is_approved' => false]);
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('Approve comments')
+                        ->action(function (Collection $records) {
+                           $records->each(function ($record) {
+                               $record->update(['is_approved' => true]);
+                           });
+                        })->deselectRecordsAfterCompletion(),
                 ]),
             ]);
     }
@@ -64,7 +106,7 @@ class CommentResource extends Resource
         return [
             'index' => Pages\ListComments::route('/'),
             'create' => Pages\CreateComment::route('/create'),
-            'edit' => Pages\EditComment::route('/{record}/edit'),
+//            'edit' => Pages\EditComment::route('/{record}/edit'),
         ];
     }
 }

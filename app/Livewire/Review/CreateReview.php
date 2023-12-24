@@ -30,8 +30,8 @@ class CreateReview extends Component implements HasForms
     {
         return $form
             ->schema([
-                TextInput::make('subject')->required(),
-                RichEditor::make('body')->required(),
+//                TextInput::make('subject')->required(),
+                RichEditor::make('body')->required()->label(''),
             ])
             ->statePath('data')
             ->model(Review::class);
@@ -42,7 +42,7 @@ class CreateReview extends Component implements HasForms
         $data = $this->form->getState();
         $author = \Auth::user();
 
-        $this->record->review($data['body'], $author, 0, $data['subject']);
+        $this->record->review($data['body'], $author, 0);
 
 //        $record = Review::create($data);
 //

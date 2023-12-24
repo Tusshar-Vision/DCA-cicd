@@ -14,9 +14,11 @@ use Laravel\Scout\Searchable;
 use RalphJSmit\Laravel\SEO\Support\HasSEO;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\ModelStatus\HasStatuses;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Tags\HasTags;
+use LaracraftTech\LaravelDateScopes\DateScopes;
 
 /**
  * @method isFeatured()
@@ -24,7 +26,7 @@ use Spatie\Tags\HasTags;
 
 class Article extends Model implements HasMedia
 {
-    use HasFactory, Searchable, HasSlug, HasTags, HasSEO, HasComments, InteractsWithMedia, HasReviewRating;
+    use HasFactory, Searchable, HasSlug, HasTags, HasSEO, HasComments, InteractsWithMedia, HasReviewRating, DateScopes, HasStatuses;
 
     protected $fillable = [
         'title',
