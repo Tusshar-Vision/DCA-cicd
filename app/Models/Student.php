@@ -16,4 +16,9 @@ class Student extends User
     {
         return $this->hasMany(ReadHistory::class);
     }
+
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
 }

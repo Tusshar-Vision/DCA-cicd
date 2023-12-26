@@ -4,55 +4,22 @@
         <div class="my-contnet-tab-filter">
             <div class="my-content-search">
                 <div class="search-bar-wrapper">
-                <input type="search" class="vi-search-bar" placeholder="Search by article name" required="">
+                    <input type="search" class="vi-search-bar" placeholder="Search by article name" required="">
                     <span class="vi-icons search"></span>
                 </div>
             </div>
         </div>
         <div class="bookmark-list-wrap">
             <ul>
-                <li>
-                    <img src="{{ URL::asset('images/card-image-small.png') }}">
-                    <div class="bookmark-cont">
-                        <span>John Jacob - 11/11/23</span>
-                        <p>Amet luctus venenatis lectus magna fringilla urna porttitor rhoncus.</p>
-                    </div>
-                </li>
-                <li>
-                    <img src="{{ URL::asset('images/card-image-small.png') }}">
-                    <div class="bookmark-cont">
-                        <span>John Jacob - 11/11/23</span>
-                        <p>Amet luctus venenatis lectus magna fringilla urna porttitor rhoncus.</p>
-                    </div>
-                </li>
-                <li>
-                    <img src="{{ URL::asset('images/card-image-small.png') }}">
-                    <div class="bookmark-cont">
-                        <span>John Jacob - 11/11/23</span>
-                        <p>Amet luctus venenatis lectus magna fringilla urna porttitor rhoncus.</p>
-                    </div>
-                </li>
-                <li>
-                    <img src="{{ URL::asset('images/card-image-small.png') }}">
-                    <div class="bookmark-cont">
-                        <span>John Jacob - 11/11/23</span>
-                        <p>Amet luctus venenatis lectus magna fringilla urna porttitor rhoncus.</p>
-                    </div>
-                </li>
-                <li>
-                    <img src="{{ URL::asset('images/card-image-small.png') }}">
-                    <div class="bookmark-cont">
-                        <span>John Jacob - 11/11/23</span>
-                        <p>Amet luctus venenatis lectus magna fringilla urna porttitor rhoncus.</p>
-                    </div>
-                </li>
-                <li>
-                    <img src="{{ URL::asset('images/card-image-small.png') }}">
-                    <div class="bookmark-cont">
-                        <span>John Jacob - 11/11/23</span>
-                        <p>Amet luctus venenatis lectus magna fringilla urna porttitor rhoncus.</p>
-                    </div>
-                </li>
+                @foreach ($bookmarks as $bookmark)
+                    <li>
+                        <img src="{{ URL::asset('images/card-image-small.png') }}">
+                        <div class="bookmark-cont">
+                            <span>{{ $bookmark->published_at }}</span>
+                            <p>{{ $bookmark->title }}</p>
+                        </div>
+                    </li>
+                @endforeach
             </ul>
         </div>
     </div>

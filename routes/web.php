@@ -53,10 +53,12 @@ Route::controller(Pages\WeeklyFocusController::class)->group(function () {
 
 Route::middleware('auth:cognito')->group(function () {
     Route::prefix('user')->group(function () {
-        Route::get('/dashboard', [Pages\UserController::class, 'dashboard'])->name('user.dashboard');
+        Route::get('/activity', [Pages\UserController::class, 'dashboard'])->name('user.dashboard');
         Route::post('/update/read-history', [Pages\UserController::class, 'updateReadHistory'])->name('user.read-history');
         Route::get('/bookmarks', [Pages\UserController::class, 'bookmarks'])->name('bookmarks');
-        Route::get('/bookmarks/add', [Pages\UserController::class, 'addBookmark'])->name('bookmarks.add');
+        Route::post('/bookmarks/add', [Pages\UserController::class, 'addBookmark'])->name('bookmarks.add');
+        Route::get('/content/{type?}', [Pages\UserController::class, 'myContent'])->name('user.content');
+        Route::get('/search-notes', [Pages\UserController::class, 'searchNotes'])->name('user.search-notes');
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
     });
 });
@@ -77,5 +79,5 @@ Route::get('/tags/{search}', [NoteController::class, 'searchTagsLike'])->name('t
 
 
 Route::get('/test', function () {
-    return view('pages.user.home');
+    return view('pages.user.edit-profile-section');
 });

@@ -9,6 +9,7 @@
 @section('content')
 
     <div class="space-y-4">
+        <x-widgets.options-nav :articleId="$article->id" :isArticleBookmarked="$isArticleBookmarked" />
         <x-common.article-heading :title="$article->title" />
         <x-widgets.articles-nav :createdAt="$article->created_at" :updatedAt="$article->updated_at" />
     </div>

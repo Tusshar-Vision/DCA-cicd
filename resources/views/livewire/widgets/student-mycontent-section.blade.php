@@ -1,355 +1,170 @@
-<!-- my content section -->
-<div class="vi-profile-tab-container">
-    <div class="my-content-tab-wrapper">
-        <div class="my-contnet-tab-filter justify-between">
-            <div class="my-content-search">
-                <div class="search-bar-wrapper">
-                    <span class="vi-icons search"></span>
-                    <input type="search" class="vi-search-bar" placeholder="Search by article name"
-                        required="">
-                </div>
-            </div>
-            <div class="my-content-sort">
-                <button class="clear-filter">Clear Filter</button>
-                <button class="cont-filter">Filter</button>
-                <div class="vi-dropdown">
-                    <div class="vi-dropbtn">Time<span class="vi-icons vi-drop-arrow"></span></div>
-                    <div class="vi-dropdown-content">
-                        <a href="#">This Year</a>
-                        <a href="#">Last 7 days</a>
-                        <a href="#">Last 15 days</a>
-                    </div>
-                </div>
-                <div class="change-view-wrap">
-                    <!-- <a href="#"><img src="{{ URL::asset('images/grid.svg') }}"></a> -->
-                    <a href="#"><img src="{{ URL::asset('images/list.svg') }}"></a>
-                </div>
-            </div>
-        </div>
-        <div class="breadcrumb-wrapper">
-            <ul>
-                <li><a href="#">Paper</a></li>
-                <li><a href="#">Subject</a></li>
-                <li><a href="#" class="active">Section</a></li>
-            </ul>
-        </div>
-        <div class="vi-tab-acc-list">
-            <!-- Accordian -->
-            <div class="vi-acrticle-highligh-coll active">
-                <div class="vi-acc-top-box">
-                    <p>Article Name 1</p>
-                    <span class="vi-line"></span>
-                    <span class="vi-tab-acc-close vi-line"></span>
-                </div>
-                <!-- add class and remove class 'grid-view' -->
-                <div class="ci-tab-acc-content">
-                    <div class="vi-note-and-high-list">
-                        <!-- single card -->
-                        <div class="vi-note">
-                            <div class="vi-card-corner">
-                                <div class="vi-card-corner-triangle"></div>
-                            </div>
-                            <p class="vi-note-title">Article Name - <span class="vi-note-name">Note 1</span></p>
-                            <div class="note-content">
-                                <p class="vi-text-light">A scelerisque purus semper eget duis. Dignissim cras tincidunt lobortis feugiat vivamus at augue eget arcu.</p>
-                                <p class="vi-text-dark">Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
-                            </div>
-                            <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                                <a href="#" class="vi-icons note-edit"></a>
-                            </div>
-                        </div>
+ <div class="vi-profile-tab-container">
+     <div class="my-content-tab-wrapper rounded">
 
-                        <div class="vi-note">
-                            <div class="vi-card-corner">
-                                <div class="vi-card-corner-triangle"></div>
-                            </div>
-                            <p class="vi-note-title">Article Name - <span class="vi-note-name">Note 1</span></p>
-                            <div class="note-content">
-                                <p class="vi-text-light">A scelerisque purus semper eget duis. Dignissim cras tincidunt lobortis feugiat vivamus
-                                    at augue eget arcu.</p>
-                                <p class="vi-text-dark">Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
-                            </div>
-                            <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                                <a href="#" class="vi-icons note-edit"></a>
-                            </div>
-                        </div>
+         {{-- <div x-data="{ isFilterModalOpen: false }">
+             <x-modals.modal-box x-show="isFilterModalOpen" heading="Filter">
+                 <livewire:widgets.my-content-filter />
+             </x-modals.modal-box>
+         </div> --}}
 
-                        <div class="vi-note">
-                            <div class="vi-card-corner">
-                                <div class="vi-card-corner-triangle"></div>
-                            </div>
-                            <p class="vi-note-title">Article Name - <span class="vi-note-name">Note 1</span></p>
-                            <div class="note-content">
-                                <p class="vi-text-light">A scelerisque purus semper eget duis. Dignissim cras tincidunt lobortis feugiat vivamus at augue eget arcu.</p>
-                                <p class="vi-text-dark">Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
-                            </div>
-                            <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                                <a href="#" class="vi-icons note-edit"></a>
-                            </div>
-                        </div>
+         <div class="my-contnet-tab-filter justify-between" x-data="{ isFilterModalOpen: false }">
 
-                        <div class="vi-note">
-                            <div class="vi-card-corner">
-                                <div class="vi-card-corner-triangle"></div>
-                            </div>
-                            <p class="vi-note-title">Article Name - <span class="vi-note-name">Highlight 1</span></p>
-                            <div class="note-content">
-                                <p class="vi-text-dark vi-yellow-text">Dignissim enim sit amet venenatis urna cursus eget nunc. Dignissim enim sit amet venenatis urna cursus eget nunc. Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
-                            </div>
-                            <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                            </div>
-                        </div>
+             {{-- filter modal --}}
+             <x-modals.modal-box x-show="isFilterModalOpen" heading="Filter">
+                 <livewire:widgets.my-content-filter />
+             </x-modals.modal-box>
 
-                        <div class="vi-note">
-                            <div class="vi-card-corner">
-                                <div class="vi-card-corner-triangle"></div>
-                            </div>
-                            <p class="vi-note-title">Article Name - <span class="vi-note-name">Highlight 1</span></p>
-                            <div class="note-content">
-                                <p class="vi-text-dark vi-yellow-text">Dignissim enim sit amet venenatis urna cursus eget nunc. Dignissim enim
-                                    sit amet venenatis urna cursus eget nunc. Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
-                            </div>
-                            <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                            </div>
-                        </div>
+             {{-- search --}}
+             <div class="my-content-search">
+                 <div class="search-bar-wrapper">
+                     <span class="vi-icons search"></span>
+                     <input type="search" class="vi-search-bar" placeholder="Search by article name" required=""
+                         onchange="searchNotes(this)">
+                     <div
+                         class="absolute left-0 top-[40px] bg-white rounded-md w-[100%] border-[#8F93A3] border-[1px] z-10 hidden showsearch">
+                         <p class="p-[10px] cursor-pointer text-[#5A7184] hover:bg-[#F4F6FC]">Search result
+                         <p>
+                     </div>
+                 </div>
+             </div>
 
-                        <div class="vi-note">
-                            <div class="vi-card-corner">
-                                <div class="vi-card-corner-triangle"></div>
-                            </div>
-                            <p class="vi-note-title">Article Name - <span class="vi-note-name">Highlight 1</span></p>
-                            <div class="note-content">
-                                <p class="vi-text-dark vi-yellow-text">Dignissim enim sit amet venenatis urna cursus eget nunc. Dignissim enim
-                                    sit amet venenatis urna cursus eget nunc. Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
-                            </div>
-                            <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                            </div>
-                        </div>
+             {{-- filter --}}
+             <div class="my-content-sort">
+                 {{-- <button class="clear-filter">Clear Filter</button> --}}
+                 <button class="cont-filter" @click="isFilterModalOpen=true">Filter</button>
+                 <div class="vi-dropdown">
+                     <div class="vi-dropbtn">Time<span class="vi-icons vi-drop-arrow"></span></div>
+                     <div class="vi-dropdown-content">
+                         <a href="javascript:void(0)">This Year</a>
+                         <a href="javascript:void(0)">Last 7 days</a>
+                         <a href="javascript:void(0)">Last 15 days</a>
+                     </div>
+                 </div>
+                 <div class="change-view-wrap">
+                     <!-- <a href="javascript:void(0)"><img src="{{ URL::asset('images/grid.svg') }}"></a> -->
+                     <a href="javascript:void(0)"><img src="{{ URL::asset('images/list.svg') }}"></a>
+                 </div>
+             </div>
 
-                    </div>
-                </div>
-            </div>
+         </div>
 
-            <div class="vi-acrticle-highligh-coll">
-                <div class="vi-acc-top-box">
-                    <p>Article Name 2</p>
-                    <span class="vi-line"></span>
-                    <span class="vi-tab-acc-close vi-line"></span>
-                </div>
-                <div class="ci-tab-acc-content">
-                    <div class="vi-note-and-high-list">
-                        <!-- single card -->
-                        <div class="vi-note">
-                            <div class="vi-card-corner">
-                                <div class="vi-card-corner-triangle"></div>
-                            </div>
-                            <p class="vi-note-title">Article Name - <span class="vi-note-name">Note 2</span></p>
-                            <div class="note-content">
-                                <p class="vi-text-light">A scelerisque purus semper eget duis. Dignissim cras tincidunt lobortis feugiat vivamus at augue eget arcu.</p>
-                                <p class="vi-text-dark">Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
-                            </div>
-                            <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                                <a href="#" class="vi-icons note-edit"></a>
-                            </div>
-                        </div>
+         <div class="breadcrumb-wrapper" id="breadcrumb">
+             <ul>
+                 <li><a href="javascript:void(0)" class="{{ $type == 'papers' ? 'active' : '' }}">Paper</a></li>
+                 @if ($paper)
+                     <li><a href="javascript:void(0)"
+                             class="{{ $type == 'topics' ? 'active' : '' }}">{{ $paper }}</a></li>
+                 @endif
+                 @if ($topic)
+                     <li><a href="javascript:void(0)"
+                             class="{{ $type == 'sections' ? 'active' : '' }}">{{ $topic }}</a></li>
+                 @endif
+                 @if ($section)
+                     <li><a href="javascript:void(0)"
+                             class="{{ $type == 'articles' ? 'active' : '' }}">{{ $section }}</a></li>
+                 @endif
+             </ul>
+         </div>
 
-                        <div class="vi-note">
-                            <div class="vi-card-corner">
-                                <div class="vi-card-corner-triangle"></div>
-                            </div>
-                            <p class="vi-note-title">Article Name - <span class="vi-note-name">Note 2</span></p>
-                            <div class="note-content">
-                                <p class="vi-text-light">A scelerisque purus semper eget duis. Dignissim cras tincidunt lobortis feugiat vivamus
-                                    at augue eget arcu.</p>
-                                <p class="vi-text-dark">Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
-                            </div>
-                            <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                                <a href="#" class="vi-icons note-edit"></a>
-                            </div>
-                        </div>
+         <div class="vi-tab-acc-list">
+             <div class="vi-acrticle-highligh-coll active">
+                 <div class="ci-tab-acc-content">
+                     <div class="vi-note-and-high-list" id="notes-list-container">
+                         @if ($type == 'papers')
+                             @foreach ($papers as $paper)
+                                 <div class="vi-note cursor-pointer">
+                                     <div class="vi-card-corner">
+                                         <div class="vi-card-corner-triangle"></div>
+                                     </div>
+                                     <a href="{{ route('user.content', ['type' => 'topics']) . '?pid=' . $paper->id }}">
+                                         <p class="vi-note-title border-0">{{ $paper->name }}
+                                         </p>
+                                     </a>
+                                 </div>
+                             @endforeach
+                         @elseif ($type == 'topics')
+                             @foreach ($topics as $topic)
+                                 <div class="vi-note cursor-pointer">
+                                     <div class="vi-card-corner">
+                                         <div class="vi-card-corner-triangle"></div>
+                                     </div>
+                                     <a
+                                         href="{{ route('user.content', ['type' => 'sections']) . '?tid=' . $topic->id }}">
+                                         <p class="vi-note-title border-0">{{ $topic->name }}
+                                         </p>
+                                     </a>
+                                 </div>
+                             @endforeach
+                         @elseif ($type == 'sections')
+                             @foreach ($sections as $section)
+                                 <div class="vi-note cursor-pointer">
+                                     <div class="vi-card-corner">
+                                         <div class="vi-card-corner-triangle"></div>
+                                     </div>
+                                     <a
+                                         href="{{ route('user.content', ['type' => 'articles']) . '?sid=' . $section->id }}">
+                                         <p class="vi-note-title border-0">{{ $section->name }}
+                                         </p>
+                                     </a>
+                                 </div>
+                             @endforeach
+                         @elseif ($type == 'articles')
+                             @foreach ($articles as $article)
+                                 <div class="vi-note">
+                                     <div class="vi-card-corner">
+                                         <div class="vi-card-corner-triangle"></div>
+                                     </div>
+                                     <a href="#" class="vi-note-title">{{ $article->title }}
+                                     </a>
+                                     <div class="note-content">
+                                         <p class="vi-text-light">
+                                             {{ html_entity_decode(substr(strip_tags($article->content), 0, 500)) }}
+                                         </p>
+                                     </div>
+                                     <div class="vi-note-action">
+                                         <a href="#" class="vi-icons note-delete"></a>
+                                         <a href="#" class="vi-icons note-edit"></a>
+                                     </div>
+                                 </div>
+                             @endforeach
+                         @endif
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
 
-                        <div class="vi-note">
-                            <div class="vi-card-corner">
-                                <div class="vi-card-corner-triangle"></div>
-                            </div>
-                            <p class="vi-note-title">Article Name - <span class="vi-note-name">Note 2</span></p>
-                            <div class="note-content">
-                                <p class="vi-text-light">A scelerisque purus semper eget duis. Dignissim cras tincidunt lobortis feugiat vivamus at augue eget arcu.</p>
-                                <p class="vi-text-dark">Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
-                            </div>
-                            <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                                <a href="#" class="vi-icons note-edit"></a>
-                            </div>
-                        </div>
-
-                        <div class="vi-note">
-                            <div class="vi-card-corner">
-                                <div class="vi-card-corner-triangle"></div>
-                            </div>
-                            <p class="vi-note-title">Article Name - <span class="vi-note-name">Highlight 2</span></p>
-                            <div class="note-content">
-                                <p class="vi-text-dark vi-yellow-text">Dignissim enim sit amet venenatis urna cursus eget nunc. Dignissim enim sit amet venenatis urna cursus eget nunc. Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
-                            </div>
-                            <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                            </div>
-                        </div>
-
-                        <div class="vi-note">
-                            <div class="vi-card-corner">
-                                <div class="vi-card-corner-triangle"></div>
-                            </div>
-                            <p class="vi-note-title">Article Name - <span class="vi-note-name">Highlight 2</span></p>
-                            <div class="note-content">
-                                <p class="vi-text-dark vi-yellow-text">Dignissim enim sit amet venenatis urna cursus eget nunc. Dignissim enim
-                                    sit amet venenatis urna cursus eget nunc. Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
-                            </div>
-                            <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                            </div>
-                        </div>
-
-                        <div class="vi-note">
-                            <div class="vi-card-corner">
-                                <div class="vi-card-corner-triangle"></div>
-                            </div>
-                            <p class="vi-note-title">Article Name - <span class="vi-note-name">Highlight 2</span></p>
-                            <div class="note-content">
-                                <p class="vi-text-dark vi-yellow-text">Dignissim enim sit amet venenatis urna cursus eget nunc. Dignissim enim
-                                    sit amet venenatis urna cursus eget nunc. Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
-                            </div>
-                            <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="vi-acrticle-highligh-coll">
-                <div class="vi-acc-top-box">
-                    <p>Article Name 3</p>
-                    <span class="vi-line"></span>
-                    <span class="vi-tab-acc-close vi-line"></span>
-                </div>
-                <div class="ci-tab-acc-content">
-                    <div class="vi-note-and-high-list">
-                        <!-- single card -->
-                        <div class="vi-note">
-                            <div class="vi-card-corner">
-                                <div class="vi-card-corner-triangle"></div>
-                            </div>
-                            <p class="vi-note-title">Article Name - <span class="vi-note-name">Note 3</span></p>
-                            <div class="note-content">
-                                <p class="vi-text-light">A scelerisque purus semper eget duis. Dignissim cras tincidunt lobortis feugiat vivamus at augue eget arcu.</p>
-                                <p class="vi-text-dark">Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
-                            </div>
-                            <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                                <a href="#" class="vi-icons note-edit"></a>
-                            </div>
-                        </div>
-
-                        <div class="vi-note">
-                            <div class="vi-card-corner">
-                                <div class="vi-card-corner-triangle"></div>
-                            </div>
-                            <p class="vi-note-title">Article Name - <span class="vi-note-name">Note 3</span></p>
-                            <div class="note-content">
-                                <p class="vi-text-light">A scelerisque purus semper eget duis. Dignissim cras tincidunt lobortis feugiat vivamus
-                                    at augue eget arcu.</p>
-                                <p class="vi-text-dark">Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
-                            </div>
-                            <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                                <a href="#" class="vi-icons note-edit"></a>
-                            </div>
-                        </div>
-
-                        <div class="vi-note">
-                            <div class="vi-card-corner">
-                                <div class="vi-card-corner-triangle"></div>
-                            </div>
-                            <p class="vi-note-title">Article Name - <span class="vi-note-name">Note 3</span></p>
-                            <div class="note-content">
-                                <p class="vi-text-light">A scelerisque purus semper eget duis. Dignissim cras tincidunt lobortis feugiat vivamus at augue eget arcu.</p>
-                                <p class="vi-text-dark">Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
-                            </div>
-                            <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                                <a href="#" class="vi-icons note-edit"></a>
-                            </div>
-                        </div>
-
-                        <div class="vi-note">
-                            <div class="vi-card-corner">
-                                <div class="vi-card-corner-triangle"></div>
-                            </div>
-                            <p class="vi-note-title">Article Name - <span class="vi-note-name">Highlight 3</span></p>
-                            <div class="note-content">
-                                <p class="vi-text-dark vi-yellow-text">Dignissim enim sit amet venenatis urna cursus eget nunc. Dignissim enim sit amet venenatis urna cursus eget nunc. Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
-                            </div>
-                            <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                            </div>
-                        </div>
-
-                        <div class="vi-note">
-                            <div class="vi-card-corner">
-                                <div class="vi-card-corner-triangle"></div>
-                            </div>
-                            <p class="vi-note-title">Article Name - <span class="vi-note-name">Highlight 3</span></p>
-                            <div class="note-content">
-                                <p class="vi-text-dark vi-yellow-text">Dignissim enim sit amet venenatis urna cursus eget nunc. Dignissim enim
-                                    sit amet venenatis urna cursus eget nunc. Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
-                            </div>
-                            <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                            </div>
-                        </div>
-
-                        <div class="vi-note">
-                            <div class="vi-card-corner">
-                                <div class="vi-card-corner-triangle"></div>
-                            </div>
-                            <p class="vi-note-title">Article Name - <span class="vi-note-name">Highlight 3</span></p>
-                            <div class="note-content">
-                                <p class="vi-text-dark vi-yellow-text">Dignissim enim sit amet venenatis urna cursus eget nunc. Dignissim enim
-                                    sit amet venenatis urna cursus eget nunc. Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
-                            </div>
-                            <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- my content section -->
+ <script>
+     function searchNotes(ele) {
+         const val = ele.value;
+         let url = "{{ route('user.search-notes') }}";
+         url += `?query=${val}`;
 
 
-<script>
-    const accordionItems = document.querySelectorAll(".vi-acrticle-highligh-coll");
-    accordionItems.forEach(item =>
-    item.addEventListener("click", () => {
-        const isItemOpen = item.classList.contains("active");
-        accordionItems.forEach(item => item.classList.remove("active"));
-        if (!isItemOpen) {
-        item.classList.toggle("active");
-        }
-    })
-    );
-</script>
+         getData(url).then(data => {
+             let html = ""
+             data.map(note => {
+                 html += `<div class="vi-note"><div class="vi-card-corner"><div class="vi-card-corner-triangle"></div></div><a href="#" class="vi-note-title">${note.title}</a>
+                                     <div class="note-content">
+                                         <p class="vi-text-light">
+                                            ${note.content}
+                                         </p>
+                                     </div>
+                                     <div class="vi-note-action">
+                                         <a href="#" class="vi-icons note-delete"></a>
+                                         <a href="#" class="vi-icons note-edit"></a>
+                                     </div>
+                      </div>`
+             })
+             console.log('====================================');
+             console.log("html", html);
+             console.log('====================================');
+
+             document.getElementById("notes-list-container").innerHTML = html;
+             document.getElementById("breadcrumb").style.display = "none"
+         })
+
+
+     }
+ </script>
