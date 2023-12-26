@@ -62,8 +62,7 @@ class WeeklyFocusController extends Controller
         $note = null;
         $isArticleBookmarked = false;
 
-
-        if (Auth::check()) {
+        if (Auth::guard('cognito')->check()) {
             $noteAvailable = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->id)->count() > 0 ? true : false;
             $note = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->id)->first();
             $bookmark =  Bookmark::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->id)->first();

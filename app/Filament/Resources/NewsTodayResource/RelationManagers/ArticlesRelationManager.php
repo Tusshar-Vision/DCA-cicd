@@ -157,7 +157,6 @@ class ArticlesRelationManager extends RelationManager
                             TinyEditor::make('content')
                                 ->columnSpanFull()
                                 ->profile('full')
-                                ->toolbarSticky(true)
                                 ->maxHeight(500)
                                 ->hiddenLabel(),
                             TagsInput::make('sources')->separator(',')->placeholder('New Source')
@@ -325,7 +324,7 @@ class ArticlesRelationManager extends RelationManager
                 SelectFilter::make('Expert')
                     ->options(function (User $users) {
                         $experts = $users->whereHas('roles', function($query) {
-                            return $query->whereIn('name', ['Admin', 'Expert']);
+                            return $query->whereIn('name', ['expert', 'news_today_expert']);
                         })->get();
 
                         return $experts->pluck('name', 'id');
@@ -334,7 +333,7 @@ class ArticlesRelationManager extends RelationManager
                 SelectFilter::make('Reviewer')
                     ->options(function (User $users) {
                         $experts = $users->whereHas('roles', function($query) {
-                            return $query->whereIn('name', ['Admin', 'Reviewer']);
+                            return $query->whereIn('name', ['reviewer', 'news_today_reviewer']);
                         })->get();
 
                         return $experts->pluck('name', 'id');

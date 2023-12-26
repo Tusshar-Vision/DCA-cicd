@@ -333,7 +333,7 @@ class ArticleResource extends Resource implements HasShieldPermissions
                 SelectFilter::make('Expert')
                     ->options(function (User $users) {
                         $experts = $users->whereHas('roles', function($query) {
-                            return $query->whereIn('name', ['Admin', 'Expert']);
+                            return $query->where('name', 'like', '%expert%');
                         })->get();
 
                         return $experts->pluck('name', 'id');
@@ -342,7 +342,7 @@ class ArticleResource extends Resource implements HasShieldPermissions
                 SelectFilter::make('Reviewer')
                     ->options(function (User $users) {
                         $experts = $users->whereHas('roles', function($query) {
-                            return $query->whereIn('name', ['Admin', 'Reviewer']);
+                            return $query->where('name', 'like', '%reviewer%');
                         })->get();
 
                         return $experts->pluck('name', 'id');

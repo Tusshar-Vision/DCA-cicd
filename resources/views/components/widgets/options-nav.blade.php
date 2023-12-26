@@ -59,7 +59,7 @@
             console.log("bookmark")
 
             saveData("{{ route('bookmarks.add') }}", {
-                student_id: "{{ Auth::guard('cognito')->user()->id }}",
+                student_id: "{{ Auth::guard('cognito')?->user()?->id }}",
                 article_id: "{{ $articleId }}",
                 _token: "{{ csrf_token() }}"
             }).then(data => {
