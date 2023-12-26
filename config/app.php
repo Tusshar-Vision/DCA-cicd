@@ -170,7 +170,6 @@ return [
         App\Providers\Filament\AdminPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\InitiativeServiceProvider::class,
-        Ellaisys\Cognito\Providers\AwsCognitoServiceProvider::class,
         Webklex\PDFMerger\Providers\PDFMergerServiceProvider::class
     ])->toArray(),
 
