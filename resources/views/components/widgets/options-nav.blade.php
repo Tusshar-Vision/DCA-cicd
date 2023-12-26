@@ -5,12 +5,12 @@
 
     <div class="flex flex-row">
         @auth('cognito')
-            <div class="flex mr-6">
+            <div class="flex mr-6" onclick="bookmark()">
                 <button class="flex items-center">
                     <svg width="16" height="21" viewBox="0 0 16 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M1 0H15C15.5523 0 16 0.44772 16 1V20.1433C16 20.4194 15.7761 20.6434 15.5 20.6434C15.4061 20.6434 15.314 20.6168 15.2344 20.5669L8 16.0313L0.76559 20.5669C0.53163 20.7136 0.22306 20.6429 0.0763698 20.4089C0.0264698 20.3293 0 20.2373 0 20.1433V1C0 0.44772 0.44772 0 1 0ZM14 2H2V17.4324L8 13.6707L14 17.4324V2Z"
-                            fill="#8F93A3" />
+                            fill="{{ $isArticleBookmarked ? 'green' : '#8F93A3' }}" id="bookmark-icon" />
                     </svg>
                     <span class="pl-2 text-visionLineGray">Bookmark</span>
                 </button>
@@ -53,6 +53,23 @@
             } else {
                 document.documentElement.requestFullscreen(); // Enter fullscreen mode
             }
+        }
+
+        function bookmark() {
+            console.log("bookmark")
+
+            saveData("{{ route('bookmarks.add') }}", {
+                student_id: "{{ Auth::guard('cognito')->user()->id }}",
+                article_id: "{{ $articleId }}",
+                _token: "{{ csrf_token() }}"
+            }).then(data => {
+                if (data && data.status == 200) {
+                    document.getElementById("bookmark-icon").style.fill = "#8F93A3"
+                }
+                if (data && data.status == 201) {
+                    document.getElementById("bookmark-icon").style.fill = "green"
+                }
+            })
         }
     </script>
 </div>

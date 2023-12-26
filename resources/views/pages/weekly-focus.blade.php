@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="space-y-4">
-        <x-widgets.options-nav />
+        <x-widgets.options-nav :articleId="$article->id" :isArticleBookmarked="$isArticleBookmarked" />
         <x-common.article-heading :title="$article->title" />
         <x-widgets.articles-nav :createdAt="$article->created_at" :updatedAt="$article->updated_at" />
     </div>
@@ -29,25 +29,25 @@
 
     <div class="space-y-12">
         <div class="flex justify-between">
-        <div class="flex space-x-8">
-            <div class="flex w-2/6 flex-col space-y-6 leftsticky">
-                <x-widgets.article-side-bar :table-of-content="$tableOfContent" />
-                <x-widgets.topic-at-a-glance />
-                <x-widgets.side-bar-download-menu initiative="weekly-focus"/>
-            </div>
+            <div class="flex space-x-8">
+                <div class="flex w-2/6 flex-col space-y-6 leftsticky">
+                    <x-widgets.article-side-bar :table-of-content="$tableOfContent" />
+                    <x-widgets.topic-at-a-glance />
+                    <x-widgets.side-bar-download-menu initiative="weekly-focus" />
+                </div>
 
-            <div class="flex flex-col w-full">
-                @if (!empty($articles) && count($articles) !== 0)
-                    <x-header.article readTime="{{ $article->read_time }}" />
-                    <x-article-content :article="$article" />
-                    <div class="mt-12">
-                        <x-widgets.article-pagination :totalArticles="$totalArticles" :baseUrl="$baseUrl" />
-                    </div>
-                @else
-                    <h1>No articles</h1>
-                @endif
+                <div class="flex flex-col w-full">
+                    @if (!empty($articles) && count($articles) !== 0)
+                        <x-header.article readTime="{{ $article->read_time }}" />
+                        <x-article-content :article="$article" />
+                        <div class="mt-12">
+                            <x-widgets.article-pagination :totalArticles="$totalArticles" :baseUrl="$baseUrl" />
+                        </div>
+                    @else
+                        <h1>No articles</h1>
+                    @endif
+                </div>
             </div>
-        </div>
         </div>
 
         <div class="flex flex-col justify-center items-center w-full">
@@ -69,5 +69,3 @@
         </div>
         <div>
         @endsection
-
-

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bookmark;
 use App\Models\InitiativeTopic;
 use App\Models\Note;
 use App\Models\Paper;
@@ -32,13 +33,20 @@ class UserController extends Controller
 
     public function bookmarks()
     {
-        // $read_histories = Auth::guard('cognito')->user()->readHistories()->join('articles', 'read_histories.article_id', '=', 'articles.id')->select('articles.title', DB::raw('DATE_FORMAT(articles.published_at, "%Y-%m-%d") as published_at'))->get();
-        return view('pages.user.bookmarks');
+        $bookmarks = Auth::guard('cognito')->user()->bookmarks()->join('articles', 'bookmarks.article_id', '=', 'articles.id')->select('articles.title', DB::raw('DATE_FORMAT(articles.published_at, "%Y-%m-%d") as published_at'))->get();
+        return view('pages.user.bookmarks', ['bookmarks' => $bookmarks]);
     }
 
     public function addBookmark()
     {
-        //
+        $inputs =  request()->all();
+        $bookmark = Bookmark::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $inputs['article_id'])->first();
+        if ($bookmark) {
+            $bookmark->delete();
+            return response()->json(['status' => 201]);
+        }
+        $bookmark = Bookmark::create($inputs);
+        return response()->json(['status' => 201]);
     }
 
     public function myContent($type = null)
