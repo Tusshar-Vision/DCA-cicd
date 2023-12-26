@@ -77,5 +77,5 @@ Route::get('/tags/{search}', [NoteController::class, 'searchTagsLike'])->name('t
 
 
 Route::get('/test', function () {
-    return view('pages.user.home');
+    return view('pages.user.edit-profile-section');
 });
