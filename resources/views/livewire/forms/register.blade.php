@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="form-item mb-[15px] relative">
-                <span class="show-password" onclick="showPassword('enterpassword')">
+                <span class="show-password" onclick="showPassword('regpassword')">
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"
                         fill="none" class="eye">
                         <path
@@ -66,7 +66,7 @@
                             fill="#686E70" />
                     </svg>
                 </span>
-                <input type="password" id="enterpassword" class="w-full rounded-lg" required autocomplete="off"
+                <input type="password" id="regpassword" class="w-full rounded-lg" required autocomplete="off"
                     wire:model="password">
                 <label for="password">Enter Password</label>
             </div>
