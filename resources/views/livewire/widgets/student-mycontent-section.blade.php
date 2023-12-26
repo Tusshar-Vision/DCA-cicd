@@ -88,29 +88,35 @@
                     </div>
                 </div>
             </div>
-            <div class="my-content-sort">
+            <div class="my-content-sort relative">
                 <button class="clear-filter">Clear Filter</button>
                 <button class="cont-filter">Filter</button>
                 <div class="vi-dropdown">
                     <div class="vi-dropbtn">Time<span class="vi-icons vi-drop-arrow"></span></div>
-                    <div class="vi-dropdown-content">
-                        <a href="#">This Year</a>
-                        <a href="#">Last 7 days</a>
-                        <a href="#">Last 15 days</a>
+                    <div class="vi-dropdown-content" id="dw">
+                        <a href="javascript:void(0)">This Year</a>
+                        <a href="javascript:void(0)">Last 7 days</a>
+                        <a href="javascript:void(0)">Last 15 days</a>
+                        <a href="javascript:void(0)">This month</a>
+                        <a href="javascript:void(0)">Last Month</a>
+                        <a href="javascript:void(0)" onclick="onCalendarShow('cal')">Custom</a>
                     </div>
                 </div>
+                <div class="mt-5 hidden absolute right-[73px] top-[30px] z-10" id="cal">
+                    <input type="text" name="daterange" value="" placeholder="Select date" class="rounded border-[#8F93A3] text-[#8F93A3]" />
+                </div>
                 <div class="change-view-wrap">
-                    <!-- <a href="#"><img src="{{ URL::asset('images/grid.svg') }}"></a> -->
-                    <a href="#"><img src="{{ URL::asset('images/list.svg') }}"></a>
+                    <!-- <a href="javascript:void(0)"><img src="{{ URL::asset('images/grid.svg') }}"></a> -->
+                    <a href="javascript:void(0)"><img src="{{ URL::asset('images/list.svg') }}"></a>
                 </div>
             </div>
         </div>
         <div class="breadcrumb-wrapper">
             <ul>
-                <li><a href="#">Paper</a></li>
-                <li><a href="#">GS-1</a></li>
-                <li><a href="#">Economics</a></li>
-                <li><a href="#" class="active">Labour</a></li>
+                <li><a href="javascript:void(0)">Paper</a></li>
+                <li><a href="javascript:void(0)">GS-1</a></li>
+                <li><a href="javascript:void(0)">Economics</a></li>
+                <li><a href="javascript:void(0)" class="active">Labour</a></li>
             </ul>
         </div>
         <div class="vi-tab-acc-list">
@@ -130,8 +136,8 @@
                                 <p class="vi-text-dark">Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
                             </div>
                             <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                                <a href="#" class="vi-icons note-edit"></a>
+                                <a href="javascript:void(0)" class="vi-icons note-delete"></a>
+                                <a href="javascript:void(0)" class="vi-icons note-edit"></a>
                             </div>
                         </div>
 
@@ -146,8 +152,8 @@
                                 <p class="vi-text-dark">Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
                             </div>
                             <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                                <a href="#" class="vi-icons note-edit"></a>
+                                <a href="javascript:void(0)" class="vi-icons note-delete"></a>
+                                <a href="javascript:void(0)" class="vi-icons note-edit"></a>
                             </div>
                         </div>
 
@@ -161,8 +167,8 @@
                                 <p class="vi-text-dark">Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
                             </div>
                             <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
-                                <a href="#" class="vi-icons note-edit"></a>
+                                <a href="javascript:void(0)" class="vi-icons note-delete"></a>
+                                <a href="javascript:void(0)" class="vi-icons note-edit"></a>
                             </div>
                         </div>
 
@@ -175,7 +181,7 @@
                                 <p class="vi-text-dark vi-yellow-text">Dignissim enim sit amet venenatis urna cursus eget nunc. Dignissim enim sit amet venenatis urna cursus eget nunc. Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
                             </div>
                             <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
+                                <a href="javascript:void(0)" class="vi-icons note-delete"></a>
                             </div>
                         </div>
 
@@ -189,7 +195,7 @@
                                     sit amet venenatis urna cursus eget nunc. Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
                             </div>
                             <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
+                                <a href="javascript:void(0)" class="vi-icons note-delete"></a>
                             </div>
                         </div>
 
@@ -203,7 +209,7 @@
                                     sit amet venenatis urna cursus eget nunc. Dignissim enim sit amet venenatis urna cursus eget nunc.</p>
                             </div>
                             <div class="vi-note-action">
-                                <a href="#" class="vi-icons note-delete"></a>
+                                <a href="javascript:void(0)" class="vi-icons note-delete"></a>
                             </div>
                         </div>
 
@@ -214,3 +220,29 @@
     </div>
 </div>
 <!-- my content section -->
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script>
+
+function onCalendarShow(id) {
+    var x = document.getElementById(id);
+    if (x.style.display === "block") {
+        x.style.display = "none";
+    } else {
+        x.style.display = "block";
+    }
+}
+
+$(function() {
+  $('input[name="daterange"]').daterangepicker({
+    opens: 'left'
+  }, 
+  function(start, end, label) {
+    start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY');
+  });
+});
+</script>
