@@ -6,6 +6,7 @@ use App\Actions\Contents;
 use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
+use App\Models\Bookmark;
 use App\Models\Note;
 use App\Services\ArticleService;
 use App\Services\PublishedInitiativeService;
@@ -59,10 +60,14 @@ class WeeklyFocusController extends Controller
 
         $noteAvailable = null;
         $note = null;
+        $isArticleBookmarked = false;
+
 
         if (Auth::check()) {
-            $noteAvailable = Note::where("user_id", Auth::user()->id)->where('article_id', $article->id)->count() > 0 ? true : false;
-            $note = Note::where("user_id", Auth::user()->id)->where('article_id', $article->id)->first();
+            $noteAvailable = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->id)->count() > 0 ? true : false;
+            $note = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->id)->first();
+            $bookmark =  Bookmark::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->id)->first();
+            if ($bookmark) $isArticleBookmarked = true;
         }
 
         $article->content = $contents->fromText($article->content)->getHandledText();
@@ -77,7 +82,8 @@ class WeeklyFocusController extends Controller
             "note" => $note,
             "baseUrl" => url('weekly-focus') . "/" . $date,
             "relatedArticles" => $relatedArticles,
-            "tableOfContent" => $tableOfContent
+            "tableOfContent" => $tableOfContent,
+            "isArticleBookmarked" => $isArticleBookmarked
         ]);
     }
 

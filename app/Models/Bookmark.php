@@ -9,13 +9,13 @@ class Bookmark extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'article_id'];
+    protected $fillable = ['student_id', 'article_id'];
 
     // Define the relationships with other models
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Student::class, 'user_id');
     }
 
     public function article()

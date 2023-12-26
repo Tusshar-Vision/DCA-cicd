@@ -2,5 +2,5 @@
 
 @section('header')
     <x-navigation.topics :published-date="$publishedDate" :topics="$topics" />
-    <x-widgets.options-nav />
+    {{-- <x-widgets.options-nav /> --}}
 @endsection

@@ -14,6 +14,11 @@ class InitiativeTopic extends Model
         'name'
     ];
 
+    public function paper()
+    {
+        return $this->belongsTo(Paper::class);
+    }
+
     public function articles(): HasMany
     {
         return $this->hasMany(Article::class);
