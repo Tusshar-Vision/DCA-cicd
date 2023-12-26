@@ -17,6 +17,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Resources\Components\Tab;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -42,7 +43,7 @@ class NewsTodayResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('New Initiative')->schema([
+                Forms\Components\Section::make()->schema([
                     Select::make('initiative_id')
                         ->options([
                             1 => 'News Today',

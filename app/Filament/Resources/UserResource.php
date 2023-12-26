@@ -93,31 +93,42 @@ class UserResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
 
-                    Tables\Actions\BulkAction::make('Assign Role')->form([
+                    Tables\Actions\BulkAction::make('Assign Roles')
+                        ->icon('heroicon-s-user-plus')
+                        ->color(Color::Green)
+                        ->form([
 
-                        Select::make('roles')->multiple()->options(function () use($super_admin, $admin) {
+                            Select::make('roles')->multiple()->options(function () use($super_admin, $admin) {
 
-                            if(\Auth::user()->hasRole($super_admin)) {
-                                return Role::all()->pluck('name', 'name')->toArray();
-                            } else {
-                                return Role::whereNotIn('name', [$super_admin, $admin])->pluck('name', 'name')->toArray();
-                            }
+                                if(\Auth::user()->hasRole($super_admin)) {
+                                    return Role::all()->pluck('name', 'name')->toArray();
+                                } else {
+                                    return Role::whereNotIn('name', [$super_admin, $admin])->pluck('name', 'name')->toArray();
+                                }
 
-                        })->required(),
+                            })->required(),
 
-                    ])->action(function (Collection $records, array $data) {
-                        $records->each(function ($record) use($data) {
-                           $record->assignRole($data['roles']);
-                        });
+                        ])->action(function (Collection $records, array $data) {
+                            $records->each(function ($record) use($data) {
+                               $record->assignRole($data['roles']);
+                            });
 
-                        Notification::make()
-                            ->title('Roles assigned successfully')
-                            ->success()
-                            ->send();
+                            Notification::make()
+                                ->title('You have been assigned roles by the admin')
+                                ->body(implode(', ', $data['roles']))
+                                ->success()
+                                ->sendToDatabase($records);
 
-                    })->deselectRecordsAfterCompletion(),
+                            Notification::make()
+                                ->title('Roles assigned successfully')
+                                ->success()
+                                ->send();
+
+                        })->deselectRecordsAfterCompletion(),
 
                     Tables\Actions\BulkAction::make('Disable accounts')
+                        ->icon('heroicon-s-shield-exclamation')
+                        ->color(Color::Red)
                         ->requiresConfirmation()
                         ->action(function (Collection $records) {
                             $records->each(function ($record) {

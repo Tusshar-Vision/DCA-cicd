@@ -2,24 +2,18 @@
 
 namespace App\Jobs;
 
-use App\Events\ExportIsReadyToDownload;
 use App\Models\PublishedInitiative;
 use App\Models\User;
 use App\Services\FileManagerService;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Filament\Notifications\Actions\ActionGroup;
 use Filament\Notifications\Notification;
-use Filament\Tables\Actions\Action;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Collection;
-use Webklex\PDFMerger\Facades\PDFMergerFacade as PDFMerger;
 
-class GenerateArticlePDF implements ShouldQueue
+class GenerateInitiativePdf implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -27,24 +21,28 @@ class GenerateArticlePDF implements ShouldQueue
      * Create a new job instance.
      */
     public function __construct(
-        public Collection $articles,
+        public PublishedInitiative $publishedInitiative,
         public User $user
     )
-    {}
+    {
+        //
+    }
 
     /**
      * Execute the job.
      */
-    public function handle(FileManagerService $fileManagerService, PublishedInitiative $publishedInitiative): void
+    public function handle(FileManagerService $fileManagerService): void
     {
-        $this->articles->each(function ($article) use($fileManagerService) {
-            $fileManagerService->generateArticlePdf($article);
-        });
+        $fileManagerService->generatePublishedInitiativePdf($this->publishedInitiative);
+
+        $media = $this->publishedInitiative->getFirstMedia('pdf');
+        $downloadLink = route('download', ['media' => $media]);
+        $body = `<a href="${$downloadLink}" target="_blank">Download</a>`;
 
         Notification::make()
             ->title('Your pdf exports are ready to download')
             ->success()
-            ->body('<a href="https://visionias.in">Download</a>')
+            ->body($body)
             ->sendToDatabase($this->user);
     }
 }

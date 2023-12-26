@@ -148,4 +148,9 @@ class ArticlePolicy
         return $user->can('reorder_article');
     }
 
+    public function review(User $user): bool
+    {
+        return $user->can('review_article');
+    }
+
 }

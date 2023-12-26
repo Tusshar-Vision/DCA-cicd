@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Widgets;
 
-use App\Services\MediaService;
+use App\Services\DownloadService;
 use Livewire\Component;
 
 class LatestDownloads extends Component
@@ -14,9 +14,9 @@ class LatestDownloads extends Component
         $this->latestDownloads = $latestDownloads;
     }
 
-    public function getData(MediaService $mediaService): void
+    public function getData(DownloadService $downloadService): void
     {
-        $this->latestDownloads = $mediaService->getLatestDownloads();
+        $this->latestDownloads = $downloadService->getLatestDownloads();
     }
 
     public function render()

@@ -75,7 +75,6 @@ class AdminPanelProvider extends PanelProvider
                     ->enablePruning(true)
                     ->pruningRetention(7),
                 FilamentShieldPlugin::make(),
-                ApprovalPlugin::make()
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->default()
@@ -121,6 +120,6 @@ class AdminPanelProvider extends PanelProvider
                 'Media'
             ])
             ->sidebarCollapsibleOnDesktop()
-            ->spa(false);
+            ->spa(true);
     }
 }

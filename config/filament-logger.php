@@ -6,7 +6,7 @@ return array(
     'activity_resource' => \Z3d0X\FilamentLogger\Resources\ActivityResource::class,
 
     'resources' => array(
-        'enabled' => true,
+        'enabled' => false,
         'log_name' => 'Resource',
 //        'logger' => \Z3d0X\FilamentLogger\Loggers\ResourceLogger::class,
         'color' => 'success',
@@ -27,8 +27,8 @@ return array(
     ),
 
     'notifications' => array(
-        'enabled' => true,
-        'logger' => \Z3d0X\FilamentLogger\Loggers\NotificationLogger::class,
+        'enabled' => false,
+//        'logger' => \Z3d0X\FilamentLogger\Loggers\NotificationLogger::class,
         'color' => null,
         'log_name' => 'Notification',
     ),
