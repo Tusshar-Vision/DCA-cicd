@@ -6,16 +6,12 @@ use App\Models\Student;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 use Aws\Credentials\Credentials;
 use Aws\Exception\AwsException;
-use Ellaisys\Cognito\Auth\AuthenticatesUsers;
-use Exception;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 
 class Login extends Component
 {
-    use AuthenticatesUsers;
-
     protected $aws_access_key_id;
     protected $aws_secret_access_key;
     protected $client;
