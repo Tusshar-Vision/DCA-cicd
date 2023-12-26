@@ -8,9 +8,10 @@
                 <p class="vi-tab-title">Reading History</p>
                 <div class="my-content-search w-[150px]">
                     <div class="search-bar-wrapper">
-                    <input type="search" class="vi-search-bar search-focus" placeholder="Search" required="">
+                        <input type="search" class="vi-search-bar search-focus" placeholder="Search" required="">
                         <span class="vi-icons search"></span>
-                        <ul class="w-full absolute left-0 top-[40px] py-2 border-[#ddd] border-2 rounded hidden bg-white focus-show">
+                        <ul
+                            class="w-full absolute left-0 top-[40px] py-2 border-[#ddd] border-2 rounded hidden bg-white focus-show">
                             <li class="px-[10px] cursor-pointer hover:bg-[#F4F6FC]">Search 1</li>
                             <li class="px-[10px] cursor-pointer hover:bg-[#F4F6FC]">Search 2</li>
                             <li class="px-[10px] cursor-pointer hover:bg-[#F4F6FC]">Search 3</li>
@@ -33,6 +34,7 @@
                 @endforeach
             </div>
         </div>
+
         <div class="activity-tab-right-itmes">
             <div class="graph-box-title-wrap">
                 <p class="vi-tab-title">Content Consumption</p>
@@ -139,6 +141,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 <!-- activity tab start -->
@@ -149,10 +152,10 @@
     const showlist = document.querySelector('.focus-show');
 
     onfocus.addEventListener("focus", () => {
-      showlist.style.display = 'block';
+        showlist.style.display = 'block';
     });
 
     onfocus.addEventListener("blur", () => {
-      showlist.style.display = 'none';
+        showlist.style.display = 'none';
     });
 </script>

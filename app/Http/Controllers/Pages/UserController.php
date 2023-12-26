@@ -93,4 +93,19 @@ class UserController extends Controller
 
         return view('pages.user.my-content', ['type' => $type, 'papers' => $papers, 'paper' => $paper, 'topics' => $topics, 'topic' => $topic, 'sections' => $sections, 'section' => $section, 'articles' => $articles]);
     }
+
+    public function searchNotes(Request $request)
+    {
+        $query = $request->get('query');
+
+        $notes = Note::search($query)->where('user_id', Auth::guard('cognito')->user()->id)->get();
+
+        // $notes = Note::where('user_id', Auth::guard('cognito')->user()->id)->where('title', 'like', "$query%")
+        //     ->join('initiative_topics', 'articles.initiative_topic_id', '=', 'initiative_topics.id')
+        //     ->join('initiatives', 'articles.initiative_id', '=', 'initiatives.id')
+        //     ->select('articles.title', 'articles.slug', 'articles.published_at', 'initiative_topics.name', 'initiatives.path', DB::raw('DATE_FORMAT(articles.published_at, "%Y-%m-%d") as published_at'))
+        //     ->get();;
+
+        return response()->json($notes);
+    }
 }

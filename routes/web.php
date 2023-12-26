@@ -58,6 +58,7 @@ Route::middleware('auth:cognito')->group(function () {
         Route::get('/bookmarks', [Pages\UserController::class, 'bookmarks'])->name('bookmarks');
         Route::post('/bookmarks/add', [Pages\UserController::class, 'addBookmark'])->name('bookmarks.add');
         Route::get('/content/{type?}', [Pages\UserController::class, 'myContent'])->name('user.content');
+        Route::get('/search-notes', [Pages\UserController::class, 'searchNotes'])->name('user.search-notes');
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
     });
 });

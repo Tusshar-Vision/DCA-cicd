@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 use Spatie\Tags\HasTags;
 
 class Note extends Model
 {
 
-    use HasFactory, HasTags;
+    use HasFactory, HasTags, Searchable;
 
     protected $fillable = [
         'user_id',
@@ -38,5 +39,14 @@ class Note extends Model
     public function noteContents()
     {
         return $this->hasMany(NoteContent::class);
+    }
+
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'title' => $this->title,
+            'content' => $this->content,
+        ];
     }
 }
