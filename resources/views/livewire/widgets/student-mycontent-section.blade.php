@@ -76,9 +76,12 @@
                                      <div class="vi-card-corner">
                                          <div class="vi-card-corner-triangle"></div>
                                      </div>
-                                     <a href="{{ route('user.content', ['type' => 'topics']) . '?pid=' . $paper->id }}">
-                                         <p class="vi-note-title border-0">{{ $paper->name }}</p>
-                                     </a>
+                                     <div class="vi-note-title">
+                                        <a href="{{ route('user.content', ['type' => 'topics']) . '?pid=' . $paper->id }}" class="flex">
+                                            <p class="overflow-hidden text-ellipsis max-w-[250px] whitespace-nowrap">{{ $paper->name }}</p>
+                                            <!-- <span class="vi-note-name ml-[10px]">Note 1</span> -->
+                                        </a>
+                                     </div>
                                  </div>
                              @endforeach
                          @elseif ($type == 'topics')
@@ -87,11 +90,12 @@
                                      <div class="vi-card-corner">
                                          <div class="vi-card-corner-triangle"></div>
                                      </div>
-                                     <a
-                                         href="{{ route('user.content', ['type' => 'sections']) . '?tid=' . $topic->id }}">
-                                         <p class="vi-note-title border-0">{{ $topic->name }}
-                                         </p>
-                                     </a>
+                                     <div class="vi-note-title">
+                                        <a href="{{ route('user.content', ['type' => 'sections']) . '?tid=' . $topic->id }}" class="flex">
+                                            <p class="overflow-hidden text-ellipsis max-w-[250px] whitespace-nowrap">{{ $topic->name }}</p>
+                                            <!-- <span class="vi-note-name ml-[10px]">Note 1</span> -->
+                                        </a>
+                                     </div>
                                  </div>
                              @endforeach
                          @elseif ($type == 'sections')
@@ -100,11 +104,12 @@
                                      <div class="vi-card-corner">
                                          <div class="vi-card-corner-triangle"></div>
                                      </div>
-                                     <a
-                                         href="{{ route('user.content', ['type' => 'articles']) . '?sid=' . $section->id }}">
-                                         <p class="vi-note-title border-0">{{ $section->name }}
-                                         </p>
-                                     </a>
+                                     <div class="vi-note-title">
+                                        <a href="{{ route('user.content', ['type' => 'articles']) . '?sid=' . $section->id }}" class="flex">
+                                            <p class="overflow-hidden text-ellipsis max-w-[250px] whitespace-nowrap">{{ $section->name }}</p>
+                                            <!-- <span class="vi-note-name ml-[10px]">Note 1</span> -->
+                                        </a>
+                                     </div>
                                  </div>
                              @endforeach
                          @elseif ($type == 'articles')
