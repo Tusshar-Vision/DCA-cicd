@@ -118,10 +118,18 @@
                                      <div class="vi-card-corner">
                                          <div class="vi-card-corner-triangle"></div>
                                      </div>
-                                     <div style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+
+                                     <div class="vi-note-title">
+                                        <a href="javascript:void(0)" class="flex">
+                                            <p class="overflow-hidden text-ellipsis max-w-[250px] whitespace-nowrap">{{ $article->title }}</p>
+                                            <!-- <span class="vi-note-name ml-[10px]">Note 1</span> -->
+                                        </a>
+                                     </div>
+
+                                     <!-- <div style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
                                          <a href="#" class="vi-note-title">{{ $article->title }}
                                          </a>
-                                     </div>
+                                     </div> -->
 
                                      <div class="note-content">
                                          <p class="vi-text-light">
