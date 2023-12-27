@@ -20,6 +20,7 @@ use Awcodes\Overlook\OverlookPlugin;
 use Awcodes\Overlook\Widgets\OverlookWidget;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
+use EightyNine\Approvals\ApprovalPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -73,13 +74,14 @@ class AdminPanelProvider extends PanelProvider
                     ->navigationCountBadge(true)
                     ->enablePruning(true)
                     ->pruningRetention(7),
-                FilamentShieldPlugin::make()
+                FilamentShieldPlugin::make(),
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->default()
             ->id('admin')
             ->path('admin')
             ->login()
+            ->profile()
             ->colors([
                 'primary' => Color::hex('#005faf'),
             ])
@@ -118,6 +120,6 @@ class AdminPanelProvider extends PanelProvider
                 'Media'
             ])
             ->sidebarCollapsibleOnDesktop()
-            ->spa(false);
+            ->spa(true);
     }
 }

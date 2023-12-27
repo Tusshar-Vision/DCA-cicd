@@ -70,10 +70,11 @@ trait HasArticlesRelation
 
 
                             Group::make()->schema([
+
                                 Select::make('author_id')
                                     ->relationship('author', 'name', function ($query) {
                                         return $query->whereHas('roles', function($subQuery) {
-                                            return $subQuery->whereIn('name', ['expert']);
+                                            return $subQuery->whereIn('name', ['expert', '*expert']);
                                         });
                                     })
                                     ->label('Expert')
@@ -89,6 +90,7 @@ trait HasArticlesRelation
                                     ->label('Reviewer')
                                     ->default(Auth::user()->id)
                                     ->required(),
+
                             ])->columns(2),
 
                         ])->columns(1)->collapsible(),

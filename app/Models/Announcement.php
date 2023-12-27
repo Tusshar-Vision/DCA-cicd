@@ -5,7 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Announcement extends Model
 {
@@ -16,8 +18,19 @@ class Announcement extends Model
         'content',
         'published_at',
         'visible',
-        'visible_till'
+        'visible_till',
+        'user_id'
     ];
+
+    protected $casts = [
+        'published_at' => 'datetime',
+        'visible_till' => 'datetime'
+    ];
+
+    public function author(): BelongsTo
+    {
+        return $this->BelongsTo(User::class, 'user_id');
+    }
 
     public function scopeIsVisible(Builder $query): Builder
     {

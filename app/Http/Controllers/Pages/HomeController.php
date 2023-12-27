@@ -17,6 +17,7 @@ class HomeController extends Controller
     public function __construct(
         private readonly ArticleService $articleService,
         private readonly MediaService $mediaService,
+        private readonly DownloadService $downloadService,
         private readonly UserService $userService
     ) {
     }
@@ -25,7 +26,7 @@ class HomeController extends Controller
         $featuredArticles = $this->articleService->getFeatured(10);
         $latestNewsArticles = $this->articleService->getLatestNews();
         $latestVideos = $this->mediaService->getLatestVideos();
-        $latestDownloads = $this->mediaService->getLatestDownloads();
+        $latestDownloads = $this->downloadService->getLatestDownloads();
         $scoreBoard = $this->userService->getScoreBoard();
 
         return View('pages.home', [

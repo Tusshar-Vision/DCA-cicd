@@ -2,13 +2,17 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Initiatives;
 use App\Filament\Resources\AnnouncementResource\Pages;
 use App\Filament\Resources\AnnouncementResource\RelationManagers;
+use App\Helpers\InitiativesHelper;
 use App\Models\Announcement;
 use Carbon\Carbon;
 use DateTimeZone;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\RichEditor;
@@ -23,7 +27,9 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use PHPUnit\Metadata\Group;
 
 class AnnouncementResource extends Resource
 {
@@ -37,34 +43,100 @@ class AnnouncementResource extends Resource
     {
         return $form
             ->schema([
-                Section::make('New Announcement')
+                Section::make()
                     ->description('Announcements will be visible to users in the Announcements Section on Home Page')
                     ->schema([
                         Fieldset::make('Announcement Controls')->schema([
-                            Toggle::make('visible')->default(true)->inline(false),
-                            DatePicker::make('visible_till')->default(Carbon::now())
-                        ]),
-                        Hidden::make('published_at')->default(Carbon::now()),
-                        RichEditor::make('content')->label('Notification Message')->required(),
-                ]),
+                            Toggle::make('visible')->default(true)->inline(false)->live(),
+                            Forms\Components\Group::make()->schema([
+                                DatePicker::make('visible_till')
+                                    ->default(Carbon::tomorrow())
+                                    ->after('published_at')
+                                    ->required(),
+                                DateTimePicker::make('published_at')
+                                    ->id('publish_at')
+                                    ->label('Automatically Publish At')
+                                    ->default(Carbon::now())
+                                    ->visible(function (Forms\Get $get) {
+                                        return !$get('visible');
+                                    })
+                                    ->reactive()
+                                    ->required(),
+
+                                Hidden::make('published_at')
+                                    ->default(function (Forms\Get $get) {
+                                        return $get('publish_at');
+                                    }),
+
+                                Hidden::make('user_id')->default(\Auth::user()->id)
+                            ])
+                        ])->columnSpan(1),
+
+                        Fieldset::make('Notification Message')->schema([
+                            RichEditor::make('content')->label('')->columnSpanFull()->toolbarButtons([
+                                'bold',
+                                'bulletList',
+                                'italic',
+                                'link',
+                                'orderedList',
+                                'redo',
+                                'strike',
+                                'underline',
+                                'undo',
+                            ])->required(),
+                        ])->columnSpan(1)
+                ])->columns(2),
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('published_at', 'desc')
             ->columns([
-                TextColumn::make('id'),
                 ToggleColumn::make('visible')->label('Is Visible'),
                 TextColumn::make('visible_till')->label('Will be Visible Till')->date(),
-                TextColumn::make('published_at')->date(),
-                TextColumn::make('updated_at')->date(),
+                TextColumn::make('published_at')->date('M d, Y, h:i a'),
+                Tables\Columns\ImageColumn::make('Published By')
+                    ->defaultImageUrl(function (Model $record) {
+                        $first_initial = mb_substr($record->author->name, 0, 1);
+                        return 'https://ui-avatars.com/api/?name=' . $first_initial . '&color=FFFFFF&background=09090b';
+                    })
+                    ->circular()
+                    ->tooltip(function (Model $record) {
+                        return $record->author->name;
+                    })
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->button(),
+                Tables\Actions\Action::make('View')
+                    ->icon('heroicon-s-eye')
+                    ->button()
+                    ->form(function (Model $record) {
+                        return [
+                            RichEditor::make('content')
+                                ->default($record->content)
+                                ->label('')
+                                ->columnSpanFull()
+                                ->toolbarButtons([
+                                'bold',
+                                'bulletList',
+                                'italic',
+                                'link',
+                                'orderedList',
+                                'redo',
+                                'strike',
+                                'underline',
+                                'undo',
+                            ])->required(),
+                        ];
+                })
+                ->action(function (Model $record, $data) {
+                    $record->update(['content' => $data['content']]);
+                })
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -87,5 +159,16 @@ class AnnouncementResource extends Resource
             'create' => Pages\CreateAnnouncement::route('/create'),
             'edit' => Pages\EditAnnouncement::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = static::getModel()::query()->with('author');
+
+        if ($tenant = Filament::getTenant()) {
+            static::scopeEloquentQueryToTenant($query, $tenant);
+        }
+
+        return $query;
     }
 }

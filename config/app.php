@@ -170,7 +170,7 @@ return [
         App\Providers\Filament\AdminPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\InitiativeServiceProvider::class,
-        Ellaisys\Cognito\Providers\AwsCognitoServiceProvider::class,
+        Webklex\PDFMerger\Providers\PDFMergerServiceProvider::class
     ])->toArray(),
 
     /*
@@ -186,6 +186,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        'PDFMerger' => Webklex\PDFMerger\Facades\PDFMergerFacade::class
     ])->toArray(),
 
     'client_url' => [
