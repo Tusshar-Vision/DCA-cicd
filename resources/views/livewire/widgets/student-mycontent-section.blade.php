@@ -125,12 +125,6 @@
                                             <!-- <span class="vi-note-name ml-[10px]">Note 1</span> -->
                                         </a>
                                      </div>
-
-                                     <!-- <div style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
-                                         <a href="#" class="vi-note-title">{{ $article->title }}
-                                         </a>
-                                     </div> -->
-
                                      <div class="note-content">
                                          <p class="vi-text-light">
                                              {{ html_entity_decode(substr(strip_tags($article->content), 0, 500)) }}
