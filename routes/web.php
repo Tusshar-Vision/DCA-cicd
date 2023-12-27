@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HighlightController;
 use App\Http\Controllers\MediaController;
@@ -77,6 +78,9 @@ Route::get('/notes/{article_id}', [NoteController::class, 'getNotesByArticleId']
 Route::post('notes/add-tag/{note_id}', [NoteController::class, 'addTag'])->name('notes.add-tag');
 Route::get('/tags/{search}', [NoteController::class, 'searchTagsLike'])->name('tags.search');
 
+Route::get('/papers', [AppController::class, 'getPapers'])->name('papers');
+Route::get('/subjects/{paper_id}', [AppController::class, 'getSubjectsOfPaper'])->name('subjects');
+Route::get('/sections/{subject_id}', [AppController::class, 'getSectionsOfSubject'])->name('sections');
 
 Route::get('/test', function () {
     return view('pages.user.edit-profile-section');

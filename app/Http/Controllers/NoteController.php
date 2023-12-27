@@ -95,4 +95,12 @@ class NoteController extends Controller
         }
         return response()->json(['data' => $data, 'status' => 200]);
     }
+
+    public function getFilteredNotes()
+    {
+        $topic_id = request()->input('topic_id');
+        $section_id = request()->input('section_id');
+        $notes = Note::where('user_id', Auth::guard('cognito')->user()->id)->where('topic_id', $topic_id)->where('topic_section_id', $section_id)->get();
+        return response()->json($notes);
+    }
 }

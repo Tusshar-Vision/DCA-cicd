@@ -1,12 +1,6 @@
  <div class="vi-profile-tab-container">
      <div class="my-content-tab-wrapper rounded">
 
-         {{-- <div x-data="{ isFilterModalOpen: false }">
-             <x-modals.modal-box x-show="isFilterModalOpen" heading="Filter">
-                 <livewire:widgets.my-content-filter />
-             </x-modals.modal-box>
-         </div> --}}
-
          <div class="my-contnet-tab-filter justify-between" x-data="{ isFilterModalOpen: false }">
 
              {{-- filter modal --}}
@@ -77,10 +71,12 @@
                                          <div class="vi-card-corner-triangle"></div>
                                      </div>
                                      <div class="vi-note-title">
-                                        <a href="{{ route('user.content', ['type' => 'topics']) . '?pid=' . $paper->id }}" class="flex">
-                                            <p class="overflow-hidden text-ellipsis max-w-[250px] whitespace-nowrap">{{ $paper->name }}</p>
-                                            <!-- <span class="vi-note-name ml-[10px]">Note 1</span> -->
-                                        </a>
+                                         <a href="{{ route('user.content', ['type' => 'topics']) . '?pid=' . $paper->id }}"
+                                             class="flex">
+                                             <p class="overflow-hidden text-ellipsis max-w-[250px] whitespace-nowrap">
+                                                 {{ $paper->name }}</p>
+                                             <!-- <span class="vi-note-name ml-[10px]">Note 1</span> -->
+                                         </a>
                                      </div>
                                  </div>
                              @endforeach
@@ -91,10 +87,12 @@
                                          <div class="vi-card-corner-triangle"></div>
                                      </div>
                                      <div class="vi-note-title">
-                                        <a href="{{ route('user.content', ['type' => 'sections']) . '?tid=' . $topic->id }}" class="flex">
-                                            <p class="overflow-hidden text-ellipsis max-w-[250px] whitespace-nowrap">{{ $topic->name }}</p>
-                                            <!-- <span class="vi-note-name ml-[10px]">Note 1</span> -->
-                                        </a>
+                                         <a href="{{ route('user.content', ['type' => 'sections']) . '?tid=' . $topic->id }}"
+                                             class="flex">
+                                             <p class="overflow-hidden text-ellipsis max-w-[250px] whitespace-nowrap">
+                                                 {{ $topic->name }}</p>
+                                             <!-- <span class="vi-note-name ml-[10px]">Note 1</span> -->
+                                         </a>
                                      </div>
                                  </div>
                              @endforeach
@@ -105,10 +103,12 @@
                                          <div class="vi-card-corner-triangle"></div>
                                      </div>
                                      <div class="vi-note-title">
-                                        <a href="{{ route('user.content', ['type' => 'articles']) . '?sid=' . $section->id }}" class="flex">
-                                            <p class="overflow-hidden text-ellipsis max-w-[250px] whitespace-nowrap">{{ $section->name }}</p>
-                                            <!-- <span class="vi-note-name ml-[10px]">Note 1</span> -->
-                                        </a>
+                                         <a href="{{ route('user.content', ['type' => 'articles']) . '?sid=' . $section->id }}"
+                                             class="flex">
+                                             <p class="overflow-hidden text-ellipsis max-w-[250px] whitespace-nowrap">
+                                                 {{ $section->name }}</p>
+                                             <!-- <span class="vi-note-name ml-[10px]">Note 1</span> -->
+                                         </a>
                                      </div>
                                  </div>
                              @endforeach
@@ -120,10 +120,11 @@
                                      </div>
 
                                      <div class="vi-note-title">
-                                        <a href="javascript:void(0)" class="flex">
-                                            <p class="overflow-hidden text-ellipsis max-w-[250px] whitespace-nowrap">{{ $article->title }}</p>
-                                            <!-- <span class="vi-note-name ml-[10px]">Note 1</span> -->
-                                        </a>
+                                         <a href="javascript:void(0)" class="flex">
+                                             <p class="overflow-hidden text-ellipsis max-w-[250px] whitespace-nowrap">
+                                                 {{ $article->title }}</p>
+                                             <!-- <span class="vi-note-name ml-[10px]">Note 1</span> -->
+                                         </a>
                                      </div>
 
                                      <!-- <div style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
