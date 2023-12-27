@@ -77,8 +77,7 @@
                                          <div class="vi-card-corner-triangle"></div>
                                      </div>
                                      <a href="{{ route('user.content', ['type' => 'topics']) . '?pid=' . $paper->id }}">
-                                         <p class="vi-note-title border-0">{{ $paper->name }}
-                                         </p>
+                                         <p class="vi-note-title border-0">{{ $paper->name }}</p>
                                      </a>
                                  </div>
                              @endforeach
@@ -114,8 +113,11 @@
                                      <div class="vi-card-corner">
                                          <div class="vi-card-corner-triangle"></div>
                                      </div>
-                                     <a href="#" class="vi-note-title">{{ $article->title }}
-                                     </a>
+                                     <div style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+                                         <a href="#" class="vi-note-title">{{ $article->title }}
+                                         </a>
+                                     </div>
+
                                      <div class="note-content">
                                          <p class="vi-text-light">
                                              {{ html_entity_decode(substr(strip_tags($article->content), 0, 500)) }}
