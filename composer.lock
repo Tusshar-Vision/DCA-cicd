@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9f8201bded1d93c4118bebe7ec34acbd",
+    "content-hash": "076ecb6a7b57bffcd9ddadf97b0487cb",
     "packages": [
         {
             "name": "amidesfahani/filament-tinyeditor",
@@ -246,16 +246,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.295.0",
+            "version": "3.295.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "326eb6c26e2be9d896c4aeb025e20980c06779af"
+                "reference": "31c69734d929510502b6401c01b593521efdcbc5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/326eb6c26e2be9d896c4aeb025e20980c06779af",
-                "reference": "326eb6c26e2be9d896c4aeb025e20980c06779af",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/31c69734d929510502b6401c01b593521efdcbc5",
+                "reference": "31c69734d929510502b6401c01b593521efdcbc5",
                 "shasum": ""
             },
             "require": {
@@ -335,9 +335,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.295.0"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.295.1"
             },
-            "time": "2023-12-22T19:07:47+00:00"
+            "time": "2023-12-26T19:06:59+00:00"
         },
         {
             "name": "aymanalhattami/filament-date-scopes-filter",
@@ -2144,6 +2144,77 @@
             "time": "2023-10-06T06:47:41+00:00"
         },
         {
+            "name": "ellaisys/aws-cognito",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ellaisys/aws-cognito.git",
+                "reference": "c34fcc8429b74e9da0f4d9f4e7c3be0eb195cdf6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ellaisys/aws-cognito/zipball/c34fcc8429b74e9da0f4d9f4e7c3be0eb195cdf6",
+                "reference": "c34fcc8429b74e9da0f4d9f4e7c3be0eb195cdf6",
+                "shasum": ""
+            },
+            "require": {
+                "aws/aws-sdk-php": ">=3.0",
+                "guzzlehttp/guzzle": "^6.0|^7.0",
+                "php": "^7.0|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Ellaisys\\Cognito\\Providers\\AwsCognitoServiceProvider"
+                    ],
+                    "aliases": []
+                },
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ellaisys\\Cognito\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "EllaiSys",
+                    "email": "support@ellaisys.com",
+                    "homepage": "https://ellaisys.github.io/",
+                    "role": "owner"
+                }
+            ],
+            "description": "AWS Cognito package that allows Auth and other related features using the AWS SDK for PHP",
+            "homepage": "https://ellaisys.github.io/aws-cognito/",
+            "keywords": [
+                "Authentication",
+                "Cognito",
+                "auth",
+                "aws",
+                "ellaisys",
+                "laravel",
+                "oauth",
+                "php",
+                "user pool"
+            ],
+            "support": {
+                "email": "support@ellaisys.com",
+                "issues": "https://github.com/ellaisys/aws-cognito/issues",
+                "source": "https://github.com/ellaisys/aws-cognito/tree/v1.2.1"
+            },
+            "time": "2023-10-10T10:01:45+00:00"
+        },
+        {
             "name": "facade/ignition-contracts",
             "version": "1.0.2",
             "source": {
@@ -2198,16 +2269,16 @@
         },
         {
             "name": "filament/actions",
-            "version": "v3.1.28",
+            "version": "v3.1.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/actions.git",
-                "reference": "670558f17cae8ff816d6a64c68f52374f01fe1ab"
+                "reference": "05abc307189530203f7cdb8bfaf63fee138d42ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filamentphp/actions/zipball/670558f17cae8ff816d6a64c68f52374f01fe1ab",
-                "reference": "670558f17cae8ff816d6a64c68f52374f01fe1ab",
+                "url": "https://api.github.com/repos/filamentphp/actions/zipball/05abc307189530203f7cdb8bfaf63fee138d42ea",
+                "reference": "05abc307189530203f7cdb8bfaf63fee138d42ea",
                 "shasum": ""
             },
             "require": {
@@ -2245,20 +2316,20 @@
                 "issues": "https://github.com/filamentphp/filament/issues",
                 "source": "https://github.com/filamentphp/filament"
             },
-            "time": "2023-12-24T21:16:04+00:00"
+            "time": "2023-12-26T22:39:20+00:00"
         },
         {
             "name": "filament/filament",
-            "version": "v3.1.28",
+            "version": "v3.1.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/panels.git",
-                "reference": "e303b2a918a5251d22519d86480fec112d97d53b"
+                "reference": "2e60d4c49a944216c9ccf994cccf097d59604692"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filamentphp/panels/zipball/e303b2a918a5251d22519d86480fec112d97d53b",
-                "reference": "e303b2a918a5251d22519d86480fec112d97d53b",
+                "url": "https://api.github.com/repos/filamentphp/panels/zipball/2e60d4c49a944216c9ccf994cccf097d59604692",
+                "reference": "2e60d4c49a944216c9ccf994cccf097d59604692",
                 "shasum": ""
             },
             "require": {
@@ -2310,20 +2381,20 @@
                 "issues": "https://github.com/filamentphp/filament/issues",
                 "source": "https://github.com/filamentphp/filament"
             },
-            "time": "2023-12-24T21:16:22+00:00"
+            "time": "2023-12-26T22:39:29+00:00"
         },
         {
             "name": "filament/forms",
-            "version": "v3.1.28",
+            "version": "v3.1.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/forms.git",
-                "reference": "c72a753707dd50b0ec9b2341bf371250321e5f9f"
+                "reference": "baf0bc2daf9b458f80e43ec5ee41e46dbfb0b3d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filamentphp/forms/zipball/c72a753707dd50b0ec9b2341bf371250321e5f9f",
-                "reference": "c72a753707dd50b0ec9b2341bf371250321e5f9f",
+                "url": "https://api.github.com/repos/filamentphp/forms/zipball/baf0bc2daf9b458f80e43ec5ee41e46dbfb0b3d2",
+                "reference": "baf0bc2daf9b458f80e43ec5ee41e46dbfb0b3d2",
                 "shasum": ""
             },
             "require": {
@@ -2366,20 +2437,20 @@
                 "issues": "https://github.com/filamentphp/filament/issues",
                 "source": "https://github.com/filamentphp/filament"
             },
-            "time": "2023-12-24T21:16:04+00:00"
+            "time": "2023-12-26T22:39:21+00:00"
         },
         {
             "name": "filament/infolists",
-            "version": "v3.1.28",
+            "version": "v3.1.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/infolists.git",
-                "reference": "38f626f0d61f612c49f6d3700147124af7112525"
+                "reference": "66d69c06dbcf74a72dd3a435eda27b1e5e11eaf3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filamentphp/infolists/zipball/38f626f0d61f612c49f6d3700147124af7112525",
-                "reference": "38f626f0d61f612c49f6d3700147124af7112525",
+                "url": "https://api.github.com/repos/filamentphp/infolists/zipball/66d69c06dbcf74a72dd3a435eda27b1e5e11eaf3",
+                "reference": "66d69c06dbcf74a72dd3a435eda27b1e5e11eaf3",
                 "shasum": ""
             },
             "require": {
@@ -2417,11 +2488,11 @@
                 "issues": "https://github.com/filamentphp/filament/issues",
                 "source": "https://github.com/filamentphp/filament"
             },
-            "time": "2023-12-24T21:16:04+00:00"
+            "time": "2023-12-26T22:39:20+00:00"
         },
         {
             "name": "filament/notifications",
-            "version": "v3.1.28",
+            "version": "v3.1.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/notifications.git",
@@ -2473,7 +2544,7 @@
         },
         {
             "name": "filament/spatie-laravel-media-library-plugin",
-            "version": "v3.1.28",
+            "version": "v3.1.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/spatie-laravel-media-library-plugin.git",
@@ -2510,7 +2581,7 @@
         },
         {
             "name": "filament/spatie-laravel-tags-plugin",
-            "version": "v3.1.28",
+            "version": "v3.1.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/spatie-laravel-tags-plugin.git",
@@ -2547,7 +2618,7 @@
         },
         {
             "name": "filament/support",
-            "version": "v3.1.28",
+            "version": "v3.1.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/support.git",
@@ -2604,16 +2675,16 @@
         },
         {
             "name": "filament/tables",
-            "version": "v3.1.28",
+            "version": "v3.1.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/tables.git",
-                "reference": "5bd73b079d71a7ed63316052d47f0ab64362774d"
+                "reference": "fb7289c06cc0b1af676b21a678892f9e795f3177"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filamentphp/tables/zipball/5bd73b079d71a7ed63316052d47f0ab64362774d",
-                "reference": "5bd73b079d71a7ed63316052d47f0ab64362774d",
+                "url": "https://api.github.com/repos/filamentphp/tables/zipball/fb7289c06cc0b1af676b21a678892f9e795f3177",
+                "reference": "fb7289c06cc0b1af676b21a678892f9e795f3177",
                 "shasum": ""
             },
             "require": {
@@ -2653,11 +2724,11 @@
                 "issues": "https://github.com/filamentphp/filament/issues",
                 "source": "https://github.com/filamentphp/filament"
             },
-            "time": "2023-12-24T21:16:57+00:00"
+            "time": "2023-12-26T22:39:48+00:00"
         },
         {
             "name": "filament/widgets",
-            "version": "v3.1.28",
+            "version": "v3.1.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/widgets.git",

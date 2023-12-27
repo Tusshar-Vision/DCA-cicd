@@ -174,6 +174,6 @@ class Article extends Model implements HasMedia
 
     public function scopeIsPublished(Builder $query): Builder
     {
-        return $query->where('is_published', true);
+        return $query->currentStatus('Published');
     }
 }

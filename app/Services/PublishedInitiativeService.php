@@ -70,4 +70,14 @@ class PublishedInitiativeService
 
         return $query->with('media')->groupByYear();
     }
+
+    public function checkIfExists($initiative_id, $published_at): bool
+    {
+        $publishedRecords = $this->publishedInitiatives
+                                ->where('initiative_id', '=', $initiative_id)
+                                ->whereDate('published_at', '=', $published_at)
+                                ->get();
+
+        return $publishedRecords->isNotEmpty();
+    }
 }

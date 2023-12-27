@@ -26,6 +26,13 @@ return [
             'upload_directory' => null,
         ],
 
+        'review' => [
+            'plugins' => '',
+            'toolbar' => 'visualblocks print preview wordcount fullscreen',
+            'templates' => false,
+            'upload_directory' => null,
+        ],
+
         'full' => [
             'plugins' => 'accordion autoresize codesample directionality advlist autolink link image lists charmap preview anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media table emoticons template help',
             'toolbar' => 'undo redo removeformat | styles | bold italic | rtl ltr | alignjustify alignright aligncenter alignleft | numlist bullist outdent indent accordion | forecolor backcolor | blockquote table toc hr | image link anchor media codesample emoticons | visualblocks print preview wordcount fullscreen help',

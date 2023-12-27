@@ -8,21 +8,15 @@ use App\Filament\Resources\NewsTodayResource\RelationManagers\ArticlesRelationMa
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
 use App\Models\PublishedInitiative;
-use App\Models\User;
-use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
+use App\Services\PublishedInitiativeService;
+use App\Traits\Filament\InitiativeResourceSchema;
+use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
-use Filament\Models\Contracts\FilamentUser;
-use Filament\Resources\Components\Tab;
 use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
-use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -39,65 +33,48 @@ class NewsTodayResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    use InitiativeResourceSchema;
+
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Section::make()->schema([
-                    Select::make('initiative_id')
-                        ->options([
-                            1 => 'News Today',
-                            2 => 'Monthly Magazine',
-                            3 => 'Weekly Focus'
-                        ])
-                        ->required()
-                        ->label('Initiative')
+
+                    Forms\Components\Hidden::make('initiative_id')
                         ->default(InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)),
-                    DatePicker::make('published_at')->default(today())->reactive(),
-                    Toggle::make('is_published')->inline(false)->afterStateUpdated(function ($state, $livewire, ?Model $record, Article $articles, callable $get) {
-                        $publishedInitiativeId = $record->id;
-                        $publishedAt = $get('published_at');
 
-                        $articles->where('published_initiative_id', '=', $publishedInitiativeId)->update([
-                            'is_published' => $state,
-                            'published_at' => $publishedAt,
-                            'publisher_id' => Auth::user()->id
-                        ]);
+                    DatePicker::make('published_at')
+                        ->label('Publish At')
+                        ->default(Carbon::now())
+                        ->rules([
+                            function (PublishedInitiativeService $publishedInitiativeService) {
+                                return function (string $attribute, $value, \Closure $fail) use($publishedInitiativeService) {
+                                    if  ($publishedInitiativeService->checkIfExists(InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY), $value)) {
+                                        $fail('This date cannot be used as it already exists for this initiative, you can search it and add your articles in it.');
+                                    }
+                                };
+                            }
+                        ])
+                        ->reactive(),
 
-                        $livewire->dispatch('updatedPublishedStatus');
-                    }),
+                    Toggle::make('is_published')
+                        ->inline(false)
+                        ->afterStateUpdated(function ($state, $livewire, ?Model $record, Article $articles, callable $get) {
+                            $publishedInitiativeId = $record->id;
+                            $publishedAt = $get('published_at');
+
+                            $articles->where('published_initiative_id', '=', $publishedInitiativeId)->update([
+                                'is_published' => $state,
+                                'published_at' => $publishedAt,
+                                'publisher_id' => Auth::user()->id
+                            ]);
+
+                            $livewire->dispatch('updatedPublishedStatus');
+                        }),
+
                 ])->columns(2),
-            ]);
-    }
-
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                TextColumn::make('id')->label('ID')->sortable(),
-                TextColumn::make('published_at')->dateTime('d M Y h:m a')->label('Published At')->sortable(),
-                ToggleColumn::make('is_published')->label('Is Published')->sortable()->afterStateUpdated(function ($state, ?Model $record, Article $articles) {
-                    $publishedInitiativeId = $record->id;
-
-                    $articles->where('published_initiative_id', '=', $publishedInitiativeId)->update([
-                        'is_published' => $state,
-                        'published_at' => $record->published_at,
-                        'publisher_id' => Auth::user()->id
-                    ]);
-                }),
-                TextColumn::make('updated_at')->dateTime('d M Y h:m a')->label('Last Updated')->sortable(),
-            ])->defaultSort('published_at', 'desc')
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ]);
     }
 
@@ -120,7 +97,8 @@ class NewsTodayResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         $query = static::getModel()::query()
-            ->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY));
+            ->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
+            ->with('articles');
 
         if ($tenant = Filament::getTenant()) {
             static::scopeEloquentQueryToTenant($query, $tenant);

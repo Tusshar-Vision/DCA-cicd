@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <title>@yield('title')</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&family=Tiro+Devanagari+Hindi&display=swap');
     </style>
     @vite('resources/sass/app.scss')
     @vite('resources/js/app.js')

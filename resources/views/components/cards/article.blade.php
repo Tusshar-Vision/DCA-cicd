@@ -21,6 +21,7 @@
     }
 
     $articleUrl = ArticleService::getArticleURL($article);
+    $featuredImage = $article->getFirstMediaUrl('article_featured_image');
 @endphp
 
 <div class="group cursor-pointer flex-col max-w-2xl">
@@ -28,7 +29,7 @@
         <div class="space-y-2">
             <div class="overflow-hidden">
                 <img
-                    src="{{ ($article->featured_image === null) ? 'https://placehold.co/1596x930' : route('image.display', ['filename' => $article->featured_image]) }}"
+                    src="{{ ($featuredImage === '') ? 'https://placehold.co/1596x930' : $featuredImage }}"
                     width="{{ $width }}" height="{{ $height }}" alt="" class="group-hover:scale-105 transition-all"/>
             </div>
             <div class="text-visionLineGray flex items-center space-x-3 text-sm">

@@ -8,6 +8,7 @@ use App\Filament\Resources\WeeklyFocusResource\Pages;
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
 use App\Models\PublishedInitiative;
+use App\Traits\Filament\InitiativeResourceSchema;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -34,6 +35,8 @@ class WeeklyFocusResource extends Resource
     protected static ?string $pluralLabel = 'Weekly Focus';
 
     protected static ?int $navigationSort = 2;
+
+    use InitiativeResourceSchema;
 
     public static function form(Form $form): Form
     {
@@ -62,37 +65,6 @@ class WeeklyFocusResource extends Resource
                         $livewire->dispatch('updatedPublishedStatus');
                     }),
                 ])->columns(2),
-            ]);
-    }
-
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                TextColumn::make('id')->label('ID')->sortable(),
-                TextColumn::make('published_at')->dateTime('d M Y h:m')->label('Published At')->sortable(),
-                ToggleColumn::make('is_published')->label('Is Published')->sortable()->afterStateUpdated(function ($state, ?Model $record, Article $articles) {
-                    $publishedInitiativeId = $record->id;
-
-                    $articles->where('published_initiative_id', '=', $publishedInitiativeId)->update([
-                        'is_published' => $state,
-                        'published_at' => $record->published_at,
-                        'publisher_id' => Auth::user()->id
-                    ]);
-                }),
-                TextColumn::make('updated_at')->dateTime('d M Y h:m')->label('Last Updated')->sortable(),
-            ])->defaultSort('published_at', 'desc')
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ]);
     }
 

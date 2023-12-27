@@ -31,10 +31,6 @@ class NewsTodayController extends Controller
     {
         $latestNewsToday = $this->publishedInitiativeService->getLatestById($this->initiativeId);
 
-        //        if (!$latestNewsToday) {
-        //            return View('pages.no-news-today');
-        //        }
-
         $articles = $latestNewsToday->articles->where('language', config("settings.language." . app()->getLocale()));
         $article_slug = $articles[0]->slug;
         $article_topic = $articles[0]->topic->name;
