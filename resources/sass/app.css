@@ -153,7 +153,7 @@
     height: 48px !important;
     width: 48px !important;
     padding: 11px;
-    top: 40% !important;
+    top: 15% !important;
   }
   .swiper-nav-button:hover {
     opacity: 0.9;
@@ -162,6 +162,14 @@
   .swiper-button-prev::after {
     content: "";
     display: none;
+  }
+  .coverImage{
+    max-height: 190px;
+    img{
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
   }
   .vi-announcement-wrap {
     width: 258px;

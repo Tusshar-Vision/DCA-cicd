@@ -24,12 +24,6 @@
         <option value="audi">Government Budgeting and Financial Interme...</option>
     </select>
 
-    <label class="mb-[10px] mt-[20px] text-[#5A7184] text-sm flex">Subsection</label>
-    <select id="subsection" class="rounded-md mb-[25px] broder-[#C3CAD9] text-[#5A7184] w-full">
-        <option value="volvo">Employment</option>
-        <option value="saab">Employment</option>
-    </select>
-
     <div class="flex justify-end">
         <button class="vi-outline-button h-10 mr-[15px] rounded-tr-md rounded-br-md w-32 cursor-pointer flex items-center justify-center">Cancel</button>
         <button class="vi-primary-button vi-search-btn h-10 rounded-tr-md rounded-br-md w-32 cursor-pointer flex items-center justify-center">Apply</button>
