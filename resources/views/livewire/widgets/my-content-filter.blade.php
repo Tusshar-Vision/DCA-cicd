@@ -22,11 +22,11 @@
             class="vi-outline-button h-10 mr-[15px] rounded-tr-md rounded-br-md w-32 cursor-pointer flex items-center justify-center">Cancel</button>
         <button
             class="vi-primary-button vi-search-btn h-10 rounded-tr-md rounded-br-md w-32 cursor-pointer flex items-center justify-center"
-            onclick="showNotes()">Apply</button>
+            onclick="showNotes()" @click="isFilterModalOpen=false;">Apply</button>
     </div>
 </div>
 
-@script
+@push('scripts')
     <script>
         getData("{{ route('papers') }}").then(data => {
             let html = ""
@@ -34,6 +34,7 @@
                 html += `<option value="${paper.id}">${paper.name}</option>`
             })
             document.getElementById("papers").innerHTML = html;
+            showSubjects(document.getElementById("papers").value)
         })
 
         function showSubjects(paper_id) {
@@ -45,6 +46,9 @@
                     html += `<option value="${sub.id}">${sub.name}</option>`
                 })
                 document.getElementById("subjects").innerHTML = html;
+                showSections(document.getElementById("subjects").value)
+            }).catch(error => {
+                document.getElementById("subjects").innerHTML = null
             })
         }
 
@@ -57,6 +61,8 @@
                     html += `<option value="${sec.id}">${sec.name}</option>`
                 })
                 document.getElementById("sections").innerHTML = html;
+            }).catch(error => {
+                document.getElementById("sections").innerHTML = null
             })
         }
 
@@ -65,22 +71,22 @@
             const section_id = document.getElementById("sections").value
             console.log('values', topic_id, section_id)
 
-            let url = "{{ url('user.filter-notes') }}";
+            let url = "{{ url('user/filter-notes') }}";
             url += `/${topic_id}/${section_id}`
             getData(url).then(data => {
                 let html = ""
                 data.map(note => {
                     html += `<div class="vi-note"><div class="vi-card-corner"><div class="vi-card-corner-triangle"></div></div><a href="#" class="vi-note-title">${note.title}</a>
-                                     <div class="note-content">
-                                         <p class="vi-text-light">
-                                            ${note.content}
-                                         </p>
-                                     </div>
-                                     <div class="vi-note-action">
-                                         <a href="#" class="vi-icons note-delete"></a>
-                                         <a href="#" class="vi-icons note-edit"></a>
-                                     </div>
-                      </div>`
+                                 <div class="note-content">
+                                     <p class="vi-text-light">
+                                        ${note.content}
+                                     </p>
+                                 </div>
+                                 <div class="vi-note-action">
+                                     <a href="#" class="vi-icons note-delete"></a>
+                                     <a href="#" class="vi-icons note-edit"></a>
+                                 </div>
+                  </div>`
                 })
 
                 document.getElementById("notes-list-container").innerHTML = html;
@@ -88,4 +94,4 @@
             })
         }
     </script>
-@endscript
+@endpush
