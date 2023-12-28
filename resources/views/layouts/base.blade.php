@@ -53,6 +53,8 @@
         <livewire:forms.email-verification />
     </x-modals.login-modal>
 
+    @stack('scripts')
+
 </body>
 
 </html>
