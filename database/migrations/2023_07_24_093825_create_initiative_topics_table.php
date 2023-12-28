@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('initiative_topics', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->unsignedBigInteger('paper_id')->nullable();
+
+            $table->foreign('paper_id')->references('id')->on('papers');
             $table->timestamps();
         });
     }

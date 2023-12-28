@@ -10,7 +10,16 @@ class Student extends User
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'email', 'password', 'token'];
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'email',
+        'mobile_number',
+        'email_verified_at',
+        'password',
+        'is_disabled',
+        'remember_token'
+    ];
 
     public function readHistories()
     {

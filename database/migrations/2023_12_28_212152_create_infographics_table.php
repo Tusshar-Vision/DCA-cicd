@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('initiatives', function (Blueprint $table) {
-            $table->unsignedInteger('sort')->nullable()->default(null);
+        Schema::create('infographics', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('initiatives', function (Blueprint $table) {
-            $table->dropColumn('sort');
-        });
+        Schema::dropIfExists('infographics');
     }
 };

@@ -1,6 +1,6 @@
 <div class="fixed top-1/2 right-0 transform -translate-y-1/2 bg-visionBlue shadow-lg">
     <ul class="flex flex-col justify-between items-center list-none">
-        <button @click="{{ Auth::guard('cognito')->check() ? 'isHighlightsOpen = true' : 'isLoginFormOpen=true' }}"
+        <button @click="{{ Auth::guard('cognito')->check() ? 'isHighlightsOpen = true' : 'isLoginFormOpen = true' }}"
             class="flex items-center p-4">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -13,7 +13,7 @@
             <path d="M42 1L0 1" stroke="white" />
         </svg>
 
-        <button @click="{{ Auth::guard('cognito')->check() ? 'isNoteOpen = true' : 'isLoginFormOpen=true' }}"
+        <button @click="{{ Auth::guard('cognito')->check() ? 'isNoteOpen = true' : 'isLoginFormOpen = true' }}"
             class="flex p-4 items-center">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path

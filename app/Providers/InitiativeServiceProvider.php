@@ -26,7 +26,7 @@ class InitiativeServiceProvider extends ServiceProvider
     {
         if (Schema::hasTable('initiatives')) {
 
-            $initiatives = Initiative::orderBy('sort')->get(['id', 'name', 'name_hindi', 'path']);
+            $initiatives = Initiative::orderBy('order_column')->get(['id', 'name', 'name_hindi', 'path']);
             $newsTodayData = $initiativeService->getMenuData(Initiatives::NEWS_TODAY);
             $monthlyMagazineData = $initiativeService->getMenuData(Initiatives::MONTHLY_MAGAZINE);
             $weeklyFocusData = $initiativeService->getMenuData(Initiatives::WEEKLY_FOCUS);

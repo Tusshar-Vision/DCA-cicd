@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
+            $table->boolean('is_visible')->default(false);
             $table->text('content');
             $table->dateTime('published_at')->nullable();
-            $table->boolean('visible')->default(false);
             $table->dateTime('visible_till')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -15,11 +15,12 @@ class Announcement extends Model
 
     protected $fillable = [
         'id',
+        'is_visible',
         'content',
         'published_at',
-        'visible',
         'visible_till',
-        'user_id'
+        'user_id',
+        'deleted_at'
     ];
 
     protected $casts = [
@@ -34,7 +35,7 @@ class Announcement extends Model
 
     public function scopeIsVisible(Builder $query): Builder
     {
-        return $query->where('visible', true);
+        return $query->where('is_visible', true);
     }
 
 }

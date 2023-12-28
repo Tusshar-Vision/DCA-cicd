@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('published_initiatives', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('initiative_id');
+            $table->string('name')->nullable();
+            $table->boolean('is_published')->default(false);
             $table->dateTime('published_at');
             $table->timestamps();
 

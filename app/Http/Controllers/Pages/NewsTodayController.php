@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pages;
 use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use App\Models\Bookmark;
 use App\Models\Note;
 use App\Services\ArticleService;
