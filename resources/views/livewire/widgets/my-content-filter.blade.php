@@ -13,7 +13,7 @@
     <select class="rounded-md mb-[20px] broder-[#C3CAD9] text-[#5A7184] w-full" id="sections">
     </select>
 
-    <div class="flex justify-end mt-[25px]">
+    <div class="flex justify-end">
         <button
             class="vi-outline-button h-10 mr-[15px] rounded-tr-md rounded-br-md w-32 cursor-pointer flex items-center justify-center">Cancel</button>
         <button

@@ -1557,14 +1557,15 @@ $gray-686E70: #686E70;
       transition: all .3s ease;
       padding: 0 15px;
       color: #3362CC;
-      focus {
-        border-color: blue
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      &:focus {
+        border-color: #3362CC;
       }
     }
     label {
       position: absolute;
-      cursor: text;
-      z-index: 2;
       top: 16px;
       left: 10px;
       font-size: 16px;
@@ -1574,13 +1575,10 @@ $gray-686E70: #686E70;
       color: rgba(90, 113, 132, 0.50);
       transition: all .3s ease;
     }
-    input:focus+label,
-    input:valid+label {
-      font-size: 11px;
-      top: -5px
-    }
     input:focus+label {
-      color: blue
+      font-size: 11px;
+      top: -5px;
+      color: #3362CC
     }
     .show-password {
       position: absolute;
