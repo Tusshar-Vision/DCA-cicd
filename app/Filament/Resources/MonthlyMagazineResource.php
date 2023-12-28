@@ -86,7 +86,9 @@ class MonthlyMagazineResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $query = static::getModel()::query()->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE));
+        $query = static::getModel()::query()
+            ->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE))
+            ->with('articles');;
 
         if ($tenant = Filament::getTenant()) {
             static::scopeEloquentQueryToTenant($query, $tenant);

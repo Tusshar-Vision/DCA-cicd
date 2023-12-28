@@ -86,7 +86,9 @@ class WeeklyFocusResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $query = static::getModel()::query()->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS));
+        $query = static::getModel()::query()
+            ->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
+            ->with('articles');
 
         if ($tenant = Filament::getTenant()) {
             static::scopeEloquentQueryToTenant($query, $tenant);

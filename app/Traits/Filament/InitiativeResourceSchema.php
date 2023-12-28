@@ -115,10 +115,15 @@ trait InitiativeResourceSchema
                         return $shouldBeHidden;
                     })
                     ->action(function (Model $record) {
-                        $record->articles->each(function($article) {
+                        $record->articles->each(function($article) use($record) {
                             if ($article->status === 'Final') {
                                 $article->setStatus('Published');
                                 $article->update(['published_at' => Carbon::now()]);
+
+                                if ($record->is_published === false) {
+                                    $record->is_published = true;
+                                    $record->save();
+                                }
 
                                 $articleUrl = ArticleService::getArticleUrlFromSlug($article->slug);
                                 $notificationBody = "<a href=\" $articleUrl \" target='_blank'>Click here to check it out</a>";;
@@ -137,8 +142,6 @@ trait InitiativeResourceSchema
 
                             }
                         });
-                        $record->is_published = true;
-                        $record->save();
                     }),
                 EditAction::make()
                     ->button(),

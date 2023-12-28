@@ -329,22 +329,27 @@ trait ArticleRelationSchema
                                 if ($record->status === 'Final') {
                                     $record->setStatus('Published');
                                     $record->update(['published_at' => Carbon::now()]);
+
+                                    if ($record->publishedInitiative->is_published === false) {
+                                        $record->publishedInitiative->is_published = true;
+                                        $record->publishedInitiative->save();
+                                    }
+
+                                    $articleUrl = ArticleService::getArticleUrlFromSlug($record->slug);
+                                    $notificationBody = "<a href=\" $articleUrl \" target='_blank'>Click here to check it out</a>";;
+
+                                    Notification::make()
+                                        ->title('Your article just got published!')
+                                        ->body($notificationBody)
+                                        ->success()
+                                        ->sendToDatabase($record->author);
+
+                                    Notification::make()
+                                        ->title('Article you reviewed just got published!')
+                                        ->body($notificationBody)
+                                        ->success()
+                                        ->sendToDatabase($record->reviewer);
                                 }
-
-                                $articleUrl = ArticleService::getArticleUrlFromSlug($record->slug);
-                                $notificationBody = "<a href=\" $articleUrl \" target='_blank'>Click here to check it out</a>";;
-
-                                Notification::make()
-                                    ->title('Your article just got published!')
-                                    ->body($notificationBody)
-                                    ->success()
-                                    ->sendToDatabase($record->author);
-
-                                Notification::make()
-                                    ->title('Article you reviewed just got published!')
-                                    ->body($notificationBody)
-                                    ->success()
-                                    ->sendToDatabase($record->reviewer);
                             });
                         })
                         ->deselectRecordsAfterCompletion(),
