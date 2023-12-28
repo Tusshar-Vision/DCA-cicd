@@ -145,17 +145,18 @@
      </div>
  </div>
 
- <script>
-     function searchNotes(ele) {
-         const val = ele.value;
-         let url = "{{ route('user.search-notes') }}";
-         url += `?query=${val}`;
+ @script
+     <script>
+         function searchNotes(ele) {
+             const val = ele.value;
+             let url = "{{ route('user.search-notes') }}";
+             url += `?query=${val}`;
 
 
-         getData(url).then(data => {
-             let html = ""
-             data.map(note => {
-                 html += `<div class="vi-note"><div class="vi-card-corner"><div class="vi-card-corner-triangle"></div></div><a href="#" class="vi-note-title">${note.title}</a>
+             getData(url).then(data => {
+                 let html = ""
+                 data.map(note => {
+                     html += `<div class="vi-note"><div class="vi-card-corner"><div class="vi-card-corner-triangle"></div></div><a href="#" class="vi-note-title">${note.title}</a>
                                      <div class="note-content">
                                          <p class="vi-text-light">
                                             ${note.content}
@@ -166,15 +167,13 @@
                                          <a href="#" class="vi-icons note-edit"></a>
                                      </div>
                       </div>`
+                 })
+
+                 document.getElementById("notes-list-container").innerHTML = html;
+                 document.getElementById("breadcrumb").style.display = "none"
              })
-             console.log('====================================');
-             console.log("html", html);
-             console.log('====================================');
-
-             document.getElementById("notes-list-container").innerHTML = html;
-             document.getElementById("breadcrumb").style.display = "none"
-         })
 
 
-     }
- </script>
+         }
+     </script>
+ @endscript
