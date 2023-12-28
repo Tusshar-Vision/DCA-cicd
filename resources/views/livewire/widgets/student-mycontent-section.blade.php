@@ -156,7 +156,17 @@
          getData(url).then(data => {
              let html = ""
              data.map(note => {
-                 html += `<div class="vi-note"><div class="vi-card-corner"><div class="vi-card-corner-triangle"></div></div><a href="#" class="vi-note-title">${note.title}</a>
+                 html += `<div class="vi-note">
+                                     <div class="vi-card-corner">
+                                         <div class="vi-card-corner-triangle"></div>
+                                     </div>
+
+                                     <div class="vi-note-title">
+                                         <a href="javascript:void(0)" class="flex">
+                                             <p class="overflow-hidden text-ellipsis max-w-[250px] whitespace-nowrap">
+                                                 ${note.title}</p>
+                                         </a>
+                                     </div>
                                      <div class="note-content">
                                          <p class="vi-text-light">
                                             ${note.content}
@@ -166,7 +176,7 @@
                                          <a href="#" class="vi-icons note-delete"></a>
                                          <a href="#" class="vi-icons note-edit"></a>
                                      </div>
-                      </div>`
+                                 </div>`
              })
 
              document.getElementById("notes-list-container").innerHTML = html;
