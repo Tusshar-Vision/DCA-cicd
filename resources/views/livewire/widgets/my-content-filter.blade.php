@@ -1,21 +1,17 @@
 <div>
-    <label class="mb-[10px] text-[#5A7184] text-sm flex">Paper</label>
-    <div class="rounded-md broder-[#C3CAD9] text-[#5A7184] w-full">
-        <select id="papers" onchange="showSubjects(this.value)">
-        </select>
-    </div>
+    <label class="mt-[20px] mb-[10px] text-[#5A7184] text-sm flex">Paper</label>
+    <select class="rounded-md mb-[20px] broder-[#C3CAD9] text-[#5A7184] w-full" id="papers"
+        onchange="showSubjects(this.value)">
+    </select>
 
     <label class="mb-[10px] mt-[20px] text-[#5A7184] text-sm flex">Subject</label>
-    <div class="rounded-md broder-[#C3CAD9] text-[#5A7184] w-full">
-        <select id="subjects" onchange="showSections(this.value)">
-        </select>
-    </div>
+    <select class="rounded-md mb-[20px] broder-[#C3CAD9] text-[#5A7184] w-full" id="subjects"
+        onchange="showSections(this.value)">
+    </select>
 
     <label class="mb-[10px] mt-[20px] text-[#5A7184] text-sm flex">Section</label>
-    <div class="rounded-md broder-[#C3CAD9] text-[#5A7184] w-full">
-        <select id="sections">
-        </select>
-    </div>
+    <select class="rounded-md mb-[20px] broder-[#C3CAD9] text-[#5A7184] w-full" id="sections">
+    </select>
 
     <div class="flex justify-end mt-[25px]">
         <button
