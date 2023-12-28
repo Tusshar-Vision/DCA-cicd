@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HighlightController;
 use App\Http\Controllers\MediaController;
@@ -59,6 +60,7 @@ Route::middleware('auth:cognito')->group(function () {
         Route::post('/bookmarks/add', [Pages\UserController::class, 'addBookmark'])->name('bookmarks.add');
         Route::get('/content/{type?}', [Pages\UserController::class, 'myContent'])->name('user.content');
         Route::get('/search-notes', [Pages\UserController::class, 'searchNotes'])->name('user.search-notes');
+        Route::get('/filter-notes/{topic_id}/{section_id}', [NoteController::class, 'getFilteredNotes'])->name('user.filter-notes');
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
     });
 });
@@ -77,6 +79,9 @@ Route::get('/notes/{article_id}', [NoteController::class, 'getNotesByArticleId']
 Route::post('notes/add-tag/{note_id}', [NoteController::class, 'addTag'])->name('notes.add-tag');
 Route::get('/tags/{search}', [NoteController::class, 'searchTagsLike'])->name('tags.search');
 
+Route::get('/papers', [AppController::class, 'getPapers'])->name('papers');
+Route::get('/subjects/{paper_id}', [AppController::class, 'getSubjectsOfPaper'])->name('subjects');
+Route::get('/sections/{subject_id}', [AppController::class, 'getSectionsOfSubject'])->name('sections');
 
 Route::get('/test', function () {
     return view('pages.user.edit-profile-section');

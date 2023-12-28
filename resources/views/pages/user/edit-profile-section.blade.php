@@ -31,8 +31,16 @@
         </div>
     </div> -->
 
-    <div class="relative w-[100%]">
-        <select id="cars" class="rounded-md broder-[#C3CAD9] text-[#5A7184] w-full">
+    <!-- <div class="relative w-[100%]">
+        <select id="cars" class="rounded-md broder-[#C3CAD9] text-[#5A7184] w-full"  onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();'>
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="opel">Opel</option>
+            <option value="audi">Audi</option>
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="opel">Opel</option>
+            <option value="audi">Audi</option>
             <option value="volvo">Volvo</option>
             <option value="saab">Saab</option>
             <option value="opel">Opel</option>
@@ -43,11 +51,9 @@
     <div class="flex justify-end mt-[25px]">
         <button class="vi-outline-button h-10 mr-[15px] rounded-tr-md rounded-br-md w-32 cursor-pointer flex items-center justify-center">Cancel</button>
         <button class="vi-primary-button vi-search-btn h-10 rounded-tr-md rounded-br-md w-32 cursor-pointer flex items-center justify-center">Apply</button>
-    </div>
-    <!-- search filter -->
+    </div> -->
 
-
-    
+        
 
 </div>
 
