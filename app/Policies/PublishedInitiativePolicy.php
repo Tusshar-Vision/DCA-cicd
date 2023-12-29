@@ -18,7 +18,7 @@ class PublishedInitiativePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_weekly::focus');
+        return $user->can('{{ ViewAny }}');
     }
 
     /**
@@ -53,7 +53,7 @@ class PublishedInitiativePolicy
      */
     public function update(User $user, PublishedInitiative $publishedInitiative): bool
     {
-        return $user->can('update_weekly::focus');
+        return $user->can('{{ Update }}');
     }
 
     /**
@@ -76,7 +76,7 @@ class PublishedInitiativePolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_weekly::focus');
+        return $user->can('{{ DeleteAny }}');
     }
 
     /**
@@ -88,7 +88,7 @@ class PublishedInitiativePolicy
      */
     public function forceDelete(User $user, PublishedInitiative $publishedInitiative): bool
     {
-        return $user->can('force_delete_weekly::focus');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -99,7 +99,7 @@ class PublishedInitiativePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_weekly::focus');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -111,7 +111,7 @@ class PublishedInitiativePolicy
      */
     public function restore(User $user, PublishedInitiative $publishedInitiative): bool
     {
-        return $user->can('restore_weekly::focus');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -122,7 +122,7 @@ class PublishedInitiativePolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_weekly::focus');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -134,7 +134,7 @@ class PublishedInitiativePolicy
      */
     public function replicate(User $user, PublishedInitiative $publishedInitiative): bool
     {
-        return $user->can('replicate_weekly::focus');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -145,7 +145,7 @@ class PublishedInitiativePolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_weekly::focus');
+        return $user->can('{{ Reorder }}');
     }
 
 }

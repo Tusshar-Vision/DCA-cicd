@@ -95,6 +95,7 @@ trait InitiativeResourceSchema
             ->actions([
                 Action::make('Publish')
                     ->icon('heroicon-s-eye')
+                    ->requiresConfirmation()
                     ->button()
                     ->visible(function () {
                         return Auth::user()->hasRole(['admin', 'super_admin']);

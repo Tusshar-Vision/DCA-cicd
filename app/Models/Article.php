@@ -127,14 +127,14 @@ class Article extends Model implements HasMedia, Sortable
         return $this->hasOne(TableOfContent::class);
     }
 
-    public function author(): HasOne
+    public function author(): BelongsTo
     {
-        return $this->hasOne(User::class, 'author_id');
+        return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function reviewer(): HasOne
+    public function reviewer(): BelongsTo
     {
-        return $this->hasOne(User::class, 'reviewer_id');
+        return $this->belongsTo(User::class, 'reviewer_id');
     }
 
     public function initiative(): BelongsTo
@@ -185,5 +185,10 @@ class Article extends Model implements HasMedia, Sortable
     public function scopeIsPublished(Builder $query): Builder
     {
         return $query->currentStatus('Published');
+    }
+
+    public function scopeLanguage(Builder $query): Builder
+    {
+        return $query->where('language', config("settings.language." . app()->getLocale()));
     }
 }

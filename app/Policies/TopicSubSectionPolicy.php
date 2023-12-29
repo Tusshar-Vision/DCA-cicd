@@ -18,7 +18,7 @@ class TopicSubSectionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_sub::section');
+        return $user->can('{{ ViewAny }}');
     }
 
     /**
@@ -53,7 +53,7 @@ class TopicSubSectionPolicy
      */
     public function update(User $user, TopicSubSection $topicSubSection): bool
     {
-        return $user->can('update_sub::section');
+        return $user->can('{{ Update }}');
     }
 
     /**
@@ -76,7 +76,7 @@ class TopicSubSectionPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_sub::section');
+        return $user->can('{{ DeleteAny }}');
     }
 
     /**
@@ -88,7 +88,7 @@ class TopicSubSectionPolicy
      */
     public function forceDelete(User $user, TopicSubSection $topicSubSection): bool
     {
-        return $user->can('force_delete_sub::section');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -99,7 +99,7 @@ class TopicSubSectionPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_sub::section');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -111,7 +111,7 @@ class TopicSubSectionPolicy
      */
     public function restore(User $user, TopicSubSection $topicSubSection): bool
     {
-        return $user->can('restore_sub::section');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -122,7 +122,7 @@ class TopicSubSectionPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_sub::section');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -134,7 +134,7 @@ class TopicSubSectionPolicy
      */
     public function replicate(User $user, TopicSubSection $topicSubSection): bool
     {
-        return $user->can('replicate_sub::section');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -145,7 +145,7 @@ class TopicSubSectionPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_sub::section');
+        return $user->can('{{ Reorder }}');
     }
 
 }

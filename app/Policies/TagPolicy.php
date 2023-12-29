@@ -18,7 +18,7 @@ class TagPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_tags');
+        return $user->can('{{ ViewAny }}');
     }
 
     /**
@@ -53,7 +53,7 @@ class TagPolicy
      */
     public function update(User $user, Tag $tag): bool
     {
-        return $user->can('update_tags');
+        return $user->can('{{ Update }}');
     }
 
     /**
@@ -76,7 +76,7 @@ class TagPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_tags');
+        return $user->can('{{ DeleteAny }}');
     }
 
     /**
@@ -88,7 +88,7 @@ class TagPolicy
      */
     public function forceDelete(User $user, Tag $tag): bool
     {
-        return $user->can('force_delete_tags');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -99,7 +99,7 @@ class TagPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_tags');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -111,7 +111,7 @@ class TagPolicy
      */
     public function restore(User $user, Tag $tag): bool
     {
-        return $user->can('restore_tags');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -122,7 +122,7 @@ class TagPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_tags');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -134,7 +134,7 @@ class TagPolicy
      */
     public function replicate(User $user, Tag $tag): bool
     {
-        return $user->can('replicate_tags');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -145,7 +145,7 @@ class TagPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_tags');
+        return $user->can('{{ Reorder }}');
     }
 
 }

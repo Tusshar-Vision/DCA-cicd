@@ -18,6 +18,7 @@ use Filament\Forms\Form;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use RalphJSmit\Filament\SEO\SEO;
+use Livewire\Component as Livewire;
 
 trait ArticleForm
 {
@@ -95,6 +96,10 @@ trait ArticleForm
                         Section::make('Category')->schema([
 
                             Group::make()->schema([
+
+                                Hidden::make('initiative_id')->default(function(Livewire $livewire) {
+                                    return $livewire->ownerRecord->initiative_id;
+                                }),
 
                                 Select::make('initiative_topic_id')
                                     ->relationship('topic', 'name')

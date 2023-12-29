@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Enums\Initiatives;
+use App\Exceptions\ArticleNotFoundException;
 use App\Exceptions\PublishedInitiativeNotFoundException;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
@@ -31,14 +32,20 @@ class NewsTodayController extends Controller
      */
     public function index()
     {
-        $latestNewsToday = $this->publishedInitiativeService->getLatestById($this->initiativeId);
+        $latestNewsToday = $this->publishedInitiativeService->getLatest($this->initiativeId);
 
         throw_if(
             $latestNewsToday === null,
             new PublishedInitiativeNotFoundException('There is no latest PublishedInitiative for ' . Initiatives::NEWS_TODAY->value)
         );
 
-        $articles = $latestNewsToday->articles->where('language', config("settings.language." . app()->getLocale()));
+        $articles = $latestNewsToday->articles;
+
+        throw_if(
+            $articles->isEmpty(),
+            new ArticleNotFoundException('There are no articles for ' . Initiatives::NEWS_TODAY->value)
+        );
+
         $article_slug = $articles[0]->slug;
         $article_topic = $articles[0]->topic->name;
         $date =  Carbon::parse($articles[0]->published_at)->format('Y-m-d');
@@ -76,8 +83,8 @@ class NewsTodayController extends Controller
 
     public function renderArticles($date, $topic, $slug)
     {
-        $latestPublishedInitiative = $this->publishedInitiativeService->getLatestById($this->initiativeId, $date);
-        $articles = $latestPublishedInitiative->articles->where('language', config("settings.language." . app()->getLocale()));
+        $latestPublishedInitiative = $this->publishedInitiativeService->getLatest($this->initiativeId);
+        $articles = $latestPublishedInitiative->articles;
         $article = $this->articleService->getArticleBySlug($slug);
         $relatedArticles = $this->articleService->getRelatedArticles($article);
 

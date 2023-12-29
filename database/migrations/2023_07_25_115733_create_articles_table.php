@@ -33,7 +33,7 @@ return new class extends Migration
             $table->unsignedBigInteger('topic_section_id')->nullable();
             $table->unsignedBigInteger('topic_sub_section_id')->nullable();
 
-            $table->dateTime('published_at');
+            $table->dateTime('published_at')->nullable();
             $table->timestamps();
             $table->unsignedInteger('order_column')->nullable()->default(null);
 

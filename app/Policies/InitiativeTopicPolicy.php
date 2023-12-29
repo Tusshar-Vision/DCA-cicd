@@ -18,7 +18,7 @@ class InitiativeTopicPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_subject');
+        return $user->can('{{ ViewAny }}');
     }
 
     /**
@@ -53,7 +53,7 @@ class InitiativeTopicPolicy
      */
     public function update(User $user, InitiativeTopic $initiativeTopic): bool
     {
-        return $user->can('update_subject');
+        return $user->can('{{ Update }}');
     }
 
     /**
@@ -76,7 +76,7 @@ class InitiativeTopicPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_subject');
+        return $user->can('{{ DeleteAny }}');
     }
 
     /**
@@ -88,7 +88,7 @@ class InitiativeTopicPolicy
      */
     public function forceDelete(User $user, InitiativeTopic $initiativeTopic): bool
     {
-        return $user->can('force_delete_subject');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -99,7 +99,7 @@ class InitiativeTopicPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_subject');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -111,7 +111,7 @@ class InitiativeTopicPolicy
      */
     public function restore(User $user, InitiativeTopic $initiativeTopic): bool
     {
-        return $user->can('restore_subject');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -122,7 +122,7 @@ class InitiativeTopicPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_subject');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -134,7 +134,7 @@ class InitiativeTopicPolicy
      */
     public function replicate(User $user, InitiativeTopic $initiativeTopic): bool
     {
-        return $user->can('replicate_subject');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -145,7 +145,7 @@ class InitiativeTopicPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_subject');
+        return $user->can('{{ Reorder }}');
     }
 
 }

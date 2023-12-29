@@ -17,6 +17,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -46,8 +47,10 @@ class NewsTodayResource extends Resource
                         ->default(InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)),
 
                     DatePicker::make('published_at')
+                        ->native(false)
                         ->label('Publish At')
                         ->default(Carbon::now())
+                        ->reactive()
                         ->rules([
                             function (PublishedInitiativeService $publishedInitiativeService) {
                                 return function (string $attribute, $value, \Closure $fail) use($publishedInitiativeService) {
@@ -59,20 +62,9 @@ class NewsTodayResource extends Resource
                         ])
                         ->reactive(),
 
-                    Toggle::make('is_published')
-                        ->inline(false)
-                        ->afterStateUpdated(function ($state, $livewire, ?Model $record, Article $articles, callable $get) {
-                            $publishedInitiativeId = $record->id;
-                            $publishedAt = $get('published_at');
-
-                            $articles->where('published_initiative_id', '=', $publishedInitiativeId)->update([
-                                'is_published' => $state,
-                                'published_at' => $publishedAt,
-                                'publisher_id' => Auth::user()->id
-                            ]);
-
-                            $livewire->dispatch('updatedPublishedStatus');
-                        }),
+                    Forms\Components\TextInput::make('name')->default(function (callable $get) {
+                        return str_replace( ' ', '_',Initiatives::NEWS_TODAY->value . ' ' . Carbon::parse($get('published_at'))->format('Y-m-d'));
+                    }),
 
                 ])->columns(2),
             ]);
@@ -110,19 +102,13 @@ class NewsTodayResource extends Resource
     public static function canViewAny(): bool
     {
         $user = Auth::user();
-        return $user->can('view_any_news::today');
-    }
-
-    public static function canView(Model $record): bool
-    {
-        $user = Auth::user();
         return $user->can('view_news::today');
     }
 
     public static function canEdit(Model $record): bool
     {
         $user = Auth::user();
-        return $user->can('update_news::today');
+        return $user->can('edit_news::today');
     }
 
     public static function canCreate(): bool

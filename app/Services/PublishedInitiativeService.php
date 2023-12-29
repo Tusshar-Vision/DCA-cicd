@@ -15,13 +15,14 @@ readonly class PublishedInitiativeService
     ) {
     }
 
-    public function getLatestById($initiativeId): PublishedInitiative|null
+    public function getLatest($initiativeId): PublishedInitiative|null
     {
         return $this->publishedInitiatives
                     ->where('initiative_id', '=', $initiativeId)
+                    ->isPublished()
                     ->latest('published_at')
                     ->with('articles', function ($article) {
-                        $article->with('topic');
+                        $article->language()->isPublished()->with('topic');
                     })
                     ->first();
     }

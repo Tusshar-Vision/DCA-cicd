@@ -45,13 +45,13 @@ trait ArticleRelationSchema
     public function table(Table $table): Table
     {
         return $table
-            ->reorderable('sort')
+            ->reorderable('order_column')
             ->reorderRecordsTriggerAction(
                 fn (Action $action, bool $isReordering) => $action
                     ->button()
                     ->label($isReordering ? 'Disable reordering' : 'Enable reordering'),
             )
-            ->defaultSort('sort')
+            ->defaultSort('order_column')
             ->recordTitleAttribute('title')
             ->columns([
                 TextColumn::make('id')

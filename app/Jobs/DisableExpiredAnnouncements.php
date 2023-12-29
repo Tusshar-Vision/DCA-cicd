@@ -25,8 +25,8 @@ class DisableExpiredAnnouncements implements ShouldQueue
     public function handle(Announcement $announcements): void
     {
         $announcements
-            ->where('visible', '=', true)
+            ->where('is_visible', '=', true)
             ->whereDate('visible_till','<=', today())
-            ->update(['visible' => false]);
+            ->update(['is_visible' => false]);
     }
 }

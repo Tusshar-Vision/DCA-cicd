@@ -18,7 +18,7 @@ class MediaPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_video');
+        return $user->can('{{ ViewAny }}');
     }
 
     /**
@@ -53,7 +53,7 @@ class MediaPolicy
      */
     public function update(User $user, Media $media): bool
     {
-        return $user->can('update_video');
+        return $user->can('{{ Update }}');
     }
 
     /**
@@ -76,7 +76,7 @@ class MediaPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_video');
+        return $user->can('{{ DeleteAny }}');
     }
 
     /**
@@ -88,7 +88,7 @@ class MediaPolicy
      */
     public function forceDelete(User $user, Media $media): bool
     {
-        return $user->can('force_delete_video');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -99,7 +99,7 @@ class MediaPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_video');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -111,7 +111,7 @@ class MediaPolicy
      */
     public function restore(User $user, Media $media): bool
     {
-        return $user->can('restore_video');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -122,7 +122,7 @@ class MediaPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_video');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -134,7 +134,7 @@ class MediaPolicy
      */
     public function replicate(User $user, Media $media): bool
     {
-        return $user->can('replicate_video');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -145,7 +145,7 @@ class MediaPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_video');
+        return $user->can('{{ Reorder }}');
     }
 
 }

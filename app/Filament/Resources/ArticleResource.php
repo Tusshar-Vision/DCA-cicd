@@ -32,18 +32,13 @@ class ArticleResource extends Resource implements HasShieldPermissions
     {
         return [
             'view',
-            'view_any',
             'create',
-            'update',
+            'edit',
             'delete',
-            'delete_any',
-            'force_delete',
-            'force_delete_any',
             'restore',
-            'restore_any',
-            'replicate',
             'reorder',
-            'review'
+            'review',
+            'publish'
         ];
     }
 }

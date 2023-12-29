@@ -47,18 +47,25 @@ class AnnouncementResource extends Resource
                     ->description('Announcements will be visible to users in the Announcements Section on Home Page')
                     ->schema([
                         Fieldset::make('Announcement Controls')->schema([
-                            Toggle::make('visible')->default(true)->inline(false)->live(),
+                            Toggle::make('is_visible')
+                                ->default(true)
+                                ->inline(false)
+                                ->live(),
                             Forms\Components\Group::make()->schema([
                                 DatePicker::make('visible_till')
+                                    ->native(false)
+                                    ->closeOnDateSelection()
                                     ->default(Carbon::tomorrow())
                                     ->after('published_at')
                                     ->required(),
                                 DateTimePicker::make('published_at')
+                                    ->native(false)
+                                    ->displayFormat('M d, Y h:i')
                                     ->id('publish_at')
                                     ->label('Automatically Publish At')
                                     ->default(Carbon::now())
-                                    ->visible(function (Forms\Get $get) {
-                                        return !$get('visible');
+                                    ->visible(function (callable $get) {
+                                        return !$get('is_visible');
                                     })
                                     ->reactive()
                                     ->required(),
@@ -94,10 +101,11 @@ class AnnouncementResource extends Resource
         return $table
             ->defaultSort('published_at', 'desc')
             ->columns([
-                ToggleColumn::make('visible')->label('Is Visible'),
+                self::showVisibleColumn(\Auth::user()),
                 TextColumn::make('visible_till')->label('Will be Visible Till')->date(),
-                TextColumn::make('published_at')->date('M d, Y, h:i a'),
-                Tables\Columns\ImageColumn::make('Published By')
+                TextColumn::make('published_at')->label('Publish At')->date('M d, Y, h:i a'),
+                Tables\Columns\ImageColumn::make('Created By')
+                    ->alignCenter()
                     ->defaultImageUrl(function (Model $record) {
                         $first_initial = mb_substr($record->author->name, 0, 1);
                         return 'https://ui-avatars.com/api/?name=' . $first_initial . '&color=FFFFFF&background=09090b';
@@ -108,7 +116,7 @@ class AnnouncementResource extends Resource
                     })
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()->button(),
@@ -122,27 +130,43 @@ class AnnouncementResource extends Resource
                                 ->label('')
                                 ->columnSpanFull()
                                 ->toolbarButtons([
-                                'bold',
-                                'bulletList',
-                                'italic',
-                                'link',
-                                'orderedList',
-                                'redo',
-                                'strike',
-                                'underline',
-                                'undo',
+                                    'bold',
+                                    'bulletList',
+                                    'italic',
+                                    'link',
+                                    'orderedList',
+                                    'redo',
+                                    'strike',
+                                    'underline',
+                                    'undo',
                             ])->required(),
                         ];
                 })
                 ->action(function (Model $record, $data) {
-                    $record->update(['content' => $data['content']]);
+//                    $record->update(['content' => $data['content']]);
                 })
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
+    }
+
+    private static function showVisibleColumn($user) {
+        if ($user->can('edit_announcement')) {
+            return ToggleColumn::make('is_visible')
+                ->alignCenter()
+                ->label('Is Visible');
+        } else {
+            return IconColumn::make('is_visible')
+                ->alignCenter()
+                ->name('is_visible')
+                ->boolean()
+                ->label('Is Visible');
+        }
     }
 
     public static function getRelations(): array
@@ -163,12 +187,10 @@ class AnnouncementResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $query = static::getModel()::query()->with('author');
-
-        if ($tenant = Filament::getTenant()) {
-            static::scopeEloquentQueryToTenant($query, $tenant);
-        }
-
-        return $query;
+        return parent::getEloquentQuery()
+            ->with('author')
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }

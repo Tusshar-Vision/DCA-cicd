@@ -18,7 +18,7 @@ class QueueMonitorPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_queue::monitor');
+        return $user->can('{{ ViewAny }}');
     }
 
     /**
@@ -53,7 +53,7 @@ class QueueMonitorPolicy
      */
     public function update(User $user, QueueMonitor $queueMonitor): bool
     {
-        return $user->can('update_queue::monitor');
+        return $user->can('{{ Update }}');
     }
 
     /**
@@ -76,7 +76,7 @@ class QueueMonitorPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_queue::monitor');
+        return $user->can('{{ DeleteAny }}');
     }
 
     /**
@@ -88,7 +88,7 @@ class QueueMonitorPolicy
      */
     public function forceDelete(User $user, QueueMonitor $queueMonitor): bool
     {
-        return $user->can('force_delete_queue::monitor');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -99,7 +99,7 @@ class QueueMonitorPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_queue::monitor');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -111,7 +111,7 @@ class QueueMonitorPolicy
      */
     public function restore(User $user, QueueMonitor $queueMonitor): bool
     {
-        return $user->can('restore_queue::monitor');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -122,7 +122,7 @@ class QueueMonitorPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_queue::monitor');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -134,7 +134,7 @@ class QueueMonitorPolicy
      */
     public function replicate(User $user, QueueMonitor $queueMonitor): bool
     {
-        return $user->can('replicate_queue::monitor');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -145,7 +145,7 @@ class QueueMonitorPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_queue::monitor');
+        return $user->can('{{ Reorder }}');
     }
 
 }

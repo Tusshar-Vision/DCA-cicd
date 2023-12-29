@@ -18,7 +18,7 @@ class InitiativePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_initiative');
+        return $user->can('{{ ViewAny }}');
     }
 
     /**
@@ -53,7 +53,7 @@ class InitiativePolicy
      */
     public function update(User $user, Initiative $initiative): bool
     {
-        return $user->can('update_initiative');
+        return $user->can('{{ Update }}');
     }
 
     /**
@@ -76,7 +76,7 @@ class InitiativePolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_initiative');
+        return $user->can('{{ DeleteAny }}');
     }
 
     /**
@@ -88,7 +88,7 @@ class InitiativePolicy
      */
     public function forceDelete(User $user, Initiative $initiative): bool
     {
-        return $user->can('force_delete_initiative');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -99,7 +99,7 @@ class InitiativePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_initiative');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -111,7 +111,7 @@ class InitiativePolicy
      */
     public function restore(User $user, Initiative $initiative): bool
     {
-        return $user->can('restore_initiative');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -122,7 +122,7 @@ class InitiativePolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_initiative');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -134,7 +134,7 @@ class InitiativePolicy
      */
     public function replicate(User $user, Initiative $initiative): bool
     {
-        return $user->can('replicate_initiative');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -145,7 +145,7 @@ class InitiativePolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_initiative');
+        return $user->can('{{ Reorder }}');
     }
 
 }
