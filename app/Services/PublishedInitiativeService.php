@@ -8,31 +8,22 @@ use App\Models\PublishedInitiative;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
-class PublishedInitiativeService
+readonly class PublishedInitiativeService
 {
     public function __construct(
-        private readonly PublishedInitiative $publishedInitiatives
+        private PublishedInitiative $publishedInitiatives
     ) {
     }
 
-    public function getLatestById($initiativeId, $date = null)
+    public function getLatestById($initiativeId): PublishedInitiative|null
     {
-        $query = $this->publishedInitiatives
-            ->where('initiative_id', '=', $initiativeId)
-            ->isPublished()
-            ->whereHas('articles', function ($articleQuery) {
-                    $articleQuery->isPublished();
-            });
-
-        if ($date) {
-            $query->whereDate('published_at', $date);
-        }
-
-        return $query->latest('published_at')
-            ->limit(1)
-            ->with('articles', function ($article) {
-                $article->with('topic');
-            })->first();
+        return $this->publishedInitiatives
+                    ->where('initiative_id', '=', $initiativeId)
+                    ->latest('published_at')
+                    ->with('articles', function ($article) {
+                        $article->with('topic');
+                    })
+                    ->first();
     }
 
     public function getByMonthAndYear($initiativeId, $date)

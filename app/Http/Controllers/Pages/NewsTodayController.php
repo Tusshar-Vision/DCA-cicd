@@ -3,17 +3,15 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Enums\Initiatives;
+use App\Exceptions\PublishedInitiativeNotFoundException;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
-use App\Models\Article;
 use App\Models\Bookmark;
 use App\Models\Note;
 use App\Services\ArticleService;
 use App\Services\PublishedInitiativeService;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Redirect;
 
 class NewsTodayController extends Controller
@@ -28,9 +26,17 @@ class NewsTodayController extends Controller
         $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY);
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function index()
     {
         $latestNewsToday = $this->publishedInitiativeService->getLatestById($this->initiativeId);
+
+        throw_if(
+            $latestNewsToday === null,
+            new PublishedInitiativeNotFoundException('There is no latest PublishedInitiative for ' . Initiatives::NEWS_TODAY->value)
+        );
 
         $articles = $latestNewsToday->articles->where('language', config("settings.language." . app()->getLocale()));
         $article_slug = $articles[0]->slug;
@@ -38,6 +44,7 @@ class NewsTodayController extends Controller
         $date =  Carbon::parse($articles[0]->published_at)->format('Y-m-d');
 
         return redirect()->route('news-today-date-wise.article', ['date' => $date, 'topic' => $article_topic, 'article_slug' => $article_slug]);
+
     }
 
     public function getArticlesDateWise($date)
