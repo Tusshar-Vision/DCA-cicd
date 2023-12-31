@@ -18,8 +18,19 @@ class ArticlePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_article');
+        return $user->can('{{ ViewAny }}');
+    }
 
+    /**
+     * Determine whether the user can view the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Article  $article
+     * @return bool
+     */
+    public function view(User $user, Article $article): bool
+    {
+        return $user->can('view_article');
     }
 
     /**
@@ -42,7 +53,7 @@ class ArticlePolicy
      */
     public function update(User $user, Article $article): bool
     {
-        return $user->can('edit_article');
+        return $user->can('{{ Update }}');
     }
 
     /**

@@ -30,7 +30,7 @@ class QueueMonitorPolicy
      */
     public function view(User $user, QueueMonitor $queueMonitor): bool
     {
-        return $user->can('view_queue::monitor');
+        return $user->can('view_job');
     }
 
     /**
@@ -41,7 +41,7 @@ class QueueMonitorPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_queue::monitor');
+        return $user->can('{{ Create }}');
     }
 
     /**
@@ -65,7 +65,7 @@ class QueueMonitorPolicy
      */
     public function delete(User $user, QueueMonitor $queueMonitor): bool
     {
-        return $user->can('delete_queue::monitor');
+        return $user->can('{{ Delete }}');
     }
 
     /**

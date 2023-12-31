@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CommentResource\Pages;
 use App\Filament\Resources\CommentResource\RelationManagers;
 use App\Models\Comment;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Collection;
 
-class CommentResource extends Resource
+class CommentResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Comment::class;
 
@@ -98,6 +99,15 @@ class CommentResource extends Resource
     {
         return [
             //
+        ];
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'approve',
+            'reply'
         ];
     }
 

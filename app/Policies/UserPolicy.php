@@ -62,7 +62,7 @@ class UserPolicy
      */
     public function delete(User $user): bool
     {
-        return $user->can('delete_user');
+        return $user->can('{{ Delete }}');
     }
 
     /**

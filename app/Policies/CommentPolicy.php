@@ -41,7 +41,7 @@ class CommentPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_comment');
+        return $user->can('{{ Create }}');
     }
 
     /**
@@ -65,7 +65,7 @@ class CommentPolicy
      */
     public function delete(User $user, Comment $comment): bool
     {
-        return $user->can('delete_comment');
+        return $user->can('{{ Delete }}');
     }
 
     /**
