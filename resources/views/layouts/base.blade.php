@@ -20,7 +20,7 @@
 </head>
 
 <body x-data="{ isLoginFormOpen: false, isRegisterFormOpen: false, isResetFormOpen: false, isEmailVerificationFormOpen: false }">
-    <div class="mx-auto max-w-[90%]">
+    <div class="mx-auto w-full px-[20px] lg:px-0 lg:max-w-[90%]">
         <header>
             <x-header />
             <x-navigation.initiatives :initiatives="$initiatives" />

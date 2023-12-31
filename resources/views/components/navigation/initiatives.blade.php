@@ -3,10 +3,59 @@
     use App\Enums\Initiatives;
 @endphp
 
-<div class="flex h-20 items-center justify-between">
+<!-- responsive menu start -->
+
+<div id="myNav" class="menuOverlay">
+  <div class="menuOverlayContent">
+    <div class="flex justify-between align-middle"> 
+        <span>MENU</span> 
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    </div>
+    <div class="accordion">
+        <a href="javascript:void(0)">Home</a>
+        <a href="javascript:void(0)">News Today</a>
+        <div class="accordion-item">
+            <div class="accordion-label" onclick="toggleAccordion(this)">
+                Weekly Focus<div class="arrow">▼</div>
+            </div>
+            <div class="accordion-content">
+                Content for Item 1
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-label" onclick="toggleAccordion(this)">
+                Monthly Magazine<div class="arrow">▼</div>
+            </div>
+            <div class="accordion-content">
+                Content for Item 2
+            </div>
+        </div>
+        <a href="javascript:void(0)">Mains 365</a>
+        <a href="javascript:void(0)">Downloads</a>
+        <div class="accordion-item">
+            <div class="accordion-label" onclick="toggleAccordion(this)">
+            More <div class="arrow">▼</div>
+            </div>
+            <div class="accordion-content">
+                Content for Item 2
+            </div>
+        </div>
+        <!-- Add more items as needed -->
+    </div>
+  </div>
+</div>
+
+<!-- responsive menu end -->
+
+<div class="flex mt-[25px] items-center justify-between">
     <div class="w-3/4">
-        <ul class="flex">
-            <li class="font-semibold pr-6">
+        <div class="lg:hidden block">
+            <a href="/" wire:navigate>
+                <img width="112px" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
+            </a>
+        </div>
+        <ul class="items-center hidden lg:block">
+            <li class="font-semibold pr-4 xl:pr-6 float-left">
                 <a href="{{ route('home') }}" wire:navigate>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path
@@ -15,17 +64,17 @@
                     </svg>
                 </a>
             </li>
-            <div class="flex" x-data="{ isMagazineDropdownOpen: false, isWeeklyDropdownOpen: false, isMoreDropdownOpen: false }">
+            <div class="flex pt-[5px]" x-data="{ isMagazineDropdownOpen: false, isWeeklyDropdownOpen: false, isMoreDropdownOpen: false }">
                 @foreach ($initiatives as $initiative)
                     @if ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
-                        <li class="font-semibold pr-6">
+                        <li class="font-semibold text-xs xl:text-sm pr-6">
                             <a class="hover:text-visionRed {{ request()->is('news-today*') ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}">
                                 {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                             </a>
                         </li>
                     @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE))
                         <div class="relative">
-                            <li class="font-semibold pr-6"
+                            <li class="font-semibold text-xs xl:text-sm pr-6"
                                 @click="
                                         isMagazineDropdownOpen = !isMagazineDropdownOpen;
                                         isMoreDropdownOpen = false;
@@ -44,7 +93,7 @@
                         </div>
                     @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
                         <div class="relative">
-                            <li class="font-semibold pr-6"
+                            <li class="font-semibold text-xs xl:text-sm pr-6"
                                 @click="
                                         isWeeklyDropdownOpen = !isWeeklyDropdownOpen;
                                         isMagazineDropdownOpen = false;
@@ -63,7 +112,7 @@
                         </div>
                     @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::MORE))
                         <div class="relative">
-                            <li class="font-semibold pr-6"
+                            <li class="font-semibold text-xs xl:text-sm pr-6"
                                 @click="
                                         isMoreDropdownOpen = !isMoreDropdownOpen;
                                         isWeeklyDropdownOpen = false;
@@ -79,7 +128,7 @@
                                 @click.away="isMoreDropdownOpen = false" :menuData="$menuData['more']" />
                         </div>
                     @else
-                        <li class="font-semibold pr-6">
+                        <li class="font-semibold text-xs xl:text-sm pr-6">
                             <a class="hover:text-visionRed {{ request()->is(trim($initiative->path, '/')) ? 'text-visionRed' : '' }}"
                                 href="{{ $initiative->path }}" wire:navigate>
                                 {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
@@ -110,12 +159,12 @@
                     <x-auth.user-dropdown-menu x-show="isUserMenuOpen" />
                 </div>
             @else
-                <li class="pr-[20px]">
+                <li class="pr-[20px] hidden lg:block">
                     <a href="#" class="register" @click="isRegisterFormOpen = true">Register</a>
                 </li>
                 <li class="pl-[20px]" style="border-left: 1px solid #E5EAF4;">
-                    <button @click="isLoginFormOpen = !isLoginFormOpen" class="flex items-center">
-                        <svg class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    <button @click="isLoginFormOpen = !isLoginFormOpen" class="flex items-center text-xs xl:text-sm">
+                        <svg class="mr-3 hidden lg:block" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z"
@@ -124,6 +173,7 @@
                         {{ __('header.login') }}
                     </button>
                 </li>
+                <li class="ml-[15px] lg:hidden block"><a href="javascript:void(0)" onclick="openNav()">&#9776;</a></li>
             @endauth
         </ul>
     </div>
@@ -137,4 +187,28 @@
         url += `?query=${val}`;
         window.location.href = url;
     }
+
+    
+    function openNav() {
+        document.getElementById("myNav").style.height = "100%";
+    }
+
+    function closeNav() {
+        document.getElementById("myNav").style.height = "0%";
+    }
+
+
+    function toggleAccordion(element) {
+    const content = element.nextElementSibling;
+    const arrow = element.querySelector('.arrow');
+
+    if (content.style.display === 'block') {
+      content.style.display = 'none';
+      arrow.style.transform = 'rotate(0deg)';
+    } else {
+      content.style.display = 'block';
+      arrow.style.transform = 'rotate(180deg)';
+    }
+  }
+
 </script>
