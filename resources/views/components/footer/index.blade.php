@@ -1,5 +1,5 @@
-<div class="flex w-full h-80 flex-col justify-around bg-visionGray mt-14">
-    <div class="flex h-2/3 border-b-2 border-gray-300 mx-20 mt-14 justify-between">
+<div class="flex w-full flex-col md:justify-between justify-center bg-visionGray mt-14">
+    <div class="flex flex-col md:flex-row border-b-2 border-gray-300 mt-14 justify-between mx-auto w-full px-[20px] lg:px-0 lg:max-w-[90%]">
         <div class="flex flex-col space-y-8">
             <div>
                 <svg xmlns="http://www.w3.org/2000/svg" width="171" height="36" viewBox="0 0 171 36" fill="none">
@@ -144,7 +144,7 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-col justify-center items-center h-1/3">
+    <div class="flex justify-center my-[35px]">
         <h6 class="italic text-center">© 2023 {{__('footer.copy_right')}}</h6>
     </div>
 </div>

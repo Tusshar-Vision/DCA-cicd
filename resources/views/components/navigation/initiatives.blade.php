@@ -7,33 +7,33 @@
 
 <div id="myNav" class="menuOverlay">
   <div class="menuOverlayContent">
-    <div class="flex justify-between align-middle"> 
-        <span>MENU</span> 
+    <div class="flex justify-between align-middle mb-[20px] px-[20px]"> 
+        <span class="font-[#242424] text-sm font-bold">MENU</span> 
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     </div>
     <div class="accordion">
-        <a href="javascript:void(0)">Home</a>
-        <a href="javascript:void(0)">News Today</a>
-        <div class="accordion-item">
-            <div class="accordion-label" onclick="toggleAccordion(this)">
+        <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[20px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[15px] px-[20px]">Home</a>
+        <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[20px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[15px] px-[20px]">News Today</a>
+        <div class="accordion-item mb-[20px]">
+            <div class="accordion-label text-sm font-[#242424] font-semibold py-[15px] px-[20px]" onclick="toggleAccordion(this)">
                 Weekly Focus<div class="arrow">▼</div>
             </div>
             <div class="accordion-content">
                 Content for Item 1
             </div>
         </div>
-        <div class="accordion-item">
-            <div class="accordion-label" onclick="toggleAccordion(this)">
+        <div class="accordion-item mb-[20px]">
+            <div class="accordion-label text-sm font-[#242424] font-semibold py-[15px] px-[20px]" onclick="toggleAccordion(this)">
                 Monthly Magazine<div class="arrow">▼</div>
             </div>
             <div class="accordion-content">
                 Content for Item 2
             </div>
         </div>
-        <a href="javascript:void(0)">Mains 365</a>
-        <a href="javascript:void(0)">Downloads</a>
-        <div class="accordion-item">
-            <div class="accordion-label" onclick="toggleAccordion(this)">
+        <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[20px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[15px] px-[20px]">Mains 365</a>
+        <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[20px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[15px] px-[20px]">Downloads</a>
+        <div class="accordion-item mb-[20px]">
+            <div class="accordion-label text-sm font-[#242424] font-semibold py-[15px] px-[20px]" onclick="toggleAccordion(this)">
             More <div class="arrow">▼</div>
             </div>
             <div class="accordion-content">
