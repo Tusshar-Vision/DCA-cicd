@@ -1,12 +1,12 @@
-<header class="h-20 border-b border-visionLineGray">
-    <div class="flex items-center justify-between">
-        <div class="py-4">
+<header class="h-auto lg:h-20 py-[20px] lg:py-0 border-b border-visionLineGray md:flex md:w-full md:align-middle">
+    <div class="flex items-center justify-between md:w-full">
+        <div class="hidden lg:block">
             <a href="/" wire:navigate>
                 <img width="200px" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
             </a>
         </div>
 
-        <div class="flex space-x-5 items-center">
+        <div class="w-full flex lg:space-x-5 items-center lg:justify-end justify-between space-x-0">
             <!-- <button class="flex" onclick="switchLang()">
                 <svg class="mr-2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2 11.0196L2.98039 7.45923M8.86273 11.0196L7.93394 7.45923M2.98039 7.45923L4.48366 2H6.5098L7.93394 7.45923M2.98039 7.45923H7.93394" stroke="#8F93A3" stroke-width="2"/>
@@ -61,8 +61,8 @@
                     <x-auth.user-dropdown-menu x-show="isUserMenuOpen" />
                 </div>
             @endauth -->
-            <div>
-                <ul class="flex">
+            <div class="flex order-last lg:order-first">
+                <ul class="flex items-center">
                     <li class="ml-[15px]"><a href="https://whatsapp.com/channel/0029Va6Adw242DcXgbUgQz1m" target="_blank"><img src="{{ asset('images/whtsapp.svg') }}"></a></li>
                     <li class="ml-[15px]"><a href="https://www.facebook.com/pages/Vision-IAS/233212040049021" target="_blank"><img src="{{ asset('images/fb.svg') }}"></a></li>
                     <li class="ml-[15px]"><a href="https://www.youtube.com/channel/UCw4wosjC-DKq95xI5klz92w" target="_blank"><img src="{{ asset('images/youtube.svg') }}"></a></li>
@@ -70,22 +70,28 @@
                     <li class="ml-[15px]"><a href="https://www.instagram.com/vision_ias/" target="_blank"><img src="{{ asset('images/insta.svg') }}"></a></li>
                     <li class="ml-[15px]"><a href="https://t.me/VisionIAS_UPSC" target="_blank"><img src="{{ asset('images/telegram.svg') }}"></a></li>
                 </ul>
+                <a href="javascript:void(0)" class="block lg:hidden pl-[15px] mx-[15px] border-slate-300 border-solid border-l-[1px]"><img src="{{ asset('images/mode.svg') }}"></a>
+                <a href="javascript:void(0)" class="block lg:hidden text-[50px] leading-5">&#8250;</a>
             </div>
-            <div>
-                <ul class="flex items-center connect-us">
-                    <li class="pl-[20px]"><a href="#"><img src="{{ asset('images/mode.svg') }}"></a></li>
-                    <li class="pl-[50px] pr-[20px] flex items-center">
-                        <img src="{{ asset('images/call.svg') }}">
-                        <div class="ml-[8px]">
+            <div class="order-first lg:order-last">
+                <ul class="flex items-center w-full connect-us">
+                    <li class="pl-[20px] lg:pr-[20px] hidden lg:block"><a href="javascript:void(0)"><img src="{{ asset('images/mode.svg') }}"></a></li>
+                    <li class="lg:pl-[20px] lg:pr-[20px] pr-[5px] flex items-center pl-0">
+                        <a href="tel:+91 846 802 2022" class="md:block lg:hidden"><img src="{{ asset('images/call.svg') }}" width="15"></a>
+                        <img src="{{ asset('images/call.svg') }}" class="hidden lg:block">
+                        <div class="ml-[8px] hidden lg:block">
                             <span>Call Us</span>
-                            <p><a href="tel:+91 846 802 2022" class="hover:text-[#005FAF]">+91 846 802 2022,</a> <a href="tel:+91 901 906 6066" class="hover:text-[#005FAF]">+91 901 906 6066</a></p>
+                            <p class="text-xs">
+                                <a href="tel:+91 846 802 2022" class="hover:text-[#005FAF] hidden lg:block">+91 846 802 2022,</a> 
+                                <a href="tel:+91 901 906 6066" class="hover:text-[#005FAF] hidden lg:block">+91 901 906 6066</a></p>
                         </div>
                     </li>
-                    <li class="pl-[20px] flex items-center">
-                        <img src="{{ asset('images/mail.svg') }}">
-                        <div class="ml-[8px]">
+                    <li class="lg:pl-[20px] pl-[5px] flex items-center">
+                        <a href="mailto:enquiry@visionias.in" class="md:block lg:hidden"><img src="{{ asset('images/mail.svg') }}" width="15"></a>
+                        <img src="{{ asset('images/mail.svg') }}" class="hidden lg:block">
+                        <div class="ml-[8px] hidden lg:block">
                             <span>Email Us</span>
-                            <p><a href="mailto:enquiry@visionias.in" class="hover:text-[#005FAF]">Enquiry@visionias.in</a></p>
+                            <p class="text-xs"><a href="mailto:enquiry@visionias.in" class="hover:text-[#005FAF]">Enquiry@visionias.in</a></p>
                         </div>
                     </li>
                 </ul>
@@ -113,4 +119,5 @@
         };
         
     } 
+
 </script>
