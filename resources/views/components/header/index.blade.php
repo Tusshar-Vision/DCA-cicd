@@ -63,17 +63,17 @@
             @endauth -->
             <div class="flex order-last lg:order-first">
                 <ul class="flex items-center">
-                    <li class="ml-[15px]"><a href="https://whatsapp.com/channel/0029Va6Adw242DcXgbUgQz1m" target="_blank"><img src="{{ asset('images/whtsapp.svg') }}"></a></li>
-                    <li class="ml-[15px]"><a href="https://www.facebook.com/pages/Vision-IAS/233212040049021" target="_blank"><img src="{{ asset('images/fb.svg') }}"></a></li>
-                    <li class="ml-[15px]"><a href="https://www.youtube.com/channel/UCw4wosjC-DKq95xI5klz92w" target="_blank"><img src="{{ asset('images/youtube.svg') }}"></a></li>
-                    <li class="ml-[15px] hidden lg:flex"><a href="https://twitter.com/vision_IAS" target="_blank"><img src="{{ asset('images/twitter.svg') }}"></a></li>
-                    <li class="ml-[15px] hidden lg:flex"><a href="https://www.instagram.com/vision_ias/" target="_blank"><img src="{{ asset('images/insta.svg') }}"></a></li>
-                    <li class="ml-[15px] hidden lg:flex"><a href="https://t.me/VisionIAS_UPSC" target="_blank"><img src="{{ asset('images/telegram.svg') }}"></a></li>
+                    <li class="ml-[10px] md:ml-[15px]"><a href="https://whatsapp.com/channel/0029Va6Adw242DcXgbUgQz1m" target="_blank"><img src="{{ asset('images/whtsapp.svg') }}" class="w-[20px] md:w-[26px]"></a></li>
+                    <li class="ml-[10px] md:ml-[15px]"><a href="https://www.facebook.com/pages/Vision-IAS/233212040049021" target="_blank"><img src="{{ asset('images/fb.svg') }}" class="w-[20px] md:w-[26px]"></a></li>
+                    <li class="ml-[10px] md:ml-[15px]"><a href="https://www.youtube.com/channel/UCw4wosjC-DKq95xI5klz92w" target="_blank"><img src="{{ asset('images/youtube.svg') }}" class="w-[20px] md:w-[26px]"></a></li>
+                    <li class="ml-[10px] md:ml-[15px] hidden lg:flex"><a href="https://twitter.com/vision_IAS" target="_blank"><img src="{{ asset('images/twitter.svg') }}" class="w-[20px] md:w-[26px]"></a></li>
+                    <li class="ml-[10px] md:ml-[15px] hidden lg:flex"><a href="https://www.instagram.com/vision_ias/" target="_blank"><img src="{{ asset('images/insta.svg') }}" class="w-[20px] md:w-[26px]"></a></li>
+                    <li class="ml-[10px] md:ml-[15px] hidden lg:flex"><a href="https://t.me/VisionIAS_UPSC" target="_blank"><img src="{{ asset('images/telegram.svg') }}" class="w-[20px] md:w-[26px]"></a></li>
                 </ul>
                 <ul class="items-center" style="display: none" id="socialList">
-                    <li class="ml-[15px]"><a href="https://twitter.com/vision_IAS" target="_blank"><img src="{{ asset('images/twitter.svg') }}"></a></li>
-                    <li class="ml-[15px]"><a href="https://www.instagram.com/vision_ias/" target="_blank"><img src="{{ asset('images/insta.svg') }}"></a></li>
-                    <li class="ml-[15px]"><a href="https://t.me/VisionIAS_UPSC" target="_blank"><img src="{{ asset('images/telegram.svg') }}"></a></li>
+                    <li class="ml-[10px] md:ml-[15px]"><a href="https://twitter.com/vision_IAS" target="_blank"><img src="{{ asset('images/twitter.svg') }}" class="w-[20px] md:w-[26px]"></a></li>
+                    <li class="ml-[10px] md:ml-[15px]"><a href="https://www.instagram.com/vision_ias/" target="_blank"><img src="{{ asset('images/insta.svg') }}" class="w-[20px] md:w-[26px]"></a></li>
+                    <li class="ml-[10px] md:ml-[15px]"><a href="https://t.me/VisionIAS_UPSC" target="_blank"><img src="{{ asset('images/telegram.svg') }}" class="w-[20px] md:w-[26px]"></a></li>
                 </ul>
                 <a href="javascript:void(0)" class="block lg:hidden pl-[15px] mx-[15px] border-slate-300 border-solid border-l-[1px]"><img src="{{ asset('images/mode.svg') }}"></a>
                 <a href="javascript:void(0)" class="block lg:hidden text-[50px] leading-5" id="toggleSocialbtn" onclick="toggleSocial()">

@@ -12,32 +12,74 @@
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     </div>
     <div class="accordion">
-        <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[20px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[15px] px-[20px]">Home</a>
-        <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[20px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[15px] px-[20px]">News Today</a>
-        <div class="accordion-item mb-[20px]">
-            <div class="accordion-label text-sm font-[#242424] font-semibold py-[15px] px-[20px]" onclick="toggleAccordion(this)">
-                Weekly Focus<div class="arrow">▼</div>
+        <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px]">Home</a>
+        <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px]">News Today</a>
+        <div class="accordion-item mb-[15px]">
+            <div class="accordion-label text-sm font-[#242424] font-semibold py-[10px] px-[20px]" onclick="toggleAccordion(this)">
+                    Weekly Focus<div class="arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
+                    <path d="M8.76615 7.42899L1.57103 0.236258C1.25531 -0.0786629 0.743796 -0.0786629 0.427282 0.236258C0.111565 0.551178 0.111565 1.06269 0.427282 1.37761L7.0517 7.99964L0.42808 14.6217C0.112363 14.9366 0.112363 15.4481 0.42808 15.7638C0.743797 16.0787 1.25611 16.0787 1.57182 15.7638L8.76695 8.57114C9.07782 8.25948 9.07782 7.73993 8.76615 7.42899Z" fill="#242424"/>
+                    </svg>
+                </div>
             </div>
             <div class="accordion-content">
-                Content for Item 1
+                <a href="javascript:void(0)" class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">Latest Edition</a>
+                <ul>
+                    <li>
+                        <a href="javascript:void(0)" class="flex justify-between items-center font-semibold w-full p-[10px] text-sm">November 2023 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
+                                <path d="M8.76615 7.42899L1.57103 0.236258C1.25531 -0.0786629 0.743796 -0.0786629 0.427282 0.236258C0.111565 0.551178 0.111565 1.06269 0.427282 1.37761L7.0517 7.99964L0.42808 14.6217C0.112363 14.9366 0.112363 15.4481 0.42808 15.7638C0.743797 16.0787 1.25611 16.0787 1.57182 15.7638L8.76695 8.57114C9.07782 8.25948 9.07782 7.73993 8.76615 7.42899Z" fill="#242424"/>
+                            </svg>
+                        </a>
+                            <ul>
+                                <li><a href="javascript:void(0)" class="text-sm block px-[10px] mb-[10px]">
+                                Countering Corruption: India's Ongoing Battle
+                                </a></li>
+                            </ul>
+                    </li>
+                </ul>
+                <a href="javascript:void(0)" class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">View All</a>
             </div>
         </div>
-        <div class="accordion-item mb-[20px]">
-            <div class="accordion-label text-sm font-[#242424] font-semibold py-[15px] px-[20px]" onclick="toggleAccordion(this)">
-                Monthly Magazine<div class="arrow">▼</div>
+        <div class="accordion-item mb-[15px]">
+            <div class="accordion-label text-sm font-[#242424] font-semibold py-[10px] px-[20px]" onclick="toggleAccordion(this)">
+                Monthly Magazine<div class="arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
+                    <path d="M8.76615 7.42899L1.57103 0.236258C1.25531 -0.0786629 0.743796 -0.0786629 0.427282 0.236258C0.111565 0.551178 0.111565 1.06269 0.427282 1.37761L7.0517 7.99964L0.42808 14.6217C0.112363 14.9366 0.112363 15.4481 0.42808 15.7638C0.743797 16.0787 1.25611 16.0787 1.57182 15.7638L8.76695 8.57114C9.07782 8.25948 9.07782 7.73993 8.76615 7.42899Z" fill="#242424"/>
+                    </svg>
+                </div>
             </div>
             <div class="accordion-content">
-                Content for Item 2
+                <a href="javascript:void(0)" class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">Latest Edition</a>
+                <ul>
+                    <li>
+                        <a href="javascript:void(0)" class="flex justify-between items-center font-semibold w-full p-[10px] text-sm">2023 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
+                                <path d="M8.76615 7.42899L1.57103 0.236258C1.25531 -0.0786629 0.743796 -0.0786629 0.427282 0.236258C0.111565 0.551178 0.111565 1.06269 0.427282 1.37761L7.0517 7.99964L0.42808 14.6217C0.112363 14.9366 0.112363 15.4481 0.42808 15.7638C0.743797 16.0787 1.25611 16.0787 1.57182 15.7638L8.76695 8.57114C9.07782 8.25948 9.07782 7.73993 8.76615 7.42899Z" fill="#242424"/>
+                            </svg>
+                        </a>
+                            <ul>
+                                <li><a href="javascript:void(0)" class="text-sm block px-[10px] mb-[10px]">
+                                    November
+                                </a></li>
+                            </ul>
+                    </li>
+                </ul>
+                <a href="javascript:void(0)" class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">View All</a>
             </div>
         </div>
-        <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[20px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[15px] px-[20px]">Mains 365</a>
-        <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[20px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[15px] px-[20px]">Downloads</a>
-        <div class="accordion-item mb-[20px]">
-            <div class="accordion-label text-sm font-[#242424] font-semibold py-[15px] px-[20px]" onclick="toggleAccordion(this)">
-            More <div class="arrow">▼</div>
+        <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px]">Mains 365</a>
+        <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px]">Downloads</a>
+        <div class="accordion-item mb-[15px]">
+            <div class="accordion-label text-sm font-[#242424] font-semibold py-[10px] px-[20px]" onclick="toggleAccordion(this)">
+            More <div class="arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
+                    <path d="M8.76615 7.42899L1.57103 0.236258C1.25531 -0.0786629 0.743796 -0.0786629 0.427282 0.236258C0.111565 0.551178 0.111565 1.06269 0.427282 1.37761L7.0517 7.99964L0.42808 14.6217C0.112363 14.9366 0.112363 15.4481 0.42808 15.7638C0.743797 16.0787 1.25611 16.0787 1.57182 15.7638L8.76695 8.57114C9.07782 8.25948 9.07782 7.73993 8.76615 7.42899Z" fill="#242424"/>
+                    </svg>
+            </div>
             </div>
             <div class="accordion-content">
-                Content for Item 2
+            <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px]">More 1</a>
             </div>
         </div>
         <!-- Add more items as needed -->
@@ -216,7 +258,7 @@
         arrow.style.transform = 'rotate(0deg)';
         } else {
         content.style.display = 'block';
-        arrow.style.transform = 'rotate(180deg)';
+        arrow.style.transform = 'rotate(-90deg)';
         }
     }
 
