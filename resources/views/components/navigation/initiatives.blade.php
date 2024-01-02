@@ -173,7 +173,15 @@
                         {{ __('header.login') }}
                     </button>
                 </li>
-                <li class="ml-[15px] lg:hidden block"><a href="javascript:void(0)" onclick="openNav()">&#9776;</a></li>
+                <li class="ml-[15px] lg:hidden block">
+                    <a href="javascript:void(0)" onclick="openNav()">
+                        <div class="hamMenu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </a>
+                </li>
             @endauth
         </ul>
     </div>
@@ -181,6 +189,7 @@
 
 
 <script>
+
     function redirect(ele) {
         const val = ele.value;
         let url = "{{ route('search') }}";
@@ -188,7 +197,7 @@
         window.location.href = url;
     }
 
-    
+    // responsive menu show hide script
     function openNav() {
         document.getElementById("myNav").style.height = "100%";
     }
@@ -197,18 +206,18 @@
         document.getElementById("myNav").style.height = "0%";
     }
 
-
+    // manu toggle script
     function toggleAccordion(element) {
-    const content = element.nextElementSibling;
-    const arrow = element.querySelector('.arrow');
+        const content = element.nextElementSibling;
+        const arrow = element.querySelector('.arrow');
 
-    if (content.style.display === 'block') {
-      content.style.display = 'none';
-      arrow.style.transform = 'rotate(0deg)';
-    } else {
-      content.style.display = 'block';
-      arrow.style.transform = 'rotate(180deg)';
+        if (content.style.display === 'block') {
+        content.style.display = 'none';
+        arrow.style.transform = 'rotate(0deg)';
+        } else {
+        content.style.display = 'block';
+        arrow.style.transform = 'rotate(180deg)';
+        }
     }
-  }
 
 </script>
