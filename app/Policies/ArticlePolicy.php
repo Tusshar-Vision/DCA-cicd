@@ -18,18 +18,6 @@ class ArticlePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('{{ ViewAny }}');
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Article  $article
-     * @return bool
-     */
-    public function view(User $user, Article $article): bool
-    {
         return $user->can('view_article');
     }
 
@@ -53,7 +41,7 @@ class ArticlePolicy
      */
     public function update(User $user, Article $article): bool
     {
-        return $user->can('{{ Update }}');
+        return $user->can('edit_article');
     }
 
     /**
@@ -76,7 +64,7 @@ class ArticlePolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('{{ DeleteAny }}');
+        return $user->can('delete_article');
     }
 
     /**
@@ -88,7 +76,7 @@ class ArticlePolicy
      */
     public function forceDelete(User $user, Article $article): bool
     {
-        return $user->can('{{ ForceDelete }}');
+        return $user->can('delete_article');
     }
 
     /**
@@ -99,7 +87,7 @@ class ArticlePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('{{ ForceDeleteAny }}');
+        return $user->can('delete_article');
     }
 
     /**
@@ -122,19 +110,7 @@ class ArticlePolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('{{ RestoreAny }}');
-    }
-
-    /**
-     * Determine whether the user can replicate.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Article  $article
-     * @return bool
-     */
-    public function replicate(User $user, Article $article): bool
-    {
-        return $user->can('{{ Replicate }}');
+        return $user->can('restore_article');
     }
 
     /**

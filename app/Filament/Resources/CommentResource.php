@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class CommentResource extends Resource implements HasShieldPermissions
 {
@@ -67,6 +68,9 @@ class CommentResource extends Resource implements HasShieldPermissions
 
                 Tables\Actions\Action::make('Approve')
                     ->button()
+                    ->visible(function () {
+                        return Auth::user()->can('approve_comment');
+                    })
                     ->hidden(function (Model $record) {
                         return $record->is_approved;
                     })
@@ -76,6 +80,9 @@ class CommentResource extends Resource implements HasShieldPermissions
 
                 Tables\Actions\Action::make('Disapprove')
                     ->button()
+                    ->visible(function () {
+                        return Auth::user()->can('approve_comment');
+                    })
                     ->visible(function (Model $record) {
                         return $record->is_approved;
                     })
@@ -86,6 +93,9 @@ class CommentResource extends Resource implements HasShieldPermissions
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\BulkAction::make('Approve comments')
+                        ->visible(function () {
+                            return Auth::user()->can('approve_comment');
+                        })
                         ->action(function (Collection $records) {
                            $records->each(function ($record) {
                                $record->update(['is_approved' => true]);

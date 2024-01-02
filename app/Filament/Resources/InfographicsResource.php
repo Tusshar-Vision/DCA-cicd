@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\InfographicsResource\Pages;
 use App\Filament\Resources\InfographicsResource\RelationManagers;
 use App\Helpers\InitiativesHelper;
+use App\Models\Infographic;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -19,7 +20,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class InfographicsResource extends Resource
 {
-    protected static ?string $model = Media::class;
+    protected static ?string $model = Infographic::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-photo';
 
@@ -73,73 +74,36 @@ class InfographicsResource extends Resource
 
     public static function canViewAny(): bool
     {
-        $user = Auth::user();
-        return $user->can('view_any_infographics');
-    }
-
-    public static function canView(Model $record): bool
-    {
-        $user = Auth::user();
-        return $user->can('view_infographics');
+        return Auth::user()->can('view_infographics');
     }
 
     public static function canEdit(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('update_infographics');
+        return Auth::user()->can('edit_infographics');
     }
 
     public static function canCreate(): bool
     {
-        $user = Auth::user();
-        return $user->can('create_infographics');
+        return Auth::user()->can('create_infographics');
     }
 
     public static function canDelete(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_infographics');
+        return Auth::user()->can('delete_infographics');
     }
 
     public static function canDeleteAny(): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_any_infographics');
+        return Auth::user()->can('delete_infographics');
     }
 
     public static function canForceDelete(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('force_delete_infographics');
+        return Auth::user()->can('delete_infographics');
     }
 
     public static function canForceDeleteAny(): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_any_infographics');
-    }
-
-    public static function canReorder(): bool
-    {
-        $user = Auth::user();
-        return $user->can('reorder_infographics');
-    }
-
-    public static function canReplicate(Model $record): bool
-    {
-        $user = Auth::user();
-        return $user->can('replicate_infographics');
-    }
-
-    public static function canRestore(Model $record): bool
-    {
-        $user = Auth::user();
-        return $user->can('restore_infographics');
-    }
-
-    public static function canRestoreAny(): bool
-    {
-        $user = Auth::user();
-        return $user->can('restore_any_infographics');
+        return Auth::user()->can('delete_infographics');
     }
 }

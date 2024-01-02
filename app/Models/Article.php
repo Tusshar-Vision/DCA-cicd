@@ -60,7 +60,8 @@ class Article extends Model implements HasMedia, Sortable
 
     protected $casts = [
         'sources' => 'array',
-        'is_published' => 'bool'
+        'is_published' => 'bool',
+        'published_at' => 'datetime'
     ];
 
     // This method will automatically be called when creating or updating an article.

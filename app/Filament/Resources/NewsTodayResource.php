@@ -49,7 +49,7 @@ class NewsTodayResource extends Resource
                     DatePicker::make('published_at')
                         ->native(false)
                         ->label('Publish At')
-                        ->default(Carbon::now())
+                        ->default(Carbon::now()->format('Y-m-d'))
                         ->reactive()
                         ->rules([
                             function (PublishedInitiativeService $publishedInitiativeService) {
@@ -101,67 +101,36 @@ class NewsTodayResource extends Resource
 
     public static function canViewAny(): bool
     {
-        $user = Auth::user();
-        return $user->can('view_news::today');
+        return Auth::user()->can('view_news::today');
     }
 
     public static function canEdit(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('edit_news::today');
+        return Auth::user()->can('edit_news::today');
     }
 
     public static function canCreate(): bool
     {
-        $user = Auth::user();
-        return $user->can('create_news::today');
+        return Auth::user()->can('create_news::today');
     }
 
     public static function canDelete(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_news::today');
+        return Auth::user()->can('delete_news::today');
     }
 
     public static function canDeleteAny(): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_any_news::today');
+        return Auth::user()->can('delete_news::today');
     }
 
     public static function canForceDelete(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('force_delete_news::today');
+        return Auth::user()->can('delete_news::today');
     }
 
     public static function canForceDeleteAny(): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_any_news::today');
-    }
-
-    public static function canReorder(): bool
-    {
-        $user = Auth::user();
-        return $user->can('reorder_news::today');
-    }
-
-    public static function canReplicate(Model $record): bool
-    {
-        $user = Auth::user();
-        return $user->can('replicate_news::today');
-    }
-
-    public static function canRestore(Model $record): bool
-    {
-        $user = Auth::user();
-        return $user->can('restore_news::today');
-    }
-
-    public static function canRestoreAny(): bool
-    {
-        $user = Auth::user();
-        return $user->can('restore_any_news::today');
+        return Auth::user()->can('delete_news::today');
     }
 }

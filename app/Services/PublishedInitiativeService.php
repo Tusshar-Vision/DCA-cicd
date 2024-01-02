@@ -22,27 +22,21 @@ readonly class PublishedInitiativeService
                     ->isPublished()
                     ->latest('published_at')
                     ->with('articles', function ($article) {
-                        $article->language()->isPublished()->with('topic');
+                        $article->language()->isPublished()->Ordered()->with('topic');
                     })
                     ->first();
     }
 
-    public function getByMonthAndYear($initiativeId, $date)
+    public function getByDate($initiativeId, $date): PublishedInitiative|null
     {
-        $year =  Carbon::parse($date)->year;
-        $month = Carbon::parse($date)->month;
-
-        $magazines = $this->publishedInitiatives
+        return $this->publishedInitiatives
             ->where('initiative_id', '=', $initiativeId)
             ->isPublished()
-            ->whereRaw("YEAR(published_at) = $year && MONTH(published_at) = $month")
-            ->latest('published_at')
+            ->whereDate('published_at', '=', Carbon::parse($date)->format('Y-m-d'))
             ->with('articles', function ($article) {
-                $article->with('topic');
+                $article->language()->isPublished()->Ordered()->with('topic');
             })
             ->first();
-
-        return $magazines;
     }
 
     public function getDownloads($initiative_id = null, $year = null, $month = null) : array | Collection
@@ -67,7 +61,11 @@ readonly class PublishedInitiativeService
     {
         $publishedRecords = $this->publishedInitiatives
                                 ->where('initiative_id', '=', $initiative_id)
-                                ->whereDate('published_at', '=', $published_at)
+                                ->whereDate(
+                                    'published_at',
+                                    '=',
+                                    Carbon::parse($published_at)->format('Y-m-d')
+                                )
                                 ->get();
 
         return $publishedRecords->isNotEmpty();

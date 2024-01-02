@@ -36,7 +36,7 @@
                 <div class="calendar-wrapper border-1 border-color-C3CAD9 border rounded">
                     <label>
                         <input id="news-today-calendar" type="date" class="w-full border-0"
-                            value="{{ Carbon::parse($article->published_at)->format('Y-m-d') }}">
+                            value="{{ Carbon::parse($article->publishedInitiative->published_at)->format('Y-m-d') }}">
                     </label>
                 </div>
                 <x-widgets.article-side-bar :table-of-content="$articles" />

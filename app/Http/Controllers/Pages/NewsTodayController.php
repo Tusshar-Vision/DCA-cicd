@@ -56,7 +56,7 @@ class NewsTodayController extends Controller
 
     public function getArticlesDateWise($date)
     {
-        $latestPublishedInitiative = $this->publishedInitiativeService->getLatestById($this->initiativeId, $date);
+        $latestPublishedInitiative = $this->publishedInitiativeService->getByDate($this->initiativeId, $date);
 
         if (!$latestPublishedInitiative) {
             return View('pages.no-news-today');
@@ -67,7 +67,7 @@ class NewsTodayController extends Controller
         if ($page_no = request()->query('page'))
             $article_no = $page_no;
 
-        $articles = $latestPublishedInitiative->articles->where('language', config("settings.language." . app()->getLocale()));
+        $articles = $latestPublishedInitiative->articles;
 
         if ($articles->isEmpty()) {
             return View('pages.no-news-today');
@@ -83,34 +83,34 @@ class NewsTodayController extends Controller
 
     public function renderArticles($date, $topic, $slug)
     {
-        $latestPublishedInitiative = $this->publishedInitiativeService->getLatest($this->initiativeId);
+        $latestPublishedInitiative = $this->publishedInitiativeService->getByDate($this->initiativeId, $date);
         $articles = $latestPublishedInitiative->articles;
         $article = $this->articleService->getArticleBySlug($slug);
         $relatedArticles = $this->articleService->getRelatedArticles($article);
 
-        $topics = [];
-
-        foreach ($articles as $a) {
-            $topics[] = $a->topic;
-        }
-
-        $topics = array_unique($topics);
-
-        usort($topics, function ($a, $b) {
-            return $a->id - $b->id;
-        });
-
-        $sortedArticles = [];
-
-        foreach ($topics as $topic) {
-            foreach ($articles as $a) {
-                if ($a->topic === $topic) {
-                    $sortedArticles[] = $a;
-                }
-            }
-        }
-
-        $articles = $sortedArticles;
+//        $topics = [];
+//
+//        foreach ($articles as $a) {
+//            $topics[] = $a->topic;
+//        }
+//
+//        $topics = array_unique($topics);
+//
+//        usort($topics, function ($a, $b) {
+//            return $a->id - $b->id;
+//        });
+//
+//        $sortedArticles = [];
+//
+//        foreach ($topics as $topic) {
+//            foreach ($articles as $a) {
+//                if ($a->topic === $topic) {
+//                    $sortedArticles[] = $a;
+//                }
+//            }
+//        }
+//
+//        $articles = $sortedArticles;
 
         $noteAvailable = null;
         $note = null;
@@ -124,7 +124,7 @@ class NewsTodayController extends Controller
         }
 
         return View('pages.news-today', [
-            "topics" => $topics,
+//            "topics" => $topics,
             "articles" => $articles,
             "article" => $article,
             "totalArticles" => count($articles),

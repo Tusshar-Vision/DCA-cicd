@@ -95,8 +95,10 @@ trait ArticleResourceSchema
                     ->label('Sub-Section')
                     ->limit(20)
                     ->tooltip(fn (Model $record): string => $record->topicSubSection->name ?? '')
-                    ->searchable(),
-                SpatieTagsColumn::make('tags'),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                SpatieTagsColumn::make('tags')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('author.name')
                     ->searchable()
                     ->label('Expert'),
@@ -107,6 +109,10 @@ trait ArticleResourceSchema
                     ->label('Last Modified')
                     ->date('d M Y h:i a')
                     ->sortable(),
+                TextColumn::make('published_at')
+                    ->label('Published At')
+                    ->date('d M Y h:i a')
+                    ->toggleable(isToggledHiddenByDefault: true)
             ])
             ->filters([
                 DateScopeFilter::make('created_at'),
@@ -235,7 +241,8 @@ trait ArticleResourceSchema
                         }
                     })
                     ->icon('heroicon-s-eye')
-                    ->button()
+                    ->iconButton()
+                    ->tooltip('View')
                     ->fillForm(fn (Model $record): array => [
                         'content' => $record->content,
                     ])
@@ -248,21 +255,37 @@ trait ArticleResourceSchema
                     ])->slideOver(),
 
                 EditAction::make()
-                    ->button()
+                    ->iconButton()
+                    ->tooltip('Edit')
                     ->visible(function (Model $record) {
                         $user = Auth::user();
-                        if ($record->status === 'Published') return false;
-                        if($user->hasRole(['super_admin', 'admin'])) return true;
-                        return $user->can('update_article') && $record->author_id == $user->id && $record->status !== 'Final';
+                        return
+                            (
+                                $user->can('edit_article') &&
+                                $record->author_id === $user->id &&
+                                $record->status !== 'Published'
+                            ) || (
+                                $user->can('edit_article') &&
+                                $user->hasRole(['super_admin', 'admin']) &&
+                                $record->status !== 'Published'
+                            );
                     }),
 
                 Action::make('Review')
+                    ->tooltip('Review')
                     ->icon('heroicon-s-chat-bubble-left-right')
                     ->visible(function (Model $record) {
                         $user = Auth::user();
-                        if ($record->status === 'Published') return false;
-                        if($user->hasRole(['super_admin', 'admin'])) return true;
-                        return $user->can('review_article') && $record->reviewer_id == $user->id;
+                        return
+                            (
+                                $user->can('review_article') &&
+                                $record->reviewer_id === $user->id &&
+                                $record->status !== 'Published'
+                            ) || (
+                                $user->can('review_article') &&
+                                $user->hasRole(['super_admin', 'admin']) &&
+                                $record->status !== 'Published'
+                            );
                     })
                     ->fillForm(function (Model $record) {
                         return [
@@ -314,7 +337,7 @@ trait ArticleResourceSchema
                             ($data['body'] !== null) ? $record->review($data['body'], $author, 0) : null;
 
                         $record->setStatus($data['status']);
-                    })->button()
+                    })->iconButton()
 
             ], ActionsPosition::BeforeColumns)
             ->bulkActions([
@@ -326,8 +349,7 @@ trait ArticleResourceSchema
                         ->requiresConfirmation()
                         ->modalDescription('Only the articles that have a status of final will be published.')
                         ->visible(function () {
-                            $user = Auth::user();
-                            return $user->hasRole(['admin', 'super_admin']);
+                            return Auth::user()->can('publish_article');
                         })
                         ->action(function (?Collection $records) {
                             $records->each(function ($record) {
@@ -360,8 +382,7 @@ trait ArticleResourceSchema
                         ->requiresConfirmation()
                         ->modalDescription('Only the articles that have a status of published will be unpublished.')
                         ->visible(function () {
-                            $user = Auth::user();
-                            return $user->hasRole(['admin', 'super_admin']);
+                            return Auth::user()->can('publish_article');
                         })
                         ->action(function (?Collection $records) {
                             $records->each(function ($record) {
@@ -376,8 +397,7 @@ trait ArticleResourceSchema
                         ->color(Color::hex('#00569e'))
                         ->icon('heroicon-s-star')
                         ->visible(function () {
-                            $user = Auth::user();
-                            return $user->hasRole(['admin', 'super_admin']);
+                            return Auth::user()->can('publish_article');
                         })
                         ->action(function (Collection $records) {
                             $records->each(function($article) {
@@ -390,8 +410,7 @@ trait ArticleResourceSchema
                         ->color(Color::Red)
                         ->icon('heroicon-s-x-mark')
                         ->visible(function () {
-                            $user = Auth::user();
-                            return $user->hasRole(['admin', 'super_admin']);
+                            return Auth::user()->can('publish_article');
                         })
                         ->action(function (Collection $records) {
                             $records->each(function($article) {
