@@ -68,11 +68,17 @@
                         <script>
                             document.addEventListener("DOMContentLoaded", () => {
                                 const squares = document.querySelector('.con-squares');
-                                for (var i = 1; i < 365; i++) {
-                                    const level = Math.floor(Math.random() * 5);
-                                    squares.insertAdjacentHTML('beforeend',
-                                        `<li data-level="${level}" data-complete="98% Read" aria-label="Friday Feb 27, 2023"></li>`);
-                                }
+                               @foreach ($newsTodayConsumption as $day => $percent)
+                                <?php $level = null; 
+                                if($percent === 100) $level = 1; 
+                                else if($percent > 0) $level = 2;
+                                else if($percent === 0) $level = 3;
+                                else $level = 4;
+                                ?>
+
+                                squares.insertAdjacentHTML('beforeend',
+                                        `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : $percent."% Read"}}"></li>`);
+                                @endforeach
                             });
                         </script>
                     </ul>
@@ -99,11 +105,18 @@
                         <script>
                             document.addEventListener("DOMContentLoaded", () => {
                                 const squares = document.querySelector('.weekly-con-graph .con-squares');
-                                for (var i = 1; i <= 52; i++) {
-                                    const level = Math.floor(Math.random() * 5);
-                                    squares.insertAdjacentHTML('beforeend',
-                                        `<li data-level="${level}" data-complete="98% Read" aria-label="Friday Feb 27, 2023"></li>`);
-                                }
+
+                               @foreach ($weeklyFocusConsumption as $week => $percent)
+                                <?php $level = null; 
+                                if($percent === 100) $level = 1; 
+                                else if($percent > 0) $level = 2;
+                                else if($percent === 0) $level = 3;
+                                else $level = 4;
+                                ?>
+
+                                squares.insertAdjacentHTML('beforeend',
+                                        `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : $percent."% Read"}}"></li>`);
+                                @endforeach
                             });
                         </script>
                     </ul>
@@ -125,9 +138,7 @@
                         <li>Nov</li>
                         <li>Dec</li>
                     </ul>
-                    @foreach ($montlyMagazineConsumption as $month => $percent)
-                     <?php   echo $month." ". $percent; ?>
-                    @endforeach
+
                     <ul class="con-squares">
                         <script>
                             document.addEventListener("DOMContentLoaded", () => {
@@ -142,7 +153,7 @@
                                 ?>
 
                                 squares.insertAdjacentHTML('beforeend',
-                                        `<li data-level="${<?php  echo $level ?>}" data-complete="98% Read" aria-label="Friday Feb 27, 2023"></li>`);
+                                        `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : $percent."% Read"}}"></li>`);
                                 @endforeach
                             });
                         </script>

@@ -10,6 +10,7 @@ use App\Models\Note;
 use App\Models\Paper;
 use App\Models\ReadHistory;
 use App\Models\TopicSection;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +22,75 @@ class UserController extends Controller
         $read_histories = Auth::guard('cognito')->user()->readHistories()->join('articles', 'read_histories.article_id', '=', 'articles.id')->select('articles.title', DB::raw('DATE_FORMAT(articles.published_at, "%Y-%m-%d") as published_at'))->get();
 
         // content consumption
+
+        // news today
+        $newsTodayConsumption = Auth::guard('cognito')->user()->readHistories()->whereHas('article', function ($articleQuery) {
+            $articleQuery->where('initiative_id', config('settings.initiatives.NEWS_TODAY'));
+        })
+            ->select(DB::raw('DAYOFYEAR(article_published_at) as day'), DB::raw('CEIL(AVG(read_percent)) as percent_read'))
+            ->groupBy(DB::raw('DAYOFYEAR(article_published_at)'))
+            ->get();
+
+        $year = now()->year;
+        $numberOfDaysInYear = Carbon::createFromDate($year, 12, 31)->dayOfYear;
+
+        $allDayNumbers = range(1, $numberOfDaysInYear);
+
+        $dayNumbersWithRecords = Article::where('initiative_id', config('settings.initiatives.NEWS_TODAY'))
+            ->select(DB::raw('DAYOFYEAR(published_at) as day_number'))
+            ->whereYear('published_at', $year)
+            ->groupBy(DB::raw('DAYOFYEAR(published_at)'))
+            ->get()
+            ->pluck('day_number')
+            ->toArray();
+
+        $dayNumbersWithoutRecords = array_values(array_diff($allDayNumbers, $dayNumbersWithRecords));
+
+        logger("da", [$dayNumbersWithoutRecords]);
+
+        $newsTodayAverages = array_fill(1, $numberOfDaysInYear, 0);
+        $newsTodayConsumption->each(function ($item) use (&$newsTodayAverages) {
+            $newsTodayAverages[$item->day] = $item->percent_read;
+        });
+
+        foreach ($dayNumbersWithoutRecords as $record) $newsTodayAverages[$record] = null;
+
+        logger("asdf", [$newsTodayAverages]);
+
+        // weekly focus
+        $weeklyFocusConsumption = Auth::guard('cognito')->user()->readHistories()->whereHas('article', function ($articleQuery) {
+            $articleQuery->where('initiative_id', config('settings.initiatives.WEEKLY_FOCUS'));
+        })
+            ->select(DB::raw('WEEK(article_published_at, 1) as week'), DB::raw('CEIL(AVG(read_percent)) as percent_read'))
+            ->groupBy(DB::raw('WEEK(article_published_at, 1)'))
+            ->get();
+
+        $startDate = now()->startOfYear();
+        $endDate = now()->endOfYear();
+
+        $allWeeks = [];
+        $currentDate = clone $startDate;
+        while ($currentDate->lte($endDate)) {
+            $allWeeks[] = $currentDate->isoWeek();
+            $currentDate->addWeek();
+        }
+
+        $weeksWithRecords = Article::where('initiative_id', config('settings.initiatives.WEEKLY_FOCUS'))
+            ->select(DB::raw('WEEK(published_at, 1) as week'))
+            ->groupBy(DB::raw('WEEK(published_at, 1)'))
+            ->whereBetween('published_at', [$startDate, $endDate])
+            ->get()
+            ->pluck('week')
+            ->toArray();
+
+        $weeksWithoutRecords = array_values(array_diff($allWeeks, $weeksWithRecords));
+
+        $weeklyAverages = array_fill(1, 52, 0);
+        $weeklyFocusConsumption->each(function ($item) use (&$weeklyAverages) {
+            $weeklyAverages[$item->week] = $item->percent_read;
+        });
+
+        foreach ($weeksWithoutRecords as $record) $weeklyAverages[$record] = null;
 
         // monthly magazine
         $montlyMagazineConsumption = Auth::guard('cognito')->user()->readHistories()->whereHas('article', function ($articleQuery) {
@@ -46,7 +116,7 @@ class UserController extends Controller
 
         foreach ($monthsWithoutRecords as $record) $monthlyAverages[$record] = null;
 
-        return view('pages.user.home', ['readHistories' => $read_histories, 'monthly_magazine_consumption' => $monthlyAverages]);
+        return view('pages.user.home', ['readHistories' => $read_histories, 'monthly_magazine_consumption' => $monthlyAverages, 'weekly_focus_consumption' => $weeklyAverages, 'news_today_consumption' => $newsTodayAverages]);
     }
 
     public function updateReadHistory(Request $request)
