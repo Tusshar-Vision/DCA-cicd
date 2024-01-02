@@ -18,18 +18,6 @@ class PublishedInitiativePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('{{ ViewAny }}');
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\PublishedInitiative  $publishedInitiative
-     * @return bool
-     */
-    public function view(User $user, PublishedInitiative $publishedInitiative): bool
-    {
         return $user->can('view_weekly::focus');
     }
 
@@ -53,7 +41,7 @@ class PublishedInitiativePolicy
      */
     public function update(User $user, PublishedInitiative $publishedInitiative): bool
     {
-        return $user->can('{{ Update }}');
+        return $user->can('edit_mains365');
     }
 
     /**
@@ -76,7 +64,7 @@ class PublishedInitiativePolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('{{ DeleteAny }}');
+        return $user->can('delete_weekly::focus');
     }
 
     /**
@@ -88,7 +76,7 @@ class PublishedInitiativePolicy
      */
     public function forceDelete(User $user, PublishedInitiative $publishedInitiative): bool
     {
-        return $user->can('{{ ForceDelete }}');
+        return $user->can('delete_weekly::focus');
     }
 
     /**
@@ -99,7 +87,7 @@ class PublishedInitiativePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('{{ ForceDeleteAny }}');
+        return $user->can('delete_weekly::focus');
     }
 
     /**

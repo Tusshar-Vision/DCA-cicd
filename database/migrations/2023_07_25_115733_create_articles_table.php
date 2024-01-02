@@ -35,6 +35,7 @@ return new class extends Migration
             $table->dateTime('published_at')->nullable();
             $table->timestamps();
             $table->unsignedInteger('order_column')->nullable()->default(null);
+            $table->softDeletes();
 
             $table->fullText('title');
 

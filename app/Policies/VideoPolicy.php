@@ -18,18 +18,6 @@ class VideoPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('{{ ViewAny }}');
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Video  $video
-     * @return bool
-     */
-    public function view(User $user, Video $video): bool
-    {
         return $user->can('view_video');
     }
 
@@ -53,7 +41,7 @@ class VideoPolicy
      */
     public function update(User $user, Video $video): bool
     {
-        return $user->can('{{ Update }}');
+        return $user->can('edit_video');
     }
 
     /**
@@ -76,7 +64,7 @@ class VideoPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('{{ DeleteAny }}');
+        return $user->can('delete_video');
     }
 
     /**
@@ -88,7 +76,7 @@ class VideoPolicy
      */
     public function forceDelete(User $user, Video $video): bool
     {
-        return $user->can('{{ ForceDelete }}');
+        return $user->can('delete_video');
     }
 
     /**
@@ -99,53 +87,6 @@ class VideoPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('{{ ForceDeleteAny }}');
+        return $user->can('delete_video');
     }
-
-    /**
-     * Determine whether the user can restore.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Video  $video
-     * @return bool
-     */
-    public function restore(User $user, Video $video): bool
-    {
-        return $user->can('{{ Restore }}');
-    }
-
-    /**
-     * Determine whether the user can bulk restore.
-     *
-     * @param  \App\Models\User  $user
-     * @return bool
-     */
-    public function restoreAny(User $user): bool
-    {
-        return $user->can('{{ RestoreAny }}');
-    }
-
-    /**
-     * Determine whether the user can replicate.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Video  $video
-     * @return bool
-     */
-    public function replicate(User $user, Video $video): bool
-    {
-        return $user->can('{{ Replicate }}');
-    }
-
-    /**
-     * Determine whether the user can reorder.
-     *
-     * @param  \App\Models\User  $user
-     * @return bool
-     */
-    public function reorder(User $user): bool
-    {
-        return $user->can('{{ Reorder }}');
-    }
-
 }

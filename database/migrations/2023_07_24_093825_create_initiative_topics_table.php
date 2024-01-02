@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedBigInteger('paper_id')->nullable();
 
+            $table->unsignedInteger('order_column')->nullable()->default(null);
             $table->foreign('paper_id')->references('id')->on('papers');
             $table->timestamps();
         });

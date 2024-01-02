@@ -111,20 +111,13 @@ class Mains365Resource extends Resource
 
     public static function canViewAny(): bool
     {
-        $user = Auth::user();
-        return $user->can('view_any_mains365');
-    }
-
-    public static function canView(Model $record): bool
-    {
-        $user = Auth::user();
-        return $user->can('view_mains365');
+        return Auth::user()->can('view_mains365');
     }
 
     public static function canEdit(Model $record): bool
     {
         $user = Auth::user();
-        return $user->can('update_mains365');
+        return $user->can('edit_mains365');
     }
 
     public static function canCreate(): bool
@@ -142,42 +135,18 @@ class Mains365Resource extends Resource
     public static function canDeleteAny(): bool
     {
         $user = Auth::user();
-        return $user->can('delete_any_mains365');
+        return $user->can('delete_mains365');
     }
 
     public static function canForceDelete(Model $record): bool
     {
         $user = Auth::user();
-        return $user->can('force_delete_mains365');
+        return $user->can('delete_mains365');
     }
 
     public static function canForceDeleteAny(): bool
     {
         $user = Auth::user();
-        return $user->can('delete_any_mains365');
-    }
-
-    public static function canReorder(): bool
-    {
-        $user = Auth::user();
-        return $user->can('reorder_mains365');
-    }
-
-    public static function canReplicate(Model $record): bool
-    {
-        $user = Auth::user();
-        return $user->can('replicate_mains365');
-    }
-
-    public static function canRestore(Model $record): bool
-    {
-        $user = Auth::user();
-        return $user->can('restore_mains365');
-    }
-
-    public static function canRestoreAny(): bool
-    {
-        $user = Auth::user();
-        return $user->can('restore_any_mains365');
+        return $user->can('delete_mains365');
     }
 }

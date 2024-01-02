@@ -111,73 +111,36 @@ class PT365Resource extends Resource
 
     public static function canViewAny(): bool
     {
-        $user = Auth::user();
-        return $user->can('view_any_p::t365');
-    }
-
-    public static function canView(Model $record): bool
-    {
-        $user = Auth::user();
-        return $user->can('view_p::t365');
+        return Auth::user()->can('view_p::t365');
     }
 
     public static function canEdit(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('update_p::t365');
+        return Auth::user()->can('edit_p::t365');
     }
 
     public static function canCreate(): bool
     {
-        $user = Auth::user();
-        return $user->can('create_p::t365');
+        return Auth::user()->can('create_p::t365');
     }
 
     public static function canDelete(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_p::t365');
+        return Auth::user()->can('delete_p::t365');
     }
 
     public static function canDeleteAny(): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_any_p::t365');
+        return Auth::user()->can('delete_p::t365');
     }
 
     public static function canForceDelete(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('force_delete_p::t365');
+        return Auth::user()->can('delete_p::t365');
     }
 
     public static function canForceDeleteAny(): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_any_p::t365');
-    }
-
-    public static function canReorder(): bool
-    {
-        $user = Auth::user();
-        return $user->can('reorder_p::t365');
-    }
-
-    public static function canReplicate(Model $record): bool
-    {
-        $user = Auth::user();
-        return $user->can('replicate_p::t365');
-    }
-
-    public static function canRestore(Model $record): bool
-    {
-        $user = Auth::user();
-        return $user->can('restore_p::t365');
-    }
-
-    public static function canRestoreAny(): bool
-    {
-        $user = Auth::user();
-        return $user->can('restore_any_p::t365');
+        return Auth::user()->can('delete_p::t365');
     }
 }
