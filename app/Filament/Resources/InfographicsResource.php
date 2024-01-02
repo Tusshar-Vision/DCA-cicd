@@ -71,39 +71,4 @@ class InfographicsResource extends Resource
             'edit' => Pages\EditInfographics::route('/{record}/edit'),
         ];
     }
-
-    public static function canViewAny(): bool
-    {
-        return Auth::user()->can('view_infographics');
-    }
-
-    public static function canEdit(Model $record): bool
-    {
-        return Auth::user()->can('edit_infographics');
-    }
-
-    public static function canCreate(): bool
-    {
-        return Auth::user()->can('create_infographics');
-    }
-
-    public static function canDelete(Model $record): bool
-    {
-        return Auth::user()->can('delete_infographics');
-    }
-
-    public static function canDeleteAny(): bool
-    {
-        return Auth::user()->can('delete_infographics');
-    }
-
-    public static function canForceDelete(Model $record): bool
-    {
-        return Auth::user()->can('delete_infographics');
-    }
-
-    public static function canForceDeleteAny(): bool
-    {
-        return Auth::user()->can('delete_infographics');
-    }
 }

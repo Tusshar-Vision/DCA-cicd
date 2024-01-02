@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->longText('content')->nullable();
             $table->string('slug')->unique();
             $table->text('excerpt')->nullable();
             $table->unsignedInteger('read_time')->nullable();
@@ -38,7 +37,6 @@ return new class extends Migration
             $table->unsignedInteger('order_column')->nullable()->default(null);
 
             $table->fullText('title');
-            $table->fullText('content');
 
             // * Define foreign key relationship with the above tables
             $table->foreign('author_id')->references('id')->on('users');

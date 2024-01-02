@@ -35,7 +35,6 @@ class Article extends Model implements HasMedia, Sortable
 
     protected $fillable = [
         'title',
-        'content',
         'slug',
         'featured_image',
         'excerpt',
@@ -161,6 +160,11 @@ class Article extends Model implements HasMedia, Sortable
     public function publishedInitiative(): BelongsTo
     {
         return $this->belongsTo(PublishedInitiative::class, 'published_initiative_id');
+    }
+
+    public function content(): HasMany
+    {
+        return $this->hasMany(ArticleContent::class);
     }
 
     public function relatedTerms(): HasMany

@@ -3,15 +3,15 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\VideoResource\Pages;
+use App\Models\Video;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class VideoResource extends Resource
 {
-    protected static ?string $model = Media::class;
+    protected static ?string $model = Video::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-video-camera';
 

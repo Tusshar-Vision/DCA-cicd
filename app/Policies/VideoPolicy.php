@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use App\Models\Video;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class MediaPolicy
+class VideoPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class MediaPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \Spatie\MediaLibrary\MediaCollections\Models\Media  $media
+     * @param  \App\Models\Video  $video
      * @return bool
      */
-    public function view(User $user, Media $media): bool
+    public function view(User $user, Video $video): bool
     {
         return $user->can('view_video');
     }
@@ -48,10 +48,10 @@ class MediaPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \Spatie\MediaLibrary\MediaCollections\Models\Media  $media
+     * @param  \App\Models\Video  $video
      * @return bool
      */
-    public function update(User $user, Media $media): bool
+    public function update(User $user, Video $video): bool
     {
         return $user->can('{{ Update }}');
     }
@@ -60,10 +60,10 @@ class MediaPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \Spatie\MediaLibrary\MediaCollections\Models\Media  $media
+     * @param  \App\Models\Video  $video
      * @return bool
      */
-    public function delete(User $user, Media $media): bool
+    public function delete(User $user, Video $video): bool
     {
         return $user->can('delete_video');
     }
@@ -83,10 +83,10 @@ class MediaPolicy
      * Determine whether the user can permanently delete.
      *
      * @param  \App\Models\User  $user
-     * @param  \Spatie\MediaLibrary\MediaCollections\Models\Media  $media
+     * @param  \App\Models\Video  $video
      * @return bool
      */
-    public function forceDelete(User $user, Media $media): bool
+    public function forceDelete(User $user, Video $video): bool
     {
         return $user->can('{{ ForceDelete }}');
     }
@@ -106,10 +106,10 @@ class MediaPolicy
      * Determine whether the user can restore.
      *
      * @param  \App\Models\User  $user
-     * @param  \Spatie\MediaLibrary\MediaCollections\Models\Media  $media
+     * @param  \App\Models\Video  $video
      * @return bool
      */
-    public function restore(User $user, Media $media): bool
+    public function restore(User $user, Video $video): bool
     {
         return $user->can('{{ Restore }}');
     }
@@ -129,10 +129,10 @@ class MediaPolicy
      * Determine whether the user can replicate.
      *
      * @param  \App\Models\User  $user
-     * @param  \Spatie\MediaLibrary\MediaCollections\Models\Media  $media
+     * @param  \App\Models\Video  $video
      * @return bool
      */
-    public function replicate(User $user, Media $media): bool
+    public function replicate(User $user, Video $video): bool
     {
         return $user->can('{{ Replicate }}');
     }
