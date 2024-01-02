@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use App\Models\Bookmark;
 use App\Models\InitiativeTopic;
 use App\Models\Note;
@@ -18,7 +19,34 @@ class UserController extends Controller
     public function dashboard()
     {
         $read_histories = Auth::guard('cognito')->user()->readHistories()->join('articles', 'read_histories.article_id', '=', 'articles.id')->select('articles.title', DB::raw('DATE_FORMAT(articles.published_at, "%Y-%m-%d") as published_at'))->get();
-        return view('pages.user.home', ['readHistories' => $read_histories]);
+
+        // content consumption
+
+        // monthly magazine
+        $montlyMagazineConsumption = Auth::guard('cognito')->user()->readHistories()->whereHas('article', function ($articleQuery) {
+            $articleQuery->where('initiative_id', config('settings.initiatives.MONTHLY_MAGAZINE'));
+        })
+            ->select(DB::raw('MONTH(article_published_at) as month'), DB::raw('CEIL(AVG(read_percent)) as percent_read'))
+            ->groupBy(DB::raw('MONTH(article_published_at)'))
+            ->get();
+
+        $allMonths = range(1, 12);
+        $monthsWithRecords = Article::where('initiative_id', config('settings.initiatives.MONTHLY_MAGAZINE'))
+            ->select(DB::raw('MONTH(published_at) as month'))
+            ->groupBy(DB::raw('MONTH(published_at)'))
+            ->get()
+            ->pluck('month')
+            ->toArray();
+        $monthsWithoutRecords = array_diff($allMonths, $monthsWithRecords);
+
+        $monthlyAverages = array_fill(1, 12, 0);
+        $montlyMagazineConsumption->each(function ($item) use (&$monthlyAverages) {
+            $monthlyAverages[$item->month] = $item->percent_read;
+        });
+
+        foreach ($monthsWithoutRecords as $record) $monthlyAverages[$record] = null;
+
+        return view('pages.user.home', ['readHistories' => $read_histories, 'monthly_magazine_consumption' => $monthlyAverages]);
     }
 
     public function updateReadHistory(Request $request)

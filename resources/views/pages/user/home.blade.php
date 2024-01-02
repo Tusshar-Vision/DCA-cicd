@@ -4,5 +4,5 @@
 @section('content')
     <livewire:widgets.edit-profile-section />
     <livewire:widgets.student-profile-tabsection />
-    <livewire:widgets.student-activity-section :readHistories="$readHistories" />
+    <livewire:widgets.student-activity-section :readHistories="$readHistories" :montlyMagazineConsumption="$monthly_magazine_consumption" />
 @endsection

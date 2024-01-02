@@ -9,7 +9,7 @@ class ReadHistory extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['student_id', 'article_id', 'read_percent'];
+    protected $fillable = ['student_id', 'article_id', 'article_published_at', 'read_percent'];
 
     public function student()
     {

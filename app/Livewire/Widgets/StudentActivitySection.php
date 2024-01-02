@@ -8,10 +8,12 @@ class StudentActivitySection extends Component
 {
 
     public $readHistories;
+    public $montlyMagazineConsumption;
 
-    public function mount($readHistories)
+    public function mount($readHistories, $montlyMagazineConsumption)
     {
         $this->readHistories = $readHistories;
+        $this->montlyMagazineConsumption = $montlyMagazineConsumption;
     }
 
     public function render()
