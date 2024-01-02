@@ -100,10 +100,12 @@
         function addReadArticle() {
             console.log("add read article", "{{ Auth::guard('cognito')->user()->name }}");
             const article_id = "{{ $article->id }}";
+            const article_published_at = "{{$article->published_at}}"
             const student_id = "{{ Auth::guard('cognito')->user()->id }}"
             saveData("{{ route('user.read-history') }}", {
                 article_id,
                 student_id,
+                article_published_at,
                 read_percent: 0,
                 _token: "{{ csrf_token() }}"
             })
