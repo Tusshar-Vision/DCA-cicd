@@ -2945,24 +2945,6 @@ li[data-level="4"] {
     .accordion-content {
       display: none;
       padding: 10px;
-      ul{
-        li{
-          &:hover ul{
-            display: block;
-          }
-          ul{
-            display: none;
-          }
-          a{
-            &:hover{
-              // color: #3362CC;
-            }
-            &:hover svg{
-              transform: rotate(90deg);
-            }
-          }
-        }
-      }
     }
   }
 }
