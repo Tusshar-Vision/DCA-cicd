@@ -1621,7 +1621,10 @@ $gray-686E70: #686E70;
         border-color: #3362CC;
       }
     }
-
+    .passwordOverlay{
+      position: relative;
+      z-index: 1;
+    }
     label {
       position: absolute;
       top: 16px;
@@ -1632,8 +1635,13 @@ $gray-686E70: #686E70;
       padding: 0 10px;
       color: rgba(90, 113, 132, 0.50);
       transition: all .3s ease;
+      &.overlayLabel{
+        z-index: 0;
+      }
     }
-
+    .passwordOverlay:focus+label.overlayLabel{
+      z-index: 1  ;
+    }
     input:focus+label {
       font-size: 11px;
       top: -5px;
@@ -2971,4 +2979,5 @@ li[data-level="4"] {
   -webkit-transition: all ease 0s;
   -moz-transition: all ease 0s;
 }
+
 
