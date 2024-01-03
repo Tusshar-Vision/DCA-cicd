@@ -177,9 +177,9 @@ class Article extends Model implements HasMedia, Sortable
         return $this->hasMany(Video::class);
     }
 
-    public function infographics(): HasMany
+    public function infographics(): HasOne
     {
-        return $this->hasMany(Infographic::class);
+        return $this->hasOne(Infographic::class);
     }
 
     public function scopeIsFeatured(Builder $query): Builder

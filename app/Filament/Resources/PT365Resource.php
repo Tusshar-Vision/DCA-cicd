@@ -69,7 +69,7 @@ class PT365Resource extends Resource
                     Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
                         ->name('file')
                         ->acceptedFileTypes(['application/pdf'])
-                        ->collection('pt365')
+                        ->collection('pt-365')
                         ->required()
                         ->columnSpanFull(),
 

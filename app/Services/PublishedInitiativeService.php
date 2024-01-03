@@ -89,4 +89,14 @@ readonly class PublishedInitiativeService
 
         return $publishedRecords->isNotEmpty();
     }
+
+    public function checkIfNameExists($initiative_id, $name): bool
+    {
+        $publishedRecords = $this->publishedInitiatives
+            ->where('initiative_id', '=', $initiative_id)
+            ->where('name', '=', $name)
+            ->get();
+
+        return $publishedRecords->isNotEmpty();
+    }
 }
