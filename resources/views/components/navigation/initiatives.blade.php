@@ -3,10 +3,94 @@
     use App\Enums\Initiatives;
 @endphp
 
-<div class="flex h-20 items-center justify-between">
+<!-- responsive menu start -->
+
+<div id="myNav" class="menuOverlay">
+  <div class="menuOverlayContent">
+    <div class="flex justify-between align-middle mb-[20px] px-[20px]"> 
+        <span class="font-[#242424] text-sm font-bold">MENU</span> 
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    </div>
+    <div class="accordion h-[60vh] overflow-scroll">
+        <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px]">Home</a>
+        <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px]">News Today</a>
+        <div class="accordion-item mb-[15px]">
+            <div class="accordion-label text-sm font-[#242424] font-semibold py-[10px] px-[20px]" onclick="toggleAccordion(this)">
+                    Weekly Focus<div class="arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
+                    <path d="M8.76615 7.42899L1.57103 0.236258C1.25531 -0.0786629 0.743796 -0.0786629 0.427282 0.236258C0.111565 0.551178 0.111565 1.06269 0.427282 1.37761L7.0517 7.99964L0.42808 14.6217C0.112363 14.9366 0.112363 15.4481 0.42808 15.7638C0.743797 16.0787 1.25611 16.0787 1.57182 15.7638L8.76695 8.57114C9.07782 8.25948 9.07782 7.73993 8.76615 7.42899Z" fill="#242424"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="accordion-content">
+                <a href="javascript:void(0)" class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">Latest Edition</a>
+                <ul>
+                    <li>
+                        <a href="javascript:void(0)" class="flex justify-between items-center font-semibold w-full p-[10px] text-sm">November 2023</a>
+                            <ul>
+                                <li><a href="javascript:void(0)" class="text-sm block px-[15px] mb-[10px]">
+                                Countering Corruption: India's Ongoing Battle
+                                </a></li>
+                            </ul>
+                    </li>
+                </ul>
+                <a href="javascript:void(0)" class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">View All</a>
+            </div>
+        </div>
+        <div class="accordion-item mb-[15px]">
+            <div class="accordion-label text-sm font-[#242424] font-semibold py-[10px] px-[20px]" onclick="toggleAccordion(this)">
+                Monthly Magazine<div class="arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
+                    <path d="M8.76615 7.42899L1.57103 0.236258C1.25531 -0.0786629 0.743796 -0.0786629 0.427282 0.236258C0.111565 0.551178 0.111565 1.06269 0.427282 1.37761L7.0517 7.99964L0.42808 14.6217C0.112363 14.9366 0.112363 15.4481 0.42808 15.7638C0.743797 16.0787 1.25611 16.0787 1.57182 15.7638L8.76695 8.57114C9.07782 8.25948 9.07782 7.73993 8.76615 7.42899Z" fill="#242424"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="accordion-content">
+                <a href="javascript:void(0)" class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">Latest Edition</a>
+                <ul>
+                    <li>
+                        <a href="javascript:void(0)" class="flex justify-between items-center font-semibold w-full p-[10px] text-sm">2023</a>
+                            <ul>
+                                <li><a href="javascript:void(0)" class="text-sm block px-[15px] mb-[10px]">
+                                    November
+                                </a></li>
+                            </ul>
+                    </li>
+                </ul>
+                <a href="javascript:void(0)" class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">View All</a>
+            </div>
+        </div>
+        <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px]">Mains 365</a>
+        <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px]">Downloads</a>
+        <div class="accordion-item mb-[15px]">
+            <div class="accordion-label text-sm font-[#242424] font-semibold py-[10px] px-[20px]" onclick="toggleAccordion(this)">
+            More <div class="arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
+                    <path d="M8.76615 7.42899L1.57103 0.236258C1.25531 -0.0786629 0.743796 -0.0786629 0.427282 0.236258C0.111565 0.551178 0.111565 1.06269 0.427282 1.37761L7.0517 7.99964L0.42808 14.6217C0.112363 14.9366 0.112363 15.4481 0.42808 15.7638C0.743797 16.0787 1.25611 16.0787 1.57182 15.7638L8.76695 8.57114C9.07782 8.25948 9.07782 7.73993 8.76615 7.42899Z" fill="#242424"/>
+                    </svg>
+            </div>
+            </div>
+            <div class="accordion-content">
+                <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[10px]">More 1</a>
+            </div>
+            <a href="javascript:void(0)" class="text-sm text-[#FFFFFF] rounded font-bold my-[20px] bg-[#3983F2] block py-[15px] text-center">Register</a>    
+        </div>
+        <!-- Add more items as needed -->
+    </div>
+  </div>
+</div>
+
+<!-- responsive menu end -->
+
+<div class="flex py-[20px] bg-[#fff] items-center justify-between leftsticky">
     <div class="w-3/4">
-        <ul class="flex">
-            <li class="font-semibold pr-6">
+        <div class="lg:hidden block">
+            <a href="/" wire:navigate>
+                <img width="112px" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
+            </a>
+        </div>
+        <ul class="items-center hidden lg:block">
+            <li class="font-semibold pr-4 xl:pr-6 float-left">
                 <a href="{{ route('home') }}" wire:navigate>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path
@@ -15,17 +99,17 @@
                     </svg>
                 </a>
             </li>
-            <div class="flex" x-data="{ isMagazineDropdownOpen: false, isWeeklyDropdownOpen: false, isMoreDropdownOpen: false }">
+            <div class="flex pt-[5px]" x-data="{ isMagazineDropdownOpen: false, isWeeklyDropdownOpen: false, isMoreDropdownOpen: false }">
                 @foreach ($initiatives as $initiative)
                     @if ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
-                        <li class="font-semibold pr-6">
+                        <li class="font-semibold text-xs xl:text-sm pr-6">
                             <a class="hover:text-visionRed {{ request()->is('news-today*') ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}">
                                 {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                             </a>
                         </li>
                     @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE))
                         <div class="relative">
-                            <li class="font-semibold pr-6"
+                            <li class="font-semibold text-xs xl:text-sm pr-6"
                                 @click="
                                         isMagazineDropdownOpen = !isMagazineDropdownOpen;
                                         isMoreDropdownOpen = false;
@@ -44,7 +128,7 @@
                         </div>
                     @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
                         <div class="relative">
-                            <li class="font-semibold pr-6"
+                            <li class="font-semibold text-xs xl:text-sm pr-6"
                                 @click="
                                         isWeeklyDropdownOpen = !isWeeklyDropdownOpen;
                                         isMagazineDropdownOpen = false;
@@ -63,7 +147,7 @@
                         </div>
                     @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::MORE))
                         <div class="relative">
-                            <li class="font-semibold pr-6"
+                            <li class="font-semibold text-xs xl:text-sm pr-6"
                                 @click="
                                         isMoreDropdownOpen = !isMoreDropdownOpen;
                                         isWeeklyDropdownOpen = false;
@@ -79,7 +163,7 @@
                                 @click.away="isMoreDropdownOpen = false" :menuData="$menuData['more']" />
                         </div>
                     @else
-                        <li class="font-semibold pr-6">
+                        <li class="font-semibold text-xs xl:text-sm pr-6">
                             <a class="hover:text-visionRed {{ request()->is(trim($initiative->path, '/')) ? 'text-visionRed' : '' }}"
                                 href="{{ $initiative->path }}" wire:navigate>
                                 {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
@@ -110,12 +194,12 @@
                     <x-auth.user-dropdown-menu x-show="isUserMenuOpen" />
                 </div>
             @else
-                <li class="pr-[20px]">
+                <li class="pr-[20px] hidden lg:block">
                     <a href="#" class="register" @click="isRegisterFormOpen = true">Register</a>
                 </li>
                 <li class="pl-[20px]" style="border-left: 1px solid #E5EAF4;">
-                    <button @click="isLoginFormOpen = !isLoginFormOpen" class="flex items-center">
-                        <svg class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    <button @click="isLoginFormOpen = !isLoginFormOpen" class="flex items-center text-xs xl:text-sm">
+                        <svg class="mr-3 hidden lg:block" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z"
@@ -124,6 +208,15 @@
                         {{ __('header.login') }}
                     </button>
                 </li>
+                <li class="ml-[15px] lg:hidden block">
+                    <a href="javascript:void(0)" onclick="openNav()">
+                        <div class="hamMenu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </a>
+                </li>
             @endauth
         </ul>
     </div>
@@ -131,10 +224,35 @@
 
 
 <script>
+
     function redirect(ele) {
         const val = ele.value;
         let url = "{{ route('search') }}";
         url += `?query=${val}`;
         window.location.href = url;
     }
+
+    // responsive menu show hide script
+    function openNav() {
+        document.getElementById("myNav").style.height = "100%";
+    }
+
+    function closeNav() {
+        document.getElementById("myNav").style.height = "0%";
+    }
+
+    // manu toggle script
+    function toggleAccordion(element) {
+        const content = element.nextElementSibling;
+        const arrow = element.querySelector('.arrow');
+
+        if (content.style.display === 'block') {
+        content.style.display = 'none';
+        arrow.style.transform = 'rotate(0deg)';
+        } else {
+        content.style.display = 'block';
+        arrow.style.transform = 'rotate(-90deg)';
+        }
+    }
+
 </script>
