@@ -23,45 +23,51 @@ class UserController extends Controller
 
         // content consumption
 
+        $year = now()->year;
+
         // news today
-        $newsTodayConsumption = Auth::guard('cognito')->user()->readHistories()->whereHas('article', function ($articleQuery) {
-            $articleQuery->where('initiative_id', config('settings.initiatives.NEWS_TODAY'));
-        })
-            ->select(DB::raw('DAYOFYEAR(article_published_at) as day'), DB::raw('CEIL(AVG(read_percent)) as percent_read'))
+        $newsTodayConsumption = Auth::guard('cognito')->user()->readHistories()
+            ->whereYear('article_published_at', $year)
+            ->whereHas('article', function ($articleQuery) {
+                $articleQuery->where('initiative_id', config('settings.initiatives.NEWS_TODAY'));
+            })
+            ->select(DB::raw('DAYOFYEAR(article_published_at) as day'), DB::raw('COUNT(*) as total_read'))
             ->groupBy(DB::raw('DAYOFYEAR(article_published_at)'))
             ->get();
 
-        $year = now()->year;
+
         $numberOfDaysInYear = Carbon::createFromDate($year, 12, 31)->dayOfYear;
 
         $allDayNumbers = range(1, $numberOfDaysInYear);
 
-        $dayNumbersWithRecords = Article::where('initiative_id', config('settings.initiatives.NEWS_TODAY'))
-            ->select(DB::raw('DAYOFYEAR(published_at) as day_number'))
+        $dailyArticles = Article::where('initiative_id', config('settings.initiatives.NEWS_TODAY'))
+            ->select(DB::raw('DAYOFYEAR(published_at) as day'), DB::raw('COUNT(*) as total_article'))
             ->whereYear('published_at', $year)
             ->groupBy(DB::raw('DAYOFYEAR(published_at)'))
-            ->get()
-            ->pluck('day_number')
-            ->toArray();
+            ->get(['day', 'total_read']);
+
+        $dayNumbersWithRecords = $dailyArticles->pluck('day')->toArray();
 
         $dayNumbersWithoutRecords = array_values(array_diff($allDayNumbers, $dayNumbersWithRecords));
 
-        logger("da", [$dayNumbersWithoutRecords]);
-
-        $newsTodayAverages = array_fill(1, $numberOfDaysInYear, 0);
+        $newsTodayAverages = array_fill(1, $numberOfDaysInYear, []);
         $newsTodayConsumption->each(function ($item) use (&$newsTodayAverages) {
-            $newsTodayAverages[$item->day] = $item->percent_read;
+            $newsTodayAverages[$item->day]['total_read'] = $item->total_read;
+        });
+
+        $dailyArticles->each(function ($item) use (&$newsTodayAverages) {
+            $newsTodayAverages[$item->day]['total_article'] = $item->total_article;
         });
 
         foreach ($dayNumbersWithoutRecords as $record) $newsTodayAverages[$record] = null;
 
-        logger("asdf", [$newsTodayAverages]);
-
         // weekly focus
-        $weeklyFocusConsumption = Auth::guard('cognito')->user()->readHistories()->whereHas('article', function ($articleQuery) {
-            $articleQuery->where('initiative_id', config('settings.initiatives.WEEKLY_FOCUS'));
-        })
-            ->select(DB::raw('WEEK(article_published_at, 1) as week'), DB::raw('CEIL(AVG(read_percent)) as percent_read'))
+        $weeklyFocusConsumption = Auth::guard('cognito')->user()->readHistories()
+            ->whereYear('article_published_at', $year)
+            ->whereHas('article', function ($articleQuery) {
+                $articleQuery->where('initiative_id', config('settings.initiatives.WEEKLY_FOCUS'));
+            })
+            ->select(DB::raw('WEEK(article_published_at, 1) as week'), DB::raw('COUNT(*) as total_read'))
             ->groupBy(DB::raw('WEEK(article_published_at, 1)'))
             ->get();
 
@@ -75,43 +81,57 @@ class UserController extends Controller
             $currentDate->addWeek();
         }
 
-        $weeksWithRecords = Article::where('initiative_id', config('settings.initiatives.WEEKLY_FOCUS'))
-            ->select(DB::raw('WEEK(published_at, 1) as week'))
+        $weeklyArticleRecords = Article::where('initiative_id', config('settings.initiatives.WEEKLY_FOCUS'))
+            ->whereYear('published_at', $year)
+            ->select(DB::raw('WEEK(published_at, 1) as week'), DB::raw('COUNT(*) as total_article'))
             ->groupBy(DB::raw('WEEK(published_at, 1)'))
             ->whereBetween('published_at', [$startDate, $endDate])
-            ->get()
-            ->pluck('week')
-            ->toArray();
+            ->get(['week', 'total_article']);
+
+        $weeksWithRecords = $weeklyArticleRecords->pluck('week')->toArray();
 
         $weeksWithoutRecords = array_values(array_diff($allWeeks, $weeksWithRecords));
 
-        $weeklyAverages = array_fill(1, 52, 0);
+        $weeklyAverages = array_fill(1, 52, []);
         $weeklyFocusConsumption->each(function ($item) use (&$weeklyAverages) {
-            $weeklyAverages[$item->week] = $item->percent_read;
+            $weeklyAverages[$item->week]['total_read'] = $item->total_read;
+        });
+
+        $weeklyArticleRecords->each(function ($item) use (&$weeklyAverages) {
+            $weeklyAverages[$item->week]['total_article'] = $item->total_article;
         });
 
         foreach ($weeksWithoutRecords as $record) $weeklyAverages[$record] = null;
 
         // monthly magazine
-        $montlyMagazineConsumption = Auth::guard('cognito')->user()->readHistories()->whereHas('article', function ($articleQuery) {
-            $articleQuery->where('initiative_id', config('settings.initiatives.MONTHLY_MAGAZINE'));
-        })
-            ->select(DB::raw('MONTH(article_published_at) as month'), DB::raw('CEIL(AVG(read_percent)) as percent_read'))
+        $montlyMagazineConsumption = Auth::guard('cognito')->user()->readHistories()
+            ->whereYear('article_published_at', $year)
+            ->whereHas('article', function ($articleQuery) {
+                $articleQuery->where('initiative_id', config('settings.initiatives.MONTHLY_MAGAZINE'));
+            })
+            ->select(DB::raw('MONTH(article_published_at) as month'), DB::raw('COUNT(*) as total_read'))
             ->groupBy(DB::raw('MONTH(article_published_at)'))
             ->get();
 
         $allMonths = range(1, 12);
-        $monthsWithRecords = Article::where('initiative_id', config('settings.initiatives.MONTHLY_MAGAZINE'))
-            ->select(DB::raw('MONTH(published_at) as month'))
+        $articleRecords = Article::where('initiative_id', config('settings.initiatives.MONTHLY_MAGAZINE'))
+            ->whereYear('published_at', $year)
+            ->select(DB::raw('MONTH(published_at) as month'), DB::raw('COUNT(*) as total_article'))
             ->groupBy(DB::raw('MONTH(published_at)'))
-            ->get()
-            ->pluck('month')
-            ->toArray();
+            ->get(['month', 'total_article']);
+
+        // $collection = collect($articleRecords);
+        $monthsWithRecords = $articleRecords->pluck('month')->toArray();
+
         $monthsWithoutRecords = array_diff($allMonths, $monthsWithRecords);
 
-        $monthlyAverages = array_fill(1, 12, 0);
+        $monthlyAverages = array_fill(1, 12, []);
         $montlyMagazineConsumption->each(function ($item) use (&$monthlyAverages) {
-            $monthlyAverages[$item->month] = $item->percent_read;
+            $monthlyAverages[$item->month]['total_read'] = $item->total_read;
+        });
+
+        $articleRecords->each(function ($item) use (&$monthlyAverages) {
+            $monthlyAverages[$item->month]['total_article'] = $item->total_article;
         });
 
         foreach ($monthsWithoutRecords as $record) $monthlyAverages[$record] = null;
