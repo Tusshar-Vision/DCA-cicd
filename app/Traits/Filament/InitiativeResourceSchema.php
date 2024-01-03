@@ -93,6 +93,11 @@ trait InitiativeResourceSchema
                     ->label('Publish On')
                     ->sortable(),
 
+                TextColumn::make('created_at')
+                    ->dateTime('d M Y H:i')
+                    ->label('Created At')
+                    ->sortable()
+
             ])->defaultSort('published_at', 'desc')
             ->filters([
                 //

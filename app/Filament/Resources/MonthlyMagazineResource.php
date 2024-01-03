@@ -58,7 +58,26 @@ class MonthlyMagazineResource extends Resource
                             ->required()
                             ->default(Carbon::now()->format('Y-m-d'))
                             ->rules([
-                                function (PublishedInitiativeService $publishedInitiativeService) {
+                                function (PublishedInitiativeService $publishedInitiativeService, ?Model $record) {
+
+                                    if ($record !== null) {
+                                        return function (string $attribute, $value, \Closure $fail) use ($publishedInitiativeService, $record) {
+                                            if (
+                                                Carbon::parse($record->published_at)
+                                                    ->format('Y-m-d') === Carbon::parse($value)->format('Y-m-d')
+                                            ) {
+                                            } elseif (
+                                                $publishedInitiativeService
+                                                    ->checkIfExists(
+                                                        InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE),
+                                                        $value
+                                                    )
+                                            ) {
+                                                $fail('This month cannot be used as it already exists for this initiative, you can search it and add your articles in it.');
+                                            }
+                                        };
+                                    }
+
                                     return function (string $attribute, $value, \Closure $fail) use($publishedInitiativeService) {
                                         if  (
                                             $publishedInitiativeService
@@ -78,12 +97,47 @@ class MonthlyMagazineResource extends Resource
 
                         Forms\Components\TextInput::make('name')->default(function (callable $get) {
                             return static::generateName($get('published_at'));
-                        })
+                        })->rules([
+                            function (PublishedInitiativeService $publishedInitiativeService, ?Model $record) {
+
+                                if ($record !== null) {
+                                    return function (string $attribute, $value, \Closure $fail) use($publishedInitiativeService, $record) {
+                                        if (
+                                            $record->name === $value
+                                        ) {}
+
+                                        elseif  (
+                                            $publishedInitiativeService
+                                                ->checkIfNameExists(
+                                                    InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE),
+                                                    $value
+                                                )
+                                        ) {
+                                            $fail('This name cannot be used as it already exists for this initiative, you can search it and add your articles in it.');
+                                        }
+                                    };
+                                }
+
+                                return function (string $attribute, $value, \Closure $fail) use($publishedInitiativeService) {
+                                    if  (
+                                        $publishedInitiativeService
+                                            ->checkIfNameExists(
+                                                InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE),
+                                                $value
+                                            )
+                                    ) {
+                                        $fail('This name cannot be used as it already exists for this initiative, you can search it and add your articles in it.');
+                                    }
+                                };
+                            }
+                        ])
                             ->required(),
                     ])->columns(2)->columnSpanFull(),
 
                     Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
-                        ->collection('pdf')->columnSpanFull(),
+                        ->collection('monthly-magazine')
+                        ->acceptedFileTypes(['application/pdf'])
+                        ->columnSpanFull(),
 
 
 

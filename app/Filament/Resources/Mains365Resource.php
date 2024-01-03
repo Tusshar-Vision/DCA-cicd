@@ -67,7 +67,7 @@ class Mains365Resource extends Resource
                     Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
                         ->name('file')
                         ->acceptedFileTypes(['application/pdf'])
-                        ->collection('mains365')
+                        ->collection('mains-365')
                         ->required()
                         ->columnSpanFull(),
 
