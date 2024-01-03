@@ -33,22 +33,30 @@ class MonthlyMagazineController extends Controller
         $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE);
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function index()
     {
-        $publishedAt = Carbon::now()->format('Y-m');
-        $this->getData($publishedAt);
-
+        $this->getData();
+        $publishedAt = Carbon::parse($this->latestMonthlyMagazine->published_at)->format('Y-m-d');
         $this->article_slug = $this->articles[0]->slug;
         $this->article_topic = $this->articles[0]->topic->name;
 
-        return redirect()->route('monthly-magazine.article', ['month' => $publishedAt, 'topic' => $this->article_topic, 'article_slug' => $this->article_slug]);
+        return redirect()->route(
+            'monthly-magazine.article',
+            [
+                'month' => $publishedAt,
+                'topic' => $this->article_topic,
+                'article_slug' => $this->article_slug
+            ]
+        );
     }
 
 
     public function renderByMonth($month)
     {
         $this->getData($month);
-
         $article_no = 1;
         if ($page_no = request()->query('page')) $article_no = $page_no;
         $article = $this->articles[$article_no - 1];
@@ -59,9 +67,7 @@ class MonthlyMagazineController extends Controller
 
     public function renderArticles($month, $topic, $article_slug, Contents $contents)
     {
-
         $this->getData($month);
-
         $article = $this->articleService->getArticleBySlug($article_slug);
         $relatedArticles = $this->articleService->getRelatedArticles($article);
 
@@ -100,11 +106,14 @@ class MonthlyMagazineController extends Controller
         ]);
     }
 
+    /**
+     * @throws \Throwable
+     */
     protected function getData($publishedAt = null)
     {
-        $this->latestMonthlyMagazine = $this->publishedInitiativeService->getByMonthAndYear($this->initiativeId, $publishedAt);
+        $this->latestMonthlyMagazine = $this->publishedInitiativeService->getLatest($this->initiativeId, $publishedAt);
 
-        $this->articles = $this->latestMonthlyMagazine->articles->where('language', config("settings.language." . app()->getLocale()));
+        $this->articles = $this->latestMonthlyMagazine->articles;
 
         $this->topics = [];
 

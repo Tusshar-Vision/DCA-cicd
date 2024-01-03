@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('table_of_contents', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('article_id');
-            $table->string('title');
+            $table->unsignedBigInteger('article_id')->index();
+            $table->longText('handled_text')->nullable();
+            $table->json('toc')->nullable();
             $table->timestamps();
 
             $table->foreign('article_id')->references('id')->on('articles');

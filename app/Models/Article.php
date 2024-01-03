@@ -10,8 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Scout\Searchable;
 use RalphJSmit\Laravel\SEO\Support\HasSEO;
+use Spatie\EloquentSortable\Sortable;
+use Spatie\EloquentSortable\SortableTrait;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\ModelStatus\HasStatuses;
@@ -24,13 +27,14 @@ use LaracraftTech\LaravelDateScopes\DateScopes;
  * @method isFeatured()
  */
 
-class Article extends Model implements HasMedia
+class Article extends Model implements HasMedia, Sortable
 {
-    use HasFactory, Searchable, HasSlug, HasTags, HasSEO, HasComments, InteractsWithMedia, HasReviewRating, DateScopes, HasStatuses;
+    use Searchable, InteractsWithMedia, DateScopes, SortableTrait;
+
+    use HasFactory,  HasSlug, HasTags, HasSEO, HasComments,  HasReviewRating,  HasStatuses;
 
     protected $fillable = [
         'title',
-        'content',
         'slug',
         'featured_image',
         'excerpt',
@@ -39,12 +43,7 @@ class Article extends Model implements HasMedia
         'visibility',
         'language',
         'featured',
-        'uuid',
         'published_at',
-        'is_published',
-        'is_current',
-        'publisher_type',
-        'publisher_id',
         'created_at',
         'updated_at',
         'author_id',
@@ -55,12 +54,13 @@ class Article extends Model implements HasMedia
         'reviewer_id',
         'initiative_id',
         'sources',
-        'sort'
+        'order_column'
     ];
 
     protected $casts = [
         'sources' => 'array',
-        'is_published' => 'bool'
+        'is_published' => 'bool',
+        'published_at' => 'datetime'
     ];
 
     // This method will automatically be called when creating or updating an article.
@@ -122,29 +122,24 @@ class Article extends Model implements HasMedia
 
     // Define the relationships with other models
 
+    public function tableOfContent(): HasOne
+    {
+        return $this->hasOne(TableOfContent::class);
+    }
+
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function publishedInitiative(): BelongsTo
+    public function reviewer(): BelongsTo
     {
-        return $this->belongsTo(PublishedInitiative::class, 'published_initiative_id');
+        return $this->belongsTo(User::class, 'reviewer_id');
     }
 
     public function initiative(): BelongsTo
     {
         return $this->belongsTo(Initiative::class, 'initiative_id');
-    }
-
-    public function relatedTerms(): BelongsToMany
-    {
-        return $this->belongsToMany(RelatedTerm::class);
-    }
-
-    public function relatedVideos(): HasMany
-    {
-        return $this->hasMany(RelatedVideo::class);
     }
 
     public function topic(): BelongsTo
@@ -162,9 +157,29 @@ class Article extends Model implements HasMedia
         return $this->belongsTo(TopicSubSection::class, 'topic_sub_section_id');
     }
 
-    public function reviewer(): BelongsTo
+    public function publishedInitiative(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'reviewer_id');
+        return $this->belongsTo(PublishedInitiative::class, 'published_initiative_id');
+    }
+
+    public function content(): HasOne
+    {
+        return $this->hasOne(ArticleContent::class);
+    }
+
+    public function relatedTerms(): HasMany
+    {
+        return $this->hasMany(RelatedTerm::class);
+    }
+
+    public function relatedVideos(): HasMany
+    {
+        return $this->hasMany(Video::class);
+    }
+
+    public function infographics(): HasMany
+    {
+        return $this->hasMany(Infographic::class);
     }
 
     public function scopeIsFeatured(Builder $query): Builder
@@ -174,6 +189,11 @@ class Article extends Model implements HasMedia
 
     public function scopeIsPublished(Builder $query): Builder
     {
-        return $query->where('is_published', true);
+        return $query->currentStatus('Published');
+    }
+
+    public function scopeLanguage(Builder $query): Builder
+    {
+        return $query->where('language', config("settings.language." . app()->getLocale()));
     }
 }

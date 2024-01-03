@@ -9,15 +9,11 @@ use Spatie\Tags\HasTags;
 
 class Note extends Model
 {
-
     use HasFactory, HasTags, Searchable;
 
     protected $fillable = [
         'user_id',
         'article_id',
-        'content',
-        'highlight_start_offset',
-        'highlight_end_offset',
         'title',
         'topic_id',
         'topic_section_id',
@@ -28,7 +24,7 @@ class Note extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Student::class, 'user_id');
     }
 
     public function article()

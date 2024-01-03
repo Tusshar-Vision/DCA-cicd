@@ -30,7 +30,7 @@ class ArticleService
 
     public function getFeatured(int $limit = 12): Collection|array
     {
-        return $this->articles->isPublished()->isFeatured()->where('language', $this->language)->latest()->limit($limit)->get();
+        return $this->articles->isPublished()->isFeatured()->where('language', $this->language)->latest()->limit($limit)->with('media')->get();
     }
 
     public function getLatestNews(int $limit = 2): Collection|array

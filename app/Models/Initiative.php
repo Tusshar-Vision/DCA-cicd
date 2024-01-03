@@ -5,16 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\EloquentSortable\Sortable;
+use Spatie\EloquentSortable\SortableTrait;
 
-class Initiative extends Model
+class Initiative extends Model implements Sortable
 {
-    use HasFactory;
+    use HasFactory, SortableTrait;
 
     protected $fillable = [
         'name',
+        'name_hindi',
         'description',
         'path',
-        'name_hindi'
+        'order_column'
     ];
 
     public function published(): HasMany

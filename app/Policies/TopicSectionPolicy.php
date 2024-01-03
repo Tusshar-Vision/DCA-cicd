@@ -18,18 +18,6 @@ class TopicSectionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_section');
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\TopicSection  $topicSection
-     * @return bool
-     */
-    public function view(User $user, TopicSection $topicSection): bool
-    {
         return $user->can('view_section');
     }
 
@@ -53,7 +41,7 @@ class TopicSectionPolicy
      */
     public function update(User $user, TopicSection $topicSection): bool
     {
-        return $user->can('update_section');
+        return $user->can('edit_section');
     }
 
     /**
@@ -76,7 +64,7 @@ class TopicSectionPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_section');
+        return $user->can('delete_section');
     }
 
     /**
@@ -88,7 +76,7 @@ class TopicSectionPolicy
      */
     public function forceDelete(User $user, TopicSection $topicSection): bool
     {
-        return $user->can('force_delete_section');
+        return $user->can('delete_section');
     }
 
     /**
@@ -99,53 +87,6 @@ class TopicSectionPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_section');
+        return $user->can('delete_section');
     }
-
-    /**
-     * Determine whether the user can restore.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\TopicSection  $topicSection
-     * @return bool
-     */
-    public function restore(User $user, TopicSection $topicSection): bool
-    {
-        return $user->can('restore_section');
-    }
-
-    /**
-     * Determine whether the user can bulk restore.
-     *
-     * @param  \App\Models\User  $user
-     * @return bool
-     */
-    public function restoreAny(User $user): bool
-    {
-        return $user->can('restore_any_section');
-    }
-
-    /**
-     * Determine whether the user can replicate.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\TopicSection  $topicSection
-     * @return bool
-     */
-    public function replicate(User $user, TopicSection $topicSection): bool
-    {
-        return $user->can('replicate_section');
-    }
-
-    /**
-     * Determine whether the user can reorder.
-     *
-     * @param  \App\Models\User  $user
-     * @return bool
-     */
-    public function reorder(User $user): bool
-    {
-        return $user->can('reorder_section');
-    }
-
 }

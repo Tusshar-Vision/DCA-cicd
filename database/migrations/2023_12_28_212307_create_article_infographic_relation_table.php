@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('topic_at_glances', function (Blueprint $table) {
+        Schema::create('article_infographic_relation', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('article_id');
-            $table->string('title');
-            $table->text('summary');
+            $table->unsignedBigInteger('infographic_id');
             $table->timestamps();
 
             $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
+            $table->foreign('infographic_id')->references('id')->on('infographics')->onDelete('cascade');
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('topic_at_glances');
+        Schema::dropIfExists('article_infographic_relation');
     }
 };

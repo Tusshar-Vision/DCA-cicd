@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Initiative;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -23,6 +24,6 @@ class InitiativeSeeder extends Seeder
             ['name' => 'More', 'name_hindi' => 'अधिक', 'description' => null, 'path' => '/more']
         ];
 
-        DB::table('initiatives')->insert($initiatives);
+        Initiative::insert($initiatives);
     }
 }

@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('initiatives', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('name_hindi');
             $table->text('description')->nullable();
             $table->string('path');
             $table->timestamps();
+            $table->unsignedInteger('order_column')->nullable()->default(null);
         });
     }
 

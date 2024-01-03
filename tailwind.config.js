@@ -24,7 +24,7 @@ export default {
                 visionToolTip: "#04040499"
             },
             fontFamily: {
-              sans: ['Inter'],
+              sans: ['Poppins'],
             },
         },
     },

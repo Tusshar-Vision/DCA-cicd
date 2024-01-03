@@ -10,6 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Support\Colors\Color;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class EditUser extends EditRecord
 {
@@ -45,6 +46,9 @@ class EditUser extends EditRecord
                 })->button(),
 
             Actions\Action::make('Disable Account')
+                ->visible(function () {
+                    return Auth::user()->can('disable_user');
+                })
                 ->hidden(function (Model $record) {
 
                     if(\Auth::user()->email === $record->email) return true;

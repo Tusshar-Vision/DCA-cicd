@@ -31,7 +31,6 @@ class WeeklyFocusController extends Controller
 
     public function index()
     {
-
         $this->getData();
 
         $article_no = 1;
@@ -52,9 +51,7 @@ class WeeklyFocusController extends Controller
 
     public function renderArticles($date, $topic, $article_slug, Contents $contents)
     {
-
         $this->getData();
-
         $article = $this->articleService->getArticleBySlug($article_slug);
         $relatedArticles = $this->articleService->getRelatedArticles($article);
 
@@ -69,7 +66,7 @@ class WeeklyFocusController extends Controller
             if ($bookmark) $isArticleBookmarked = true;
         }
 
-        $article->content = $contents->fromText($article->content)->getHandledText();
+        $article->content->content = $contents->fromText($article->content->content)->getHandledText();
         $tableOfContent = $contents->getContentsArray();
 
         return View('pages.weekly-focus', [
@@ -86,10 +83,13 @@ class WeeklyFocusController extends Controller
         ]);
     }
 
+    /**
+     * @throws \Throwable
+     */
     protected function getData($publishedAt = null)
     {
-        $this->latestWeeklyFocus = $this->publishedInitiativeService->getLatestById($this->initiativeId);
-        $this->articles = $this->latestWeeklyFocus->articles->where('language', config("settings.language." . app()->getLocale()));
+        $this->latestWeeklyFocus = $this->publishedInitiativeService->getLatest($this->initiativeId);
+        $this->articles = $this->latestWeeklyFocus->articles;
     }
 
 

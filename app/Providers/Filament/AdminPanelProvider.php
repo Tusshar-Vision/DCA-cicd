@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use Althinect\FilamentSpatieRolesPermissions\Middleware\SyncSpatiePermissionsWithFilamentTenants;
+use App\Filament\Pages\Auth\EditProfile;
 use App\Filament\Resources\ArticleResource;
 use App\Filament\Resources\CommentResource;
 use App\Filament\Resources\DownloadsResource;
@@ -74,14 +75,29 @@ class AdminPanelProvider extends PanelProvider
                     ->navigationCountBadge(true)
                     ->enablePruning(true)
                     ->pruningRetention(7),
-                FilamentShieldPlugin::make(),
+                FilamentShieldPlugin::make()
+                    ->gridColumns([
+                        'default' => 1,
+                        'sm' => 2,
+                        'lg' => 3
+                    ])
+                    ->sectionColumnSpan(1)
+                    ->checkboxListColumns([
+                        'default' => 1,
+                        'sm' => 2,
+                        'lg' => 4,
+                    ])
+                    ->resourceCheckboxListColumns([
+                        'default' => 1,
+                        'sm' => 2,
+                    ]),
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->default()
             ->id('admin')
             ->path('admin')
             ->login()
-            ->profile()
+            ->profile(EditProfile::class)
             ->colors([
                 'primary' => Color::hex('#005faf'),
             ])

@@ -37,7 +37,9 @@ readonly class InitiativeService
 
     protected function getMenuDataForNewsToday($initiativeId): array
     {
-        $mainMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
+        $mainMenuData = $this->publishedInitiatives
+            ->isPublished()
+            ->where('initiative_id', '=', $initiativeId)
             ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as date')
             ->groupBy('date')
             ->limit(10)
@@ -61,7 +63,9 @@ readonly class InitiativeService
     protected function getMenuDataForMonthlyMagazine($initiativeId): array
     {
 
-        $mainMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
+        $mainMenuData = $this->publishedInitiatives
+            ->where('initiative_id', '=', $initiativeId)
+            ->isPublished()
             ->selectRaw('DATE_FORMAT(published_at, "%Y") as year')
             ->groupBy('year')
             ->orderByDesc('year')
@@ -70,8 +74,10 @@ readonly class InitiativeService
 
         $yearsData = $mainMenuData->pluck('year')->toArray();
 
-        $sideDropDownMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
-            ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as year')
+        $sideDropDownMenuData = $this->publishedInitiatives
+            ->where('initiative_id', '=', $initiativeId)
+            ->isPublished()
+            ->selectRaw('DATE_FORMAT(published_at, "%Y-%m-%d") as year')
             ->whereIn(DB::raw('DATE_FORMAT(published_at, "%Y")'), $yearsData)
             ->orderByDesc('year')
             ->groupBy('year')
