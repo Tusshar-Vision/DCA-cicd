@@ -26,6 +26,6 @@ class PublishedInitiativeNotFoundException extends Exception
      */
     public function render(Request $request)
     {
-        return view('pages.no-news-today');
+        return view('errors.404');
     }
 }

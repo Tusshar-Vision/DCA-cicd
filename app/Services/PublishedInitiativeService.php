@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Enums\Initiatives;
+use App\Exceptions\ArticleNotFoundException;
+use App\Exceptions\PublishedInitiativeNotFoundException;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
 use Carbon\Carbon;
@@ -15,28 +17,34 @@ readonly class PublishedInitiativeService
     ) {
     }
 
-    public function getLatest($initiativeId): PublishedInitiative|null
+    /**
+     * @throws \Throwable
+     */
+    public function getLatest($initiativeId, $date = null): PublishedInitiative|null
     {
-        return $this->publishedInitiatives
+        $query = $this->publishedInitiatives
                     ->where('initiative_id', '=', $initiativeId)
-                    ->isPublished()
-                    ->latest('published_at')
-                    ->with('articles', function ($article) {
-                        $article->language()->isPublished()->Ordered()->with('topic');
-                    })
-                    ->first();
-    }
+                    ->isPublished();
 
-    public function getByDate($initiativeId, $date): PublishedInitiative|null
-    {
-        return $this->publishedInitiatives
-            ->where('initiative_id', '=', $initiativeId)
-            ->isPublished()
-            ->whereDate('published_at', '=', Carbon::parse($date)->format('Y-m-d'))
-            ->with('articles', function ($article) {
-                $article->language()->isPublished()->Ordered()->with('topic');
-            })
-            ->first();
+        if ($date !== null)
+            $query = $query->whereDate('published_at', '=', Carbon::parse($date)->format('Y-m-d'));
+
+        $publishedInitiative = $query->with('articles', function ($article) {
+                    $article->language()->isPublished()->Ordered()->with('topic');
+                })
+                ->first();
+
+        throw_if(
+            $publishedInitiative === null,
+            new PublishedInitiativeNotFoundException('There is no latest PublishedInitiative for ' . Initiatives::NEWS_TODAY->value)
+        );
+
+        throw_if(
+            $publishedInitiative->articles->isEmpty(),
+            new ArticleNotFoundException('There are no articles for ' . Initiatives::NEWS_TODAY->value)
+        );
+
+        return $publishedInitiative;
     }
 
     public function getDownloads($initiative_id = null, $year = null, $month = null) : array | Collection

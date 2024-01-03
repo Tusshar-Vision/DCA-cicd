@@ -33,34 +33,21 @@ class NewsTodayController extends Controller
     public function index()
     {
         $latestNewsToday = $this->publishedInitiativeService->getLatest($this->initiativeId);
-
-        throw_if(
-            $latestNewsToday === null,
-            new PublishedInitiativeNotFoundException('There is no latest PublishedInitiative for ' . Initiatives::NEWS_TODAY->value)
-        );
-
         $articles = $latestNewsToday->articles;
-
-        throw_if(
-            $articles->isEmpty(),
-            new ArticleNotFoundException('There are no articles for ' . Initiatives::NEWS_TODAY->value)
-        );
-
         $article_slug = $articles[0]->slug;
         $article_topic = $articles[0]->topic->name;
-        $date =  Carbon::parse($articles[0]->published_at)->format('Y-m-d');
+        $date =  Carbon::parse($latestNewsToday->published_at)->format('Y-m-d');
 
         return redirect()->route('news-today-date-wise.article', ['date' => $date, 'topic' => $article_topic, 'article_slug' => $article_slug]);
 
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function getArticlesDateWise($date)
     {
-        $latestPublishedInitiative = $this->publishedInitiativeService->getByDate($this->initiativeId, $date);
-
-        if (!$latestPublishedInitiative) {
-            return View('pages.no-news-today');
-        }
+        $latestPublishedInitiative = $this->publishedInitiativeService->getLatest($this->initiativeId, $date);
 
         $article_no = 1;
 
@@ -81,36 +68,15 @@ class NewsTodayController extends Controller
             return Redirect::to(route('news-today-date-wise.article', ['date' => $date, 'topic' => $article->topic->name, 'article_slug' => $article->slug]));
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function renderArticles($date, $topic, $slug)
     {
-        $latestPublishedInitiative = $this->publishedInitiativeService->getByDate($this->initiativeId, $date);
+        $latestPublishedInitiative = $this->publishedInitiativeService->getLatest($this->initiativeId, $date);
         $articles = $latestPublishedInitiative->articles;
         $article = $this->articleService->getArticleBySlug($slug);
         $relatedArticles = $this->articleService->getRelatedArticles($article);
-
-//        $topics = [];
-//
-//        foreach ($articles as $a) {
-//            $topics[] = $a->topic;
-//        }
-//
-//        $topics = array_unique($topics);
-//
-//        usort($topics, function ($a, $b) {
-//            return $a->id - $b->id;
-//        });
-//
-//        $sortedArticles = [];
-//
-//        foreach ($topics as $topic) {
-//            foreach ($articles as $a) {
-//                if ($a->topic === $topic) {
-//                    $sortedArticles[] = $a;
-//                }
-//            }
-//        }
-//
-//        $articles = $sortedArticles;
 
         $noteAvailable = null;
         $note = null;
