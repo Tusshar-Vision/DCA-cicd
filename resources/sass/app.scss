@@ -1721,6 +1721,7 @@ $gray-686E70: #686E70;
 
 /* sticky side bar */
 
+
 .leftsticky {
   position: -webkit-sticky;
   position: sticky;
@@ -2884,7 +2885,7 @@ li[data-level="4"] {
   height: 0;
   width: 100%;
   position: fixed;
-  z-index: 1;
+  z-index: 9;
   bottom: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.9);

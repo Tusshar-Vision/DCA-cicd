@@ -11,7 +11,7 @@
         <form wire:submit="login">
             <div class="form-item mb-[15px]">
                 <input type="text" id="username" class="w-full rounded-lg" required autocomplete="off"
-                    wire:model="email">
+                    wire:model="email" oninput="checkInputValue(this)">
                 <label for="username">Email</label>
             </div>
             <div class="form-item mb-[15px] relative">
@@ -72,6 +72,24 @@
 
 
 <script>
+    // restrict label animation
+    document.querySelectorAll('input').forEach(function(input) {
+      input.addEventListener('focus', function() {
+        this.nextElementSibling.style.top = '-5px';
+        this.nextElementSibling.style.fontSize = '11px';
+        this.nextElementSibling.style.color = '#3362CC';
+      });
+
+      input.addEventListener('blur', function() {
+        if (!this.value) {
+          this.nextElementSibling.style.top = '';
+          this.nextElementSibling.style.fontSize = '';
+          this.nextElementSibling.style.color = '';
+        }
+      });
+    });
+
+
     // show hide function
     function showPassword(targetID) {
         var x = document.getElementById(targetID);

@@ -108,6 +108,23 @@
     </div>
 </div>
 <script>
+    // restrict label animation
+    document.querySelectorAll('input').forEach(function(input) {
+      input.addEventListener('focus', function() {
+        this.nextElementSibling.style.top = '-5px';
+        this.nextElementSibling.style.fontSize = '11px';
+        this.nextElementSibling.style.color = '#3362CC';
+      });
+
+      input.addEventListener('blur', function() {
+        if (!this.value) {
+          this.nextElementSibling.style.top = '';
+          this.nextElementSibling.style.fontSize = '';
+          this.nextElementSibling.style.color = '';
+        }
+      });
+    });
+    
     // show hide function
     function showPassword(targetID) {
         var x = document.getElementById(targetID);
