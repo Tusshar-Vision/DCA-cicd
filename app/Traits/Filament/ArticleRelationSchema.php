@@ -7,6 +7,7 @@ use App\Jobs\GenerateArticlePDF;
 use App\Models\User;
 use App\Services\ArticleService;
 use App\Traits\Filament\Components\ArticleForm;
+use App\Traits\HasNotifications;
 use Carbon\Carbon;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
@@ -36,7 +37,7 @@ use Spatie\Tags\Tag;
 
 trait ArticleRelationSchema
 {
-    use ArticleForm;
+    use ArticleForm, HasNotifications;
     public function form(Form $form): Form
     {
         return $this->articleForm($form);
@@ -45,13 +46,13 @@ trait ArticleRelationSchema
     public function table(Table $table): Table
     {
         return $table
-            ->reorderable('sort')
+            ->reorderable('order_column')
             ->reorderRecordsTriggerAction(
                 fn (Action $action, bool $isReordering) => $action
                     ->button()
                     ->label($isReordering ? 'Disable reordering' : 'Enable reordering'),
             )
-            ->defaultSort('sort')
+            ->defaultSort('order_column')
             ->recordTitleAttribute('title')
             ->columns([
                 TextColumn::make('id')
@@ -98,18 +99,24 @@ trait ArticleRelationSchema
                     ->label('Sub-Section')
                     ->limit(20)
                     ->tooltip(fn (Model $record): string => $record->topicSubSection->name ?? '')
-                    ->searchable(),
-                SpatieTagsColumn::make('tags'),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                SpatieTagsColumn::make('tags')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('author.name')
-                    ->label('Expert')
-                    ->searchable(),
+                    ->searchable()
+                    ->label('Expert'),
                 TextColumn::make('reviewer.name')
-                    ->label('Reviewer')
-                    ->searchable(),
+                    ->searchable()
+                    ->label('Reviewer'),
                 TextColumn::make('updated_at')
                     ->label('Last Modified')
                     ->date('d M Y h:i a')
                     ->sortable(),
+                TextColumn::make('published_at')
+                    ->label('Published At')
+                    ->date('d M Y h:i a')
+                    ->toggleable(isToggledHiddenByDefault: true)
             ])
             ->filters([
 
@@ -202,8 +209,9 @@ trait ArticleRelationSchema
             ->filtersFormColumns(4)
             ->filtersFormMaxHeight('400px')
             ->headerActions([
-                CreateAction::make()->after(function (Model $record) {
+                CreateAction::make()->slideOver()->after(function (Model $record) {
                     $record->setStatus('Draft', 'New Entry Created');
+                    $this->sendNotificationOfArticleCreation($record);
                 })
             ])
             ->actions([
@@ -215,9 +223,9 @@ trait ArticleRelationSchema
 
                         $user = Auth::user();
 
-                        if ($user->hasRole(['super_admin', 'admin'])) return false;
-
                         if ($record->reviewer_id === $user->id) return false;
+
+                        if ($user->hasRole(['super_admin', 'admin'])) return false;
 
                         if ($user->cant('update_article')) {
                             if ($user->cant('review_article')) {
@@ -230,9 +238,10 @@ trait ArticleRelationSchema
                         }
                     })
                     ->icon('heroicon-s-eye')
-                    ->button()
+                    ->iconButton()
+                    ->tooltip('View')
                     ->fillForm(fn (Model $record): array => [
-                        'content' => $record->content,
+                        'content' => $record->content->content,
                     ])
                     ->form([
                         TinyEditor::make('content')
@@ -243,21 +252,38 @@ trait ArticleRelationSchema
                     ])->slideOver(),
 
                 EditAction::make()
-                    ->button()
+                    ->iconButton()
+                    ->slideOver()
+                    ->tooltip('Edit')
                     ->visible(function (Model $record) {
                         $user = Auth::user();
-                        if ($record->status === 'Published') return false;
-                        if($user->hasRole(['super_admin', 'admin'])) return true;
-                        return $user->can('update_article') && $record->author_id == $user->id && $record->status !== 'Final';
-                    })->slideOver(),
+                        return
+                            (
+                                $user->can('edit_article') &&
+                                $record->author_id === $user->id &&
+                                $record->status !== 'Published'
+                            ) || (
+                                $user->can('edit_article') &&
+                                $user->hasRole(['super_admin', 'admin']) &&
+                                $record->status !== 'Published'
+                            );
+                    }),
 
-                Action::make('review')
+                Action::make('Review')
+                    ->tooltip('Review')
                     ->icon('heroicon-s-chat-bubble-left-right')
                     ->visible(function (Model $record) {
                         $user = Auth::user();
-                        if ($record->status === 'Published') return false;
-                        if ($user->hasRole(['super_admin', 'admin'])) return true;
-                        return $user->can('review_article') && $record->reviewer_id == $user->id;
+                        return
+                            (
+                                $user->can('review_article') &&
+                                $record->reviewer_id === $user->id &&
+                                $record->status !== 'Published'
+                            ) || (
+                                $user->can('review_article') &&
+                                $user->hasRole(['super_admin', 'admin']) &&
+                                $record->status !== 'Published'
+                            );
                     })
                     ->fillForm(function (Model $record) {
                         return [
@@ -267,15 +293,19 @@ trait ArticleRelationSchema
                         ];
                     })
                     ->form([
-                        Section::make('Article Content')->schema([
-                            TinyEditor::make('content')
-                                ->columnSpanFull()
-                                ->profile('review')
-                                ->maxHeight(500)
-                                ->hiddenLabel(),
+
+                        Section::make('Article Content')
+                            ->relationship('content')
+                            ->schema([
+                                TinyEditor::make('content')
+                                    ->columnSpanFull()
+                                    ->profile('review')
+                                    ->maxHeight(500)
+                                    ->hiddenLabel(),
                         ])->collapsible(),
 
                         Section::make('Review Comment')->schema([
+
                             Select::make('status')->options([
                                 "Draft" => "Draft",
 
@@ -298,8 +328,11 @@ trait ArticleRelationSchema
                                     'attachFiles',
                                     'codeBlock',
                                 ]),
+
                         ])
+
                     ])
+                    ->slideOver()
                     ->action(function (array $data, Model $record) {
                         $author = Auth::user();
 
@@ -309,7 +342,7 @@ trait ArticleRelationSchema
                             ($data['body'] !== null) ? $record->review($data['body'], $author, 0) : null;
 
                         $record->setStatus($data['status']);
-                    })->button()->slideOver()
+                    })->iconButton()
 
             ], ActionsPosition::BeforeColumns)
             ->bulkActions([
@@ -321,35 +354,16 @@ trait ArticleRelationSchema
                         ->requiresConfirmation()
                         ->modalDescription('Only the articles that have a status of final will be published.')
                         ->visible(function () {
-                            $user = Auth::user();
-                            return $user->hasRole(['admin', 'super_admin']);
+                            return Auth::user()->can('publish_article');
                         })
                         ->action(function (?Collection $records) {
                             $records->each(function ($record) {
                                 if ($record->status === 'Final') {
                                     $record->setStatus('Published');
                                     $record->update(['published_at' => Carbon::now()]);
-
-                                    if ($record->publishedInitiative->is_published === false) {
-                                        $record->publishedInitiative->is_published = true;
-                                        $record->publishedInitiative->save();
-                                    }
-
-                                    $articleUrl = ArticleService::getArticleUrlFromSlug($record->slug);
-                                    $notificationBody = "<a href=\" $articleUrl \" target='_blank'>Click here to check it out</a>";;
-
-                                    Notification::make()
-                                        ->title('Your article just got published!')
-                                        ->body($notificationBody)
-                                        ->success()
-                                        ->sendToDatabase($record->author);
-
-                                    Notification::make()
-                                        ->title('Article you reviewed just got published!')
-                                        ->body($notificationBody)
-                                        ->success()
-                                        ->sendToDatabase($record->reviewer);
                                 }
+
+                                $this->sendNotificationOfArticlePublished($record);
                             });
                         })
                         ->deselectRecordsAfterCompletion(),
@@ -360,8 +374,7 @@ trait ArticleRelationSchema
                         ->requiresConfirmation()
                         ->modalDescription('Only the articles that have a status of published will be unpublished.')
                         ->visible(function () {
-                            $user = Auth::user();
-                            return $user->hasRole(['admin', 'super_admin']);
+                            return Auth::user()->can('publish_article');
                         })
                         ->action(function (?Collection $records) {
                             $records->each(function ($record) {
@@ -376,8 +389,7 @@ trait ArticleRelationSchema
                         ->color(Color::hex('#00569e'))
                         ->icon('heroicon-s-star')
                         ->visible(function () {
-                            $user = Auth::user();
-                            return $user->hasRole(['admin', 'super_admin']);
+                            return Auth::user()->can('publish_article');
                         })
                         ->action(function (Collection $records) {
                             $records->each(function($article) {
@@ -390,8 +402,7 @@ trait ArticleRelationSchema
                         ->color(Color::Red)
                         ->icon('heroicon-s-x-mark')
                         ->visible(function () {
-                            $user = Auth::user();
-                            return $user->hasRole(['admin', 'super_admin']);
+                            return Auth::user()->can('publish_article');
                         })
                         ->action(function (Collection $records) {
                             $records->each(function($article) {

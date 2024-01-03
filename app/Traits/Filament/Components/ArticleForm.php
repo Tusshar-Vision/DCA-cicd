@@ -18,6 +18,7 @@ use Filament\Forms\Form;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use RalphJSmit\Filament\SEO\SEO;
+use Livewire\Component as Livewire;
 
 trait ArticleForm
 {
@@ -96,6 +97,10 @@ trait ArticleForm
 
                             Group::make()->schema([
 
+                                Hidden::make('initiative_id')->default(function(Livewire $livewire) {
+                                    return $livewire->ownerRecord->initiative_id;
+                                }),
+
                                 Select::make('initiative_topic_id')
                                     ->relationship('topic', 'name')
                                     ->required()
@@ -138,17 +143,15 @@ trait ArticleForm
 
                         ])->columns(2)->collapsible(),
 
-                        Section::make('Content')->schema([
-
-                            TinyEditor::make('content')
-                                ->columnSpanFull()
-                                ->profile('full')
-//                                ->toolbarSticky(true)
-                                ->maxHeight(500)
-                                ->hiddenLabel(),
-                            TagsInput::make('sources')
-                                ->separator(',')
-                                ->placeholder('New Source')
+                        Section::make('Content')
+                            ->relationship('content')
+                            ->schema([
+                                TinyEditor::make('content')
+                                    ->columnSpanFull()
+                                    ->profile('full')
+    //                                ->toolbarSticky(true)
+                                    ->maxHeight(500)
+                                    ->hiddenLabel(),
 
                         ])->headerActions([
                             \Filament\Forms\Components\Actions\Action::make('Reviews')
@@ -170,8 +173,7 @@ trait ArticleForm
                                 ])
                                 ->visible(function (?Model $record) {
                                     return $record !== null;
-                                })
-                            ,
+                                }),
 
                             \Filament\Forms\Components\Actions\Action::make('Changes Incorporated')
                                 ->requiresConfirmation()
@@ -185,6 +187,9 @@ trait ArticleForm
                                 }),
                         ])->collapsible(),
 
+                        TagsInput::make('sources')
+                            ->separator(',')
+                            ->placeholder('New Source')
                     ]),
 
                     Tabs\Tab::make('SEO')->schema([

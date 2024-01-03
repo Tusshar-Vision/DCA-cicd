@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\TopicSubSection;
+use App\Models\Video;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class TopicSubSectionPolicy
+class VideoPolicy
 {
     use HandlesAuthorization;
 
@@ -18,7 +18,7 @@ class TopicSubSectionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_sub::section');
+        return $user->can('view_video');
     }
 
     /**
@@ -29,31 +29,31 @@ class TopicSubSectionPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_sub::section');
+        return $user->can('create_video');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\TopicSubSection  $topicSubSection
+     * @param  \App\Models\Video  $video
      * @return bool
      */
-    public function update(User $user, TopicSubSection $topicSubSection): bool
+    public function update(User $user, Video $video): bool
     {
-        return $user->can('edit_sub::section');
+        return $user->can('edit_video');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\TopicSubSection  $topicSubSection
+     * @param  \App\Models\Video  $video
      * @return bool
      */
-    public function delete(User $user, TopicSubSection $topicSubSection): bool
+    public function delete(User $user, Video $video): bool
     {
-        return $user->can('delete_sub::section');
+        return $user->can('delete_video');
     }
 
     /**
@@ -64,19 +64,19 @@ class TopicSubSectionPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_sub::section');
+        return $user->can('delete_video');
     }
 
     /**
      * Determine whether the user can permanently delete.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\TopicSubSection  $topicSubSection
+     * @param  \App\Models\Video  $video
      * @return bool
      */
-    public function forceDelete(User $user, TopicSubSection $topicSubSection): bool
+    public function forceDelete(User $user, Video $video): bool
     {
-        return $user->can('delete_sub::section');
+        return $user->can('delete_video');
     }
 
     /**
@@ -87,6 +87,6 @@ class TopicSubSectionPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('delete_sub::section');
+        return $user->can('delete_video');
     }
 }

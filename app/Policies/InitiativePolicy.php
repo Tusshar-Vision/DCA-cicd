@@ -18,18 +18,6 @@ class InitiativePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_initiative');
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Initiative  $initiative
-     * @return bool
-     */
-    public function view(User $user, Initiative $initiative): bool
-    {
         return $user->can('view_initiative');
     }
 
@@ -53,7 +41,7 @@ class InitiativePolicy
      */
     public function update(User $user, Initiative $initiative): bool
     {
-        return $user->can('update_initiative');
+        return $user->can('edit_initiative');
     }
 
     /**
@@ -76,7 +64,7 @@ class InitiativePolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_initiative');
+        return $user->can('delete_initiative');
     }
 
     /**
@@ -88,7 +76,7 @@ class InitiativePolicy
      */
     public function forceDelete(User $user, Initiative $initiative): bool
     {
-        return $user->can('force_delete_initiative');
+        return $user->can('delete_initiative');
     }
 
     /**
@@ -99,53 +87,7 @@ class InitiativePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_initiative');
-    }
-
-    /**
-     * Determine whether the user can restore.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Initiative  $initiative
-     * @return bool
-     */
-    public function restore(User $user, Initiative $initiative): bool
-    {
-        return $user->can('restore_initiative');
-    }
-
-    /**
-     * Determine whether the user can bulk restore.
-     *
-     * @param  \App\Models\User  $user
-     * @return bool
-     */
-    public function restoreAny(User $user): bool
-    {
-        return $user->can('restore_any_initiative');
-    }
-
-    /**
-     * Determine whether the user can replicate.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Initiative  $initiative
-     * @return bool
-     */
-    public function replicate(User $user, Initiative $initiative): bool
-    {
-        return $user->can('replicate_initiative');
-    }
-
-    /**
-     * Determine whether the user can reorder.
-     *
-     * @param  \App\Models\User  $user
-     * @return bool
-     */
-    public function reorder(User $user): bool
-    {
-        return $user->can('reorder_initiative');
+        return $user->can('delete_initiative');
     }
 
 }

@@ -25,7 +25,6 @@ class AuthServiceProvider extends ServiceProvider
         Role::class => RolePolicy::class,
         Activity::class => ActivityPolicy::class,
         Tag::class => TagPolicy::class,
-        Media::class => MediaPolicy::class,
         QueueMonitor::class => QueueMonitorPolicy::class
     ];
 

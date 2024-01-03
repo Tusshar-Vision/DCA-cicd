@@ -3,17 +3,16 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Enums\Initiatives;
+use App\Exceptions\ArticleNotFoundException;
+use App\Exceptions\PublishedInitiativeNotFoundException;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
-use App\Models\Article;
 use App\Models\Bookmark;
 use App\Models\Note;
 use App\Services\ArticleService;
 use App\Services\PublishedInitiativeService;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Redirect;
 
 class NewsTodayController extends Controller
@@ -28,21 +27,36 @@ class NewsTodayController extends Controller
         $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY);
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function index()
     {
-        $latestNewsToday = $this->publishedInitiativeService->getLatestById($this->initiativeId);
+        $latestNewsToday = $this->publishedInitiativeService->getLatest($this->initiativeId);
 
-        $articles = $latestNewsToday->articles->where('language', config("settings.language." . app()->getLocale()));
+        throw_if(
+            $latestNewsToday === null,
+            new PublishedInitiativeNotFoundException('There is no latest PublishedInitiative for ' . Initiatives::NEWS_TODAY->value)
+        );
+
+        $articles = $latestNewsToday->articles;
+
+        throw_if(
+            $articles->isEmpty(),
+            new ArticleNotFoundException('There are no articles for ' . Initiatives::NEWS_TODAY->value)
+        );
+
         $article_slug = $articles[0]->slug;
         $article_topic = $articles[0]->topic->name;
         $date =  Carbon::parse($articles[0]->published_at)->format('Y-m-d');
 
         return redirect()->route('news-today-date-wise.article', ['date' => $date, 'topic' => $article_topic, 'article_slug' => $article_slug]);
+
     }
 
     public function getArticlesDateWise($date)
     {
-        $latestPublishedInitiative = $this->publishedInitiativeService->getLatestById($this->initiativeId, $date);
+        $latestPublishedInitiative = $this->publishedInitiativeService->getByDate($this->initiativeId, $date);
 
         if (!$latestPublishedInitiative) {
             return View('pages.no-news-today');
@@ -53,7 +67,7 @@ class NewsTodayController extends Controller
         if ($page_no = request()->query('page'))
             $article_no = $page_no;
 
-        $articles = $latestPublishedInitiative->articles->where('language', config("settings.language." . app()->getLocale()));
+        $articles = $latestPublishedInitiative->articles;
 
         if ($articles->isEmpty()) {
             return View('pages.no-news-today');
@@ -69,34 +83,34 @@ class NewsTodayController extends Controller
 
     public function renderArticles($date, $topic, $slug)
     {
-        $latestPublishedInitiative = $this->publishedInitiativeService->getLatestById($this->initiativeId, $date);
-        $articles = $latestPublishedInitiative->articles->where('language', config("settings.language." . app()->getLocale()));
+        $latestPublishedInitiative = $this->publishedInitiativeService->getByDate($this->initiativeId, $date);
+        $articles = $latestPublishedInitiative->articles;
         $article = $this->articleService->getArticleBySlug($slug);
         $relatedArticles = $this->articleService->getRelatedArticles($article);
 
-        $topics = [];
-
-        foreach ($articles as $a) {
-            $topics[] = $a->topic;
-        }
-
-        $topics = array_unique($topics);
-
-        usort($topics, function ($a, $b) {
-            return $a->id - $b->id;
-        });
-
-        $sortedArticles = [];
-
-        foreach ($topics as $topic) {
-            foreach ($articles as $a) {
-                if ($a->topic === $topic) {
-                    $sortedArticles[] = $a;
-                }
-            }
-        }
-
-        $articles = $sortedArticles;
+//        $topics = [];
+//
+//        foreach ($articles as $a) {
+//            $topics[] = $a->topic;
+//        }
+//
+//        $topics = array_unique($topics);
+//
+//        usort($topics, function ($a, $b) {
+//            return $a->id - $b->id;
+//        });
+//
+//        $sortedArticles = [];
+//
+//        foreach ($topics as $topic) {
+//            foreach ($articles as $a) {
+//                if ($a->topic === $topic) {
+//                    $sortedArticles[] = $a;
+//                }
+//            }
+//        }
+//
+//        $articles = $sortedArticles;
 
         $noteAvailable = null;
         $note = null;
@@ -110,7 +124,7 @@ class NewsTodayController extends Controller
         }
 
         return View('pages.news-today', [
-            "topics" => $topics,
+//            "topics" => $topics,
             "articles" => $articles,
             "article" => $article,
             "totalArticles" => count($articles),

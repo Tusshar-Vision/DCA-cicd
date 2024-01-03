@@ -8,49 +8,35 @@ use App\Models\PublishedInitiative;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
-class PublishedInitiativeService
+readonly class PublishedInitiativeService
 {
     public function __construct(
-        private readonly PublishedInitiative $publishedInitiatives
+        private PublishedInitiative $publishedInitiatives
     ) {
     }
 
-    public function getLatestById($initiativeId, $date = null)
+    public function getLatest($initiativeId): PublishedInitiative|null
     {
-        $query = $this->publishedInitiatives
-            ->where('initiative_id', '=', $initiativeId)
-            ->isPublished()
-            ->whereHas('articles', function ($articleQuery) {
-                    $articleQuery->isPublished();
-            });
-
-        if ($date) {
-            $query->whereDate('published_at', $date);
-        }
-
-        return $query->latest('published_at')
-            ->limit(1)
-            ->with('articles', function ($article) {
-                $article->with('topic');
-            })->first();
+        return $this->publishedInitiatives
+                    ->where('initiative_id', '=', $initiativeId)
+                    ->isPublished()
+                    ->latest('published_at')
+                    ->with('articles', function ($article) {
+                        $article->language()->isPublished()->Ordered()->with('topic');
+                    })
+                    ->first();
     }
 
-    public function getByMonthAndYear($initiativeId, $date)
+    public function getByDate($initiativeId, $date): PublishedInitiative|null
     {
-        $year =  Carbon::parse($date)->year;
-        $month = Carbon::parse($date)->month;
-
-        $magazines = $this->publishedInitiatives
+        return $this->publishedInitiatives
             ->where('initiative_id', '=', $initiativeId)
             ->isPublished()
-            ->whereRaw("YEAR(published_at) = $year && MONTH(published_at) = $month")
-            ->latest('published_at')
+            ->whereDate('published_at', '=', Carbon::parse($date)->format('Y-m-d'))
             ->with('articles', function ($article) {
-                $article->with('topic');
+                $article->language()->isPublished()->Ordered()->with('topic');
             })
             ->first();
-
-        return $magazines;
     }
 
     public function getDownloads($initiative_id = null, $year = null, $month = null) : array | Collection
@@ -74,9 +60,24 @@ class PublishedInitiativeService
     public function checkIfExists($initiative_id, $published_at): bool
     {
         $publishedRecords = $this->publishedInitiatives
-                                ->where('initiative_id', '=', $initiative_id)
-                                ->whereDate('published_at', '=', $published_at)
-                                ->get();
+            ->where('initiative_id', '=', $initiative_id);
+
+        if ($initiative_id == 1) {
+            // For News Today, check if an initiative exists for the same date
+            $publishedRecords = $publishedRecords->whereDate('published_at', '=', Carbon::parse($published_at)->format('Y-m-d'));
+        } elseif ($initiative_id == 3) {
+            // For Weekly Focus, check if an initiative exists for the same week
+            $publishedRecords = $publishedRecords->whereBetween('published_at', [
+                Carbon::parse($published_at)->startOfWeek(),
+                Carbon::parse($published_at)->endOfWeek(),
+            ]);
+        } elseif ($initiative_id == 2) {
+            // For Monthly Magazine, check if an initiative exists for the same month
+            $publishedRecords = $publishedRecords->whereYear('published_at', '=', Carbon::parse($published_at)->year)
+                ->whereMonth('published_at', '=', Carbon::parse($published_at)->month);
+        }
+
+        $publishedRecords = $publishedRecords->get();
 
         return $publishedRecords->isNotEmpty();
     }

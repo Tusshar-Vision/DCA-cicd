@@ -2,9 +2,8 @@
 
 namespace App\Traits\Filament;
 
-use App\Services\ArticleService;
+use App\Traits\HasNotifications;
 use Carbon\Carbon;
-use Filament\Notifications\Notification;
 use Filament\Support\Colors\Color;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkAction;
@@ -21,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 
 trait InitiativeResourceSchema
 {
+    use HasNotifications;
     public static function table(Table $table): Table
     {
         return $table
@@ -30,10 +30,14 @@ trait InitiativeResourceSchema
                     ->label('ID')
                     ->sortable(),
 
+                TextColumn::make('name'),
+
                 IconColumn::make('is_published')
+                    ->alignCenter()
                     ->label('Is Published'),
 
                 TextColumn::make('articles_count')
+                    ->alignCenter()
                     ->label('Articles')
                     ->default(function (Model $record) {
                         return $record->articles->count();
@@ -41,6 +45,7 @@ trait InitiativeResourceSchema
                     ->badge(),
 
                 TextColumn::make('progress')
+                    ->alignCenter()
                     ->default(function (Model $record) {
 
                         $totalCountOfArticles = $record->articles->count();
@@ -95,13 +100,12 @@ trait InitiativeResourceSchema
             ->actions([
                 Action::make('Publish')
                     ->icon('heroicon-s-eye')
+                    ->requiresConfirmation()
                     ->button()
                     ->visible(function () {
-                        return Auth::user()->hasRole(['admin', 'super_admin']);
+                        return Auth::user()->can('publish_article');
                     })
                     ->hidden(function(Model $record) {
-                        if ($record->is_published) return true;
-
                         if ($record->articles->count() === 0) return true;
 
                         $shouldBeHidden = true;
@@ -125,28 +129,17 @@ trait InitiativeResourceSchema
                                     $record->save();
                                 }
 
-                                $articleUrl = ArticleService::getArticleUrlFromSlug($article->slug);
-                                $notificationBody = "<a href=\" $articleUrl \" target='_blank'>Click here to check it out</a>";;
-
-                                Notification::make()
-                                    ->title('Your article just got published!')
-                                    ->body($notificationBody)
-                                    ->success()
-                                    ->sendToDatabase($article->author);
-
-                                Notification::make()
-                                    ->title('Article you reviewed just got published!')
-                                    ->body($notificationBody)
-                                    ->success()
-                                    ->sendToDatabase($article->reviewer);
-
+                                $notification = new self();
+                                $notification->sendNotificationOfArticlePublished($article);
                             }
                         });
                     }),
                 EditAction::make()
-                    ->button(),
+                    ->tooltip('Edit')
+                    ->iconButton(),
                 DeleteAction::make()
-                    ->button()
+                    ->tooltip('Delete')
+                    ->iconButton()
                     ->visible(function (Model $record) {
                         return $record->articles->count() === 0;
                     })
@@ -159,18 +152,34 @@ trait InitiativeResourceSchema
                         ->requiresConfirmation()
                         ->modalDescription('This action would not affect the published status of the articles inside.')
                         ->visible(function () {
-                            $user = Auth::user();
-                            return $user->hasRole(['admin', 'super_admin']);
+                            return Auth::user()->can('publish_article');
                         })
                         ->action(function (?Collection $records) {
                             $records->each(function ($record) {
                                 $record->is_published = false;
                                 $record->save();
+
+                                $record->articles->each(function($article) {
+                                    if ($article->status === 'Published') {
+                                        $article->setStatus('Improve');
+                                        $article->update(['published_at' => null]);
+                                    }
+                                });
                             });
                         })
                         ->deselectRecordsAfterCompletion(),
                     DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    private static function generateName(string $date): array|string
+    {
+        return str_replace(
+            ' ',
+            '_',
+            static::$modelLabel . ' ' . Carbon::parse($date)
+                ->format('Y-m-d')
+        );
     }
 }

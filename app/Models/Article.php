@@ -35,7 +35,6 @@ class Article extends Model implements HasMedia, Sortable
 
     protected $fillable = [
         'title',
-        'content',
         'slug',
         'featured_image',
         'excerpt',
@@ -60,7 +59,8 @@ class Article extends Model implements HasMedia, Sortable
 
     protected $casts = [
         'sources' => 'array',
-        'is_published' => 'bool'
+        'is_published' => 'bool',
+        'published_at' => 'datetime'
     ];
 
     // This method will automatically be called when creating or updating an article.
@@ -127,14 +127,14 @@ class Article extends Model implements HasMedia, Sortable
         return $this->hasOne(TableOfContent::class);
     }
 
-    public function author(): HasOne
+    public function author(): BelongsTo
     {
-        return $this->hasOne(User::class, 'author_id');
+        return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function reviewer(): HasOne
+    public function reviewer(): BelongsTo
     {
-        return $this->hasOne(User::class, 'reviewer_id');
+        return $this->belongsTo(User::class, 'reviewer_id');
     }
 
     public function initiative(): BelongsTo
@@ -162,6 +162,11 @@ class Article extends Model implements HasMedia, Sortable
         return $this->belongsTo(PublishedInitiative::class, 'published_initiative_id');
     }
 
+    public function content(): HasOne
+    {
+        return $this->hasOne(ArticleContent::class);
+    }
+
     public function relatedTerms(): HasMany
     {
         return $this->hasMany(RelatedTerm::class);
@@ -185,5 +190,10 @@ class Article extends Model implements HasMedia, Sortable
     public function scopeIsPublished(Builder $query): Builder
     {
         return $query->currentStatus('Published');
+    }
+
+    public function scopeLanguage(Builder $query): Builder
+    {
+        return $query->where('language', config("settings.language." . app()->getLocale()));
     }
 }

@@ -6,6 +6,8 @@ use App\Enums\Initiatives;
 use App\Filament\Resources\DownloadsResource\Pages;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
+use App\Traits\Filament\OtherUploadsResourceSchema;
+use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -25,6 +27,8 @@ use Illuminate\Support\Facades\Auth;
 
 class DownloadsResource extends Resource
 {
+    use OtherUploadsResourceSchema;
+
     protected static ?string $model = PublishedInitiative::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-arrow-down-tray';
@@ -38,48 +42,36 @@ class DownloadsResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('New Initiative')->schema([
-                    Select::make('initiative_id')
-                        ->options([
-                            4 => 'Mains 365',
-                            5 => 'PT 365',
-                            6 => 'Downloads'
-                        ])
-                        ->label('Initiative')
-                        ->required()
+                Forms\Components\Section::make()->schema([
+
+                    Forms\Components\Hidden::make('initiative_id')
                         ->default(InitiativesHelper::getInitiativeID(Initiatives::DOWNLOADS)),
-                    DatePicker::make('published_at')->default(today()),
-                    SpatieMediaLibraryFileUpload::make('file')
+
+
+                    Forms\Components\Group::make()->schema([
+                        DatePicker::make('published_at')
+                            ->native(false)
+                            ->closeOnDateSelection()
+                            ->label('Publish At')
+                            ->required()
+                            ->default(Carbon::now()->format('Y-m-d'))
+                            ->live()
+                            ->afterStateUpdated(
+                                fn (Forms\Set $set, ?string $state) => $set('name', static::generateName($state))),
+
+                        Forms\Components\TextInput::make('name')->default(function (callable $get) {
+                            return static::generateName($get('published_at'));
+                        })->required(),
+                    ])->columns(2)->columnSpanFull(),
+
+                    Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
                         ->name('file')
                         ->acceptedFileTypes(['application/pdf'])
                         ->collection('downloads')
                         ->required()
-                        ->storeFileNamesIn('name'),
-                    TextInput::make('name')->label('File Name')->placeholder('Add Custom Name or File Name will be used'),
-                    Toggle::make('is_published')->inline(false)
-                ])->columns(2),
-            ]);
-    }
+                        ->columnSpanFull(),
 
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                TextColumn::make('id')->label('ID')->sortable(),
-                TextColumn::make('name'),
-                ToggleColumn::make('is_published')->inline(false),
-                TextColumn::make('published_at')->dateTime('d M Y h:m')->label('Published At')->sortable(),
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                ])->columns(2),
             ]);
     }
 
@@ -111,73 +103,36 @@ class DownloadsResource extends Resource
 
     public static function canViewAny(): bool
     {
-        $user = Auth::user();
-        return $user->can('view_any_downloads');
-    }
-
-    public static function canView(Model $record): bool
-    {
-        $user = Auth::user();
-        return $user->can('view_downloads');
+        return Auth::user()->can('view_downloads');
     }
 
     public static function canEdit(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('update_downloads');
+        return Auth::user()->can('edit_downloads');
     }
 
     public static function canCreate(): bool
     {
-        $user = Auth::user();
-        return $user->can('create_downloads');
+        return Auth::user()->can('create_downloads');
     }
 
     public static function canDelete(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_downloads');
+        return Auth::user()->can('delete_downloads');
     }
 
     public static function canDeleteAny(): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_any_downloads');
+        return Auth::user()->can('delete_downloads');
     }
 
     public static function canForceDelete(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('force_delete_downloads');
+        return Auth::user()->can('delete_downloads');
     }
 
     public static function canForceDeleteAny(): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_any_downloads');
-    }
-
-    public static function canReorder(): bool
-    {
-        $user = Auth::user();
-        return $user->can('reorder_downloads');
-    }
-
-    public static function canReplicate(Model $record): bool
-    {
-        $user = Auth::user();
-        return $user->can('replicate_downloads');
-    }
-
-    public static function canRestore(Model $record): bool
-    {
-        $user = Auth::user();
-        return $user->can('restore_downloads');
-    }
-
-    public static function canRestoreAny(): bool
-    {
-        $user = Auth::user();
-        return $user->can('restore_any_downloads');
+        return Auth::user()->can('delete_downloads');
     }
 }

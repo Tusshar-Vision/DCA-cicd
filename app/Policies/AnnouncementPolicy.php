@@ -18,7 +18,7 @@ class AnnouncementPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_announcement');
+        return $user->can('view_announcement');
     }
 
     /**
@@ -53,7 +53,7 @@ class AnnouncementPolicy
      */
     public function update(User $user, Announcement $announcement): bool
     {
-        return $user->can('update_announcement');
+        return $user->can('edit_announcement');
     }
 
     /**
@@ -76,7 +76,8 @@ class AnnouncementPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_announcement');
+        return $user->can('delete_announcement');
+
     }
 
     /**
@@ -88,7 +89,7 @@ class AnnouncementPolicy
      */
     public function forceDelete(User $user, Announcement $announcement): bool
     {
-        return $user->can('force_delete_announcement');
+        return $user->can('delete_announcement');
     }
 
     /**
@@ -99,7 +100,7 @@ class AnnouncementPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_announcement');
+        return $user->can('delete_announcement');
     }
 
     /**
@@ -111,7 +112,7 @@ class AnnouncementPolicy
      */
     public function restore(User $user, Announcement $announcement): bool
     {
-        return $user->can('restore_announcement');
+        return $user->can('delete_announcement');
     }
 
     /**
@@ -122,30 +123,7 @@ class AnnouncementPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_announcement');
-    }
-
-    /**
-     * Determine whether the user can replicate.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Announcement  $announcement
-     * @return bool
-     */
-    public function replicate(User $user, Announcement $announcement): bool
-    {
-        return $user->can('replicate_announcement');
-    }
-
-    /**
-     * Determine whether the user can reorder.
-     *
-     * @param  \App\Models\User  $user
-     * @return bool
-     */
-    public function reorder(User $user): bool
-    {
-        return $user->can('reorder_announcement');
+        return $user->can('delete_announcement');
     }
 
 }

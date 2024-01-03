@@ -14,9 +14,11 @@ use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -45,34 +47,43 @@ class NewsTodayResource extends Resource
                     Forms\Components\Hidden::make('initiative_id')
                         ->default(InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)),
 
-                    DatePicker::make('published_at')
-                        ->label('Publish At')
-                        ->default(Carbon::now())
-                        ->rules([
-                            function (PublishedInitiativeService $publishedInitiativeService) {
-                                return function (string $attribute, $value, \Closure $fail) use($publishedInitiativeService) {
-                                    if  ($publishedInitiativeService->checkIfExists(InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY), $value)) {
-                                        $fail('This date cannot be used as it already exists for this initiative, you can search it and add your articles in it.');
-                                    }
-                                };
-                            }
-                        ])
-                        ->reactive(),
 
-                    Toggle::make('is_published')
-                        ->inline(false)
-                        ->afterStateUpdated(function ($state, $livewire, ?Model $record, Article $articles, callable $get) {
-                            $publishedInitiativeId = $record->id;
-                            $publishedAt = $get('published_at');
+                    Forms\Components\Group::make()->schema([
+                        DatePicker::make('published_at')
+                            ->native(false)
+                            ->closeOnDateSelection()
+                            ->label('Publish At')
+                            ->required()
+                            ->default(Carbon::now()->format('Y-m-d'))
+                            ->rules([
+                                function (PublishedInitiativeService $publishedInitiativeService) {
+                                    return function (string $attribute, $value, \Closure $fail) use($publishedInitiativeService) {
+                                        if  (
+                                                $publishedInitiativeService
+                                                    ->checkIfExists(
+                                                        InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY),
+                                                        $value
+                                                    )
+                                            ) {
+                                            $fail('This date cannot be used as it already exists for this initiative, you can search it and add your articles in it.');
+                                        }
+                                    };
+                                }
+                            ])
+                            ->live()
+                            ->afterStateUpdated(
+                                fn (Forms\Set $set, ?string $state) => $set('name', static::generateName($state))),
 
-                            $articles->where('published_initiative_id', '=', $publishedInitiativeId)->update([
-                                'is_published' => $state,
-                                'published_at' => $publishedAt,
-                                'publisher_id' => Auth::user()->id
-                            ]);
+                        Forms\Components\TextInput::make('name')->default(function (callable $get) {
+                            return static::generateName($get('published_at'));
+                        })
+                        ->required(),
+                    ])->columns(2)->columnSpanFull(),
 
-                            $livewire->dispatch('updatedPublishedStatus');
-                        }),
+                    Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
+                        ->collection('pdf')->columnSpanFull(),
+
+
 
                 ])->columns(2),
             ]);
@@ -109,73 +120,36 @@ class NewsTodayResource extends Resource
 
     public static function canViewAny(): bool
     {
-        $user = Auth::user();
-        return $user->can('view_any_news::today');
-    }
-
-    public static function canView(Model $record): bool
-    {
-        $user = Auth::user();
-        return $user->can('view_news::today');
+        return Auth::user()->can('view_news::today');
     }
 
     public static function canEdit(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('update_news::today');
+        return Auth::user()->can('edit_news::today');
     }
 
     public static function canCreate(): bool
     {
-        $user = Auth::user();
-        return $user->can('create_news::today');
+        return Auth::user()->can('create_news::today');
     }
 
     public static function canDelete(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_news::today');
+        return Auth::user()->can('delete_news::today');
     }
 
     public static function canDeleteAny(): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_any_news::today');
+        return Auth::user()->can('delete_news::today');
     }
 
     public static function canForceDelete(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('force_delete_news::today');
+        return Auth::user()->can('delete_news::today');
     }
 
     public static function canForceDeleteAny(): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_any_news::today');
-    }
-
-    public static function canReorder(): bool
-    {
-        $user = Auth::user();
-        return $user->can('reorder_news::today');
-    }
-
-    public static function canReplicate(Model $record): bool
-    {
-        $user = Auth::user();
-        return $user->can('replicate_news::today');
-    }
-
-    public static function canRestore(Model $record): bool
-    {
-        $user = Auth::user();
-        return $user->can('restore_news::today');
-    }
-
-    public static function canRestoreAny(): bool
-    {
-        $user = Auth::user();
-        return $user->can('restore_any_news::today');
+        return Auth::user()->can('delete_news::today');
     }
 }

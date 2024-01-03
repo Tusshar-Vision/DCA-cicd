@@ -8,7 +8,9 @@ use App\Filament\Resources\WeeklyFocusResource\Pages;
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
 use App\Models\PublishedInitiative;
+use App\Services\PublishedInitiativeService;
 use App\Traits\Filament\InitiativeResourceSchema;
+use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -42,28 +44,49 @@ class WeeklyFocusResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('New Initiative')->schema([
-                    Select::make('initiative_id')
-                        ->options([
-                            1 => 'News Today',
-                            2 => 'Monthly Magazine',
-                            3 => 'Weekly Focus'
-                        ])
-                        ->required()
-                        ->label('Initiative')
-                        ->default(InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)),
-                    DatePicker::make('published_at')->default(today())->reactive(),
-                    Toggle::make('is_published')->inline(false)->afterStateUpdated(function ($state, $livewire, ?Model $record, Article $articles, callable $get) {
-                        $publishedInitiativeId = $record->id;
-                        $publishedAt = $get('published_at');
+                Forms\Components\Section::make()->schema([
 
-                        $articles->where('published_initiative_id', '=', $publishedInitiativeId)->update([
-                            'is_published' => $state,
-                            'published_at' => $publishedAt,
-                            'publisher_id' => Auth::user()->id
-                        ]);
-                        $livewire->dispatch('updatedPublishedStatus');
-                    }),
+                    Forms\Components\Hidden::make('initiative_id')
+                        ->default(InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)),
+
+
+                    Forms\Components\Group::make()->schema([
+                        DatePicker::make('published_at')
+                            ->native(false)
+                            ->closeOnDateSelection()
+                            ->label('Publish At')
+                            ->required()
+                            ->default(Carbon::now()->format('Y-m-d'))
+                            ->rules([
+                                function (PublishedInitiativeService $publishedInitiativeService) {
+                                    return function (string $attribute, $value, \Closure $fail) use($publishedInitiativeService) {
+                                        if  (
+                                                $publishedInitiativeService
+                                                    ->checkIfExists(
+                                                        InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS),
+                                                        $value
+                                                    )
+                                            ) {
+                                            $fail('This week cannot be used as it already exists for this initiative, you can search it and add your articles in it.');
+                                        }
+                                    };
+                                }
+                            ])
+                            ->live()
+                            ->afterStateUpdated(
+                                fn (Forms\Set $set, ?string $state) => $set('name', static::generateName($state))),
+
+                        Forms\Components\TextInput::make('name')->default(function (callable $get) {
+                            return static::generateName($get('published_at'));
+                        })
+                            ->required(),
+                    ])->columns(2)->columnSpanFull(),
+
+                    Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
+                        ->collection('pdf')->columnSpanFull(),
+
+
+
                 ])->columns(2),
             ]);
     }

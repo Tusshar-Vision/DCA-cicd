@@ -29,8 +29,8 @@ class EnableAutomatedAnnouncements implements ShouldQueue
     {
         $announcements
             ->where('visible_till', '>', date('Y-m-d H:i:s'))
-            ->where('visible', false)
+            ->where('is_visible', false)
             ->where('published_at','<=', date('Y-m-d H:i:s'))
-            ->update(['visible' => true]);
+            ->update(['is_visible' => true]);
     }
 }

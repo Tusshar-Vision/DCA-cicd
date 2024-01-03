@@ -18,18 +18,6 @@ class TagPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_tags');
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \Spatie\Tags\Tag  $tag
-     * @return bool
-     */
-    public function view(User $user, Tag $tag): bool
-    {
         return $user->can('view_tags');
     }
 
@@ -53,7 +41,7 @@ class TagPolicy
      */
     public function update(User $user, Tag $tag): bool
     {
-        return $user->can('update_tags');
+        return $user->can('edit_tags');
     }
 
     /**
@@ -76,7 +64,7 @@ class TagPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_tags');
+        return $user->can('delete_tags');
     }
 
     /**
@@ -88,7 +76,7 @@ class TagPolicy
      */
     public function forceDelete(User $user, Tag $tag): bool
     {
-        return $user->can('force_delete_tags');
+        return $user->can('delete_tags');
     }
 
     /**
@@ -99,53 +87,6 @@ class TagPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_tags');
+        return $user->can('delete_tags');
     }
-
-    /**
-     * Determine whether the user can restore.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \Spatie\Tags\Tag  $tag
-     * @return bool
-     */
-    public function restore(User $user, Tag $tag): bool
-    {
-        return $user->can('restore_tags');
-    }
-
-    /**
-     * Determine whether the user can bulk restore.
-     *
-     * @param  \App\Models\User  $user
-     * @return bool
-     */
-    public function restoreAny(User $user): bool
-    {
-        return $user->can('restore_any_tags');
-    }
-
-    /**
-     * Determine whether the user can replicate.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \Spatie\Tags\Tag  $tag
-     * @return bool
-     */
-    public function replicate(User $user, Tag $tag): bool
-    {
-        return $user->can('replicate_tags');
-    }
-
-    /**
-     * Determine whether the user can reorder.
-     *
-     * @param  \App\Models\User  $user
-     * @return bool
-     */
-    public function reorder(User $user): bool
-    {
-        return $user->can('reorder_tags');
-    }
-
 }

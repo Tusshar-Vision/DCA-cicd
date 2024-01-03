@@ -7,6 +7,8 @@ use App\Models\Article;
 use App\Traits\Filament\ArticleResourceSchema;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Resources\Resource;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleResource extends Resource implements HasShieldPermissions
 {
@@ -32,18 +34,65 @@ class ArticleResource extends Resource implements HasShieldPermissions
     {
         return [
             'view',
-            'view_any',
             'create',
-            'update',
+            'edit',
             'delete',
-            'delete_any',
-            'force_delete',
-            'force_delete_any',
             'restore',
-            'restore_any',
-            'replicate',
             'reorder',
-            'review'
+            'review',
+            'publish'
         ];
+    }
+
+    public static function canViewAny(): bool
+    {
+        return Auth::user()->can('view_article');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('edit_article') && $record->author_id === $user->id;
+    }
+
+    public static function canCreate(): bool
+    {
+        return Auth::user()->can('create_article');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return Auth::user()->can('delete_article');
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        return Auth::user()->can('delete_article');
+
+    }
+
+    public static function canForceDelete(Model $record): bool
+    {
+        return Auth::user()->can('delete_article');
+    }
+
+    public static function canForceDeleteAny(): bool
+    {
+        return Auth::user()->can('delete_article');
+    }
+
+    public static function canReorder(): bool
+    {
+        return Auth::user()->can('reorder_article');
+    }
+
+    public static function canRestore(Model $record): bool
+    {
+        return Auth::user()->can('restore_article');
+    }
+
+    public static function canRestoreAny(): bool
+    {
+        return Auth::user()->can('restore_article');
     }
 }
