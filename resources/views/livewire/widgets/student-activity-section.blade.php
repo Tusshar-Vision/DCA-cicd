@@ -68,16 +68,21 @@
                         <script>
                             document.addEventListener("DOMContentLoaded", () => {
                                 const squares = document.querySelector('.con-squares');
-                               @foreach ($newsTodayConsumption as $day => $percent)
-                                <?php $level = null; 
-                                if($percent === 100) $level = 1; 
-                                else if($percent > 0) $level = 2;
-                                else if($percent === 0) $level = 3;
-                                else $level = 4;
+
+                                 @foreach ($newsTodayConsumption as $day => $value)
+                                <?php 
+                                $level = null; 
+                                if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
+                                   if($value['total_read'] == $value['total_article']) $level = 1;
+                                   else if($value['total_read'] < $value['total_article']) $level = 2;
+                                } else {
+                                    if($value == null) $level =4;
+                                    else $level = 3;
+                                }
                                 ?>
 
                                 squares.insertAdjacentHTML('beforeend',
-                                        `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : $percent."% Read"}}"></li>`);
+                                        `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : ""}}"></li>`);
                                 @endforeach
                             });
                         </script>
@@ -106,16 +111,21 @@
                             document.addEventListener("DOMContentLoaded", () => {
                                 const squares = document.querySelector('.weekly-con-graph .con-squares');
 
-                               @foreach ($weeklyFocusConsumption as $week => $percent)
-                                <?php $level = null; 
-                                if($percent === 100) $level = 1; 
-                                else if($percent > 0) $level = 2;
-                                else if($percent === 0) $level = 3;
-                                else $level = 4;
+                                
+                                @foreach ($weeklyFocusConsumption as $week => $value)
+                                <?php 
+                                $level = null; 
+                                if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
+                                   if($value['total_read'] == $value['total_article']) $level = 1;
+                                   else if($value['total_read'] < $value['total_article']) $level = 2;
+                                } else {
+                                    if($value == null) $level =4;
+                                    else $level = 3;
+                                }
                                 ?>
 
                                 squares.insertAdjacentHTML('beforeend',
-                                        `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : $percent."% Read"}}"></li>`);
+                                        `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : ""}}"></li>`);
                                 @endforeach
                             });
                         </script>
@@ -144,16 +154,20 @@
                             document.addEventListener("DOMContentLoaded", () => {
                                 const squares = document.querySelector('.monthly-con-graph .con-squares');
 
-                                @foreach ($montlyMagazineConsumption as $month => $percent)
-                                <?php $level = null; 
-                                if($percent === 100) $level = 1; 
-                                else if($percent > 0) $level = 2;
-                                else if($percent === 0) $level = 3;
-                                else $level = 4;
+                                @foreach ($montlyMagazineConsumption as $month => $value)
+                                <?php 
+                                $level = null; 
+                                if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
+                                   if($value['total_read'] == $value['total_article']) $level = 1;
+                                   else if($value['total_read'] < $value['total_article']) $level = 2;
+                                } else {
+                                    if($value == null) $level =4;
+                                    else $level = 3;
+                                }
                                 ?>
 
                                 squares.insertAdjacentHTML('beforeend',
-                                        `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : $percent."% Read"}}"></li>`);
+                                        `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : ""}}"></li>`);
                                 @endforeach
                             });
                         </script>

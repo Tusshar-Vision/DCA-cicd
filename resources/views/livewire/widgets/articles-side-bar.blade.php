@@ -50,7 +50,7 @@
                     <ul class="mt-2 space-y-4 ml-6">
                         @foreach ($articles[$topic->name] as $article)
                             <li class="text-clip text-sm">
-                                <a href="{{ ArticleService::getArticleURL($article) }}" class="cursor-pointer hover:underline {{ ($article->slug === $currentArticle) ? 'font-bold' : '' }}" wire:navigate>
+                                <a href="{{ ArticleService::getArticleURL($article) }}" class="cursor-pointer hover:underline {{ ($article->slug === $currentArticle) ? 'font-bold' : '' }}">
                                     {{ $loop->parent->iteration }}.{{ $loop->iteration }} {{ $article->title }}
                                 </a>
                             </li>
