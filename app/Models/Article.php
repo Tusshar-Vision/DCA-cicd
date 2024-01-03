@@ -162,9 +162,9 @@ class Article extends Model implements HasMedia, Sortable
         return $this->belongsTo(PublishedInitiative::class, 'published_initiative_id');
     }
 
-    public function content(): HasMany
+    public function content(): HasOne
     {
-        return $this->hasMany(ArticleContent::class);
+        return $this->hasOne(ArticleContent::class);
     }
 
     public function relatedTerms(): HasMany

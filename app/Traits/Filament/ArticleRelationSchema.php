@@ -7,6 +7,7 @@ use App\Jobs\GenerateArticlePDF;
 use App\Models\User;
 use App\Services\ArticleService;
 use App\Traits\Filament\Components\ArticleForm;
+use App\Traits\HasNotifications;
 use Carbon\Carbon;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
@@ -36,7 +37,7 @@ use Spatie\Tags\Tag;
 
 trait ArticleRelationSchema
 {
-    use ArticleForm;
+    use ArticleForm, HasNotifications;
     public function form(Form $form): Form
     {
         return $this->articleForm($form);
@@ -210,6 +211,7 @@ trait ArticleRelationSchema
             ->headerActions([
                 CreateAction::make()->slideOver()->after(function (Model $record) {
                     $record->setStatus('Draft', 'New Entry Created');
+                    $this->sendNotificationOfArticleCreation($record);
                 })
             ])
             ->actions([
@@ -239,7 +241,7 @@ trait ArticleRelationSchema
                     ->iconButton()
                     ->tooltip('View')
                     ->fillForm(fn (Model $record): array => [
-                        'content' => $record->content,
+                        'content' => $record->content->content,
                     ])
                     ->form([
                         TinyEditor::make('content')
@@ -291,15 +293,19 @@ trait ArticleRelationSchema
                         ];
                     })
                     ->form([
-                        Section::make('Article Content')->schema([
-                            TinyEditor::make('content')
-                                ->columnSpanFull()
-                                ->profile('review')
-                                ->maxHeight(500)
-                                ->hiddenLabel(),
+
+                        Section::make('Article Content')
+                            ->relationship('content')
+                            ->schema([
+                                TinyEditor::make('content')
+                                    ->columnSpanFull()
+                                    ->profile('review')
+                                    ->maxHeight(500)
+                                    ->hiddenLabel(),
                         ])->collapsible(),
 
                         Section::make('Review Comment')->schema([
+
                             Select::make('status')->options([
                                 "Draft" => "Draft",
 
@@ -322,8 +328,11 @@ trait ArticleRelationSchema
                                     'attachFiles',
                                     'codeBlock',
                                 ]),
+
                         ])
-                    ])->slideOver()
+
+                    ])
+                    ->slideOver()
                     ->action(function (array $data, Model $record) {
                         $author = Auth::user();
 
@@ -354,20 +363,7 @@ trait ArticleRelationSchema
                                     $record->update(['published_at' => Carbon::now()]);
                                 }
 
-                                $articleUrl = ArticleService::getArticleUrlFromSlug($record->slug);
-                                $notificationBody = "<a href=\" $articleUrl \" target='_blank'>Click here to check it out</a>";;
-
-                                Notification::make()
-                                    ->title('Your article just got published!')
-                                    ->body($notificationBody)
-                                    ->success()
-                                    ->sendToDatabase($record->author);
-
-                                Notification::make()
-                                    ->title('Article you reviewed just got published!')
-                                    ->body($notificationBody)
-                                    ->success()
-                                    ->sendToDatabase($record->reviewer);
+                                $this->sendNotificationOfArticlePublished($record);
                             });
                         })
                         ->deselectRecordsAfterCompletion(),

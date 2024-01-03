@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -46,25 +47,43 @@ class NewsTodayResource extends Resource
                     Forms\Components\Hidden::make('initiative_id')
                         ->default(InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)),
 
-                    DatePicker::make('published_at')
-                        ->native(false)
-                        ->label('Publish At')
-                        ->default(Carbon::now()->format('Y-m-d'))
-                        ->reactive()
-                        ->rules([
-                            function (PublishedInitiativeService $publishedInitiativeService) {
-                                return function (string $attribute, $value, \Closure $fail) use($publishedInitiativeService) {
-                                    if  ($publishedInitiativeService->checkIfExists(InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY), $value)) {
-                                        $fail('This date cannot be used as it already exists for this initiative, you can search it and add your articles in it.');
-                                    }
-                                };
-                            }
-                        ])
-                        ->reactive(),
 
-                    Forms\Components\TextInput::make('name')->default(function (callable $get) {
-                        return str_replace( ' ', '_',Initiatives::NEWS_TODAY->value . ' ' . Carbon::parse($get('published_at'))->format('Y-m-d'));
-                    }),
+                    Forms\Components\Group::make()->schema([
+                        DatePicker::make('published_at')
+                            ->native(false)
+                            ->closeOnDateSelection()
+                            ->label('Publish At')
+                            ->required()
+                            ->default(Carbon::now()->format('Y-m-d'))
+                            ->rules([
+                                function (PublishedInitiativeService $publishedInitiativeService) {
+                                    return function (string $attribute, $value, \Closure $fail) use($publishedInitiativeService) {
+                                        if  (
+                                                $publishedInitiativeService
+                                                    ->checkIfExists(
+                                                        InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY),
+                                                        $value
+                                                    )
+                                            ) {
+                                            $fail('This date cannot be used as it already exists for this initiative, you can search it and add your articles in it.');
+                                        }
+                                    };
+                                }
+                            ])
+                            ->live()
+                            ->afterStateUpdated(
+                                fn (Forms\Set $set, ?string $state) => $set('name', static::generateName($state))),
+
+                        Forms\Components\TextInput::make('name')->default(function (callable $get) {
+                            return static::generateName($get('published_at'));
+                        })
+                        ->required(),
+                    ])->columns(2)->columnSpanFull(),
+
+                    Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
+                        ->collection('pdf')->columnSpanFull(),
+
+
 
                 ])->columns(2),
             ]);

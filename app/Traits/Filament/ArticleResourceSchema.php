@@ -244,7 +244,7 @@ trait ArticleResourceSchema
                     ->iconButton()
                     ->tooltip('View')
                     ->fillForm(fn (Model $record): array => [
-                        'content' => $record->content,
+                        'content' => $record->content->content,
                     ])
                     ->form([
                         TinyEditor::make('content')
@@ -295,12 +295,14 @@ trait ArticleResourceSchema
                         ];
                     })
                     ->form([
-                        Section::make('Article Content')->schema([
-                            TinyEditor::make('content')
-                                ->columnSpanFull()
-                                ->profile('review')
-                                ->maxHeight(500)
-                                ->hiddenLabel(),
+                        Section::make('Article Content')
+                            ->relationship('content')
+                            ->schema([
+                                TinyEditor::make('content')
+                                    ->columnSpanFull()
+                                    ->profile('review')
+                                    ->maxHeight(500)
+                                    ->hiddenLabel(),
                         ])->collapsible(),
 
                         Section::make('Review Comment')->schema([

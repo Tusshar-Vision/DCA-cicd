@@ -119,10 +119,13 @@ class AnnouncementResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->button(),
+                Tables\Actions\EditAction::make()
+                    ->iconButton()
+                    ->tooltip('Edit'),
                 Tables\Actions\Action::make('View')
                     ->icon('heroicon-s-eye')
-                    ->button()
+                    ->tooltip('View')
+                    ->iconButton()
                     ->form(function (Model $record) {
                         return [
                             RichEditor::make('content')

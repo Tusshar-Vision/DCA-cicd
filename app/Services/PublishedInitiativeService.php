@@ -60,13 +60,24 @@ readonly class PublishedInitiativeService
     public function checkIfExists($initiative_id, $published_at): bool
     {
         $publishedRecords = $this->publishedInitiatives
-                                ->where('initiative_id', '=', $initiative_id)
-                                ->whereDate(
-                                    'published_at',
-                                    '=',
-                                    Carbon::parse($published_at)->format('Y-m-d')
-                                )
-                                ->get();
+            ->where('initiative_id', '=', $initiative_id);
+
+        if ($initiative_id == 1) {
+            // For News Today, check if an initiative exists for the same date
+            $publishedRecords = $publishedRecords->whereDate('published_at', '=', Carbon::parse($published_at)->format('Y-m-d'));
+        } elseif ($initiative_id == 3) {
+            // For Weekly Focus, check if an initiative exists for the same week
+            $publishedRecords = $publishedRecords->whereBetween('published_at', [
+                Carbon::parse($published_at)->startOfWeek(),
+                Carbon::parse($published_at)->endOfWeek(),
+            ]);
+        } elseif ($initiative_id == 2) {
+            // For Monthly Magazine, check if an initiative exists for the same month
+            $publishedRecords = $publishedRecords->whereYear('published_at', '=', Carbon::parse($published_at)->year)
+                ->whereMonth('published_at', '=', Carbon::parse($published_at)->month);
+        }
+
+        $publishedRecords = $publishedRecords->get();
 
         return $publishedRecords->isNotEmpty();
     }

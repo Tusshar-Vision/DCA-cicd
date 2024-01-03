@@ -6,6 +6,8 @@ use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Models\Announcement;
 use App\Models\Article;
+use Filament\Notifications\Notification;
+use Illuminate\Database\Eloquent\Model;
 
 readonly class NotificationService
 {

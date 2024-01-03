@@ -143,17 +143,15 @@ trait ArticleForm
 
                         ])->columns(2)->collapsible(),
 
-                        Section::make('Content')->schema([
-
-                            TinyEditor::make('content')
-                                ->columnSpanFull()
-                                ->profile('full')
-//                                ->toolbarSticky(true)
-                                ->maxHeight(500)
-                                ->hiddenLabel(),
-                            TagsInput::make('sources')
-                                ->separator(',')
-                                ->placeholder('New Source')
+                        Section::make('Content')
+                            ->relationship('content')
+                            ->schema([
+                                TinyEditor::make('content')
+                                    ->columnSpanFull()
+                                    ->profile('full')
+    //                                ->toolbarSticky(true)
+                                    ->maxHeight(500)
+                                    ->hiddenLabel(),
 
                         ])->headerActions([
                             \Filament\Forms\Components\Actions\Action::make('Reviews')
@@ -175,8 +173,7 @@ trait ArticleForm
                                 ])
                                 ->visible(function (?Model $record) {
                                     return $record !== null;
-                                })
-                            ,
+                                }),
 
                             \Filament\Forms\Components\Actions\Action::make('Changes Incorporated')
                                 ->requiresConfirmation()
@@ -190,6 +187,9 @@ trait ArticleForm
                                 }),
                         ])->collapsible(),
 
+                        TagsInput::make('sources')
+                            ->separator(',')
+                            ->placeholder('New Source')
                     ]),
 
                     Tabs\Tab::make('SEO')->schema([

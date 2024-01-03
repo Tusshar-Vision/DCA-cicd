@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use Althinect\FilamentSpatieRolesPermissions\Middleware\SyncSpatiePermissionsWithFilamentTenants;
+use App\Filament\Pages\Auth\EditProfile;
 use App\Filament\Resources\ArticleResource;
 use App\Filament\Resources\CommentResource;
 use App\Filament\Resources\DownloadsResource;
@@ -96,7 +97,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->profile()
+            ->profile(EditProfile::class)
             ->colors([
                 'primary' => Color::hex('#005faf'),
             ])

@@ -19,6 +19,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class UserResource extends Resource implements HasShieldPermissions
 {
@@ -52,15 +53,20 @@ class UserResource extends Resource implements HasShieldPermissions
                             ->hiddenOn('edit')
                     ])->columnSpan(1),
 
-                    Forms\Components\Section::make('User Roles')->description('You can assign multiple roles to one user.')->schema([
+                    Forms\Components\Section::make('User Roles')
+                        ->visible(function () {
+                            return Auth::user()->can('assign role_user');
+                        })
+                        ->description('You can assign multiple roles to one user.')
+                        ->schema([
 
-                        Select::make('roles')->multiple()->relationship('roles', 'name', function ($query) use($super_admin, $admin) {
-                            if(\Auth::user()->hasRole($super_admin)) {
-                                return $query;
-                            } else {
-                                return $query->whereNotIn('name', [$super_admin, $admin]);
-                            }
-                        })->preload()->required(),
+                            Select::make('roles')->multiple()->relationship('roles', 'name', function ($query) use($super_admin, $admin) {
+                                if(\Auth::user()->hasRole($super_admin)) {
+                                    return $query;
+                                } else {
+                                    return $query->whereNotIn('name', [$super_admin, $admin]);
+                                }
+                            })->preload()->required(),
 
                     ])->columnSpan(1)
                 ])->columns(2)
@@ -89,7 +95,9 @@ class UserResource extends Resource implements HasShieldPermissions
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->iconButton()
+                    ->tooltip('Edit'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -97,6 +105,9 @@ class UserResource extends Resource implements HasShieldPermissions
                     Tables\Actions\BulkAction::make('Assign Roles')
                         ->icon('heroicon-s-user-plus')
                         ->color(Color::Green)
+                        ->visible(function () {
+                            return Auth::user()->can('assign role_user');
+                        })
                         ->form([
 
                             Select::make('roles')->multiple()->options(function () use($super_admin, $admin) {
@@ -128,6 +139,9 @@ class UserResource extends Resource implements HasShieldPermissions
                         })->deselectRecordsAfterCompletion(),
 
                     Tables\Actions\BulkAction::make('Disable accounts')
+                        ->visible(function () {
+                            return Auth::user()->can('disable_user');
+                        })
                         ->icon('heroicon-s-shield-exclamation')
                         ->color(Color::Red)
                         ->requiresConfirmation()

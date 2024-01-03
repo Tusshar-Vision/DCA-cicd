@@ -8,7 +8,8 @@ use Filament\Resources\RelationManagers\RelationManager;
 class ArticlesRelationManager extends RelationManager
 {
     protected static string $relationship = 'articles';
-    protected $listeners = ['updatedPublishedStatus' => '$refresh'];
+    protected static ?string $title = 'Sections';
+    protected static ?string $label = 'section';
 
     use ArticleRelationSchema;
 }

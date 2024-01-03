@@ -2,9 +2,8 @@
 
 namespace App\Traits\Filament;
 
-use App\Services\ArticleService;
+use App\Traits\HasNotifications;
 use Carbon\Carbon;
-use Filament\Notifications\Notification;
 use Filament\Support\Colors\Color;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkAction;
@@ -21,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 
 trait InitiativeResourceSchema
 {
+    use HasNotifications;
     public static function table(Table $table): Table
     {
         return $table
@@ -129,21 +129,8 @@ trait InitiativeResourceSchema
                                     $record->save();
                                 }
 
-                                $articleUrl = ArticleService::getArticleUrlFromSlug($article->slug);
-                                $notificationBody = "<a href=\" $articleUrl \" target='_blank'>Click here to check it out</a>";;
-
-                                Notification::make()
-                                    ->title('Your article just got published!')
-                                    ->body($notificationBody)
-                                    ->success()
-                                    ->sendToDatabase($article->author);
-
-                                Notification::make()
-                                    ->title('Article you reviewed just got published!')
-                                    ->body($notificationBody)
-                                    ->success()
-                                    ->sendToDatabase($article->reviewer);
-
+                                $notification = new self();
+                                $notification->sendNotificationOfArticlePublished($article);
                             }
                         });
                     }),
@@ -171,11 +158,28 @@ trait InitiativeResourceSchema
                             $records->each(function ($record) {
                                 $record->is_published = false;
                                 $record->save();
+
+                                $record->articles->each(function($article) {
+                                    if ($article->status === 'Published') {
+                                        $article->setStatus('Improve');
+                                        $article->update(['published_at' => null]);
+                                    }
+                                });
                             });
                         })
                         ->deselectRecordsAfterCompletion(),
                     DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    private static function generateName(string $date): array|string
+    {
+        return str_replace(
+            ' ',
+            '_',
+            static::$modelLabel . ' ' . Carbon::parse($date)
+                ->format('Y-m-d')
+        );
     }
 }

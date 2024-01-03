@@ -90,7 +90,7 @@
 </div>
 
 <div id="article-content" onmouseup="handleSelection()" class="mt-4 printable-area">
-    {!! $article->content !!}
+    {!! $article->content->content !!}
 </div>
 
 <script>
