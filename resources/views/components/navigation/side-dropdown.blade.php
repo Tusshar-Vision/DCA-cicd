@@ -16,7 +16,7 @@
                          }}"
                    class="flex items-center justify-between px-3 py-2 hover:brand-color hover:bgcolor-gray-F4F6FC"
                 >
-                    <span class="ml-2 font-medium">{{ $initiativeId == InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS) ? $value['title'] : $value }}</span>
+                    <span class="ml-2 font-medium text-sm">{{ $initiativeId == InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS) ? $value['title'] : $value }}</span>
                 </a>
             </li>
         @endforeach

@@ -5,7 +5,7 @@
                 <a  href="#"
                     class="flex items-center justify-between mx-2 py-2 hover:brand-color hover:bgcolor-gray-F4F6FC firstlabelMenu"
                 >
-                    <span class="px-4 font-medium">
+                    <span class="px-4 font-medium text-sm">
                         {{ $data }}
                     </span>
                 </a>

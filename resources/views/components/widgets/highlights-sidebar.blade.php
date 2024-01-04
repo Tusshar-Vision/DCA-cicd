@@ -34,8 +34,8 @@
     }
 </style>
 
-<div class="vi-highlights-sidebar">
-    <div class="vi-announcement-wrap">
+<div class="vi-highlights-sidebar w-full lg:w-auto">
+    <div class="vi-announcement-wrap w-full lg:w-auto">
         <h5 class="vi-sidebar-title">What’s New</h5>
         <div class="vi-announcement-card">
             <div class="flex justify-between items-center">
