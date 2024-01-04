@@ -26,8 +26,8 @@ use App\Http\Controllers\Pages\SearchController;
 
 // Routes for all the pages
 Route::get('/', [Pages\HomeController::class, 'index'])->name('home');
-Route::get('/mains-365', [Pages\Mains365Controller::class, 'index'])->name('mains365');
-Route::get('/pt-365', [Pages\PT365Controller::class, 'index'])->name('pt365');
+Route::get('/mains-365', [Pages\Mains365Controller::class, 'index'])->name('mains-365');
+Route::get('/pt-365', [Pages\PT365Controller::class, 'index'])->name('pt-365');
 Route::get('/downloads', [Pages\DownloadsController::class, 'index'])->name('downloads');
 Route::get('/search', [Pages\SearchController::class, 'index'])->name('search');
 Route::get('/search/{query}', [Pages\SearchController::class, 'searchQuery'])->name('search.query');

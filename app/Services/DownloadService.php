@@ -14,7 +14,7 @@ readonly class DownloadService
 
     public function getLatestDownloads(int $limit = 6): Collection|array {
         return $this->media->where('mime_type', 'application/pdf')
-            ->where('collection_name', '!=', 'pdf')
+            ->where('collection_name', '!=', 'infographic')
             ->latest()
             ->limit($limit)
             ->get();

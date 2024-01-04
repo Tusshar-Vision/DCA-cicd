@@ -4,19 +4,13 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\InfographicsResource\Pages;
 use App\Filament\Resources\InfographicsResource\RelationManagers;
-use App\Helpers\InitiativesHelper;
 use App\Models\Infographic;
-use Filament\Facades\Filament;
+use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\Auth;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class InfographicsResource extends Resource
 {
@@ -33,7 +27,15 @@ class InfographicsResource extends Resource
     {
         return $form
             ->schema([
-                //
+
+                Forms\Components\Section::make('Upload Infographic')->schema([
+                    Forms\Components\SpatieMediaLibraryFileUpload::make('Infographic')
+                        ->id('infographic')
+                        ->collection('infographic')
+                        ->acceptedFileTypes(['application/pdf']),
+
+                        Forms\Components\TextInput::make('title')->required()
+                ])
             ]);
     }
 
@@ -41,13 +43,19 @@ class InfographicsResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('title')
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('View')
+                    ->icon('heroicon-s-eye')
+                    ->tooltip('Preview')
+                    ->iconButton(),
+                Tables\Actions\EditAction::make()
+                    ->tooltip('Edit')
+                    ->iconButton(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
