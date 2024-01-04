@@ -33,11 +33,14 @@
         <div class="flex space-x-8">
             <div class="flex w-2/6 flex-col space-y-4 leftsticky">
                 <h2 class="text-[20px] font-bold pb-[15px] border-b border-color">News Today</h2>
-                <div class="calendar-wrapper border-1 border-color-C3CAD9 border rounded">
+                <div class="calendar-wrapper border-1 border-color-C3CAD9 border rounded relative">
                     <label>
-                        <input id="news-today-calendar" type="date" class="w-full border-0"
-                            value="{{ Carbon::parse($article->publishedInitiative->published_at)->format('Y-m-d') }}">
+                        <input type="text" name="newsToday" value="Select Date" class="w-full border-0 text-[#8F93A3]" />
                     </label>
+                        <!-- <input id="news-today-calendar" type="date" class="w-full border-0"
+                            value="{{ Carbon::parse($article->publishedInitiative->published_at)->format('Y-m-d') }}"> -->
+                    
+                    
                 </div>
                 <x-widgets.article-side-bar :table-of-content="$articles" />
                 <x-widgets.side-bar-download-menu />
@@ -77,20 +80,37 @@
             </div>
         </div>
         <div>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
             <script>
-                let newsTodayCalendar = document.getElementById('news-today-calendar');
+                // let newsTodayCalendar = document.getElementById('news-today-calendar');
 
-                newsTodayCalendar.addEventListener('change', function(event) {
-                    let selectedDate = event.target.value;
+                // newsTodayCalendar.addEventListener('change', function(event) {
+                //     let selectedDate = event.target.value;
 
-                    // Get the current URL
-                    const currentURL = new URL(window.location.href);
+                //     // Get the current URL
+                //     const currentURL = new URL(window.location.href);
 
-                    // Update the date part of the URL
-                    currentURL.pathname = `/news-today/${selectedDate}/`;
+                //     // Update the date part of the URL
+                //     currentURL.pathname = `/news-today/${selectedDate}/`;
 
-                    // Navigate to the updated URL
-                    window.location.href = currentURL.href;
-                })
+                //     // Navigate to the updated URL
+                //     window.location.href = currentURL.href;
+                // })
+
+                // calendar for news today
+                $(function() {
+                    $('input[name="newsToday"]').daterangepicker({
+                        singleDatePicker: true,
+                        showDropdowns: true,
+                        minYear: 2000,
+                        maxYear: parseInt(moment().format('YYYY'),10)
+                    }, function(start, end, label) {
+                        var years = moment().diff(start, 'years');
+                    });
+                });
+
             </script>
         @endsection
