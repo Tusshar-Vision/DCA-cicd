@@ -35,7 +35,7 @@
                 <h2 class="text-[20px] font-bold pb-[15px] border-b border-color">News Today</h2>
                 <div class="calendar-wrapper border-1 border-color-C3CAD9 border rounded relative">
                     <label>
-                        <input type="text" name="newsToday" value="Select Date" class="w-full border-0 text-[#8F93A3]" />
+                        <input type="text" name="newsToday" value="01/03/2024" class="w-full border-0 text-[#8F93A3]" />
                     </label>
                         <!-- <input id="news-today-calendar" type="date" class="w-full border-0"
                             value="{{ Carbon::parse($article->publishedInitiative->published_at)->format('Y-m-d') }}"> -->
@@ -105,12 +105,14 @@
                     $('input[name="newsToday"]').daterangepicker({
                         singleDatePicker: true,
                         showDropdowns: true,
-                        minYear: 2000,
+                        minYear: 1901,
                         maxYear: parseInt(moment().format('YYYY'),10)
                     }, function(start, end, label) {
                         var years = moment().diff(start, 'years');
+                        alert("You are " + years + " years old!");
                     });
                 });
+
 
             </script>
         @endsection
