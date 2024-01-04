@@ -9,15 +9,16 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class ArticleService
+readonly class ArticleService
 {
     public function __construct(
-        private readonly Article $articles
+        private Article $articles
     ) {}
 
     public function getArticleBySlug($slug)
     {
-        return $this->articles->findBySlug($slug);
+        return $this->articles
+                    ->findBySlug($slug);
     }
 
     public function getArticlesByDate($date)

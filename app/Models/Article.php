@@ -2,19 +2,20 @@
 
 namespace App\Models;
 
+use App\DTO\ArticleDTO;
 use App\Traits\HasComments;
 use Digikraaft\ReviewRating\Traits\HasReviewRating;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Scout\Searchable;
 use RalphJSmit\Laravel\SEO\Support\HasSEO;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
+use Spatie\LaravelData\WithData;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\ModelStatus\HasStatuses;
@@ -29,9 +30,10 @@ use LaracraftTech\LaravelDateScopes\DateScopes;
 
 class Article extends Model implements HasMedia, Sortable
 {
-    use Searchable, InteractsWithMedia, DateScopes, SortableTrait;
+    use Searchable, InteractsWithMedia, DateScopes, SortableTrait, WithData;
 
     use HasFactory,  HasSlug, HasTags, HasSEO, HasComments,  HasReviewRating,  HasStatuses;
+    protected string $dataClass = ArticleDTO::class;
 
     protected $fillable = [
         'title',

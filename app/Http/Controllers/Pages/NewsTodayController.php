@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Pages;
 
+use App\DTO\NewsTodayDTO;
 use App\Enums\Initiatives;
-use App\Exceptions\ArticleNotFoundException;
-use App\Exceptions\PublishedInitiativeNotFoundException;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Bookmark;
@@ -18,7 +17,7 @@ use Illuminate\Support\Facades\Redirect;
 class NewsTodayController extends Controller
 {
     private int $initiativeId;
-    protected $articles;
+    protected NewsTodayDTO $newsToday;
 
     public function __construct(
         private readonly PublishedInitiativeService $publishedInitiativeService,
@@ -32,14 +31,19 @@ class NewsTodayController extends Controller
      */
     public function index()
     {
-        $latestNewsToday = $this->publishedInitiativeService->getLatest($this->initiativeId);
-        $articles = $latestNewsToday->articles;
-        $article_slug = $articles[0]->slug;
-        $article_topic = $articles[0]->topic->name;
-        $date =  Carbon::parse($latestNewsToday->published_at)->format('Y-m-d');
+        $this->newsToday = NewsTodayDTO::fromModel(
+            $this->publishedInitiativeService
+                ->getLatest($this->initiativeId)
+        );
 
-        return redirect()->route('news-today-date-wise.article', ['date' => $date, 'topic' => $article_topic, 'article_slug' => $article_slug]);
-
+        return redirect()
+            ->route(
+                'news-today-date-wise.article',
+                [
+                    'date' => $date,
+                    'topic' => $article_topic,
+                    'article_slug' => $article_slug
+                ]);
     }
 
     /**
