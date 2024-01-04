@@ -125,6 +125,7 @@ trait InitiativeResourceSchema
                     })
                     ->action(function (Model $record) {
                         $record->articles->each(function($article) use($record) {
+
                             if ($article->status === 'Final') {
                                 $article->setStatus('Published');
                                 $article->update(['published_at' => Carbon::now()]);
@@ -155,14 +156,18 @@ trait InitiativeResourceSchema
                         ->icon('heroicon-s-x-mark')
                         ->color(Color::Yellow)
                         ->requiresConfirmation()
-                        ->modalDescription('This action would not affect the published status of the articles inside.')
+                        ->modalHeading('Unpublish Initiative?')
+                        ->modalDescription('This action would set the published status of the articles inside to improve.')
                         ->visible(function () {
                             return Auth::user()->can('publish_article');
                         })
                         ->action(function (?Collection $records) {
                             $records->each(function ($record) {
-                                $record->is_published = false;
-                                $record->save();
+
+                                if ($record->is_published === true) {
+                                    $record->is_published = false;
+                                    $record->save();
+                                }
 
                                 $record->articles->each(function($article) {
                                     if ($article->status === 'Published') {

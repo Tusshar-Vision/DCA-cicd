@@ -100,7 +100,9 @@ readonly class InitiativeService
 
     protected function getMenuDataForWeeklyFocus($initiativeId): array
     {
-        $mainMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
+        $mainMenuData = $this->publishedInitiatives
+            ->where('initiative_id', '=', $initiativeId)
+            ->isPublished()
             ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as date')
             ->groupBy('date')
             ->limit(10)
@@ -111,6 +113,7 @@ readonly class InitiativeService
 
         $sideDropDownMenuData = $this->publishedInitiatives
             ->where('initiative_id', '=', $initiativeId)
+            ->isPublished()
             ->with(['articles.topic'])
             ->whereIn(DB::raw('DATE_FORMAT(published_at, "%Y-%m")'), $dateData)
             ->get();
