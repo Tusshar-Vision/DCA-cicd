@@ -6,7 +6,7 @@
         </div>
         <div class="text-visionLineGray text-sm font-light italic flex flex-col space-y-2" x-show="expanded" x-collapse>
             @foreach($sources as $url)
-                <a class="hover:underline" href="{{ $url }}" target="_blank">
+                <a class="hover:underline break-all" href="{{ $url }}" target="_blank">
                     {{ $url }}
                 </a>
             @endforeach
