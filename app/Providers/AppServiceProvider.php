@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Enums\Initiatives;
+use App\Models\Initiative;
+use App\Services\InitiativeService;
 use Filament\Facades\Filament;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Health\Checks\Checks\UsedDiskSpaceCheck;
 use Spatie\Health\Facades\Health;
@@ -22,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any application services.
+     * @throws \Throwable
      */
     public function boot(): void
     {

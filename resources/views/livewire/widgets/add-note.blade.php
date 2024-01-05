@@ -44,7 +44,7 @@
 </div>
 
 
-<script>    
+<script>
     tinymce.init({
         selector: 'textarea#notes-text-area',
         plugins: 'code table lists',
@@ -57,12 +57,12 @@
         }
     });
 
-        // edit content 
+        // edit content
     function toggleContentEditable() {
         console.log('HI');
         var blockquote = document.getElementById('myBlockquote');
         var currentValue = blockquote.getAttribute('contenteditable');
-        
+
         // Toggle the attribute value
         if (currentValue === 'false') {
             blockquote.setAttribute('contenteditable', 'true');
@@ -74,7 +74,7 @@
     window.onload = loadForLocalStorage;
 
     function loadForLocalStorage() {
-        const article_id = "{{ $article->id }}";
+        const article_id = "{{ $article->getID() }}";
         <?php if(!Auth::check()) { ?>
         if (localStorage.getItem('notes')) {
             const notes = JSON.parse(localStorage.getItem('notes'));
@@ -97,10 +97,10 @@
         @if (Auth::check())
             const user_id = "{{ Auth::check() ? Auth::user()->id : '' }}";
         @endif
-        const article_id = "{{ $article->id }}";
-        const topic_id = "{{ $article->topic->id }}";
-        const topic_section_id = "{{ $article->topic_section_id }}";
-        const topic_sub_section_id = "{{ $article->topic_sub_section_id }}";
+        const article_id = "{{ $article->getID() }}";
+        const topic_id = "{{ $article->getTopicID() }}";
+        const topic_section_id = "{{ $article->getSectionID() }}";
+        const topic_sub_section_id = "{{ $article->getSubSectionID() }}";
         const note = tinyMCE.activeEditor.getContent();
         const note_title = document.getElementById("note-title").innerHTML
 
@@ -146,7 +146,7 @@
             localStorage.setItem("notes", JSON.stringify(notes));
         @endif
     }
-    
+
 
     function addTagToNote(tag, click_from = null) {
         const tagsNodes = document.querySelectorAll('.tag-name');

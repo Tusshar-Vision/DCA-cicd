@@ -7,7 +7,7 @@
         <h4 class="font-bold text-base[16px] py-[16px] border-bottom">Table of Content</h4>
         <div>
             <ul class="list-none ml-0">
-                @foreach($tableOfContent as $key => $header)
+                @foreach($tableOfContent->articles as $key => $header)
                     <li class="py-[15px] border-bottom last:border-0 hover:brand-color">
                         @if(is_array($header))
                             <a href="#header-{{$header['id']}}"

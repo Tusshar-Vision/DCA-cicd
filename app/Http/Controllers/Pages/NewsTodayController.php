@@ -10,9 +10,7 @@ use App\Models\Bookmark;
 use App\Models\Note;
 use App\Services\ArticleService;
 use App\Services\PublishedInitiativeService;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 
 class NewsTodayController extends Controller
 {
@@ -40,36 +38,11 @@ class NewsTodayController extends Controller
             ->route(
                 'news-today-date-wise.article',
                 [
-                    'date' => $date,
-                    'topic' => $article_topic,
-                    'article_slug' => $article_slug
-                ]);
-    }
-
-    /**
-     * @throws \Throwable
-     */
-    public function getArticlesDateWise($date)
-    {
-        $latestPublishedInitiative = $this->publishedInitiativeService->getLatest($this->initiativeId, $date);
-
-        $article_no = 1;
-
-        if ($page_no = request()->query('page'))
-            $article_no = $page_no;
-
-        $articles = $latestPublishedInitiative->articles;
-
-        if ($articles->isEmpty()) {
-            return View('pages.no-news-today');
-        }
-
-        $article = $articles[$article_no - 1];
-
-        if ($page_no)
-            return Redirect::to(route('news-today-date-wise.article', ['date' => $date, 'topic' => $article->topic->name, 'article_slug' => $article->slug]) . "?page=$page_no");
-        else
-            return Redirect::to(route('news-today-date-wise.article', ['date' => $date, 'topic' => $article->topic->name, 'article_slug' => $article->slug]));
+                    'date' => $this->newsToday->publishedAt,
+                    'topic' => $this->newsToday->articles->first()->topic,
+                    'article_slug' => $this->newsToday->articles->first()->slug
+                ]
+            );
     }
 
     /**
@@ -77,9 +50,12 @@ class NewsTodayController extends Controller
      */
     public function renderArticles($date, $topic, $slug)
     {
-        $latestPublishedInitiative = $this->publishedInitiativeService->getLatest($this->initiativeId, $date);
-        $articles = $latestPublishedInitiative->articles;
-        $article = $this->articleService->getArticleBySlug($slug);
+        $this->newsToday = NewsTodayDTO::fromModel(
+            $this->publishedInitiativeService
+                ->getLatest($this->initiativeId, $date)
+        );
+
+        $article = $this->newsToday->getArticleFromSlug($slug);
         $relatedArticles = $this->articleService->getRelatedArticles($article);
 
         $noteAvailable = null;
@@ -94,13 +70,10 @@ class NewsTodayController extends Controller
         }
 
         return View('pages.news-today', [
-//            "topics" => $topics,
-            "articles" => $articles,
+            "articles" => $this->newsToday,
             "article" => $article,
-            "totalArticles" => count($articles),
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
-            "baseUrl" => url('news-today') . "/" . $date,
             "relatedArticles" => $relatedArticles,
             "isArticleBookmarked" => $isArticleBookmarked
         ]);

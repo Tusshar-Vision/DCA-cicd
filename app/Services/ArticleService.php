@@ -109,10 +109,12 @@ readonly class ArticleService
 
     public function getRelatedArticles($article)
     {
-        return $this->articles
+        $articles = $this->articles
                 ->isPublished()
                 ->language()
                 ->withAnyTags($article->tags)
                 ->get();
+
+        return $articles->where('id', '!=', $article->getID());
     }
 }

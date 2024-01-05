@@ -24,14 +24,14 @@ class HomeController extends Controller
     public function index()
     {
         $featuredArticles = $this->articleService->getFeatured(10);
-        $latestNewsArticles = $this->articleService->getLatestNews();
+//        $latestNewsArticles = $this->articleService->getLatestNews();
         $latestVideos = $this->mediaService->getLatestVideos();
         $latestDownloads = $this->downloadService->getLatestDownloads();
         $scoreBoard = $this->userService->getScoreBoard();
 
         return View('pages.home', [
             'featuredArticles' => $featuredArticles,
-            'latestNewsArticles' => $latestNewsArticles,
+//            'latestNewsArticles' => $latestNewsArticles,
             'latestVideos' => $latestVideos,
             'latestDownloads' => $latestDownloads,
             'scoreBoard' => $scoreBoard

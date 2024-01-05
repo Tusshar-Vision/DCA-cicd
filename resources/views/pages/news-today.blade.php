@@ -10,9 +10,9 @@
 @section('content')
 
     <div class="space-y-4">
-        <x-widgets.options-nav :articleId="$article->id" :isArticleBookmarked="$isArticleBookmarked" />
+        <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />
         <x-common.article-heading :title="$article->title" />
-        <x-widgets.articles-nav :createdAt="$article->created_at" :updatedAt="$article->updated_at" />
+        <x-widgets.articles-nav :createdAt="$article->createdAt" :updatedAt="$article->updatedAt" />
     </div>
 
     <div x-data="{ isHighlightsOpen: false, isNotesOpen: false }">
@@ -22,7 +22,7 @@
             <x-widgets.article-highlights />
         </x-modals.modal-box>
         <x-modals.modal-box x-show="isNotesOpen" :heading="$notesHeading">
-            <livewire:widgets.edit-note :articleId="$article->id" />
+            <livewire:widgets.edit-note :articleId="$article->getID()" />
         </x-modals.modal-box>
         <x-modals.modal-box x-show="isNoteOpen" heading="Add Note">
             <livewire:widgets.add-note :article="$article" :note="$note" />
@@ -35,29 +35,26 @@
                 <h2 class="text-[20px] font-bold pb-[15px] border-b border-color">News Today</h2>
                 <div class="calendar-wrapper border-1 border-color-C3CAD9 border rounded relative">
                     <label>
-                        <input type="text" name="newsToday" value="01/03/2024" class="w-full border-0 text-[#8F93A3]" />
+                        <input
+                            type="text"
+                            name="newsToday"
+                            value="{{ Carbon::parse($articles->publishedAt)->format('m/d/Y') }}"
+                            class="w-full border-0 text-[#8F93A3]"
+                        />
                     </label>
-                        <!-- <input id="news-today-calendar" type="date" class="w-full border-0"
-                            value="{{ Carbon::parse($article->publishedInitiative->published_at)->format('Y-m-d') }}"> -->
-                    
-                    
                 </div>
                 <x-widgets.article-side-bar :table-of-content="$articles" />
                 <x-widgets.side-bar-download-menu />
             </div>
 
             <div class="flex flex-col w-full">
-                @if (!empty($articles) && count($articles) !== 0)
-                    <x-header.article readTime="{{ $article->read_time }}" />
+                <x-header.article readTime="{{ $article->readTime }}" />
 
-                    <x-article-content :article="$article" />
+                <x-article-content :article="$article" />
 
-                    <div class="mt-12">
-                        <x-widgets.article-pagination :totalArticles="$totalArticles" :baseUrl="$baseUrl" />
-                    </div>
-                @else
-                    <h1>No articles</h1>
-                @endif
+                <div class="mt-12">
+                    <x-widgets.article-pagination :current-initiative="$articles" :current-article-slug="$article->slug" />
+                </div>
             </div>
 
         </div>
