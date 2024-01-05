@@ -30,14 +30,14 @@
 
 
     <div class="space-y-12">
-        <div class="flex space-x-8">
+        <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8">
 
-            <div class="flex w-2/6 flex-col space-y-6 leftsticky">
+            <div class="flex min-w-full lg:min-w-[340px] lg:w-2/6 flex-col space-y-6 leftsticky">
                 <livewire:widgets.articles-side-bar :topics="$topics" :articles="$sortedArticlesWithTopics" :table-of-content="$tableOfContent" />
                 <x-widgets.side-bar-download-menu />
             </div>
 
-            <div class="flex flex-col w-full">
+            <div class="flex flex-col w-full mt-[20px]">
                 @if (!empty($articles) && count($articles) !== 0)
                     <x-header.article readTime="{{ $article->read_time }}" />
                     <x-article-content :article="$article" />
@@ -52,18 +52,18 @@
         </div>
 
         <div class="flex flex-col justify-center items-center w-full">
-            <div class="flex flex-col w-5/6 space-y-12">
-                <div class="grid grid-cols-3 gap-3">
+            <div class="flex flex-col w-full lg:w-5/6 lg:space-y-12">
+                <div class="grid grid-cols-1 gap-0 lg:grid-cols-3 lg:gap-3">
                     <x-widgets.related-terms />
                     <x-widgets.related-articles :related-articles="$relatedArticles" />
                     <x-widgets.related-videos />
                 </div>
 
-                <div>
+                <div class="mt-[25px] lg:mt-0">
                     <livewire:widgets.comments />
                 </div>
 
-                <div>
+                <div class="mt-[25px] lg:mt-0">
                     <x-widgets.article-sources :sources="$article->sources" />
                 </div>
             </div>

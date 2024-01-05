@@ -24,7 +24,7 @@
 						<div class="comment-text submitted-comment">
 							<h4>John Doe</h4>
 							<em>Jan 11, 2019 at <span>6:19 am</span></em>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+							<p class="mt-[8px] text-sm text-[#8F93A3]">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 						</div>
 					</div>
 					<div class="create-comment submitted-secondlabel">

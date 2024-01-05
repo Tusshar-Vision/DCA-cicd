@@ -8,7 +8,7 @@
         <a href="#" class="vi-view-all">{{__('home_page.view_all')}}</a>
     </div>
 
-    <div class="grid gap-6">
+    <div class="grid gap-6 featureVideo">
         @foreach([1, 2] as $video)
             <x-cards.video :source="$testSource" :video-title="$testTitle" />
         @endforeach

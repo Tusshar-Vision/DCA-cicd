@@ -1732,10 +1732,13 @@ $gray-686E70: #686E70;
 
 
 .leftsticky {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    align-self: flex-start;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  @media screen and (max-width: 1024px) {
+    position: static;
+  }
 }
 
 /* profile page  style */
@@ -2981,4 +2984,6 @@ li[data-level="4"] {
   -moz-transition: all ease 0s;
 }
 
-
+.featureVideo video{
+  width: 100%;
+}
