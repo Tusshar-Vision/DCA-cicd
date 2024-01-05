@@ -2,7 +2,7 @@
     use Carbon\Carbon;
 @endphp
 
-<div class="flex h-16 text-white items-center justify-between">
+<div class="flex flex-col md:flex-row h-16 text-white items-center justify-between">
     <div class="text-visionLineGray flex space-x-3 items-center text-sm">
         <p>Posted <strong>{{ Carbon::parse($createdAt)->format('d-m-Y')  }}</strong></p>
 
