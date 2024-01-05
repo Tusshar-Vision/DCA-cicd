@@ -1,1 +1,1 @@
-<h1 class="text-5xl">{{ $title }}</h1>
+<h1 class="text-xl lg:text-5xl">{{ $title }}</h1>
