@@ -15,20 +15,28 @@ class ArticlePagination extends Component
      */
     public function __construct(public $currentInitiative, string $currentArticleSlug)
     {
-        $currentArticleIndex = $this->currentInitiative->getArticleIndexFromSlug($currentArticleSlug);
+        if ($this->currentInitiative->articles->count() === 1) {
 
-        if ($currentArticleIndex === 0) {
-            $this->nextArticleIndex = $currentArticleIndex + 1;
-        }
-
-        if ($currentArticleIndex > 0 && $currentArticleIndex < $this->currentInitiative->articles->count() - 1) {
-            $this->previousArticleIndex = $currentArticleIndex - 1;
-            $this->nextArticleIndex = $currentArticleIndex + 1;
-        }
-
-        if ($currentArticleIndex === $this->currentInitiative->articles->count() - 1) {
-            $this->previousArticleIndex = $currentArticleIndex - 1;
             $this->nextArticleIndex = null;
+            $this->previousArticleIndex = null;
+
+        } else {
+
+            $currentArticleIndex = $this->currentInitiative->getArticleIndexFromSlug($currentArticleSlug);
+
+            if ($currentArticleIndex === 0) {
+                $this->nextArticleIndex = $currentArticleIndex + 1;
+            }
+
+            if ($currentArticleIndex > 0 && $currentArticleIndex < $this->currentInitiative->articles->count() - 1) {
+                $this->previousArticleIndex = $currentArticleIndex - 1;
+                $this->nextArticleIndex = $currentArticleIndex + 1;
+            }
+
+            if ($currentArticleIndex === $this->currentInitiative->articles->count() - 1) {
+                $this->previousArticleIndex = $currentArticleIndex - 1;
+                $this->nextArticleIndex = null;
+            }
         }
     }
 

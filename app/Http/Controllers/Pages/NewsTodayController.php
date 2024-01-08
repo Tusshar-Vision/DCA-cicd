@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 class NewsTodayController extends Controller
 {
     private int $initiativeId;
-    protected NewsTodayDTO $newsToday;
+    private NewsTodayDTO $newsToday;
 
     public function __construct(
         private readonly PublishedInitiativeService $publishedInitiativeService,
@@ -36,7 +36,7 @@ class NewsTodayController extends Controller
 
         return redirect()
             ->route(
-                'news-today-date-wise.article',
+                'news-today.article',
                 [
                     'date' => $this->newsToday->publishedAt,
                     'topic' => $this->newsToday->articles->first()->topic,
@@ -48,7 +48,7 @@ class NewsTodayController extends Controller
     /**
      * @throws \Throwable
      */
-    public function renderArticles($date, $topic, $slug)
+    public function renderArticle($date, $topic, $slug)
     {
         $this->newsToday = NewsTodayDTO::fromModel(
             $this->publishedInitiativeService

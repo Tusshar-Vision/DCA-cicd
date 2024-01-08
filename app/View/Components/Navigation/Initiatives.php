@@ -23,8 +23,8 @@ class Initiatives extends Component
 
             $this->initiatives = Initiative::orderBy('order_column')->get(['id', 'name', 'name_hindi', 'path']);
             $newsTodayData = $initiativeService->getMenuData(\App\Enums\Initiatives::NEWS_TODAY);
-            $monthlyMagazineData = $initiativeService->getMenuData(\App\Enums\Initiatives::MONTHLY_MAGAZINE);
             $weeklyFocusData = $initiativeService->getMenuData(\App\Enums\Initiatives::WEEKLY_FOCUS);
+            $monthlyMagazineData = $initiativeService->getMenuData(\App\Enums\Initiatives::MONTHLY_MAGAZINE);
             $moreData = $initiativeService->getMenuData(\App\Enums\Initiatives::MORE);
 
             view()->share([

@@ -5,9 +5,9 @@ namespace App\DTO;
 use App\DTO\Base\PublishedInitiativeDTO;
 use App\Models\PublishedInitiative;
 
-class NewsTodayDTO extends PublishedInitiativeDTO
+class WeeklyFocusDTO extends PublishedInitiativeDTO
 {
-    public static function fromModel(PublishedInitiative $publishedInitiative): NewsTodayDTO|PublishedInitiativeDTO
+    public static function fromModel(PublishedInitiative $publishedInitiative): WeeklyFocusDTO|PublishedInitiativeDTO
     {
         return parent::fromModel($publishedInitiative);
     }
