@@ -16,7 +16,9 @@
                             </a>
                         @else
                             <a href="{{ ArticleService::getArticleUrlFromSlug($header->slug) }}"
-                               class="flex text-base[16px] font-normal hover:brand-color {{ ($header->slug === $currentArticle) ? 'brand-color' : '' }}">
+                               wire:navigate
+                               class="flex text-base[16px] font-normal hover:brand-color {{ ($header->slug === $currentArticle) ? 'brand-color' : '' }}"
+                            >
                                 <span class="mr-1">{{ $loop->iteration }}<em>.</em></span> {{ $header->title }}
                             </a>
                         @endif

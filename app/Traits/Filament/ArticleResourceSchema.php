@@ -13,6 +13,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Support\Colors\Color;
 use Filament\Tables\Actions\Action;
@@ -47,6 +48,7 @@ trait ArticleResourceSchema
     {
         return $table
             ->deferLoading()
+            ->recordUrl(null)
             ->defaultSort('updated_at', 'desc')
             ->columns([
                 TextColumn::make('id')

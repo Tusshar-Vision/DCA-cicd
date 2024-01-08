@@ -58,4 +58,9 @@ class PublishedInitiative extends Model implements HasMedia
     {
         return $query->where('is_published', true);
     }
+
+    public function whereInitiative($initiative_id): Builder
+    {
+        return $this->where('initiative_id', '=', $initiative_id);
+    }
 }

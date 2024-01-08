@@ -357,6 +357,11 @@ trait ArticleRelationSchema
                                 if ($record->status === 'Final') {
                                     $record->setStatus('Published');
                                     $record->update(['published_at' => Carbon::now()]);
+
+                                    if ($record->publishedInitiative->is_published === false) {
+                                        $record->publishedInitiative->is_published = true;
+                                        $record->publishedInitiative->save();
+                                    }
                                 }
 
                                 $this->sendNotificationOfArticlePublished($record);

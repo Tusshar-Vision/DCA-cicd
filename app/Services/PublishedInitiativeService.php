@@ -23,7 +23,7 @@ readonly class PublishedInitiativeService
     public function getLatest($initiativeId, $date = null): PublishedInitiative|null
     {
         $query = $this->publishedInitiatives
-                    ->where('initiative_id', '=', $initiativeId)
+                    ->whereInitiative($initiativeId)
                     ->isPublished();
 
         if ($date !== null)
@@ -50,7 +50,7 @@ readonly class PublishedInitiativeService
     public function getDownloads($initiative_id = null, $year = null, $month = null) : array | Collection
     {
         if($initiative_id)
-            $query = $this->publishedInitiatives->where('initiative_id', '=', $initiative_id)->isPublished();
+            $query = $this->publishedInitiatives->whereInitiative($initiative_id)->isPublished();
         else
             $query = $this->publishedInitiatives->whereIn('initiative_id', [
                 InitiativesHelper::getInitiativeID(Initiatives::MAINS_365),

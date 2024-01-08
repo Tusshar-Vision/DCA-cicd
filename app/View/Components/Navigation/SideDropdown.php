@@ -2,6 +2,8 @@
 
 namespace App\View\Components\Navigation;
 
+use App\Enums\Initiatives;
+use App\Helpers\InitiativesHelper;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -21,17 +23,26 @@ class SideDropdown extends Component
     public function getDataToRender(): array
     {
         $dataToRender = [];
-        //Checking if the Initiative is Monthly Magazine
 
-        if ($this->initiativeId === 2) {
+        if ($this->initiativeId === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE)) {
             foreach ($this->menuData[1] as $key => $value) {
-                $dataToRender[] = Carbon::parse($value['year'])->monthName;
+                $dataToRender[] = [
+                    'date' => Carbon::parse($value['year'])->format('Y-m-d'),
+                    'title' => Carbon::parse($value['year'])->monthName,
+                    'topic' => $value['articles']->first()->topic->name,
+                    'slug' => $value['articles']->first()->slug
+                ];
             }
         }
 
-        if ($this->initiativeId === 3) {
+        if ($this->initiativeId === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)) {
             foreach ($this->menuData as $key => $value) {
-                $dataToRender[] = ['date' => $value['published_at'] ?? $value['created_at'], 'title' => $value['title'], 'topic' => $value['topic']['name'], 'slug' => $value['slug']];
+                $dataToRender[] = [
+                    'date' => $value['published_at'],
+                    'title' => $value['title'],
+                    'topic' => $value['topic']['name'],
+                    'slug' => $value['slug']
+                ];
             }
         }
         return $dataToRender;

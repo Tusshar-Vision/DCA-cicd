@@ -38,8 +38,8 @@ readonly class InitiativeService
     protected function getMenuDataForNewsToday($initiativeId): array
     {
         $mainMenuData = $this->publishedInitiatives
+            ->whereInitiative($initiativeId)
             ->isPublished()
-            ->where('initiative_id', '=', $initiativeId)
             ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as date')
             ->groupBy('date')
             ->limit(10)
@@ -60,47 +60,11 @@ readonly class InitiativeService
         ];
     }
 
-    protected function getMenuDataForMonthlyMagazine($initiativeId): array
-    {
-
-        $mainMenuData = $this->publishedInitiatives
-            ->where('initiative_id', '=', $initiativeId)
-            ->isPublished()
-            ->selectRaw('DATE_FORMAT(published_at, "%Y") as year')
-            ->groupBy('year')
-            ->orderByDesc('year')
-            ->limit(10)
-            ->get();
-
-        $yearsData = $mainMenuData->pluck('year')->toArray();
-
-        $sideDropDownMenuData = $this->publishedInitiatives
-            ->where('initiative_id', '=', $initiativeId)
-            ->isPublished()
-            ->selectRaw('DATE_FORMAT(published_at, "%Y-%m-%d") as year')
-            ->whereIn(DB::raw('DATE_FORMAT(published_at, "%Y")'), $yearsData)
-            ->orderByDesc('year')
-            ->groupBy('year')
-            ->get()
-            ->toArray();
-
-        $menuData = [];
-
-        foreach ($yearsData as $year) {
-            $menuData[$year] = array_values(array_filter($sideDropDownMenuData, function ($item) use ($year) {
-                return str_contains($item['year'], $year);
-            }));
-        }
-
-        return [
-            'initiative_id' => $initiativeId,
-            'data' => $menuData
-        ];
-    }
-
     protected function getMenuDataForWeeklyFocus($initiativeId): array
     {
-        $mainMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
+        $mainMenuData = $this->publishedInitiatives
+            ->whereInitiative($initiativeId)
+            ->isPublished()
             ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as date')
             ->groupBy('date')
             ->limit(10)
@@ -110,7 +74,8 @@ readonly class InitiativeService
         $dateData = $mainMenuData->pluck('date')->toArray();
 
         $sideDropDownMenuData = $this->publishedInitiatives
-            ->where('initiative_id', '=', $initiativeId)
+            ->whereInitiative($initiativeId)
+            ->isPublished()
             ->with(['articles.topic'])
             ->whereIn(DB::raw('DATE_FORMAT(published_at, "%Y-%m")'), $dateData)
             ->get();
@@ -137,9 +102,47 @@ readonly class InitiativeService
         ];
     }
 
+    protected function getMenuDataForMonthlyMagazine($initiativeId): array
+    {
+        $mainMenuData = $this->publishedInitiatives
+            ->whereInitiative($initiativeId)
+            ->isPublished()
+            ->selectRaw('DATE_FORMAT(published_at, "%Y") as year')
+            ->groupBy('year')
+            ->orderByDesc('year')
+            ->limit(10)
+            ->get();
+
+        $yearsData = $mainMenuData->pluck('year')->toArray();
+
+        $sideDropDownMenuData = $this->publishedInitiatives
+            ->whereInitiative($initiativeId)
+            ->isPublished()
+            ->select('id', 'published_at as year')
+            ->whereIn(DB::raw('DATE_FORMAT(published_at, "%Y")'), $yearsData)
+            ->with('articles')
+            ->orderByDesc('year')
+            ->get();
+
+        $menuData = [];
+
+        foreach ($yearsData as $year) {
+            $menuData[$year] = $sideDropDownMenuData
+                ->filter(function ($item) use ($year) {
+                    return str_contains($item['year'], $year);
+                })
+                ->values()
+                ->all();
+        }
+
+        return [
+            'initiative_id' => $initiativeId,
+            'data' => $menuData
+        ];
+    }
+
     protected function getMenuDataForMore($initiativeId): array
     {
-
         $menuData = [
             "Economic Survey and Budget",
             "Weekly Round Table",

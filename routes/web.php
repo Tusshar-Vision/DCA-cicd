@@ -1,15 +1,12 @@
 <?php
 
 use App\Http\Controllers\AppController;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HighlightController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\NoteController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Pages;
-use App\Http\Controllers\Pages\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +19,6 @@ use App\Http\Controllers\Pages\SearchController;
 |
 */
 
-//Auth::routes();
-
 // Routes for all the pages
 Route::get('/', [Pages\HomeController::class, 'index'])->name('home');
 Route::get('/mains-365', [Pages\Mains365Controller::class, 'index'])->name('mains-365');
@@ -32,25 +27,41 @@ Route::get('/downloads', [Pages\DownloadsController::class, 'index'])->name('dow
 Route::get('/search', [Pages\SearchController::class, 'index'])->name('search');
 Route::get('/search/{query}', [Pages\SearchController::class, 'searchQuery'])->name('search.query');
 
-Route::controller(Pages\NewsTodayController::class)->group(function () {
-    Route::get('/news-today', 'index')->name('news-today');
-    Route::get('/news-today/{date}/{article_no?}', 'getArticlesDateWise')->name('news-today-date-wise');
-    Route::get('/news-today/{date}/{topic}/{article_slug}', 'renderArticles')->name('news-today-date-wise.article');
-    Route::get('/archive/daily-news', 'archive')->name('news-today.archive');
-});
+Route::controller(Pages\NewsTodayController::class)
+    ->group(
+        function () {
+            Route::prefix('/news-today')
+                ->group(
+                    function () {
+                        Route::get('/', 'index')->name('news-today');
+                        Route::get('/{date}/{topic}/{article_slug}', 'renderArticle')->name('news-today.article');
+                        Route::get('/archive', 'archive')->name('news-today.archive');
+                    });
+        });
 
-Route::controller(Pages\MonthlyMagazineController::class)->group(function () {
-    Route::get('/monthly-magazine', 'index')->name('monthly-magazine');
-    Route::get('/monthly-magazine/{month}', 'renderByMonth')->name('monthly-magazine-of-month.article');
-    Route::get('/monthly-magazine/{month}/{topic}/{article_slug}', 'renderArticles')->name('monthly-magazine.article');
-    Route::get('/archive/monthly-magazine', 'archive')->name('monthly-magazine.archive');
-});
+Route::controller(Pages\WeeklyFocusController::class)
+    ->group(
+        function () {
+            Route::prefix('/weekly-focus')
+                ->group(
+                    function () {
+                        Route::get('/', 'index')->name('weekly-focus');
+                        Route::get('/{date}/{topic}/{article_slug}', 'renderArticle')->name('weekly-focus.article');
+                        Route::get('/archive', 'archive')->name('weekly-focus.archive');
+                    });
+        });
 
-Route::controller(Pages\WeeklyFocusController::class)->group(function () {
-    Route::get('/weekly-focus', 'index')->name('weekly-focus');
-    Route::get('/weekly-focus/{date}/{topic}/{article_slug}', 'renderArticles')->name('weekly-focus.article');
-    Route::get('/archive/weekly-focus', 'archive')->name('weekly-focus.archive');
-});
+Route::controller(Pages\MonthlyMagazineController::class)
+    ->group(
+        function () {
+            Route::prefix('/monthly-magazine')
+                ->group(
+                    function() {
+                        Route::get('/', 'index')->name('monthly-magazine');
+                        Route::get('/{date}/{topic}/{article_slug}', 'renderArticle')->name('monthly-magazine.article');
+                        Route::get('/archive', 'archive')->name('monthly-magazine.archive');
+                    });
+        });
 
 Route::middleware('auth:cognito')->group(function () {
     Route::prefix('user')->group(function () {
@@ -82,7 +93,3 @@ Route::get('/tags/{search}', [NoteController::class, 'searchTagsLike'])->name('t
 Route::get('/papers', [AppController::class, 'getPapers'])->name('papers');
 Route::get('/subjects/{paper_id}', [AppController::class, 'getSubjectsOfPaper'])->name('subjects');
 Route::get('/sections/{subject_id}', [AppController::class, 'getSectionsOfSubject'])->name('sections');
-
-Route::get('/test', function () {
-    return view('pages.user.edit-profile-section');
-});

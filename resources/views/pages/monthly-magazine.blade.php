@@ -9,9 +9,9 @@
 @section('content')
 
     <div class="space-y-4">
-        <x-widgets.options-nav :articleId="$article->id" :isArticleBookmarked="$isArticleBookmarked" />
+        <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />
         <x-common.article-heading :title="$article->title" />
-        <x-widgets.articles-nav :createdAt="$article->created_at" :updatedAt="$article->updated_at" />
+        <x-widgets.articles-nav :createdAt="$article->createdAt" :updatedAt="$article->updatedAt" />
     </div>
 
     <div x-data="{ isHighlightsOpen: false, isNotesOpen: false }">
@@ -21,7 +21,7 @@
             <x-widgets.article-highlights />
         </x-modals.modal-box>
         <x-modals.modal-box x-show="isNotesOpen" :heading="$notesHeading">
-            <livewire:widgets.edit-note :articleId="$article->id" />
+            <livewire:widgets.edit-note :articleId="$article->getID()" />
         </x-modals.modal-box>
         <x-modals.modal-box x-show="isNoteOpen" heading="Add Note">
             <livewire:widgets.add-note :article="$article" :note="$note" />
@@ -38,15 +38,11 @@
             </div>
 
             <div class="flex flex-col w-full mt-[20px]">
-                @if (!empty($articles) && count($articles) !== 0)
-                    <x-header.article readTime="{{ $article->read_time }}" />
+                    <x-header.article readTime="{{ $article->readTime }}" />
                     <x-article-content :article="$article" />
                     <div class="mt-12">
-                        <x-widgets.article-pagination :totalArticles="$totalArticles" :baseUrl="$baseUrl" />
+                        <x-widgets.article-pagination :current-initiative="$articles" :current-article-slug="$article->slug" />
                     </div>
-                @else
-                    <h1>No articles</h1>
-                @endif
             </div>
 
         </div>
@@ -70,4 +66,4 @@
         </div>
         <div>
 
-        @endsection
+@endsection
