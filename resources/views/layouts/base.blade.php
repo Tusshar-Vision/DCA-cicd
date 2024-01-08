@@ -35,6 +35,7 @@
     <footer>
         @yield('footer')
         <x-footer />
+        @stack('scripts')
     </footer>
 
     <x-modals.login-modal x-show="isLoginFormOpen">
@@ -52,8 +53,6 @@
     <x-modals.login-modal x-show="isEmailVerificationFormOpen">
         <livewire:forms.email-verification />
     </x-modals.login-modal>
-
-    @stack('scripts')
 
 </body>
 

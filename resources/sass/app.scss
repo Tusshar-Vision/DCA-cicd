@@ -527,7 +527,7 @@ $gray-686E70: #686E70;
     align-items: center;
     border-radius: 50%;
     font-weight: 600;
-    background: radial-gradient(closest-side, #f9f9f9 80%, transparent 90% 100%), conic-gradient(#EFC73A 72%, #f9f9f9 0);
+    background: radial-gradient(closest-side, #f9f9f9 80%, transparent 90% 100%), conic-gradient(#89D38C 72%, #f9f9f9 0);
 
     &:before {
       content: attr(data-progress);
@@ -565,7 +565,7 @@ $gray-686E70: #686E70;
     border: 1px solid #E9E9E9;
     border-radius: 4px;
     padding: 12px 16px;
-    margin-bottom: 24px;
+    // margin-bottom: 24px;
     -webkit-column-break-inside: avoid;
     page-break-inside: avoid;
     break-inside: avoid;
@@ -585,6 +585,9 @@ $gray-686E70: #686E70;
     display: grid;
     grid-gap: 26px;
     margin-top: 10px;
+  }
+  .weekly-focus-progress-list .weekly-focus-progress-single-bar:last-child{
+    border: 0;
   }
 
   .weekly-focus-progress-single-bar {
