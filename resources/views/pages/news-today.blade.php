@@ -50,7 +50,7 @@
                         </label>
                     </div>
                     <x-widgets.article-side-bar :table-of-content="$articles->articles" />
-                    <x-widgets.side-bar-download-menu />
+                    <x-widgets.side-bar-download-menu initiative="news-today"/>
                 </div>
 
                 <div class="flex flex-col mt-[30px] w-full">

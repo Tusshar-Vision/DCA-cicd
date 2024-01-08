@@ -15,22 +15,6 @@ readonly class ArticleService
         private Article $articles
     ) {}
 
-    public function getArticleBySlug($slug)
-    {
-        return $this->articles
-                    ->findBySlug($slug);
-    }
-
-    public function getArticlesByDate($date)
-    {
-        return $this->articles
-                    ->isPublished()
-                    ->language()
-                    ->whereDate('created_at', Carbon::parse($date))
-                    ->orderBy('published_at')
-                    ->get();
-    }
-
     public function getFeatured(int $limit = 12): Collection|array
     {
         return $this->articles
