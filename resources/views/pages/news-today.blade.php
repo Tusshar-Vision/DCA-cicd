@@ -105,8 +105,9 @@
                 // calendar for news today
                 $(function() {
                     $('input[name="newsToday"]').daterangepicker({
-                        "autoApply": true,
+                        autoApply: true,
                         singleDatePicker: true,
+                        opens: 'left',
                         minYear: 1901,
                         maxYear: parseInt(moment().format('YYYY'),10)
                     }, function(start, end, label) {

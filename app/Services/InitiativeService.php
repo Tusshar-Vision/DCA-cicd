@@ -27,37 +27,11 @@ readonly class InitiativeService
         throw_unless($initiativeId, new InitiativeNotFoundException($initiative->name . ' not present in database'));
 
         return match ($initiative->name) {
-            Initiatives::NEWS_TODAY->name => $this->getMenuDataForNewsToday($initiativeId),
             Initiatives::MONTHLY_MAGAZINE->name => $this->getMenuDataForMonthlyMagazine($initiativeId),
             Initiatives::WEEKLY_FOCUS->name => $this->getMenuDataForWeeklyFocus($initiativeId),
             Initiatives::MORE->name => $this->getMenuDataForMore($initiativeId),
             default => throw (new InitiativeNotFoundException('Initiative get data function does not exist')),
         };
-    }
-
-    protected function getMenuDataForNewsToday($initiativeId): array
-    {
-        $mainMenuData = $this->publishedInitiatives
-            ->whereInitiative($initiativeId)
-            ->isPublished()
-            ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as date')
-            ->groupBy('date')
-            ->limit(10)
-            ->orderByDesc('date')
-            ->get();
-
-        $dateData = $mainMenuData->pluck('date')->toArray();
-
-        $menuData = [];
-
-        foreach ($dateData as $date) {
-            $menuData[$date] = Carbon::parse($date)->daysInMonth;
-        }
-
-        return [
-            'initiative_id' => $initiativeId,
-            'data' => $menuData
-        ];
     }
 
     protected function getMenuDataForWeeklyFocus($initiativeId): array

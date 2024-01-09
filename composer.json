@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
+    "name": "visionitlabs/current-affairs-ecosystem",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "A comprehensive digital platform delivering real-time news, updates, and insights on current affairs. Stay informed with personalized content, multimedia features, and expert analysis.",
     "keywords": [
         "laravel",
         "framework"
