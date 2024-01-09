@@ -4,6 +4,7 @@
     <x-header.archives title="{{ $title }}" />
 @endsection --}}
 
+
 @section('content')
     <div class="flex w-full gap-6 mt-[40px]">
         <livewire:navigation.archive-sidebar />
