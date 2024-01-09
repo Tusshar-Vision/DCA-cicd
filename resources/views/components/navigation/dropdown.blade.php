@@ -17,7 +17,7 @@
                             @click.outside="isMenuOpen = null"
                         >
                             <span class="px-4 font-medium">
-                                {{ ($menuData['initiative_id'] != InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE))
+                                {{ ($menuData['initiative_id'] === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
                                     ? Carbon::parse($mainMenu)->format('F Y')
                                     : $mainMenu
                                 }}

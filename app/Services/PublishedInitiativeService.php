@@ -24,7 +24,8 @@ readonly class PublishedInitiativeService
     {
         $query = $this->publishedInitiatives
                     ->whereInitiative($initiativeId)
-                    ->isPublished();
+                    ->isPublished()
+                    ->latest('published_at');
 
         if ($date !== null)
             $query = $query->whereDate('published_at', '=', Carbon::parse($date)->format('Y-m-d'));
