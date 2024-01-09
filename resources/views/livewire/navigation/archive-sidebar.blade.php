@@ -1,5 +1,6 @@
-<div class="w-2/6 leftsticky">
-    <div class="py-[40px] px-[14px] bg-[#F7F8F9] rounded-md">
+<div class="w-2/6 leftArchiveMenu" id="myDIV">
+    <div class="py-[40px] px-[14px] bg-[#F7F8F9] rounded-md relative">
+    <a href="javascript:void(0)" class="absolute right-[-45px] top-0 xl:hidden" onclick="myFunction()">OPEN</a>
     <h3 class="text-[#242424] text-xl mb-[25px] font-semibold">Current Affairs</h3>
     <ul>
         <li class="font-semibold text-base text-[#183B56] mb-1">
@@ -38,3 +39,9 @@
     </ul>
     </div>
 </div>
+<script>
+    function myFunction() {
+        var element = document.getElementById("myDIV");
+        element.classList.toggle("mystyle");
+    }
+</script>
