@@ -5,7 +5,6 @@
     </div>
 </div>
 
-
 <!-- Weekly Focus section -->
 
 <div class="archiveWrapper mb-[15px] border-b-2">
