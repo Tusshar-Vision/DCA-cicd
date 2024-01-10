@@ -11,7 +11,7 @@
         <span class="font-[#242424] text-sm font-bold">MENU</span> 
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     </div>
-    <div class="accordion h-[60vh] overflow-scroll">
+    <div class="accordion h-[60vh] md:h-auto overflow-scroll">
         <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px]">Home</a>
         <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px]">News Today</a>
         <div class="accordion-item mb-[15px]">
