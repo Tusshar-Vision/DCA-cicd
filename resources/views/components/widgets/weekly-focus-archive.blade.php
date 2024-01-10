@@ -1,3 +1,4 @@
+<div class="w-full">
 <div class="pt-[25px] border-t-2">
     <div class="flex w-full items-center justify-end space-x-4 mb-[25px]">
         <p>Filter</p>
@@ -19,7 +20,7 @@
             </svg>
         </div>
     </div>
-    <div class="grid grid-cols-3 gap-6 archiveContent pb-[30px]">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]">
         <div class="weekly-focus-single-card">
             <div class="weekly-focus-month-name">August</div>
             <div class="weekly-focus-progress-list">
@@ -153,7 +154,7 @@
             </svg>
         </div>
     </div>
-    <div class="grid grid-cols-3 gap-6 archiveContent pb-[30px] hidden">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px] hidden">
         <div class="weekly-focus-single-card">
             <div class="weekly-focus-month-name">August</div>
             <div class="weekly-focus-progress-list">
@@ -294,7 +295,7 @@
             </svg>
         </div>
     </div>
-    <div class="grid grid-cols-3 gap-6 archiveContent pb-[30px]">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]">
         <div class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
                 <div class="weekly-focus-progress-single-bar border-b-2">
@@ -402,7 +403,7 @@
             </svg>
         </div>
     </div>
-    <div class="grid grid-cols-3 gap-6 archiveContent pb-[30px] hidden">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px] hidden">
         <div class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
                 <div class="weekly-focus-progress-single-bar border-b-2">
@@ -512,7 +513,7 @@
             </svg>
         </div>
     </div>
-    <div class="grid grid-cols-3 gap-6 archiveContent pb-[30px]">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]">
         <div class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
                 <div class="weekly-focus-progress-single-bar border-b-2">
@@ -593,7 +594,7 @@
             </svg>
         </div>
     </div>
-    <div class="grid grid-cols-3 gap-6 archiveContent pb-[30px] hidden">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px] hidden">
         <div class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
                 <div class="weekly-focus-progress-single-bar border-b-2">
@@ -679,7 +680,7 @@
             </svg>
         </div>
     </div>
-    <div class="grid grid-cols-3 gap-6 archiveContent border-b-2 mb-[35px] pb-[35px]">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent border-b-2 mb-[35px] pb-[35px]">
         <div class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
                 <div class="weekly-focus-progress-single-bar border-b-2">
@@ -771,7 +772,7 @@
             </div>
         </div>
     </div>
-    <div class="grid grid-cols-3 gap-6 archiveContent pb-[30px]">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]">
         <div class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
                 <div class="weekly-focus-progress-single-bar border-b-2">
@@ -852,7 +853,7 @@
             </svg>
         </div>
     </div>
-    <div class="grid grid-cols-3 gap-6 archiveContent pb-[30px] hidden">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px] hidden">
         <div class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
                 <div class="weekly-focus-progress-single-bar border-b-2">
@@ -937,7 +938,7 @@
             </svg>
         </div>
     </div>
-    <div class="grid grid-cols-3 gap-6 archiveContent pb-[30px]">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]">
         <div class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
                 <div class="weekly-focus-progress-single-bar border-b-2">
@@ -1018,7 +1019,7 @@
             </svg>
         </div>
     </div>
-    <div class="grid grid-cols-3 gap-6 archiveContent pb-[30px]">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]">
         <div class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
                 <div class="weekly-focus-progress-single-bar border-b-2">
@@ -1103,7 +1104,7 @@
             </svg>
         </div>
     </div>
-    <div class="grid grid-cols-3 gap-6 archiveContent pb-[30px]">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]">
         <div class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
                 <div class="weekly-focus-progress-single-bar border-b-2">
@@ -1184,7 +1185,7 @@
             </svg>
         </div>
     </div>
-    <div class="grid grid-cols-3 gap-6 archiveContent pb-[30px] hidden">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px] hidden">
         <div class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
                 <div class="weekly-focus-progress-single-bar border-b-2">
@@ -1252,4 +1253,6 @@
             </div>
         </div>
     </div>
+</div>
+
 </div>

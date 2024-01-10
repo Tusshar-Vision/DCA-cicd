@@ -2994,3 +2994,21 @@ li[data-level="4"] {
   background: #3362CC;
   color: #fff;
 }
+
+.leftArchiveMenu{
+    position: fixed;
+    left: -300px;
+    top: 0;
+    z-index: 1;
+    width: 300px;
+    height: 100vh;
+    background: #F7F8F9;
+    // overflow-y: auto;
+    @media screen and (min-width: 1280px) {
+      position: static;
+      min-width: 300px; 
+    }
+}
+.mystyle{
+  left: 0 !important;
+}
