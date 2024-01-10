@@ -82,7 +82,7 @@
 
 <!-- responsive menu end -->
 
-<div class="flex py-[20px] bg-[#fff] items-center justify-between leftsticky">
+<div class="flex py-[20px] bg-[#fff] items-center justify-between">
     <div class="w-3/4">
         <div class="lg:hidden block">
             <a href="/" wire:navigate>
@@ -103,7 +103,7 @@
                 @foreach ($initiatives as $initiative)
                     @if ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
                         <li class="font-semibold text-xs xl:text-sm pr-6">
-                            <a class="hover:text-visionRed {{ request()->is('news-today*') ? 'text-visionRed' : '' }}" href="{{ $initiative->path }}">
+                            <a class="hover:text-[#005FAF] {{ request()->is('news-today*') ? 'text-[#005FAF]' : '' }}" href="{{ $initiative->path }}">
                                 {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                             </a>
                         </li>
@@ -115,7 +115,7 @@
                                         isMoreDropdownOpen = false;
                                         isWeeklyDropdownOpen = false;
                                        ">
-                                <a class="hover:text-visionRed {{ request()->is('monthly-magazine*') ? 'text-visionRed' : '' }}"
+                                <a class="hover:text-[#005FAF] {{ request()->is('monthly-magazine*') ? 'text-[#005FAF]' : '' }}"
                                     href="#">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                                 </a>
@@ -134,7 +134,7 @@
                                         isMagazineDropdownOpen = false;
                                         isMoreDropdownOpen = false;
                                        ">
-                                <a class="hover:text-visionRed {{ request()->is('weekly-focus*') ? 'text-visionRed' : '' }}"
+                                <a class="hover:text-[#005FAF] {{ request()->is('weekly-focus*') ? 'text-[#005FAF]' : '' }}"
                                     href="#">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                                 </a>
@@ -153,7 +153,7 @@
                                         isWeeklyDropdownOpen = false;
                                         isMagazineDropdownOpen = false;
                                        ">
-                                <a class="hover:text-visionRed {{ request()->is('more*') ? 'text-visionRed' : '' }}"
+                                <a class="hover:text-[#005FAF] {{ request()->is('more*') ? 'text-[#005FAF]' : '' }}"
                                     href="#">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                                 </a>
@@ -164,7 +164,7 @@
                         </div>
                     @else
                         <li class="font-semibold text-xs xl:text-sm pr-6">
-                            <a class="hover:text-visionRed {{ request()->is(trim($initiative->path, '/')) ? 'text-visionRed' : '' }}"
+                            <a class="hover:text-[#005FAF] {{ request()->is(trim($initiative->path, '/')) ? 'text-[#005FAF]' : '' }}"
                                 href="{{ $initiative->path }}" wire:navigate>
                                 {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                             </a>

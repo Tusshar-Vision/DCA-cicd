@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\DTO\StudentDTO;
 use Illuminate\Foundation\Auth\User;
+use Spatie\LaravelData\WithData;
 
 class Student extends User
 {
-    use HasFactory;
+    use WithData;
+    protected string $dataClass = StudentDTO::class;
 
     protected $fillable = [
         'first_name',

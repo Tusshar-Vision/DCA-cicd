@@ -13,6 +13,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Support\Colors\Color;
 use Filament\Tables\Actions\Action;
@@ -47,6 +48,7 @@ trait ArticleResourceSchema
     {
         return $table
             ->deferLoading()
+            ->recordUrl(null)
             ->defaultSort('updated_at', 'desc')
             ->columns([
                 TextColumn::make('id')
@@ -219,9 +221,21 @@ trait ArticleResourceSchema
             ->filtersFormMaxHeight('400px')
             ->actions([
 
+               EditAction::make('Edit')
+                    ->iconButton()
+                    ->tooltip('Edit')
+                    ->visible(function (Model $record) {
+                        $user = Auth::user();
+                        return
+                            (
+                                $user->can('edit_article') && $record->status !== 'Published'
+                            ) && (
+                                $user->hasRole(['super_admin', 'admin']) || $record->author_id === $user->id
+                            );
+                    }),
+
                 Action::make('View')
                     ->visible(function (Model $record) {
-
                         if ($record->status === 'Published') return true;
 
                         $user = Auth::user();
@@ -253,23 +267,6 @@ trait ArticleResourceSchema
                             ->maxHeight(500)
                             ->hiddenLabel(),
                     ])->slideOver(),
-
-                EditAction::make()
-                    ->iconButton()
-                    ->tooltip('Edit')
-                    ->visible(function (Model $record) {
-                        $user = Auth::user();
-                        return
-                            (
-                                $user->can('edit_article') &&
-                                $record->author_id === $user->id &&
-                                $record->status !== 'Published'
-                            ) || (
-                                $user->can('edit_article') &&
-                                $user->hasRole(['super_admin', 'admin']) &&
-                                $record->status !== 'Published'
-                            );
-                    }),
 
                 Action::make('Review')
                     ->tooltip('Review')

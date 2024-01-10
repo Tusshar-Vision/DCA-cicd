@@ -11,7 +11,7 @@
         <form wire:submit="login">
             <div class="form-item mb-[15px]">
                 <input type="text" id="username" class="w-full rounded-lg" required autocomplete="off"
-                    wire:model="email">
+                    wire:model="email" oninput="checkInputValue(this)">
                 <label for="username">Email</label>
             </div>
             <div class="form-item mb-[15px] relative">
@@ -29,9 +29,9 @@
                             fill="#686E70" />
                     </svg>
                 </span>
-                <input type="password" id="enterpassword" class="w-full rounded-lg" required autocomplete="off"
+                <input type="password" id="enterpassword" class="w-full rounded-lg passwordOverlay" required autocomplete="off"
                     wire:model="password">
-                <label for="password">Enter Password</label>
+                <label for="password" class="overlayLabel">Enter Password</label>
             </div>
             <a href="#" class="block text-right forgetpass mb-[20px]">Forgot password?</a>
             <button type="submit" class="login-btn">Login</button>
@@ -72,6 +72,36 @@
 
 
 <script>
+    // restrict label animation
+    document.querySelectorAll('input').forEach(function(input) {
+      input.addEventListener('focus', function() {
+        this.nextElementSibling.style.top = '-5px';
+        this.nextElementSibling.style.fontSize = '11px';
+        this.nextElementSibling.style.color = '#3362CC';
+        this.nextElementSibling.style.zIndex = '1';
+      });
+
+      input.addEventListener('blur', function() {
+        if (!this.value) {
+          this.nextElementSibling.style.top = '';
+          this.nextElementSibling.style.fontSize = '';
+          this.nextElementSibling.style.color = '';
+          this.nextElementSibling.style.zIndex = '0';
+        }
+      });
+    });
+
+    const inputs = document.querySelectorAll('.js_form-input');
+    inputs.forEach(input => {
+        input.addEventListener('blur', (event) => {
+        if (event.target.value.length) {
+            event.target.classList.add("full");
+        } else {
+            event.target.classList.remove("full");
+        }
+    });
+    })
+
     // show hide function
     function showPassword(targetID) {
         var x = document.getElementById(targetID);

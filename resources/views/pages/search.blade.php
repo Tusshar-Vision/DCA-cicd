@@ -23,12 +23,12 @@
             </ul>
         </div>
         <div class="eco-menu">
+            <a href="javascript:void(0)" class="mr-[15px] relative top-[-12px]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="13" viewBox="0 0 8 13" fill="none" class="inline-block">
+                <path d="M3.05 6.364L8 11.314L6.586 12.728L0.222 6.364L6.586 -6.18079e-08L8 1.414L3.05 6.364Z" fill="#8F93A3"/>
+                </svg>
+            </a>
             <ul>
-                <li><a href="javascript:void(0)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="13" viewBox="0 0 8 13" fill="none" class="inline-block">
-                    <path d="M3.05 6.364L8 11.314L6.586 12.728L0.222 6.364L6.586 -6.18079e-08L8 1.414L3.05 6.364Z" fill="#8F93A3"/>
-                    </svg>
-                </a></li>
                 <li><a href="{{ route('search') . "?query=$query" }}" class="active">All</a></li>
                 <li><a href="{{ route('search') . "?query=$query&initiative=1" }}">News Today</a></li>
                 <li><a href="{{ route('search') . "?query=$query&initiative=2" }}">Monthly Magazine</a></li>

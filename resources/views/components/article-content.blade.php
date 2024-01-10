@@ -90,7 +90,7 @@
 </div>
 
 <div id="article-content" onmouseup="handleSelection()" class="mt-4 printable-area">
-    {!! $article->content->content !!}
+    {!! $article->content !!}
 </div>
 
 <script>
@@ -99,8 +99,8 @@
 
         function addReadArticle() {
             console.log("add read article", "{{ Auth::guard('cognito')->user()->name }}");
-            const article_id = "{{ $article->id }}";
-            const article_published_at = "{{$article->published_at}}"
+            const article_id = "{{ $article->getID() }}";
+            const article_published_at = "{{$article->publishedAt}}"
             const student_id = "{{ Auth::guard('cognito')->user()->id }}"
             saveData("{{ route('user.read-history') }}", {
                 article_id,
@@ -217,7 +217,7 @@
                 highlight,
                 serializedData,
                 user_id: "{{ Auth::check() ? Auth::user()->id : '' }}",
-                article_id: {{ $article->id }},
+                article_id: {{ $article->getID() }},
                 _token: '{{ csrf_token() }}'
             });
         @else
@@ -249,7 +249,7 @@
 
     async function loadHighlights() {
         const serrializedData = await getData(
-            "{{ route('highlights.serialized', ['article_id' => $article->id]) }}", 'text');
+            "{{ route('highlights.serialized', ['article_id' => $article->getID()]) }}", 'text');
         const serial = serrializedData.data?.serialized;
         if (serial) showHighlights(serial);
     }

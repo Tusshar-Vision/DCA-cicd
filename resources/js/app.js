@@ -11,21 +11,21 @@ function initializeSwiper() {
         modules: [Navigation],
         direction: 'horizontal',
         loop: true,
-        slidesPerView: 2,
+        slidesPerView: 1,
         spaceBetween: 20,
 
         breakpoints: {
-            640: {
-                slidesPerView: 1,
-            },
+            // 640: {
+            //     slidesPerView: 1,
+            // },
             768: {
-                slidesPerView: 2,
+                slidesPerView: 1,
             },
             1024: {
                 slidesPerView: 2,
             },
             1280: {
-                slidesPerView: 2,
+                slidesPerView: 3,
             },
             1536: {
                 slidesPerView: 3,

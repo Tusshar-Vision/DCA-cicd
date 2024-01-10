@@ -10,6 +10,6 @@
     </svg>
 
     @foreach ($topics as $topic)
-        <a>{{ $topic->name }}</a>
+        <a>{{ ucwords($topic) }}</a>
     @endforeach
 </div>

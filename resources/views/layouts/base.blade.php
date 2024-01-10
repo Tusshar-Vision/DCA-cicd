@@ -23,7 +23,7 @@
     <div class="mx-auto w-full px-[20px] lg:px-0 lg:max-w-[90%]">
         <header>
             <x-header />
-            <x-navigation.initiatives :initiatives="$initiatives" />
+            <x-navigation.initiatives />
             @yield('header')
         </header>
 
@@ -35,6 +35,7 @@
     <footer>
         @yield('footer')
         <x-footer />
+        @stack('scripts')
     </footer>
 
     <x-modals.login-modal x-show="isLoginFormOpen">
@@ -52,8 +53,6 @@
     <x-modals.login-modal x-show="isEmailVerificationFormOpen">
         <livewire:forms.email-verification />
     </x-modals.login-modal>
-
-    @stack('scripts')
 
 </body>
 

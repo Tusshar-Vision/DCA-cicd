@@ -251,7 +251,7 @@ trait ArticleRelationSchema
                             ->hiddenLabel(),
                     ])->slideOver(),
 
-                EditAction::make()
+                EditAction::make('Edit')
                     ->iconButton()
                     ->slideOver()
                     ->tooltip('Edit')
@@ -259,13 +259,9 @@ trait ArticleRelationSchema
                         $user = Auth::user();
                         return
                             (
-                                $user->can('edit_article') &&
-                                $record->author_id === $user->id &&
-                                $record->status !== 'Published'
-                            ) || (
-                                $user->can('edit_article') &&
-                                $user->hasRole(['super_admin', 'admin']) &&
-                                $record->status !== 'Published'
+                                $user->can('edit_article') && $record->status !== 'Published'
+                            ) && (
+                                $user->hasRole(['super_admin', 'admin']) || $record->author_id === $user->id
                             );
                     }),
 
@@ -361,6 +357,11 @@ trait ArticleRelationSchema
                                 if ($record->status === 'Final') {
                                     $record->setStatus('Published');
                                     $record->update(['published_at' => Carbon::now()]);
+
+                                    if ($record->publishedInitiative->is_published === false) {
+                                        $record->publishedInitiative->is_published = true;
+                                        $record->publishedInitiative->save();
+                                    }
                                 }
 
                                 $this->sendNotificationOfArticlePublished($record);

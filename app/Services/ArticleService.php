@@ -9,39 +9,42 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class ArticleService
+readonly class ArticleService
 {
-    private $language;
     public function __construct(
-        private readonly Article $articles
-    ) {
-        $this->language = config("settings.language." . app()->getLocale());
-    }
-
-    public function getArticleBySlug($slug)
-    {
-        return $this->articles->findBySlug($slug);
-    }
-
-    public function getArticlesByDate($date)
-    {
-        return $this->articles->isPublished()->whereDate('created_at', Carbon::parse($date))->orderBy('published_at')->get();
-    }
+        private Article $articles
+    ) {}
 
     public function getFeatured(int $limit = 12): Collection|array
     {
-        return $this->articles->isPublished()->isFeatured()->where('language', $this->language)->latest()->limit($limit)->with('media')->get();
+        return $this->articles
+                    ->isPublished()
+                    ->language()
+                    ->isFeatured()
+                    ->latest()
+                    ->limit($limit)
+                    ->with('media')
+                    ->get();
     }
 
     public function getLatestNews(int $limit = 2): Collection|array
     {
-        return $this->articles->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))->isPublished()
-            ->where('language', $this->language)->latest()->limit($limit)->with('author')->get();
+        return $this->articles
+                    ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
+                    ->isPublished()
+                    ->language()
+                    ->latest()
+                    ->limit($limit)
+                    ->with('author')
+                    ->get();
     }
 
     public function search(string $query, int $initiative_id = null, $date = null, int $perPage = 10): Collection|array|LengthAwarePaginator
     {
-        $query = $this->articles->search($query)->where('is_published', true)->where('language', $this->language);
+        $query = $this->articles
+                    ->isPublished()
+                    ->language()
+                    ->search($query);
 
         if ($initiative_id) {
             $query->where('initiative_id', $initiative_id);
@@ -90,6 +93,12 @@ class ArticleService
 
     public function getRelatedArticles($article)
     {
-        return $this->articles->withAnyTags($article->tags)->get();
+        $articles = $this->articles
+                ->isPublished()
+                ->language()
+                ->withAnyTags($article->tags)
+                ->get();
+
+        return $articles->where('id', '!=', $article->getID());
     }
 }

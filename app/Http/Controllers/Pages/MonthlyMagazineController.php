@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Actions\Contents;
+use App\DTO\MonthlyMagazineDTO;
 use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
@@ -12,19 +13,12 @@ use App\Services\ArticleService;
 use App\Services\PublishedInitiativeService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 
 
 class MonthlyMagazineController extends Controller
 {
     private int $initiativeId;
-    protected $latestMonthlyMagazine;
-    protected $articles;
-    protected $sortedArticlesWithTopics;
-    protected $topics;
-
-    protected  $article_topic;
-    protected $article_slug;
+    private MonthlyMagazineDTO $monthlyMagazine;
 
     public function __construct(
         private readonly PublishedInitiativeService $publishedInitiativeService,
@@ -38,37 +32,32 @@ class MonthlyMagazineController extends Controller
      */
     public function index()
     {
-        $this->getData();
-        $publishedAt = Carbon::parse($this->latestMonthlyMagazine->published_at)->format('Y-m-d');
-        $this->article_slug = $this->articles[0]->slug;
-        $this->article_topic = $this->articles[0]->topic->name;
+        $this->monthlyMagazine = MonthlyMagazineDTO::fromModel(
+            $this->publishedInitiativeService
+                ->getLatest($this->initiativeId)
+        );
 
         return redirect()->route(
             'monthly-magazine.article',
             [
-                'month' => $publishedAt,
-                'topic' => $this->article_topic,
-                'article_slug' => $this->article_slug
+                'date' => $this->monthlyMagazine->publishedAt,
+                'topic' => $this->monthlyMagazine->articles->first()->topic,
+                'article_slug' => $this->monthlyMagazine->articles->first()->slug
             ]
         );
     }
 
-
-    public function renderByMonth($month)
+    /**
+     * @throws \Throwable
+     */
+    public function renderArticle($date, ?string $topic = null, ?string $slug = null)
     {
-        $this->getData($month);
-        $article_no = 1;
-        if ($page_no = request()->query('page')) $article_no = $page_no;
-        $article = $this->articles[$article_no - 1];
+        $this->monthlyMagazine = MonthlyMagazineDTO::fromModel(
+            $this->publishedInitiativeService
+                ->getLatest($this->initiativeId, $date)
+        );
 
-        if ($page_no) return Redirect::to(route('monthly-magazine.article', ['month' => $month, 'topic' => $article->topic->name, 'article_slug' => $article->slug]) . "?page=$page_no");
-        else return Redirect::to(route('monthly-magazine.article', ['month' => $month, 'topic' => $article->topic->name, 'article_slug' => $article->slug]));
-    }
-
-    public function renderArticles($month, $topic, $article_slug, Contents $contents)
-    {
-        $this->getData($month);
-        $article = $this->articleService->getArticleBySlug($article_slug);
+        $article = $this->monthlyMagazine->getArticleFromSlug($slug);
         $relatedArticles = $this->articleService->getRelatedArticles($article);
 
         $noteAvailable = null;
@@ -83,6 +72,7 @@ class MonthlyMagazineController extends Controller
             if ($bookmark) $isArticleBookmarked = true;
         }
 
+        $contents = new Contents();
         $temporaryContent = $contents->fromText($article->content)->getHandledText();
         $tableOfContent = $contents->getContentsArray();
 
@@ -91,57 +81,17 @@ class MonthlyMagazineController extends Controller
         }
 
         return View('pages.monthly-magazine', [
-            "publishedDate" => $this->latestMonthlyMagazine->published_at,
-            "articles" => $this->articles,
+            "publishedDate" => $this->monthlyMagazine->publishedAt,
+            "articles" => $this->monthlyMagazine,
             "article" => $article,
-            "topics" => $this->topics,
-            "totalArticles" => count($this->articles),
+            "topics" => $this->monthlyMagazine->topics,
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
-            "baseUrl" => url('monthly-magazine') . "/" . $month,
             "relatedArticles" => $relatedArticles,
-            "sortedArticlesWithTopics" => $this->sortedArticlesWithTopics,
+            "sortedArticlesWithTopics" => $this->monthlyMagazine->sortedArticlesWithTopic,
             "tableOfContent" => $tableOfContent,
             "isArticleBookmarked" => $isArticleBookmarked
         ]);
-    }
-
-    /**
-     * @throws \Throwable
-     */
-    protected function getData($publishedAt = null)
-    {
-        $this->latestMonthlyMagazine = $this->publishedInitiativeService->getLatest($this->initiativeId, $publishedAt);
-
-        $this->articles = $this->latestMonthlyMagazine->articles;
-
-        $this->topics = [];
-
-        foreach ($this->articles as $article) {
-            $this->topics[] = $article->topic;
-        }
-
-        $this->topics = array_unique($this->topics);
-
-        usort($this->topics, function ($a, $b) {
-            return $a->id - $b->id;
-        });
-
-        $sortedArticles = [];
-        $sortedArticlesWithTopic = [];
-
-        foreach ($this->topics as $topic) {
-            $sortedArticlesWithTopic[$topic['name']] = [];
-            foreach ($this->articles as $article) {
-                if ($article->topic === $topic) {
-                    $sortedArticles[] = $article;
-                    $sortedArticlesWithTopic[$topic['name']][] = $article;
-                }
-            }
-        }
-
-        $this->articles = $sortedArticles;
-        $this->sortedArticlesWithTopics = $sortedArticlesWithTopic;
     }
 
     public function archive()

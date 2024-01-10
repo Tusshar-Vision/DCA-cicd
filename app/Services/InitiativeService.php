@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
+use App\DTO\Menu\MainMenuDTO;
 use App\Enums\Initiatives;
 use App\Exceptions\InitiativeNotFoundException;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -27,7 +27,6 @@ readonly class InitiativeService
         throw_unless($initiativeId, new InitiativeNotFoundException($initiative->name . ' not present in database'));
 
         return match ($initiative->name) {
-            Initiatives::NEWS_TODAY->name => $this->getMenuDataForNewsToday($initiativeId),
             Initiatives::MONTHLY_MAGAZINE->name => $this->getMenuDataForMonthlyMagazine($initiativeId),
             Initiatives::WEEKLY_FOCUS->name => $this->getMenuDataForWeeklyFocus($initiativeId),
             Initiatives::MORE->name => $this->getMenuDataForMore($initiativeId),
@@ -35,23 +34,25 @@ readonly class InitiativeService
         };
     }
 
-    protected function getMenuDataForNewsToday($initiativeId): array
+    protected function getMenuDataForWeeklyFocus($initiativeId): array
     {
-        $mainMenuData = $this->publishedInitiatives
+        $data = $this->publishedInitiatives
+            ->whereInitiative($initiativeId)
             ->isPublished()
-            ->where('initiative_id', '=', $initiativeId)
-            ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as date')
-            ->groupBy('date')
+            ->with('articles.topic')
             ->limit(10)
-            ->orderByDesc('date')
-            ->get();
-
-        $dateData = $mainMenuData->pluck('date')->toArray();
+            ->orderByDesc('published_at')
+            ->groupByMonth();
 
         $menuData = [];
 
-        foreach ($dateData as $date) {
-            $menuData[$date] = Carbon::parse($date)->daysInMonth;
+        foreach ($data as $month => $groupedInitiatives) {
+            $publishedInitiatives = [];
+
+            foreach ($groupedInitiatives as $initiative) {
+                $publishedInitiatives[] = MainMenuDTO::fromArray($initiative);
+            }
+            $menuData[$month] = $publishedInitiatives;
         }
 
         return [
@@ -62,73 +63,23 @@ readonly class InitiativeService
 
     protected function getMenuDataForMonthlyMagazine($initiativeId): array
     {
-
-        $mainMenuData = $this->publishedInitiatives
-            ->where('initiative_id', '=', $initiativeId)
+        $data = $this->publishedInitiatives
+            ->whereInitiative($initiativeId)
             ->isPublished()
-            ->selectRaw('DATE_FORMAT(published_at, "%Y") as year')
-            ->groupBy('year')
-            ->orderByDesc('year')
+            ->with('articles.topic')
             ->limit(10)
-            ->get();
-
-        $yearsData = $mainMenuData->pluck('year')->toArray();
-
-        $sideDropDownMenuData = $this->publishedInitiatives
-            ->where('initiative_id', '=', $initiativeId)
-            ->isPublished()
-            ->selectRaw('DATE_FORMAT(published_at, "%Y-%m-%d") as year')
-            ->whereIn(DB::raw('DATE_FORMAT(published_at, "%Y")'), $yearsData)
-            ->orderByDesc('year')
-            ->groupBy('year')
-            ->get()
-            ->toArray();
+            ->orderByDesc('published_at')
+            ->groupByYear();
 
         $menuData = [];
 
-        foreach ($yearsData as $year) {
-            $menuData[$year] = array_values(array_filter($sideDropDownMenuData, function ($item) use ($year) {
-                return str_contains($item['year'], $year);
-            }));
-        }
+        foreach ($data as $year => $groupedInitiatives) {
+            $publishedInitiatives = [];
 
-        return [
-            'initiative_id' => $initiativeId,
-            'data' => $menuData
-        ];
-    }
-
-    protected function getMenuDataForWeeklyFocus($initiativeId): array
-    {
-        $mainMenuData = $this->publishedInitiatives->where('initiative_id', '=', $initiativeId)
-            ->selectRaw('DATE_FORMAT(published_at, "%Y-%m") as date')
-            ->groupBy('date')
-            ->limit(10)
-            ->orderByDesc('date')
-            ->get();
-
-        $dateData = $mainMenuData->pluck('date')->toArray();
-
-        $sideDropDownMenuData = $this->publishedInitiatives
-            ->where('initiative_id', '=', $initiativeId)
-            ->with(['articles.topic'])
-            ->whereIn(DB::raw('DATE_FORMAT(published_at, "%Y-%m")'), $dateData)
-            ->get();
-
-        $articles = [];
-
-        foreach ($sideDropDownMenuData as $data) {
-            foreach ($data->articles as $article) {
-                $articles[] = $article->toArray();
+            foreach ($groupedInitiatives as $initiative) {
+                $publishedInitiatives[] = MainMenuDTO::fromArray($initiative);
             }
-        }
-
-        $menuData = [];
-
-        foreach ($dateData as $date) {
-            $menuData[$date] = array_values(array_filter($articles, function ($article) use ($date) {
-                return str_contains(Carbon::parse($article['published_at'])->format('Y-m'), $date);
-            }));
+            $menuData[$year] = $publishedInitiatives;
         }
 
         return [
@@ -139,7 +90,6 @@ readonly class InitiativeService
 
     protected function getMenuDataForMore($initiativeId): array
     {
-
         $menuData = [
             "Economic Survey and Budget",
             "Weekly Round Table",

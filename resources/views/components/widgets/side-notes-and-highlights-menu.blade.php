@@ -1,4 +1,4 @@
-<div class="fixed top-1/2 right-0 transform -translate-y-1/2 bg-visionBlue shadow-lg">
+<div class="fixed top-1/2 right-0 transform -translate-y-1/2 bg-visionBlue shadow-lg z-[1]">
     <ul class="flex flex-col justify-between items-center list-none">
         <button @click="{{ Auth::guard('cognito')->check() ? 'isHighlightsOpen = true' : 'isLoginFormOpen = true' }}"
             class="flex items-center p-4">

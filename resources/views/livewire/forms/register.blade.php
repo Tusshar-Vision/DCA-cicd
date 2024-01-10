@@ -66,9 +66,9 @@
                             fill="#686E70" />
                     </svg>
                 </span>
-                <input type="password" id="regpassword" class="w-full rounded-lg" required autocomplete="off"
+                <input type="password" id="regpassword" class="w-full rounded-lg passwordOverlay" required autocomplete="off"
                     wire:model="password">
-                <label for="password">Enter Password</label>
+                <label for="password" class="overlayLabel">Enter Password</label>
             </div>
             <button type="submit" class="login-btn" @click="isEmailVerificationFormOpen = true">Sign up</button>
 
@@ -108,6 +108,25 @@
     </div>
 </div>
 <script>
+    // restrict label animation
+    document.querySelectorAll('input').forEach(function(input) {
+      input.addEventListener('focus', function() {
+        this.nextElementSibling.style.top = '-5px';
+        this.nextElementSibling.style.fontSize = '11px';
+        this.nextElementSibling.style.color = '#3362CC';
+        this.nextElementSibling.style.zIndex = '1';
+      });
+
+      input.addEventListener('blur', function() {
+        if (!this.value) {
+          this.nextElementSibling.style.top = '';
+          this.nextElementSibling.style.fontSize = '';
+          this.nextElementSibling.style.color = '';
+          this.nextElementSibling.style.zIndex = '0';
+        }
+      });
+    });
+
     // show hide function
     function showPassword(targetID) {
         var x = document.getElementById(targetID);

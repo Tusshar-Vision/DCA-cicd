@@ -1,4 +1,4 @@
-<div class="space-y-6">
+<div class="space-y-6 mt-[25px] lg:mt-0">
     <div>
         <h1 class="text-lg font-bold">RELATED VIDEOS</h1>
     </div>

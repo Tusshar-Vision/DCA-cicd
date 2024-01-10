@@ -8,19 +8,25 @@
         <div>
             <ul class="list-none ml-0">
                 @foreach($tableOfContent as $key => $header)
-                    <li class="py-[15px] border-bottom last:border-0 hover:brand-color">
                         @if(is_array($header))
-                            <a href="#header-{{$header['id']}}"
-                               class="flex text-base[16px] font-normal black-040404 hover:brand-color">
-                                <span class="mr-1">{{ $loop->iteration }}<em>.</em></span>{{ strip_tags($header['header']) }}
-                            </a>
+                            @if (isset($header['id']))
+                                <li class="py-[15px] border-bottom last:border-0 hover:brand-color">
+                                    <a href="#header-{{ $header['id'] }}"
+                                       class="flex text-base[16px] font-normal black-040404 hover:brand-color">
+                                        <span class="mr-1">{{ $loop->iteration }}<em>.</em></span>{{ strip_tags($header['header']) }}
+                                    </a>
+                                </li>
+                            @endif
                         @else
-                            <a href="{{ ArticleService::getArticleUrlFromSlug($header->slug) }}"
-                               class="flex text-base[16px] font-normal hover:brand-color {{ ($header->slug === $currentArticle) ? 'brand-color' : '' }}">
-                                <span class="mr-1">{{ $loop->iteration }}<em>.</em></span> {{ $header->title }}
-                            </a>
+                            <li class="py-[15px] border-bottom last:border-0 hover:brand-color">
+                                <a href="{{ ArticleService::getArticleUrlFromSlug($header->slug) }}"
+                                   wire:navigate
+                                   class="flex text-base[16px] font-normal hover:brand-color {{ ($header->slug === $currentArticle) ? 'brand-color' : '' }}"
+                                >
+                                    <span class="mr-1">{{ $loop->iteration }}<em>.</em></span> {{ $header->title }}
+                                </a>
+                            </li>
                         @endif
-                    </li>
                 @endforeach
             </ul>
         </div>

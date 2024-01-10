@@ -2,10 +2,14 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Initiatives;
 use App\Filament\Resources\UserResource\Pages;
+use App\Helpers\InitiativesHelper;
 use App\Models\Role;
 use App\Models\User;
+use App\Services\PublishedInitiativeService;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -44,6 +48,7 @@ class UserResource extends Resource implements HasShieldPermissions
                         TextInput::make('email')
                             ->email()
                             ->required()
+                            ->unique()
                             ->placeholder('example@visionias.in')
                             ->disabledOn('edit'),
                         TextInput::make('password')
