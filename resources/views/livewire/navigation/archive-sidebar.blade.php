@@ -2,7 +2,7 @@
     <div class="py-[40px] px-[14px] bg-[#F7F8F9] rounded-md relative">
         <div class="flex justify-between align-middle relative">
             <h3 class="text-[#242424] text-xl mb-[25px] font-semibold">Current Affairs</h3>
-            <a href="javascript:void(0)" class="text-lg border-[1px] border-black rounded-full w-[25px] h-[25px] text-center leading-[125%]" onclick="myFunction()">&times;</a>
+            <a href="javascript:void(0)" class="text-lg border-[1px] border-black rounded-full w-[25px] h-[25px] text-center leading-[125%] block xl:hidden" onclick="myFunction()">&times;</a>
         </div>
     <ul>
         <li class="font-semibold text-base text-[#183B56] mb-1">

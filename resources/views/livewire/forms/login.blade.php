@@ -1,11 +1,11 @@
-<div class="flex min-h-[680px] justify-center text-center items-stretch bg-white">
-    <div class="w-6/12 flex items-center" style="background: #F5F7F8;">
+<div class="flex flex-col xl:flex-row min-h-[680px] justify-center text-center items-stretch bg-white py-[50px] xl:py-0">
+    <div class="w-full xl:w-6/12 flex items-center bg-white xl:bg-[#F5F7F8] mb-0">
         <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
         <dotlottie-player src="https://lottie.host/efd12853-25b1-4c36-bf27-3d0efb0eea46/mtnAb2oVRI.json"
             background="transparent" speed="1" style="width: 300px; height: 300px; margin: 0 auto;" loop
             autoplay></dotlottie-player>
     </div>
-    <div class="w-6/12 flex flex-col justify-center px-[56px] loginwrap">
+    <div class="w-full xl:w-6/12 flex flex-col justify-center px-[20px] md:px-[56px] py-[30px] loginwrap">
         <h2 class="font-medium text-base mb-5">Welcome Back !</h2>
         <p class="text-sm	font-normal mb-[40px]">Please log-in to your account for a personalised experience.</p>
         <form wire:submit="login">
