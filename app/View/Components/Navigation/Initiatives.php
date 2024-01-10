@@ -22,7 +22,6 @@ class Initiatives extends Component
         if (Schema::hasTable('initiatives')) {
 
             $this->initiatives = Initiative::orderBy('order_column')->get(['id', 'name', 'name_hindi', 'path']);
-            $newsTodayData = $initiativeService->getMenuData(\App\Enums\Initiatives::NEWS_TODAY);
             $weeklyFocusData = $initiativeService->getMenuData(\App\Enums\Initiatives::WEEKLY_FOCUS);
             $monthlyMagazineData = $initiativeService->getMenuData(\App\Enums\Initiatives::MONTHLY_MAGAZINE);
             $moreData = $initiativeService->getMenuData(\App\Enums\Initiatives::MORE);
@@ -30,7 +29,6 @@ class Initiatives extends Component
             view()->share([
                 'initiatives' => $this->initiatives,
                 'menuData' => [
-                    'newsToday' => $newsTodayData,
                     'monthlyMagazine' => $monthlyMagazineData,
                     'weeklyFocus' => $weeklyFocusData,
                     'more' => $moreData

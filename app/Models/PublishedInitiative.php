@@ -51,6 +51,19 @@ class PublishedInitiative extends Model implements HasMedia
     }
 
     /**
+     * Builder method to fetch and group records by the month they were published.
+     *
+     * @param  Builder  $query
+     * @return Collection
+     */
+    public static function scopeGroupByMonth(Builder $query): Collection
+    {
+        return $query->get()->groupBy(function ($item) {
+            return $item->published_at->format('F Y');
+        });
+    }
+
+    /**
      * @param Builder $query
      * @return Builder
      */

@@ -24,24 +24,24 @@ class SideDropdown extends Component
     {
         $dataToRender = [];
 
-        if ($this->initiativeId === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE)) {
-            foreach ($this->menuData[1] as $key => $value) {
+        if ($this->initiativeId === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)) {
+            foreach ($this->menuData as $key => $initiative) {
                 $dataToRender[] = [
-                    'date' => Carbon::parse($value['year'])->format('Y-m-d'),
-                    'title' => Carbon::parse($value['year'])->monthName,
-                    'topic' => $value['articles']->first()->topic->name,
-                    'slug' => $value['articles']->first()->slug
+                    'date' => Carbon::parse($initiative->publishedAt)->format('Y-m-d'),
+                    'title' => $initiative->article->first()->title,
+                    'topic' => $initiative->article->first()->topic,
+                    'slug' => $initiative->article->first()->slug
                 ];
             }
         }
 
-        if ($this->initiativeId === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)) {
-            foreach ($this->menuData as $key => $value) {
+        if ($this->initiativeId === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE)) {
+            foreach ($this->menuData[1] as $key => $initiative) {
                 $dataToRender[] = [
-                    'date' => $value['published_at'],
-                    'title' => $value['title'],
-                    'topic' => $value['topic']['name'],
-                    'slug' => $value['slug']
+                    'date' => Carbon::parse($initiative->publishedAt)->format('Y-m-d'),
+                    'title' => Carbon::parse($initiative->publishedAt)->monthName,
+                    'topic' => $initiative->article->first()->topic,
+                    'slug' => $initiative->article->first()->slug
                 ];
             }
         }
