@@ -4,8 +4,10 @@
    echo $segment;
 ?>
     <div class="py-[40px] px-[14px] bg-[#F7F8F9] rounded-md relative">
-    <a href="javascript:void(0)" class="absolute right-[-45px] top-0 xl:hidden" onclick="myFunction()">OPEN</a>
-    <h3 class="text-[#242424] text-xl mb-[25px] font-semibold">Current Affairs</h3>
+        <div class="flex justify-between align-middle relative">
+            <h3 class="text-[#242424] text-xl mb-[25px] font-semibold">Current Affairs</h3>
+            <a href="javascript:void(0)" class="text-lg border-[1px] border-black rounded-full w-[25px] h-[25px] text-center leading-[125%] block xl:hidden" onclick="myFunction()">&times;</a>
+        </div>
     <ul>
         <li class="font-semibold text-base text-[#183B56] mb-1">
             <a href="{{route('monthly-magazine.archive')}}" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ $segment == 'monthly-magazine' ? 'activeSidebar' : '' }}">Monthly Magazine Archives</a>

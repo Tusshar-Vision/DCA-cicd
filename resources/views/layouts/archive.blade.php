@@ -6,7 +6,7 @@
 
 
 @section('content')
-    <div class="flex w-full gap-6 mt-[20px] lg:mt-[40px] relative">
+    <div class="flex w-full gap-6 mt-0 lg:mt-[10px] relative">
         <livewire:navigation.archive-sidebar />
         @yield('archive-content')
     </div>
