@@ -26,6 +26,9 @@ class Initiatives extends Component
             $monthlyMagazineData = $initiativeService->getMenuData(\App\Enums\Initiatives::MONTHLY_MAGAZINE);
             $moreData = $initiativeService->getMenuData(\App\Enums\Initiatives::MORE);
 
+            logger("monthlymagazine");
+
+            logger($monthlyMagazineData);
             view()->share([
                 'initiatives' => $this->initiatives,
                 'menuData' => [
