@@ -7,7 +7,6 @@ use App\Enums\Initiatives;
 use App\Exceptions\InitiativeNotFoundException;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
-use Illuminate\Support\Facades\DB;
 use Throwable;
 
 readonly class InitiativeService
@@ -91,12 +90,12 @@ readonly class InitiativeService
     protected function getMenuDataForMore($initiativeId): array
     {
         $menuData = [
-            "Economic Survey and Budget",
-            "Weekly Round Table",
-            "Animated Shorts",
-            "PYQs",
-            "Value Added Material",
-            "Value Added Material Optional"
+            "Economic Survey and Budget" => "economy-survey",
+            "Weekly Round Table" => "weekly-round-table",
+            "Animated Shorts" => "animated-shorts",
+            "PYQs" => "pyq",
+            "Value Added Material" => "value-added-material",
+            "Value Added Material Optional" => "value-added-material"
         ];
 
         return [

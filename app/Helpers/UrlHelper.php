@@ -2,10 +2,9 @@
 
 namespace App\Helpers;
 
-class URLHelper
+class UrlHelper
 {
-    public function linkToVision(string $path): string {
+    public static function linkToVision(string $path): string {
         return config('app.vision_url') . $path;
     }
-
 }
