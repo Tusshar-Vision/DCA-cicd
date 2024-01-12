@@ -32,6 +32,16 @@ readonly class DownloadService
             });
     }
 
+    public function getArchivePT365(): Collection|array
+    {
+        return $this->media->where('mime_type', 'application/pdf')
+            ->where('collection_name', 'pt-365')
+            ->get()
+            ->groupBy(function ($item) {
+                return $item->created_at->format('Y');
+            });
+    }
+
     public function getSingleDownloadFile()
     {
     }
