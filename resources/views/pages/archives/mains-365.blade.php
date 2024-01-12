@@ -2,5 +2,5 @@
 @section('title', "Daily News Archive | Current Affairs")
 
 @section('archive-content')
-    <livewire:widgets.daily-news-archive-section :articles="$data"/>
+    <livewire:widgets.mains-365-archive-section />
 @endsection

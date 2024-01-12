@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Actions\Contents;
+use App\DTO\Menu\MainMenuDTO;
 use App\DTO\MonthlyMagazineDTO;
 use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Bookmark;
 use App\Models\Note;
+use App\Models\PublishedInitiative;
 use App\Services\ArticleService;
 use App\Services\PublishedInitiativeService;
 use Carbon\Carbon;
@@ -22,7 +24,8 @@ class MonthlyMagazineController extends Controller
 
     public function __construct(
         private readonly PublishedInitiativeService $publishedInitiativeService,
-        private readonly ArticleService $articleService
+        private readonly ArticleService $articleService,
+        private PublishedInitiative $publishedInitiatives,
     ) {
         $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE);
     }
@@ -96,8 +99,33 @@ class MonthlyMagazineController extends Controller
 
     public function archive()
     {
+
+        $articles = $this->publishedInitiatives
+            ->whereInitiative(config('settings.initiatives.MONTHLY_MAGAZINE'))
+            ->isPublished()
+            ->with('articles.topic')
+            ->orderByDesc('published_at')
+            ->groupByYear();
+
+        $data = [];
+
+        foreach ($articles as $year => $groupedInitiatives) {
+            $publishedInitiatives = [];
+
+            foreach ($groupedInitiatives as $initiative) {
+                $publishedInitiatives[] = MainMenuDTO::fromArray($initiative);
+            }
+            $data[$year] = $publishedInitiatives;
+        }
+
+        // $data = collect($data);
+        $data = json_encode($data);
+
+        logger("Data", [$data]);
+
         return View('pages.archives.monthly-magazine', [
-            "title" => "Monthly Magazine Archives"
+            "title" => "Monthly Magazine Archives",
+            'data' => $data
         ]);
     }
 }

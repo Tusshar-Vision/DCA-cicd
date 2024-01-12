@@ -6,10 +6,11 @@ use Livewire\Component;
 
 class DailyNewsArchiveSection extends Component
 {
-    public int $year;
+    public $articles;
 
-    public function mount($year) {
-        $this->year = $year;
+    public function mount($articles)
+    {
+        $this->articles = $articles;
     }
 
     public function render()
