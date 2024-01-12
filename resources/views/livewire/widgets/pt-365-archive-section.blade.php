@@ -6,12 +6,12 @@
     </div>
 </div>
 
-<!-- Mains 365 -->
+<!-- PT 365 -->
 
 @foreach ($data as $year => $files)
     <div class="archiveWrapper mb-[15px] border-b-2 mt-[100px]">
     <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]">
-        <h4 class="text-[#040404] text-[32px] font-normal">Mains 365 - {{$year}}</h4>
+        <h4 class="text-[#040404] text-[32px] font-normal">PT 365 - {{$year}}</h4>
         <div>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5 11V13H19V11H5Z" fill="#8F93A3"/>
