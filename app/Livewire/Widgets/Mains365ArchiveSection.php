@@ -7,9 +7,10 @@ use Livewire\Component;
 class Mains365ArchiveSection extends Component
 {
 
-    public function mount()
+    public $data;
+    public function mount($data): void
     {
-        //
+        $this->data = collect($data);
     }
 
     public function render()

@@ -9,8 +9,11 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class MediaController extends Controller
 {
-    public function renderImage($filename) {
+    public function renderImage($filename)
+    {
+        logger("filenamee", [$filename]);
         $path = storage_path('app/public/' . $filename);
+        logger("path", [$path]);
 
         if (!File::exists($path)) {
             abort(404);
@@ -25,11 +28,13 @@ class MediaController extends Controller
         return $response;
     }
 
-    public function download(Media $media) {
+    public function download(Media $media)
+    {
         return $media;
     }
 
-    public function viewFile(Media $media) {
+    public function viewFile(Media $media)
+    {
         return response()->file($media->getPath());
     }
 }
