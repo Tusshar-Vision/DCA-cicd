@@ -14,7 +14,7 @@
     </div>
 
     <div class="flex space-x-3">
-        <a href="https://web.whatsapp.com://send?text={{ url()->full() }}" target="_blank">
+        <a href="https://web.whatsapp.com:/send?text={{ url()->full() }}" target="_blank">
             <span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
                     <path d="M15.9993 2.66602C8.63935 2.66602 2.66602 8.63935 2.66602 15.9993C2.66602 23.3594 8.63935 29.3327 15.9993 29.3327C23.3594 29.3327 29.3327 23.3594 29.3327 15.9993C29.3327 8.63935 23.3594 2.66602 15.9993 2.66602Z" fill="#47A83E"/>
