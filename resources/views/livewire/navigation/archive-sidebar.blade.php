@@ -1,7 +1,6 @@
 <div class="w-2/6 leftArchiveMenu" id="myDIV">
 <?php 
    $segment = request()->segment(count(request()->segments())-1);
-   echo $segment;
 ?>
     <div class="py-[40px] px-[14px] bg-[#F7F8F9] rounded-md relative">
         <div class="flex justify-between align-middle relative">
@@ -16,7 +15,7 @@
             <a href="{{route('weekly-focus.archive')}}" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ $segment == 'weekly-focus' ? 'activeSidebar' : '' }}">Weekly Focus Archives</a>
         </li>
         <li class="font-semibold text-base text-[#183B56] mb-1">
-            <a href="{{route('news-today.archive')}}" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white ">Daily News Archives</a>
+            <a href="{{route('news-today.archive')}}" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ $segment == 'news-today' ? 'activeSidebar' : '' }}">Daily News Archives</a>
         </li>
         <li class="font-semibold text-base text-[#183B56] mb-1">
             <a href="javascript:void(0)" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white">PT 365</a>

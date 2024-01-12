@@ -27,8 +27,6 @@
 
     @foreach ($article as $a) 
        <?php
-       logger("adf");
-       logger($a);
         $date = Carbon\Carbon::parse($a['publishedAt'])->format('Y-m-d');
         $title = Carbon\Carbon::parse($a['publishedAt'])->monthName;
         $topic = $a['article'][0]['topic'];

@@ -35,9 +35,12 @@ Route::controller(Pages\NewsTodayController::class)
                     function () {
                         Route::get('/', 'index')->name('news-today');
                         Route::get('/{date}/{topic}/{article_slug}', 'renderArticle')->name('news-today.article');
+                        Route::get('/getbymonth', 'getByYearAndMonth')->name('news-today.getByYearAndMonth');
                         Route::get('/archive', 'archive')->name('news-today.archive');
-                    });
-        });
+                    }
+                );
+        }
+    );
 
 Route::controller(Pages\WeeklyFocusController::class)
     ->group(
@@ -48,20 +51,24 @@ Route::controller(Pages\WeeklyFocusController::class)
                         Route::get('/', 'index')->name('weekly-focus');
                         Route::get('/{date}/{topic}/{article_slug}', 'renderArticle')->name('weekly-focus.article');
                         Route::get('/archive', 'archive')->name('weekly-focus.archive');
-                    });
-        });
+                    }
+                );
+        }
+    );
 
 Route::controller(Pages\MonthlyMagazineController::class)
     ->group(
         function () {
             Route::prefix('/monthly-magazine')
                 ->group(
-                    function() {
+                    function () {
                         Route::get('/', 'index')->name('monthly-magazine');
                         Route::get('/{date}/{topic}/{article_slug}', 'renderArticle')->name('monthly-magazine.article');
                         Route::get('/archive', 'archive')->name('monthly-magazine.archive');
-                    });
-        });
+                    }
+                );
+        }
+    );
 
 Route::middleware('auth:cognito')->group(function () {
     Route::prefix('user')->group(function () {
