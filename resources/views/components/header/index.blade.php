@@ -63,19 +63,57 @@
             @endauth -->
             <div class="flex order-last lg:order-first">
                 <ul class="flex items-center">
-                    <li class="ml-[10px] md:ml-[15px]"><a href="https://whatsapp.com/channel/0029Va6Adw242DcXgbUgQz1m" target="_blank"><img src="{{ asset('images/whtsapp.svg') }}" class="w-[20px] md:w-[26px]"></a></li>
-                    <li class="ml-[10px] md:ml-[15px]"><a href="https://www.facebook.com/pages/Vision-IAS/233212040049021" target="_blank"><img src="{{ asset('images/fb.svg') }}" class="w-[20px] md:w-[26px]"></a></li>
-                    <li class="ml-[10px] md:ml-[15px]"><a href="https://www.youtube.com/channel/UCw4wosjC-DKq95xI5klz92w" target="_blank"><img src="{{ asset('images/youtube.svg') }}" class="w-[20px] md:w-[26px]"></a></li>
-                    <li class="ml-[10px] md:ml-[15px] hidden lg:flex"><a href="https://twitter.com/vision_IAS" target="_blank"><img src="{{ asset('images/twitter.svg') }}" class="w-[20px] md:w-[26px]"></a></li>
-                    <li class="ml-[10px] md:ml-[15px] hidden lg:flex"><a href="https://www.instagram.com/vision_ias/" target="_blank"><img src="{{ asset('images/insta.svg') }}" class="w-[20px] md:w-[26px]"></a></li>
-                    <li class="ml-[10px] md:ml-[15px] hidden lg:flex"><a href="https://t.me/VisionIAS_UPSC" target="_blank"><img src="{{ asset('images/telegram.svg') }}" class="w-[20px] md:w-[26px]"></a></li>
+                    <li class="ml-[10px] md:ml-[15px]">
+                        <a href="https://whatsapp.com/channel/0029Va6Adw242DcXgbUgQz1m" target="_blank">
+                            <img src="{{ asset('images/whtsapp.svg') }}" class="w-[20px] md:w-[26px]">
+                        </a>
+                    </li>
+                    <li class="ml-[10px] md:ml-[15px]">
+                        <a href="https://www.facebook.com/pages/Vision-IAS/233212040049021" target="_blank">
+                            <img src="{{ asset('images/fb.svg') }}" class="w-[20px] md:w-[26px]">
+                        </a>
+                    </li>
+                    <li class="ml-[10px] md:ml-[15px]">
+                        <a href="https://www.youtube.com/channel/UCw4wosjC-DKq95xI5klz92w" target="_blank">
+                            <img src="{{ asset('images/youtube.svg') }}" class="w-[20px] md:w-[26px]">
+                        </a>
+                    </li>
+                    <li class="ml-[10px] md:ml-[15px] hidden lg:flex">
+                        <a href="https://twitter.com/vision_IAS" target="_blank">
+                            <img src="{{ asset('images/twitter.svg') }}" class="w-[20px] md:w-[26px]">
+                        </a>
+                    </li>
+                    <li class="ml-[10px] md:ml-[15px] hidden lg:flex">
+                        <a href="https://www.instagram.com/vision_ias/" target="_blank">
+                            <img src="{{ asset('images/insta.svg') }}" class="w-[20px] md:w-[26px]">
+                        </a>
+                    </li>
+                    <li class="ml-[10px] md:ml-[15px] hidden lg:flex">
+                        <a href="https://t.me/VisionIAS_UPSC" target="_blank">
+                            <img src="{{ asset('images/telegram.svg') }}" class="w-[20px] md:w-[26px]">
+                        </a>
+                    </li>
                 </ul>
                 <ul class="items-center" style="display: none" id="socialList">
-                    <li class="ml-[10px] md:ml-[15px]"><a href="https://twitter.com/vision_IAS" target="_blank"><img src="{{ asset('images/twitter.svg') }}" class="w-[20px] md:w-[26px]"></a></li>
-                    <li class="ml-[10px] md:ml-[15px]"><a href="https://www.instagram.com/vision_ias/" target="_blank"><img src="{{ asset('images/insta.svg') }}" class="w-[20px] md:w-[26px]"></a></li>
-                    <li class="ml-[10px] md:ml-[15px]"><a href="https://t.me/VisionIAS_UPSC" target="_blank"><img src="{{ asset('images/telegram.svg') }}" class="w-[20px] md:w-[26px]"></a></li>
+                    <li class="ml-[10px] md:ml-[15px]">
+                        <a href="https://twitter.com/vision_IAS" target="_blank">
+                            <img src="{{ asset('images/twitter.svg') }}" class="w-[20px] md:w-[26px]">
+                        </a>
+                    </li>
+                    <li class="ml-[10px] md:ml-[15px]">
+                        <a href="https://www.instagram.com/vision_ias/" target="_blank">
+                            <img src="{{ asset('images/insta.svg') }}" class="w-[20px] md:w-[26px]">
+                        </a>
+                    </li>
+                    <li class="ml-[10px] md:ml-[15px]">
+                        <a href="https://t.me/VisionIAS_UPSC" target="_blank">
+                            <img src="{{ asset('images/telegram.svg') }}" class="w-[20px] md:w-[26px]">
+                        </a>
+                    </li>
                 </ul>
-                <a href="javascript:void(0)" class="block lg:hidden pl-[15px] mx-[15px] border-slate-300 border-solid border-l-[1px]"><img src="{{ asset('images/mode.svg') }}"></a>
+                <a href="javascript:void(0)" class="block lg:hidden pl-[15px] mx-[15px] border-slate-300 border-solid border-l-[1px]">
+                    <img src="{{ asset('images/mode.svg') }}">
+                </a>
                 <a href="javascript:void(0)" class="block lg:hidden text-[50px] leading-5" id="toggleSocialbtn" onclick="toggleSocial()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 14 14" fill="none">
                         <path d="M0 2C0 0.89543 0.895431 0 2 0H12C13.1046 0 14 0.895431 14 2V12C14 13.1046 13.1046 14 12 14H2C0.89543 14 0 13.1046 0 12V2Z" fill="#E5EAF4"/>
@@ -92,7 +130,7 @@
                         <div class="ml-[8px] hidden lg:block">
                             <span>Call Us</span>
                             <p class="text-xs">
-                                <a href="tel:+91 846 802 2022" class="hover:text-[#005FAF] hidden lg:block">+91 846 802 2022,</a> 
+                                <a href="tel:+91 846 802 2022" class="hover:text-[#005FAF] hidden lg:block">+91 846 802 2022,</a>
                                 <a href="tel:+91 901 906 6066" class="hover:text-[#005FAF] hidden lg:block">+91 901 906 6066</a></p>
                         </div>
                     </li>
@@ -110,7 +148,7 @@
     </div>
 </header>
 
-<script type="text/javascript">  
+<script type="text/javascript">
 
     function toggleSocial() {
         var list = document.getElementById("socialList");
@@ -142,10 +180,10 @@
         if(confirm(msg)) {
            window.location.href = url + "?lang="+ toConvertLang;
         };
-        
-    } 
 
-    
+    }
+
+
 
     // document.addEventListener('DOMContentLoaded', function() {
     //     const toggleButton = document.getElementById('toggleSocial');
