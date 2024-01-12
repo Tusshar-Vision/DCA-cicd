@@ -8,7 +8,7 @@ class UrlHelper
         return config('app.vision_url') . $path;
     }
 
-    public static function linkToSocial(string $socialmedia = 'facebook'): string {
+    public static function linkToSocial(string $socialmedia): string {
         return config('social.' . $socialmedia);
     }
 }
