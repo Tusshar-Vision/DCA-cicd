@@ -18,9 +18,6 @@ class Login extends Component
     #[Rule('required|min:8')]
     public $password;
 
-    public function __construct()
-    {}
-
     public function login()
     {
         try {

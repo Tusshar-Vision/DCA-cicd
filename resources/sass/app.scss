@@ -628,8 +628,52 @@ $gray-686E70: #686E70;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  //gap: 2rem;
   align-self: stretch;
+
+    table{
+        overflow: auto;
+        width: 100%;
+        border: 1px solid #333333;
+    }
+
+    @media
+    only screen and (max-width: 760px),
+    (min-device-width: 768px) and (max-device-width: 1024px)  {
+
+        /* Force table to not be like tables anymore */
+        table, thead, tbody, th, td, tr {
+            font-size: 10px;
+            display: block;
+        }
+
+        /* Hide table headers (but not display: none;, for accessibility) */
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        tr { border: 1px solid #ccc; }
+
+        td {
+            /* Behave  like a "row" */
+            border: none;
+            border-bottom: 1px solid #eee;
+            position: relative;
+        }
+
+        td:before {
+            /* Now like a table header */
+            position: absolute;
+            /* Top/left values mimic padding */
+            top: 6px;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+    }
+
 
   h1 {
     font-size: 30px;
@@ -650,15 +694,21 @@ $gray-686E70: #686E70;
   }
 
   h3 {
-    font-size: 2.5rem;
-    line-height: 3rem;
-    /* 120% */
+      font-size: 20px;
+      line-height: 110%;
+      @media screen and (min-width: 1024px) {
+          font-size: 2.5rem;
+          line-height: 3rem;
+      }
   }
 
   h4 {
-    font-size: 2rem;
-    line-height: 2.5rem;
-    /* 125% */
+      font-size: 20px;
+      line-height: 110%;
+      @media screen and (min-width: 1024px) {
+          font-size: 2.5rem;
+          line-height: 3rem;
+      }
   }
 
   ol {
@@ -3012,7 +3062,7 @@ li[data-level="4"] {
     // overflow-y: auto;
     @media screen and (min-width: 1280px) {
       position: static;
-      min-width: 300px; 
+      min-width: 300px;
     }
 }
 .mystyle{
