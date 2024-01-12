@@ -87,7 +87,7 @@
                     </li>
                     <li class="ml-[10px] md:ml-[15px]">
                         <a href="{{ UrlHelper::linkToSocial('instagram') }}" target="_blank">
-                            {!! SvgIconsHelper::getSvgIcon('instagram-header') !!}
+                            {!! SvgIconsHelper::getSvgIcon('instagram-header-mobile') !!}
                         </a>
                     </li>
                     <li class="ml-[10px] md:ml-[15px]">

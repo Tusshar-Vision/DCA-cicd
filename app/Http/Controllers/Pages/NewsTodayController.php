@@ -91,7 +91,6 @@ class NewsTodayController extends Controller
 
     public function archive()
     {
-
         $archiveData = $this->articleService->archive(config('settings.initiatives.NEWS_TODAY'));
         logger("archiveData");
         logger($archiveData);
