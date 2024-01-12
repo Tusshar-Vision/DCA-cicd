@@ -427,7 +427,7 @@ input[type=search] {
     align-items: center;
     border-radius: 50%;
     font-weight: 600;
-    background: radial-gradient(closest-side, #f9f9f9 80%, transparent 90% 100%), conic-gradient(#EFC73A 72%, #f9f9f9 0);
+    background: radial-gradient(closest-side, #f9f9f9 80%, transparent 90% 100%), conic-gradient(#89D38C 72%, #f9f9f9 0);
   }
   .vi-progress-bar-round:before {
     content: attr(data-progress);
@@ -459,7 +459,6 @@ input[type=search] {
     border: 1px solid #E9E9E9;
     border-radius: 4px;
     padding: 12px 16px;
-    margin-bottom: 24px;
     page-break-inside: avoid;
     -moz-column-break-inside: avoid;
          break-inside: avoid;
@@ -476,6 +475,9 @@ input[type=search] {
     display: grid;
     grid-gap: 26px;
     margin-top: 10px;
+  }
+  .weekly-focus-progress-list .weekly-focus-progress-single-bar:last-child {
+    border: 0;
   }
   .weekly-focus-progress-single-bar {
     cursor: pointer;
@@ -1444,6 +1446,7 @@ input[type=search] {
   z-index: 1;
   display: inline-block;
   cursor: pointer;
+  z-index: 2;
 }
 .loginwrap .forgetpass {
   font-size: 12px;
@@ -1509,6 +1512,11 @@ input[type=search] {
   position: sticky;
   top: 0;
   align-self: flex-start;
+}
+@media screen and (max-width: 1024px) {
+  .leftsticky {
+    position: static;
+  }
 }
 
 /* profile page  style */
@@ -2506,7 +2514,7 @@ li[data-level="4"] {
   font-size: 25px;
   width: 25px;
   height: 25px;
-  line-height: 84%;
+  line-height: 100%;
   padding: 0;
   text-align: center;
 }
@@ -2551,4 +2559,33 @@ li[data-level="4"] {
   transition: all ease 0s;
   -webkit-transition: all ease 0s;
   -moz-transition: all ease 0s;
+}
+
+.featureVideo video {
+  width: 100%;
+}
+
+.activeSidebar {
+  background: #3362CC;
+  color: #fff;
+}
+
+.leftArchiveMenu {
+  position: fixed;
+  left: -300px;
+  top: 0;
+  z-index: 1;
+  width: 300px;
+  height: 100vh;
+  background: #F7F8F9;
+}
+@media screen and (min-width: 1280px) {
+  .leftArchiveMenu {
+    position: static;
+    min-width: 300px;
+  }
+}
+
+.mystyle {
+  left: 0 !important;
 }/*# sourceMappingURL=app.css.map */
