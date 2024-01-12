@@ -32,8 +32,12 @@
             <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8 ">
                 <div class="flex w-full lg:md:w-2/6 flex-col space-y-6 leftsticky">
                     <x-widgets.article-side-bar :table-of-content="$tableOfContent" />
-                    <x-widgets.topic-at-a-glance />
-                    <x-widgets.side-bar-download-menu initiative="weekly-focus" />
+                    <div class="hidden lg:block">
+                        <x-widgets.topic-at-a-glance />
+                    </div>
+                    <div class="hidden lg:block">
+                        <x-widgets.side-bar-download-menu initiative="weekly-focus" />
+                    </div>
                 </div>
 
                 <div class="flex flex-col w-full mt-[40px]">
@@ -43,6 +47,12 @@
 
                     <div class="mt-12">
                         <x-widgets.article-pagination :current-initiative="$articles" :current-article-slug="$article->slug" />
+                    </div>
+                    <div class="block lg:hidden mb-4">
+                        <x-widgets.topic-at-a-glance />
+                    </div>
+                    <div class="block lg:hidden">
+                        <x-widgets.side-bar-download-menu initiative="weekly-focus" />
                     </div>
                 </div>
             </div>

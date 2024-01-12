@@ -50,7 +50,9 @@
                         </label>
                     </div>
                     <x-widgets.article-side-bar :table-of-content="$articles->articles" />
-                    <x-widgets.side-bar-download-menu initiative="news-today"/>
+                    <div class="hidden lg:block">
+                        <x-widgets.side-bar-download-menu initiative="news-today"/>
+                    </div>
                 </div>
 
                 <div class="flex flex-col mt-[30px] w-full">
@@ -60,6 +62,9 @@
 
                     <div class="mt-12">
                         <x-widgets.article-pagination :current-initiative="$articles" :current-article-slug="$article->slug" />
+                    </div>
+                    <div class="block lg:hidden mt-4">
+                        <x-widgets.side-bar-download-menu initiative="news-today"/>
                     </div>
                 </div>
         </div>
