@@ -21,11 +21,23 @@ use App\Http\Controllers\Pages;
 
 // Routes for all the pages
 Route::get('/', [Pages\HomeController::class, 'index'])->name('home');
-Route::get('/mains-365', [Pages\Mains365Controller::class, 'index'])->name('mains-365');
 Route::get('/pt-365', [Pages\PT365Controller::class, 'index'])->name('pt-365');
 Route::get('/downloads', [Pages\DownloadsController::class, 'index'])->name('downloads');
 Route::get('/search', [Pages\SearchController::class, 'index'])->name('search');
 Route::get('/search/{query}', [Pages\SearchController::class, 'searchQuery'])->name('search.query');
+
+Route::controller(Pages\Mains365Controller::class)
+    ->group(
+        function () {
+            Route::prefix('/mains-365')
+                ->group(
+                    function () {
+                        Route::get('/', 'index')->name('mains-365');
+                        Route::get('/archive', 'archive')->name('mains365.archive');
+                    }
+                );
+        }
+    );
 
 Route::controller(Pages\NewsTodayController::class)
     ->group(

@@ -21,7 +21,7 @@
             <a href="javascript:void(0)" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white">PT 365</a>
         </li>
         <li class="font-semibold text-base text-[#183B56] mb-1">
-            <a href="javascript:void(0)" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white">Mains 365</a>
+            <a href="{{route('mains365.archive')}}" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ $segment == 'mains-365' ? 'activeSidebar' : '' }}">Mains 365</a>
         </li>
         <li class="font-semibold text-base text-[#183B56] mb-1">
             <a href="javascript:void(0)" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white">Economic Survey and Budget</a>
