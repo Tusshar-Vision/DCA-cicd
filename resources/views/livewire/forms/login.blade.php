@@ -74,48 +74,49 @@
     </div>
 </div>
 
+@script
+    <script>
+        // restrict label animation
+        document.querySelectorAll('input').forEach(function(input) {
+          input.addEventListener('focus', function() {
+            this.nextElementSibling.style.top = '-5px';
+            this.nextElementSibling.style.fontSize = '11px';
+            this.nextElementSibling.style.color = '#3362CC';
+            this.nextElementSibling.style.zIndex = '1';
+          });
 
-<script>
-    // restrict label animation
-    document.querySelectorAll('input').forEach(function(input) {
-      input.addEventListener('focus', function() {
-        this.nextElementSibling.style.top = '-5px';
-        this.nextElementSibling.style.fontSize = '11px';
-        this.nextElementSibling.style.color = '#3362CC';
-        this.nextElementSibling.style.zIndex = '1';
-      });
+          input.addEventListener('blur', function() {
+            if (!this.value) {
+              this.nextElementSibling.style.top = '';
+              this.nextElementSibling.style.fontSize = '';
+              this.nextElementSibling.style.color = '';
+              this.nextElementSibling.style.zIndex = '0';
+            }
+          });
+        });
 
-      input.addEventListener('blur', function() {
-        if (!this.value) {
-          this.nextElementSibling.style.top = '';
-          this.nextElementSibling.style.fontSize = '';
-          this.nextElementSibling.style.color = '';
-          this.nextElementSibling.style.zIndex = '0';
+        const inputs = document.querySelectorAll('.js_form-input');
+        inputs.forEach(input => {
+            input.addEventListener('blur', (event) => {
+            if (event.target.value.length) {
+                event.target.classList.add("full");
+            } else {
+                event.target.classList.remove("full");
+            }
+        });
+        })
+
+        // show hide function
+        function showPassword(targetID) {
+            const x = document.getElementById(targetID);
+            const img = document.querySelector('.eye');
+            if (x.type === "password") {
+                x.type = "text";
+                img.style.opacity = "0.5";
+            } else {
+                x.type = "password";
+                img.style.opacity = "1";
+            }
         }
-      });
-    });
-
-    const inputs = document.querySelectorAll('.js_form-input');
-    inputs.forEach(input => {
-        input.addEventListener('blur', (event) => {
-        if (event.target.value.length) {
-            event.target.classList.add("full");
-        } else {
-            event.target.classList.remove("full");
-        }
-    });
-    })
-
-    // show hide function
-    function showPassword(targetID) {
-        var x = document.getElementById(targetID);
-        var img = document.querySelector('.eye')
-        if (x.type === "password") {
-            x.type = "text";
-            img.style.opacity = "0.5";
-        } else {
-            x.type = "password";
-            img.style.opacity = "1";
-        }
-    }
-</script>
+    </script>
+@endscript

@@ -202,7 +202,7 @@ $gray-686E70: #686E70;
     height: 48px !important;
     width: 48px !important;
     padding: 11px;
-    top: 40% !important;
+    top: 24% !important;
 
     &:hover {
       opacity: 0.9;
@@ -631,9 +631,18 @@ $gray-686E70: #686E70;
   align-self: stretch;
 
     table{
-        overflow: auto;
         width: 100%;
         border: 1px solid #333333;
+    }
+    tr {
+        border: 1px solid #eee;
+    }
+
+    td {
+        /* Behave  like a "row" */
+        border: 1px solid #eee;
+        position: relative;
+        padding: 10px;
     }
 
     @media

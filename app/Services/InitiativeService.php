@@ -90,12 +90,12 @@ readonly class InitiativeService
     protected function getMenuDataForMore($initiativeId): array
     {
         $menuData = [
-            "Economic Survey and Budget" => "economy-survey",
-            "Weekly Round Table" => "weekly-round-table",
-            "Animated Shorts" => "animated-shorts",
-            "PYQs" => "pyq",
-            "Value Added Material" => "value-added-material",
-            "Value Added Material Optional" => "value-added-material"
+            "economy-survey"  => "Economic Survey and Budget",
+            "weekly-round-table" => "Weekly Round Table",
+            "animated-shorts" => "Animated Shorts"  ,
+            "pyq" => "PYQs",
+            "value-added-material" => "Value Added Material",
+            "value-added-material-optional" => "Value Added Material Optional"
         ];
 
         return [
