@@ -17,9 +17,4 @@ class EditMains365 extends EditRecord
 //            Actions\DeleteAction::make(),
         ];
     }
-
-    public function getTitle(): Htmlable|string
-    {
-        return "";
-    }
 }

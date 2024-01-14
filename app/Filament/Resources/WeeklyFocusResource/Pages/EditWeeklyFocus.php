@@ -17,14 +17,4 @@ class EditWeeklyFocus extends EditRecord
 //            Actions\DeleteAction::make(),
         ];
     }
-
-    public function getTitle(): Htmlable|string
-    {
-        return "";
-    }
-
-//    public function mutateFormDataBeforeSave(array $data): array
-//    {
-////        dd($data);
-//    }
 }

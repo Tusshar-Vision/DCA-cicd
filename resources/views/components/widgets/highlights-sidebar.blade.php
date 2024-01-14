@@ -3,6 +3,7 @@
 <style>
     .announcement-container {
         overflow: hidden;
+        max-width: 350px;
         max-height: 200px; /* Set a fixed height for the container */
         position: relative;
         transition: height 0.3s;

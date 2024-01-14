@@ -18,15 +18,4 @@ class ListNewsTodays extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
-
-//    public function getTabs(): array
-//    {
-//        return [
-//            'all' => Tab::make('Articles'),
-//            'active' => Tab::make('Reviewers')
-//                ->modifyQueryUsing(fn (Builder $query) => dd($query)),
-//            'inactive' => Tab::make('Experts')
-//                ->modifyQueryUsing(fn (Builder $query) => $query->where('active', false)),
-//        ];
-//    }
 }

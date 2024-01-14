@@ -132,7 +132,7 @@
 
                         <div class="ml-[8px] hidden lg:block">
                             <span>Email Us</span>
-                            <p class="text-xs"><a href="mailto:enquiry@visionias.in" class="hover:text-[#005FAF]">Enquiry@visionias.in</a></p>
+                            <p class="text-xs"><a href="mailto:enquiry@visionias.in" class="hover:text-[#005FAF]">enquiry@visionias.in</a></p>
                         </div>
                     </li>
                 </ul>
