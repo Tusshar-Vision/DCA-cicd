@@ -157,7 +157,7 @@
                     </div>
                     <div class="accordion-content">
 
-                        @foreach($menuData['more']['data'] as $heading => $route)
+                        @foreach($menuData['more']['data'] as $route => $heading)
 
                             <a href="{{ $route }}" class="text-sm block font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[5px] px-[10px]">
                                 {{ $heading }}

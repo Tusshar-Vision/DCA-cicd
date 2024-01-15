@@ -20,13 +20,13 @@ class InitiativesHelper {
         "PT_365" => 5,
         "DOWNLOADS" => 6,
         "MORE" => 7,
-        "ECONOMIC_SURVEY_AND_BUDGET" => 8,
-        "WEEKLY_ROUND_TABLE" => 9,
-        "ANIMATED_SHORTS" => 10,
-        "PYQ" => 11,
-        "VALUE_ADDED_MATERIAL" => 12,
-        "VALUE_ADDED_MATERIAL_OPTIONAL" => 13,
-        "QUARTERLY_REVISION_DOCUMENTS" => 14
+        "ECONOMIC_SURVEY_AND_BUDGET" => 9,
+        "WEEKLY_ROUND_TABLE" => 10,
+        "ANIMATED_SHORTS" => 11,
+        "PYQ" => 12,
+        "VALUE_ADDED_MATERIAL" => 13,
+        "VALUE_ADDED_MATERIAL_OPTIONAL" => 14,
+        "QUARTERLY_REVISION_DOCUMENTS" => 15
     ];
     private const InitiativeTopics = [
         "POLITY" => 1,

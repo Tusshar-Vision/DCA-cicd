@@ -96,7 +96,7 @@
         </div>
     </div>
     <div class="flex justify-center my-[35px]">
-        <h6 class="italic text-center">© {{ Carbon::now()->year . __('footer.copy_right')}}</h6>
+        <h6 class="italic text-center">© {{ Carbon::now()->year . ' ' . __('footer.copy_right')}}.</h6>
     </div>
 </div>
 
