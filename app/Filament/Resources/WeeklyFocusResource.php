@@ -155,7 +155,7 @@ class WeeklyFocusResource extends Resource
                     ->schema([
                         Select::make('infographic')
                             ->options(function (MediaService $mediaService) {
-                                    return $mediaService->getAllInfographics()->pluck('title', 'id');
+                                    return $mediaService->getAllInfographics(10)->pluck('title', 'id');
                                 }),
                 ])->columnSpan(1)
             ]);

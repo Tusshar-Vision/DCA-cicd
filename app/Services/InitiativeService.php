@@ -41,6 +41,7 @@ readonly class InitiativeService
             ->whereInitiative($initiativeId)
             ->isPublished()
             ->with('articles.topic')
+            ->hasPublishedArticle()
             ->limit(10)
             ->orderByDesc('published_at')
             ->groupByMonth();
@@ -68,6 +69,7 @@ readonly class InitiativeService
             ->whereInitiative($initiativeId)
             ->isPublished()
             ->with('articles.topic')
+            ->hasPublishedArticle()
             ->limit(10)
             ->orderByDesc('published_at')
             ->groupByYear();
