@@ -9,4 +9,11 @@ enum Initiatives : string {
     case PT_365 = 'PT 365';
     case DOWNLOADS = 'Downloads';
     case MORE = 'More';
+    case ECONOMIC_SURVEY_AND_BUDGET = 'Economic Survey & Budget';
+    case WEEKLY_ROUND_TABLE = 'Weekly Round Table';
+    case ANIMATED_SHORTS = 'Animated Shorts';
+    case PYQ = 'PYQs';
+    case VALUE_ADDED_MATERIAL = 'Value Added Material';
+    case VALUE_ADDED_MATERIAL_OPTIONAL = 'Value Added Material (Optional)';
+    case QUARTERLY_REVISION_DOCUMENTS = 'Quarterly Revision Documents';
 }
