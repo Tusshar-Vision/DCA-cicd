@@ -24,6 +24,11 @@ readonly class MediaService
         return $this->video->latest()->with('media')->limit($limit)->get();
     }
 
+    public function getRelatedVideos($article): Collection|array {
+        return $this->video->latest()->withAnyTags($article->tags)
+            ->get();
+    }
+
     public function getAllInfographics($limit): Collection|array  {
         return $this->infographic->latest()->limit($limit)->get();
     }

@@ -63,7 +63,7 @@
                 <div class="grid grid-cols-1 gap-0 lg:grid-cols-3 lg:gap-3">
                     <x-widgets.related-terms />
                     <x-widgets.related-articles :related-articles="$relatedArticles" />
-                    <x-widgets.related-videos />
+                    <x-widgets.related-videos :related-videos="$relatedVideos" />
                 </div>
 
                 <div class="mt-[25px] lg:mt-0">
