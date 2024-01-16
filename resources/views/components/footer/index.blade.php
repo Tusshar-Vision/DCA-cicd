@@ -1,6 +1,7 @@
 @php
     use App\Helpers\UrlHelper;
     use App\Helpers\SvgIconsHelper;
+    use Carbon\Carbon;
 @endphp
 
 <div class="flex w-full flex-col md:justify-between justify-center bg-visionGray mt-14">
@@ -52,7 +53,10 @@
             <div class="flex flex-col md:flex-row text-center md:text-justify space-x-5 text-sm pb-4">
                 <span>
                     <h5 class="text-gray-400">{{ __('footer.call_us') }}</h5>
-                    <p>+91 8468022022, +91 9013066066</p>
+                    <p class="text-sm">
+                        <a href="tel:+91 846 802 2022" class="hover:text-[#005FAF] hidden lg:inline-block">+91 846 802 2022,</a>
+                        <a href="tel:+91 901 906 6066" class="hover:text-[#005FAF] hidden lg:inline-block">+91 901 906 6066</a>
+                    </p>
                 </span>
                 <span class="hidden md:block">
                     <svg xmlns="http://www.w3.org/2000/svg" width="2" height="38" viewBox="0 0 2 38" fill="none">
@@ -61,7 +65,10 @@
                 </span>
                 <span class="mt-[10px] md:mt-0">
                     <h5 class="text-gray-400">{{ __('footer.email_us') }}</h5>
-                    <p>enquiry@visionias.in</p>
+                    <p class="text-sm">
+                        <a href="mailto:enquiry@visionias.in" class="hover:text-[#005FAF]">enquiry@visionias.in</a>
+                    </p>
+
                 </span>
             </div>
         </div>
@@ -71,9 +78,9 @@
                 <h5 class="font-bold flex justify-between md:hidden" onclick="toggleList(this)">{{__('footer.policy')}} <span class="plus">+</span></h5>
 
                 <ul class="space-y-2 hidden md:block">
-                    <li><a href="{{ UrlHelper::linkToVision('/privacy') }}" class="text-sm">{{__('footer.privacy_policy')}}</a></li>
-                    <li><a href="{{ UrlHelper::linkToVision('/refund-policy') }}" class="text-sm">{{__('footer.refund_policy')}}</a></li>
-                    <li><a href="{{ UrlHelper::linkToVision('/terms-of-use') }}" class="text-sm">{{__('footer.terms_of_use')}}</a></li>
+                    <li><a href="{{ UrlHelper::linkToVision('/privacy') }}" class="text-sm hover:text-[#005FAF]">{{__('footer.privacy_policy')}}</a></li>
+                    <li><a href="{{ UrlHelper::linkToVision('/refund-policy') }}" class="text-sm hover:text-[#005FAF]">{{__('footer.refund_policy')}}</a></li>
+                    <li><a href="{{ UrlHelper::linkToVision('/terms-of-use') }}" class="text-sm hover:text-[#005FAF]">{{__('footer.terms_of_use')}}</a></li>
                 </ul>
             </div>
             <div class="space-y-2 border-t-[1px] border-b-[1px] md:border-t-0 md:border-b-0 py-[15px] md:py-0">
@@ -81,15 +88,15 @@
                 <h5 class="font-bold flex justify-between md:hidden" onclick="toggleList(this)">{{__('footer.pages')}} <span class="plus block md:hidden">+</span></h5>
 
                 <ul class="space-y-2 hidden md:block">
-                    <li><a href="{{ UrlHelper::linkToVision('/about-us') }}" class="text-sm">{{__('footer.about_us')}}</a></li>
-                    <li><a href="{{ UrlHelper::linkToVision('/centers') }}" class="text-sm">{{__('footer.locations')}}</a></li>
-                    <li><a href="{{ UrlHelper::linkToVision('/contact-us') }}" class="text-sm">{{__('footer.contact_us')}}</a></li>
+                    <li><a href="{{ UrlHelper::linkToVision('/about-us') }}" class="text-sm hover:text-[#005FAF]">{{__('footer.about_us')}}</a></li>
+                    <li><a href="{{ UrlHelper::linkToVision('/centers') }}" class="text-sm hover:text-[#005FAF]">{{__('footer.locations')}}</a></li>
+                    <li><a href="{{ UrlHelper::linkToVision('/contact-us') }}" class="text-sm hover:text-[#005FAF]">{{__('footer.contact_us')}}</a></li>
                 </ul>
             </div>
         </div>
     </div>
     <div class="flex justify-center my-[35px]">
-        <h6 class="italic text-center">© 2023 {{__('footer.copy_right')}}</h6>
+        <h6 class="italic text-center">© {{ Carbon::now()->year . ' ' . __('footer.copy_right')}}.</h6>
     </div>
 </div>
 

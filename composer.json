@@ -38,6 +38,7 @@
         "laravel/sanctum": "^3.2",
         "laravel/scout": "^10.2",
         "laravel/tinker": "^2.8",
+        "league/flysystem-aws-s3-v3": "^3.0",
         "livewire/livewire": "^3.0",
         "ralphjsmit/laravel-filament-seo": "^1.2",
         "ralphjsmit/laravel-seo": "^1.4",

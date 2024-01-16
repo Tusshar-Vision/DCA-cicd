@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class DownloadsResource extends Resource
+class ValueAddedOptionalResource extends Resource
 {
     use OtherUploadsResourceSchema;
 
@@ -35,8 +35,8 @@ class DownloadsResource extends Resource
 
     protected static ?string $navigationGroup = 'Other Uploads';
 
-    protected static ?int $navigationSort = 6;
-    protected static ?string $modelLabel = 'Downloads';
+    protected static ?int $navigationSort = 9;
+    protected static ?string $modelLabel = 'Value Added Material (Optional)';
 
     public static function form(Form $form): Form
     {
@@ -56,8 +56,10 @@ class DownloadsResource extends Resource
                             ->required()
                             ->default(Carbon::now()->format('Y-m-d'))
                             ->live()
-                            ->afterStateUpdated(
-                                fn (Forms\Set $set, ?string $state) => $set('name', static::generateName($state))),
+                            ->afterStateUpdated(function (Forms\Set $set, ?string $state) {
+                                if ($state !== null)
+                                    $set('name', static::generateName($state));
+                            }),
 
                         Forms\Components\TextInput::make('name')->default(function (callable $get) {
                             return static::generateName($get('published_at'));

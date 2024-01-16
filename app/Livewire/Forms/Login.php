@@ -12,30 +12,11 @@ use Livewire\Component;
 
 class Login extends Component
 {
-    protected $aws_access_key_id;
-    protected $aws_secret_access_key;
-    protected $client;
-    protected $client_id;
-    protected $user_pool_id;
-
     #[Rule('required|email')]
     public $email;
 
     #[Rule('required|min:8')]
     public $password;
-
-    public function __construct()
-    {
-        $this->aws_access_key_id = config('aws.access_key.id');
-        $this->aws_secret_access_key = config('aws.access_key.secret');
-        $this->client = new CognitoIdentityProviderClient([
-            'version' => config('aws.cognito.version'),
-            'region' => config('aws.cognito.region'),
-            'credentials' => new Credentials($this->aws_access_key_id, $this->aws_secret_access_key),
-        ]);
-        $this->client_id =  config('aws.cognito.client_id');
-        $this->user_pool_id = config('aws.cognito.user_pool_id');
-    }
 
     public function login()
     {
@@ -71,42 +52,6 @@ class Login extends Component
             Log::info('Unhandled Exception: ' . $e->getMessage());
         }
     }
-
-    // public function login()
-    // {
-    //     if (empty($this->email) || empty($this->password)) {
-    //         return;
-    //     }
-
-    //     try {
-    //         $collection = collect(['email' => $this->email, 'password' => $this->password]);
-
-    //         $response = $this->attemptLogin($collection, 'cognito');
-    //         //Authenticate with Cognito Package Trait (with 'web' as the auth guard)
-    //         if ($response) {
-    //             if ($response === true) {
-    //                 session()->regenerate();
-    //                 return redirect(route('home'));
-    //                 // ->intended('home');
-    //             } else if ($response === false) {
-    //                 session()->flash('error', 'Incorrect email and/or password.');
-    //                 $this->reset(['password']); // Clear the password field
-
-    //                 //$this->incrementLoginAttempts($request);
-    //                 //
-    //                 //$this->sendFailedLoginResponse($collection, null);
-    //             } else {
-    //                 return $response;
-    //             } //End if
-    //         } //End if
-    //     } catch (Exception $e) {
-    //         session()->flash('error', $e->getMessage());
-    //         $this->reset(['password']);
-    //         Log::error($e->getMessage());
-    //     } //Try-catch ends
-    // }
-
-
 
     public function render()
     {

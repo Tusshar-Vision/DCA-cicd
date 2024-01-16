@@ -91,8 +91,10 @@ class NewsTodayResource extends Resource
                                 }
                             ])
                             ->live()
-                            ->afterStateUpdated(
-                                fn (Forms\Set $set, ?string $state) => $set('name', static::generateName($state))),
+                            ->afterStateUpdated(function (Forms\Set $set, ?string $state) {
+                                if ($state !== null)
+                                    $set('name', static::generateName($state));
+                                }),
 
                         Forms\Components\TextInput::make('name')->default(function (callable $get) {
                             return static::generateName($get('published_at'));

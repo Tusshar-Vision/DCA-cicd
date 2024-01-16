@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Support\Colors\Color;
@@ -57,6 +58,7 @@ trait ArticleRelationSchema
             ->columns([
                 TextColumn::make('id')
                     ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->label('id'),
                 TextColumn::make('article.status')
                     ->label('Status')
@@ -77,24 +79,29 @@ trait ArticleRelationSchema
                             case 'Published': return Color::Green;
                             case 'Final Database': return Color::Indigo;
                         }
-                    }),
+                    })
+                    ->toggleable(),
                 IconColumn::make('featured')
                     ->boolean()
                     ->trueIcon('heroicon-o-check-badge')
-                    ->falseIcon('heroicon-o-x-mark'),
+                    ->falseIcon('heroicon-o-x-mark')
+                    ->toggleable(),
                 TextColumn::make('title')
                     ->limit(40)
                     ->tooltip(fn (Model $record): string => $record->title)
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
                 TextColumn::make('topic.name')
                     ->label('Subject')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
                 TextColumn::make('topicSection.name')
                     ->label('Section')
                     ->limit(20)
                     ->tooltip(fn (Model $record): string => $record->topicSection->name ?? '')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
                 TextColumn::make('topicSubSection.name')
                     ->label('Sub-Section')
                     ->limit(20)
@@ -105,14 +112,17 @@ trait ArticleRelationSchema
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('author.name')
                     ->searchable()
-                    ->label('Expert'),
+                    ->label('Expert')
+                    ->toggleable(),
                 TextColumn::make('reviewer.name')
                     ->searchable()
-                    ->label('Reviewer'),
+                    ->label('Reviewer')
+                    ->toggleable(),
                 TextColumn::make('updated_at')
                     ->label('Last Modified')
                     ->date('d M Y h:i a')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('published_at')
                     ->label('Published At')
                     ->date('d M Y h:i a')
@@ -241,7 +251,9 @@ trait ArticleRelationSchema
                     ->iconButton()
                     ->tooltip('View')
                     ->fillForm(fn (Model $record): array => [
+                        'body' => $record->latestReview()->review ?? '',
                         'content' => $record->content->content,
+                        'sources' => $record->sources
                     ])
                     ->form([
                         TinyEditor::make('content')
@@ -249,6 +261,15 @@ trait ArticleRelationSchema
                             ->profile('review')
                             ->maxHeight(500)
                             ->hiddenLabel(),
+
+                        RichEditor::make('body')
+                            ->label('Review Comments')
+                            ->disableToolbarButtons([
+                                'attachFiles',
+                                'codeBlock',
+                            ])->disabled(),
+
+                        TagsInput::make('sources')->placeholder('')->disabled()
                     ])->slideOver(),
 
                 EditAction::make('Edit')

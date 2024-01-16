@@ -6,6 +6,7 @@ use App\Filament\Resources\InitiativeResource\Pages;
 use App\Filament\Resources\InitiativeResource\RelationManagers;
 use App\Models\Initiative;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -31,6 +32,13 @@ class InitiativeResource extends Resource
             ->schema([
                 TextInput::make('name')->required(),
                 TextInput::make('path')->required(),
+                Select::make('parent_id')
+                    ->label('Parent Initiative')
+                    ->options(
+                        Initiative::where('parent_id', '=', null)
+                            ->get()
+                            ->pluck('name', 'id')
+                    ),
                 TextInput::make('name_hindi')->required()
             ]);
     }
@@ -49,7 +57,8 @@ class InitiativeResource extends Resource
                 TextColumn::make('id'),
                 TextColumn::make('name'),
                 TextColumn::make('path'),
-                TextColumn::make('name_hindi')
+                TextColumn::make('name_hindi'),
+                TextColumn::make('parent_id')->label('Parent')->default('Individual')
             ])
             ->filters([
                 //

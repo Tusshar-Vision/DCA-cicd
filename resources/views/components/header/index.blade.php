@@ -87,7 +87,7 @@
                     </li>
                     <li class="ml-[10px] md:ml-[15px]">
                         <a href="{{ UrlHelper::linkToSocial('instagram') }}" target="_blank">
-                            {!! SvgIconsHelper::getSvgIcon('instagram-header') !!}
+                            {!! SvgIconsHelper::getSvgIcon('instagram-header-mobile') !!}
                         </a>
                     </li>
                     <li class="ml-[10px] md:ml-[15px]">
@@ -119,8 +119,8 @@
                         <div class="ml-[8px] hidden lg:block">
                             <span>Call Us</span>
                             <p class="text-xs">
-                                <a href="tel:+91 846 802 2022" class="hover:text-[#005FAF] hidden lg:block">+91 846 802 2022,</a>
-                                <a href="tel:+91 901 906 6066" class="hover:text-[#005FAF] hidden lg:block">+91 901 906 6066</a>
+                                <a href="tel:+91 846 802 2022" class="hover:text-[#005FAF] hidden lg:inline-block">+91 846 802 2022,</a>
+                                <a href="tel:+91 901 906 6066" class="hover:text-[#005FAF] hidden lg:inline-block">+91 901 906 6066</a>
                             </p>
                         </div>
 
@@ -132,7 +132,7 @@
 
                         <div class="ml-[8px] hidden lg:block">
                             <span>Email Us</span>
-                            <p class="text-xs"><a href="mailto:enquiry@visionias.in" class="hover:text-[#005FAF]">Enquiry@visionias.in</a></p>
+                            <p class="text-xs"><a href="mailto:enquiry@visionias.in" class="hover:text-[#005FAF]">enquiry@visionias.in</a></p>
                         </div>
                     </li>
                 </ul>

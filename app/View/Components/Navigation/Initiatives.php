@@ -22,7 +22,9 @@ class Initiatives extends Component
     {
         if (Schema::hasTable('initiatives')) {
 
-            $this->initiatives = Initiative::orderBy('order_column')->get(['id', 'name', 'name_hindi', 'path']);
+            $this->initiatives = Initiative::orderBy('order_column')
+                    ->where('parent_id', '=', null)
+                    ->get(['id', 'name', 'name_hindi', 'path']);
             $this->weeklyFocusData = $initiativeService->getMenuData(\App\Enums\Initiatives::WEEKLY_FOCUS);
             $this->monthlyMagazineData = $initiativeService->getMenuData(\App\Enums\Initiatives::MONTHLY_MAGAZINE);
             $this->moreData = $initiativeService->getMenuData(\App\Enums\Initiatives::MORE);

@@ -119,9 +119,6 @@ class AnnouncementResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()
-                    ->iconButton()
-                    ->tooltip('Edit'),
                 Tables\Actions\Action::make('View')
                     ->icon('heroicon-s-eye')
                     ->tooltip('View')
@@ -144,10 +141,12 @@ class AnnouncementResource extends Resource
                                     'undo',
                             ])->required(),
                         ];
-                })
-                ->action(function (Model $record, $data) {
+                })->action(function (Model $record, $data) {
 //                    $record->update(['content' => $data['content']]);
-                })
+                    }),
+                Tables\Actions\EditAction::make()
+                    ->iconButton()
+                    ->tooltip('Edit')
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
