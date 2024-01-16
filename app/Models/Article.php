@@ -176,12 +176,17 @@ class Article extends Model implements HasMedia, Sortable
 
     public function relatedVideos(): HasMany
     {
-        return $this->hasMany(Video::class);
+        return $this->hasMany(RelatedVideo::class);
     }
 
     public function infographics(): HasOne
     {
         return $this->hasOne(Infographic::class);
+    }
+
+    public function relatedArticles(): HasMany
+    {
+        return $this->hasMany(RelatedArticle::class);
     }
 
     public function scopeIsFeatured(Builder $query): Builder

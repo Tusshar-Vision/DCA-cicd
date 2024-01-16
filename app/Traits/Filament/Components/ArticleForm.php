@@ -5,6 +5,7 @@ namespace App\Traits\Filament\Components;
 use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -197,6 +198,32 @@ trait ArticleForm
                         TagsInput::make('sources')
                             ->separator(',')
                             ->placeholder('New Source')
+                    ]),
+
+                    Tabs\Tab::make('Related Articles')->schema([
+                        Repeater::make('articles')
+                            ->label('')
+                            ->relationship('relatedArticles')
+                            ->schema([
+                                Select::make('related_article_id')->relationship('article', 'title')->required(),
+                            ])
+                            ->addActionLabel('Add article')
+                            ->columns(1)
+                    ]),
+
+                    Tabs\Tab::make('Related Videos')->schema([
+                        Repeater::make('videos')
+                            ->label('')
+                            ->relationship('relatedVideos')
+                            ->schema([
+                                Select::make('video_id')->relationship('video', 'title')->required(),
+                            ])
+                            ->addActionLabel('Add video')
+                            ->columns(1)
+                    ]),
+
+                    Tabs\Tab::make('Related Terms')->schema([
+
                     ]),
 
                     Tabs\Tab::make('SEO')->schema([
