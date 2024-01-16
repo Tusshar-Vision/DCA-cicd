@@ -1487,6 +1487,14 @@ $gray-686E70: #686E70;
       content: none;
     }
   }
+  a{
+    svg{
+      width: 16px;
+      @media screen and (min-width: 768px){
+        width: 20px;
+      }
+    }
+  }
 }
 
 
@@ -3010,7 +3018,19 @@ li[data-level="4"] {
   pointer-events: none;
 }
 
+.topMenu li a svg{
+  width: 20px;
+  @media screen and (min-width: 768px) {
+    width: 26px;
+  }
+}
 
+.modeSvg svg{
+  width: 20px;
+  @media screen and (min-width: 768px) {
+    width: 26px;
+  }
+}
 
 
 /* date picker css min */

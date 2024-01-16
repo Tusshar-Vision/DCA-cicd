@@ -46,7 +46,7 @@
             <svg width="2" height="32" viewBox="0 0 2 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path opacity="0.5" d="M1 0V32" stroke="#8F93A3"/>
             </svg> -->
-            <div class="flex order-last lg:order-first">
+            <div class="flex order-last lg:order-first topMenu">
                 <ul class="flex items-center">
                     <li class="ml-[10px] md:ml-[15px]">
                         <a href="{{ UrlHelper::linkToSocial('whatsapp') }}" target="_blank">
@@ -96,10 +96,10 @@
                         </a>
                     </li>
                 </ul>
-                <a href="javascript:void(0)" class="block lg:hidden pl-[15px] mx-[15px] border-slate-300 border-solid border-l-[1px]">
+                <a href="javascript:void(0)" class="block lg:hidden pl-[15px] mx-[15px] border-slate-300 border-solid border-l-[1px] modeSvg">
                     {!! SvgIconsHelper::getSvgIcon('dark-mode-toggle') !!}
                 </a>
-                <a href="javascript:void(0)" class="block lg:hidden text-[50px] leading-5" id="toggleSocialbtn" onclick="toggleSocial()">
+                <a href="javascript:void(0)" class="block lg:hidden text-[50px] leading-5 h-[23px]" id="toggleSocialbtn" onclick="toggleSocial()">
                     {!! SvgIconsHelper::getSvgIcon('right-arrow') !!}
                 </a>
             </div>
