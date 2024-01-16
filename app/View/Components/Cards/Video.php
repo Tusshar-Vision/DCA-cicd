@@ -12,8 +12,7 @@ class Video extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public string $source,
-        public string $videoTitle
+        public $source,
     )
     {}
 

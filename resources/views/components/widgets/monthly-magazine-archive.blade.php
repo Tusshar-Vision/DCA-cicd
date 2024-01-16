@@ -8,7 +8,7 @@
 
 <!-- Monthly Magazine section -->
 
-<div class="archiveWrapper mb-[15px] border-b-2 mt-[100px]">
+<div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]">
     <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]">
         <div class="flex space-x-4 items-center">
             <div class="vi-progress-bar-round"></div>

@@ -74,7 +74,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-3">
                     <x-widgets.related-terms />
                     <x-widgets.related-articles :related-articles="$relatedArticles" />
-                    <x-widgets.related-videos />
+                    <x-widgets.related-videos :related-videos="$relatedVideos" />
                 </div>
 
                 <div>
@@ -87,7 +87,6 @@
             </div>
         </div>
     </div>
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
         <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>

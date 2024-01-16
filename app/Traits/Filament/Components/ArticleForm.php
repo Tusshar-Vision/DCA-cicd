@@ -15,6 +15,7 @@ use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use RalphJSmit\Filament\SEO\SEO;
@@ -105,7 +106,11 @@ trait ArticleForm
                                     ->relationship('topic', 'name')
                                     ->required()
                                     ->label('Subject')
-                                    ->reactive(),
+                                    ->reactive()
+                                    ->afterStateUpdated(function (Set $set, ?string $state) {
+                                        $set('topic_section_id', 0);
+                                        $set('topic_sub_section_id', 0);
+                                    }),
 
                                 Select::make('topic_section_id')
                                     ->relationship('topicSection', 'name', function ($query, callable $get) {
@@ -114,7 +119,10 @@ trait ArticleForm
                                         return $query->where('topic_id', '=', $topic);
                                     })
                                     ->reactive()
-                                    ->label('Section'),
+                                    ->label('Section')
+                                    ->afterStateUpdated(function (Set $set, ?string $state) {
+                                        $set('topic_sub_section_id', 0);
+                                    }),
 
                                 Select::make('topic_sub_section_id')
                                     ->relationship('topicSubSection', 'name', function ($query, callable $get) {
@@ -149,7 +157,6 @@ trait ArticleForm
                                 TinyEditor::make('content')
                                     ->columnSpanFull()
                                     ->profile('full')
-    //                                ->toolbarSticky(true)
                                     ->maxHeight(500)
                                     ->hiddenLabel(),
 

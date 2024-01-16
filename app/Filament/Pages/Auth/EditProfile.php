@@ -2,8 +2,7 @@
 
 namespace App\Filament\Pages\Auth;
 
-use Filament\Forms\Components\SpatieTagsInput;
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Pages\Auth\EditProfile as BaseEditProfile;
 
@@ -17,6 +16,13 @@ class EditProfile extends BaseEditProfile
                 $this->getEmailFormComponent(),
                 $this->getPasswordFormComponent(),
                 $this->getPasswordConfirmationFormComponent(),
+
+                Select::make('roles')
+                    ->label('My Roles')
+                    ->multiple()
+                    ->relationship('roles', 'name')
+                    ->preload()
+                    ->disabled(),
             ]);
     }
 }
