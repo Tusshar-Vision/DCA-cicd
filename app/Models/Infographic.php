@@ -16,12 +16,17 @@ class Infographic extends Model implements HasMedia
     protected $fillable = [
         'title',
         'views',
-        'language',
+        'language_id',
         'author_id',
         'initiative_topic_id',
         'topic_section_id',
         'topic_sub_section_id'
     ];
+
+    public function language(): BelongsTo
+    {
+        return $this->belongsTo(Language::class, 'language_id');
+    }
 
     public function author(): BelongsTo
     {

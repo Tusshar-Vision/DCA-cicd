@@ -93,13 +93,13 @@ class InfographicsResource extends Resource
 
                     Group::make()->schema([
 
-                        Select::make('language')
-                            ->options([
-                                "english" => "English",
-                                "hindi" => "Hindi",
-                            ])
+                        Select::make('language_id')
+                            ->relationship('language', 'name', function ($query) {
+                                return $query->orderBy('order_column');
+                            })
+                            ->label('Language')
                             ->required()
-                            ->default('english'),
+                            ->default(1),
 
                         SpatieTagsInput::make('tags')
                             ->required(),

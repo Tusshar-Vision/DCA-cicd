@@ -43,7 +43,7 @@ class Article extends Model implements HasMedia, Sortable
         'read_time',
         'views',
         'visibility',
-        'language',
+        'language_id',
         'featured',
         'published_at',
         'created_at',
@@ -123,6 +123,11 @@ class Article extends Model implements HasMedia, Sortable
     }
 
     // Define the relationships with other models
+
+    public function language(): BelongsTo
+    {
+        return $this->belongsTo(Language::class, 'language_id');
+    }
 
     public function tableOfContent(): HasOne
     {

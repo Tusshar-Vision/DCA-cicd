@@ -14,6 +14,8 @@ use Filament\Forms\Components\Group;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -329,7 +331,8 @@ trait ArticleResourceSchema
                         'subject' => $record->topic->name,
                         'section' => $record->topicSection->name,
                         'subSection' => $record->topicSubSection->name,
-                        "status" => $record->status,
+                        'tags' => $record->tags,
+                        'status' => $record->status,
                         'body' => $record->latestReview()->review ?? '',
                     ])
                     ->form([
@@ -338,7 +341,8 @@ trait ArticleResourceSchema
                             TextInput::make('subject')->disabled(),
                             TextInput::make('section')->disabled(),
                             TextInput::make('subSection')->disabled(),
-                        ])->columns(3),
+                            SpatieTagsInput::make('tags')->placeholder('')->disabled()
+                        ])->columns(2),
                         Section::make('Article Content')
                             ->relationship('content')
                             ->schema([

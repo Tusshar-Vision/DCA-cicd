@@ -19,6 +19,7 @@ class PublishedInitiative extends Model implements HasMedia
         'initiative_id',
         'name',
         'published_at',
+        'language_id',
         'is_published',
         'initiative_topic_id'
     ];
@@ -76,6 +77,11 @@ class PublishedInitiative extends Model implements HasMedia
     public function topic(): BelongsTo
     {
         return $this->belongsTo(InitiativeTopic::class, 'initiative_topic_id');
+    }
+
+    public function language(): BelongsTo
+    {
+        return $this->belongsTo(Language::class, 'language_id');
     }
 
     public function scopeHasPublishedArticle(Builder $query): Builder

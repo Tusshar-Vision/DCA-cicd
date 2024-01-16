@@ -13,6 +13,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -61,6 +62,22 @@ class QuarterlyRevisionResource extends Resource
                         TextInput::make('name')->default(function (callable $get) {
                             return static::generateName($get('published_at'));
                         })->required(),
+
+                        Select::make('initiative_topic_id')
+                            ->relationship('topic', 'name', function ($query) {
+                                return $query->orderBy('order_column');
+                            })
+                            ->required()
+                            ->label('Subject')
+                            ->required(),
+
+                        Select::make('language_id')
+                            ->relationship('language', 'name', function ($query) {
+                                return $query->orderBy('order_column');
+                            })
+                            ->label('Language')
+                            ->required()
+                            ->default(1),
 
                     ])->columns(2)->columnSpanFull(),
 

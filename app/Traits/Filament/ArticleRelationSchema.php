@@ -15,6 +15,7 @@ use Filament\Forms\Components\Group;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -328,6 +329,7 @@ trait ArticleRelationSchema
                         'subject' => $record->topic->name,
                         'section' => $record->topicSection->name,
                         'subSection' => $record->topicSubSection->name,
+                        'tags' => $record->tags,
                         'body' => $record->latestReview()->review ?? '',
                         "status" => $record->status,
                     ])
@@ -338,6 +340,7 @@ trait ArticleRelationSchema
                             TextInput::make('subject')->disabled(),
                             TextInput::make('section')->disabled(),
                             TextInput::make('subSection')->disabled(),
+                            SpatieTagsInput::make('tags')->placeholder('')->disabled()
                         ])->columns(3),
                         Section::make('Article Content')
                             ->relationship('content')

@@ -72,11 +72,20 @@ class PT365Resource extends Resource
                             ->label('Subject')
                             ->required(),
 
+                        Select::make('language_id')
+                            ->relationship('language', 'name', function ($query) {
+                                return $query->orderBy('order_column');
+                            })
+                            ->label('Language')
+                            ->required()
+                            ->default(1),
+
                         Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
                             ->name('file')
                             ->acceptedFileTypes(['application/pdf'])
                             ->collection('pt-365')
-                            ->required(),
+                            ->required()
+                            ->columnSpanFull(),
 
                     ])->columns(2)->columnSpanFull(),
                 ])->columns(2),
