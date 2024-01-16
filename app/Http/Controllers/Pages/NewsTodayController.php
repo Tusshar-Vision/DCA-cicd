@@ -84,8 +84,6 @@ class NewsTodayController extends Controller
         $year = request()->input('year');
         $month = request()->input('month');
         $articles = $this->articleService->getByYearAndMonth(config('settings.initiatives.NEWS_TODAY'), $year, $month);
-        logger("articles");
-        logger($articles);
         return response()->json($articles);
     }
 
@@ -93,8 +91,6 @@ class NewsTodayController extends Controller
     {
 
         $archiveData = $this->articleService->archive(config('settings.initiatives.NEWS_TODAY'));
-        logger("archiveData");
-        logger($archiveData);
 
         return View('pages.archives.daily-news', [
             "title" => "Daily News Archive",
