@@ -14,6 +14,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\SpatieTagsColumn;
@@ -48,7 +49,11 @@ class VideoResource extends Resource
                             ->relationship('topic', 'name')
                             ->required()
                             ->label('Subject')
-                            ->reactive(),
+                            ->reactive()
+                            ->afterStateUpdated(function (Set $set, ?string $state) {
+                                $set('topic_section_id', 0);
+                                $set('topic_sub_section_id', 0);
+                            }),
 
                         Select::make('topic_section_id')
                             ->relationship('topicSection', 'name', function ($query, callable $get) {
@@ -57,7 +62,10 @@ class VideoResource extends Resource
                                 return $query->where('topic_id', '=', $topic);
                             })
                             ->reactive()
-                            ->label('Section'),
+                            ->label('Section')
+                            ->afterStateUpdated(function (Set $set, ?string $state) {
+                                $set('topic_sub_section_id', 0);
+                            }),
 
                         Select::make('topic_sub_section_id')
                             ->relationship('topicSubSection', 'name', function ($query, callable $get) {
@@ -125,6 +133,7 @@ class VideoResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('id')
                     ->searchable()
@@ -159,10 +168,10 @@ class VideoResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\Action::make('View')
-                    ->icon('heroicon-s-eye')
-                    ->tooltip('Preview')
-                    ->iconButton(),
+//                Tables\Actions\Action::make('View')
+//                    ->icon('heroicon-s-eye')
+//                    ->tooltip('Preview')
+//                    ->iconButton(),
                 Tables\Actions\EditAction::make()
                     ->tooltip('Edit')
                     ->iconButton(),

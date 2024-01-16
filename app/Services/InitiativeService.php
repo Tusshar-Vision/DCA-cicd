@@ -98,6 +98,7 @@ readonly class InitiativeService
                         'parent_id',
                         '=',
                                 InitiativesHelper::getInitiativeID(Initiatives::MORE))
+                    ->orderBy('order_column')
                     ->get()
                     ->pluck('name', 'path');
 

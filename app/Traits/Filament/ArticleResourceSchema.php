@@ -4,15 +4,18 @@ namespace App\Traits\Filament;
 
 use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use App\Jobs\GenerateArticlePDF;
+use App\Models\Article;
 use App\Models\User;
 use App\Services\ArticleService;
 use App\Traits\Filament\Components\ArticleForm;
 use AymanAlhattami\FilamentDateScopesFilter\DateScopeFilter;
 use Carbon\Carbon;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
@@ -268,17 +271,32 @@ trait ArticleResourceSchema
                     ->icon('heroicon-s-eye')
                     ->iconButton()
                     ->tooltip('View')
-                    ->fillForm(fn (Model $record): array => [
+                    ->fillForm(fn (Article $record): array => [
+                        'title' => $record->title,
+                        'subject' => $record->topic->name,
+                        'section' => $record->topicSection->name,
+                        'subSection' => $record->topicSubSection->name,
+                        'author' => $record->author->name,
+                        'reviewer' => $record->reviewer->name ?? '',
                         'body' => $record->latestReview()->review ?? '',
                         'content' => $record->content->content,
                         'sources' => $record->sources
                     ])
                     ->form([
+                        TextInput::make('title')->disabled(),
+                        Group::make()->schema([
+                            TextInput::make('subject')->disabled(),
+                            TextInput::make('section')->disabled(),
+                            TextInput::make('subSection')->disabled(),
+                        ])->columns(3),
+                        Group::make()->schema([
+                            TextInput::make('author')->disabled(),
+                            TextInput::make('reviewer')->disabled(),
+                        ])->columns(),
                         TinyEditor::make('content')
                             ->columnSpanFull()
                             ->profile('review')
-                            ->maxHeight(500)
-                            ->hiddenLabel(),
+                            ->maxHeight(500),
 
                         RichEditor::make('body')
                             ->label('Review Comments')
@@ -293,7 +311,7 @@ trait ArticleResourceSchema
                 Action::make('Review')
                     ->tooltip('Review')
                     ->icon('heroicon-s-chat-bubble-left-right')
-                    ->visible(function (Model $record) {
+                    ->visible(function (Article $record) {
                         $user = Auth::user();
                         return
                             (
@@ -306,14 +324,21 @@ trait ArticleResourceSchema
                                 $record->status !== 'Published'
                             );
                     })
-                    ->fillForm(function (Model $record) {
-                        return [
-                            'body' => $record->latestReview()->review ?? '',
-                            'status' => $record->status,
-                            'content' => $record->content,
-                        ];
-                    })
+                    ->fillForm(fn (Article $record): array => [
+                        'title' => $record->title,
+                        'subject' => $record->topic->name,
+                        'section' => $record->topicSection->name,
+                        'subSection' => $record->topicSubSection->name,
+                        "status" => $record->status,
+                        'body' => $record->latestReview()->review ?? '',
+                    ])
                     ->form([
+                        TextInput::make('title')->disabled(),
+                        Group::make()->schema([
+                            TextInput::make('subject')->disabled(),
+                            TextInput::make('section')->disabled(),
+                            TextInput::make('subSection')->disabled(),
+                        ])->columns(3),
                         Section::make('Article Content')
                             ->relationship('content')
                             ->schema([

@@ -19,7 +19,8 @@ class PublishedInitiative extends Model implements HasMedia
         'initiative_id',
         'name',
         'published_at',
-        'is_published'
+        'is_published',
+        'initiative_topic_id'
     ];
 
     protected $casts = [
@@ -70,6 +71,11 @@ class PublishedInitiative extends Model implements HasMedia
     public function scopeIsPublished(Builder $query): Builder
     {
         return $query->where('is_published', true);
+    }
+
+    public function topic(): BelongsTo
+    {
+        return $this->belongsTo(InitiativeTopic::class, 'initiative_topic_id');
     }
 
     public function scopeHasPublishedArticle(Builder $query): Builder

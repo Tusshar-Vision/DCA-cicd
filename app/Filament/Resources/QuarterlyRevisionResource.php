@@ -2,20 +2,28 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Initiatives;
 use App\Filament\Resources\QuarterlyRevisionResource\Pages;
-use App\Filament\Resources\QuarterlyRevisionResource\RelationManagers;
+use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
-use App\Models\QuarterlyRevision;
-use Filament\Forms;
+use App\Traits\Filament\MoreResourceSchema;
+use Carbon\Carbon;
+use Filament\Facades\Filament;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class QuarterlyRevisionResource extends Resource
 {
+    use MoreResourceSchema;
+
     protected static ?string $model = PublishedInitiative::class;
 
     protected static ?string $navigationGroup = 'Other Uploads';
@@ -30,26 +38,40 @@ class QuarterlyRevisionResource extends Resource
     {
         return $form
             ->schema([
-                //
-            ]);
-    }
+                Section::make()->schema([
 
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                //
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                    Hidden::make('initiative_id')
+                        ->default(InitiativesHelper::getInitiativeID(Initiatives::QUARTERLY_REVISION_DOCUMENTS)),
+
+                    Group::make()->schema([
+
+                        DatePicker::make('published_at')
+                            ->native(false)
+                            ->closeOnDateSelection()
+                            ->label('Publish At')
+                            ->required()
+                            ->default(Carbon::now()->format('Y-m-d'))
+                            ->live()
+                            ->afterStateUpdated(
+                                function (Set $set, ?string $state) {
+                                    if ($state !== null)
+                                        $set('name', static::generateName($state));
+                                }),
+
+                        TextInput::make('name')->default(function (callable $get) {
+                            return static::generateName($get('published_at'));
+                        })->required(),
+
+                    ])->columns(2)->columnSpanFull(),
+
+                    SpatieMediaLibraryFileUpload::make('Upload pdf File')
+                        ->name('file')
+                        ->acceptedFileTypes(['application/pdf'])
+                        ->collection('quarterly-revision-document')
+                        ->required()
+                        ->columnSpanFull(),
+
+                ])->columns(2),
             ]);
     }
 
@@ -58,6 +80,17 @@ class QuarterlyRevisionResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = static::getModel()::query()->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::QUARTERLY_REVISION_DOCUMENTS));
+
+        if ($tenant = Filament::getTenant()) {
+            static::scopeEloquentQueryToTenant($query, $tenant);
+        }
+
+        return $query;
     }
 
     public static function getPages(): array

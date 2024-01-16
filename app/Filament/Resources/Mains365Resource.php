@@ -67,16 +67,20 @@ class Mains365Resource extends Resource
                             return static::generateName($get('published_at'));
                         })->required(),
 
+                        Select::make('initiative_topic_id')
+                            ->relationship('topic', 'name')
+                            ->required()
+                            ->label('Subject')
+                            ->required(),
+
+                        Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
+                            ->name('file')
+                            ->acceptedFileTypes(['application/pdf'])
+                            ->collection('mains-365')
+                            ->required(),
+
                     ])->columns(2)->columnSpanFull(),
-
-                    Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
-                        ->name('file')
-                        ->acceptedFileTypes(['application/pdf'])
-                        ->collection('mains-365')
-                        ->required()
-                        ->columnSpanFull(),
-
-                ])->columns(2),
+                ]),
             ]);
     }
 

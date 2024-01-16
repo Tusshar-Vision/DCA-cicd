@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Enums\Initiatives;
-use App\Filament\Resources\EconomicSurveyResource\Pages;
+use App\Filament\Resources\BudgetResource\Pages;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
 use App\Traits\Filament\MoreResourceSchema;
@@ -20,7 +20,7 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 
-class EconomicSurveyResource extends Resource
+class BudgetResource extends Resource
 {
     use MoreResourceSchema;
 
@@ -28,11 +28,11 @@ class EconomicSurveyResource extends Resource
 
     protected static ?string $navigationGroup = 'Other Uploads';
 
-    protected static ?int $navigationSort = 7;
+    protected static ?int $navigationSort = 8;
 
-    protected static ?string $modelLabel = 'Economic Survey';
+    protected static ?string $modelLabel = 'Budget';
 
-    protected static ?string $navigationIcon = 'heroicon-o-currency-rupee';
+    protected static ?string $navigationIcon = 'heroicon-o-building-library';
 
     public static function form(Form $form): Form
     {
@@ -41,7 +41,7 @@ class EconomicSurveyResource extends Resource
                 Section::make()->schema([
 
                     Hidden::make('initiative_id')
-                        ->default(InitiativesHelper::getInitiativeID(Initiatives::ECONOMIC_SURVEY)),
+                        ->default(InitiativesHelper::getInitiativeID(Initiatives::BUDGET)),
 
                     Group::make()->schema([
 
@@ -67,27 +67,12 @@ class EconomicSurveyResource extends Resource
                     SpatieMediaLibraryFileUpload::make('Upload pdf File')
                         ->name('file')
                         ->acceptedFileTypes(['application/pdf'])
-                        ->collection('economic-survey')
+                        ->collection('budget')
                         ->required()
                         ->columnSpanFull(),
 
                 ])->columns(2),
             ]);
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        $query = static::getModel()::query()
-            ->where(
-                'initiative_id',
-                InitiativesHelper::getInitiativeID(Initiatives::ECONOMIC_SURVEY)
-            );
-
-        if ($tenant = Filament::getTenant()) {
-            static::scopeEloquentQueryToTenant($query, $tenant);
-        }
-
-        return $query;
     }
 
     public static function getRelations(): array
@@ -97,12 +82,27 @@ class EconomicSurveyResource extends Resource
         ];
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        $query = static::getModel()::query()
+            ->where(
+                'initiative_id',
+                InitiativesHelper::getInitiativeID(Initiatives::BUDGET)
+            );
+
+        if ($tenant = Filament::getTenant()) {
+            static::scopeEloquentQueryToTenant($query, $tenant);
+        }
+
+        return $query;
+    }
+
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListEconomicSurveys::route('/'),
-            'create' => Pages\CreateEconomicSurvey::route('/create'),
-            'edit' => Pages\EditEconomicSurvey::route('/{record}/edit'),
+            'index' => Pages\ListBudgets::route('/'),
+            'create' => Pages\CreateBudget::route('/create'),
+            'edit' => Pages\EditBudget::route('/{record}/edit'),
         ];
     }
 }

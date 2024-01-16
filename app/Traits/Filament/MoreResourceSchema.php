@@ -16,7 +16,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-trait OtherUploadsResourceSchema
+trait MoreResourceSchema
 {
     public static function table(Table $table): Table
     {
@@ -28,8 +28,6 @@ trait OtherUploadsResourceSchema
                     ->sortable(),
 
                 TextColumn::make('name'),
-                
-                TextColumn::make('topic.name')->label('Subject'),
 
                 IconColumn::make('is_published')
                     ->alignCenter()

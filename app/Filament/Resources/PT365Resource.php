@@ -64,17 +64,21 @@ class PT365Resource extends Resource
 
                         Forms\Components\TextInput::make('name')->default(function (callable $get) {
                             return static::generateName($get('published_at'));
-                        })
+                        })->required(),
+
+                        Select::make('initiative_topic_id')
+                            ->relationship('topic', 'name')
+                            ->required()
+                            ->label('Subject')
                             ->required(),
+
+                        Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
+                            ->name('file')
+                            ->acceptedFileTypes(['application/pdf'])
+                            ->collection('pt-365')
+                            ->required(),
+
                     ])->columns(2)->columnSpanFull(),
-
-                    Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
-                        ->name('file')
-                        ->acceptedFileTypes(['application/pdf'])
-                        ->collection('pt-365')
-                        ->required()
-                        ->columnSpanFull(),
-
                 ])->columns(2),
             ]);
     }

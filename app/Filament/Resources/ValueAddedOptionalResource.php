@@ -6,6 +6,7 @@ use App\Enums\Initiatives;
 use App\Filament\Resources\DownloadsResource\Pages;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
+use App\Traits\Filament\MoreResourceSchema;
 use App\Traits\Filament\OtherUploadsResourceSchema;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
@@ -27,7 +28,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ValueAddedOptionalResource extends Resource
 {
-    use OtherUploadsResourceSchema;
+    use MoreResourceSchema;
 
     protected static ?string $model = PublishedInitiative::class;
 
@@ -45,7 +46,7 @@ class ValueAddedOptionalResource extends Resource
                 Forms\Components\Section::make()->schema([
 
                     Forms\Components\Hidden::make('initiative_id')
-                        ->default(InitiativesHelper::getInitiativeID(Initiatives::DOWNLOADS)),
+                        ->default(InitiativesHelper::getInitiativeID(Initiatives::VALUE_ADDED_MATERIAL_OPTIONAL)),
 
 
                     Forms\Components\Group::make()->schema([
@@ -69,7 +70,7 @@ class ValueAddedOptionalResource extends Resource
                     Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
                         ->name('file')
                         ->acceptedFileTypes(['application/pdf'])
-                        ->collection('downloads')
+                        ->collection('value-added-material-optional')
                         ->required()
                         ->columnSpanFull(),
 
@@ -94,7 +95,7 @@ class ValueAddedOptionalResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $query = static::getModel()::query()->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::DOWNLOADS));
+        $query = static::getModel()::query()->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::VALUE_ADDED_MATERIAL_OPTIONAL));
 
         if ($tenant = Filament::getTenant()) {
             static::scopeEloquentQueryToTenant($query, $tenant);
