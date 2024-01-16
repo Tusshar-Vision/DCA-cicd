@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Bookmark;
 use App\Models\Note;
 use App\Services\ArticleService;
+use App\Services\MediaService;
 use App\Services\PublishedInitiativeService;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +20,8 @@ class NewsTodayController extends Controller
 
     public function __construct(
         private readonly PublishedInitiativeService $publishedInitiativeService,
-        private readonly ArticleService $articleService
+        private readonly ArticleService $articleService,
+        private readonly MediaService $mediaService
     ) {
         $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY);
     }
@@ -57,6 +59,7 @@ class NewsTodayController extends Controller
 
         $article = $this->newsToday->getArticleFromSlug($slug);
         $relatedArticles = $this->articleService->getRelatedArticles($article);
+        $relatedVideos = $this->mediaService->getRelatedVideos($article);
 
         $noteAvailable = null;
         $note = null;
@@ -74,8 +77,9 @@ class NewsTodayController extends Controller
             "article" => $article,
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
+            "isArticleBookmarked" => $isArticleBookmarked,
             "relatedArticles" => $relatedArticles,
-            "isArticleBookmarked" => $isArticleBookmarked
+            "relatedVideos" => $relatedVideos
         ]);
     }
 

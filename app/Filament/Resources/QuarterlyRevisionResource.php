@@ -20,7 +20,7 @@ class QuarterlyRevisionResource extends Resource
 
     protected static ?string $navigationGroup = 'Other Uploads';
 
-    protected static ?int $navigationSort = 9;
+    protected static ?int $navigationSort = 10;
 
     protected static ?string $modelLabel = 'Quarterly Revision Document';
 

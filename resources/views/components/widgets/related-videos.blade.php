@@ -4,21 +4,26 @@
     </div>
 
     <div class="flex flex-col space-y-5">
-        @for($i = 0; $i < 5; $i++)
+        @foreach($relatedVideos as $key => $video)
             <div class="flex space-x-2">
-                <div>
-                    <video width="320" height="360" controls>
-                        <source src="video.mp4" type="video/mp4">
+                @if($video->is_url)
+                    @php
+                        $mediaEmbed = new MediaEmbed\MediaEmbed();
+                        $mediaObject =  $mediaEmbed->parseUrl($video->url);
+                        $mediaObject->setWidth(150, true);
+
+                        echo $mediaObject->getEmbedCode();
+                    @endphp
+                @else
+                    <video width="320" controls>
+                        <source src="{{ $video->media->first()->getTemporaryUrl(now()->add('minutes', 120)) }}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
-                </div>
-                <!-- <div>
-                    <p class="text-visionLineGray font-semibold text-sm">John Jacob - 11/11/23</p>
-                </div> -->
+                @endif
                 <div>
-                    <p class="text-sm">Amet luctus venenatis lectus magna fringilla urna porttitor rhoncus.</p>
+                    <p class="text-sm">{{ $video->description ?? $video->title }}</p>
                 </div>
             </div>
-        @endfor
+        @endforeach
     </div>
 </div>

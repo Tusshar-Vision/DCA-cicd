@@ -6,7 +6,9 @@ use Althinect\FilamentSpatieRolesPermissions\Middleware\SyncSpatiePermissionsWit
 use App\Filament\Pages\Auth\EditProfile;
 use App\Filament\Resources\ArticleResource;
 use App\Filament\Resources\CommentResource;
-use App\Filament\Resources\DownloadsResource;
+use App\Filament\Resources\EconomicSurveyResource;
+use App\Filament\Resources\QuarterlyRevisionResource;
+use App\Filament\Resources\ValueAddedOptionalResource;
 use App\Filament\Resources\InfographicsResource;
 use App\Filament\Resources\Mains365Resource;
 use App\Filament\Resources\MonthlyMagazineResource;
@@ -15,6 +17,7 @@ use App\Filament\Resources\PT365Resource;
 use App\Filament\Resources\SectionResource;
 use App\Filament\Resources\SubjectResource;
 use App\Filament\Resources\SubSectionResource;
+use App\Filament\Resources\ValueAddedResource;
 use App\Filament\Resources\VideoResource;
 use App\Filament\Resources\WeeklyFocusResource;
 use Awcodes\Overlook\OverlookPlugin;
@@ -51,7 +54,10 @@ class AdminPanelProvider extends PanelProvider
                         MonthlyMagazineResource::class,
                         Mains365Resource::class,
                         PT365Resource::class,
-                        DownloadsResource::class,
+                        EconomicSurveyResource::class,
+                        ValueAddedResource::class,
+                        ValueAddedOptionalResource::class,
+                        QuarterlyRevisionResource::class,
                         InfographicsResource::class,
                         VideoResource::class,
                         CommentResource::class,

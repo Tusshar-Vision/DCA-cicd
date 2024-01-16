@@ -2,27 +2,35 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Initiatives;
 use App\Filament\Resources\EconomicSurveyResource\Pages;
-use App\Filament\Resources\EconomicSurveyResource\RelationManagers;
-use App\Models\EconomicSurvey;
+use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
-use Filament\Forms;
+use App\Traits\Filament\OtherUploadsResourceSchema;
+use Carbon\Carbon;
+use Filament\Facades\Filament;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class EconomicSurveyResource extends Resource
 {
+    use OtherUploadsResourceSchema;
+
     protected static ?string $model = PublishedInitiative::class;
 
     protected static ?string $navigationGroup = 'Other Uploads';
 
     protected static ?int $navigationSort = 7;
 
-    protected static ?string $modelLabel = 'Economic Survey & Budget';
+    protected static ?string $modelLabel = 'Economic Survey And Budget';
 
     protected static ?string $navigationIcon = 'heroicon-o-currency-rupee';
 
@@ -30,27 +38,56 @@ class EconomicSurveyResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Section::make()->schema([
+
+                    Hidden::make('initiative_id')
+                        ->default(InitiativesHelper::getInitiativeID(Initiatives::ECONOMIC_SURVEY_AND_BUDGET)),
+
+                    Group::make()->schema([
+
+                        DatePicker::make('published_at')
+                            ->native(false)
+                            ->closeOnDateSelection()
+                            ->label('Publish At')
+                            ->required()
+                            ->default(Carbon::now()->format('Y-m-d'))
+                            ->live()
+                            ->afterStateUpdated(
+                                function (Set $set, ?string $state) {
+                                    if ($state !== null)
+                                        $set('name', static::generateName($state));
+                                }),
+
+                        TextInput::make('name')->default(function (callable $get) {
+                            return static::generateName($get('published_at'));
+                        })->required(),
+
+                    ])->columns(2)->columnSpanFull(),
+
+                    SpatieMediaLibraryFileUpload::make('Upload pdf File')
+                        ->name('file')
+                        ->acceptedFileTypes(['application/pdf'])
+                        ->collection('economic-survey-budget')
+                        ->required()
+                        ->columnSpanFull(),
+
+                ])->columns(2),
             ]);
     }
 
-    public static function table(Table $table): Table
+    public static function getEloquentQuery(): Builder
     {
-        return $table
-            ->columns([
-                //
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+        $query = static::getModel()::query()
+            ->where(
+                'initiative_id',
+                InitiativesHelper::getInitiativeID(Initiatives::ECONOMIC_SURVEY_AND_BUDGET)
+            );
+
+        if ($tenant = Filament::getTenant()) {
+            static::scopeEloquentQueryToTenant($query, $tenant);
+        }
+
+        return $query;
     }
 
     public static function getRelations(): array

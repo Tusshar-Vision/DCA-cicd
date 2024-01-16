@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class DownloadsResource extends Resource
+class ValueAddedOptionalResource extends Resource
 {
     use OtherUploadsResourceSchema;
 

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Infographic;
+use App\Models\Video;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -10,7 +11,8 @@ readonly class MediaService
 {
     public function __construct(
         private Media $media,
-        private Infographic $infographic
+        private Infographic $infographic,
+        private Video $video
     )
     {}
 
@@ -19,10 +21,15 @@ readonly class MediaService
     }
 
     public function getLatestVideos(int $limit = 2): Collection|array {
-        return $this->media->where('mime_type', 'like', 'video%')->latest()->limit($limit)->get();
+        return $this->video->latest()->with('media')->limit($limit)->get();
     }
 
-    public function getAllInfographics() {
-        return $this->infographic->latest()->limit(10)->get();
+    public function getRelatedVideos($article): Collection|array {
+        return $this->video->latest()->withAnyTags($article->tags)
+            ->get();
+    }
+
+    public function getAllInfographics($limit): Collection|array  {
+        return $this->infographic->latest()->limit($limit)->get();
     }
 }

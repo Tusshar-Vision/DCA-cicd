@@ -6,6 +6,7 @@ use App\DTO\Menu\MainMenuDTO;
 use App\Enums\Initiatives;
 use App\Exceptions\InitiativeNotFoundException;
 use App\Helpers\InitiativesHelper;
+use App\Models\Initiative;
 use App\Models\PublishedInitiative;
 use Throwable;
 
@@ -13,6 +14,7 @@ readonly class InitiativeService
 {
     public function __construct(
         private PublishedInitiative $publishedInitiatives,
+        private Initiative $initiative
     ) {
     }
 
@@ -39,6 +41,7 @@ readonly class InitiativeService
             ->whereInitiative($initiativeId)
             ->isPublished()
             ->with('articles.topic')
+            ->hasPublishedArticle()
             ->limit(10)
             ->orderByDesc('published_at')
             ->groupByMonth();
@@ -66,6 +69,7 @@ readonly class InitiativeService
             ->whereInitiative($initiativeId)
             ->isPublished()
             ->with('articles.topic')
+            ->hasPublishedArticle()
             ->limit(10)
             ->orderByDesc('published_at')
             ->groupByYear();
@@ -89,14 +93,13 @@ readonly class InitiativeService
 
     protected function getMenuDataForMore($initiativeId): array
     {
-        $menuData = [
-            "economy-survey"  => "Economic Survey and Budget",
-            "weekly-round-table" => "Weekly Round Table",
-            "animated-shorts" => "Animated Shorts"  ,
-            "pyq" => "PYQs",
-            "value-added-material" => "Value Added Material",
-            "value-added-material-optional" => "Value Added Material Optional"
-        ];
+        $menuData = $this->initiative
+                    ->where(
+                        'parent_id',
+                        '=',
+                                InitiativesHelper::getInitiativeID(Initiatives::MORE))
+                    ->get()
+                    ->pluck('name', 'path');
 
         return [
             'initiative_id' => $initiativeId,
