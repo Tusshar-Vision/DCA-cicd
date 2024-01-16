@@ -3018,3 +3018,7 @@ li[data-level="4"] {
 .mystyle{
   left: 0 !important;
 }
+
+.daterangepicker td.off{
+  pointer-events: none;
+}
