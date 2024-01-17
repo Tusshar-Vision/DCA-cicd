@@ -59,7 +59,6 @@
 </div>
 
 <script>
-console.log("hii")
 
 function showArticleCards(year, month) {
     let url = "{{url('news-today')}}";
