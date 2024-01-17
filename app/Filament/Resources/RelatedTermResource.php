@@ -4,10 +4,13 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RelatedTermsResource\Pages;
 use App\Models\RelatedTerm;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class RelatedTermResource extends Resource
 {
@@ -23,7 +26,8 @@ class RelatedTermResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('term')->required(),
+                Textarea::make('description')->required()->rows(5)
             ]);
     }
 
@@ -31,7 +35,11 @@ class RelatedTermResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('id')->toggleable(),
+                Tables\Columns\TextColumn::make('term'),
+                Tables\Columns\TextColumn::make('description')->limit(40)
+                    ->tooltip(fn (Model $record): string => $record->description),
+                Tables\Columns\TextColumn::make('created_at')->date('d M Y h:i a')->sortable()->toggleable()
             ])
             ->filters([
                 //

@@ -176,7 +176,7 @@ class Article extends Model implements HasMedia, Sortable
 
     public function relatedTerms(): HasMany
     {
-        return $this->hasMany(RelatedTerm::class);
+        return $this->hasMany(ArticleRelatedTerm::class);
     }
 
     public function relatedVideos(): HasMany
@@ -206,6 +206,6 @@ class Article extends Model implements HasMedia, Sortable
 
     public function scopeLanguage(Builder $query): Builder
     {
-        return $query->where('language', config("settings.language." . app()->getLocale()));
+        return $query->where('language_id', config("settings.language." . app()->getLocale()));
     }
 }

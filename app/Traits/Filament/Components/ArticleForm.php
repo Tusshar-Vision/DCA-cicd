@@ -31,7 +31,7 @@ trait ArticleForm
 
                 Tabs::make('Tabs')->tabs([
 
-                    Tabs\Tab::make('Content')->schema([
+                    Tabs\Tab::make('Article Content')->schema([
 
                         Section::make('General')->schema([
 
@@ -205,8 +205,12 @@ trait ArticleForm
                             ->label('')
                             ->relationship('relatedArticles')
                             ->schema([
-                                Select::make('related_article_id')->relationship('article', 'title')->required(),
+                                Select::make('related_article_id')
+                                    ->relationship('relatedArticle', 'title')
+                                    ->required(),
                             ])
+                            ->orderColumn('order_column')
+                            ->reorderable()
                             ->addActionLabel('Add article')
                             ->columns(1)
                     ]),
@@ -216,14 +220,29 @@ trait ArticleForm
                             ->label('')
                             ->relationship('relatedVideos')
                             ->schema([
-                                Select::make('video_id')->relationship('video', 'title')->required(),
+                                Select::make('video_id')
+                                    ->relationship('video', 'title')
+                                    ->required(),
                             ])
+                            ->orderColumn('order_column')
+                            ->reorderable()
                             ->addActionLabel('Add video')
                             ->columns(1)
                     ]),
 
                     Tabs\Tab::make('Related Terms')->schema([
-
+                        Repeater::make('terms')
+                            ->label('')
+                            ->relationship('relatedTerms')
+                            ->schema([
+                                Select::make('related_term_id')
+                                    ->relationship('term', 'term')
+                                    ->required(),
+                            ])
+                            ->orderColumn('order_column')
+                            ->reorderable()
+                            ->addActionLabel('Add term')
+                            ->columns(1)
                     ]),
 
                     Tabs\Tab::make('SEO')->schema([

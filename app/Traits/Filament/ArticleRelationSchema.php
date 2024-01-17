@@ -264,7 +264,8 @@ trait ArticleRelationSchema
                         'subSection' => $record->topicSubSection->name,
                         'author' => $record->author->name,
                         'reviewer' => $record->reviewer->name ?? '',
-                        'body' => $record->latestReview()->review ?? '',
+                        'tags' => $record->tags,
+                        'body' => $record->latestReview()->review ?? 'No reviewer comments available on this article.',
                         'content' => $record->content->content,
                         'sources' => $record->sources
                     ])
@@ -275,6 +276,7 @@ trait ArticleRelationSchema
                             TextInput::make('section')->disabled(),
                             TextInput::make('subSection')->disabled(),
                         ])->columns(3),
+                        SpatieTagsInput::make('tags')->placeholder('')->disabled(),
                         Group::make()->schema([
                             TextInput::make('author')->disabled(),
                             TextInput::make('reviewer')->disabled(),
@@ -340,8 +342,8 @@ trait ArticleRelationSchema
                             TextInput::make('subject')->disabled(),
                             TextInput::make('section')->disabled(),
                             TextInput::make('subSection')->disabled(),
-                            SpatieTagsInput::make('tags')->placeholder('')->disabled()
                         ])->columns(3),
+                        SpatieTagsInput::make('tags')->placeholder('')->disabled(),
                         Section::make('Article Content')
                             ->relationship('content')
                             ->schema([

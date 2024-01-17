@@ -9,6 +9,12 @@ class RelatedVideo extends Pivot
 {
     protected $table = 'article_video_relation';
 
+    protected $fillable = [
+        'article_id',
+        'video_id',
+        'order_column'
+    ];
+
     public function article(): BelongsTo
     {
         return $this->belongsTo(Article::class, 'article_id');

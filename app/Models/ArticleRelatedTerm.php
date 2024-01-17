@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class RelatedArticle extends Model
+class ArticleRelatedTerm extends Model
 {
-    protected $table = 'related_articles';
+    protected $table = 'article_related_term';
 
     protected $fillable = [
         'article_id',
-        'related_article_id',
+        'related_term_id',
         'order_column'
     ];
 
@@ -20,8 +20,8 @@ class RelatedArticle extends Model
         return $this->belongsTo(Article::class, 'article_id');
     }
 
-    public function relatedArticle(): BelongsTo
+    public function term(): BelongsTo
     {
-        return $this->belongsTo(Article::class, 'related_article_id');
+        return $this->belongsTo(RelatedTerm::class, 'related_term_id');
     }
 }
