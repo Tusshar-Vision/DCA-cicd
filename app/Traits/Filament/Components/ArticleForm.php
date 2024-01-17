@@ -49,6 +49,7 @@ trait ArticleForm
                                         '4:3',
                                         '1:1',
                                     ])
+                                    ->disk('s3_public')
                                     ->collection('article-featured-image')
                                     ->responsiveImages()
                                     ->conversion('thumb'),

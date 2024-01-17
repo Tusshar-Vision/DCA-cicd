@@ -20,6 +20,8 @@ use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class QuarterlyRevisionResource extends Resource
 {
@@ -117,5 +119,40 @@ class QuarterlyRevisionResource extends Resource
             'create' => Pages\CreateQuarterlyRevision::route('/create'),
             'edit' => Pages\EditQuarterlyRevision::route('/{record}/edit'),
         ];
+    }
+
+    public static function canViewAny(): bool
+    {
+        return Auth::user()->can('view_quarterly::revision');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return Auth::user()->can('edit_quarterly::revision');
+    }
+
+    public static function canCreate(): bool
+    {
+        return Auth::user()->can('create_quarterly::revision');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return Auth::user()->can('delete_quarterly::revision');
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        return Auth::user()->can('delete_quarterly::revision');
+    }
+
+    public static function canForceDelete(Model $record): bool
+    {
+        return Auth::user()->can('delete_quarterly::revision');
+    }
+
+    public static function canForceDeleteAny(): bool
+    {
+        return Auth::user()->can('delete_quarterly::revision');
     }
 }

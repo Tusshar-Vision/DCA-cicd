@@ -97,7 +97,8 @@ class VideoResource extends Resource
                             'video/mp4',         // MP4 videos
                             'video/webm',        // WebM videos
                             'video/ogg',
-                        ]),
+                        ])
+                        ->previewable(),
 
                     TextInput::make('url')
                         ->visible(function (callable $get) {

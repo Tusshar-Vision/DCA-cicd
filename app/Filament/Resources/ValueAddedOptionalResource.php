@@ -123,36 +123,36 @@ class ValueAddedOptionalResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return Auth::user()->can('view_downloads');
+        return Auth::user()->can('view_value::added::optional');
     }
 
     public static function canEdit(Model $record): bool
     {
-        return Auth::user()->can('edit_downloads');
+        return Auth::user()->can('edit_value::added::optional');
     }
 
     public static function canCreate(): bool
     {
-        return Auth::user()->can('create_downloads');
+        return Auth::user()->can('create_value::added::optional');
     }
 
     public static function canDelete(Model $record): bool
     {
-        return Auth::user()->can('delete_downloads');
+        return Auth::user()->can('delete_value::added::optional');
     }
 
     public static function canDeleteAny(): bool
     {
-        return Auth::user()->can('delete_downloads');
+        return Auth::user()->can('delete_value::added::optional');
     }
 
     public static function canForceDelete(Model $record): bool
     {
-        return Auth::user()->can('delete_downloads');
+        return Auth::user()->can('delete_value::added::optional');
     }
 
     public static function canForceDeleteAny(): bool
     {
-        return Auth::user()->can('delete_downloads');
+        return Auth::user()->can('delete_value::added::optional');
     }
 }

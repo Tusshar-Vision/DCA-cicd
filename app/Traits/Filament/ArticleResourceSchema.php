@@ -55,6 +55,7 @@ trait ArticleResourceSchema
         return $table
             ->deferLoading()
             ->recordUrl(null)
+            ->emptyStateHeading('No Articles')
             ->defaultSort('updated_at', 'desc')
             ->columns([
                 TextColumn::make('id')
