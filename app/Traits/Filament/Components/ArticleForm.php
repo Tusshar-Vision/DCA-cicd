@@ -5,6 +5,7 @@ namespace App\Traits\Filament\Components;
 use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -15,6 +16,7 @@ use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use RalphJSmit\Filament\SEO\SEO;
@@ -29,7 +31,7 @@ trait ArticleForm
 
                 Tabs::make('Tabs')->tabs([
 
-                    Tabs\Tab::make('Content')->schema([
+                    Tabs\Tab::make('Article Content')->schema([
 
                         Section::make('General')->schema([
 
@@ -47,7 +49,8 @@ trait ArticleForm
                                         '4:3',
                                         '1:1',
                                     ])
-                                    ->collection('article_featured_image')
+                                    ->disk('s3_public')
+                                    ->collection('article-featured-image')
                                     ->responsiveImages()
                                     ->conversion('thumb'),
 
@@ -105,7 +108,11 @@ trait ArticleForm
                                     ->relationship('topic', 'name')
                                     ->required()
                                     ->label('Subject')
-                                    ->reactive(),
+                                    ->reactive()
+                                    ->afterStateUpdated(function (Set $set, ?string $state) {
+                                        $set('topic_section_id', 0);
+                                        $set('topic_sub_section_id', 0);
+                                    }),
 
                                 Select::make('topic_section_id')
                                     ->relationship('topicSection', 'name', function ($query, callable $get) {
@@ -114,7 +121,10 @@ trait ArticleForm
                                         return $query->where('topic_id', '=', $topic);
                                     })
                                     ->reactive()
-                                    ->label('Section'),
+                                    ->label('Section')
+                                    ->afterStateUpdated(function (Set $set, ?string $state) {
+                                        $set('topic_sub_section_id', 0);
+                                    }),
 
                                 Select::make('topic_sub_section_id')
                                     ->relationship('topicSubSection', 'name', function ($query, callable $get) {
@@ -128,13 +138,13 @@ trait ArticleForm
 
                             Group::make()->schema([
 
-                                Select::make('language')
-                                    ->options([
-                                        "english" => "English",
-                                        "hindi" => "Hindi",
-                                    ])
+                                Select::make('language_id')
+                                    ->relationship('language', 'name', function ($query) {
+                                        return $query->orderBy('order_column');
+                                    })
+                                    ->label('Language')
                                     ->required()
-                                    ->default('english'),
+                                    ->default(1),
 
                                 SpatieTagsInput::make('tags')
                                     ->required(),
@@ -149,7 +159,6 @@ trait ArticleForm
                                 TinyEditor::make('content')
                                     ->columnSpanFull()
                                     ->profile('full')
-    //                                ->toolbarSticky(true)
                                     ->maxHeight(500)
                                     ->hiddenLabel(),
 
@@ -190,6 +199,51 @@ trait ArticleForm
                         TagsInput::make('sources')
                             ->separator(',')
                             ->placeholder('New Source')
+                    ]),
+
+                    Tabs\Tab::make('Related Articles')->schema([
+                        Repeater::make('articles')
+                            ->label('')
+                            ->relationship('relatedArticles')
+                            ->schema([
+                                Select::make('related_article_id')
+                                    ->relationship('relatedArticle', 'title')
+                                    ->required(),
+                            ])
+                            ->orderColumn('order_column')
+                            ->reorderable()
+                            ->addActionLabel('Add article')
+                            ->columns(1)
+                    ]),
+
+                    Tabs\Tab::make('Related Videos')->schema([
+                        Repeater::make('videos')
+                            ->label('')
+                            ->relationship('relatedVideos')
+                            ->schema([
+                                Select::make('video_id')
+                                    ->relationship('video', 'title')
+                                    ->required(),
+                            ])
+                            ->orderColumn('order_column')
+                            ->reorderable()
+                            ->addActionLabel('Add video')
+                            ->columns(1)
+                    ]),
+
+                    Tabs\Tab::make('Related Terms')->schema([
+                        Repeater::make('terms')
+                            ->label('')
+                            ->relationship('relatedTerms')
+                            ->schema([
+                                Select::make('related_term_id')
+                                    ->relationship('term', 'term')
+                                    ->required(),
+                            ])
+                            ->orderColumn('order_column')
+                            ->reorderable()
+                            ->addActionLabel('Add term')
+                            ->columns(1)
                     ]),
 
                     Tabs\Tab::make('SEO')->schema([

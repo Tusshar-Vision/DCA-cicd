@@ -57,6 +57,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'vision_url' => env('VISION_URL', 'https://visionias.in'),
+
     'asset_url' => env('ASSET_URL'),
 
     /*

@@ -17,6 +17,7 @@ class Initiative extends Model implements Sortable
         'name_hindi',
         'description',
         'path',
+        'parent_id',
         'order_column'
     ];
 

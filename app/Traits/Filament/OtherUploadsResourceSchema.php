@@ -28,11 +28,12 @@ trait OtherUploadsResourceSchema
                     ->sortable(),
 
                 TextColumn::make('name'),
+                
+                TextColumn::make('topic.name')->label('Subject'),
 
                 IconColumn::make('is_published')
                     ->alignCenter()
                     ->label('Is Published'),
-
 
                 TextColumn::make('published_at')
                     ->dateTime('d M Y')

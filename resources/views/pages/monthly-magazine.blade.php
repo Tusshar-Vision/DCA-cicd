@@ -30,11 +30,13 @@
 
 
     <div class="space-y-12">
-        <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8">
+        <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8 mt-[20px] md:mt-0">
 
             <div class="flex min-w-full lg:min-w-[340px] lg:w-2/6 flex-col space-y-6 leftsticky">
                 <livewire:widgets.articles-side-bar :topics="$topics" :articles="$sortedArticlesWithTopics" :table-of-content="$tableOfContent" />
-                <x-widgets.side-bar-download-menu />
+                <div class="hidden lg:block">
+                    <x-widgets.side-bar-download-menu />
+                </div>
             </div>
 
             <div class="flex flex-col w-full mt-[20px]">
@@ -43,6 +45,9 @@
                     <div class="mt-12">
                         <x-widgets.article-pagination :current-initiative="$articles" :current-article-slug="$article->slug" />
                     </div>
+                    <div class="block lg:hidden">
+                        <x-widgets.side-bar-download-menu />
+                    </div>
             </div>
 
         </div>
@@ -50,9 +55,9 @@
         <div class="flex flex-col justify-center items-center w-full">
             <div class="flex flex-col w-full lg:w-5/6 lg:space-y-12">
                 <div class="grid grid-cols-1 gap-0 lg:grid-cols-3 lg:gap-3">
-                    <x-widgets.related-terms />
+                    <x-widgets.related-terms :related-terms="$relatedTerms" />
                     <x-widgets.related-articles :related-articles="$relatedArticles" />
-                    <x-widgets.related-videos />
+                    <x-widgets.related-videos :related-videos="$relatedVideos" />
                 </div>
 
                 <div class="mt-[25px] lg:mt-0">

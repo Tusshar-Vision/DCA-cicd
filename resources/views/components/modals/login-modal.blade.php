@@ -5,8 +5,8 @@
      aria-labelledby="modal-title" role="dialog" aria-modal="true">
     <div class="fixed inset-0 bg-visionLineGray bg-opacity-75 transition-opacity"></div>
     <div class="fixed inset-0 z-10 overflow-y-auto">
-        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <div class="relative transform overflow-hidden rounded-md bg-white shadow-xl transition-all w-7/12">
+        <div class="flex min-h-full items-end justify-center p-0 md:p-4 text-center sm:items-center sm:p-0">
+            <div class="relative transform overflow-hidden rounded-none md:rounded-md bg-white shadow-xl transition-all w-full md:w-7/12">
 
                             
                 <button @click="{{ $attributes['x-show'] }} = false" class="absolute right-3 top-3">

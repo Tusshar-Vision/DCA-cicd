@@ -21,11 +21,37 @@ use App\Http\Controllers\Pages;
 
 // Routes for all the pages
 Route::get('/', [Pages\HomeController::class, 'index'])->name('home');
-Route::get('/mains-365', [Pages\Mains365Controller::class, 'index'])->name('mains-365');
-Route::get('/pt-365', [Pages\PT365Controller::class, 'index'])->name('pt-365');
 Route::get('/downloads', [Pages\DownloadsController::class, 'index'])->name('downloads');
 Route::get('/search', [Pages\SearchController::class, 'index'])->name('search');
 Route::get('/search/{query}', [Pages\SearchController::class, 'searchQuery'])->name('search.query');
+
+Route::get('/eco-survey-budget', function(){})->name('economic-survey-budget');
+
+Route::controller(Pages\Mains365Controller::class)
+    ->group(
+        function () {
+            Route::prefix('/mains-365')
+                ->group(
+                    function () {
+                        Route::get('/', 'index')->name('mains-365');
+                        Route::get('/archive', 'archive')->name('mains365.archive');
+                    }
+                );
+        }
+    );
+
+Route::controller(Pages\PT365Controller::class)
+    ->group(
+        function () {
+            Route::prefix('/pt-365')
+                ->group(
+                    function () {
+                        Route::get('/', 'index')->name('pt-365');
+                        Route::get('/archive', 'archive')->name('pt365.archive');
+                    }
+                );
+        }
+    );
 
 Route::controller(Pages\NewsTodayController::class)
     ->group(
@@ -35,9 +61,12 @@ Route::controller(Pages\NewsTodayController::class)
                     function () {
                         Route::get('/', 'index')->name('news-today');
                         Route::get('/{date}/{topic}/{article_slug}', 'renderArticle')->name('news-today.article');
+                        Route::get('/getbymonth', 'getByYearAndMonth')->name('news-today.getByYearAndMonth');
                         Route::get('/archive', 'archive')->name('news-today.archive');
-                    });
-        });
+                    }
+                );
+        }
+    );
 
 Route::controller(Pages\WeeklyFocusController::class)
     ->group(
@@ -48,20 +77,24 @@ Route::controller(Pages\WeeklyFocusController::class)
                         Route::get('/', 'index')->name('weekly-focus');
                         Route::get('/{date}/{topic}/{article_slug}', 'renderArticle')->name('weekly-focus.article');
                         Route::get('/archive', 'archive')->name('weekly-focus.archive');
-                    });
-        });
+                    }
+                );
+        }
+    );
 
 Route::controller(Pages\MonthlyMagazineController::class)
     ->group(
         function () {
             Route::prefix('/monthly-magazine')
                 ->group(
-                    function() {
+                    function () {
                         Route::get('/', 'index')->name('monthly-magazine');
                         Route::get('/{date}/{topic}/{article_slug}', 'renderArticle')->name('monthly-magazine.article');
                         Route::get('/archive', 'archive')->name('monthly-magazine.archive');
-                    });
-        });
+                    }
+                );
+        }
+    );
 
 Route::middleware('auth:cognito')->group(function () {
     Route::prefix('user')->group(function () {

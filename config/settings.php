@@ -2,8 +2,8 @@
 
 return [
     'language' => [
-        'en' => 'english',
-        'hi' => 'hindi'
+        'en' => 1,
+        'hi' => 2
     ],
     'initiatives' => [
         "NEWS_TODAY" => 1,

@@ -11,7 +11,8 @@ use Illuminate\View\Component;
 
 class Initiatives extends Component
 {
-    public $initiatives;
+    private $initiatives;
+    private $weeklyFocusData, $monthlyMagazineData, $moreData;
 
     /**
      * Create a new component instance.
@@ -21,19 +22,12 @@ class Initiatives extends Component
     {
         if (Schema::hasTable('initiatives')) {
 
-            $this->initiatives = Initiative::orderBy('order_column')->get(['id', 'name', 'name_hindi', 'path']);
-            $weeklyFocusData = $initiativeService->getMenuData(\App\Enums\Initiatives::WEEKLY_FOCUS);
-            $monthlyMagazineData = $initiativeService->getMenuData(\App\Enums\Initiatives::MONTHLY_MAGAZINE);
-            $moreData = $initiativeService->getMenuData(\App\Enums\Initiatives::MORE);
-
-            view()->share([
-                'initiatives' => $this->initiatives,
-                'menuData' => [
-                    'monthlyMagazine' => $monthlyMagazineData,
-                    'weeklyFocus' => $weeklyFocusData,
-                    'more' => $moreData
-                ]
-            ]);
+            $this->initiatives = Initiative::orderBy('order_column')
+                    ->where('parent_id', '=', null)
+                    ->get(['id', 'name', 'name_hindi', 'path']);
+            $this->weeklyFocusData = $initiativeService->getMenuData(\App\Enums\Initiatives::WEEKLY_FOCUS);
+            $this->monthlyMagazineData = $initiativeService->getMenuData(\App\Enums\Initiatives::MONTHLY_MAGAZINE);
+            $this->moreData = $initiativeService->getMenuData(\App\Enums\Initiatives::MORE);
         }
     }
 
@@ -42,6 +36,13 @@ class Initiatives extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.navigation.initiatives');
+        return view('components.navigation.initiatives')->with([
+            'initiatives' => $this->initiatives,
+            'menuData' => [
+                'monthlyMagazine' => $this->monthlyMagazineData,
+                'weeklyFocus' => $this->weeklyFocusData,
+                'more' => $this->moreData,
+            ]
+        ]);
     }
 }

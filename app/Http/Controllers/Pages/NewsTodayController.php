@@ -9,7 +9,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Bookmark;
 use App\Models\Note;
 use App\Services\ArticleService;
+use App\Services\MediaService;
 use App\Services\PublishedInitiativeService;
+use App\Services\SuggestionService;
 use Illuminate\Support\Facades\Auth;
 
 class NewsTodayController extends Controller
@@ -19,7 +21,8 @@ class NewsTodayController extends Controller
 
     public function __construct(
         private readonly PublishedInitiativeService $publishedInitiativeService,
-        private readonly ArticleService $articleService
+        private readonly ArticleService $articleService,
+        private readonly SuggestionService $suggestionService
     ) {
         $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY);
     }
@@ -56,7 +59,10 @@ class NewsTodayController extends Controller
         );
 
         $article = $this->newsToday->getArticleFromSlug($slug);
-        $relatedArticles = $this->articleService->getRelatedArticles($article);
+
+        $relatedTerms = $this->suggestionService->getRelatedTerms($article);
+        $relatedArticles = $this->suggestionService->getRelatedArticles($article);
+        $relatedVideos = $this->suggestionService->getRelatedVideos($article);
 
         $noteAvailable = null;
         $note = null;
@@ -74,15 +80,28 @@ class NewsTodayController extends Controller
             "article" => $article,
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
+            "isArticleBookmarked" => $isArticleBookmarked,
+            "relatedTerms" => $relatedTerms,
             "relatedArticles" => $relatedArticles,
-            "isArticleBookmarked" => $isArticleBookmarked
+            "relatedVideos" => $relatedVideos
         ]);
+    }
+
+    public function getByYearAndMonth()
+    {
+        $year = request()->input('year');
+        $month = request()->input('month');
+        $articles = $this->articleService->getByYearAndMonth(config('settings.initiatives.NEWS_TODAY'), $year, $month);
+        return response()->json($articles);
     }
 
     public function archive()
     {
+        $archiveData = $this->articleService->archive(config('settings.initiatives.NEWS_TODAY'));
+
         return View('pages.archives.daily-news', [
-            "title" => "Daily News Archive"
+            "title" => "Daily News Archive",
+            "data" => $archiveData
         ]);
     }
 }

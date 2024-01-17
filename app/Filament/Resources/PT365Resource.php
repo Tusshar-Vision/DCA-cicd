@@ -57,22 +57,37 @@ class PT365Resource extends Resource
                             ->required()
                             ->default(Carbon::now()->format('Y-m-d'))
                             ->live()
-                            ->afterStateUpdated(
-                                fn (Forms\Set $set, ?string $state) => $set('name', static::generateName($state))),
+                            ->afterStateUpdated(function (Forms\Set $set, ?string $state) {
+                                if ($state !== null)
+                                    $set('name', static::generateName($state));
+                            }),
 
                         Forms\Components\TextInput::make('name')->default(function (callable $get) {
                             return static::generateName($get('published_at'));
-                        })
+                        })->required(),
+
+                        Select::make('initiative_topic_id')
+                            ->relationship('topic', 'name')
+                            ->required()
+                            ->label('Subject')
                             ->required(),
+
+                        Select::make('language_id')
+                            ->relationship('language', 'name', function ($query) {
+                                return $query->orderBy('order_column');
+                            })
+                            ->label('Language')
+                            ->required()
+                            ->default(1),
+
+                        Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
+                            ->name('file')
+                            ->acceptedFileTypes(['application/pdf'])
+                            ->collection('pt-365')
+                            ->required()
+                            ->columnSpanFull(),
+
                     ])->columns(2)->columnSpanFull(),
-
-                    Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
-                        ->name('file')
-                        ->acceptedFileTypes(['application/pdf'])
-                        ->collection('pt-365')
-                        ->required()
-                        ->columnSpanFull(),
-
                 ])->columns(2),
             ]);
     }

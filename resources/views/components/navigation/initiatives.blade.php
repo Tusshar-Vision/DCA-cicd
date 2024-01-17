@@ -1,81 +1,189 @@
 @php
     use App\Helpers\InitiativesHelper;
     use App\Enums\Initiatives;
+    use App\Helpers\UrlHelper;
+    use Carbon\Carbon;
 @endphp
 
 <!-- responsive menu start -->
 
 <div id="myNav" class="menuOverlay">
   <div class="menuOverlayContent">
-    <div class="flex justify-between align-middle mb-[20px] px-[20px]"> 
-        <span class="font-[#242424] text-sm font-bold">MENU</span> 
+
+    <div class="flex justify-between align-middle mb-[20px] px-[20px]">
+        <span class="font-[#242424] text-sm font-bold">MENU</span>
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     </div>
+
     <div class="accordion h-[60vh] md:h-auto overflow-scroll">
-        <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px]">Home</a>
-        <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px]">News Today</a>
-        <div class="accordion-item mb-[15px]">
-            <div class="accordion-label text-sm font-[#242424] font-semibold py-[10px] px-[20px]" onclick="toggleAccordion(this)">
-                    Weekly Focus<div class="arrow">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
-                    <path d="M8.76615 7.42899L1.57103 0.236258C1.25531 -0.0786629 0.743796 -0.0786629 0.427282 0.236258C0.111565 0.551178 0.111565 1.06269 0.427282 1.37761L7.0517 7.99964L0.42808 14.6217C0.112363 14.9366 0.112363 15.4481 0.42808 15.7638C0.743797 16.0787 1.25611 16.0787 1.57182 15.7638L8.76695 8.57114C9.07782 8.25948 9.07782 7.73993 8.76615 7.42899Z" fill="#242424"/>
-                    </svg>
+
+        <a href="{{ route('home') }}" wire:navigate class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px] {{ request()->is('/') ? 'text-[#005FAF]' : '' }}">
+            Home
+        </a>
+
+        @foreach ($initiatives as $initiative)
+            @if ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
+
+                <a class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px] {{ request()->is('news-today*') ? 'text-[#005FAF]' : '' }}"
+                   href="{{ $initiative->path }}"
+                   wire:navigate
+                >
+                    {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
+                </a>
+
+            @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE))
+
+                <div class="accordion-item mb-[15px]">
+                    <div class="accordion-label text-sm font-[#242424] font-semibold py-[10px] px-[20px] {{ request()->is('monthly-magazine*') ? 'text-[#005FAF]' : '' }}"
+                         onclick="toggleAccordion(this)"
+                    >
+                        {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
+                        <div class="arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
+                                <path d="M8.76615 7.42899L1.57103 0.236258C1.25531 -0.0786629 0.743796 -0.0786629 0.427282 0.236258C0.111565 0.551178 0.111565 1.06269 0.427282 1.37761L7.0517 7.99964L0.42808 14.6217C0.112363 14.9366 0.112363 15.4481 0.42808 15.7638C0.743797 16.0787 1.25611 16.0787 1.57182 15.7638L8.76695 8.57114C9.07782 8.25948 9.07782 7.73993 8.76615 7.42899Z" fill="#242424"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="accordion-content">
+                        <a href="{{ $initiative->path }}" class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">
+                            Latest Edition
+                        </a>
+
+                        <ul>
+                            @foreach($menuData['monthlyMagazine']['data'] as $year => $menuDTO)
+                                <li>
+                                    <a href="javascript:void(0)" class="flex justify-between items-center font-semibold w-full p-[10px] text-sm">
+                                        {{ $year }}
+                                    </a>
+                                    <ul>
+                                        @foreach($menuDTO as $key => $menu)
+                                            <li>
+                                                <a href="{{ route(
+                                                                'monthly-magazine.article',
+                                                                [
+                                                                    'date' => Carbon::parse($menu->publishedAt)->format('Y-m-d'),
+                                                                    'topic' => strtolower($menu->article->first()->topic),
+                                                                    'article_slug' => $menu->article->first()->slug
+                                                                ]
+                                                            )
+                                                        }}"
+                                                   class="text-sm block px-[15px] mb-[10px]"
+                                                   wire:navigate
+                                                >
+                                                    {{ Carbon::parse($menu->publishedAt)->monthName }}
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                            @endforeach
+                        </ul>
+
+                        <a href="{{ route('monthly-magazine.archive') }}" class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">
+                            View All
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="accordion-content">
-                <a href="javascript:void(0)" class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">Latest Edition</a>
-                <ul>
-                    <li>
-                        <a href="javascript:void(0)" class="flex justify-between items-center font-semibold w-full p-[10px] text-sm">November 2023</a>
-                            <ul>
-                                <li><a href="javascript:void(0)" class="text-sm block px-[15px] mb-[10px]">
-                                Countering Corruption: India's Ongoing Battle
-                                </a></li>
-                            </ul>
-                    </li>
-                </ul>
-                <a href="javascript:void(0)" class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">View All</a>
-            </div>
-        </div>
-        <div class="accordion-item mb-[15px]">
-            <div class="accordion-label text-sm font-[#242424] font-semibold py-[10px] px-[20px]" onclick="toggleAccordion(this)">
-                Monthly Magazine<div class="arrow">
-                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
-                    <path d="M8.76615 7.42899L1.57103 0.236258C1.25531 -0.0786629 0.743796 -0.0786629 0.427282 0.236258C0.111565 0.551178 0.111565 1.06269 0.427282 1.37761L7.0517 7.99964L0.42808 14.6217C0.112363 14.9366 0.112363 15.4481 0.42808 15.7638C0.743797 16.0787 1.25611 16.0787 1.57182 15.7638L8.76695 8.57114C9.07782 8.25948 9.07782 7.73993 8.76615 7.42899Z" fill="#242424"/>
-                    </svg>
+
+            @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
+
+                <div class="accordion-item mb-[15px]">
+                    <div class="accordion-label text-sm font-[#242424] font-semibold py-[10px] px-[20px]" onclick="toggleAccordion(this)">
+                        <a class="hover:text-[#005FAF] {{ request()->is('weekly-focus*') ? 'text-[#005FAF]' : '' }}"
+                           href="javascript:void(0)">
+                            {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
+                        </a>
+                        <div class="arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
+                                <path d="M8.76615 7.42899L1.57103 0.236258C1.25531 -0.0786629 0.743796 -0.0786629 0.427282 0.236258C0.111565 0.551178 0.111565 1.06269 0.427282 1.37761L7.0517 7.99964L0.42808 14.6217C0.112363 14.9366 0.112363 15.4481 0.42808 15.7638C0.743797 16.0787 1.25611 16.0787 1.57182 15.7638L8.76695 8.57114C9.07782 8.25948 9.07782 7.73993 8.76615 7.42899Z" fill="#242424"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="accordion-content">
+                        <a href="{{ $initiative->path }}" class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]" wire:navigate>
+                            Latest Edition
+                        </a>
+                        <ul>
+
+                            @foreach($menuData['weeklyFocus']['data'] as $month => $menuDTO)
+
+                                <li>
+                                    <a href="javascript:void(0)" class="flex justify-between items-center font-semibold w-full p-[10px] text-sm">
+                                        {{ $month }}
+                                    </a>
+                                    @foreach($menuDTO as $key => $menu)
+                                        <ul>
+                                            <li>
+                                                <a href="{{
+                                                        route(
+                                                            'weekly-focus.article',
+                                                            [
+                                                                'date' => Carbon::parse($menu->publishedAt)->format('Y-m-d'),
+                                                                'topic' => strtolower($menu->article->first()->topic),
+                                                                'article_slug' => $menu->article->first()->slug
+                                                            ]
+                                                        )
+                                                    }}" class="text-sm block px-[15px] mb-[10px]">
+                                                    {{ $menu->article->first()->title }}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    @endforeach
+                                </li>
+
+                            @endforeach
+
+                        </ul>
+                        <a href="{{ route('weekly-focus.archive') }}" class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">
+                            View All
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="accordion-content">
-                <a href="javascript:void(0)" class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">Latest Edition</a>
-                <ul>
-                    <li>
-                        <a href="javascript:void(0)" class="flex justify-between items-center font-semibold w-full p-[10px] text-sm">2023</a>
-                            <ul>
-                                <li><a href="javascript:void(0)" class="text-sm block px-[15px] mb-[10px]">
-                                    November
-                                </a></li>
-                            </ul>
-                    </li>
-                </ul>
-                <a href="javascript:void(0)" class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">View All</a>
-            </div>
-        </div>
-        <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px]">Mains 365</a>
-        <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px]">Downloads</a>
-        <div class="accordion-item mb-[15px]">
-            <div class="accordion-label text-sm font-[#242424] font-semibold py-[10px] px-[20px]" onclick="toggleAccordion(this)">
-            More <div class="arrow">
-            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
-                    <path d="M8.76615 7.42899L1.57103 0.236258C1.25531 -0.0786629 0.743796 -0.0786629 0.427282 0.236258C0.111565 0.551178 0.111565 1.06269 0.427282 1.37761L7.0517 7.99964L0.42808 14.6217C0.112363 14.9366 0.112363 15.4481 0.42808 15.7638C0.743797 16.0787 1.25611 16.0787 1.57182 15.7638L8.76695 8.57114C9.07782 8.25948 9.07782 7.73993 8.76615 7.42899Z" fill="#242424"/>
-                    </svg>
-            </div>
-            </div>
-            <div class="accordion-content">
-                <a href="javascript:void(0)" class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[10px]">More 1</a>
-            </div>
-            <a href="javascript:void(0)" class="text-sm text-[#FFFFFF] rounded font-bold my-[20px] bg-[#3983F2] block py-[15px] text-center">Register</a>    
-        </div>
-        <!-- Add more items as needed -->
+
+            @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::MORE))
+
+                <div class="accordion-item mb-[15px]">
+                    <div class="accordion-label text-sm font-[#242424] font-semibold py-[10px] px-[20px]" onclick="toggleAccordion(this)">
+                        <a class="hover:text-[#005FAF] {{ request()->is('weekly-focus*') ? 'text-[#005FAF]' : '' }}"
+                           href="#">
+                            {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
+                        </a>
+                        <div class="arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
+                                <path d="M8.76615 7.42899L1.57103 0.236258C1.25531 -0.0786629 0.743796 -0.0786629 0.427282 0.236258C0.111565 0.551178 0.111565 1.06269 0.427282 1.37761L7.0517 7.99964L0.42808 14.6217C0.112363 14.9366 0.112363 15.4481 0.42808 15.7638C0.743797 16.0787 1.25611 16.0787 1.57182 15.7638L8.76695 8.57114C9.07782 8.25948 9.07782 7.73993 8.76615 7.42899Z" fill="#242424"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="accordion-content">
+
+                        @foreach($menuData['more']['data'] as $route => $heading)
+
+                            <a href="{{ $route }}" class="text-sm block font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[5px] px-[10px]">
+                                {{ $heading }}
+                            </a>
+
+                        @endforeach
+
+                    </div>
+                </div>
+
+            @else
+
+                <a class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px] {{ request()->is(trim($initiative->path, '/')) ? 'text-[#005FAF]' : '' }}"
+                   href="{{ $initiative->path }}" wire:navigate>
+                    {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
+                </a>
+
+            @endif
+
+            <!-- Add more items as needed -->
+        @endforeach
+
+        <a href="{{ UrlHelper::linkToVision('/register') }}" class="text-sm text-[#FFFFFF] rounded font-bold my-[20px] bg-[#3983F2] block py-[15px] text-center">
+            Register
+        </a>
+
     </div>
   </div>
 </div>
@@ -85,7 +193,7 @@
 <div class="flex py-[20px] bg-[#fff] items-center justify-between">
     <div class="w-3/4">
         <div class="lg:hidden block">
-            <a href="/" wire:navigate>
+            <a href="{{ route('home') }}" wire:navigate>
                 <img width="112px" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
             </a>
         </div>
@@ -116,15 +224,18 @@
                                         isWeeklyDropdownOpen = false;
                                        ">
                                 <a class="hover:text-[#005FAF] {{ request()->is('monthly-magazine*') ? 'text-[#005FAF]' : '' }}"
-                                    href="#">
+                                    href="javascript:void(0)">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                                 </a>
                             </li>
 
                             <x-navigation.dropdown x-show="isMagazineDropdownOpen"
-                                @click.away="isMagazineDropdownOpen = false" button-text="Latest Edition"
+                                @click.away="isMagazineDropdownOpen = false"
+                                button-text="Latest Edition"
                                 button-link="{{ $initiative->path }}"
-                                archive-link="{{ route('monthly-magazine.archive') }}" :menuData="$menuData['monthlyMagazine']" />
+                                archive-link="{{ route('monthly-magazine.archive') }}"
+                                :menuData="$menuData['monthlyMagazine']"
+                            />
                         </div>
                     @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
                         <div class="relative">
@@ -135,15 +246,18 @@
                                         isMoreDropdownOpen = false;
                                        ">
                                 <a class="hover:text-[#005FAF] {{ request()->is('weekly-focus*') ? 'text-[#005FAF]' : '' }}"
-                                    href="#">
+                                    href="javascript:void(0)">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                                 </a>
                             </li>
 
                             <x-navigation.dropdown x-show="isWeeklyDropdownOpen"
-                                @click.away="isWeeklyDropdownOpen = false" button-text="Latest Edition"
-                                button-link="{{ $initiative->path }}" archive-link="{{ route('weekly-focus.archive') }}"
-                                :menuData="$menuData['weeklyFocus']" />
+                                @click.away="isWeeklyDropdownOpen = false"
+                                button-text="Latest Edition"
+                                button-link="{{ $initiative->path }}"
+                                archive-link="{{ route('weekly-focus.archive') }}"
+                                :menuData="$menuData['weeklyFocus']"
+                            />
                         </div>
                     @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::MORE))
                         <div class="relative">
@@ -154,7 +268,7 @@
                                         isMagazineDropdownOpen = false;
                                        ">
                                 <a class="hover:text-[#005FAF] {{ request()->is('more*') ? 'text-[#005FAF]' : '' }}"
-                                    href="#">
+                                    href="javascript:void(0)">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                                 </a>
                             </li>
@@ -195,7 +309,7 @@
                 </div>
             @else
                 <li class="pr-[20px] hidden lg:block">
-                    <a href="#" class="register" @click="isRegisterFormOpen = true">Register</a>
+                    <a href="{{ UrlHelper::linkToVision('/register') }}" class="register">Register</a>
                 </li>
                 <li class="pl-[20px]" style="border-left: 1px solid #E5EAF4;">
                     <button @click="isLoginFormOpen = !isLoginFormOpen" class="flex items-center text-xs xl:text-sm">

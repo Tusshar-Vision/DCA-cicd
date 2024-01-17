@@ -6,10 +6,11 @@ use Livewire\Component;
 
 class WeeklyFocusArchiveSection extends Component
 {
-    public int $year;
+    public $data;
 
-    public function mount($year) {
-        $this->year = $year;
+    public function mount($data)
+    {
+        $this->data = $data;
     }
     public function render()
     {

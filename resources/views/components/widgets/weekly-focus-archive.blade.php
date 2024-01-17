@@ -327,7 +327,7 @@
 
 <!-- Monthely Magazine section -->
 
-<div class="archiveWrapper mb-[15px] border-b-2 mt-[100px]">
+<div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]">
     <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]">
         <div class="flex space-x-4 items-center">
             <div class="vi-progress-bar-round"></div>
@@ -548,7 +548,7 @@
 
 <!-- Daily News section -->
 
-<div class="archiveWrapper mb-[15px] border-b-2 mt-[100px]">
+<div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]">
     <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]">
         <h4 class="text-[#040404] text-[32px] font-normal">Daily News - 2023</h4>
         <div>
@@ -715,7 +715,7 @@
 
 <!-- Daily News Details section -->
 
-<div class="archiveWrapper mb-[15px] border-b-2 mt-[100px]">
+<div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]">
     <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]">
         <h4 class="text-[#040404] text-[32px] font-normal">Daily News details - 2023 September</h4>
         <div>
@@ -973,7 +973,7 @@
 
 <!-- PT 365 -->
 
-<div class="archiveWrapper mb-[15px] border-b-2 mt-[100px]">
+<div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]">
     <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]">
         <h4 class="text-[#040404] text-[32px] font-normal">PT 365 - 2023</h4>
         <div>
@@ -1139,7 +1139,7 @@
 
 <!-- Mains 365 -->
 
-<div class="archiveWrapper mb-[15px] border-b-2 mt-[100px]">
+<div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]">
     <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]">
         <h4 class="text-[#040404] text-[32px] font-normal">Mains 365 - 2023</h4>
         <div>

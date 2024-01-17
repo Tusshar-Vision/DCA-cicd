@@ -50,7 +50,9 @@
                         </label>
                     </div>
                     <x-widgets.article-side-bar :table-of-content="$articles->articles" />
-                    <x-widgets.side-bar-download-menu initiative="news-today"/>
+                    <div class="hidden lg:block">
+                        <x-widgets.side-bar-download-menu initiative="news-today"/>
+                    </div>
                 </div>
 
                 <div class="flex flex-col mt-[30px] w-full">
@@ -61,15 +63,18 @@
                     <div class="mt-12">
                         <x-widgets.article-pagination :current-initiative="$articles" :current-article-slug="$article->slug" />
                     </div>
+                    <div class="block lg:hidden mt-4">
+                        <x-widgets.side-bar-download-menu initiative="news-today"/>
+                    </div>
                 </div>
         </div>
 
         <div class="flex flex-col justify-center items-center w-full">
             <div class="flex flex-col space-y-12">
                 <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-3">
-                    <x-widgets.related-terms />
+                    <x-widgets.related-terms :related-terms="$relatedTerms" />
                     <x-widgets.related-articles :related-articles="$relatedArticles" />
-                    <x-widgets.related-videos />
+                    <x-widgets.related-videos :related-videos="$relatedVideos" />
                 </div>
 
                 <div>
@@ -82,39 +87,33 @@
             </div>
         </div>
     </div>
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
         <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-            <script>
-                // let newsTodayCalendar = document.getElementById('news-today-calendar');
+        <script>
+            function renderNewsToday(selectedDate) {
+                // Get the current URL
+                const currentURL = new URL(window.location.href);
 
-                // newsTodayCalendar.addEventListener('change', function(event) {
-                //     let selectedDate = event.target.value;
+                // Update the date part of the URL
+                currentURL.pathname = `/news-today/${selectedDate}/`;
 
-                //     // Get the current URL
-                //     const currentURL = new URL(window.location.href);
+                // Navigate to the updated URL
+                window.location.href = currentURL.href;
+            }
 
-                //     // Update the date part of the URL
-                //     currentURL.pathname = `/news-today/${selectedDate}/`;
-
-                //     // Navigate to the updated URL
-                //     window.location.href = currentURL.href;
-                // })
-
-                // calendar for news today
-                $(function() {
-                    $('input[name="newsToday"]').daterangepicker({
-                        autoApply: true,
-                        singleDatePicker: true,
-                        opens: 'left',
-                        minYear: 1901,
-                        maxYear: parseInt(moment().format('YYYY'),10)
-                    }, function(start, end, label) {
-                        var years = moment().diff(start, 'years');
-                    });
+            // calendar for news today
+            $(function() {
+                $('input[name="newsToday"]').daterangepicker({
+                    autoApply: true,
+                    singleDatePicker: true,
+                    opens: 'left',
+                    minYear: 2009,
+                    maxYear: parseInt(moment().format('YYYY'),10)
+                }, function(start) {
+                    renderNewsToday(start.format('YYYY-MM-DD'));
                 });
+            });
 
-
-            </script>
-    @endsection
+        </script>
+@endsection
