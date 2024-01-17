@@ -21,7 +21,7 @@
     }
 
     $articleUrl = ArticleService::getArticleURL($article);
-    $featuredImage = $article->getFirstMediaUrl('article_featured_image');
+    $featuredImage = $article->getFirstMediaUrl('article-featured-image');
 @endphp
 
 <div class="group cursor-pointer flex-col max-w-2xl">

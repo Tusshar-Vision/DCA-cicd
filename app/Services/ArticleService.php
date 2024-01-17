@@ -93,17 +93,6 @@ readonly class ArticleService
         return self::getArticleURL(Article::findBySlug($slug));
     }
 
-    public function getRelatedArticles($article)
-    {
-        $articles = $this->articles
-            ->isPublished()
-            ->language()
-            ->withAnyTags($article->tags)
-            ->get();
-
-        return $articles->where('id', '!=', $article->getID());
-    }
-
     public function archive($initiative_id)
     {
         $archive = $this->articles::where('initiative_id', $initiative_id)->where('published_at', '!=', null)

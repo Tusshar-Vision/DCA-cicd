@@ -13,6 +13,7 @@ use App\Models\Note;
 use App\Services\ArticleService;
 use App\Services\MediaService;
 use App\Services\PublishedInitiativeService;
+use App\Services\SuggestionService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,7 @@ class WeeklyFocusController extends Controller
     public function __construct(
         private readonly ArticleService $articleService,
         private readonly PublishedInitiativeService $publishedInitiativeService,
-        private readonly MediaService $mediaService
+        private readonly SuggestionService $suggestionService
     ) {
         $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS);
     }
@@ -62,8 +63,9 @@ class WeeklyFocusController extends Controller
         );
 
         $article = $this->weeklyFocus->getArticleFromSlug($slug);
-        $relatedArticles = $this->articleService->getRelatedArticles($article);
-        $relatedVideos = $this->mediaService->getRelatedVideos($article);
+        $relatedTerms = $this->suggestionService->getRelatedTerms($article);
+        $relatedArticles = $this->suggestionService->getRelatedArticles($article);
+        $relatedVideos = $this->suggestionService->getRelatedVideos($article);
 
         $noteAvailable = null;
         $note = null;
@@ -87,6 +89,7 @@ class WeeklyFocusController extends Controller
             "note" => $note,
             "tableOfContent" => $tableOfContent,
             "isArticleBookmarked" => $isArticleBookmarked,
+            "relatedTerms" => $relatedTerms,
             "relatedArticles" => $relatedArticles,
             "relatedVideos" => $relatedVideos
         ]);

@@ -8,9 +8,7 @@
             <div class="group flex items-center h-full">
                 <a href="{{ \App\Services\ArticleService::getArticleUrlFromSlug($article->slug) }}">
                     <div class="flex space-y-1 items-center space-x-2">
-                        <div class="w-2/5">
-                            <img src="{{ ($article->featured_image === null) ? 'https://placehold.co/600x400' : route('image.display', ['filename' => $article->featured_image]) }}" />
-                        </div>
+                        <img src="{{ $article->getFirstMediaUrl('article-featured-image') ?? 'https://placehold.co/600x400' }}" width="150px" />
                         <div>
                             <div>
                                 <p class="group-hover:underline text-black text-sm">

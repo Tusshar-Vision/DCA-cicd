@@ -14,6 +14,7 @@ use App\Models\PublishedInitiative;
 use App\Services\ArticleService;
 use App\Services\MediaService;
 use App\Services\PublishedInitiativeService;
+use App\Services\SuggestionService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,9 +26,8 @@ class MonthlyMagazineController extends Controller
 
     public function __construct(
         private readonly PublishedInitiativeService $publishedInitiativeService,
-        private readonly ArticleService             $articleService,
         private readonly PublishedInitiative        $publishedInitiatives,
-        private readonly MediaService $mediaService
+        private readonly SuggestionService $suggestionService
     ) {
         $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE);
     }
@@ -63,8 +63,9 @@ class MonthlyMagazineController extends Controller
         );
 
         $article = $this->monthlyMagazine->getArticleFromSlug($slug);
-        $relatedArticles = $this->articleService->getRelatedArticles($article);
-        $relatedVideos = $this->mediaService->getRelatedVideos($article);
+        $relatedTerms = $this->suggestionService->getRelatedTerms($article);
+        $relatedArticles = $this->suggestionService->getRelatedArticles($article);
+        $relatedVideos = $this->suggestionService->getRelatedVideos($article);
 
         $noteAvailable = null;
         $note = null;
@@ -96,6 +97,7 @@ class MonthlyMagazineController extends Controller
             "sortedArticlesWithTopics" => $this->monthlyMagazine->sortedArticlesWithTopic,
             "tableOfContent" => $tableOfContent,
             "isArticleBookmarked" => $isArticleBookmarked,
+            "relatedTerms" => $relatedTerms,
             "relatedArticles" => $relatedArticles,
             "relatedVideos" => $relatedVideos
         ]);
