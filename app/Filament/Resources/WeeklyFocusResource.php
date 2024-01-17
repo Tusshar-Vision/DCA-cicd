@@ -7,7 +7,10 @@ use App\Filament\Resources\WeeklyFocusResource\RelationManagers\ArticlesRelation
 use App\Filament\Resources\WeeklyFocusResource\Pages;
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
+use App\Models\InitiativeTopic;
 use App\Models\PublishedInitiative;
+use App\Models\TopicSection;
+use App\Models\TopicSubSection;
 use App\Services\MediaService;
 use App\Services\PublishedInitiativeService;
 use App\Traits\Filament\InitiativeResourceSchema;
@@ -15,9 +18,16 @@ use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -153,11 +163,70 @@ class WeeklyFocusResource extends Resource
 
                 Forms\Components\Section::make('Topic at a glance')
                     ->schema([
-                        Select::make('infographic')
-                            ->options(function (MediaService $mediaService) {
-                                    return $mediaService->getAllInfographics(10)->pluck('title', 'id');
-                                }),
-                ])->columnSpan(1)
+                        Select::make('infographic_id')
+                            ->label('Infographic')
+                            ->relationship('infographic', 'title')
+                            ->createOptionForm([
+                                    TextInput::make('title')->required(),
+
+                                    Group::make()->schema([
+                                        Select::make('initiative_topic_id')
+                                            ->options(InitiativeTopic::all()->pluck('name', 'id'))
+                                            ->required()
+                                            ->label('Subject')
+                                            ->reactive()
+                                            ->afterStateUpdated(function (Set $set, ?string $state) {
+                                                $set('topic_section_id', 0);
+                                                $set('topic_sub_section_id', 0);
+                                            }),
+
+                                        Select::make('topic_section_id')
+                                            ->options(function (Get $get) {
+                                                $topicID = $get('initiative_topic_id');
+                                                return TopicSection::where('topic_id', '=', $topicID)->pluck('name', 'id');
+                                            })
+                                            ->reactive()
+                                            ->label('Section')
+                                            ->afterStateUpdated(function (Set $set, ?string $state) {
+                                                $set('topic_sub_section_id', 0);
+                                            }),
+
+                                        Select::make('topic_sub_section_id')
+                                            ->options(function (Get $get) {
+                                                $sectionID = $get('topic_section_id');
+                                                return TopicSubSection::where('section_id', '=', $sectionID)->pluck('name', 'id');
+                                            })
+                                            ->reactive()
+                                            ->label('Sub Section'),
+                                    ])->columns(3),
+
+                                    Group::make()->schema([
+
+                                        Select::make('language_id')
+                                            ->relationship('language', 'name', function ($query) {
+                                                return $query->orderBy('order_column');
+                                            })
+                                            ->required()
+                                            ->default(1),
+
+                                    ])->columns(1),
+
+                                    Hidden::make('author_id')->default(function () {
+                                        return Auth::user()->id;
+                                    }),
+
+                                    SpatieMediaLibraryFileUpload::make('Infographic')
+                                        ->id('infographic')
+                                        ->collection('infographic')
+                                        ->required()
+                                        ->acceptedFileTypes([
+                                            'application/pdf',
+                                            'image/jpeg',
+                                            'image/png',
+                                            'image/svg'
+                                        ]),
+                            ]),
+                    ])->columnSpan(1)
             ]);
     }
 

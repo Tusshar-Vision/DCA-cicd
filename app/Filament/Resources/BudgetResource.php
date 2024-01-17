@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Enums\Initiatives;
-use App\Filament\Resources\QuarterlyRevisionResource\Pages;
+use App\Filament\Resources\BudgetResource\Pages;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
 use App\Traits\Filament\MoreResourceSchema;
@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class QuarterlyRevisionResource extends Resource
+class BudgetResource extends Resource
 {
     use MoreResourceSchema;
 
@@ -31,11 +31,11 @@ class QuarterlyRevisionResource extends Resource
 
     protected static ?string $navigationGroup = 'Other Uploads';
 
-    protected static ?int $navigationSort = 10;
+    protected static ?int $navigationSort = 8;
 
-    protected static ?string $modelLabel = 'Quarterly Revision Document';
+    protected static ?string $modelLabel = 'Budget';
 
-    protected static ?string $navigationIcon = 'heroicon-o-puzzle-piece';
+    protected static ?string $navigationIcon = 'heroicon-o-building-library';
 
     public static function form(Form $form): Form
     {
@@ -44,7 +44,7 @@ class QuarterlyRevisionResource extends Resource
                 Section::make()->schema([
 
                     Hidden::make('initiative_id')
-                        ->default(InitiativesHelper::getInitiativeID(Initiatives::QUARTERLY_REVISION_DOCUMENTS)),
+                        ->default(InitiativesHelper::getInitiativeID(Initiatives::BUDGET)),
 
                     Group::make()->schema([
 
@@ -71,6 +71,7 @@ class QuarterlyRevisionResource extends Resource
                             })
                             ->required()
                             ->label('Subject')
+                            ->default(3)
                             ->required(),
 
                         Select::make('language_id')
@@ -86,7 +87,7 @@ class QuarterlyRevisionResource extends Resource
                     SpatieMediaLibraryFileUpload::make('Upload pdf File')
                         ->name('file')
                         ->acceptedFileTypes(['application/pdf'])
-                        ->collection('quarterly-revision-document')
+                        ->collection('budget')
                         ->required()
                         ->columnSpanFull(),
 
@@ -103,7 +104,11 @@ class QuarterlyRevisionResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $query = static::getModel()::query()->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::QUARTERLY_REVISION_DOCUMENTS));
+        $query = static::getModel()::query()
+            ->where(
+                'initiative_id',
+                InitiativesHelper::getInitiativeID(Initiatives::BUDGET)
+            );
 
         if ($tenant = Filament::getTenant()) {
             static::scopeEloquentQueryToTenant($query, $tenant);
@@ -115,44 +120,50 @@ class QuarterlyRevisionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListQuarterlyRevisions::route('/'),
-            'create' => Pages\CreateQuarterlyRevision::route('/create'),
-            'edit' => Pages\EditQuarterlyRevision::route('/{record}/edit'),
+            'index' => Pages\ListBudgets::route('/'),
+            'create' => Pages\CreateBudget::route('/create'),
+            'edit' => Pages\EditBudget::route('/{record}/edit'),
         ];
     }
 
     public static function canViewAny(): bool
     {
-        return Auth::user()->can('view_quarterly::revision');
+        return Auth::user()->can('view_budget');
     }
 
     public static function canEdit(Model $record): bool
     {
-        return Auth::user()->can('edit_quarterly::revision');
+        $user = Auth::user();
+        return $user->can('edit_budget');
     }
 
     public static function canCreate(): bool
     {
-        return Auth::user()->can('create_quarterly::revision');
+        $user = Auth::user();
+        return $user->can('create_budget');
     }
 
     public static function canDelete(Model $record): bool
     {
-        return Auth::user()->can('delete_quarterly::revision');
+        $user = Auth::user();
+        return $user->can('delete_budget');
     }
 
     public static function canDeleteAny(): bool
     {
-        return Auth::user()->can('delete_quarterly::revision');
+        $user = Auth::user();
+        return $user->can('delete_budget');
     }
 
     public static function canForceDelete(Model $record): bool
     {
-        return Auth::user()->can('delete_quarterly::revision');
+        $user = Auth::user();
+        return $user->can('delete_budget');
     }
 
     public static function canForceDeleteAny(): bool
     {
-        return Auth::user()->can('delete_quarterly::revision');
+        $user = Auth::user();
+        return $user->can('delete_budget');
     }
 }

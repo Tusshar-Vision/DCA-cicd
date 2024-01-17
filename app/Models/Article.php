@@ -43,7 +43,7 @@ class Article extends Model implements HasMedia, Sortable
         'read_time',
         'views',
         'visibility',
-        'language',
+        'language_id',
         'featured',
         'published_at',
         'created_at',
@@ -124,6 +124,11 @@ class Article extends Model implements HasMedia, Sortable
 
     // Define the relationships with other models
 
+    public function language(): BelongsTo
+    {
+        return $this->belongsTo(Language::class, 'language_id');
+    }
+
     public function tableOfContent(): HasOne
     {
         return $this->hasOne(TableOfContent::class);
@@ -171,17 +176,22 @@ class Article extends Model implements HasMedia, Sortable
 
     public function relatedTerms(): HasMany
     {
-        return $this->hasMany(RelatedTerm::class);
+        return $this->hasMany(ArticleRelatedTerm::class);
     }
 
     public function relatedVideos(): HasMany
     {
-        return $this->hasMany(Video::class);
+        return $this->hasMany(RelatedVideo::class);
     }
 
     public function infographics(): HasOne
     {
         return $this->hasOne(Infographic::class);
+    }
+
+    public function relatedArticles(): HasMany
+    {
+        return $this->hasMany(RelatedArticle::class);
     }
 
     public function scopeIsFeatured(Builder $query): Builder
@@ -196,6 +206,6 @@ class Article extends Model implements HasMedia, Sortable
 
     public function scopeLanguage(Builder $query): Builder
     {
-        return $query->where('language', config("settings.language." . app()->getLocale()));
+        return $query->where('language_id', config("settings.language." . app()->getLocale()));
     }
 }
