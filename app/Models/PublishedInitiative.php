@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -19,7 +20,10 @@ class PublishedInitiative extends Model implements HasMedia
         'initiative_id',
         'name',
         'published_at',
-        'is_published'
+        'language_id',
+        'is_published',
+        'initiative_topic_id',
+        'infographics_id'
     ];
 
     protected $casts = [
@@ -70,6 +74,21 @@ class PublishedInitiative extends Model implements HasMedia
     public function scopeIsPublished(Builder $query): Builder
     {
         return $query->where('is_published', true);
+    }
+
+    public function topic(): BelongsTo
+    {
+        return $this->belongsTo(InitiativeTopic::class, 'initiative_topic_id');
+    }
+
+    public function infographic(): BelongsTo
+    {
+        return $this->belongsTo(Infographic::class);
+    }
+
+    public function language(): BelongsTo
+    {
+        return $this->belongsTo(Language::class, 'language_id');
     }
 
     public function scopeHasPublishedArticle(Builder $query): Builder

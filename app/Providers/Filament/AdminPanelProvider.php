@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use Althinect\FilamentSpatieRolesPermissions\Middleware\SyncSpatiePermissionsWithFilamentTenants;
 use App\Filament\Pages\Auth\EditProfile;
 use App\Filament\Resources\ArticleResource;
+use App\Filament\Resources\BudgetResource;
 use App\Filament\Resources\CommentResource;
 use App\Filament\Resources\EconomicSurveyResource;
 use App\Filament\Resources\QuarterlyRevisionResource;
@@ -55,6 +56,7 @@ class AdminPanelProvider extends PanelProvider
                         Mains365Resource::class,
                         PT365Resource::class,
                         EconomicSurveyResource::class,
+                        BudgetResource::class,
                         ValueAddedResource::class,
                         ValueAddedOptionalResource::class,
                         QuarterlyRevisionResource::class,

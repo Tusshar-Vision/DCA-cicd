@@ -72,7 +72,7 @@
         <div class="flex flex-col justify-center items-center w-full">
             <div class="flex flex-col space-y-12">
                 <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-3">
-                    <x-widgets.related-terms />
+                    <x-widgets.related-terms :related-terms="$relatedTerms" />
                     <x-widgets.related-articles :related-articles="$relatedArticles" />
                     <x-widgets.related-videos :related-videos="$relatedVideos" />
                 </div>
@@ -90,35 +90,30 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-            <script>
-                // let newsTodayCalendar = document.getElementById('news-today-calendar');
+        <script>
+            function renderNewsToday(selectedDate) {
+                // Get the current URL
+                const currentURL = new URL(window.location.href);
 
-                // newsTodayCalendar.addEventListener('change', function(event) {
-                //     let selectedDate = event.target.value;
+                // Update the date part of the URL
+                currentURL.pathname = `/news-today/${selectedDate}/`;
 
-                //     // Get the current URL
-                //     const currentURL = new URL(window.location.href);
+                // Navigate to the updated URL
+                window.location.href = currentURL.href;
+            }
 
-                //     // Update the date part of the URL
-                //     currentURL.pathname = `/news-today/${selectedDate}/`;
-
-                //     // Navigate to the updated URL
-                //     window.location.href = currentURL.href;
-                // })
-
-                // calendar for news today
-                $(function() {
-                    $('input[name="newsToday"]').daterangepicker({
-                        autoApply: true,
-                        singleDatePicker: true,
-                        opens: 'left',
-                        minYear: 1901,
-                        maxYear: parseInt(moment().format('YYYY'),10)
-                    }, function(start, end, label) {
-                        var years = moment().diff(start, 'years');
-                    });
+            // calendar for news today
+            $(function() {
+                $('input[name="newsToday"]').daterangepicker({
+                    autoApply: true,
+                    singleDatePicker: true,
+                    opens: 'left',
+                    minYear: 2009,
+                    maxYear: parseInt(moment().format('YYYY'),10)
+                }, function(start) {
+                    renderNewsToday(start.format('YYYY-MM-DD'));
                 });
+            });
 
-
-            </script>
-    @endsection
+        </script>
+@endsection

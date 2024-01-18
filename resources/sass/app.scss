@@ -3040,7 +3040,7 @@ li[data-level="4"] {
   color: inherit;
   background-color: #fff;
   border-radius: 4px;
-  width: 300px;
+  width: 330px;
   max-width: none;
   padding: 0;
   margin-top: 7px;
@@ -3402,7 +3402,7 @@ li[data-level="4"] {
 /*  Larger Screen Styling */
 @media (min-width: 564px) {
   .daterangepicker {
-    width: auto;
+    width: 330px;
   }
 
   .daterangepicker .ranges ul {
@@ -3418,7 +3418,7 @@ li[data-level="4"] {
   }
 
   .daterangepicker.single .ranges, .daterangepicker.single .drp-calendar {
-    float: left;
+    float: none;
   }
 
   .daterangepicker {

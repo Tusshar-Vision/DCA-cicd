@@ -13,6 +13,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\SpatieTagsColumn;
@@ -47,7 +48,10 @@ class InfographicsResource extends Resource
                             ->relationship('topic', 'name')
                             ->required()
                             ->label('Subject')
-                            ->reactive(),
+                            ->reactive()->afterStateUpdated(function (Set $set, ?string $state) {
+                                $set('topic_section_id', 0);
+                                $set('topic_sub_section_id', 0);
+                            }),
 
                         Select::make('topic_section_id')
                             ->relationship('topicSection', 'name', function ($query, callable $get) {
@@ -56,7 +60,10 @@ class InfographicsResource extends Resource
                                 return $query->where('topic_id', '=', $topic);
                             })
                             ->reactive()
-                            ->label('Section'),
+                            ->label('Section')
+                            ->afterStateUpdated(function (Set $set, ?string $state) {
+                                $set('topic_sub_section_id', 0);
+                            }),
 
                         Select::make('topic_sub_section_id')
                             ->relationship('topicSubSection', 'name', function ($query, callable $get) {
@@ -86,13 +93,13 @@ class InfographicsResource extends Resource
 
                     Group::make()->schema([
 
-                        Select::make('language')
-                            ->options([
-                                "english" => "English",
-                                "hindi" => "Hindi",
-                            ])
+                        Select::make('language_id')
+                            ->relationship('language', 'name', function ($query) {
+                                return $query->orderBy('order_column');
+                            })
+                            ->label('Language')
                             ->required()
-                            ->default('english'),
+                            ->default(1),
 
                         SpatieTagsInput::make('tags')
                             ->required(),

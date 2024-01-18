@@ -6,23 +6,26 @@ use App\Enums\Initiatives;
 use App\Filament\Resources\EconomicSurveyResource\Pages;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
-use App\Traits\Filament\OtherUploadsResourceSchema;
+use App\Traits\Filament\MoreResourceSchema;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class EconomicSurveyResource extends Resource
 {
-    use OtherUploadsResourceSchema;
+    use MoreResourceSchema;
 
     protected static ?string $model = PublishedInitiative::class;
 
@@ -30,7 +33,7 @@ class EconomicSurveyResource extends Resource
 
     protected static ?int $navigationSort = 7;
 
-    protected static ?string $modelLabel = 'Economic Survey And Budget';
+    protected static ?string $modelLabel = 'Economic Survey';
 
     protected static ?string $navigationIcon = 'heroicon-o-currency-rupee';
 
@@ -41,7 +44,7 @@ class EconomicSurveyResource extends Resource
                 Section::make()->schema([
 
                     Hidden::make('initiative_id')
-                        ->default(InitiativesHelper::getInitiativeID(Initiatives::ECONOMIC_SURVEY_AND_BUDGET)),
+                        ->default(InitiativesHelper::getInitiativeID(Initiatives::ECONOMIC_SURVEY)),
 
                     Group::make()->schema([
 
@@ -62,12 +65,29 @@ class EconomicSurveyResource extends Resource
                             return static::generateName($get('published_at'));
                         })->required(),
 
+                        Select::make('initiative_topic_id')
+                            ->relationship('topic', 'name', function ($query) {
+                                return $query->orderBy('order_column');
+                            })
+                            ->required()
+                            ->label('Subject')
+                            ->default(3)
+                            ->required(),
+
+                        Select::make('language_id')
+                            ->relationship('language', 'name', function ($query) {
+                                return $query->orderBy('order_column');
+                            })
+                            ->label('Language')
+                            ->required()
+                            ->default(1),
+
                     ])->columns(2)->columnSpanFull(),
 
                     SpatieMediaLibraryFileUpload::make('Upload pdf File')
                         ->name('file')
                         ->acceptedFileTypes(['application/pdf'])
-                        ->collection('economic-survey-budget')
+                        ->collection('economic-survey')
                         ->required()
                         ->columnSpanFull(),
 
@@ -80,7 +100,7 @@ class EconomicSurveyResource extends Resource
         $query = static::getModel()::query()
             ->where(
                 'initiative_id',
-                InitiativesHelper::getInitiativeID(Initiatives::ECONOMIC_SURVEY_AND_BUDGET)
+                InitiativesHelper::getInitiativeID(Initiatives::ECONOMIC_SURVEY)
             );
 
         if ($tenant = Filament::getTenant()) {
@@ -104,5 +124,46 @@ class EconomicSurveyResource extends Resource
             'create' => Pages\CreateEconomicSurvey::route('/create'),
             'edit' => Pages\EditEconomicSurvey::route('/{record}/edit'),
         ];
+    }
+
+    public static function canViewAny(): bool
+    {
+        return Auth::user()->can('view_economic::survey');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('edit_economic::survey');
+    }
+
+    public static function canCreate(): bool
+    {
+        $user = Auth::user();
+        return $user->can('create_economic::survey');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('delete_economic::survey');
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        $user = Auth::user();
+        return $user->can('delete_economic::survey');
+    }
+
+    public static function canForceDelete(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('delete_economic::survey');
+    }
+
+    public static function canForceDeleteAny(): bool
+    {
+        $user = Auth::user();
+        return $user->can('delete_economic::survey');
     }
 }
