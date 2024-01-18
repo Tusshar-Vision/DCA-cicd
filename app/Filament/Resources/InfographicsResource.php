@@ -151,10 +151,10 @@ class InfographicsResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\Action::make('View')
-                    ->icon('heroicon-s-eye')
-                    ->tooltip('Preview')
-                    ->iconButton(),
+//                Tables\Actions\Action::make('View')
+//                    ->icon('heroicon-s-eye')
+//                    ->tooltip('Preview')
+//                    ->iconButton(),
                 Tables\Actions\EditAction::make()
                     ->tooltip('Edit')
                     ->iconButton(),

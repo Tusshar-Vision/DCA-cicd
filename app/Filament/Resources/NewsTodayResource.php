@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
@@ -134,6 +135,14 @@ class NewsTodayResource extends Resource
                         ])
                         ->required(),
                     ])->columns(2)->columnSpanFull(),
+
+                    Select::make('language_id')
+                        ->relationship('language', 'name', function ($query) {
+                            return $query->orderBy('order_column');
+                        })
+                        ->label('Language')
+                        ->required()
+                        ->default(1),
 
                     Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
                         ->acceptedFileTypes(['application/pdf'])

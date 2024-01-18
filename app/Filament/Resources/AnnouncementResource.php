@@ -161,6 +161,15 @@ class AnnouncementResource extends Resource
     private static function showVisibleColumn($user) {
         if ($user->can('edit_announcement')) {
             return ToggleColumn::make('is_visible')
+                ->afterStateUpdated(function ($state, Model $record) {
+                    if ($state === true) {
+                        $visibleTill = Carbon::parse($record->visible_till)->format('Y-m-d');
+                        if (Carbon::now()->format('Y-m-d') >= $visibleTill) {
+                            $record->visible_till = Carbon::tomorrow()->format('Y-m-d');
+                            $record->save();
+                        }
+                    }
+                })
                 ->alignCenter()
                 ->label('Is Visible');
         } else {
