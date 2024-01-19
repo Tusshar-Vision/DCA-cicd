@@ -25,7 +25,7 @@ Route::get('/downloads', [Pages\DownloadsController::class, 'index'])->name('dow
 Route::get('/search', [Pages\SearchController::class, 'index'])->name('search');
 Route::get('/search/{query}', [Pages\SearchController::class, 'searchQuery'])->name('search.query');
 
-Route::get('/eco-survey-budget', function(){})->name('economic-survey-budget');
+Route::get('/eco-survey-budget/archive', [Pages\ArchiveController::class, 'economicSurvery'])->name('economic-survey-budget');
 
 Route::controller(Pages\Mains365Controller::class)
     ->group(
