@@ -27,6 +27,16 @@ Route::get('/search/{query}', [Pages\SearchController::class, 'searchQuery'])->n
 
 Route::get('/eco-survey-budget/archive', [Pages\ArchiveController::class, 'economicSurvery'])->name('economic-survey-budget');
 
+// Routes for adding these initiatives
+Route::get('/economic-survey', function () {})->name('economic-survey');
+Route::get('/budget', function () {})->name('budget');
+Route::get('/weekly-round-table', function () {})->name('weekly-round-table');
+Route::get('/animated-shorts', function () {})->name('animated-shorts');
+Route::get('/pyq', function () {})->name('pyq');
+Route::get('/value-added-material', function () {})->name('value-added-material');
+Route::get('/value-added-material-optional', function () {})->name('value-added-material-optional');
+Route::get('/quarterly-revision-documents', function () {})->name('quarterly-revision-document');
+
 Route::controller(Pages\Mains365Controller::class)
     ->group(
         function () {
