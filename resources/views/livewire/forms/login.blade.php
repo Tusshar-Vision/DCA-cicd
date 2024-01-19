@@ -16,30 +16,37 @@
             <div class="form-item mb-[15px]">
                 <input
                     type="text"
-                    id="email"
-                    class="w-full rounded-lg js_form-input"
-                    required autocomplete="off"
+                    id="login-email"
+                    class="w-full rounded-lg"
+                    required
+                    autocomplete="off"
                     wire:model.live="email"
                 >
-                <label for="email">Email</label>
+                <label for="login-email" class="overlayLabel">Email</label>
+                @error('email')
+                    <p class="text-xs text-[#C10000] text-left mt-2">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="form-item mb-[15px] relative">
-                <span class="show-password" onclick="showPassword('password')">
+                <span class="show-password" onclick="showPassword('login-password')">
                     {!! SvgIconsHelper::getSvgIcon('eye-icon') !!}
                 </span>
                 <input
                     type="password"
-                    id="password"
-                    class="w-full rounded-lg passwordOverlay js_form-input"
+                    id="login-password"
+                    class="w-full rounded-lg passwordOverlay"
                     required autocomplete="off"
-                    wire:model="password"
+                    wire:model.live="password"
                 >
-                <label for="password" class="overlayLabel">Enter Password</label>
+                <label for="login-password" class="overlayLabel">Enter Password</label>
+                @error('password')
+                    <p class="text-xs text-[#C10000] text-left mt-2">{{ $message }}</p>
+                @enderror
             </div>
 
             <a href="#" class="block text-right forgetpass mb-[20px]">Forgot password?</a>
-            <button @click="login" class="login-btn">Login</button>
+            <button wire:click="login" class="login-btn">Login</button>
 
             <span class="divider-or mt-[20px]">OR</span>
             <ul class="flex justify-center items-center my-[20px]">
@@ -60,49 +67,58 @@
     </div>
 </div>
 
-@script
-    <script>
-        // restrict label animation
-        document.querySelectorAll('input').forEach(function(input) {
-          input.addEventListener('focus', function() {
-            this.nextElementSibling.style.top = '-5px';
-            this.nextElementSibling.style.fontSize = '11px';
-            this.nextElementSibling.style.color = '#3362CC';
-            this.nextElementSibling.style.zIndex = '1';
-          });
+<script>
+    // restrict label animation
+    document.addEventListener('livewire:init', () => {
 
-          input.addEventListener('blur', function() {
-            if (!this.value) {
-              this.nextElementSibling.style.top = '';
-              this.nextElementSibling.style.fontSize = '';
-              this.nextElementSibling.style.color = '';
-              this.nextElementSibling.style.zIndex = '0';
-            }
-          });
+        let inputFields = document.querySelectorAll('input');
+
+        inputFields.forEach(function(input) {
+            input.addEventListener('focus', function() {
+                animateLabelOnFocus(input);
+            });
+
+            input.addEventListener('blur', function() {
+                animateLabelOnFocusOut(input);
+            });
         });
 
-        const inputs = document.querySelectorAll('.js_form-input');
-        inputs.forEach(input => {
-            input.addEventListener('blur', (event) => {
-            if (event.target.value.length) {
-                event.target.classList.add("full");
-            } else {
-                event.target.classList.remove("full");
-            }
+        Livewire.hook('morph.updated', ({ el, component }) => {
+            inputFields.forEach(function (input) {
+                animateLabelOnFocus(input);
+                animateLabelOnFocusOut(input);
+            });
         });
-        })
+    });
 
-        // show hide function
-        function showPassword(targetID) {
-            const x = document.getElementById(targetID);
-            const img = document.querySelector('.eye');
-            if (x.type === "password") {
-                x.type = "text";
-                img.style.opacity = "0.5";
-            } else {
-                x.type = "password";
-                img.style.opacity = "1";
-            }
+    // show hide function
+    function showPassword(targetID) {
+        const x = document.getElementById(targetID);
+        const img = document.querySelector('.eye');
+        if (x.type === "password") {
+            x.type = "text";
+            img.style.opacity = "0.5";
+        } else {
+            x.type = "password";
+            img.style.opacity = "1";
         }
-    </script>
-@endscript
+    }
+
+    function animateLabelOnFocus(input) {
+        if (input !== null && input.nextElementSibling !== null) {
+            input.nextElementSibling.style.top = '-5px';
+            input.nextElementSibling.style.fontSize = '11px';
+            input.nextElementSibling.style.color = '#3362CC';
+            input.nextElementSibling.style.zIndex = '1';
+        }
+    }
+
+    function animateLabelOnFocusOut(input) {
+        if (input !== null && input.value === '' && input.nextElementSibling !== null) {
+            input.nextElementSibling.style.top = '';
+            input.nextElementSibling.style.fontSize = '';
+            input.nextElementSibling.style.color = '';
+            input.nextElementSibling.style.zIndex = '0';
+        }
+    }
+</script>

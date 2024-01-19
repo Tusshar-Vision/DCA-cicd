@@ -49,6 +49,12 @@ trait ArticleForm
                                         '4:3',
                                         '1:1',
                                     ])
+                                    ->acceptedFileTypes([
+                                        'image/jpeg',
+                                        'image/png',
+                                        'image/svg',
+                                        'image/webp'
+                                    ])
                                     ->disk('s3_public')
                                     ->collection('article-featured-image')
                                     ->responsiveImages()
@@ -110,8 +116,8 @@ trait ArticleForm
                                     ->label('Subject')
                                     ->reactive()
                                     ->afterStateUpdated(function (Set $set, ?string $state) {
-                                        $set('topic_section_id', 0);
-                                        $set('topic_sub_section_id', 0);
+                                        $set('topic_section_id', null);
+                                        $set('topic_sub_section_id', null);
                                     }),
 
                                 Select::make('topic_section_id')
@@ -123,7 +129,7 @@ trait ArticleForm
                                     ->reactive()
                                     ->label('Section')
                                     ->afterStateUpdated(function (Set $set, ?string $state) {
-                                        $set('topic_sub_section_id', 0);
+                                        $set('topic_sub_section_id', null);
                                     }),
 
                                 Select::make('topic_sub_section_id')
@@ -131,7 +137,8 @@ trait ArticleForm
                                         $topicSectionId = $get('topic_section_id');
 
                                         return $query->where('section_id', '=', $topicSectionId);
-                                    })->reactive()
+                                    })
+                                    ->reactive()
                                     ->label('Sub Section'),
 
                             ])->columns(1),
@@ -213,7 +220,6 @@ trait ArticleForm
                             ->orderColumn('order_column')
                             ->reorderable()
                             ->addActionLabel('Add article')
-                            ->columns(1)
                     ]),
 
                     Tabs\Tab::make('Related Videos')->schema([
@@ -228,7 +234,6 @@ trait ArticleForm
                             ->orderColumn('order_column')
                             ->reorderable()
                             ->addActionLabel('Add video')
-                            ->columns(1)
                     ]),
 
                     Tabs\Tab::make('Related Terms')->schema([
@@ -243,7 +248,6 @@ trait ArticleForm
                             ->orderColumn('order_column')
                             ->reorderable()
                             ->addActionLabel('Add term')
-                            ->columns(1)
                     ]),
 
                     Tabs\Tab::make('SEO')->schema([

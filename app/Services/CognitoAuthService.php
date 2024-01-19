@@ -30,25 +30,28 @@ class CognitoAuthService
         ]);
     }
 
-    public function attemptLogin(string $email, string $password)
+    public function attemptLogin(array $credentials)
     {
         try {
+
             $result = $this->client->initiateAuth([
                 'AuthFlow' => 'USER_PASSWORD_AUTH',
                 'ClientId' => $this->client_id,
                 'UserPoolId' => $this->user_pool_id,
                 'AuthParameters' => [
-                    'USERNAME' => $email,
-                    'PASSWORD' => $password,
+                    'USERNAME' => $credentials['email'],
+                    'PASSWORD' => $credentials['password'],
                 ],
             ]);
+
+            dd($result);
 
             // Authentication successful
             $accessToken = $result['AuthenticationResult']['AccessToken'];
             $idToken = $result['AuthenticationResult']['IdToken'];
             $refreshToken = $result['AuthenticationResult']['RefreshToken'];
 
-            $user = Student::where('email', $email)->first();
+            $user = Student::where('email',  $credentials['email'])->first();
             if ($user) auth('cognito')->login($user);
 
             // You can now use the tokens as needed
