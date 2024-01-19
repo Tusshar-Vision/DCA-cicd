@@ -21,7 +21,7 @@ class ListArticles extends ListRecords
             'Published' => Tab::make()
                 ->modifyQueryUsing(fn (Builder $query) => $query->currentStatus('Published')),
             'Rejected' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query) => $query->currentStatus('Rejected')),
+                ->modifyQueryUsing(fn (Builder $query) => $query->currentStatus('Reject')),
         ];
     }
 
