@@ -7,9 +7,8 @@
 </div>
 
 <!-- PT 365 -->
-
 @foreach ($data as $year => $files)
-    <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]">
+    <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: false }" @click="expanded = ! expanded">
     <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]">
         <h4 class="text-[#040404] text-[32px] font-normal">PT 365 - {{$year}}</h4>
         <div>
@@ -21,7 +20,7 @@
             </svg>
         </div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true">
         @foreach ($files as $file)
             <div class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
@@ -39,7 +38,7 @@
 </div>
 @endforeach
 
-<div class="archiveWrapper mb-[15px] border-b-2">
+{{-- <div class="archiveWrapper mb-[15px] border-b-2">
     <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]">
         <h4 class="text-[#040404] text-[32px] font-normal">2022</h4>
         <div>
@@ -119,6 +118,6 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 </div>
