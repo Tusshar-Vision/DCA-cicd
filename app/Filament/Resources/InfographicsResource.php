@@ -49,8 +49,8 @@ class InfographicsResource extends Resource
                             ->required()
                             ->label('Subject')
                             ->reactive()->afterStateUpdated(function (Set $set, ?string $state) {
-                                $set('topic_section_id', 0);
-                                $set('topic_sub_section_id', 0);
+                                $set('topic_section_id', null);
+                                $set('topic_sub_section_id', null);
                             }),
 
                         Select::make('topic_section_id')
@@ -62,7 +62,7 @@ class InfographicsResource extends Resource
                             ->reactive()
                             ->label('Section')
                             ->afterStateUpdated(function (Set $set, ?string $state) {
-                                $set('topic_sub_section_id', 0);
+                                $set('topic_sub_section_id', null);
                             }),
 
                         Select::make('topic_sub_section_id')

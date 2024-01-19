@@ -46,7 +46,12 @@
             </div>
 
             <a href="#" class="block text-right forgetpass mb-[20px]">Forgot password?</a>
-            <button wire:click="login" class="login-btn">Login</button>
+            <button wire:click="login" class="login-btn text-center">
+                <p class="flex items-center justify-center">
+                    <span wire:loading.delay class="loader mr-2"></span>
+                    <span>Login</span>
+                </p>
+            </button>
 
             <span class="divider-or mt-[20px]">OR</span>
             <ul class="flex justify-center items-center my-[20px]">
