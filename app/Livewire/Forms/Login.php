@@ -2,25 +2,22 @@
 
 namespace App\Livewire\Forms;
 
-use App\Models\Student;
-use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
-use Aws\Credentials\Credentials;
-use Aws\Exception\AwsException;
-use Illuminate\Support\Facades\Log;
-use Livewire\Attributes\Rule;
+use App\Services\CognitoAuthService;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class Login extends Component
 {
-    #[Rule('required|email')]
+    #[Validate('required|email')]
     public $email;
 
-    #[Rule('required|min:8')]
+    #[Validate('required|min:6')]
     public $password;
 
-    public function login()
+    public function login(CognitoAuthService $authService): void
     {
-
+        $validated = $this->validate();
+        $authService->attemptLogin($validated);
     }
 
     public function render()
