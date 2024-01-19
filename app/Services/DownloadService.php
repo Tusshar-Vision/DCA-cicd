@@ -42,6 +42,16 @@ readonly class DownloadService
             });
     }
 
+    public function getArchiveEconomicSurvey(): Collection|array
+    {
+        return $this->media->where('mime_type', 'application/pdf')
+            ->where('collection_name', config('settings.media_collections_type.EconomicSurvey'))
+            ->get()
+            ->groupBy(function ($item) {
+                return $item->created_at->format('Y');
+            });
+    }
+
     public function getSingleDownloadFile()
     {
     }

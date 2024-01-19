@@ -24,7 +24,7 @@
             <a href="{{route('mains365.archive')}}" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ $segment == 'mains-365' ? 'activeSidebar' : '' }}">Mains 365</a>
         </li>
         <li class="font-semibold text-base text-[#183B56] mb-1">
-            <a href="javascript:void(0)" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white">Economic Survey and Budget</a>
+            <a href="{{route('economic-survey-budget')}}" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ $segment == 'economic-survey' ? 'activeSidebar' : '' }}">Economic Survey and Budget</a>
         </li>
         <li class="font-semibold text-base text-[#183B56] mb-1">
             <a href="javascript:void(0)" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white">Weekly Round Table</a>
