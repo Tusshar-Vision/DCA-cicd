@@ -31,7 +31,7 @@
                 @foreach ($monthData as $week => $weekData)
                    @foreach ($weekData as $article)
                         <div class="weekly-focus-progress-single-bar border-b-2 pb-[15px]">
-                    <p><span>{{$week}}</span> - {{$article['title']}}</p>
+                    <p>{{$article['title']}}</p>
                     <div class="progress-bar">
                         <div class="bar" style="width:35%;background-color: #89D38C;">
                         </div>

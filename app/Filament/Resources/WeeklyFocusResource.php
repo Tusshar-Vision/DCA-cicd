@@ -151,6 +151,14 @@ class WeeklyFocusResource extends Resource
 
                     ])->columns(2)->columnSpanFull(),
 
+                    Select::make('language_id')
+                        ->relationship('language', 'name', function ($query) {
+                            return $query->orderBy('order_column');
+                        })
+                        ->label('Language')
+                        ->required()
+                        ->default(1),
+
                     Forms\Components\SpatieMediaLibraryFileUpload::make('pdf')
                         ->label('Upload pdf file')
                         ->acceptedFileTypes(['application/pdf'])

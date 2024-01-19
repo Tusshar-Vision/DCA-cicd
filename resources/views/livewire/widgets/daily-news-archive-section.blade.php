@@ -11,7 +11,7 @@
 @foreach ($articles as $year => $months)
     <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]">
     <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]">
-        <h4 class="text-[#040404] text-[32px] font-normal">{{$year}}</h4>
+        <h4 class="text-[#040404] text-[32px] font-normal">{{$year}} <span id="month"></span></h4>
         <div>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5 11V13H19V11H5Z" fill="#8F93A3"/>
@@ -59,13 +59,11 @@
 </div>
 
 <script>
-console.log("hii")
 
 function showArticleCards(year, month) {
-    console.log("year", year, month)
     let url = "{{url('news-today')}}";
     url += `/getbymonth?year=${year}&month=${month}`;
-    console.log("url", url);
+    document.getElementById("month").innerHTML = "- " + "{{ date('F', mktime(0, 0, 0, $month, 1)) }}"
     getData(url).then(res => {
           let html = ""
          console.log("data", res);
