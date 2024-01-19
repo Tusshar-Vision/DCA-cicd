@@ -70,7 +70,7 @@
         </div>
 
         <div class="flex flex-col justify-center items-center w-full">
-            <div class="flex flex-col space-y-12">
+            <div class="flex flex-col space-y-12 w-full">
                 <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-3">
                     <x-widgets.related-terms :related-terms="$relatedTerms" />
                     <x-widgets.related-articles :related-articles="$relatedArticles" />
