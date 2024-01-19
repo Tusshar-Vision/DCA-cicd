@@ -4,9 +4,8 @@ namespace App\Services;
 
 use App\Models\Student;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
+use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Aws\Credentials\Credentials;
-use Aws\Exception\AwsException;
-use Illuminate\Support\Facades\Log;
 
 class CognitoAuthService
 {
@@ -30,7 +29,7 @@ class CognitoAuthService
         ]);
     }
 
-    public function attemptLogin(array $credentials)
+    public function authenticate(array $credentials)
     {
         try {
 
@@ -43,8 +42,6 @@ class CognitoAuthService
                     'PASSWORD' => $credentials['password'],
                 ],
             ]);
-
-            dd($result);
 
             // Authentication successful
             $accessToken = $result['AuthenticationResult']['AccessToken'];
@@ -59,12 +56,14 @@ class CognitoAuthService
             // echo 'Id Token: ' . $idToken . PHP_EOL;
             // echo 'Refresh Token: ' . $refreshToken . PHP_EOL;
             return redirect()->route('home');
-        } catch (AwsException $e) {
-            // Authentication failed
-            Log::info('Error: ' . $e->getAwsErrorMessage());
-        } catch (\Exception $e) {
-            // Catch any other exception
-            Log::info('Unhandled Exception: ' . $e->getMessage());
+        } catch (CognitoIdentityProviderException $exception)
+        {
+            if ($exception->getAwsErrorCode() === self::RESET_REQUIRED ||
+                $exception->getAwsErrorCode() === self::USER_NOT_FOUND) {
+                return false;
+            }
+
+            throw $exception;
         }
     }
 }

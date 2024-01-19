@@ -3,6 +3,7 @@
 namespace App\Livewire\Forms;
 
 use App\Services\CognitoAuthService;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -17,10 +18,10 @@ class Login extends Component
     public function login(CognitoAuthService $authService): void
     {
         $validated = $this->validate();
-        $authService->attemptLogin($validated);
+        $authService->authenticate($validated);
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.forms.login');
     }
