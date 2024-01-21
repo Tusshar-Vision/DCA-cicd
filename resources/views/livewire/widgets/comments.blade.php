@@ -1,5 +1,5 @@
 <div x-data="{ expanded: false }" @click="expanded = ! expanded" :class="{ 'items-center': !expanded }" class="border-2 border-visionSelectedGray rounded px-4 py-2 flex items-center justify-between cursor-pointer" x-transition>
-        <div class="space-y-5">
+        <div class="space-y-5 w-full">
             <div>
                 <h1 class="text-lg font-bold">Comments</h1>
                 <p class="text-visionLineGray text-sm">34 comments</p>
