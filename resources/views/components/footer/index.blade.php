@@ -54,8 +54,8 @@
                 <span>
                     <h5 class="text-gray-400">{{ __('footer.call_us') }}</h5>
                     <p class="text-sm">
-                        <a href="tel:+91 846 802 2022" class="hover:text-[#005FAF] hidden lg:inline-block">+91 846 802 2022,</a>
-                        <a href="tel:+91 901 906 6066" class="hover:text-[#005FAF] hidden lg:inline-block">+91 901 906 6066</a>
+                        <a href="tel:+91 846 802 2022" class="hover:text-[#005FAF] lg:inline-block">+91 846 802 2022,</a>
+                        <a href="tel:+91 901 906 6066" class="hover:text-[#005FAF] lg:inline-block">+91 901 906 6066</a>
                     </p>
                 </span>
                 <span class="hidden md:block">

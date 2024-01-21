@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\CognitoErrorCodes;
 use App\Models\Student;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
@@ -29,6 +30,9 @@ class CognitoAuthService
         ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function authenticate(array $credentials)
     {
         try {
@@ -58,12 +62,14 @@ class CognitoAuthService
             return redirect()->route('home');
         } catch (CognitoIdentityProviderException $exception)
         {
-            if ($exception->getAwsErrorCode() === self::RESET_REQUIRED ||
-                $exception->getAwsErrorCode() === self::USER_NOT_FOUND) {
-                return false;
-            }
+            $errorCode = $exception->getAwsErrorCode();
 
-            throw $exception;
+            return match ($errorCode) {
+                CognitoErrorCodes::USER_NOT_FOUND => CognitoErrorCodes::USER_NOT_FOUND,
+                CognitoErrorCodes::USER_NOT_CONFIRMED => CognitoErrorCodes::USER_NOT_CONFIRMED,
+                CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION => CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION,
+                default => throw new \Exception("Unhandled AWS Cognito error code: $errorCode"),
+            };
         }
     }
 }

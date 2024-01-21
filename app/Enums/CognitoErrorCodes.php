@@ -8,6 +8,8 @@ enum CognitoErrorCodes : string
     case FORCE_PASSWORD_STATUS  = 'FORCE_CHANGE_PASSWORD';
     case RESET_REQUIRED         = 'PasswordResetRequiredException';
     case USER_NOT_FOUND         = 'UserNotFoundException';
+    case USER_NOT_CONFIRMED     = 'UserNotConfirmedException';
+    case NOT_AUTHORIZED_EXCEPTION = 'NotAuthorizedException';
     case USERNAME_EXISTS        = 'UsernameExistsException';
     case INVALID_PASSWORD       = 'InvalidPasswordException';
     case CODE_MISMATCH          = 'CodeMismatchException';

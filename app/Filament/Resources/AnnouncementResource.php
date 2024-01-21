@@ -80,7 +80,7 @@ class AnnouncementResource extends Resource
                             ])
                         ])->columnSpan(1),
 
-                        Fieldset::make('Notification Message')->schema([
+                        Fieldset::make('Notification Message*')->schema([
                             RichEditor::make('content')->label('')->columnSpanFull()->toolbarButtons([
                                 'bold',
                                 'bulletList',

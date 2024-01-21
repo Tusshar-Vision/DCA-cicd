@@ -136,3 +136,7 @@ Route::get('/tags/{search}', [NoteController::class, 'searchTagsLike'])->name('t
 Route::get('/papers', [AppController::class, 'getPapers'])->name('papers');
 Route::get('/subjects/{paper_id}', [AppController::class, 'getSubjectsOfPaper'])->name('subjects');
 Route::get('/sections/{subject_id}', [AppController::class, 'getSectionsOfSubject'])->name('sections');
+
+Route::get('/test', function() {
+    return view('test');
+});
