@@ -18,6 +18,7 @@ use Guava\Filament\NestedResources\Ancestor;
 use Guava\Filament\NestedResources\Resources\NestedResource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\URL;
 
 class SectionResource extends NestedResource
 {
@@ -37,7 +38,12 @@ class SectionResource extends NestedResource
             ->schema([
                 Select::make('topic_id')
                     ->relationship('subject', 'name')
-                    ->required()->label('Subject'),
+                    ->required()
+                    ->default(function () {
+                        preg_match('/subjects\/(\d+)/', URL::current(), $matches);
+                        return $matches[1];
+                    })
+                    ->label('Subject'),
                 TextInput::make('name')->required(),
             ]);
     }

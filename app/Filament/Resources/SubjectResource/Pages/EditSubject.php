@@ -5,6 +5,7 @@ namespace App\Filament\Resources\SubjectResource\Pages;
 use App\Filament\Resources\SubjectResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Database\Eloquent\Model;
 
 class EditSubject extends EditRecord
 {
@@ -13,7 +14,10 @@ class EditSubject extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()
+                ->visible(function (Model $record) {
+                    return $record->sections->count() === 0;
+                }),
         ];
     }
 }
