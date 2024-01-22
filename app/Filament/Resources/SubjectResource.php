@@ -11,6 +11,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Guava\Filament\NestedResources\Resources\NestedResource;
+use Illuminate\Database\Eloquent\Model;
 
 class SubjectResource extends NestedResource
 {
@@ -43,11 +44,19 @@ class SubjectResource extends NestedResource
 
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->tooltip('Edit')
+                    ->iconButton(),
+                Tables\Actions\DeleteAction::make()
+                    ->tooltip('Delete')
+                    ->visible(function (Model $record) {
+                        return $record->sections->count() === 0;
+                    })
+                    ->iconButton()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+//                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
             ->emptyStateActions([

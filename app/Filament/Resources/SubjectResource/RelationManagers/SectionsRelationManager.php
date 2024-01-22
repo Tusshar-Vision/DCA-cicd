@@ -10,6 +10,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Guava\Filament\NestedResources\RelationManagers\NestedRelationManager;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SectionsRelationManager extends NestedRelationManager
@@ -40,12 +41,19 @@ class SectionsRelationManager extends NestedRelationManager
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->iconButton()
+                    ->tooltip('Edit'),
+                Tables\Actions\DeleteAction::make()
+                    ->iconButton()
+                    ->visible(function (Model $record) {
+                        return $record->subSection->count() === 0;
+                    })
+                    ->tooltip('Delete'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+//                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
