@@ -3,7 +3,6 @@
 namespace App\Livewire\Forms;
 
 use App\Enums\CognitoErrorCodes;
-use App\Livewire\Widgets\AuthContainer;
 use App\Services\CognitoAuthService;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Validate;
@@ -34,7 +33,8 @@ class Login extends Component
         }
 
         if ($response === CognitoErrorCodes::USER_NOT_CONFIRMED) {
-            $this->addError('email', "User not confirmed.");
+            $this->dispatch('confirmEmail', $this->email)->to(EmailVerification::class);
+            $this->dispatch('renderComponent', 'forms.email-verification');
         }
     }
 

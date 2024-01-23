@@ -13,9 +13,9 @@ use Livewire\Component;
 class EmailVerification extends Component
 {
     public $otp_first, $otp_sec, $otp_third, $otp_fourth, $otp_fifth, $otp_sixth;
-    public $email, $user;
+    public $email;
 
-    #[On('signup')]
+    #[On('confirmEmail')]
     public function confirmEmail($email): void
     {
         $this->email = $email;
