@@ -31,6 +31,7 @@
             <div class="form-item mb-[15px] relative">
                 <span class="show-password" onclick="showPassword('login-password')">
                     {!! SvgIconsHelper::getSvgIcon('eye-icon') !!}
+                    {!! SvgIconsHelper::getSvgIcon('eye-icon-close') !!}
                 </span>
                 <input
                     type="password"
