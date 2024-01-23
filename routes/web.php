@@ -25,17 +25,25 @@ Route::get('/downloads', [Pages\DownloadsController::class, 'index'])->name('dow
 Route::get('/search', [Pages\SearchController::class, 'index'])->name('search');
 Route::get('/search/{query}', [Pages\SearchController::class, 'searchQuery'])->name('search.query');
 
-Route::get('/economic-survey-budget/archive', [Pages\ArchiveController::class, 'economicSurvery'])->name('economic-survey-budget');
+Route::get('/economic-survey-budget', [Pages\ArchiveController::class, 'economicSurvery'])->name('economic-survey-budget');
 
 // Routes for adding these initiatives
-Route::get('/economic-survey', function () {})->name('economic-survey');
-Route::get('/budget', function () {})->name('budget');
-Route::get('/weekly-round-table', function () {})->name('weekly-round-table');
-Route::get('/animated-shorts', function () {})->name('animated-shorts');
-Route::get('/pyq', function () {})->name('pyq');
-Route::get('/value-added-material', function () {})->name('value-added-material');
-Route::get('/value-added-material-optional', function () {})->name('value-added-material-optional');
-Route::get('/quarterly-revision-documents', function () {})->name('quarterly-revision-document');
+Route::get('/economic-survey', function () {
+})->name('economic-survey');
+Route::get('/budget', function () {
+})->name('budget');
+Route::get('/weekly-round-table', function () {
+})->name('weekly-round-table');
+Route::get('/animated-shorts', function () {
+})->name('animated-shorts');
+Route::get('/pyq', function () {
+})->name('pyq');
+Route::get('/value-added-material', function () {
+})->name('value-added-material');
+Route::get('/value-added-material-optional', function () {
+})->name('value-added-material-optional');
+Route::get('/quarterly-revision-documents', function () {
+})->name('quarterly-revision-document');
 
 Route::controller(Pages\Mains365Controller::class)
     ->group(
@@ -43,8 +51,8 @@ Route::controller(Pages\Mains365Controller::class)
             Route::prefix('/mains-365')
                 ->group(
                     function () {
-                        Route::get('/', 'index')->name('mains-365');
-                        Route::get('/archive', 'archive')->name('mains365.archive');
+                        Route::get('/', 'archive')->name('mains-365');
+                        // Route::get('/archive', 'archive')->name('mains365.archive');
                     }
                 );
         }
@@ -56,8 +64,8 @@ Route::controller(Pages\PT365Controller::class)
             Route::prefix('/pt-365')
                 ->group(
                     function () {
-                        Route::get('/', 'index')->name('pt-365');
-                        Route::get('/archive', 'archive')->name('pt365.archive');
+                        Route::get('/', 'archive')->name('pt-365');
+                        // Route::get('/archive', 'archive')->name('pt365.archive');
                     }
                 );
         }
@@ -137,6 +145,6 @@ Route::get('/papers', [AppController::class, 'getPapers'])->name('papers');
 Route::get('/subjects/{paper_id}', [AppController::class, 'getSubjectsOfPaper'])->name('subjects');
 Route::get('/sections/{subject_id}', [AppController::class, 'getSectionsOfSubject'])->name('sections');
 
-Route::get('/test', function() {
+Route::get('/test', function () {
     return view('test');
 });
