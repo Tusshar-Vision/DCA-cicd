@@ -3,6 +3,7 @@
 namespace App\Livewire\Forms;
 
 use App\Enums\CognitoErrorCodes;
+use App\Livewire\Widgets\AuthContainer;
 use App\Services\CognitoAuthService;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Validate;

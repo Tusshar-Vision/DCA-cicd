@@ -10,8 +10,9 @@
         </dotlottie-player>
     </div>
     <div class="w-full xl:w-6/12 flex flex-col justify-center px-[20px] md:px-[56px] py-[30px] loginwrap">
-        <h2 class="font-medium text-base mb-5">Welcome Back !</h2>
-        <p class="text-sm	font-normal mb-[40px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <h2 class="font-medium text-base mb-5">Welcome!</h2>
+        <p class="text-sm	font-normal mb-[40px]">Please sign-up to your account for a personalised experience.</p>
+
         <form wire:submit="register">
             <div class="form-item mb-[15px]">
                 <input type="text" id="fname" class="w-full rounded-lg" required autocomplete="off"
@@ -104,10 +105,14 @@
                         </svg>
                         Facebook</a></li>
             </ul>
-            <h5 class="text-base text-[#3D3D3D]" @click="isLoginFormOpen = true;isRegisterFormOpen = false;">Already
-                Registered? Login.</h5>
-            <p class="text-[12px] text-[#3D3D3D]">By signing in, you confirm that you have read and agree to our <a
-                    href="#" class="text-[#3362CC] block">Trems and Conditions</a></p>
+            <h5 class="text-base text-[#3D3D3D]">Already Registered?
+                <a href="#" class="text-[#3362CC] hover:underline" wire:click="$parent.renderComponent('forms.login')">
+                    Login
+                </a>
+            </h5>
+            <p class="text-[12px] text-[#3D3D3D]">By signing in, you confirm that you have read and agree to our
+                <a href="{{ \App\Helpers\UrlHelper::linkToVision('/termsandcondition') }}" target="_blank" class="text-[#3362CC] block">Terms and Conditions</a>
+            </p>
         </form>
     </div>
 </div>

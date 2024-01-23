@@ -45,7 +45,7 @@
                 @enderror
             </div>
 
-            <a href="#" class="block text-right forgetpass mb-[20px]">Forgot password?</a>
+            <a href="#" wire:click="$parent.renderComponent('forms.verify-email')" class="block text-right forgetpass mb-[20px]">Forgot password?</a>
             <button wire:click="login" class="login-btn text-center">
                 <p class="flex items-center justify-center">
                     <span wire:loading.delay class="loader mr-2"></span>
@@ -68,7 +68,7 @@
                     </a>
                 </li>
             </ul>
-            <button type="button" class="sign-up" @click="isLoginFormOpen = false;isRegisterFormOpen = true;">New User? Sign up</button>
+            <button type="button" class="sign-up" wire:click="$parent.renderComponent('forms.register')">New User? Sign up</button>
     </div>
 </div>
 

@@ -312,7 +312,7 @@
                     <a href="{{ UrlHelper::linkToVision('/register') }}" class="register">Register</a>
                 </li>
                 <li class="pl-[20px]" style="border-left: 1px solid #E5EAF4;">
-                    <button @click="isLoginFormOpen = !isLoginFormOpen" class="flex items-center text-xs xl:text-sm">
+                    <button @click="isAuthFormOpen = !isAuthFormOpen" class="flex items-center text-xs xl:text-sm">
                         <svg class="mr-3 hidden lg:block" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path

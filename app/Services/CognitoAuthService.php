@@ -72,4 +72,31 @@ class CognitoAuthService
             };
         }
     }
+    /**
+     * Confirms email of a user in the given user pool
+     *
+     * @param $email
+     * @param $code
+     * @return bool
+     */
+    public function confirmSignup($email, $code): bool
+    {
+        try
+        {
+            $response = $this->client->confirmSignUp([
+                'ClientId' => $this->client_id,
+                'Username' => $email,
+                'ConfirmationCode' => $code
+            ]);
+        }
+        catch (CognitoIdentityProviderException $exception) {
+            if ($exception->getAwsErrorCode() === CognitoErrorCodes::CODE_MISMATCH || $exception->getAwsErrorCode() === CognitoErrorCodes::EXPIRED_CODE) {
+                return false;
+            }
+
+            throw $exception;
+        }
+
+        return (bool) $response['UserConfirmed'];
+    }
 }
