@@ -1639,13 +1639,15 @@ $gray-686E70: #686E70;
     letter-spacing: 0.9px;
     background: #fff;
     z-index: 0;
+    width: 100px;
+    margin: 25px auto 0;
 
     &::after {
       content: "";
       width: 60px;
       border-top: 1px solid #3D3D3D;
       position: absolute;
-      right: -75px;
+      right: -35px;
       top: 50%;
       z-index: -1;
     }
@@ -1655,7 +1657,7 @@ $gray-686E70: #686E70;
       width: 60px;
       border-top: 1px solid #3D3D3D;
       position: absolute;
-      left: -75px;
+      left: -35px;
       top: 50%;
       z-index: -1;
     }
