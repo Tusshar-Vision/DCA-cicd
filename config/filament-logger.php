@@ -21,7 +21,7 @@ return array(
 
     'access' => array(
         'enabled' => true,
-        'logger' => \Z3d0X\FilamentLogger\Loggers\AccessLogger::class,
+        'logger' => \App\Loggers\AccessLogger::class,
         'color' => 'danger',
         'log_name' => 'Access',
     ),

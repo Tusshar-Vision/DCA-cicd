@@ -29,12 +29,15 @@
     function showPassword(targetID) {
         const x = document.getElementById(targetID);
         const img = document.querySelector('.eye');
+        const imgclose = document.querySelector('.eyeclose');
         if (x.type === "password") {
             x.type = "text";
-            img.style.opacity = "0.5";
+            img.style.display = "none";
+            imgclose.style.display = "block";
         } else {
             x.type = "password";
-            img.style.opacity = "1";
+            img.style.display = "block";
+            imgclose.style.display = "none";
         }
     }
 
