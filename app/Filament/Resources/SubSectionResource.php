@@ -16,7 +16,11 @@ use Filament\Tables\Table;
 use Guava\Filament\NestedResources\Ancestor;
 use Guava\Filament\NestedResources\Resources\NestedResource;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\URL;
+use Livewire\Component;
+use Livewire\Livewire;
 
 class SubSectionResource extends NestedResource
 {
@@ -30,7 +34,12 @@ class SubSectionResource extends NestedResource
             ->schema([
                 Select::make('section_id')
                     ->relationship('section', 'name')
-                    ->required()->label('Section'),
+                    ->default(function () {
+                        preg_match('/sections\/(\d+)/', URL::current(), $matches);
+                        return $matches[1];
+                    })
+                    ->required()
+                    ->label('Section'),
                 TextInput::make('name')->required(),
             ]);
     }

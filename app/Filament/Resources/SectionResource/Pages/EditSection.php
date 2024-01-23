@@ -6,6 +6,7 @@ use App\Filament\Resources\SectionResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Guava\Filament\NestedResources\Pages\NestedEditRecord;
+use Illuminate\Database\Eloquent\Model;
 
 class EditSection extends NestedEditRecord
 {
@@ -14,7 +15,10 @@ class EditSection extends NestedEditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()
+                ->visible(function (Model $record) {
+                    return $record->subSection->count() === 0;
+                }),
         ];
     }
 }

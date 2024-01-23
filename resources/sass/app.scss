@@ -3032,6 +3032,10 @@ li[data-level="4"] {
   }
 }
 
+.folderDrilldown li{
+
+}
+
 
 /* date picker css min */
 
@@ -3399,6 +3403,25 @@ li[data-level="4"] {
   background-color: #fff !important;
 }
 
+.loader {
+    width: 20px;
+    height: 20px;
+    border: 5px solid #FFF;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 /*  Larger Screen Styling */
 @media (min-width: 564px) {
   .daterangepicker {
@@ -3473,3 +3496,22 @@ li[data-level="4"] {
     clear: none !important;
   }
 }
+
+.card-corner {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 15px;
+  height: 15px;
+  background-color: #8F93A3;
+
+  .card-corner-triangle {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 16px 17px 0;
+    border-color: transparent #ffffff transparent transparent;
+  }
+}
+
