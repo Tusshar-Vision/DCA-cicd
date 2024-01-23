@@ -29,7 +29,9 @@ class TagsResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name.en')->label('Name')
+                TextInput::make('name.en')
+                    ->required()
+                    ->label('Name')
             ]);
     }
 
@@ -45,7 +47,8 @@ class TagsResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->iconButton(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -65,11 +65,38 @@ class CognitoAuthService
             $errorCode = $exception->getAwsErrorCode();
 
             return match ($errorCode) {
-                CognitoErrorCodes::USER_NOT_FOUND => CognitoErrorCodes::USER_NOT_FOUND,
-                CognitoErrorCodes::USER_NOT_CONFIRMED => CognitoErrorCodes::USER_NOT_CONFIRMED,
-                CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION => CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION,
+                CognitoErrorCodes::USER_NOT_FOUND->value => CognitoErrorCodes::USER_NOT_FOUND,
+                CognitoErrorCodes::USER_NOT_CONFIRMED->value => CognitoErrorCodes::USER_NOT_CONFIRMED,
+                CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION->value => CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION,
                 default => throw new \Exception("Unhandled AWS Cognito error code: $errorCode"),
             };
         }
+    }
+    /**
+     * Confirms email of a user in the given user pool
+     *
+     * @param $email
+     * @param $code
+     * @return bool
+     */
+    public function confirmSignup($email, $code): bool
+    {
+        try
+        {
+            $response = $this->client->confirmSignUp([
+                'ClientId' => $this->client_id,
+                'Username' => $email,
+                'ConfirmationCode' => $code
+            ]);
+        }
+        catch (CognitoIdentityProviderException $exception) {
+            if ($exception->getAwsErrorCode() === CognitoErrorCodes::CODE_MISMATCH || $exception->getAwsErrorCode() === CognitoErrorCodes::EXPIRED_CODE) {
+                return false;
+            }
+
+            throw $exception;
+        }
+
+        return (bool) $response['UserConfirmed'];
     }
 }

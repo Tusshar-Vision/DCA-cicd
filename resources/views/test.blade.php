@@ -2,6 +2,16 @@
 
 @section('content')
 
+<div class="dropdown relative inline-block" id="dropdown1">
+    <button class="dropdown-button cursor-pointer p-1 text-[#374957] rotate-90 font-bold text-xs tracking-[5px]" onclick="toggleDropdown('dropdown1')">...</button>
+    <div class="dropdown-content absolute right-0 hidden z-10 shadow-lg py-2">
+        <!-- Dropdown content goes here -->
+        <p class="text-[#8F93A3] text-sm font-normal px-4 py-1 cursor-pointer hover:bg-[#F4F6FC]">Rename</p>
+        <p class="text-[#8F93A3] text-sm font-normal px-4 py-1 cursor-pointer hover:bg-[#F4F6FC]">Delete</p>
+        <p class="text-[#8F93A3] text-sm font-normal px-4 py-1 cursor-pointer hover:bg-[#F4F6FC]">Move</p>
+    </div>
+</div>
+
 <div style="width: 500px; margin: 0 auto">
     <!-- folder header -->
     <div class="flex justify-start items-center w-full text-[#8F93A3] text-sm">
@@ -93,5 +103,50 @@
         </div>
     </div> 
 </div>
+  
+  {{-- <div class="dropdown" id="dropdown2">
+    <button class="dropdown-button" onclick="toggleDropdown('dropdown2')">
+        ...
+    </button>
+    <div class="dropdown-content">
+      <!-- Dropdown content goes here -->
+      <p>Dropdown Item A</p>
+      <p>Dropdown Item B</p>
+      <p>Dropdown Item C</p>
+    </div>
+  </div> --}}
+
+  <script>
+    // Function to toggle the visibility of the dropdown
+    function toggleDropdown(dropdownId) {
+        var dropdown = document.getElementById(dropdownId);
+        var dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        // Close all other dropdowns
+        var allDropdowns = document.querySelectorAll('.dropdown');
+        allDropdowns.forEach(function(dropdown) {
+            var content = dropdown.querySelector('.dropdown-content');
+            if (dropdown !== dropdownId && content.style.display === 'block') {
+            content.style.display = 'none';
+            }
+        });
+
+        // Toggle the visibility of the clicked dropdown
+        dropdownContent.style.display = (dropdownContent.style.display === 'block') ? 'none' : 'block';
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown-button')) {
+            var openDropdowns = document.querySelectorAll('.dropdown-content');
+            openDropdowns.forEach(function(dropdown) {
+                if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+                }
+            });
+            }
+        };
+    }
+  
+  </script>
 
 @endsection
