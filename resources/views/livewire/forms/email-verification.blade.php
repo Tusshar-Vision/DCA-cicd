@@ -1,8 +1,12 @@
 <!-- Email verification OTP UI -->
 <div class="flex flex-col xl:flex-row min-h-[680px] justify-center text-center items-stretch bg-white py-[50px] xl:py-0">
     <div class="w-full xl:w-6/12 flex items-center bg-white xl:bg-[#F5F7F8]">
-        <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
-        <dotlottie-player src="https://lottie.host/5659d5fb-8a75-464f-9488-683967c8dd65/PyUWY2Jblu.json" background="transparent" speed="1" style="width: 300px; height: 300px; margin: 0 auto;" loop autoplay></dotlottie-player>
+        <dotlottie-player
+            src="https://lottie.host/5659d5fb-8a75-464f-9488-683967c8dd65/PyUWY2Jblu.json"
+            background="transparent"
+            speed="1" style="width: 300px; height: 300px; margin: 0 auto;"
+            loop autoplay>
+        </dotlottie-player>
     </div>
     <div class="w-full xl:w-6/12 flex flex-col justify-center px-[20px] md:px-[56px] py-[30px] loginwrap">
         <h5 class="py-[20px] bg-[#C5F7DC4D] text-sm mb-[40px] px-[30px] rounded-md">Kindly, enter the six digit
@@ -42,7 +46,7 @@
 
 {{-- <div class="flex flex-col xl:flex-row min-h-[680px] justify-center text-center items-stretch bg-white py-[50px] xl:py-0">
     <div class="w-full xl:w-6/12 flex items-center bg-white xl:bg-[#F5F7F8] mb-0">
-      <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+      <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
       <dotlottie-player src="https://lottie.host/efd12853-25b1-4c36-bf27-3d0efb0eea46/mtnAb2oVRI.json" background="transparent" speed="1" style="width: 300px; height: 300px; margin: 0 auto;" loop autoplay></dotlottie-player>
     </div>
     <div class="w-full xl:w-6/12 flex flex-col justify-center px-[20px] md:px-[48px] py-[30px] loginwrap">
@@ -52,7 +56,7 @@
         <div class="form-item mb-[56px]">
           <input type="text" id="email" class="w-full rounded-lg" required autocomplete="off">
           <label for="email">Email</label>
-        </div> 
+        </div>
         <button type="submit" class="login-btn">Continue</button>
       </form>
     </div>
@@ -62,7 +66,7 @@
 <!-- Forgot password -->
 {{-- <div class="flex flex-col xl:flex-row min-h-[680px] justify-center text-center items-stretch bg-white py-[50px] xl:py-0">
     <div class="w-full xl:w-6/12 flex items-center bg-white xl:bg-[#F5F7F8] mb-0">
-        <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+        <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
         <dotlottie-player src="https://lottie.host/07fb6a39-c632-4ee0-a521-f7d341f9b34d/eUdLCAHNrn.json" background="transparent" speed="1" style="width: 300px; height: 300px; margin: 0 auto;" loop autoplay></dotlottie-player>
     </div>
     <div class="w-full xl:w-6/12 flex flex-col justify-center px-[20px] md:px-[56px] py-[30px] loginwrap">
@@ -73,7 +77,7 @@
         <div class="form-item mb-[56px]">
           <input type="text" id="email" class="w-full rounded-lg" required autocomplete="off">
           <label for="email">Email</label>
-        </div> 
+        </div>
         <button type="submit" class="login-btn">Continue</button>
       </form>
     </div>
@@ -83,7 +87,7 @@
  <!-- Enter OTP UI -->
  {{-- <div class="flex flex-col xl:flex-row min-h-[680px] justify-center text-center items-stretch bg-white py-[50px] xl:py-0">
     <div class="w-full xl:w-6/12 flex items-center bg-white xl:bg-[#F5F7F8]">
-        <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+        <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
         <dotlottie-player src="https://lottie.host/37fd71df-253c-4c97-9801-0269a1916e43/nXpmkJueeK.json" background="transparent" speed="1" style="width: 300px; height: 300px; margin: 0 auto;" loop autoplay></dotlottie-player>
     </div>
     <div class="w-full xl:w-6/12 flex flex-col justify-center px-[20px] md:px-[56px] py-[30px] loginwrap">

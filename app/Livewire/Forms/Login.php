@@ -24,8 +24,6 @@ class Login extends Component
         $validated = $this->validate();
         $response = $authService->authenticate($validated);
 
-        logger($response);
-
         if ($response === CognitoErrorCodes::USER_NOT_FOUND) {
             $this->addError('email', "Email id doesn't exists, Please Sign Up.");
         }
@@ -35,6 +33,7 @@ class Login extends Component
         }
 
         if ($response === CognitoErrorCodes::USER_NOT_CONFIRMED) {
+            $this->addError('email', "User not confirmed.");
         }
     }
 

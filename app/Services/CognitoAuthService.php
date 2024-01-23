@@ -65,9 +65,9 @@ class CognitoAuthService
             $errorCode = $exception->getAwsErrorCode();
 
             return match ($errorCode) {
-                CognitoErrorCodes::USER_NOT_FOUND => CognitoErrorCodes::USER_NOT_FOUND,
-                CognitoErrorCodes::USER_NOT_CONFIRMED => CognitoErrorCodes::USER_NOT_CONFIRMED,
-                CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION => CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION,
+                CognitoErrorCodes::USER_NOT_FOUND->value => CognitoErrorCodes::USER_NOT_FOUND,
+                CognitoErrorCodes::USER_NOT_CONFIRMED->value => CognitoErrorCodes::USER_NOT_CONFIRMED,
+                CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION->value => CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION,
                 default => throw new \Exception("Unhandled AWS Cognito error code: $errorCode"),
             };
         }
