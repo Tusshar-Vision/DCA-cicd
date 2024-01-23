@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
+use App\DTO\StudentDTO;
 use App\Enums\CognitoErrorCodes;
 use App\Models\Student;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Aws\Credentials\Credentials;
+use Aws\Result;
 
 class CognitoAuthService
 {
@@ -52,13 +54,19 @@ class CognitoAuthService
             $idToken = $result['AuthenticationResult']['IdToken'];
             $refreshToken = $result['AuthenticationResult']['RefreshToken'];
 
-            $user = Student::where('email',  $credentials['email'])->first();
-            if ($user) auth('cognito')->login($user);
+            $studentData = $this->getUser($accessToken);
 
-            // You can now use the tokens as needed
-            // echo 'Access Token: ' . $accessToken . PHP_EOL;
-            // echo 'Id Token: ' . $idToken . PHP_EOL;
-            // echo 'Refresh Token: ' . $refreshToken . PHP_EOL;
+            $studentDTO = StudentDTO::fromAwsResult($studentData['UserAttributes']);
+
+            $user = Student::createOrFirst([
+                'first_name' => $studentDTO->first_name,
+                'last_name' => $studentDTO->last_name,
+                'email' => $studentDTO->email,
+                'mobile_number' => $studentDTO->mobile_number,
+            ]);
+
+            auth('cognito')->login($user);
+
             return redirect()->route('home');
         } catch (CognitoIdentityProviderException $exception)
         {
@@ -157,6 +165,25 @@ class CognitoAuthService
         }
 
         return (bool) $response['UserConfirmed'];
+    }
+
+    /**
+     * Get user details using token
+     *
+     * @param string $token
+     * @return false|Result
+     */
+    public function getUser(string $token): false|Result
+    {
+        try {
+            $user = $this->client->getUser([
+                'AccessToken' => $token,
+            ]);
+        } catch (CognitoIdentityProviderException $exception) {
+            return false;
+        }
+
+        return $user;
     }
 
     /**
