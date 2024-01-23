@@ -72,6 +72,65 @@ class CognitoAuthService
             };
         }
     }
+
+    /**
+     * Registers a user in the given user pool
+     *
+     * @param $email
+     * @param $password
+     * @param array $attributes
+     * @return bool
+     */
+    public function register($email, $password, array $attributes = []): bool
+    {
+        $attributes['email'] = $email;
+
+        try
+        {
+            $response = $this->client->signUp([
+                'ClientId' => $this->client_id,
+                'Password' => $password,
+                // 'SecretHash' => $this->cognitoSecretHash($email),
+                'UserAttributes' => $this->formatAttributes($attributes),
+                'Username' => $email
+            ]);
+        }
+        catch (CognitoIdentityProviderException $exception) {
+            if ($exception->getAwsErrorCode() === CognitoErrorCodes::USERNAME_EXISTS) {
+                return false;
+            }
+
+            throw $exception;
+        }
+
+        return (bool) $response['UserConfirmed'];
+    }
+
+
+
+    /**
+     * Generates and resends the confirmation code for the given user
+     *
+     * @param $email
+     * @return bool
+     */
+    public function resendCode($email): bool
+    {
+        try
+        {
+            $response = $this->client->resendConfirmationCode([
+                'ClientId' => $this->client_id,
+                'Username' => $email,
+                'UserPoolId' => $this->user_pool_id
+            ]);
+        }
+        catch (CognitoIdentityProviderException $exception) {
+            throw $exception;
+        }
+
+        return (bool) $response['UserConfirmed'];
+    }
+
     /**
      * Confirms email of a user in the given user pool
      *
@@ -98,5 +157,25 @@ class CognitoAuthService
         }
 
         return (bool) $response['UserConfirmed'];
+    }
+
+    /**
+     * Format attributes in Name/Value array
+     *
+     * @param  array $attributes
+     * @return array
+     */
+    protected function formatAttributes(array $attributes): array
+    {
+        $userAttributes = [];
+
+        foreach ($attributes as $key => $value) {
+            $userAttributes[] = [
+                'Name' => $key,
+                'Value' => $value,
+            ];
+        }
+
+        return $userAttributes;
     }
 }

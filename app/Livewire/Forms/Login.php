@@ -33,7 +33,7 @@ class Login extends Component
         }
 
         if ($response === CognitoErrorCodes::USER_NOT_CONFIRMED) {
-            $this->dispatch('confirmEmail', $this->email)->to(EmailVerification::class);
+            session(['verify_email' => $this->email]);
             $this->dispatch('renderComponent', 'forms.email-verification');
         }
     }
