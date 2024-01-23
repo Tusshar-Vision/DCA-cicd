@@ -143,7 +143,6 @@ class AdminPanelProvider extends PanelProvider
                 'Other Uploads',
                 'Media'
             ])
-            ->sidebarCollapsibleOnDesktop()
-            ->spa(true);
+            ->sidebarCollapsibleOnDesktop();
     }
 }

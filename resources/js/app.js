@@ -5,6 +5,7 @@ import {Navigation} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
+import '@dotlottie/player-component';
 function initializeSwiper() {
     new Swiper('.swiper', {
         // configure Swiper to use modules
@@ -50,13 +51,11 @@ window.addEventListener('onHomePage', () => {
 });
 
 // remove tag function
-var container = document.getElementById('note-tag');
-container.addEventListener('click', function (event) {
-    const span = document.getElementById(event.target.id + "span");
-    span.remove()
-});
-
-
+// let container = document.getElementById('note-tag');
+// container.addEventListener('click', function (event) {
+//     const span = document.getElementById(event.target.id + "span");
+//     span.remove()
+// });
 
 // text lenght for whats new section
 
@@ -75,7 +74,7 @@ container.addEventListener('click', function (event) {
 
 
 // accordion toggle
-const accordionItems = document.querySelectorAll(".vi-acrticle-highligh-coll");
+const accordionItems= document.querySelectorAll(".vi-acrticle-highligh-coll");
     accordionItems.forEach(item =>
     item.addEventListener("click", () => {
         const isItemOpen = item.classList.contains("active");
