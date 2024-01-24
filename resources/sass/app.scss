@@ -1561,7 +1561,7 @@ $gray-686E70: #686E70;
     background: url("/images/search.svg") left center no-repeat;
 
     &:focus {
-      width: 240px;
+      width: 205px;
       background: #fff;
       cursor: inherit;
       padding-right: 10px;
@@ -3594,4 +3594,8 @@ iframe {
     aspect-ratio: 16/9;
     width: 100%;
     height: 100%;
+}
+
+.activeSubTab{
+  color: #3362CC;
 }
