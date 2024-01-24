@@ -32,12 +32,12 @@
         const imgclose = document.querySelector('.eyeclose');
         if (x.type === "password") {
             x.type = "text";
-            img.style.display = "none";
-            imgclose.style.display = "block";
+            imgclose.style.display = "none";
+            img.style.display = "block";
         } else {
             x.type = "password";
-            img.style.display = "block";
-            imgclose.style.display = "none";
+            imgclose.style.display = "block";
+            img.style.display = "none";
         }
     }
 

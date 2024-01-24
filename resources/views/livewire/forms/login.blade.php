@@ -45,8 +45,9 @@
                     <p class="text-xs text-[#C10000] text-left mt-2">{{ $message }}</p>
                 @enderror
             </div>
-
-            <a href="#" wire:click="$dispatch('renderComponent', { component: 'forms.verify-email' })" class="block text-right forgetpass mb-[20px]">Forgot password?</a>
+            <div class="flex justify-end w-full">
+                <a href="#" wire:click="$dispatch('renderComponent', { component: 'forms.verify-email' })" class="inline-block text-right forgetpass mb-[20px]">Forgot password?</a>
+            </div>
             <button wire:click="login" class="login-btn text-center">
                 <p class="flex items-center justify-center">
                     <span wire:loading.delay class="loader mr-2"></span>
