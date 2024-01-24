@@ -1,6 +1,8 @@
 <div class="w-2/6 leftArchiveMenu" id="myDIV">
 <?php 
    $segment = request()->segment(count(request()->segments())-1);
+   $url = request()->path();
+   logger("url1", [$url]);
 ?>
     <div class="py-[40px] px-[14px] bg-[#F7F8F9] rounded-md relative">
         <div class="flex justify-between align-middle relative">
@@ -18,13 +20,13 @@
             <a href="{{route('news-today.archive')}}" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ $segment == 'news-today' ? 'activeSidebar' : '' }}">Daily News Archives</a>
         </li>
         <li class="font-semibold text-base text-[#183B56] mb-1">
-            <a href="{{route('pt365.archive')}}" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ $segment == 'pt-365' ? 'activeSidebar' : '' }}">PT 365</a>
+            <a href="{{route('pt-365')}}" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ $url == 'pt-365' ? 'activeSidebar' : '' }}">PT 365</a>
         </li>
         <li class="font-semibold text-base text-[#183B56] mb-1">
-            <a href="{{route('mains365.archive')}}" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ $segment == 'mains-365' ? 'activeSidebar' : '' }}">Mains 365</a>
+            <a href="{{route('mains-365')}}" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ $url == 'mains-365' ? 'activeSidebar' : '' }}">Mains 365</a>
         </li>
         <li class="font-semibold text-base text-[#183B56] mb-1">
-            <a href="{{route('economic-survey-budget')}}" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ $segment == 'economic-survey' ? 'activeSidebar' : '' }}">Economic Survey and Budget</a>
+            <a href="{{route('economic-survey-budget')}}" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ $segment == 'economic-survey-budget' ? 'activeSidebar' : '' }}">Economic Survey and Budget</a>
         </li>
         <li class="font-semibold text-base text-[#183B56] mb-1">
             <a href="javascript:void(0)" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white">Weekly Round Table</a>

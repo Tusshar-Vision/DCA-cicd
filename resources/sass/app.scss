@@ -3555,6 +3555,26 @@ li[data-level="4"] {
   text-align: center;
   padding: 2px 0px;
 }
+
+.calender-wrap  .vi-daily-news-card .vi-calender-grid-week {
+  display: grid;
+  grid-template-columns: repeat(7, auto);
+  gap: 4px;
+  font-size: 12px;
+  max-width: 100%;
+  margin-top: 10px;
+}
+.calender-wrap .vi-daily-news-card .vi-calender-grid-week a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: #686E70;
+  text-align: center;
+  padding: 2px 0px;
+}
+
 .calender-wrap .vi-daily-news-card .vi-calender-grid a::after {
   content: '';
   width: 12px;
@@ -3568,4 +3588,10 @@ li[data-level="4"] {
 }
 .calender-wrap .vi-daily-news-card .vi-calender-grid a[data-status="lvl-2"]::after {
   background-color: #4DA769;
+}
+
+iframe {
+    aspect-ratio: 16/9;
+    width: 100%;
+    height: 100%;
 }

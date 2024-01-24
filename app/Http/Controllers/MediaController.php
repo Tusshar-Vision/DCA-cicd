@@ -11,9 +11,7 @@ class MediaController extends Controller
 {
     public function renderImage($filename)
     {
-        logger("filenamee", [$filename]);
         $path = storage_path('app/public/' . $filename);
-        logger("path", [$path]);
 
         if (!File::exists($path)) {
             abort(404);
@@ -35,6 +33,6 @@ class MediaController extends Controller
 
     public function viewFile(Media $media)
     {
-        return response()->file($media->getPath());
+        return response()->redirectTo($media->getTemporaryUrl(now()->add('minutes', 120)));
     }
 }
