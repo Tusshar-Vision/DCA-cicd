@@ -300,7 +300,7 @@
             @auth('cognito')
                 <div class="flex items-center font-bold cursor-pointer user-style" x-data="{ isUserMenuOpen: false }"
                     @click="isUserMenuOpen = true">
-                    <div class="user-greet">
+                    <div class="user-greet min-w-[80px] md:w-auto">
                         <p>Welcome,</p>
                         <div>{{ auth('cognito')->user()->name ?? 'No Name' }}</div>
                     </div>
