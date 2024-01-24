@@ -2,12 +2,8 @@
 
 namespace App\Livewire\Forms;
 
-use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
-use Aws\Credentials\Credentials;
-use Aws\Exception\AwsException;
+use App\Services\CognitoAuthService;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Log;
-use Livewire\Attributes\On;
 use Livewire\Component;
 
 class EmailVerification extends Component
@@ -15,17 +11,18 @@ class EmailVerification extends Component
     public $otp_first, $otp_sec, $otp_third, $otp_fourth, $otp_fifth, $otp_sixth;
     public $email;
 
-    #[On('confirmEmail')]
-    public function confirmEmail($email): void
+    public function mount(CognitoAuthService $cognitoAuthService): void
     {
-        $this->email = $email;
+        $this->email = session('verify_email');
+        $cognitoAuthService->resendCode($this->email);
     }
 
-    public function __construct() {}
-
-    public function verify()
+    public function verify(CognitoAuthService $cognitoAuthService): void
     {
+        $otpCode = $this->otp_first . $this->otp_sec . $this->otp_third . $this->otp_fourth . $this->otp_fifth . $this->otp_sixth;
+        $response = $cognitoAuthService->confirmSignup($this->email, $otpCode);
 
+        logger($response);
     }
 
     public function render(): View
