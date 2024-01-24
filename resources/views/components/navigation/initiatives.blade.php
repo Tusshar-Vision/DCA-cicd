@@ -292,9 +292,10 @@
     <div class="login-wrapper">
         <ul class="flex items-center">
             <li>
-                <!-- <x-widgets.search-bar /> -->
                 <div class="search-field-container">
-                    <input type="search" class="search-field" placeholder="Search" onchange="redirect(this)" />
+                    <label>
+                        <input type="search" class="search-field" placeholder="Search" onchange="redirect(this)" />
+                    </label>
                 </div>
             </li>
             @auth('cognito')
@@ -302,9 +303,9 @@
                     @click="isUserMenuOpen = true">
                     <div class="user-greet min-w-[80px] md:w-auto">
                         <p>Welcome,</p>
-                        <div>{{ auth('cognito')->user()->name ?? 'No Name' }}</div>
+                        <div>{{ auth('cognito')->user()->first_name ?? 'No Name' }}</div>
                     </div>
-                    <span>Y</span>
+                    <span>{{ mb_substr(auth('cognito')->user()->first_name, 0, 1) ?? 'X' }}</span>
                     <x-auth.user-dropdown-menu x-show="isUserMenuOpen" />
                 </div>
             @else

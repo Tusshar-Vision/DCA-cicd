@@ -3589,3 +3589,9 @@ li[data-level="4"] {
 .calender-wrap .vi-daily-news-card .vi-calender-grid a[data-status="lvl-2"]::after {
   background-color: #4DA769;
 }
+
+iframe {
+    aspect-ratio: 16/9;
+    width: 100%;
+    height: 100%;
+}
