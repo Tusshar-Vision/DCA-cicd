@@ -33,7 +33,7 @@
         <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8">
                 <div class="flex w-full lg:w-2/6 flex-col space-y-4 leftsticky">
                     <h2 class="text-[20px] font-bold mt-[26px] pb-3 border-b border-color">News Today</h2>
-                    <livewire:widgets.news-today-calendar />
+                    <livewire:widgets.news-today-calendar :calendar-data="$newsTodayCalendar" />
                     <x-widgets.article-side-bar :table-of-content="$articles->articles" />
                     <div class="hidden lg:block">
                         <x-widgets.side-bar-download-menu initiative="news-today"/>

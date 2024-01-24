@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Pages;
 
+use App\DTO\Menu\NewsTodayMenuDTO;
 use App\DTO\NewsTodayDTO;
 use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
@@ -9,7 +10,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Bookmark;
 use App\Models\Note;
 use App\Services\ArticleService;
-use App\Services\MediaService;
 use App\Services\PublishedInitiativeService;
 use App\Services\SuggestionService;
 use Illuminate\Support\Facades\Auth;
@@ -58,6 +58,7 @@ class NewsTodayController extends Controller
                 ->getLatest($this->initiativeId, $date)
         );
 
+        $newsTodayCalendar = NewsTodayMenuDTO::from($this->newsToday);
         $article = $this->newsToday->getArticleFromSlug($slug);
 
         $relatedTerms = $this->suggestionService->getRelatedTerms($article);
@@ -83,7 +84,8 @@ class NewsTodayController extends Controller
             "isArticleBookmarked" => $isArticleBookmarked,
             "relatedTerms" => $relatedTerms,
             "relatedArticles" => $relatedArticles,
-            "relatedVideos" => $relatedVideos
+            "relatedVideos" => $relatedVideos,
+            "newsTodayCalendar" => $newsTodayCalendar
         ]);
     }
 

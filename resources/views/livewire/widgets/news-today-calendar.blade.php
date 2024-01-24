@@ -2,9 +2,9 @@
     <div class="calender-wrap absolute left-0 top-0 mt-[23px] w-full bar hidden calendar">
         <div class="vi-daily-news-card">
             <div class="flex justify-between items-center">
+                @dd($calendarData)
                 <label>
-                    <select class="py-1 h-[28px] text-sm border-[1px] border-[#C3CAD9] text-[#3d3d3d]">
-                        <option>Year</option>
+                    <select class="py-1 h-[28px] text-sm border-none border-[#C3CAD9] text-[#3d3d3d] cursor-pointer">
                         <option>January 2024</option>
                         <option>February 2024</option>
                         <option>March 2024</option>
@@ -84,7 +84,7 @@
             calendar.style.display = 'block';
         });
 
-        input.addEventListener('focusout', function () {
+        calendar.addEventListener('focusout', function () {
             calendar.style.display = 'none';
         });
     </script>

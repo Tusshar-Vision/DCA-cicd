@@ -75,10 +75,10 @@
 
     function loadForLocalStorage() {
         const article_id = "{{ $article->getID() }}";
-        <?php if(!Auth::check()) { ?>
+        <?php if(!Auth::guard('cognito')->check()) { ?>
         if (localStorage.getItem('notes')) {
             const notes = JSON.parse(localStorage.getItem('notes'));
-            const note = notes.find(note => note.article_id == article_id)
+            const note = notes.find(note => note.article_id === article_id)
             if (note) {
                 tinymce.get('notes-text-area').setContent(note.note);
             }
@@ -94,17 +94,18 @@
         const tagsNodes = document.querySelectorAll('.tag-name');
         let tags = [];
         for (let i = 0; i < tagsNodes.length; i++) tags.push(tagsNodes[i].innerText)
-        @if (Auth::check())
-            const user_id = "{{ Auth::check() ? Auth::user()->id : '' }}";
+        @if (Auth::guard('cognito')->check())
+            const user_id = "{{ Auth::guard('cognito')->check() ? Auth::guard('cognito')->user()->id : '' }}";
         @endif
         const article_id = "{{ $article->getID() }}";
         const topic_id = "{{ $article->getTopicID() }}";
         const topic_section_id = "{{ $article->getSectionID() }}";
         const topic_sub_section_id = "{{ $article->getSubSectionID() }}";
         const note = tinyMCE.activeEditor.getContent();
-        const note_title = document.getElementById("note-title").innerHTML
+        const note_title = document.getElementById("note-title").innerHTML;
+        const _token = '{{ csrf_token() }}';
 
-        @if (Auth::check())
+        @if (Auth::guard('cognito')->check())
             saveData("{{ route('notes.add') }}", {
                 user_id,
                 article_id,
@@ -114,7 +115,7 @@
                 note_title,
                 note,
                 tags,
-                _token: '{{ csrf_token() }}'
+                _token
             }).then(data => {
                 tinymce.get('notes-text-area').setContent(data.data.content)
             })
