@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Bookmark;
 use App\Models\Note;
 use App\Services\ArticleService;
+use App\Services\InitiativeService;
 use App\Services\PublishedInitiativeService;
 use App\Services\SuggestionService;
 use Illuminate\Support\Facades\Auth;
@@ -51,14 +52,18 @@ class NewsTodayController extends Controller
     /**
      * @throws \Throwable
      */
-    public function renderArticle($date, $topic, $slug)
+    public function renderArticle($date, $topic, $slug, InitiativeService $initiativeService)
     {
         $this->newsToday = NewsTodayDTO::fromModel(
             $this->publishedInitiativeService
                 ->getLatest($this->initiativeId, $date)
         );
 
-        $newsTodayCalendar = NewsTodayMenuDTO::from($this->newsToday);
+        $newsTodayCalendar = NewsTodayMenuDTO::fromNewsTodayDTO(
+            $this->newsToday,
+            $initiativeService->getMenuData(Initiatives::NEWS_TODAY)
+        );
+
         $article = $this->newsToday->getArticleFromSlug($slug);
 
         $relatedTerms = $this->suggestionService->getRelatedTerms($article);
@@ -70,7 +75,7 @@ class NewsTodayController extends Controller
         $isArticleBookmarked = false;
 
         if (Auth::guard('cognito')->check()) {
-            $noteAvailable = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->count() > 0 ? true : false;
+            $noteAvailable = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->count() > 0;
             $note = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
             $bookmark =  Bookmark::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
             if ($bookmark) $isArticleBookmarked = true;
