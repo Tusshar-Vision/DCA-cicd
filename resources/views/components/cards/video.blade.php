@@ -3,8 +3,6 @@
         @php
             $mediaEmbed = new MediaEmbed\MediaEmbed();
             $mediaObject =  $mediaEmbed->parseUrl($source->url);
-            $mediaObject->setWidth(320, true);
-
             echo $mediaObject->getEmbedCode();
         @endphp
     @else
