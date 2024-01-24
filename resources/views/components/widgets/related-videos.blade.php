@@ -10,9 +10,9 @@
                     @php
                         $mediaEmbed = new MediaEmbed\MediaEmbed();
                         $mediaObject =  $mediaEmbed->parseUrl($video->url);
-                        $mediaObject->setWidth(150, true);
-
-                        echo $mediaObject->getEmbedCode();
+                        echo "<div class='max-w-36 max-h-36'>";
+                            echo $mediaObject->getEmbedCode();
+                        echo "</div>"
                     @endphp
                 @else
                     <video width="320" controls>
