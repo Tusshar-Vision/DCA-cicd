@@ -7,7 +7,7 @@
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
         </svg>
         <input type="text" class="w-full vi-search-bar h-8 border-none focus:ring-0" placeholder="Search"
-            id="searchInput" wire:model="searchTerm" required>
+            id="searchInput" wire:model="searchTerm" autocomplete="off" required>
         <div id="search-item-container" class="search-list overflow-scroll" style="display: none">
             <p>Search 1</p>
         </div>

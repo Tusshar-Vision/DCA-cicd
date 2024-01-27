@@ -51,12 +51,6 @@ readonly class InitiativeService
         $menuData = [];
 
         foreach ($data as $month => $groupedInitiatives) {
-//            $publishedInitiatives = [];
-//
-//            foreach ($groupedInitiatives as $initiative) {
-//                $publishedInitiatives[] = MainMenuDTO::fromArray($initiative);
-//            }
-//            $menuData[$month]['menu'] = $publishedInitiatives;
             $daysArray = [];
 
             $totalDays = Carbon::parse($month)->daysInMonth;
@@ -66,8 +60,13 @@ readonly class InitiativeService
                 $date = Carbon::createFromFormat('d F Y', $day . ' ' . $month);
 
                 // Add the date as a key and the weekday as the value to the array
-                $daysArray[$date->format('d')]['day_name'] = $date->format('l');
-                $daysArray[$date->format('d')]['menu'] = $groupedInitiatives->where('published_at', '=', $date->format('Y-m-d') . ' ' . '00:00:00');
+                $daysArray[$date->format('j')]['day_name'] = $date->format('l');
+
+                $initiatives = $groupedInitiatives->where('published_at', '=', $date->format('Y-m-d') . ' ' . '00:00:00');
+                $daysArray[$date->format('j')]['menu'] = collect();
+                if ($initiatives->count() !== 0) {
+                    $daysArray[$date->format('j')]['menu']->push(MainMenuDTO::fromArray($initiatives->first()));
+                }
             }
             $menuData[$month]['days'] = $daysArray;
         }

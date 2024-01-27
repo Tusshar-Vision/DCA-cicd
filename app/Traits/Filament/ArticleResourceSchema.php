@@ -333,7 +333,7 @@ trait ArticleResourceSchema
                         'title' => $record->title,
                         'subject' => $record->topic->name,
                         'section' => $record->topicSection->name,
-                        'subSection' => $record->topicSubSection->name,
+                        'subSection' => $record->topicSubSection->name ?? '',
                         'tags' => $record->tags,
                         'status' => $record->status,
                         'body' => $record->latestReview()->review ?? '',

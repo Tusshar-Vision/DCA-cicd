@@ -294,7 +294,7 @@
             <li>
                 <div class="search-field-container">
                     <label>
-                        <input type="search" class="search-field" placeholder="Search" onchange="redirect(this)" />
+                        <input type="search" class="search-field" placeholder="Search" />
                     </label>
                 </div>
             </li>

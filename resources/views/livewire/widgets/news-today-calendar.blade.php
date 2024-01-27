@@ -1,12 +1,16 @@
+@php
+    use App\Services\ArticleService;
+@endphp
 <div class="calendar-wrapper border-1 border-color-C3CAD9 bg-white border rounded relative">
     <div class="calender-wrap absolute left-0 top-0 mt-[23px] w-full bar hidden calendar">
         <div class="vi-daily-news-card">
             <div class="flex justify-between items-center">
-                @dd($calendarData)
                 <label>
                     <select title="month" class="py-1 h-[28px] text-sm border-none border-[#C3CAD9] text-[#3d3d3d] cursor-pointer">
                         @foreach($calendarData->mainMenu as $month => $data)
-                            <option value="{{ $month }}" {{ $calendarData->currentMonth === $month ? 'selected' : '' }}>{{ $month }}</option>
+                            <option value="{{ $month }}" {{ $calendarData->currentMonth === $month ? 'selected' : '' }}>
+                                {{ $month }}
+                            </option>
                         @endforeach
                     </select>
                 </label>
@@ -21,10 +25,27 @@
                 <a href="javascript:void(0)" class="cursor-default">SAT</a>
             </div>
             <div class="vi-calender-grid">
+                @for($count = 1; $count <= $calendarData->diffInDays; $count++)
+                    <a href="javascript:void(0)" data-status="" class="date-disabled"></a>
+                @endfor
+
                 @foreach($calendarData->mainMenu as $month => $data)
-                    @for($i = 1; $i <= $data['days']; $i++)
-                        <a href="javascript:void(0)" data-status="" class="date-disabled">{{ $i }}</a>
-                    @endfor
+                    @foreach($data['days'] as $day => $menuData)
+                        @if($menuData['menu']->isEmpty())
+                            <a href="javascript:void(0)" data-status="" class="date-disabled">
+                                {{ $day }}
+                            </a>
+                        @else
+                            <a href="{{ ArticleService::getArticleUrlFromSlug($menuData['menu']->first()->article->first()->slug) }}"
+                               data-status=""
+                               class="{{ $calendarData->date == $day ? 'font-bold' : '' }}"
+                               style="{{ $calendarData->date == $day ? 'border-color: #8F93A3' : '' }}"
+                               wire:navigate
+                            >
+                                {{ $day }}
+                            </a>
+                        @endif
+                    @endforeach
                 @endforeach
             </div>
         </div>
@@ -35,8 +56,17 @@
         <path d="M9.74805 4.7998V7.7998" stroke="#8F93A3" stroke-linecap="round"/>
         <path d="M17.687 4.7998V7.7998" stroke="#8F93A3" stroke-linecap="round"/>
     </svg>
-    <input type="text" class="border-0 focus:outline-none focus:border-0 w-full" id="showCalendar"/>
+    <label for="showCalendar"></label>
+    <input
+        id="showCalendar"
+        type="text"
+        class="border-0 focus:outline-none focus:border-0 w-full"
+        autocomplete="off"
+        readonly
+        wire:model="selectedDate"
+    />
 </div>
+
 @script
     <script>
         let input = document.getElementById('showCalendar');
