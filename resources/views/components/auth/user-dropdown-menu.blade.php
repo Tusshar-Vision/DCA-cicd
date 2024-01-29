@@ -1,16 +1,16 @@
-<div {{ $attributes }} x-cloak>
-    <ul class="absolute font-normal bg-visionGray shadow rounded-sm border mt-2 py-1 z-20 right-6 top-14">
+<div {{ $attributes }} x-cloak class="relative">
+    <ul class="absolute font-normal bg-white border shadow rounded-sm border mt-2 py-1 z-20 right-0 top-4 min-w-[150px]">
         <li class="relative">
             <a href="{{ route('user.dashboard') }}" @click.outside="isUserMenuOpen = false"
-                class="flex items-center justify-between px-3 py-3 hover:bg-visionSelectedGray">
+                class="flex items-center justify-between px-3 py-2 hover:text-[#3362CC]">
                 My Dashboard
             </a>
             <a href="#" @click.outside="isUserMenuOpen = false"
-                class="flex items-center justify-between px-3 py-3 hover:bg-visionSelectedGray">
+                class="flex items-center justify-between px-3 py-2 hover:text-[#3362CC]">
                 Profile Settings
             </a>
             <a href="{{ route('logout') }}" @click.outside="isUserMenuOpen = false"
-                class="flex items-center justify-between px-3 py-3 hover:bg-visionSelectedGray">
+                class="flex items-center justify-between px-3 py-2 hover:text-[#3362CC]">
                 Logout
             </a>
         </li>

@@ -1,6 +1,7 @@
 <!-- activity tab start -->
 
 {{-- <?php dd($readHistories); ?> --}}
+<div class="vigrid-wide"> 
 <div class="vi-profile-tab-container tabc-activity">
     <div class="activity-tab-wrapper">
         <div class="activity-tab-left-itmes">
@@ -177,6 +178,7 @@
         </div>
 
     </div>
+</div>
 </div>
 <!-- activity tab start -->
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Pages;
 
+use App\DTO\Menu\NewsTodayMenuDTO;
 use App\DTO\NewsTodayDTO;
 use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
@@ -9,7 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Bookmark;
 use App\Models\Note;
 use App\Services\ArticleService;
-use App\Services\MediaService;
+use App\Services\InitiativeService;
 use App\Services\PublishedInitiativeService;
 use App\Services\SuggestionService;
 use Illuminate\Support\Facades\Auth;
@@ -51,11 +52,16 @@ class NewsTodayController extends Controller
     /**
      * @throws \Throwable
      */
-    public function renderArticle($date, $topic, $slug)
+    public function renderArticle($date, $topic, $slug, InitiativeService $initiativeService)
     {
         $this->newsToday = NewsTodayDTO::fromModel(
             $this->publishedInitiativeService
                 ->getLatest($this->initiativeId, $date)
+        );
+
+        $newsTodayCalendar = NewsTodayMenuDTO::fromNewsTodayDTO(
+            $this->newsToday,
+            $initiativeService->getMenuData(Initiatives::NEWS_TODAY)
         );
 
         $article = $this->newsToday->getArticleFromSlug($slug);
@@ -69,7 +75,7 @@ class NewsTodayController extends Controller
         $isArticleBookmarked = false;
 
         if (Auth::guard('cognito')->check()) {
-            $noteAvailable = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->count() > 0 ? true : false;
+            $noteAvailable = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->count() > 0;
             $note = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
             $bookmark =  Bookmark::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
             if ($bookmark) $isArticleBookmarked = true;
@@ -83,7 +89,8 @@ class NewsTodayController extends Controller
             "isArticleBookmarked" => $isArticleBookmarked,
             "relatedTerms" => $relatedTerms,
             "relatedArticles" => $relatedArticles,
-            "relatedVideos" => $relatedVideos
+            "relatedVideos" => $relatedVideos,
+            "newsTodayCalendar" => $newsTodayCalendar
         ]);
     }
 

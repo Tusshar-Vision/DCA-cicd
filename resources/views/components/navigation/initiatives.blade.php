@@ -294,14 +294,14 @@
             <li>
                 <div class="search-field-container">
                     <label>
-                        <input type="search" class="search-field" placeholder="Search" onchange="redirect(this)" />
+                        <input type="search" class="search-field" placeholder="Search" />
                     </label>
                 </div>
             </li>
             @auth('cognito')
                 <div class="flex items-center font-bold cursor-pointer user-style" x-data="{ isUserMenuOpen: false }"
                     @click="isUserMenuOpen = true">
-                    <div class="user-greet">
+                    <div class="user-greet min-w-[80px] md:w-auto">
                         <p>Welcome,</p>
                         <div>{{ auth('cognito')->user()->first_name ?? 'No Name' }}</div>
                     </div>

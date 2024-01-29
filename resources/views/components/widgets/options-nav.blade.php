@@ -3,7 +3,7 @@
         {{--        {{ Breadcrumbs::render('home') }} --}}
     </div>
 
-    <div class="flex flex-row">
+    <div class="flex px-[20px] md:px-0">
         @auth('cognito')
             <div class="flex mr-6" onclick="bookmark()">
                 <button class="flex items-center">
@@ -33,7 +33,7 @@
                 </button>
             </div>
         @endauth
-        <div x-data="{ isFullScreen: false }" class="flex">
+        <div x-data="{ isFullScreen: false }" class="md:flex hidden">
             <button class="flex items-center" @click="toggleFullScreen()">
                 <svg width="20" height="18" viewBox="0 0 20 18" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
