@@ -6,9 +6,9 @@
         <div class="vi-daily-news-card">
             <div class="flex justify-between items-center">
                 <label>
-                    <select title="month" class="py-1 h-[28px] text-sm border-none border-[#C3CAD9] text-[#3d3d3d] cursor-pointer">
+                    <select wire:model.live="selectedMonth" title="month" class="py-1 h-[28px] text-sm border-none border-[#C3CAD9] text-[#3d3d3d] cursor-pointer">
                         @foreach($calendarData->mainMenu as $month => $data)
-                            <option value="{{ $month }}" {{ $calendarData->currentMonth === $month ? 'selected' : '' }}>
+                            <option value="{{ $month }}" {{ $selectedMonth === $month ? 'selected' : '' }}>
                                 {{ $month }}
                             </option>
                         @endforeach
@@ -25,27 +25,28 @@
                 <a href="javascript:void(0)" class="cursor-default">SAT</a>
             </div>
             <div class="vi-calender-grid">
-                @for($count = 1; $count <= $calendarData->diffInDays; $count++)
+                @for($count = 1; $count <= $calendarData->mainMenu[$selectedMonth]['diffInDays']; $count++)
                     <a href="javascript:void(0)" data-status="" class="date-disabled"></a>
                 @endfor
 
                 @foreach($calendarData->mainMenu as $month => $data)
-                    @foreach($data['days'] as $day => $menuData)
-                        @if($menuData['menu']->isEmpty())
-                            <a href="javascript:void(0)" data-status="" class="date-disabled">
-                                {{ $day }}
-                            </a>
-                        @else
-                            <a href="{{ ArticleService::getArticleUrlFromSlug($menuData['menu']->first()->article->first()->slug) }}"
-                               data-status=""
-                               class="{{ $calendarData->date == $day ? 'font-bold' : '' }}"
-                               style="{{ $calendarData->date == $day ? 'border-color: #8F93A3' : '' }}"
-                               wire:navigate
-                            >
-                                {{ $day }}
-                            </a>
-                        @endif
-                    @endforeach
+                    @if($month == $selectedMonth)
+                        @foreach($data['days'] as $day => $menuData)
+                            @if($menuData['menu']->isEmpty())
+                                <a href="javascript:void(0)" data-status="" class="date-disabled">
+                                    {{ $day }}
+                                </a>
+                            @else
+                                <a href="{{ ArticleService::getArticleUrlFromSlug($menuData['menu']->first()->article->first()->slug) }}"
+                                   data-status=""
+                                   class="{{ ($calendarData->currentMonth === $selectedMonth && $calendarData->date == $day) ? 'font-bold' : '' }}"
+                                   style="{{ ($calendarData->currentMonth === $selectedMonth && $calendarData->date == $day) ? 'border-color: #8F93A3' : '' }}"
+                                >
+                                    {{ $day }}
+                                </a>
+                            @endif
+                        @endforeach
+                    @endif
                 @endforeach
             </div>
         </div>
@@ -67,17 +68,54 @@
     />
 </div>
 
-@script
-    <script>
+<script>
+    document.addEventListener('livewire:init', () => {
         let input = document.getElementById('showCalendar');
         let calendar = document.getElementsByClassName('calendar')[0];
+        let isCalendarVisible = false;
 
         input.addEventListener('focus', function() {
             calendar.style.display = 'block';
+            isCalendarVisible = true;
+            // Add click event to document to hide calendar on outside click
+            document.addEventListener('click', handleOutsideClick);
+            // Add touchstart event for mobile
+            document.addEventListener('touchstart', handleOutsideClick);
         });
 
-        calendar.addEventListener('focusout', function () {
-            calendar.style.display = 'none';
+        Livewire.hook('morph.updated', ({ el, component }) => {
+            calendar.style.display = 'block';
+            isCalendarVisible = true;
+            if (isCalendarVisible) {
+                // Add click event to document to hide calendar on outside click
+                document.addEventListener('click', handleOutsideClick);
+                // Add touchstart event for mobile
+                document.addEventListener('touchstart', handleOutsideClick);
+            }
         });
-    </script>
-@endscript
+
+        Livewire.hook('beforeDomUpdate', ({ el, component }) => {
+            // Remove click and touchstart event listeners before Livewire update
+            document.removeEventListener('click', handleOutsideClick);
+            document.removeEventListener('touchstart', handleOutsideClick);
+        });
+
+        Livewire.hook('afterDomUpdate', ({ el, component }) => {
+            if (isCalendarVisible) {
+                // Re-add click and touchstart event listeners after Livewire update
+                document.addEventListener('click', handleOutsideClick);
+                document.addEventListener('touchstart', handleOutsideClick);
+            }
+        });
+
+        function handleOutsideClick(event) {
+            // Check if the clicked element is outside the calendar
+            if (!calendar.contains(event.target) && event.target !== input) {
+                calendar.style.display = 'none';
+                // Remove click and touchstart event listeners when calendar is hidden
+                document.removeEventListener('click', handleOutsideClick);
+                document.removeEventListener('touchstart', handleOutsideClick);
+            }
+        }
+    });
+</script>

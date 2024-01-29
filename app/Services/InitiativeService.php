@@ -68,6 +68,7 @@ readonly class InitiativeService
                     $daysArray[$date->format('j')]['menu']->push(MainMenuDTO::fromArray($initiatives->first()));
                 }
             }
+            $menuData[$month]['diffInDays'] = Carbon::parse($month)->firstOfMonth()->previous(Carbon::SUNDAY)->diffInDays(Carbon::parse($month)->firstOfMonth());
             $menuData[$month]['days'] = $daysArray;
         }
 

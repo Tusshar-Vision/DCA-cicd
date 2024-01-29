@@ -13,7 +13,6 @@ class NewsTodayMenuDTO extends Data implements Wireable
     use WireableData;
     public function __construct(
         public string $currentMonth,
-        public string $diffInDays,
         public string $date,
         public array $mainMenu
     )
@@ -23,7 +22,6 @@ class NewsTodayMenuDTO extends Data implements Wireable
     {
         return new self (
             Carbon::parse($newsTodayDTO->publishedAt)->format('F Y'),
-            Carbon::parse($newsTodayDTO->publishedAt)->firstOfMonth()->previous(Carbon::SUNDAY)->diffInDays(Carbon::parse($newsTodayDTO->publishedAt)->firstOfMonth()),
             Carbon::parse($newsTodayDTO->publishedAt)->format('j'),
             $mainMenu
         );
