@@ -22,7 +22,7 @@
     @endif
 
     @if($nextArticleIndex !== null)
-        <div class="flex flex-col cursor-pointer w-3/6 md:w-2/6 noPreviouss">
+        <div class="flex flex-col cursor-pointer w-3/6 md:w-2/6 {{ $previousArticleIndex === null ? 'noPrevious' : '' }}">
             <a wire:navigate id="nxt-article-btn" href="{{ ArticleService::getArticleUrlFromSlug($currentInitiative->articles[$nextArticleIndex]->slug) }}">
                 <div class="flex-col text-right md:flex justify-end"> 
                     <span class="flex justify-end mb-2">
