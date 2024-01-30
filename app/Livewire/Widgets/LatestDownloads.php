@@ -3,6 +3,7 @@
 namespace App\Livewire\Widgets;
 
 use App\Services\DownloadService;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class LatestDownloads extends Component
@@ -16,10 +17,10 @@ class LatestDownloads extends Component
 
     public function getData(DownloadService $downloadService): void
     {
-        $this->latestDownloads = $downloadService->getLatestDownloads();
+        $this->latestDownloads = $downloadService->getLatest();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.widgets.latest-downloads');
     }

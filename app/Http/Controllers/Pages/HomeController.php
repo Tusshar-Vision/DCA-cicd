@@ -25,7 +25,7 @@ class HomeController extends Controller
     {
         $featuredArticles = $this->articleService->getFeatured(10);
         $latestVideos = $this->mediaService->getLatestVideos();
-        $latestDownloads = $this->downloadService->getLatestDownloads();
+        $latestDownloads = $this->downloadService->getLatest();
         $scoreBoard = $this->userService->getScoreBoard();
 
         return View('pages.home', [

@@ -2,5 +2,5 @@
 @section('title', "Monthly Magazine Archive | Current Affairs")
 
 @section('archive-content')
-    <livewire:widgets.monthly-magazine-archive-section :articles="$data" />
+    <livewire:widgets.archives.monthly-magazine :articles="$data" />
 @endsection

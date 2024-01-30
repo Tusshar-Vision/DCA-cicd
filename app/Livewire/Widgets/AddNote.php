@@ -3,7 +3,7 @@
 namespace App\Livewire\Widgets;
 
 use App\DTO\ArticleDTO;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class AddNote extends Component

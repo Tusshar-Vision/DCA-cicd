@@ -97,7 +97,6 @@ class WeeklyFocusController extends Controller
 
     public function archive()
     {
-
         $data = Article::where('initiative_id', config('settings.initiatives.WEEKLY_FOCUS'))->select(
             DB::raw('YEAR(published_at) as year'),
             DB::raw('MONTHNAME(published_at) as month'),
