@@ -21,55 +21,8 @@ use App\Http\Controllers\Pages;
 
 // Routes for all the pages
 Route::get('/', [Pages\HomeController::class, 'index'])->name('home');
-Route::get('/downloads', [Pages\DownloadsController::class, 'index'])->name('downloads');
 Route::get('/search', [Pages\SearchController::class, 'index'])->name('search');
 Route::get('/search/{query}', [Pages\SearchController::class, 'searchQuery'])->name('search.query');
-
-Route::get('/economic-survey-budget', [Pages\ArchiveController::class, 'economicSurvery'])->name('economic-survey-budget');
-
-// Routes for adding these initiatives
-Route::get('/economic-survey', function () {
-})->name('economic-survey');
-Route::get('/budget', function () {
-})->name('budget');
-Route::get('/weekly-round-table', function () {
-})->name('weekly-round-table');
-Route::get('/animated-shorts', function () {
-})->name('animated-shorts');
-Route::get('/pyq', function () {
-})->name('pyq');
-Route::get('/value-added-material', function () {
-})->name('value-added-material');
-Route::get('/value-added-material-optional', function () {
-})->name('value-added-material-optional');
-Route::get('/quarterly-revision-documents', function () {
-})->name('quarterly-revision-document');
-
-Route::controller(Pages\Mains365Controller::class)
-    ->group(
-        function () {
-            Route::prefix('/mains-365')
-                ->group(
-                    function () {
-                        Route::get('/', 'archive')->name('mains-365');
-                        // Route::get('/archive', 'archive')->name('mains365.archive');
-                    }
-                );
-        }
-    );
-
-Route::controller(Pages\PT365Controller::class)
-    ->group(
-        function () {
-            Route::prefix('/pt-365')
-                ->group(
-                    function () {
-                        Route::get('/', 'archive')->name('pt-365');
-                        // Route::get('/archive', 'archive')->name('pt365.archive');
-                    }
-                );
-        }
-    );
 
 Route::controller(Pages\NewsTodayController::class)
     ->group(
@@ -114,6 +67,22 @@ Route::controller(Pages\MonthlyMagazineController::class)
         }
     );
 
+// Routes for downloadable initiatives
+Route::controller(Pages\DownloadsController::class)->group(function () {
+    Route::get('/downloads', 'index')->name('downloads');
+    Route::get('/mains-365', 'renderMains365')->name('mains-365');
+    Route::get('/pt-365', 'renderPT365')->name('pt-365');
+    Route::get('/economic-survey', 'renderEconomicSurvey')->name('economic-survey');
+    Route::get('/budget', 'renderBudget')->name('budget');
+    Route::get('/value-added-material', 'renderValueAddedMaterial')->name('value-added-material');
+    Route::get('/value-added-material-optional', 'renderValueAddedMaterialOptional')->name('value-added-material-optional');
+    Route::get('/quarterly-revision-documents', 'renderQuarterlyRevisionDocument')->name('quarterly-revision-document');
+
+//    Route::get('/weekly-round-table', 'getWeeklyRoundTable')->name('weekly-round-table');
+//    Route::get('/animated-shorts', 'getAnimatedShorts')->name('animated-shorts');
+//    Route::get('/pyq', 'getPYQ')->name('pyq');
+});
+
 Route::middleware('auth:cognito')->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('/activity', [Pages\UserController::class, 'dashboard'])->name('user.dashboard');
@@ -123,6 +92,7 @@ Route::middleware('auth:cognito')->group(function () {
         Route::get('/content/{type?}', [Pages\UserController::class, 'myContent'])->name('user.content');
         Route::get('/search-notes', [Pages\UserController::class, 'searchNotes'])->name('user.search-notes');
         Route::get('/filter-notes/{topic_id}/{section_id}', [NoteController::class, 'getFilteredNotes'])->name('user.filter-notes');
+
         Route::get('/logout', function () {
             try {
                 auth('cognito')->logout();
@@ -131,6 +101,7 @@ Route::middleware('auth:cognito')->group(function () {
             }
             return redirect()->route('home');
         })->name('logout');
+
     });
 });
 

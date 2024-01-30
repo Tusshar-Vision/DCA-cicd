@@ -30,7 +30,7 @@
                         @if ($menuData['initiative_id'] === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE))
                             <x-navigation.side-dropdown
                                 x-show="isMenuOpen === 'menu{{ $menuData['initiative_id'] . $loop->iteration }}'"
-                                :menuData="[$mainMenu,$subMenu]"
+                                :menuData="[$mainMenu, $subMenu]"
                                 :initiativeId="$menuData['initiative_id']"
                             />
                         @else

@@ -23,8 +23,12 @@ return [
         "BUDGET" => 17
     ],
     'media_collections_type' => [
-        "Mains365" => 'mains-365',
+        'Mains365' => 'mains-365',
         'PT365' => 'pt-365',
-        'EconomicSurvey' => 'economic-survey'
+        'EconomicSurvey' => 'economic-survey',
+        'Budget' => 'budget',
+        'ValueAddedMaterial' => 'value-added-material',
+        'ValueAddedMaterialOptional' => 'value-added-material-optional',
+        'QuarterlyRevisionDocument' => 'quarterly-revision-document'
     ]
 ];

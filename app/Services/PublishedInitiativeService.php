@@ -37,33 +37,15 @@ readonly class PublishedInitiativeService
 
         throw_if(
             $publishedInitiative === null,
-            new PublishedInitiativeNotFoundException('There is no latest PublishedInitiative for ' . Initiatives::NEWS_TODAY->value)
+            new PublishedInitiativeNotFoundException('There is no latest PublishedInitiative for ' . $initiativeId)
         );
 
         throw_if(
             $publishedInitiative->articles->isEmpty(),
-            new ArticleNotFoundException('There are no articles for ' . Initiatives::NEWS_TODAY->value)
+            new ArticleNotFoundException('There are no articles for ' . $initiativeId)
         );
 
         return $publishedInitiative;
-    }
-
-    public function getDownloads($initiative_id = null, $year = null, $month = null) : array | Collection
-    {
-        if($initiative_id)
-            $query = $this->publishedInitiatives->whereInitiative($initiative_id)->isPublished();
-        else
-            $query = $this->publishedInitiatives->whereIn('initiative_id', [
-                InitiativesHelper::getInitiativeID(Initiatives::MAINS_365),
-                InitiativesHelper::getInitiativeID(Initiatives::PT_365),
-                InitiativesHelper::getInitiativeID(Initiatives::DOWNLOADS)
-                ])->isPublished();
-
-        if ($year) {
-            $query->whereRaw("YEAR(published_at) = $year");
-        }
-
-        return $query->with('media')->groupByYear();
     }
 
     public function checkIfExists($initiative_id, $published_at): bool
