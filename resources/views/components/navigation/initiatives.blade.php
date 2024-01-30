@@ -46,7 +46,7 @@
                     </div>
 
                     <div class="accordion-content">
-                        <a href="{{ $initiative->path }}" class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">
+                        <a href="{{ $initiative->path }}" wire:navigate class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">
                             Latest Edition
                         </a>
 
@@ -80,7 +80,7 @@
                             @endforeach
                         </ul>
 
-                        <a href="{{ route('monthly-magazine.archive') }}" class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">
+                        <a href="{{ route('monthly-magazine.archive') }}" wire:navigate class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">
                             View All
                         </a>
                     </div>
@@ -101,7 +101,7 @@
                         </div>
                     </div>
                     <div class="accordion-content">
-                        <a href="{{ $initiative->path }}" class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]" wire:navigate>
+                        <a href="{{ $initiative->path }}" wire:navigate class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]" wire:navigate>
                             Latest Edition
                         </a>
                         <ul>
@@ -124,7 +124,10 @@
                                                                 'article_slug' => $menu->article->first()->slug
                                                             ]
                                                         )
-                                                    }}" class="text-sm block px-[15px] mb-[10px]">
+                                                    }}"
+                                                   class="text-sm block px-[15px] mb-[10px]"
+                                                   wire:navigate
+                                                >
                                                     {{ $menu->article->first()->title }}
                                                 </a>
                                             </li>
@@ -135,7 +138,7 @@
                             @endforeach
 
                         </ul>
-                        <a href="{{ route('weekly-focus.archive') }}" class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">
+                        <a href="{{ route('weekly-focus.archive') }}" wire:navigate class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]">
                             View All
                         </a>
                     </div>
@@ -158,7 +161,7 @@
                     <div class="accordion-content">
                         @foreach($menuData['more']['data'] as $route => $heading)
                             @if($route != '/weekly-round-table' && $route != '/animated-shorts' && $route != '/pyq')
-                                <a href="{{ $route }}" class="text-sm block font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[5px] px-[10px]">
+                                <a href="{{ $route }}" wire:navigate class="text-sm block font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[5px] px-[10px]">
                                     {{ $heading }}
                                 </a>
                             @endif
@@ -209,7 +212,10 @@
                 @foreach ($initiatives as $initiative)
                     @if ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
                         <li class="font-semibold text-xs xl:text-sm pr-6">
-                            <a class="hover:text-[#005FAF] {{ request()->is('news-today*') ? 'text-[#005FAF]' : '' }}" href="{{ $initiative->path }}">
+                            <a class="hover:text-[#005FAF] {{ request()->is('news-today*') ? 'text-[#005FAF]' : '' }}"
+                               href="{{ $initiative->path }}"
+                               wire:navigate
+                            >
                                 {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                             </a>
                         </li>
@@ -321,6 +327,7 @@
                         {{ __('header.login') }}
                     </button>
                 </li>
+            @endauth
                 <li class="ml-[15px] lg:hidden block">
                     <a href="javascript:void(0)" onclick="openNav()">
                         <div class="hamMenu">
@@ -330,7 +337,6 @@
                         </div>
                     </a>
                 </li>
-            @endauth
         </ul>
     </div>
 </div>

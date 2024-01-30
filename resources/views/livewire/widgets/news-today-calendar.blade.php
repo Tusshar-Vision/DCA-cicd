@@ -1,8 +1,8 @@
 @php
     use App\Services\ArticleService;
 @endphp
-<div class="calendar-wrapper border-1 border-color-C3CAD9 bg-white border rounded relative">
-    <div class="calender-wrap absolute left-0 top-0 mt-[23px] w-full bar hidden calendar">
+<div x-data="{ isCalendarOpen: false }" class="calendar-wrapper border-1 border-color-C3CAD9 bg-white border rounded relative">
+    <div x-show="isCalendarOpen" @click.away="isCalendarOpen = false" class="calender-wrap absolute left-0 top-0 mt-[23px] w-full bar" x-cloak>
         <div class="vi-daily-news-card">
             <div class="flex justify-between items-center">
                 <label>
@@ -38,6 +38,7 @@
                                 </a>
                             @else
                                 <a href="{{ ArticleService::getArticleUrlFromSlug($menuData['menu']->first()->article->first()->slug) }}"
+                                   wire:navigate
                                    data-status=""
                                    class="{{ ($calendarData->currentMonth === $selectedMonth && $calendarData->date == $day) ? 'font-bold' : '' }}"
                                    style="{{ ($calendarData->currentMonth === $selectedMonth && $calendarData->date == $day) ? 'border-color: #8F93A3' : '' }}"
@@ -65,57 +66,6 @@
         autocomplete="off"
         readonly
         wire:model="selectedDate"
+        @click="isCalendarOpen = true"
     />
 </div>
-
-<script>
-    document.addEventListener('livewire:init', () => {
-        let input = document.getElementById('showCalendar');
-        let calendar = document.getElementsByClassName('calendar')[0];
-        let isCalendarVisible = false;
-
-        input.addEventListener('focus', function() {
-            calendar.style.display = 'block';
-            isCalendarVisible = true;
-            // Add click event to document to hide calendar on outside click
-            document.addEventListener('click', handleOutsideClick);
-            // Add touchstart event for mobile
-            document.addEventListener('touchstart', handleOutsideClick);
-        });
-
-        Livewire.hook('morph.updated', ({ el, component }) => {
-            calendar.style.display = 'block';
-            isCalendarVisible = true;
-            if (isCalendarVisible) {
-                // Add click event to document to hide calendar on outside click
-                document.addEventListener('click', handleOutsideClick);
-                // Add touchstart event for mobile
-                document.addEventListener('touchstart', handleOutsideClick);
-            }
-        });
-
-        Livewire.hook('beforeDomUpdate', ({ el, component }) => {
-            // Remove click and touchstart event listeners before Livewire update
-            document.removeEventListener('click', handleOutsideClick);
-            document.removeEventListener('touchstart', handleOutsideClick);
-        });
-
-        Livewire.hook('afterDomUpdate', ({ el, component }) => {
-            if (isCalendarVisible) {
-                // Re-add click and touchstart event listeners after Livewire update
-                document.addEventListener('click', handleOutsideClick);
-                document.addEventListener('touchstart', handleOutsideClick);
-            }
-        });
-
-        function handleOutsideClick(event) {
-            // Check if the clicked element is outside the calendar
-            if (!calendar.contains(event.target) && event.target !== input) {
-                calendar.style.display = 'none';
-                // Remove click and touchstart event listeners when calendar is hidden
-                document.removeEventListener('click', handleOutsideClick);
-                document.removeEventListener('touchstart', handleOutsideClick);
-            }
-        }
-    });
-</script>
