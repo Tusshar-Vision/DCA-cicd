@@ -2,7 +2,7 @@
 
 <div class="flex justify-between items-center">
     @if($previousArticleIndex !== null)
-        <div class="flex flex-col items-center cursor-pointer w-3/6 md:w-2/6">
+        <div class="flex flex-col cursor-pointer w-3/6 md:w-2/6">
             <a wire:navigate
                id="prev-article-btn"
                href="{{ ArticleService::getArticleUrlFromSlug($currentInitiative->articles[$previousArticleIndex]->slug) }}"
@@ -22,7 +22,7 @@
     @endif
 
     @if($nextArticleIndex !== null)
-        <div class="flex flex-col items-center cursor-pointer w-3/6 md:w-2/6">
+        <div class="flex flex-col cursor-pointer w-3/6 md:w-2/6 noPreviouss">
             <a wire:navigate id="nxt-article-btn" href="{{ ArticleService::getArticleUrlFromSlug($currentInitiative->articles[$nextArticleIndex]->slug) }}">
                 <div class="flex-col text-right md:flex justify-end"> 
                     <span class="flex justify-end mb-2">
