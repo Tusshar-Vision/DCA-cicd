@@ -8,6 +8,7 @@ use App\Exceptions\InitiativeNotFoundException;
 use App\Helpers\InitiativesHelper;
 use App\Models\Initiative;
 use App\Models\PublishedInitiative;
+use Carbon\Carbon;
 use Throwable;
 
 readonly class InitiativeService
@@ -28,11 +29,50 @@ readonly class InitiativeService
         throw_unless($initiativeId, new InitiativeNotFoundException($initiative->name . ' not present in database'));
 
         return match ($initiative->name) {
+            Initiatives::NEWS_TODAY->name => $this->getMenuDataForNewsToday($initiativeId),
             Initiatives::MONTHLY_MAGAZINE->name => $this->getMenuDataForMonthlyMagazine($initiativeId),
             Initiatives::WEEKLY_FOCUS->name => $this->getMenuDataForWeeklyFocus($initiativeId),
             Initiatives::MORE->name => $this->getMenuDataForMore($initiativeId),
             default => throw (new InitiativeNotFoundException('Initiative get data function does not exist')),
         };
+    }
+
+    protected function getMenuDataForNewsToday($initiativeId): array
+    {
+        $data = $this->publishedInitiatives
+            ->whereInitiative($initiativeId)
+            ->isPublished()
+            ->with('articles.topic')
+            ->hasPublishedArticle()
+            ->limit(10)
+            ->orderByDesc('published_at')
+            ->groupByMonth();
+
+        $menuData = [];
+
+        foreach ($data as $month => $groupedInitiatives) {
+            $daysArray = [];
+
+            $totalDays = Carbon::parse($month)->daysInMonth;
+            // Loop through each day of the month
+            for ($day = 1; $day <= $totalDays; $day++) {
+                // Create a Carbon instance for the current date
+                $date = Carbon::createFromFormat('d F Y', $day . ' ' . $month);
+
+                // Add the date as a key and the weekday as the value to the array
+                $daysArray[$date->format('j')]['day_name'] = $date->format('l');
+
+                $initiatives = $groupedInitiatives->where('published_at', '=', $date->format('Y-m-d') . ' ' . '00:00:00');
+                $daysArray[$date->format('j')]['menu'] = collect();
+                if ($initiatives->count() !== 0) {
+                    $daysArray[$date->format('j')]['menu']->push(MainMenuDTO::fromArray($initiatives->first()));
+                }
+            }
+            $menuData[$month]['diffInDays'] = Carbon::parse($month)->firstOfMonth()->previous(Carbon::SUNDAY)->diffInDays(Carbon::parse($month)->firstOfMonth());
+            $menuData[$month]['days'] = $daysArray;
+        }
+
+        return $menuData;
     }
 
     protected function getMenuDataForWeeklyFocus($initiativeId): array

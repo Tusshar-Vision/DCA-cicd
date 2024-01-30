@@ -3,10 +3,13 @@
 namespace App\DTO\Menu;
 
 use Illuminate\Support\Carbon;
+use Livewire\Wireable;
+use Spatie\LaravelData\Concerns\WireableData;
 use Spatie\LaravelData\Data;
 
-class SideMenuDTO extends Data
+class SideMenuDTO extends Data implements Wireable
 {
+    use WireableData;
     public function __construct(
         public string $title,
         public string $slug,
@@ -19,7 +22,7 @@ class SideMenuDTO extends Data
         return new self(
             $payloads['title'],
             $payloads['slug'],
-            $payloads['topic']['name']
+            is_string($payloads['topic']) ? $payloads['topic'] : $payloads['topic']['name']
         );
     }
 }

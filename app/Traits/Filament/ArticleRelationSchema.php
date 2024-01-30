@@ -41,6 +41,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use phpDocumentor\Reflection\Types\False_;
 use Spatie\Tags\Tag;
 
 trait ArticleRelationSchema
@@ -260,8 +261,8 @@ trait ArticleRelationSchema
                     ->fillForm(fn (Article $record): array => [
                         'title' => $record->title,
                         'subject' => $record->topic->name,
-                        'section' => $record->topicSection->name,
-                        'subSection' => $record->topicSubSection->name,
+                        'section' => $record->topicSection->name ?? '',
+                        'subSection' => $record->topicSubSection->name ?? '',
                         'author' => $record->author->name,
                         'reviewer' => $record->reviewer->name ?? '',
                         'tags' => $record->tags,
@@ -329,8 +330,8 @@ trait ArticleRelationSchema
                     ->fillForm(fn (Article $record): array => [
                         'title' => $record->title,
                         'subject' => $record->topic->name,
-                        'section' => $record->topicSection->name,
-                        'subSection' => $record->topicSubSection->name,
+                        'section' => $record->topicSection->name ?? '',
+                        'subSection' => $record->topicSubSection->name ?? '',
                         'tags' => $record->tags,
                         'body' => $record->latestReview()->review ?? '',
                         "status" => $record->status,
@@ -373,6 +374,7 @@ trait ArticleRelationSchema
                                 ->disableOptionWhen(fn (string $value): bool => $value === 'Changes Incorporated' || $value === 'Draft'),
 
                             RichEditor::make('body')
+                                ->placeholder('Add your comments...')
                                 ->label('')
                                 ->disableToolbarButtons([
                                     'attachFiles',
@@ -466,7 +468,16 @@ trait ArticleRelationSchema
                             });
                         })->deselectRecordsAfterCompletion(),
 
-                    BulkAction::make('Export as pdf File')
+//                    BulkAction::make('Move Articles')
+//                        ->icon('heroicon-s-arrows-right-left')
+//                        ->form([
+//                            Select::make('Initiative')
+//                                ->options(function () {
+//                                    if ($this->modelLabel)
+//                                })
+//                        ]),
+
+                    BulkAction::make('Export as pdf')
                         ->icon('heroicon-s-arrow-top-right-on-square')
                         ->requiresConfirmation()
                         ->color(Color::hex('#00569e'))

@@ -277,8 +277,8 @@ trait ArticleResourceSchema
                     ->fillForm(fn (Article $record): array => [
                         'title' => $record->title,
                         'subject' => $record->topic->name,
-                        'section' => $record->topicSection->name,
-                        'subSection' => $record->topicSubSection->name,
+                        'section' => $record->topicSection->name ?? '',
+                        'subSection' => $record->topicSubSection->name ?? '',
                         'author' => $record->author->name,
                         'reviewer' => $record->reviewer->name ?? '',
                         'tags' => $record->tags,
@@ -332,8 +332,8 @@ trait ArticleResourceSchema
                     ->fillForm(fn (Article $record): array => [
                         'title' => $record->title,
                         'subject' => $record->topic->name,
-                        'section' => $record->topicSection->name,
-                        'subSection' => $record->topicSubSection->name,
+                        'section' => $record->topicSection->name ?? '',
+                        'subSection' => $record->topicSubSection->name ?? '',
                         'tags' => $record->tags,
                         'status' => $record->status,
                         'body' => $record->latestReview()->review ?? '',
@@ -374,6 +374,7 @@ trait ArticleResourceSchema
                                 ->disableOptionWhen(fn (string $value): bool => $value === 'Changes Incorporated' || $value === 'Draft'),
 
                             RichEditor::make('body')
+                                ->placeholder('Add your comments...')
                                 ->label('')
                                 ->disableToolbarButtons([
                                     'attachFiles',

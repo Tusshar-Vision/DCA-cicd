@@ -173,7 +173,7 @@ trait ArticleForm
                             \Filament\Forms\Components\Actions\Action::make('Reviews')
                                 ->fillForm(function (Model $record) {
                                     return [
-                                        "body" => $record->latestReview()->review ?? '',
+                                        "body" => $record->latestReview()->review ?? 'No reviewer comments available on this article.',
                                     ];
                                 })
                                 ->form([
