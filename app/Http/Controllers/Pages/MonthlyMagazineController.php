@@ -80,7 +80,7 @@ class MonthlyMagazineController extends Controller
         }
 
         $contents = new Contents();
-        $temporaryContent = $contents->fromText($article->content)->getHandledText();
+        $temporaryContent = $contents->fromText($article->content ?? '')->getHandledText();
         $tableOfContent = $contents->getContentsArray();
 
         if (!empty($tableOfContent)) {
