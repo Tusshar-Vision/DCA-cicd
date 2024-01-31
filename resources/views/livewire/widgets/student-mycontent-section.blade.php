@@ -15,7 +15,7 @@
                     <a href="javascript:void(0)">Last 15 days</a>
                     <a href="javascript:void(0)">This Month</a>
                     <a href="javascript:void(0)">Last Month</a>
-                    <a href="javascript:void(0)" @click="isFilterModalOpen=true">Custom</a>
+                    <a href="javascript:void(0)">Custom</a>
                     <a href="javascript:void(0)">Clear Filter</a>
                 </div>
             </div>
@@ -46,7 +46,7 @@
              {{-- filter --}}
              <div class="my-content-sort">
                  {{-- <button class="clear-filter">Clear Filter</button> --}}
-                 {{-- <button class="cont-filter" @click="isFilterModalOpen=true">Filter</button> --}}
+                 <button class="cont-filter" @click="isFilterModalOpen=true">Filter</button>
                  <a href="javascript:void(0)" class="flex items-center text-[#3362CC] mr-4">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
                         <path d="M8.99982 12.2847C9.38816 12.2847 9.70294 11.9556 9.70294 11.5496V10.2409H10.9547C11.3431 10.2409 11.6578 9.91184 11.6578 9.50586C11.6578 9.09987 11.3431 8.77077 10.9547 8.77077H9.70294V7.46214C9.70294 7.05615 9.38816 6.72705 8.99982 6.72705C8.61148 6.72705 8.2967 7.05615 8.2967 7.46214V8.77077H7.04492C6.65659 8.77077 6.3418 9.09987 6.3418 9.50586C6.3418 9.91184 6.65659 10.2409 7.04492 10.2409H8.2967V11.5496C8.2967 11.9556 8.61148 12.2847 8.99982 12.2847Z" fill="#3362CC"/>
@@ -72,7 +72,7 @@
                          <a href="javascript:void(0)">Last 15 days</a>
                          <a href="javascript:void(0)">This Month</a>
                          <a href="javascript:void(0)">Last Month</a>
-                         <a href="javascript:void(0)" @click="isFilterModalOpen=true">Custom</a>
+                         <a href="javascript:void(0)">Custom</a>
                          <a href="javascript:void(0)">Clear Filter</a>
                      </div>
                  </div>

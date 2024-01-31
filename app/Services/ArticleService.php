@@ -14,8 +14,7 @@ readonly class ArticleService
 {
     public function __construct(
         private Article $articles
-    ) {
-    }
+    ) {}
 
     public function getFeatured(int $limit = 12): Collection|array
     {
@@ -112,7 +111,6 @@ readonly class ArticleService
 
     public function getByYearAndMonth($initiative_id, $year, $month)
     {
-
         return $this->articles
             ->where('initiative_id', $initiative_id)
             ->isPublished()
