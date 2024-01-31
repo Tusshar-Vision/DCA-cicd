@@ -82,14 +82,14 @@
         </div>
     </div>
     <!-- hybrid body section start -->
-    <div class="hybrid-text-wrapper">
+    <div class="hybrid-text-wrapper flex flex-col lg:flex-row justify-between">
         <div class="hybrid-left-panel">
              <div class="hybrid-img-wrapper">
                 <div class="hybrid-img-row">
                     <h3>Images Section</h3>
-                    <ul>
+                    <ul class="grid grid-cols-2 lg:grid-cols-4">
                         <li>
-                            <img src="{{ URL::asset('images/hybrid-img.jpg') }}">
+                            <img src="{{ URL::asset('images/hybrid-img.jpg') }}" class="">
                             <p>Hybrid Warfare : A New Face of Warfare</p>
                         </li>
                         <li>
@@ -117,7 +117,7 @@
                 </div>
             @endforeach
         </div>
-         <div class="hybrid-right-panel">
+         <div class="hybrid-right-panel ml-0 lg:ml-[40px] mt-4 lg:mt-0">
             <div class="video-cont-wrapper mb-6">
                 <h4>Hybrid Warfare</h4>
                 <p>Lorem ipsum dolor sit amet. Aut praesentium molestiae sit amet consectetur id consequuntur velit et enim

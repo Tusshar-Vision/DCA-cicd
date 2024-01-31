@@ -105,26 +105,6 @@
 </div>
 
 
-{{-- <div class="container flex bg-slate-300 p-6">
-    <div class="w-6/12">
-        <h2 class="font-bold mb-2">Left Panel</h2>
-        <div id="left-panel" class="max-h-full" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <div class="cursor-move my-2" draggable="true" ondragstart="drag(event)">Item 1</div>
-            <div class="cursor-move my-2" draggable="true" ondragstart="drag(event)">Item 2</div>
-            <div class="cursor-move my-2" draggable="true" ondragstart="drag(event)">Item 3</div>
-        </div>
-    </div>
-    <div class="w-6/12 pl-4">
-        <h2 class="font-bold mb-2">Right Panel</h2>
-        <div id="right-panel" class="max-h-full" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <div class="cursor-move my-2" draggable="true" ondragstart="drag(event)">Item 1</div>
-            <div class="cursor-move my-2" draggable="true" ondragstart="drag(event)">Item 2</div>
-        </div>
-    </div>
-</div> --}}
-
-
-  
   {{-- <div class="dropdown" id="dropdown2">
     <button class="dropdown-button" onclick="toggleDropdown('dropdown2')">
         ...
@@ -168,31 +148,6 @@
         };
     }
   
-    // dragable panel
-    // function allowDrop(event) {
-    //         event.preventDefault();
-    //     }
-
-    //     function drag(event) {
-    //         event.dataTransfer.setData("text", event.target.innerText);
-    //     }
-
-    //     function drop(event) {
-    //         event.preventDefault();
-    //         var data = event.dataTransfer.getData("text");
-    //         var newItem = document.createElement("div");
-    //         newItem.className = "item";
-    //         newItem.innerText = data;
-    //         newItem.draggable = true;
-    //         newItem.ondragstart = function(event) { drag(event); };
-    //         newItem.ondragend = function(event) { removeItem(event); };
-    //         event.target.appendChild(newItem);
-    //     }
-
-    //     function removeItem(event) {
-    //         // Remove the item from the original list when dragged to the other panel
-    //         event.target.parentNode.removeChild(event.target);
-    //     }
   </script>
 
 @endsection
