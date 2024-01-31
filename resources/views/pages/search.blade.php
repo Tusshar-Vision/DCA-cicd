@@ -1,20 +1,18 @@
 @extends('layouts.base')
 @section('title', 'Search Results')
 
+@php
+    use App\Services\ArticleService;
+    use Carbon\Carbon;
+@endphp
 @section('content')
-    <!-- <div class="grid grid-cols-3 gap-4">
-                                                                                                                                                                                                                                                                @foreach ($searchResults as $result)
-    <x-cards.article :article="$result"/>
-    @endforeach
-                                                                                                                                                                                                                                                            </div> -->
-    <!-- <section class="vi-magzin-header-section"> -->
-    <!-- <div class="vigrid-wide"> -->
-    <?php $query = $_GET['query']; ?>
     <div class="ecosystem-wrap">
         <div class="search-bar-wrapper">
             <span class="vi-icons search"></span>
-            <input type="text" class="vi-search-bar focus" placeholder="Hydrid Warfare" required="" value="{{ $query }}"
-                onchange="redirect(this)">
+            <label>
+                <input type="text" class="vi-search-bar focus" placeholder="Search" required value="{{ $query }}"
+                    onchange="redirect(this)">
+            </label>
             <ul class="w-full absolute left-0 top-[40px] py-2 border-[#ddd] border-2 rounded bg-white hidden updatedText">
                 <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 1</li>
                 <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 2</li>
@@ -29,13 +27,27 @@
                 </svg>
             </a>
             <ul>
-                <li><a href="{{ route('search') . "?query=$query" }}" class="active">All</a></li>
-                <li><a href="{{ route('search') . "?query=$query&initiative=1" }}">News Today</a></li>
-                <li><a href="{{ route('search') . "?query=$query&initiative=2" }}">Monthly Magazine</a></li>
-                <li><a href="{{ route('search') . "?query=$query&initiative=3" }}">Weekly Focus</a></li>
-                <li><a href="#">Notes</a></li>
-                <li><a href="#">Images</a></li>
-                <li><a href="#">Others</a></li>
+                <li>
+                    <a href="{{ route('search') . "?query=$query" }}" class="active">All</a>
+                </li>
+                <li>
+                    <a href="{{ route('search') . "?query=$query&initiative=1" }}">News Today</a>
+                </li>
+                <li>
+                    <a href="{{ route('search') . "?query=$query&initiative=2" }}">Monthly Magazine</a>
+                </li>
+                <li>
+                    <a href="{{ route('search') . "?query=$query&initiative=3" }}">Weekly Focus</a>
+                </li>
+                <li>
+                    <a href="#">Notes</a>
+                </li>
+                <li>
+                    <a href="#">Images</a>
+                </li>
+                <li>
+                    <a href="#">Others</a>
+                </li>
             </ul>
             <a href="javascript:void(0)" class="hybrid-filter" onclick="toggleFilter()">Filter</a>
         </div>
@@ -72,7 +84,7 @@
     <!-- hybrid body section start -->
     <div class="hybrid-text-wrapper">
         <div class="hybrid-left-panel">
-            {{-- <div class="hybrid-img-wrapper">
+             <div class="hybrid-img-wrapper">
                 <div class="hybrid-img-row">
                     <h3>Images Section</h3>
                     <ul>
@@ -94,24 +106,18 @@
                         </li>
                     </ul>
                 </div>
-            </div> --}}
+            </div>
             @foreach ($searchResults as $result)
-                <?php $published_at = Carbon\Carbon::parse($result->published_at)->format('Y-m-d');
-                $topic = $result->topic->name;
-                $slug = $result->slug;
-                ?>
                 <div class="hybrid-text-row">
-                    <a href="{{ url($result->initiative->path . '/' . $published_at . '/' . $topic . '/' . $slug) }}">
-                        <h3>
-                            {{ $result->title }}</h3>
+                    <a href="{{ ArticleService::getArticleUrlFromSlug($result->slug) }}">
+                        <h3>{{ $result->title }}</h3>
                     </a>
-                    <p class="result-content"> {{ html_entity_decode(substr(strip_tags($result->content), 0, 500)) }}</p>
-                    <span>{{ $result->initiative->name }} |
-                        {{ Carbon\Carbon::parse($result->published_at)->format('Y-m-d') }}</span>
+                    <p class="result-content">{{ $result->excerpt ?? 'No Description Available'}}</p>
+                    <span>{{ $result->initiative->name }} | {{ Carbon::parse($result->published_at)->format('Y-m-d') }}</span>
                 </div>
             @endforeach
         </div>
-        {{-- <div class="hybrid-right-panel">
+         <div class="hybrid-right-panel">
             <div class="video-cont-wrapper mb-6">
                 <h4>Hybrid Warfare</h4>
                 <p>Lorem ipsum dolor sit amet. Aut praesentium molestiae sit amet consectetur id consequuntur velit et enim
@@ -124,20 +130,13 @@
                     asperiores </p>
                 <div class="hybrid-video"></div>
             </div>
-        </div> --}}
+        </div>
     </div>
     <!-- </div> -->
     <!-- </section> -->
 
 
     <script>
-        function redirect(ele) {
-            const val = ele.value;
-            let url = "{{ route('search') }}";
-            url += `?query=${val}`;
-            window.location.href = url;
-        }
-
     /* on focus show dropdown */
     const onfocus = document.querySelector('.focus');
     const showlist = document.querySelector('.updatedText');
@@ -150,8 +149,7 @@
       showlist.style.display = 'none';
     });
 
-
-    /* toggle dropdown menu */   
+    /* toggle dropdown menu */
     function togglelist() {
         document.getElementById("relevent").classList.toggle("show");
         document.getElementById("all").classList.remove("show");

@@ -78,7 +78,7 @@ class WeeklyFocusController extends Controller
             if ($bookmark) $isArticleBookmarked = true;
         }
 
-        $article->content = $contents->fromText($article->content)->getHandledText();
+        $article->content = $contents->fromText($article->content ?? '')->getHandledText();
         $tableOfContent = $contents->getContentsArray();
 
 

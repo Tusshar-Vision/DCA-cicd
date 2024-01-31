@@ -14,8 +14,6 @@ class Note extends Model
 {
     use HasTags, Searchable, WithData;
 
-    protected string $dataClass = NoteDTO::class;
-
     protected $fillable = [
         'user_id',
         'article_id',
@@ -40,14 +38,5 @@ class Note extends Model
     public function noteContents() : HasMany
     {
         return $this->hasMany(NoteContent::class);
-    }
-
-
-    public function toSearchableArray(): array
-    {
-        return [
-            'title' => $this->title,
-            'content' => $this->content,
-        ];
     }
 }

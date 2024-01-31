@@ -19,7 +19,7 @@
                     id="login-email"
                     class="w-full rounded-lg"
                     required
-                    autocomplete="off"
+                    name="email"
                     wire:model.live="email"
                 >
                 <label for="login-email" class="overlayLabel">Email</label>
@@ -37,7 +37,8 @@
                     type="password"
                     id="login-password"
                     class="w-full rounded-lg passwordOverlay"
-                    required autocomplete="off"
+                    required
+                    name="password"
                     wire:model.live="password"
                 >
                 <label for="login-password" class="overlayLabel">Enter Password</label>
