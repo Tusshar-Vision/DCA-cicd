@@ -6,8 +6,7 @@ use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Models\Announcement;
 use App\Models\Article;
-use Filament\Notifications\Notification;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 readonly class NotificationService
 {
@@ -17,12 +16,12 @@ readonly class NotificationService
     )
     {}
 
-    public function getAnnouncementsForToday($limit = 3)
+    public function getAnnouncementsForToday($limit = 3): Collection
     {
         return $this->announcement->isVisible()->latest()->limit($limit)->get();
     }
 
-    public function getNewsUpdatesForToday($limit = 6)
+    public function getNewsUpdatesForToday($limit = 6): Collection
     {
         return $this->article
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))

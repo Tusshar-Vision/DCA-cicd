@@ -297,9 +297,7 @@
         <ul class="flex items-center">
             <li>
                 <div class="search-field-container">
-                    <label>
-                        <input type="search" class="search-field" placeholder="Search" />
-                    </label>
+                    <livewire:widgets.search-box />
                 </div>
             </li>
             @auth('cognito')
@@ -343,14 +341,6 @@
 
 
 <script>
-
-    function redirect(ele) {
-        const val = ele.value;
-        let url = "{{ route('search') }}";
-        url += `?query=${val}`;
-        window.location.href = url;
-    }
-
     // responsive menu show hide script
     function openNav() {
         document.getElementById("myNav").style.height = "100%";
@@ -373,5 +363,4 @@
         arrow.style.transform = 'rotate(-90deg)';
         }
     }
-
 </script>

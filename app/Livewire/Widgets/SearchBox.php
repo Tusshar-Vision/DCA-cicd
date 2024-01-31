@@ -2,27 +2,23 @@
 
 namespace App\Livewire\Widgets;
 
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class SearchBox extends Component
 {
-    public $searchTerm = '';
+    public $query = '';
 
-    public function mount()
+    public function search(): null
     {
-        $this->searchTerm = request()->get('query');
-    }
-
-    public function search() {
-
         $this->validate([
-            'searchTerm' => 'required|min:2', // Add validation rules as needed
+            'query' => 'required|min:2', // Add validation rules as needed
         ]);
 
-        return $this->redirect('/search?query=' . $this->searchTerm, navigate: true);
+        return $this->redirectRoute('search', ['query' => $this->query]);
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.widgets.search-box');
     }

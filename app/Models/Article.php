@@ -114,14 +114,6 @@ class Article extends Model implements HasMedia, Sortable
         return 'slug';
     }
 
-    public function toSearchableArray(): array
-    {
-        return [
-            'title' => $this->title,
-            'content' => $this->content,
-        ];
-    }
-
     // Define the relationships with other models
 
     public function language(): BelongsTo

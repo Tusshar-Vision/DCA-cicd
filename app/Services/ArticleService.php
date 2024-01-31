@@ -14,8 +14,7 @@ readonly class ArticleService
 {
     public function __construct(
         private Article $articles
-    ) {
-    }
+    ) {}
 
     public function getFeatured(int $limit = 12): Collection|array
     {
@@ -41,41 +40,6 @@ readonly class ArticleService
             ->get();
     }
 
-    public function search(string $query, int $initiative_id = null, $date = null, int $perPage = 10): Collection|array|LengthAwarePaginator
-    {
-        $query = $this->articles
-            ->isPublished()
-            ->language()
-            ->search($query);
-
-        if ($initiative_id) {
-            $query->where('initiative_id', $initiative_id);
-        }
-
-        if ($date) {
-            if ($date == 'pas_24_hours') {
-                $date = Carbon::now()
-                    ->subDay()
-                    ->format('Y-m-d');
-                $query->where('published_at', '>=', Carbon::parse($date));
-            } else if ($date == 'past_week') {
-                $weekStartDate = Carbon::now()->subDays(7)->startOfDay();
-                $weekEndDate = Carbon::now()->endOfDay();
-                $query->whereBetween('published_at', [$weekStartDate, $weekEndDate]);
-            } else if ($date == 'past_month') {
-                $monthStartDate = Carbon::now()->subMonth()->startOfMonth();
-                $monthEndDate = Carbon::now()->endOfMonth();
-                $query->whereBetween('published_at', [$monthStartDate, $monthEndDate]);
-            } else if ($date == 'past_year') {
-                $yearStartDate = Carbon::now()->subYear()->startOfYear();
-                $yearEndDate = Carbon::now()->endOfYear();
-                $query->whereBetween('published_at', [$yearStartDate, $yearEndDate]);
-            }
-        }
-
-        return $query->paginate($perPage);
-    }
-
     public static function getArticleURL($article): string
     {
         $initiative = $article->initiative->name;
@@ -93,7 +57,7 @@ readonly class ArticleService
         return self::getArticleURL(Article::findBySlug($slug));
     }
 
-    public function archive($initiative_id)
+    public function archive($initiative_id): array
     {
         $archive = $this->articles::where('initiative_id', $initiative_id)->where('published_at', '!=', null)
             ->select(DB::raw('YEAR(published_at) as year, MONTH(published_at) as month'))
@@ -112,7 +76,6 @@ readonly class ArticleService
 
     public function getByYearAndMonth($initiative_id, $year, $month)
     {
-
         return $this->articles
             ->where('initiative_id', $initiative_id)
             ->isPublished()
