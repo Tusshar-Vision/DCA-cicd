@@ -33,12 +33,14 @@
 
         <footer>
             @yield('footer')
-            <x-footer />
+                <x-footer />
             @stack('scripts')
         </footer>
 
         <x-modals.login-modal x-show="isAuthFormOpen">
-            <livewire:widgets.auth-container />
+            <template x-if="isAuthFormOpen">
+                <livewire:widgets.auth-container />
+            </template>
         </x-modals.login-modal>
     </body>
 </html>
