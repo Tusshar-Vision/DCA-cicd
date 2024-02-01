@@ -27,9 +27,9 @@
                         <a href="#" class="vi-article">
                             <img src="{{ URL::asset('images/card-image-small.png') }}" alt="">
                         </a>
-                        <a href="#" class="vi-article">
-                            <p class="vi-article-date-name">{{ $history->published_at }}</p>
-                            <p>{{ $history->title }}</p>
+                        <a href="{{$history['url']}}" class="vi-article">
+                            <p class="vi-article-date-name">{{ $history['published_at'] }}</p>
+                            <p>{{ $history['title'] }}</p>
                         </a>
                     </div>
                 @endforeach
