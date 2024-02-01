@@ -65,9 +65,10 @@
     <!-- responsive filter section end -->
 
     <!-- Weekly Focus section -->
+<?php $i = 0; ?>
 
     @foreach ($data as $year => $yearData)
-        <div x-data="{ expanded: false }" @click="expanded = ! expanded" class="archiveWrapper mb-[15px] border-b-2" x-transition>
+        <div x-data="{ expanded: {{$i==0 ? 'true': 'false'}} }" @click="expanded = ! expanded" class="archiveWrapper mb-[15px] border-b-2" x-transition>
             <div class="flex justify-between items-center archiveHeader cursor-pointer">
                 <h4 class="text-[#040404] text-[32px] font-normal mb-[15px]">{{$year}}</h4>
                 <div>

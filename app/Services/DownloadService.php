@@ -22,71 +22,96 @@ readonly class DownloadService
             ->get();
     }
 
-    public function getMains365(): Collection|array
+    public function getMains365($year, $month): Collection|array
     {
-        return $this->media->where('mime_type', 'application/pdf')
-            ->where('collection_name', '=', config('settings.media_collections_type.Mains365'))
-            ->get()
+        $query =  $this->media->where('mime_type', 'application/pdf')
+            ->where('collection_name', '=', config('settings.media_collections_type.Mains365'));
+
+        if ($year) $query->whereYear('created_at', $year);
+
+        $result = $query->get()
+            ->groupBy(function ($item) {
+                return $item->created_at->format('Y');
+            });
+
+        return $result;
+    }
+
+    public function getPT365($year, $month): Collection|array
+    {
+        $query = $this->media->where('mime_type', 'application/pdf')
+            ->where('collection_name', '=', config('settings.media_collections_type.PT365'));
+
+        if ($year) $query->whereYear('created_at', $year);
+
+        $result = $query->get()
+            ->groupBy(function ($item) {
+                return $item->created_at->format('Y');
+            });
+
+        return $result;
+    }
+
+    public function getEconomicSurvey($year, $month): Collection|array
+    {
+        $query =  $this->media->where('mime_type', 'application/pdf')
+            ->where('collection_name', '=', config('settings.media_collections_type.EconomicSurvey'));
+
+        if ($year) $query->whereYear('created_at', $year);
+
+        return $query->get()
             ->groupBy(function ($item) {
                 return $item->created_at->format('Y');
             });
     }
 
-    public function getPT365(): Collection|array
+    public function getBudget($year, $month): Collection|array
     {
-        return $this->media->where('mime_type', 'application/pdf')
-            ->where('collection_name', '=', config('settings.media_collections_type.PT365'))
-            ->get()
+        $query =  $this->media->where('mime_type', 'application/pdf')
+            ->where('collection_name', '=', config('settings.media_collections_type.Budget'));
+
+        if ($year) $query->whereYear('created_at', $year);
+
+        return  $query->get()
             ->groupBy(function ($item) {
                 return $item->created_at->format('Y');
             });
     }
 
-    public function getEconomicSurvey(): Collection|array
+    public function getValueAddedMaterial($year, $month): Collection|array
     {
-        return $this->media->where('mime_type', 'application/pdf')
-            ->where('collection_name', '=', config('settings.media_collections_type.EconomicSurvey'))
-            ->get()
+        $query =  $this->media->where('mime_type', 'application/pdf')
+            ->where('collection_name', '=', config('settings.media_collections_type.ValueAddedMaterial'));
+
+        if ($year) $query->whereYear('created_at', $year);
+
+        return $query->get()
             ->groupBy(function ($item) {
                 return $item->created_at->format('Y');
             });
     }
 
-    public function getBudget(): Collection|array
+    public function getValueAddedMaterialOptional($year, $month): Collection|array
     {
-        return $this->media->where('mime_type', 'application/pdf')
-            ->where('collection_name', '=', config('settings.media_collections_type.Budget'))
-            ->get()
+        $query = $this->media->where('mime_type', 'application/pdf')
+            ->where('collection_name', '=', config('settings.media_collections_type.ValueAddedMaterialOptional'));
+
+        if ($year) $query->whereYear('created_at', $year);
+
+        return $query->get()
             ->groupBy(function ($item) {
                 return $item->created_at->format('Y');
             });
     }
 
-    public function getValueAddedMaterial(): Collection|array
+    public function getQuarterlyRevisionDocument($year, $month): Collection|array
     {
-        return $this->media->where('mime_type', 'application/pdf')
-            ->where('collection_name', '=', config('settings.media_collections_type.ValueAddedMaterial'))
-            ->get()
-            ->groupBy(function ($item) {
-                return $item->created_at->format('Y');
-            });
-    }
+        $query = $this->media->where('mime_type', 'application/pdf')
+            ->where('collection_name', '=', config('settings.media_collections_type.QuarterlyRevisionDocument'));
 
-    public function getValueAddedMaterialOptional(): Collection|array
-    {
-        return $this->media->where('mime_type', 'application/pdf')
-            ->where('collection_name', '=', config('settings.media_collections_type.ValueAddedMaterialOptional'))
-            ->get()
-            ->groupBy(function ($item) {
-                return $item->created_at->format('Y');
-            });
-    }
+        if ($year) $query->whereYear('created_at', $year);
 
-    public function getQuarterlyRevisionDocument(): Collection|array
-    {
-        return $this->media->where('mime_type', 'application/pdf')
-            ->where('collection_name', '=', config('settings.media_collections_type.QuarterlyRevisionDocument'))
-            ->get()
+        return $query->get()
             ->groupBy(function ($item) {
                 return $item->created_at->format('Y');
             });

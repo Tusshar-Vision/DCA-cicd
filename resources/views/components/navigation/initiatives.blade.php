@@ -193,12 +193,12 @@
 
 <div class="flex py-[20px] bg-[#fff] items-center justify-between">
     <div class="w-3/4">
-        <div class="lg:hidden block">
+        <div class="xl:hidden block">
             <a href="{{ route('home') }}" wire:navigate>
                 <img width="112px" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
             </a>
         </div>
-        <ul class="items-center hidden lg:block">
+        <ul class="items-center hidden xl:block">
             <li class="font-semibold pr-4 xl:pr-6 float-left">
                 <a href="{{ route('home') }}" wire:navigate>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

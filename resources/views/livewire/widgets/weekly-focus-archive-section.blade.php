@@ -1,12 +1,16 @@
 <div class="w-full">
 <div class="pt-[25px] border-t-2">
+    {{-- <div class="flex w-full items-center justify-end space-x-4 mb-[25px]">
+        <p>Filter</p>
+        <livewire:widgets.filter />
+    </div> --}}
     <div class="flex w-full items-center justify-between xl:justify-end space-x-4 mb-[25px]">
         <div class="block xl:hidden flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="8" height="16" viewBox="0 0 8 16" fill="none" onclick="myFunction()" class="cursor-pointer">
                 <path d="M6.86719 15.0156L0.99998 8.49977" stroke="#242424" stroke-linecap="round"/>
                 <line x1="0.5" y1="-0.5" x2="9.61301" y2="-0.5" transform="matrix(-0.654931 0.755689 0.654931 0.755689 7.65625 1.30469)" stroke="#242424" stroke-linecap="round"/>
             </svg>
-            <h4 class="text-sm md:text-lg font-normal font-[#242424] ml-2 md:ml-4">Monthly Magazine Archives</h4>
+            <h4 class="text-sm md:text-lg font-normal font-[#242424] ml-2 md:ml-4">Weekly Focus Archives</h4>
         </div>
         <div class="flex items-center justify-between">
             <p class="text-sm md:text-base">Filter</p>
@@ -22,63 +26,97 @@
     </div>
 </div>
 
-<!-- Monthly Magazine section -->
-<?php $i = 0; ?>
-@foreach ($articles as $year => $article)
-    <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: {{$i==0 ? 'true': 'false'}} }" @click="expanded = ! expanded">
-    <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]">
-        <div class="flex space-x-4 items-center">
-            <div class="vi-progress-bar-round"></div>
-            <h4 class="text-[#040404] text-[32px] font-normal">{{$year}}</h4>
+<!-- responsive filter section start -->
+<div id="myFilter" class="menuOverlay">
+    <div class="menuOverlayContent">
+      <div class="flex justify-between align-middle mb-[20px]"> 
+          <span class="text-[#3362CC] text-sm font-bold">Select Filters</span> 
+          <a href="javascript:void(0)" class="closebtn" onclick="closeFilter()">&times;</a>
+      </div>
+      <div>
+        <div class="mb-[20px]">
+            <label class="block mb-[10px] text-[#183B56] text-sm">Select Year</label>
+            <select class="w-full rounded">
+                <option>2023</option>
+                <option>2022</option>
+                <option>2024</option>
+            </select>
         </div>
-        <div>
-                    <div x-show="expanded === true">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 11V13H19V11H5Z" fill="#8F93A3"/>
-                        </svg>
-                    </div>
-                    <div x-show="expanded === false">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z" fill="#8F93A3"/>
-                        </svg>
-                    </div>
-                </div>
+        <div class="mb-[20px]">
+            <label class="block mb-[10px] text-[#183B56] text-sm">Select Month</label>
+            <select class="w-full rounded">
+                <option>December</option>
+                <option>November</option>
+                <option>October</option>
+            </select>
+        </div>
+        <button class="w-full bg-[#3362CC] text-white rounded text-center text-sm font-bold py-[12px]">Apply Filters</button>
+        <button class="w-full text-[#485153] rounded text-center text-sm font-semibold py-[12px] mt-4">Clear Filters</button>
+      </div>
     </div>
+  </div>
+<!-- responsive filter section end -->
 
-    @foreach ($article as $a) 
-       <?php
-        $date = Carbon\Carbon::parse($a['publishedAt'])->format('Y-m-d');
-        $title = Carbon\Carbon::parse($a['publishedAt'])->monthName;
-        $topic = $a['article'][0]['topic'];
-        $slug = $a['article'][0]['slug'];
-        ?> 
+<!-- Weekly Focus section -->
+<?php $i = 0; ?>
+@foreach ($data as $year => $yearData)
+    <div class="archiveWrapper mb-[15px] border-b-2"  x-data="{ expanded: {{$i==0 ? 'true': 'false'}} }" @click="expanded = ! expanded">
+    <div class="flex justify-between items-center archiveHeader cursor-pointer">
+        <h4 class="text-[#040404] text-[32px] font-normal mb-[15px]"> Weekly Focus - {{$year}}</h4>
+        <div>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 11V13H19V11H5Z" fill="#8F93A3"/>
+            </svg>
+            <svg class="hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z" fill="#8F93A3"/>
+            </svg>
+        </div>
+    </div>
+    
+    @foreach ($yearData as $month => $monthData)
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true">
         <div class="weekly-focus-single-card">
-            <div class="weekly-focus-progress-list mt-0">
-                <div class="weekly-focus-progress-single-bar border-b-2">
-                    <p>January</p>
+            <div class="weekly-focus-month-name">{{$month}}</div>
+            <div class="weekly-focus-progress-list">
+
+                @foreach ($monthData as $week => $weekData)
+                   @foreach ($weekData as $article)
+                        <div class="weekly-focus-progress-single-bar border-b-2 pb-[15px]">
+                    <p>{{$article['title']}}</p>
                     <div class="progress-bar">
-                        <div class="bar" style="width:35%; background-color: #89D38C;">
+                        <div class="bar" style="width:35%;background-color: #89D38C;">
                         </div>
                     </div>
                     <ul class="flex justify-start space-x-4 mt-[15px]">
-                        <li class="text-[#3362CC] text-sm font-normal"><a href="{{route(
-                                    'monthly-magazine.article',
-                                    [
-                                        'date' => $date,
-                                        'topic' => strtolower($topic),
-                                        'article_slug' =>$slug
-                                    ]
-                                )}}" class="hover:underline">Read</a></li>
+                        <li class="text-[#3362CC] text-sm font-normal"><a href="{{url('weekly-focus'). "/". $article['published_at']. "/". $article['topic']."/". $article['slug']}}" class="hover:underline">Read</a></li>
                         <li class="text-[#3362CC] text-sm font-normal"><a href="javascript:void(0)" class="hover:underline">Download</a></li>
                     </ul>
                 </div>
+                   @endforeach
+                @endforeach
             </div>
         </div>
     </div>
-    @endforeach        
+    @endforeach
 </div>
+
 <?php $i++; ?>
+
 @endforeach
 
+
 </div>
+
+
+<script>
+
+    // responsive menu show hide script
+    function openFilter() {
+        document.getElementById("myFilter").style.height = "100%";
+    }
+
+    function closeFilter() {
+        document.getElementById("myFilter").style.height = "0%";
+    }
+
+</script>
