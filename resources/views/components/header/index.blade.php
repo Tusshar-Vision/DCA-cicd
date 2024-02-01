@@ -5,13 +5,13 @@
 
 <header class="h-auto lg:h-20 py-[20px] lg:py-0 border-b border-visionLineGray md:flex md:w-full md:align-middle">
     <div class="flex items-center justify-between md:w-full">
-        <div class="hidden lg:block">
+        <div class="hidden xl:block">
             <a href="{{ route('home') }}" wire:navigate>
                 <img class="w-60" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
             </a>
         </div>
 
-        <div class="w-full flex lg:space-x-5 items-center lg:justify-end justify-between space-x-0">
+        <div class="w-full flex xl:space-x-5 items-center xl:justify-end justify-between space-x-0">
             <!-- <button class="flex" onclick="switchLang()">
                 <svg class="mr-2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2 11.0196L2.98039 7.45923M8.86273 11.0196L7.93394 7.45923M2.98039 7.45923L4.48366 2H6.5098L7.93394 7.45923M2.98039 7.45923H7.93394" stroke="#8F93A3" stroke-width="2"/>
@@ -46,7 +46,7 @@
             <svg width="2" height="32" viewBox="0 0 2 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path opacity="0.5" d="M1 0V32" stroke="#8F93A3"/>
             </svg> -->
-            <div class="flex order-last lg:order-first topMenu">
+            <div class="flex order-last xl:order-first topMenu">
                 <ul class="flex items-center">
                     <li class="ml-[10px] md:ml-[15px]">
                         <a href="{{ UrlHelper::linkToSocial('whatsapp') }}" target="_blank">
@@ -96,27 +96,27 @@
                         </a>
                     </li>
                 </ul>
-                <a href="javascript:void(0)" class="block lg:hidden pl-[15px] mx-[15px] border-slate-300 border-solid border-l-[1px] modeSvg">
+                <a href="javascript:void(0)" class="block xl:hidden pl-[15px] mx-[15px] border-slate-300 border-solid border-l-[1px] modeSvg">
                     {!! SvgIconsHelper::getSvgIcon('dark-mode-toggle') !!}
                 </a>
-                <a href="javascript:void(0)" class="block lg:hidden text-[50px] leading-5 h-[23px]" id="toggleSocialbtn" onclick="toggleSocial()">
+                <a href="javascript:void(0)" class="block xl:hidden text-[50px] leading-5 h-[23px]" id="toggleSocialbtn" onclick="toggleSocial()">
                     {!! SvgIconsHelper::getSvgIcon('right-arrow') !!}
                 </a>
             </div>
-            <div class="order-first lg:order-last">
+            <div class="order-first xl:order-last">
                 <ul class="flex items-center w-full connect-us">
-                    <li class="pl-[20px] lg:pr-[20px] hidden lg:block">
+                    <li class="pl-[20px] xl:pr-[20px] hidden xl:block">
                         <a href="javascript:void(0)">
                             {!! SvgIconsHelper::getSvgIcon('dark-mode-toggle') !!}
                         </a>
                     </li>
-                    <li class="lg:pl-[20px] lg:pr-[20px] pr-[5px] flex items-center pl-0">
+                    <li class="xl:pl-[20px] xl:pr-[20px] pr-[5px] flex items-center pl-0">
 
                         <a href="tel:+91 846 802 2022">
                             {!! SvgIconsHelper::getSvgIcon('call-icon') !!}
                         </a>
 
-                        <div class="ml-[8px] hidden lg:block">
+                        <div class="ml-[8px] hidden xl:block">
                             <span>Call Us</span>
                             <p class="text-xs">
                                 <a href="tel:+91 846 802 2022" class="hover:text-[#005FAF] hidden lg:inline-block">+91 846 802 2022,</a>
@@ -125,12 +125,12 @@
                         </div>
 
                     </li>
-                    <li class="lg:pl-[20px] pl-[5px] flex items-center">
+                    <li class="xl:pl-[20px] pl-[5px] flex items-center">
                         <a href="mailto:enquiry@visionias.in">
                             {!! SvgIconsHelper::getSvgIcon('mail-icon') !!}
                         </a>
 
-                        <div class="ml-[8px] hidden lg:block">
+                        <div class="ml-[8px] hidden xl:block">
                             <span>Email Us</span>
                             <p class="text-xs"><a href="mailto:enquiry@visionias.in" class="hover:text-[#005FAF]">enquiry@visionias.in</a></p>
                         </div>

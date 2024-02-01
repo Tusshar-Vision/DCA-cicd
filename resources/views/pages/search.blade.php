@@ -6,7 +6,7 @@
     use Carbon\Carbon;
 @endphp
 @section('content')
-    <div class="ecosystem-wrap">
+    <div class="ecosystem-wrap w-full lg:w-auto">
         <div class="search-bar-wrapper">
             <span class="vi-icons search"></span>
             <label>
@@ -20,13 +20,13 @@
                 <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 4</li>
             </ul>
         </div>
-        <div class="eco-menu">
-            <a href="javascript:void(0)" class="mr-[15px] relative top-[-12px]">
+        <div class="eco-menu flex justify-start items-end lg:items-center mt-3 lg:mt-6">
+            <a href="javascript:void(0)" class="mr-[15px] relative top-[-6px] xl:top-[-12px]">
                 <svg xmlns="http://www.w3.org/2000/svg" width="8" height="13" viewBox="0 0 8 13" fill="none" class="inline-block">
                 <path d="M3.05 6.364L8 11.314L6.586 12.728L0.222 6.364L6.586 -6.18079e-08L8 1.414L3.05 6.364Z" fill="#8F93A3"/>
                 </svg>
             </a>
-            <ul>
+            <ul class="whitespace-nowrap lg:whitespace-normal overflow-auto lg:overflow-x-hidden w-[80%] lg:w-auto">
                 <li>
                     <a href="{{ route('search') . "?query=$query" }}" class="active">All</a>
                 </li>
@@ -56,21 +56,21 @@
     <div class="filter-row  mt-[17px]" id="filter-row-show">
         <div class="filter-select-wrap">
             <button onclick="togglelist()" class="dropbtn">Most relevant</button>
-            <ul id="relevent" class="dropdown-content">
+            <ul id="relevent" class="dropdown-content left-0">
                 <li value="">Most recent</li>
                 <li value="">Most relevant</li>
             </ul>
         </div>
         <div class="filter-select-wrap ml-[15px]">
             <button onclick="togglelist2()" class="dropbtn">All Results</button>
-            <ul id="all" class="dropdown-content">
+            <ul id="all" class="dropdown-content left-0">
                 <li value="">All results</li>
                 <li value="">Verbatim</li>
             </ul>
         </div>
         <div class="filter-select-wrap ml-[15px]">
             <button onclick="togglelist3()" class="dropbtn">Any time</button>
-            <ul id="anytime" class="dropdown-content">
+            <ul id="anytime" class="dropdown-content left-auto right-0">
                 <li value="">Any time</li>
                 <li value="">Past hour</li>
                 <li value="">Past 24 hour</li>
@@ -89,7 +89,7 @@
                     <h3>Images Section</h3>
                     <ul class="grid grid-cols-2 lg:grid-cols-4">
                         <li>
-                            <img src="{{ URL::asset('images/hybrid-img.jpg') }}" class="">
+                            <img src="{{ URL::asset('images/hybrid-img.jpg') }}">
                             <p>Hybrid Warfare : A New Face of Warfare</p>
                         </li>
                         <li>
