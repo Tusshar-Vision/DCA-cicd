@@ -355,7 +355,7 @@ $gray-686E70: #686E70;
   .vi-card-footer {
     display: flex;
     gap: 15px;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     margin-top: 10px;
     padding-top: 10px;
@@ -439,6 +439,10 @@ $gray-686E70: #686E70;
     font-weight: 400;
     color: #040404;
     line-height: 24px;
+  }
+
+  .vi-score-card:nth-child(1) .vi-user-name{
+    font-weight: bold;
   }
 
   .vi-user-score {
@@ -1496,7 +1500,7 @@ $gray-686E70: #686E70;
 .search-field-container {
   position: relative;
   display: block;
-  float: left;
+  // float: left;
   margin-right: 20px;
   height: 35px;
 
@@ -1525,14 +1529,14 @@ $gray-686E70: #686E70;
     background: url("/images/search.svg") left center no-repeat;
 
     &:focus {
-      width: 205px;
+      width: 237px;
       background: #fff;
       cursor: inherit;
       padding-right: 10px;
       padding-left: 35px;
       background: #fff url("/images/navsearch.png") 10px center no-repeat;
-      @media screen and (min-width: 768px) {
-        width: 260px;
+      @media screen and (min-width: 1280px) {
+        width: 150px;
       }
     }
   }

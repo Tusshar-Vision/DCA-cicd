@@ -311,7 +311,7 @@
                     <x-auth.user-dropdown-menu x-show="isUserMenuOpen" />
                 </div>
             @else
-                <li class="pr-[20px] hidden lg:block">
+                <li class="pr-[20px] hidden xl:block">
                     <a href="{{ UrlHelper::linkToVision('/register') }}" class="register">Register</a>
                 </li>
                 <li class="pl-[20px]" style="border-left: 1px solid #E5EAF4;">
@@ -326,7 +326,7 @@
                     </button>
                 </li>
             @endauth
-                <li class="ml-[15px] lg:hidden block">
+                <li class="ml-[15px] xl:hidden block">
                     <a href="javascript:void(0)" onclick="openNav()">
                         <div class="hamMenu">
                             <span></span>
