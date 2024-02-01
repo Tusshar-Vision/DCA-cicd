@@ -97,7 +97,14 @@ class WeeklyFocusController extends Controller
 
     public function archive()
     {
-        $data = Article::where('initiative_id', config('settings.initiatives.WEEKLY_FOCUS'))->select(
+        $year = request()->input('year');
+        $month = request()->input('month');
+
+        $query = Article::where('initiative_id', config('settings.initiatives.WEEKLY_FOCUS'));
+
+        if ($year) $query->whereYear('published_at', $year);
+
+        $data = $query->select(
             DB::raw('YEAR(published_at) as year'),
             DB::raw('MONTHNAME(published_at) as month'),
             DB::raw('WEEK(published_at) as week'),

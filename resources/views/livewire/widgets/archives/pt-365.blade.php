@@ -23,18 +23,24 @@
 </div>
 
 <!-- PT 365 -->
+<?php $i = 0; ?>
+
 @foreach ($data as $year => $files)
-    <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: false }" @click="expanded = ! expanded">
+    <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: {{$i==0 ? 'true': 'false'}} }" @click="expanded = ! expanded">
     <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]">
         <h4 class="text-[#040404] text-[32px] font-normal">PT 365 - {{$year}}</h4>
         <div>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5 11V13H19V11H5Z" fill="#8F93A3"/>
-            </svg>
-            <svg class="hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z" fill="#8F93A3"/>
-            </svg>
-        </div>
+                    <div x-show="expanded === true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 11V13H19V11H5Z" fill="#8F93A3"/>
+                        </svg>
+                    </div>
+                    <div x-show="expanded === false">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z" fill="#8F93A3"/>
+                        </svg>
+                    </div>
+                </div>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true">
         @foreach ($files as $file)
@@ -52,6 +58,9 @@
         @endforeach
     </div>
 </div>
+
+<?php $i++; ?>
+
 @endforeach
 
 {{-- <div class="archiveWrapper mb-[15px] border-b-2">

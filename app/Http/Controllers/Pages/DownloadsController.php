@@ -9,16 +9,20 @@ class DownloadsController extends Controller
 {
     public function __construct(
         private readonly DownloadService $downloadService,
-    )
-    {}
+    ) {
+    }
 
-    public function index() {
+    public function index()
+    {
         return response()->redirectToRoute('monthly-magazine.archive');
     }
 
     public function renderMains365()
     {
-        $medias = $this->downloadService->getMains365();
+        $year = request()->input('year');
+        $month = request()->input('month');
+
+        $medias = $this->downloadService->getMains365($year, $month);
 
         return View('pages.archives.mains-365', [
             "title" => "Mains 365 Archive",
@@ -28,7 +32,10 @@ class DownloadsController extends Controller
 
     public function renderPT365()
     {
-        $medias = $this->downloadService->getPT365();
+        $year = request()->input('year');
+        $month = request()->input('month');
+
+        $medias = $this->downloadService->getPT365($year, $month);
 
         return View('pages.archives.pt-365', [
             "title" => "PT 365 Archive",
@@ -38,7 +45,10 @@ class DownloadsController extends Controller
 
     public function renderEconomicSurvey()
     {
-        $medias = $this->downloadService->getEconomicSurvey();
+        $year = request()->input('year');
+        $month = request()->input('month');
+
+        $medias = $this->downloadService->getEconomicSurvey($year, $month);
 
         return View('pages.archives.economic-survey', [
             "title" => "Economic Survey Archive",
@@ -48,7 +58,10 @@ class DownloadsController extends Controller
 
     public function renderBudget()
     {
-        $medias = $this->downloadService->getBudget();
+        $year = request()->input('year');
+        $month = request()->input('month');
+
+        $medias = $this->downloadService->getBudget($year, $month);
 
         return View('pages.archives.budget', [
             "title" => "Budget Archive",
@@ -58,7 +71,10 @@ class DownloadsController extends Controller
 
     public function renderValueAddedMaterial()
     {
-        $medias = $this->downloadService->getValueAddedMaterial();
+        $year = request()->input('year');
+        $month = request()->input('month');
+
+        $medias = $this->downloadService->getValueAddedMaterial($year, $month);
 
         return View('pages.archives.value-added-material', [
             "title" => "Value Added Material Archive",
@@ -68,7 +84,10 @@ class DownloadsController extends Controller
 
     public function renderValueAddedMaterialOptional()
     {
-        $medias = $this->downloadService->getValueAddedMaterialOptional();
+        $year = request()->input('year');
+        $month = request()->input('month');
+
+        $medias = $this->downloadService->getValueAddedMaterialOptional($year, $month);
 
         return View('pages.archives.value-added-material-optional', [
             "title" => "Value Added Material Optional Archive",
@@ -78,7 +97,10 @@ class DownloadsController extends Controller
 
     public function renderQuarterlyRevisionDocument()
     {
-        $medias = $this->downloadService->getQuarterlyRevisionDocument();
+        $year = request()->input('year');
+        $month = request()->input('month');
+
+        $medias = $this->downloadService->getQuarterlyRevisionDocument($year, $month);
 
         return View('pages.archives.quarterly-revision-document', [
             "title" => "Quarterly Revision Document Archive",

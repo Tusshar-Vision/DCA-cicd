@@ -104,7 +104,10 @@ class NewsTodayController extends Controller
 
     public function archive()
     {
-        $archiveData = $this->articleService->archive(config('settings.initiatives.NEWS_TODAY'));
+        $year = request()->input('year');
+        $month = request()->input('month');
+
+        $archiveData = $this->articleService->archive(config('settings.initiatives.NEWS_TODAY'), $year, $month);
 
         return View('pages.archives.daily-news', [
             "title" => "Daily News Archive",

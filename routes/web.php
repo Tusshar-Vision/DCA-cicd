@@ -78,9 +78,9 @@ Route::controller(Pages\DownloadsController::class)->group(function () {
     Route::get('/value-added-material-optional', 'renderValueAddedMaterialOptional')->name('value-added-material-optional');
     Route::get('/quarterly-revision-documents', 'renderQuarterlyRevisionDocument')->name('quarterly-revision-document');
 
-//    Route::get('/weekly-round-table', 'getWeeklyRoundTable')->name('weekly-round-table');
-//    Route::get('/animated-shorts', 'getAnimatedShorts')->name('animated-shorts');
-//    Route::get('/pyq', 'getPYQ')->name('pyq');
+    //    Route::get('/weekly-round-table', 'getWeeklyRoundTable')->name('weekly-round-table');
+    //    Route::get('/animated-shorts', 'getAnimatedShorts')->name('animated-shorts');
+    //    Route::get('/pyq', 'getPYQ')->name('pyq');
 });
 
 Route::middleware('auth:cognito')->group(function () {
@@ -101,7 +101,6 @@ Route::middleware('auth:cognito')->group(function () {
             }
             return redirect()->route('home');
         })->name('logout');
-
     });
 });
 

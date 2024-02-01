@@ -14,7 +14,8 @@ readonly class ArticleService
 {
     public function __construct(
         private Article $articles
-    ) {}
+    ) {
+    }
 
     public function getFeatured(int $limit = 12): Collection|array
     {
@@ -57,10 +58,13 @@ readonly class ArticleService
         return self::getArticleURL(Article::findBySlug($slug));
     }
 
-    public function archive($initiative_id): array
+    public function archive($initiative_id, $year, $month): array
     {
-        $archive = $this->articles::where('initiative_id', $initiative_id)->where('published_at', '!=', null)
-            ->select(DB::raw('YEAR(published_at) as year, MONTH(published_at) as month'))
+        $query = $this->articles::where('initiative_id', $initiative_id)->where('published_at', '!=', null);
+
+        if ($year) $query->whereYear('published_at', $year);
+
+        $archive = $query->select(DB::raw('YEAR(published_at) as year, MONTH(published_at) as month'))
             ->groupBy(DB::raw('YEAR(published_at), MONTH(published_at)'))
             ->orderBy('year', 'desc')
             ->orderBy('month', 'desc')
