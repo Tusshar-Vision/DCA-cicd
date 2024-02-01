@@ -23,9 +23,9 @@
 </div>
 
 <!-- Monthly Magazine section -->
-
+<?php $i = 0; ?>
 @foreach ($articles as $year => $article)
-    <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: false }" @click="expanded = ! expanded">
+    <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: {{$i==0 ? 'true': 'false'}} }" @click="expanded = ! expanded">
     <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]">
         <div class="flex space-x-4 items-center">
             <div class="vi-progress-bar-round"></div>
@@ -74,6 +74,7 @@
     </div>
     @endforeach        
 </div>
+<?php $i++; ?>
 @endforeach
 
 </div>

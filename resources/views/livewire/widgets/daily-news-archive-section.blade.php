@@ -23,9 +23,10 @@
 </div>
 
 <!-- Daily News section -->
+<?php $i = 0; ?>
 
 @foreach ($articles as $year => $months)
-    <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: false }" @click="expanded = ! expanded">
+    <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: {{$i==0 ? 'true': 'false'}} }" @click="expanded = ! expanded">
     <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]">
         <h4 class="text-[#040404] text-[32px] font-normal">{{$year}} <span id="month"></span></h4>
         <div>
@@ -55,6 +56,7 @@
     </div>
     @endforeach
 </div>
+<?php $i++; ?>
 @endforeach
 
 </div>

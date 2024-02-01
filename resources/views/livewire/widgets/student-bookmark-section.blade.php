@@ -14,10 +14,10 @@
                 @foreach ($bookmarks as $bookmark)
                     <li>
                         <img src="{{ URL::asset('images/card-image-small.png') }}">
-                        <div class="bookmark-cont">
-                            <span>{{ $bookmark->published_at }}</span>
-                            <p>{{ $bookmark->title }}</p>
-                        </div>
+                        <a href="{{$bookmark['url']}}" class="bookmark-cont">
+                            <span>{{ $bookmark['published_at'] }}</span>
+                            <p>{{ $bookmark['title'] }}</p>
+                        </a>
                     </li>
                 @endforeach
             </ul>

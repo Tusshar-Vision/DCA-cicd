@@ -10,6 +10,7 @@ use App\Models\Note;
 use App\Models\Paper;
 use App\Models\ReadHistory;
 use App\Models\TopicSection;
+use App\Services\ArticleService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,13 @@ class UserController extends Controller
 {
     public function dashboard()
     {
-        $read_histories = Auth::guard('cognito')->user()->readHistories()->join('articles', 'read_histories.article_id', '=', 'articles.id')->select('articles.title', DB::raw('DATE_FORMAT(articles.published_at, "%Y-%m-%d") as published_at'))->get();
+        $read_histories = Auth::guard('cognito')->user()->readHistories()->with('article')->get()->map(function ($history) {
+            $history->title = $history->article->title;
+            $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
+            $history->url = ArticleService::getArticleUrl($history->article);
+
+            return $history->only(['title', 'published_at', 'url']);
+        });
 
         // content consumption
 
@@ -151,7 +158,15 @@ class UserController extends Controller
 
     public function bookmarks()
     {
-        $bookmarks = Auth::guard('cognito')->user()->bookmarks()->join('articles', 'bookmarks.article_id', '=', 'articles.id')->select('articles.title', DB::raw('DATE_FORMAT(articles.published_at, "%Y-%m-%d") as published_at'))->get();
+        // $bookmarks = Auth::guard('cognito')->user()->bookmarks()->join('articles', 'bookmarks.article_id', '=', 'articles.id')->select('articles.title', DB::raw('DATE_FORMAT(articles.published_at, "%Y-%m-%d") as published_at'))->get();
+        $bookmarks = Auth::guard('cognito')->user()->bookmarks()->with('article')->get()->map(function ($history) {
+            $history->title = $history->article->title;
+            $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
+            $history->url = ArticleService::getArticleUrl($history->article);
+
+            return $history->only(['title', 'published_at', 'url']);
+        });
+
         return view('pages.user.bookmarks', ['bookmarks' => $bookmarks]);
     }
 
