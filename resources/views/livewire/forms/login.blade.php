@@ -13,16 +13,19 @@
         <h2 class="font-bold text-base mb-2">Welcome Back !</h2>
         <p class="text-xs font-normal mb-[40px]">Please log in to your account for a personalised experience.</p>
 
-            <div class="form-item mb-[15px]">
+            <div x-data="{ focused: false }" class="form-item mb-[15px]">
                 <input
                     type="text"
                     id="login-email"
+                    x-model="email"
+                    x-on:focus="animateLabelOnFocus(this)"
+                    x-on:blur="animateLabelOnFocusOut(this)"
                     class="w-full rounded-lg"
                     required
                     name="email"
                     wire:model.live="email"
                 >
-                <label for="login-email" class="overlayLabel">Email</label>
+                <label for="login-email" :class="{ 'label-focused': focused || email }" class="overlayLabel">Email</label>
                 @error('email')
                     <p class="text-xs text-[#C10000] text-left mt-2">{{ $message }}</p>
                 @enderror
@@ -74,3 +77,23 @@
             <button type="button" class="sign-up" wire:click="$dispatch('renderComponent', { component: 'forms.register' })">New User? Sign up</button>
     </div>
 </div>
+
+<script>
+    function animateLabelOnFocus(input) {
+        if (input !== null && input.nextElementSibling !== null) {
+            input.nextElementSibling.style.top = '-5px';
+            input.nextElementSibling.style.fontSize = '11px';
+            input.nextElementSibling.style.color = '#3362CC';
+            input.nextElementSibling.style.zIndex = '1';
+        }
+    }
+
+    function animateLabelOnFocusOut(input) {
+        if (input !== null && input.value === '' && input.nextElementSibling !== null) {
+            input.nextElementSibling.style.top = '';
+            input.nextElementSibling.style.fontSize = '';
+            input.nextElementSibling.style.color = '';
+            input.nextElementSibling.style.zIndex = '0';
+        }
+    }
+</script>
