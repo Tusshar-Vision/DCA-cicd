@@ -63,17 +63,17 @@
                             {!! SvgIconsHelper::getSvgIcon('youtube-header') !!}
                         </a>
                     </li>
-                    <li class="ml-[10px] md:ml-[15px] hidden lg:flex">
+                    <li class="ml-[10px] md:ml-[15px] hidden xl:flex">
                         <a href="{{ UrlHelper::linkToSocial('twitter') }}" target="_blank">
                             {!! SvgIconsHelper::getSvgIcon('twitter-header') !!}
                         </a>
                     </li>
-                    <li class="ml-[10px] md:ml-[15px] hidden lg:flex">
+                    <li class="ml-[10px] md:ml-[15px] hidden xl:flex">
                         <a href="{{ UrlHelper::linkToSocial('instagram') }}" target="_blank">
                             {!! SvgIconsHelper::getSvgIcon('instagram-header') !!}
                         </a>
                     </li>
-                    <li class="ml-[10px] md:ml-[15px] hidden lg:flex">
+                    <li class="ml-[10px] md:ml-[15px] hidden xl:flex">
                         <a href="{{ UrlHelper::linkToSocial('telegram') }}" target="_blank">
                             {!! SvgIconsHelper::getSvgIcon('telegram-header') !!}
                         </a>
@@ -96,16 +96,17 @@
                         </a>
                     </li>
                 </ul>
-                <a href="javascript:void(0)" class="block xl:hidden pl-[15px] mx-[15px] border-slate-300 border-solid border-l-[1px] modeSvg">
+                {{-- <a href="javascript:void(0)" class="block xl:hidden pl-[15px] mx-[15px] border-slate-300 border-solid border-l-[1px] modeSvg">
                     {!! SvgIconsHelper::getSvgIcon('dark-mode-toggle') !!}
-                </a>
-                <a href="javascript:void(0)" class="block xl:hidden text-[50px] leading-5 h-[23px]" id="toggleSocialbtn" onclick="toggleSocial()">
+                </a> --}}
+                <a href="javascript:void(0)" class="block xl:hidden text-[50px] leading-5 h-[23px] ml-4" id="toggleSocialbtn" onclick="toggleSocial()">
                     {!! SvgIconsHelper::getSvgIcon('right-arrow') !!}
                 </a>
             </div>
             <div class="order-first xl:order-last">
                 <ul class="flex items-center w-full connect-us">
-                    <li class="pl-[20px] xl:pr-[20px] hidden xl:block">
+                    <li class="pl-[20px] xl:pr-[20px] hidden">
+                        {{-- xl:block --}}
                         <a href="javascript:void(0)">
                             {!! SvgIconsHelper::getSvgIcon('dark-mode-toggle') !!}
                         </a>
