@@ -106,10 +106,16 @@ class MonthlyMagazineController extends Controller
     public function archive()
     {
 
-        $articles = $this->publishedInitiatives
+        $year = request()->input('year');
+        $month = request()->input('month');
+
+        $query = $this->publishedInitiatives
             ->whereInitiative(config('settings.initiatives.MONTHLY_MAGAZINE'))
-            ->isPublished()
-            ->with('articles.topic')
+            ->isPublished();
+
+        if ($year) $query->whereYear('published_at', $year);
+
+        $articles = $query->with('articles.topic')
             ->orderByDesc('published_at')
             ->groupByYear();
 
