@@ -69,13 +69,13 @@
         <span class="divider-or mt-[20px]">OR</span>
         <ul class="flex justify-center items-center my-[20px]">
             <li class="mx-[7px]">
-                <a href="#" class="log-google flex items-center px-[40px] py-[10px]">
+                <a href="#" class="log-google flex items-center px-[20px] py-[10px]">
                     {!! SvgIconsHelper::getSvgIcon('google-icon') !!}
                     Google
                 </a>
             </li>
             <li class="mx-[7px]">
-                <a href="#" class="log-fb flex items-center p-[40px] py-[10px]">
+                <a href="#" class="log-fb flex items-center px-[20px] py-[10px]">
                     {!! SvgIconsHelper::getSvgIcon('facebook-icon') !!}
                     Facebook
                 </a>
