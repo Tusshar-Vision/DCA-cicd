@@ -35,10 +35,9 @@ class CognitoAuthService
     /**
      * @throws \Exception
      */
-    public function authenticate(array $credentials)
+    public function authenticate(array $credentials): true|CognitoErrorCodes
     {
         try {
-
             $result = $this->client->initiateAuth([
                 'AuthFlow' => 'USER_PASSWORD_AUTH',
                 'ClientId' => $this->client_id,
@@ -67,7 +66,7 @@ class CognitoAuthService
 
             auth('cognito')->login($user);
 
-            return redirect()->route('home');
+            return true;
         } catch (CognitoIdentityProviderException $exception)
         {
             $errorCode = $exception->getAwsErrorCode();
@@ -114,31 +113,6 @@ class CognitoAuthService
         return (bool) $response['UserConfirmed'];
     }
 
-
-
-    /**
-     * Generates and resends the confirmation code for the given user
-     *
-     * @param $email
-     * @return bool
-     */
-    public function resendCode($email): bool
-    {
-        try
-        {
-            $response = $this->client->resendConfirmationCode([
-                'ClientId' => $this->client_id,
-                'Username' => $email,
-                'UserPoolId' => $this->user_pool_id
-            ]);
-        }
-        catch (CognitoIdentityProviderException $exception) {
-            throw $exception;
-        }
-
-        return (bool) $response['UserConfirmed'];
-    }
-
     /**
      * Confirms email of a user in the given user pool
      *
@@ -167,6 +141,55 @@ class CognitoAuthService
         return (bool) $response['UserConfirmed'];
     }
 
+    public function forgotPassword($email): CognitoErrorCodes|Result
+    {
+        try {
+            $response = $this->client->forgotPassword([
+                'ClientId' => $this->client_id,
+                'Username' => $email,
+            ]);
+
+            // Handle the result, if needed
+            return $response;
+        } catch (CognitoIdentityProviderException $exception)
+        {
+            $errorCode = $exception->getAwsErrorCode();
+
+            return match ($errorCode) {
+                CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION->value => CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION,
+                default => throw new \Exception("Unhandled AWS Cognito error code: $errorCode"),
+            };
+        }
+    }
+
+    /**
+     * Generates and resends the confirmation code for the given user
+     *
+     * @param $email
+     * @return bool
+     */
+    public function resendCode($email): bool|CognitoErrorCodes
+    {
+        try
+        {
+            $response = $this->client->resendConfirmationCode([
+                'ClientId' => $this->client_id,
+                'Username' => $email,
+                'UserPoolId' => $this->user_pool_id
+            ]);
+        }
+        catch (CognitoIdentityProviderException $exception) {
+            $errorCode = $exception->getAwsErrorCode();
+
+            return match ($errorCode) {
+                CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION->value => CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION,
+                default => throw new \Exception("Unhandled AWS Cognito error code: $errorCode"),
+            };
+        }
+
+        return (bool) $response['UserConfirmed'];
+    }
+
     /**
      * Get user details using token
      *
@@ -183,6 +206,29 @@ class CognitoAuthService
             return false;
         }
 
+        return $user;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function checkIfUserExists($email): CognitoErrorCodes|Result
+    {
+        try {
+            $user = $this->client->adminGetUser([
+                'UserPoolId' => $this->user_pool_id,
+                'Username' => $email
+            ]);
+        } catch (CognitoIdentityProviderException $exception)
+        {
+            $errorCode = $exception->getAwsErrorCode();
+
+            return match ($errorCode) {
+                CognitoErrorCodes::USER_NOT_FOUND->value => CognitoErrorCodes::USER_NOT_FOUND,
+                CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION->value => CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION,
+                default => throw new \Exception("Unhandled AWS Cognito error code: $errorCode"),
+            };
+        }
         return $user;
     }
 

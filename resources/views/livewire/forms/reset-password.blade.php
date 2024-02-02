@@ -14,7 +14,7 @@
         <p class="text-sm	font-normal mb-[30px]">Have you forgotten your password? Enter your registered e-mail ID here to generate a new one!</p>
         <form class="w-full">
             <div class="form-item mb-[56px]">
-                <input type="text" id="email" class="w-full rounded-lg" required autocomplete="off">
+                <input type="email" id="email" class="w-full rounded-lg" required autocomplete="off">
                 <label for="email">Email</label>
             </div>
             <button type="submit" class="login-btn">Continue</button>

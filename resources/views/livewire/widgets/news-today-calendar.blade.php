@@ -52,7 +52,7 @@
             </div>
         </div>
     </div>
-    <svg xmlns="http://www.w3.org/2000/svg" width="27" height="24" viewBox="0 0 27 24" fill="none" class="absolute right-[10px] top-[7px] z-0">
+    <svg @click="isCalendarOpen = true" xmlns="http://www.w3.org/2000/svg" width="27" height="24" viewBox="0 0 27 24" fill="none" class="absolute right-[10px] top-[7px] z-0">
         <rect x="5.7793" y="6.24023" width="15.8769" height="13.2" rx="2" stroke="#8F93A3" stroke-width="1.1"/>
         <path d="M5.7793 10.4404H21.6562" stroke="#8F93A3" stroke-linecap="round"/>
         <path d="M9.74805 4.7998V7.7998" stroke="#8F93A3" stroke-linecap="round"/>
