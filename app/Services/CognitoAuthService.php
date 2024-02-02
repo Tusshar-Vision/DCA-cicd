@@ -141,9 +141,25 @@ class CognitoAuthService
         return (bool) $response['UserConfirmed'];
     }
 
-    public function forgotPassword()
+    public function forgotPassword($email): CognitoErrorCodes|Result
     {
+        try {
+            $response = $this->client->forgotPassword([
+                'ClientId' => $this->client_id,
+                'Username' => $email,
+            ]);
 
+            // Handle the result, if needed
+            return $response;
+        } catch (CognitoIdentityProviderException $exception)
+        {
+            $errorCode = $exception->getAwsErrorCode();
+
+            return match ($errorCode) {
+                CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION->value => CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION,
+                default => throw new \Exception("Unhandled AWS Cognito error code: $errorCode"),
+            };
+        }
     }
 
     /**
@@ -152,7 +168,7 @@ class CognitoAuthService
      * @param $email
      * @return bool
      */
-    public function resendCode($email): bool
+    public function resendCode($email): bool|CognitoErrorCodes
     {
         try
         {
@@ -163,7 +179,12 @@ class CognitoAuthService
             ]);
         }
         catch (CognitoIdentityProviderException $exception) {
-            throw $exception;
+            $errorCode = $exception->getAwsErrorCode();
+
+            return match ($errorCode) {
+                CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION->value => CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION,
+                default => throw new \Exception("Unhandled AWS Cognito error code: $errorCode"),
+            };
         }
 
         return (bool) $response['UserConfirmed'];

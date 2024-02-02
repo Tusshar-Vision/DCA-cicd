@@ -40,6 +40,7 @@ class Login extends Component
 
             if ($response === CognitoErrorCodes::USER_NOT_CONFIRMED) {
                 session(['verify_email' => $this->email]);
+                $authService->resendCode($this->email);
                 $this->dispatch('renderComponent', 'forms.email-verification');
             }
         }

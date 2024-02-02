@@ -56,7 +56,7 @@
         </div>
 
         <div class="flex justify-end w-full">
-            <a href="javascript:void(0)" wire:click="$dispatch('renderComponent', { component: 'forms.verify-email' })" class="inline-block text-right forgetpass mb-[20px]">Forgot password?</a>
+            <a href="javascript:void(0)" wire:click="$dispatch('renderComponent', { component: 'forms.reset-password' })" class="inline-block text-right forgetpass mb-[20px]">Forgot password?</a>
         </div>
 
         <button wire:click="login" wire:loading.attr="disabled" wire:loading.class="bg-[#3362CC]" class="login-btn text-center transition-colors">

@@ -24,7 +24,8 @@ class VerifyEmail extends Component
         if ($userExists === CognitoErrorCodes::USER_NOT_FOUND) {
             $this->addError('email', "Email id doesn't exists, Please Sign Up.");
         } else {
-
+            session(['verify_email' => $this->email]);
+            $this->dispatch('renderComponent', 'forms.email-verification');
         }
     }
 

@@ -3,6 +3,8 @@
 
 @php
     use App\Services\ArticleService;
+    use App\Helpers\InitiativesHelper;
+    use App\Enums\Initiatives;
     use Carbon\Carbon;
 @endphp
 @section('content')
@@ -10,15 +12,14 @@
         <div class="search-bar-wrapper">
             <span class="vi-icons search"></span>
             <label>
-                <input type="text" class="vi-search-bar focus" placeholder="Search" required value="{{ $query }}"
-                    onchange="redirect(this)">
+                <input type="text" class="vi-search-bar focus" placeholder="Search" required value="{{ $query }}">
             </label>
-            <ul class="w-full absolute left-0 top-[40px] py-2 border-[#ddd] border-2 rounded bg-white hidden updatedText">
-                <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 1</li>
-                <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 2</li>
-                <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 3</li>
-                <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 4</li>
-            </ul>
+{{--            <ul class="w-full absolute left-0 top-[40px] py-2 border-[#ddd] border-2 rounded bg-white hidden updatedText">--}}
+{{--                <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 1</li>--}}
+{{--                <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 2</li>--}}
+{{--                <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 3</li>--}}
+{{--                <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 4</li>--}}
+{{--            </ul>--}}
         </div>
         <div class="eco-menu flex justify-start items-end lg:items-center mt-3 lg:mt-6">
             <a href="javascript:void(0)" class="mr-[15px] relative top-[-6px] xl:top-[-12px]">
@@ -28,26 +29,52 @@
             </a>
             <ul class="whitespace-nowrap lg:whitespace-normal overflow-auto lg:overflow-x-hidden w-[80%] lg:w-auto">
                 <li>
-                    <a href="{{ route('search') . "?query=$query" }}" class="active">All</a>
+                    <a
+                        href="{{ route('search') . "?query=$query" }}"
+                        class="{{ request()->get('initiative') == null ? 'active' : '' }}"
+                        wire:navigate
+                    >
+                        All
+                    </a>
                 </li>
                 <li>
-                    <a href="{{ route('search') . "?query=$query&initiative=1" }}">News Today</a>
+                    <a
+                        href="{{ route('search') . "?query=$query&initiative=" . InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY) }}"
+                        class="{{ request()->get('initiative') == InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY) ? 'active' : '' }}"
+                        wire:navigate
+                    >
+                        News Today
+                    </a>
                 </li>
                 <li>
-                    <a href="{{ route('search') . "?query=$query&initiative=2" }}">Monthly Magazine</a>
+                    <a
+                        href="{{ route('search') . "?query=$query&initiative=" . InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS) }}"
+                        class="{{ request()->get('initiative') == InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS) ? 'active' : '' }}"
+                        wire:navigate
+                    >
+                        Weekly Focus
+                    </a>
                 </li>
                 <li>
-                    <a href="{{ route('search') . "?query=$query&initiative=3" }}">Weekly Focus</a>
+                    <a
+                        href="{{ route('search') . "?query=$query&initiative=" . InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE) }}"
+                        class="{{ request()->get('initiative') == InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE) ? 'active' : '' }}"
+                        wire:navigate
+                    >
+                        Monthly Magazine
+                    </a>
                 </li>
-                <li>
-                    <a href="#">Notes</a>
-                </li>
-                <li>
-                    <a href="#">Images</a>
-                </li>
-                <li>
-                    <a href="#">Others</a>
-                </li>
+{{--                <li>--}}
+{{--                    <a href="#">Images</a>--}}
+{{--                </li>--}}
+{{--                <li>--}}
+{{--                    <a href="#">Others</a>--}}
+{{--                </li>--}}
+                @auth('cognito')
+                    <li>
+                        <a href="#">Notes</a>
+                    </li>
+                @endauth
             </ul>
             <a href="javascript:void(0)" class="hybrid-filter" onclick="toggleFilter()">Filter</a>
         </div>
@@ -84,29 +111,29 @@
     <!-- hybrid body section start -->
     <div class="hybrid-text-wrapper flex flex-col lg:flex-row justify-between">
         <div class="hybrid-left-panel">
-             <div class="hybrid-img-wrapper">
-                <div class="hybrid-img-row">
-                    <h3>Images Section</h3>
-                    <ul class="grid grid-cols-2 lg:grid-cols-4">
-                        <li>
-                            <img src="{{ URL::asset('images/hybrid-img.jpg') }}">
-                            <p>Hybrid Warfare : A New Face of Warfare</p>
-                        </li>
-                        <li>
-                            <img src="{{ URL::asset('images/hybrid-img.jpg') }}">
-                            <p>Hybrid Warfare : A New Face of Warfare</p>
-                        </li>
-                        <li>
-                            <img src="{{ URL::asset('images/hybrid-img.jpg') }}">
-                            <p>Hybrid Warfare : A New Face of Warfare</p>
-                        </li>
-                        <li>
-                            <img src="{{ URL::asset('images/hybrid-img.jpg') }}">
-                            <p>Hybrid Warfare : A New Face of Warfare</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+{{--             <div class="hybrid-img-wrapper">--}}
+{{--                <div class="hybrid-img-row">--}}
+{{--                    <h3>Images Section</h3>--}}
+{{--                    <ul class="grid grid-cols-2 lg:grid-cols-4">--}}
+{{--                        <li>--}}
+{{--                            <img src="{{ URL::asset('images/hybrid-img.jpg') }}">--}}
+{{--                            <p>Hybrid Warfare : A New Face of Warfare</p>--}}
+{{--                        </li>--}}
+{{--                        <li>--}}
+{{--                            <img src="{{ URL::asset('images/hybrid-img.jpg') }}">--}}
+{{--                            <p>Hybrid Warfare : A New Face of Warfare</p>--}}
+{{--                        </li>--}}
+{{--                        <li>--}}
+{{--                            <img src="{{ URL::asset('images/hybrid-img.jpg') }}">--}}
+{{--                            <p>Hybrid Warfare : A New Face of Warfare</p>--}}
+{{--                        </li>--}}
+{{--                        <li>--}}
+{{--                            <img src="{{ URL::asset('images/hybrid-img.jpg') }}">--}}
+{{--                            <p>Hybrid Warfare : A New Face of Warfare</p>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
+{{--                </div>--}}
+{{--            </div>--}}
             @foreach ($searchResults as $result)
                 <div class="hybrid-text-row">
                     <a href="{{ ArticleService::getArticleUrlFromSlug($result->slug) }}">
@@ -117,20 +144,20 @@
                 </div>
             @endforeach
         </div>
-         <div class="hybrid-right-panel ml-0 lg:ml-[40px] mt-4 lg:mt-0">
-            <div class="video-cont-wrapper mb-6">
-                <h4>Hybrid Warfare</h4>
-                <p>Lorem ipsum dolor sit amet. Aut praesentium molestiae sit amet consectetur id consequuntur velit et enim
-                    asperiores </p>
-                <div class="hybrid-video"></div>
-            </div>
-            <div class="video-cont-wrapper mb-6">
-                <h4>Hybrid Warfare</h4>
-                <p>Lorem ipsum dolor sit amet. Aut praesentium molestiae sit amet consectetur id consequuntur velit et enim
-                    asperiores </p>
-                <div class="hybrid-video"></div>
-            </div>
-        </div>
+{{--         <div class="hybrid-right-panel ml-0 lg:ml-[40px] mt-4 lg:mt-0">--}}
+{{--            <div class="video-cont-wrapper mb-6">--}}
+{{--                <h4>Hybrid Warfare</h4>--}}
+{{--                <p>Lorem ipsum dolor sit amet. Aut praesentium molestiae sit amet consectetur id consequuntur velit et enim--}}
+{{--                    asperiores </p>--}}
+{{--                <div class="hybrid-video"></div>--}}
+{{--            </div>--}}
+{{--            <div class="video-cont-wrapper mb-6">--}}
+{{--                <h4>Hybrid Warfare</h4>--}}
+{{--                <p>Lorem ipsum dolor sit amet. Aut praesentium molestiae sit amet consectetur id consequuntur velit et enim--}}
+{{--                    asperiores </p>--}}
+{{--                <div class="hybrid-video"></div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
     </div>
     <!-- </div> -->
     <!-- </section> -->
