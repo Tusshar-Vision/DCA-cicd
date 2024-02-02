@@ -9,7 +9,7 @@ ssh-add ~/.ssh/github
 #export NVM_DIR="$HOME/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 ## Navigate to the Laravel project directory
-#cd /var/www/vision-ca-api/
+cd /var/www/html/vision-ca-api/
 # Pull the latest changes from the GitHub repository
 git pull origin main
 # Install/update dependencies

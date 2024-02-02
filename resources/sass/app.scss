@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 
-* {
-  transition: all 0.3s ease-in-out;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-}
+//* {
+//  transition: all 0.1s ease-in;
+//  -webkit-transition: all 0.3s ease-in;
+//  -moz-transition: all 0.3s ease-in;
+//  -o-transition: all 0.3s ease-in;
+//}
 
 :root {
   --square-size: 12px;
@@ -1036,7 +1036,7 @@ $gray-686E70: #686E70;
 
 .hybrid-text-wrapper {
   margin: 40px 0 0 0;
-  
+
 }
 
 .hybrid-text-wrapper .hybrid-left-panel .hybrid-text-row {
@@ -1648,6 +1648,12 @@ $gray-686E70: #686E70;
     }
   }
 
+    .overlayLabel-focused {
+        top: -5px !important;
+        font-size: 11px !important;
+        color: #3362CC !important;
+    }
+
   .form-item {
     position: relative;
 
@@ -1688,17 +1694,11 @@ $gray-686E70: #686E70;
     .passwordOverlay:focus+label.overlayLabel{
       z-index: 1  ;
     }
-    input:focus+label {
-      font-size: 11px;
-      top: -5px;
-      color: #3362CC
-    }
 
     .show-password {
       position: absolute;
       right: 17px;
       top: 17px;
-      z-index: 1;
       display: inline-block;
       cursor: pointer;
       z-index: 2;

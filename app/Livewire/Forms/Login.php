@@ -22,19 +22,26 @@ class Login extends Component
     public function login(CognitoAuthService $authService): void
     {
         $validated = $this->validate();
-        $response = $authService->authenticate($validated);
+        $userExists = $authService->checkIfUserExists($validated['email']);
 
-        if ($response === CognitoErrorCodes::USER_NOT_FOUND) {
+        if ($userExists === CognitoErrorCodes::USER_NOT_FOUND) {
             $this->addError('email', "Email id doesn't exists, Please Sign Up.");
         }
+        else {
+            $response = $authService->authenticate($validated);
 
-        if ($response === CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION) {
-            $this->addError('email', "Email id or password doesn't match.");
-        }
+            if ($response === true) {
+                $this->redirect(route('home'), navigate: true);
+            }
 
-        if ($response === CognitoErrorCodes::USER_NOT_CONFIRMED) {
-            session(['verify_email' => $this->email]);
-            $this->dispatch('renderComponent', 'forms.email-verification');
+            if ($response === CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION) {
+                $this->addError('email', "Email id or password doesn't match.");
+            }
+
+            if ($response === CognitoErrorCodes::USER_NOT_CONFIRMED) {
+                session(['verify_email' => $this->email]);
+                $this->dispatch('renderComponent', 'forms.email-verification');
+            }
         }
     }
 
