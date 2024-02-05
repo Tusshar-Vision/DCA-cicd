@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@dotlottie/player-component": "^2.7.8",
+    "pdfjs-dist": "^4.0.379",
     "swiper": "^10.3.1"
   }
 }

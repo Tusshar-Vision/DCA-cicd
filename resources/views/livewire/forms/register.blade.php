@@ -108,7 +108,12 @@
                     <p class="text-xs text-[#C10000] text-left mt-2">{{ $message }}</p>
                 @enderror
             </div>
-            <button type="submit" class="login-btn">Sign up</button>
+            <button type="submit" wire:loading.attr="disabled" wire:loading.class="bg-[#3362CC]" class="login-btn text-center transition-colors">
+                <p wire:loading.class="text-white" class="flex items-center justify-center">
+                    <span wire:loading.delay class="mr-1" wire:target="register"> {!! SvgIconsHelper::getSvgIcon('loading') !!} </span>
+                    <span>Sign up</span>
+                </p>
+            </button>
 
             <span class="divider-or mt-[20px]">OR</span>
             <ul class="flex justify-center items-center my-[20px]">

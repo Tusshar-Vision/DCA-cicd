@@ -2,19 +2,14 @@
 
 namespace App\View\Components\Widgets;
 
+use App\Models\Infographic;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class TopicAtAGlance extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct(public Infographic $infographic) {}
 
     /**
      * Get the view / contents that represent the component.

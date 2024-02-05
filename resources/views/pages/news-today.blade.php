@@ -62,9 +62,9 @@
                     <x-widgets.related-videos :related-videos="$relatedVideos" />
                 </div>
 
-                <div>
-                    <livewire:widgets.comments />
-                </div>
+{{--                <div>--}}
+{{--                    <livewire:widgets.comments />--}}
+{{--                </div>--}}
 
                 <div>
                     <x-widgets.article-sources :sources="$article->sources" />
