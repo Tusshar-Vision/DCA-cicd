@@ -45,7 +45,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent border-b-2 mb-[35px] pb-[35px]" id="news-today-container">
     </div>
     @foreach ($months as $month)
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" onclick="showArticleCards('{{$year}}','{{ date('F', mktime(0, 0, 0, $month, 1)) }}')" x-show="expanded === true">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" onclick="showArticleCards('{{$year}}','{{ date('F', mktime(0, 0, 0, $month, 1)) }}')" x-show="expanded === true" @click="expanded = ! expanded">
         <div class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
                 <div class="weekly-focus-progress-single-bar border-b-2">
