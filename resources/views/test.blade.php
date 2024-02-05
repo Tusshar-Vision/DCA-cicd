@@ -150,6 +150,37 @@
     </div>
 </div>
 {{-- Enter OTP end --}}
+<br><br>
+{{-- Announcements start  --}}
+
+    <ul>
+        <li class="p-2 mb-1 rounded-md border-l-2 border-transparent hover:border-[#5A7184] hover:underline hover:bg-[#B3BAC5] hover:bg-opacity-10">
+            <a href="javascript:void(0)">
+                <h5 class="text-base mb-2 font-bold">Live/Online/Offline GS फाउंडेशन कोर्स 2025</h5>
+                <p class="text-sm hover:text-blue-800">Download Toppers Mains Answer Sheet 2021</p>
+            </a>
+        </li>
+        <li class="p-2 mb-1 rounded-md border-l-2 border-transparent hover:border-[#5A7184] hover:underline hover:bg-[#B3BAC5] hover:bg-opacity-10">
+            <a href="javascript:void(0)">
+                <h5 class="text-base mb-2 font-bold">Live/Online/Offline GS फाउंडेशन कोर्स 2025</h5>
+                <p class="text-sm hover:text-blue-800">Download Toppers Mains Answer Sheet 2021</p>
+            </a>
+        </li>
+        <li class="p-2 mb-1 rounded-md border-l-2 border-transparent hover:border-[#5A7184] hover:underline hover:bg-[#B3BAC5] hover:bg-opacity-10">
+            <a href="javascript:void(0)">
+                <h5 class="text-base mb-2 font-bold">Live/Online/Offline GS फाउंडेशन कोर्स 2025</h5>
+                <p class="text-sm hover:text-blue-800">Download Toppers Mains Answer Sheet 2021</p>
+            </a>
+        </li>
+        <li class="p-2 mb-1 rounded-md border-l-2 border-transparent hover:border-[#5A7184] hover:underline hover:bg-[#B3BAC5] hover:bg-opacity-10">
+            <a href="javascript:void(0)">
+                <h5 class="text-base mb-2 font-bold">Live/Online/Offline GS फाउंडेशन कोर्स 2025</h5>
+                <p class="text-sm hover:text-blue-800">Download Toppers Mains Answer Sheet 2021</p>
+            </a>
+        </li>
+    </ul>
+
+{{-- Announcements end  --}}
 
   <script>
     // Function to toggle the visibility of the dropdown
