@@ -25,7 +25,7 @@
                 <li class="mr-[5px] relative after:content-['/'] after:ml-[5px]">Paper</li>
                 <li class="mr-[5px] relative after:content-['/'] after:ml-[5px]">GS-1</li>
                 <li class="mr-[5px] relative after:content-[''] after:ml-[5px]">Economics</li>
-            </ul>    
+            </ul>
         </div>
     </div>
     <!-- folder body -->
@@ -89,7 +89,7 @@
                 </li>
             </ul>
         </div>
-        
+
     </div>
     <!-- folder footer -->
     <div class="bg-[#E5EAF4] p-[20px]">
@@ -101,7 +101,7 @@
             <button class="py-[5px] px-[30px] mr-[15px] rounded-[4px] bg-transparent text-[#3362CC] border-2 border-[#3362CC] hover:text-white hover:bg-[#3362CC]">Cancel</button>
             <button class="py-[5px] px-[30px] rounded-[4px] bg-[#3362CC] text-white border-2 border-[#3362CC] hover:text-[#3362CC] hover:bg-transparent">Move</button>
         </div>
-    </div> 
+    </div>
 </div> --}}
 
 
@@ -120,7 +120,7 @@
   {{-- Enter OTP start --}}
   <div class="flex min-h-[680px] justify-center text-center items-stretch bg-white">
     <div class="w-6/12 flex items-center bg-[#F5F7F8]">
-        <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+        <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
 
         <dotlottie-player src="https://lottie.host/9fdd8a19-696b-458b-b325-a74104e6b362/ZBlOCe4MDw.json" background="transparent" speed="1" style="width: 300px; height: 300px; margin: 0 auto;" loop autoplay></dotlottie-player>
     </div>
@@ -135,7 +135,7 @@
           <input type="number" maxlength="1" onKeyPress="if(this.value.length==1) return false;" value=""class="w-2/12 border h-[56px] rounded appearance-none text-center">
           <input type="number" maxlength="1" onKeyPress="if(this.value.length==1) return false;" value="" class="w-2/12 border h-[56px] rounded appearance-none text-center">
           <input type="number" maxlength="1" onKeyPress="if(this.value.length==1) return false;" value="" class="w-2/12 border h-[56px] rounded appearance-none text-center">
-        </div> 
+        </div>
         <p class="text-xs text-[#C10000] mb-[15px]">Invalid verification code please try again</p>
         <div class="text-right">
             <button type="button" class="text-[18px] text-[#3362CC] mb-[40px]">Resend</button>
@@ -152,33 +152,6 @@
 {{-- Enter OTP end --}}
 <br><br>
 {{-- Announcements start  --}}
-
-    <ul>
-        <li class="p-2 mb-1 rounded-md border-l-2 border-transparent hover:border-[#5A7184] hover:underline hover:bg-[#B3BAC5] hover:bg-opacity-10">
-            <a href="javascript:void(0)">
-                <h5 class="text-base mb-2 font-bold">Live/Online/Offline GS फाउंडेशन कोर्स 2025</h5>
-                <p class="text-sm hover:text-blue-800">Download Toppers Mains Answer Sheet 2021</p>
-            </a>
-        </li>
-        <li class="p-2 mb-1 rounded-md border-l-2 border-transparent hover:border-[#5A7184] hover:underline hover:bg-[#B3BAC5] hover:bg-opacity-10">
-            <a href="javascript:void(0)">
-                <h5 class="text-base mb-2 font-bold">Live/Online/Offline GS फाउंडेशन कोर्स 2025</h5>
-                <p class="text-sm hover:text-blue-800">Download Toppers Mains Answer Sheet 2021</p>
-            </a>
-        </li>
-        <li class="p-2 mb-1 rounded-md border-l-2 border-transparent hover:border-[#5A7184] hover:underline hover:bg-[#B3BAC5] hover:bg-opacity-10">
-            <a href="javascript:void(0)">
-                <h5 class="text-base mb-2 font-bold">Live/Online/Offline GS फाउंडेशन कोर्स 2025</h5>
-                <p class="text-sm hover:text-blue-800">Download Toppers Mains Answer Sheet 2021</p>
-            </a>
-        </li>
-        <li class="p-2 mb-1 rounded-md border-l-2 border-transparent hover:border-[#5A7184] hover:underline hover:bg-[#B3BAC5] hover:bg-opacity-10">
-            <a href="javascript:void(0)">
-                <h5 class="text-base mb-2 font-bold">Live/Online/Offline GS फाउंडेशन कोर्स 2025</h5>
-                <p class="text-sm hover:text-blue-800">Download Toppers Mains Answer Sheet 2021</p>
-            </a>
-        </li>
-    </ul>
 
 {{-- Announcements end  --}}
 
@@ -212,7 +185,7 @@
             }
         };
     }
-  
+
   </script>
 
 @endsection

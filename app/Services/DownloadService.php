@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Helpers\InitiativesHelper;
+use App\Models\PublishedInitiative;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -9,17 +11,20 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 readonly class DownloadService
 {
     public function __construct(
-        private Media $media
+        private Media $media,
+        private PublishedInitiative $publishedInitiative
     ) {
     }
 
     public function getLatest(int $limit = 6): Collection|array
     {
-        return $this->media->where('mime_type', 'application/pdf')
-            ->where('collection_name', '!=', 'infographic')
-            ->latest()
-            ->limit($limit)
-            ->get();
+        return $this->publishedInitiative
+                    ->isPublished()
+                    ->latest()
+                    ->has('media')
+                    ->with('media')
+                    ->limit($limit)
+                    ->get();
     }
 
     public function getMains365($year, $month): Collection|array

@@ -22,6 +22,7 @@
                 class="w-full rounded-lg"
                 name="email"
                 wire:model.blur="email"
+                wire:keydown.enter="login"
                 required
             >
             <label for="login-email" :class="{ 'overlayLabel-focused': focusedEmail || $wire.email }">Email</label>
@@ -47,6 +48,7 @@
                 x-on:blur="focusedPassword = false"
                 class="w-full rounded-lg"
                 wire:model.blur="password"
+                wire:keydown.enter="login"
                 required
             >
             <label for="login-password" :class="{ 'overlayLabel-focused': focusedPassword || $wire.password }">Enter Password</label>
@@ -59,7 +61,7 @@
             <a href="javascript:void(0)" wire:click="$dispatch('renderComponent', { component: 'forms.reset-password' })" class="inline-block text-right forgetpass mb-[20px]">Forgot password?</a>
         </div>
 
-        <button wire:click="login" wire:loading.attr="disabled" wire:loading.class="bg-[#3362CC]" class="login-btn text-center transition-colors">
+        <button wire:click="login" wire:keydown.enter="login" wire:loading.attr="disabled" wire:loading.class="bg-[#3362CC]" class="login-btn text-center transition-colors">
             <p wire:loading.class="text-white" class="flex items-center justify-center">
                 <span wire:loading.delay class="mr-1" wire:target="login"> {!! SvgIconsHelper::getSvgIcon('loading') !!} </span>
                 <span>Login</span>

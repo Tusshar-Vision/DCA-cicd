@@ -45,13 +45,13 @@
                 </div>
     </div>
 
-    @foreach ($article as $a) 
+    @foreach ($article as $a)
        <?php
         $date = Carbon\Carbon::parse($a['publishedAt'])->format('Y-m-d');
         $title = Carbon\Carbon::parse($a['publishedAt'])->monthName;
         $topic = $a['article'][0]['topic'];
         $slug = $a['article'][0]['slug'];
-        ?> 
+        ?>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true" @click.stop>
         <div class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
@@ -76,7 +76,7 @@
             </div>
         </div>
     </div>
-    @endforeach        
+    @endforeach
 </div>
 <?php $i++; ?>
 @endforeach

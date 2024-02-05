@@ -34,7 +34,7 @@ class Login extends Component
                 $this->redirect(route('home'), navigate: true);
             }
 
-            if ($response === CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION) {
+            if ($response === CognitoErrorCodes::NOT_AUTHORIZED) {
                 $this->addError('email', "Email id or password doesn't match.");
             }
 

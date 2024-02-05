@@ -74,7 +74,7 @@ class CognitoAuthService
             return match ($errorCode) {
                 CognitoErrorCodes::USER_NOT_FOUND->value => CognitoErrorCodes::USER_NOT_FOUND,
                 CognitoErrorCodes::USER_NOT_CONFIRMED->value => CognitoErrorCodes::USER_NOT_CONFIRMED,
-                CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION->value => CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION,
+                CognitoErrorCodes::NOT_AUTHORIZED->value => CognitoErrorCodes::NOT_AUTHORIZED,
                 default => throw new \Exception("Unhandled AWS Cognito error code: $errorCode"),
             };
         }
@@ -156,7 +156,36 @@ class CognitoAuthService
             $errorCode = $exception->getAwsErrorCode();
 
             return match ($errorCode) {
-                CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION->value => CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION,
+                CognitoErrorCodes::NOT_AUTHORIZED->value => CognitoErrorCodes::NOT_AUTHORIZED,
+                CognitoErrorCodes::USER_NOT_FOUND->value => CognitoErrorCodes::USER_NOT_FOUND,
+                CognitoErrorCodes::TOO_MANY_REQUESTS->value => CognitoErrorCodes::TOO_MANY_REQUESTS,
+                CognitoErrorCodes::LIMIT_EXCEEDED->value => CognitoErrorCodes::LIMIT_EXCEEDED,
+                default => throw new \Exception("Unhandled AWS Cognito error code: $errorCode"),
+            };
+        }
+    }
+
+    public function confirmForgotPassword($email, $newPassword, $confirmationCode): CognitoErrorCodes|Result
+    {
+        try {
+            $response = $this->client->confirmForgotPassword([
+                'ClientId' => $this->client_id,
+                'Username' => $email,
+                'Password' => $newPassword,
+                'ConfirmationCode' => $confirmationCode
+            ]);
+
+            // Handle the result, if needed
+            return $response;
+        } catch (CognitoIdentityProviderException $exception)
+        {
+            $errorCode = $exception->getAwsErrorCode();
+
+            return match ($errorCode) {
+                CognitoErrorCodes::CODE_MISMATCH->value => CognitoErrorCodes::CODE_MISMATCH,
+                CognitoErrorCodes::EXPIRED_CODE->value => CognitoErrorCodes::EXPIRED_CODE,
+                CognitoErrorCodes::TOO_MANY_REQUESTS->value => CognitoErrorCodes::TOO_MANY_REQUESTS,
+                CognitoErrorCodes::LIMIT_EXCEEDED->value => CognitoErrorCodes::LIMIT_EXCEEDED,
                 default => throw new \Exception("Unhandled AWS Cognito error code: $errorCode"),
             };
         }
@@ -182,7 +211,7 @@ class CognitoAuthService
             $errorCode = $exception->getAwsErrorCode();
 
             return match ($errorCode) {
-                CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION->value => CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION,
+                CognitoErrorCodes::NOT_AUTHORIZED->value => CognitoErrorCodes::NOT_AUTHORIZED,
                 default => throw new \Exception("Unhandled AWS Cognito error code: $errorCode"),
             };
         }
@@ -225,7 +254,7 @@ class CognitoAuthService
 
             return match ($errorCode) {
                 CognitoErrorCodes::USER_NOT_FOUND->value => CognitoErrorCodes::USER_NOT_FOUND,
-                CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION->value => CognitoErrorCodes::NOT_AUTHORIZED_EXCEPTION,
+                CognitoErrorCodes::NOT_AUTHORIZED->value => CognitoErrorCodes::NOT_AUTHORIZED,
                 default => throw new \Exception("Unhandled AWS Cognito error code: $errorCode"),
             };
         }

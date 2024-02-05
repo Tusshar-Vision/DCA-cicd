@@ -8,10 +8,11 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class PdfViewer extends Component
 {
-    public string $pdf;
+    public $pdf;
 
     public function mount($pdf): void {
-        dd($pdf->getMedia('infographic'));
+        $this->pdf = $pdf;
+//        dd($pdf->getMedia('infographic'));
     }
 
     public function render(): View
