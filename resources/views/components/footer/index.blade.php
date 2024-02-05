@@ -152,6 +152,70 @@
             </div>
         </div>
     </div>
+    <div class="mx-auto w-full lg:max-w-[90%] mt-8 border-b-2 border-gray-300 pb-8 px-[20px] md:px-0">
+        <div class="mb-4">
+            <h4 class="font-bold font-sans text-base md:text-xl mb-2">About UPSC Civil Services Examination (UPSC CSE)</h4>
+            <p>The UPSC Civil Services Examination (CSE) is one of India's most prestigious tests, aimed at selecting candidates for diverse civil services roles such as IAS, IPS, and IFS. Administered annually by the UPSC, this examination is known for its rigorous selection procedure, encompassing Prelims, Mains, and a Personality Test/Interview.</p>
+        </div>
+        <div class="mb-4">
+            <h4 class="font-bold font-sans text-base md:text-xl mb-2">Skills Required to Excel in UPSC CSE</h4>
+            <p>The preliminary stage gauges foundational knowledge and cognitive abilities to identify serious aspirants for the Mains Examination. The Mains examination evaluates the aspirant's ability to think critically, analyze complex issues, and communicate effectively through coherent and compelling answer writing. The final phase, i.e. Interviews, assesses an aspirant's intellectual and social traits that reflect their ability to interact effectively with diverse groups and their readiness for a career in Civil Services.</p>
+        </div>
+        <div class="mb-4">
+            <h4 class="font-bold font-sans text-base md:text-xl mb-2">Achieving Success with VisionIAS</h4>
+            <p class="mb-4">Through its diverse range of initiatives and services, VisionIAS offers a holistic guidance and preparation platform for civil services aspirants, helping them cultivate the skills and competencies essential for success in the UPSC CSE, whether it's the Prelims, the Mains, or the Personality Test.</p>
+
+            <p class="mb-4">This support encompasses highly innovative UPSC Classes, available through both online and offline/classroom ecosystems, enabling students to achieve optimal learning outcomes. VisionIAS offers its renowned All India UPSC Mock Test Series for GS Prelims, Mains, CSAT, Essay, and Optional Subjects, ensuring ongoing assessment and continuous enhancement of student performance.</p>
+            
+            <p class="mb-4">A dedicated and dynamic Mentoring ecosystem provides personalized guidance to help students identify their growth areas and offers specific inputs that empower them to maximize their potential and achieve success.</p>
+            
+            <p class="mb-4">VisionIAS stands out as one of the best IAS academies in the country due to its extensive physical presence in over 10 cities and its nationwide online reach. The institute's pioneering innovations in UPSC online coaching, providing real-time support to students, set it apart in Civil Services guidance and support, helping students realize their dream of joining Civil Services to serve the nation.</p>
+        </div>
+        <div class="mb-4">
+            <h4 class="font-bold font-sans text-base md:text-xl mb-2">Become a part of the VisionIAS Community.</h4>
+            <p>Stay informed about crucial UPSC preparation updates. Connect with the VisionIAS community on social media to remain engaged with our informative and collaborative network.</p>
+        </div>
+
+        <div class="flex space-x-3 justify-center md:justify-start mt-8">
+            <a href="{{ UrlHelper::linkToSocial('whatsapp') }}" target="_blank">
+                <span>
+                    {!! SvgIconsHelper::getSvgIcon('whatsapp-footer') !!}
+                </span>
+            </a>
+    
+            <a href="{{ UrlHelper::linkToSocial('telegram') }}" target="_blank">
+                <span>
+                    {!! SvgIconsHelper::getSvgIcon('telegram-footer') !!}
+                </span>
+            </a>
+    
+            <a href="{{ UrlHelper::linkToSocial('facebook') }}" target="_blank">
+                <span>
+                    {!! SvgIconsHelper::getSvgIcon('facebook-footer') !!}
+                </span>
+            </a>
+    
+            <a href="{{ UrlHelper::linkToSocial('twitter') }}" target="_blank">
+                <span>
+                    {!! SvgIconsHelper::getSvgIcon('twitter-footer') !!}
+                </span>
+            </a>
+    
+            <a href="{{ UrlHelper::linkToSocial('youtube') }}" target="_blank">
+                <span>
+                    {!! SvgIconsHelper::getSvgIcon('youtube-footer') !!}
+                </span>
+            </a>
+    
+            <a href="{{ UrlHelper::linkToSocial('instagram') }}" target="_blank">
+                <span>
+                    {!! SvgIconsHelper::getSvgIcon('instagram-footer') !!}
+                </span>
+            </a>
+        </div>
+    </div>
+
+    
     <div class="flex justify-center my-[35px]">
         <h6 class="italic text-center">© {{ Carbon::now()->year . ' ' . __('footer.copy_right')}}.</h6>
     </div>
