@@ -35,13 +35,13 @@
     }
 </style>
 
-<div class="vi-highlights-sidebar w-full lg:w-auto">
+<div x-data="{ isAnnouncementsOpen: false }" class="vi-highlights-sidebar w-full lg:w-auto">
     <div class="vi-announcement-wrap w-full lg:w-auto">
         <h5 class="vi-sidebar-title">What’s New</h5>
         <div class="vi-announcement-card">
             <div class="flex justify-between items-center">
                 <p class="vi-announcement-title">Announcements</p>
-                <a class="vi-announcement-title cursor-pointer hover:underline text-xs">View All</a>
+                <a @click="isAnnouncementsOpen = !isAnnouncementsOpen" class="vi-announcement-title cursor-pointer hover:underline text-xs">View All</a>
             </div>
             <div x-data="{ isHovered: false }" class="announcement-container">
                 <ul
@@ -78,6 +78,23 @@
             </ul>
         </div>
     </div>
+    <x-modals.modal-box x-show="isAnnouncementsOpen">
+        <ul>
+            @if($announcements->isNotEmpty())
+                @foreach($announcements as $announcement)
+                    <li class="p-2 mb-1 rounded-md border-l-2 border-transparent hover:border-[#5A7184] hover:underline hover:bg-[#B3BAC5] hover:bg-opacity-10">
+                        <a href="javascript:void(0)">
+                            <p class="text-sm hover:text-blue-800">{!! $announcement->content !!}</p>
+                        </a>
+                    </li>
+                @endforeach
+            @else
+                <li class="p-2 mb-1 rounded-md border-l-2 border-transparent hover:border-[#5A7184] hover:underline hover:bg-[#B3BAC5] hover:bg-opacity-10">
+                    <span class="limited-text text-xs">No New Announcements</span>
+                </li>
+            @endif
+        </ul>
+    </x-modals.modal-box>
 </div>
 <script>
     function truncateText(selector, maxLength = 35) {
