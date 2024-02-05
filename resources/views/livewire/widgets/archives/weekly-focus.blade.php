@@ -86,7 +86,7 @@
             </div>
 
             @foreach ($yearData as $month => $monthData)
-                <div x-show="expanded === true" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-collapse>
+                <div x-show="expanded === true" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-collapse @click="expanded = ! expanded">
                     <div class="weekly-focus-single-card">
                         <div class="weekly-focus-month-name">{{$month}}</div>
                         <div class="weekly-focus-progress-list">
