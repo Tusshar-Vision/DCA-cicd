@@ -25,7 +25,7 @@
 <!-- Monthly Magazine section -->
 <?php $i = 0; ?>
 @foreach ($articles as $year => $article)
-    <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: {{$i==0 ? 'true': 'false'}} }" @click="expanded = ! expanded">
+    <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: {{$i==0 ? 'true': 'false'}} }" @click="expanded = ! expanded" >
     <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]">
         <div class="flex space-x-4 items-center">
             <div class="vi-progress-bar-round"></div>
@@ -45,14 +45,14 @@
                 </div>
     </div>
 
-    @foreach ($article as $a) 
+    @foreach ($article as $a)
        <?php
         $date = Carbon\Carbon::parse($a['publishedAt'])->format('Y-m-d');
         $title = Carbon\Carbon::parse($a['publishedAt'])->monthName;
         $topic = $a['article'][0]['topic'];
         $slug = $a['article'][0]['slug'];
-        ?> 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true">
+        ?>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true" @click.stop>
         <div class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
                 <div class="weekly-focus-progress-single-bar border-b-2">
@@ -76,7 +76,7 @@
             </div>
         </div>
     </div>
-    @endforeach        
+    @endforeach
 </div>
 <?php $i++; ?>
 @endforeach

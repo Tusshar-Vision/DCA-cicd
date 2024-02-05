@@ -60,9 +60,9 @@
                     <x-widgets.related-videos :related-videos="$relatedVideos" />
                 </div>
 
-                <div class="mt-[25px]">
-                    <livewire:widgets.comments />
-                </div>
+{{--                <div class="mt-[25px]">--}}
+{{--                    <livewire:widgets.comments />--}}
+{{--                </div>--}}
 
                 <div class="mt-[25px]">
                     <x-widgets.article-sources :sources="$article->sources" />

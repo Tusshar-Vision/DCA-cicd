@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="dropdown relative inline-block" id="dropdown1">
+{{-- <div class="dropdown relative inline-block" id="dropdown1">
     <button class="dropdown-button cursor-pointer p-1 text-[#374957] rotate-90 font-bold text-xs tracking-[5px]" onclick="toggleDropdown('dropdown1')">...</button>
     <div class="dropdown-content absolute right-0 hidden z-10 shadow-lg py-2">
         <!-- Dropdown content goes here -->
@@ -25,7 +25,7 @@
                 <li class="mr-[5px] relative after:content-['/'] after:ml-[5px]">Paper</li>
                 <li class="mr-[5px] relative after:content-['/'] after:ml-[5px]">GS-1</li>
                 <li class="mr-[5px] relative after:content-[''] after:ml-[5px]">Economics</li>
-            </ul>    
+            </ul>
         </div>
     </div>
     <!-- folder body -->
@@ -89,7 +89,7 @@
                 </li>
             </ul>
         </div>
-        
+
     </div>
     <!-- folder footer -->
     <div class="bg-[#E5EAF4] p-[20px]">
@@ -101,11 +101,11 @@
             <button class="py-[5px] px-[30px] mr-[15px] rounded-[4px] bg-transparent text-[#3362CC] border-2 border-[#3362CC] hover:text-white hover:bg-[#3362CC]">Cancel</button>
             <button class="py-[5px] px-[30px] rounded-[4px] bg-[#3362CC] text-white border-2 border-[#3362CC] hover:text-[#3362CC] hover:bg-transparent">Move</button>
         </div>
-    </div> 
-</div>
+    </div>
+</div> --}}
 
 
-  {{-- <div class="dropdown" id="dropdown2">
+{{-- <div class="dropdown" id="dropdown2">
     <button class="dropdown-button" onclick="toggleDropdown('dropdown2')">
         ...
     </button>
@@ -116,6 +116,44 @@
       <p>Dropdown Item C</p>
     </div>
   </div> --}}
+
+  {{-- Enter OTP start --}}
+  <div class="flex min-h-[680px] justify-center text-center items-stretch bg-white">
+    <div class="w-6/12 flex items-center bg-[#F5F7F8]">
+        <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+
+        <dotlottie-player src="https://lottie.host/9fdd8a19-696b-458b-b325-a74104e6b362/ZBlOCe4MDw.json" background="transparent" speed="1" style="width: 300px; height: 300px; margin: 0 auto;" loop autoplay></dotlottie-player>
+    </div>
+    <div class="w-6/12 flex flex-col justify-center px-[56px] loginwrap">
+      <h2 class="font-medium text-base mb-[15px]">Enter OTP</h2>
+      <p class="text-xs text-[#3D3D3D] mb-[15px]">Kindly, enter the four digit verification code sent to your e-mail ID, vision@gmail.com</p>
+      <form class="w-full">
+        <div class="flex gap-2 otp-wrap mb-[15px]">
+          <input type="number" maxlength="1" onKeyPress="if(this.value.length==1) return false;" value="" class="w-2/12 border h-[56px] rounded appearance-none text-center">
+          <input type="number" maxlength="1" onKeyPress="if(this.value.length==1) return false;" value="" class="w-2/12 border h-[56px] rounded appearance-none text-center">
+          <input type="number" maxlength="1" onKeyPress="if(this.value.length==1) return false;" value="" class="w-2/12 border h-[56px] rounded appearance-none text-center">
+          <input type="number" maxlength="1" onKeyPress="if(this.value.length==1) return false;" value=""class="w-2/12 border h-[56px] rounded appearance-none text-center">
+          <input type="number" maxlength="1" onKeyPress="if(this.value.length==1) return false;" value="" class="w-2/12 border h-[56px] rounded appearance-none text-center">
+          <input type="number" maxlength="1" onKeyPress="if(this.value.length==1) return false;" value="" class="w-2/12 border h-[56px] rounded appearance-none text-center">
+        </div>
+        <p class="text-xs text-[#C10000] mb-[15px]">Invalid verification code please try again</p>
+        <div class="text-right">
+            <button type="button" class="text-[18px] text-[#3362CC] mb-[40px]">Resend</button>
+        </div>
+
+        <button type="button" class="login-btn mb-[30px]">Update</button>
+        <div class="flex items-center justify-center flex-col">
+          <button type="button" class="text-[18px] text-[#3362CC] mb-[40px]">Login?</button>
+          <button type="button" class="text-[18px] text-[#3362CC]">Change Email ID?</button>
+        </div>
+      </form>
+    </div>
+</div>
+{{-- Enter OTP end --}}
+<br><br>
+{{-- Announcements start  --}}
+
+{{-- Announcements end  --}}
 
   <script>
     // Function to toggle the visibility of the dropdown
@@ -147,7 +185,7 @@
             }
         };
     }
-  
+
   </script>
 
 @endsection

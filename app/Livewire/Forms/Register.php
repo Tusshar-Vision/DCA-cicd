@@ -5,23 +5,23 @@ namespace App\Livewire\Forms;
 use App\Enums\CognitoErrorCodes;
 use App\Services\CognitoAuthService;
 use Illuminate\Contracts\View\View;
-use Livewire\Attributes\Rule;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class Register extends Component
 {
-    #[Rule('required|string|min:3')]
+    #[Validate('required|string|min:3')]
     public $first_name;
-    #[Rule('required|string|min:3')]
+    #[Validate('required|string|min:3')]
     public $last_name;
 
-    #[Rule('required|email')]
+    #[Validate('required|email')]
     public $email;
 
-    #[Rule('required|min:6')]
+    #[Validate('required|min:6')]
     public $password;
 
-    #[Rule('required|min_digits:10|max_digits:10')]
+    #[Validate('required|min_digits:10|max_digits:10')]
     public $mobile;
 
     public function __construct() {}

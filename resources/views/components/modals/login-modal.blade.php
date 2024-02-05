@@ -7,8 +7,6 @@
     <div class="fixed inset-0 z-10 overflow-y-auto">
         <div class="flex min-h-full items-end justify-center p-0 md:p-4 text-center sm:items-center sm:p-0">
             <div class="relative transform overflow-hidden rounded-none md:rounded-md bg-white shadow-xl transition-all w-full md:w-7/12">
-
-
                 <button @click="{{ $attributes['x-show'] }} = false" class="absolute right-3 top-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
                         <g clip-path="url(#clip0_930_4385)">

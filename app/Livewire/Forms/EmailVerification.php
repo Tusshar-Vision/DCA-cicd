@@ -14,7 +14,7 @@ class EmailVerification extends Component
     /**
      * @throws \Exception
      */
-    public function mount(CognitoAuthService $cognitoAuthService): void
+    public function mount(): void
     {
         $this->email = session('verify_email');
     }

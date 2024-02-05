@@ -13,7 +13,7 @@ cd /var/www/html/vision-ca-api/
 # Pull the latest changes from the GitHub repository
 git pull origin main
 # Install/update dependencies
-composer install --no-interaction --prefer-dist --optimize-autoloader
+composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 bun install
 bun run build
 # Run database migrations
