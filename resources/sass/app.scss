@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 
-* {
-  transition: all 0.3s ease-in-out;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-}
+//* {
+//  transition: all 0.1s ease-in;
+//  -webkit-transition: all 0.3s ease-in;
+//  -moz-transition: all 0.3s ease-in;
+//  -o-transition: all 0.3s ease-in;
+//}
 
 :root {
   --square-size: 12px;
@@ -355,7 +355,7 @@ $gray-686E70: #686E70;
   .vi-card-footer {
     display: flex;
     gap: 15px;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     margin-top: 10px;
     padding-top: 10px;
@@ -439,6 +439,10 @@ $gray-686E70: #686E70;
     font-weight: 400;
     color: #040404;
     line-height: 24px;
+  }
+
+  .vi-score-card:nth-child(1) .vi-user-name{
+    font-weight: bold;
   }
 
   .vi-user-score {
@@ -1032,7 +1036,7 @@ $gray-686E70: #686E70;
 
 .hybrid-text-wrapper {
   margin: 40px 0 0 0;
-  
+
 }
 
 .hybrid-text-wrapper .hybrid-left-panel .hybrid-text-row {
@@ -1496,7 +1500,7 @@ $gray-686E70: #686E70;
 .search-field-container {
   position: relative;
   display: block;
-  float: left;
+  // float: left;
   margin-right: 20px;
   height: 35px;
 
@@ -1525,14 +1529,14 @@ $gray-686E70: #686E70;
     background: url("/images/search.svg") left center no-repeat;
 
     &:focus {
-      width: 205px;
+      width: 237px;
       background: #fff;
       cursor: inherit;
       padding-right: 10px;
       padding-left: 35px;
       background: #fff url("/images/navsearch.png") 10px center no-repeat;
-      @media screen and (min-width: 768px) {
-        width: 260px;
+      @media screen and (min-width: 1280px) {
+        width: 150px;
       }
     }
   }
@@ -1644,6 +1648,12 @@ $gray-686E70: #686E70;
     }
   }
 
+    .overlayLabel-focused {
+        top: -5px !important;
+        font-size: 11px !important;
+        color: #3362CC !important;
+    }
+
   .form-item {
     position: relative;
 
@@ -1684,17 +1694,11 @@ $gray-686E70: #686E70;
     .passwordOverlay:focus+label.overlayLabel{
       z-index: 1  ;
     }
-    input:focus+label {
-      font-size: 11px;
-      top: -5px;
-      color: #3362CC
-    }
 
     .show-password {
       position: absolute;
       right: 17px;
       top: 17px;
-      z-index: 1;
       display: inline-block;
       cursor: pointer;
       z-index: 2;

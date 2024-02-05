@@ -28,13 +28,19 @@
     </div>
 
     <div class="space-y-12">
-        <div class="flex justify-between mt-[20px] md:mt-0">
+        <div x-data="{ isTopicAtGlanceOpen: false }" class="flex justify-between mt-[20px] md:mt-0">
             <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8 ">
                 <div class="flex w-full lg:md:w-2/6 flex-col space-y-6 leftsticky">
                     <x-widgets.article-side-bar :table-of-content="$tableOfContent" />
-                    <div class="hidden lg:block">
-                        <x-widgets.topic-at-a-glance />
-                    </div>
+
+                    @if($articles->topicAtGlance !== null)
+                        <div @click="isTopicAtGlanceOpen = !isTopicAtGlanceOpen" class="hidden lg:block">
+                            <x-widgets.topic-at-a-glance :infographic="$articles->topicAtGlance"/>
+                        </div>
+                    @endif
+                    <x-modals.modal-box x-show="isTopicAtGlanceOpen">
+                        <livewire:widgets.pdf-viewer :pdf="$articles->topicAtGlance" />
+                    </x-modals.modal-box>
                     <div class="hidden lg:block">
                         <x-widgets.side-bar-download-menu initiative="weekly-focus" />
                     </div>
@@ -48,9 +54,11 @@
                     <div class="mt-12">
                         <x-widgets.article-pagination :current-initiative="$articles" :current-article-slug="$article->slug" />
                     </div>
-                    <div class="block lg:hidden mb-4">
-                        <x-widgets.topic-at-a-glance />
-                    </div>
+                    @if($articles->topicAtGlance !== null)
+                        <div @click="isTopicAtGlanceOpen = !isTopicAtGlanceOpen" class="block lg:hidden mb-4">
+                            <x-widgets.topic-at-a-glance :infographic="$articles->topicAtGlance"/>
+                        </div>
+                    @endif
                     <div class="block lg:hidden">
                         <x-widgets.side-bar-download-menu initiative="weekly-focus" />
                     </div>
@@ -66,9 +74,9 @@
                     <x-widgets.related-videos :related-videos="$relatedVideos" />
                 </div>
 
-                <div class="mt-[25px]">
-                    <livewire:widgets.comments />
-                </div>
+{{--                <div class="mt-[25px]">--}}
+{{--                    <livewire:widgets.comments />--}}
+{{--                </div>--}}
 
                 <div class="mt-[25px]">
                     <x-widgets.article-sources :sources="$article->sources" />
