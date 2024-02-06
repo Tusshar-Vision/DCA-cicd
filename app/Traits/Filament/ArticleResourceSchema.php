@@ -8,6 +8,7 @@ use App\Models\Article;
 use App\Models\User;
 use App\Services\ArticleService;
 use App\Traits\Filament\Components\ArticleForm;
+use App\Traits\HasNotifications;
 use AymanAlhattami\FilamentDateScopesFilter\DateScopeFilter;
 use Carbon\Carbon;
 use Filament\Forms\Components\Group;
@@ -43,7 +44,7 @@ use Spatie\Tags\Tag;
 
 trait ArticleResourceSchema
 {
-    use ArticleForm;
+    use ArticleForm, HasNotifications;
     public static function form(Form $form): Form
     {
         $articleResource = new self();
@@ -410,22 +411,14 @@ trait ArticleResourceSchema
                                 if ($record->status === 'Final') {
                                     $record->setStatus('Published');
                                     $record->update(['published_at' => Carbon::now()]);
+
+                                    if ($record->publishedInitiative->is_published === false) {
+                                        $record->publishedInitiative->is_published = true;
+                                        $record->publishedInitiative->save();
+                                    }
                                 }
 
-                                $articleUrl = ArticleService::getArticleUrlFromSlug($record->slug);
-                                $notificationBody = "<a href=\" $articleUrl \" target='_blank'>Click here to check it out</a>";;
-
-                                Notification::make()
-                                    ->title('Your article just got published!')
-                                    ->body($notificationBody)
-                                    ->success()
-                                    ->sendToDatabase($record->author);
-
-                                Notification::make()
-                                    ->title('Article you reviewed just got published!')
-                                    ->body($notificationBody)
-                                    ->success()
-                                    ->sendToDatabase($record->reviewer);
+                                $this->sendNotificationOfArticlePublished($record);
                             });
                         })
                         ->deselectRecordsAfterCompletion(),
