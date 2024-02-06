@@ -3120,3 +3120,7 @@ iframe {
 .current-folder{
   background-color: #ECECEC;
 }
+
+.svgHover:hover svg path{
+  fill: #3362CC;
+}

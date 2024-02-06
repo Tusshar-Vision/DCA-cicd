@@ -70,6 +70,15 @@
             </ul>
         </div>
         <div class="w-4/6">
+            <div class="flex justify-end mb-4">
+                <a href="javascript:void(0)" class="flex items-center text-[#040404] text-xm hover:text-[#3362CC] svgHover">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
+                        <path d="M8.99994 12.2847C9.38828 12.2847 9.70307 11.9556 9.70307 11.5496V10.2409H10.9548C11.3432 10.2409 11.658 9.91184 11.658 9.50586C11.658 9.09987 11.3432 8.77077 10.9548 8.77077H9.70307V7.46214C9.70307 7.05615 9.38828 6.72705 8.99994 6.72705C8.61161 6.72705 8.29682 7.05615 8.29682 7.46214V8.77077H7.04504C6.65671 8.77077 6.34192 9.09987 6.34192 9.50586C6.34192 9.91184 6.65671 10.2409 7.04504 10.2409H8.29682V11.5496C8.29682 11.9556 8.61161 12.2847 8.99994 12.2847Z" fill="#040404"/>
+                        <path d="M17.2969 11.0458C17.6852 11.0458 18 10.7167 18 10.3107V4.85358C18 3.23228 16.7383 1.91324 15.1875 1.91324H8.59057L7.22447 0.699691C6.7166 0.248495 6.06983 0 5.40327 0H2.8125C1.26169 0 0 1.31904 0 2.94034V14.0025C0 15.6238 1.26169 16.9428 2.8125 16.9428H15.1875C16.7383 16.9428 18 15.6238 18 14.0025V13.9861C18 13.5801 17.6852 13.251 17.2969 13.251C16.9085 13.251 16.5938 13.5801 16.5938 13.9861V14.0025C16.5938 14.8131 15.9629 15.4726 15.1875 15.4726H2.8125C2.03709 15.4726 1.40625 14.8131 1.40625 14.0025V2.94034C1.40625 2.12969 2.03709 1.47017 2.8125 1.47017H5.40327C5.73652 1.47017 6.05992 1.5944 6.31385 1.82003L7.87686 3.20854C8.00399 3.32145 8.16536 3.38345 8.33217 3.38345H15.1875C15.9629 3.38345 16.5938 4.04297 16.5938 4.85362V10.3107C16.5938 10.7167 16.9085 11.0458 17.2969 11.0458Z" fill="#040404"/>
+                    </svg>
+                    <span class="ml-2">Create new folder</span>
+                </a>
+            </div>
             <ul class="flex flex-wrap justify-between">
                 <li class="relative rounded-sm text-[#000] border-[#E9E9E9] border-[1px] py-[10px] mb-4 w-[47%] cursor-pointer">
                     <div class="card-corner">
@@ -89,7 +98,7 @@
                 </li>
             </ul>
 
-            <!-- create new folder -->
+            {{-- <!-- create new folder -->
             <ul class="flex flex-wrap justify-between">
                 <li class="relative rounded-sm text-[#000] border-[#E9E9E9] border-[1px] py-[10px] mb-4 w-[47%] cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="15" class="mx-auto" viewBox="0 0 18 15" fill="none">
@@ -107,7 +116,7 @@
                     <span class="text-ellipsis whitespace-nowrap overflow-hidden px-[20px] block">Labour-1</span>
                 </li>
             </ul>
-            <!-- create new folder -->
+            <!-- create new folder --> --}}
         </div>
 
     </div>
