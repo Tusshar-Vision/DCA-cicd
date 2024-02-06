@@ -27,6 +27,7 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\CreateAction;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
@@ -394,7 +395,21 @@ trait ArticleRelationSchema
                             ($data['body'] !== null) ? $record->review($data['body'], $author, 0) : null;
 
                         $record->setStatus($data['status']);
-                    })->iconButton()
+                    })->iconButton(),
+
+                DeleteAction::make()
+                    ->iconButton()
+                    ->tooltip('Delete')
+                    ->visible(function (Model $record) {
+                        return $record->status === 'Draft';
+                    })
+                    ->action(function (Article $record) {
+                        $record->content->delete();
+                        $record->relatedTerms()->delete();
+                        $record->relatedVideos()->delete();
+                        $record->relatedArticles()->delete();
+                        $record->delete();
+                    }),
 
             ], ActionsPosition::BeforeColumns)
             ->bulkActions([
@@ -499,7 +514,7 @@ trait ArticleRelationSchema
                         })
                         ->deselectRecordsAfterCompletion(),
 
-                    DeleteBulkAction::make()
+//                    DeleteBulkAction::make()
                 ])
             ]);
     }

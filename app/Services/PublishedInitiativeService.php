@@ -53,15 +53,9 @@ readonly class PublishedInitiativeService
         $publishedRecords = $this->publishedInitiatives
             ->where('initiative_id', '=', $initiative_id);
 
-        if ($initiative_id == 1) {
-            // For News Today, check if an initiative exists for the same date
+        if ($initiative_id == 1 || $initiative_id == 3) {
+            // For News Today and Weekly Focus, check if an initiative exists for the same date
             $publishedRecords = $publishedRecords->whereDate('published_at', '=', Carbon::parse($published_at)->format('Y-m-d'));
-        } elseif ($initiative_id == 3) {
-            // For Weekly Focus, check if an initiative exists for the same week
-            $publishedRecords = $publishedRecords->whereBetween('published_at', [
-                Carbon::parse($published_at)->startOfWeek(),
-                Carbon::parse($published_at)->endOfWeek(),
-            ]);
         } elseif ($initiative_id == 2) {
             // For Monthly Magazine, check if an initiative exists for the same month
             $publishedRecords = $publishedRecords->whereYear('published_at', '=', Carbon::parse($published_at)->year)
