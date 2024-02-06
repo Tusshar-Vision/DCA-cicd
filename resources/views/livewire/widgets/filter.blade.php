@@ -1,6 +1,5 @@
 <?php
 $year = request()->input('year');
-logger("sdfsdf", [request()->is('monthly-magazine*')])
 ?>
 
 <div x-data="{ isYearOpen: false, isMonthOpen: false }" class="relative flex text-left space-x-4" x-cloak>
