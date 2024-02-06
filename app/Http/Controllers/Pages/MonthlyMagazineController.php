@@ -114,6 +114,7 @@ class MonthlyMagazineController extends Controller
             ->isPublished();
 
         if ($year) $query->whereYear('published_at', $year);
+        if ($month) $query->whereMonth('published_at', $month);
 
         $articles = $query->with('articles.topic')
             ->orderByDesc('published_at')

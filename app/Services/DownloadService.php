@@ -19,12 +19,12 @@ readonly class DownloadService
     public function getLatest(int $limit = 6): Collection|array
     {
         return $this->publishedInitiative
-                    ->isPublished()
-                    ->latest()
-                    ->has('media')
-                    ->with('media')
-                    ->limit($limit)
-                    ->get();
+            ->isPublished()
+            ->latest()
+            ->has('media')
+            ->with('media')
+            ->limit($limit)
+            ->get();
     }
 
     public function getMains365($year, $month): Collection|array
@@ -33,6 +33,7 @@ readonly class DownloadService
             ->where('collection_name', '=', config('settings.media_collections_type.Mains365'));
 
         if ($year) $query->whereYear('created_at', $year);
+        if ($month) $query->whereMonth('published_at', $month);
 
         $result = $query->get()
             ->groupBy(function ($item) {
@@ -48,6 +49,7 @@ readonly class DownloadService
             ->where('collection_name', '=', config('settings.media_collections_type.PT365'));
 
         if ($year) $query->whereYear('created_at', $year);
+        if ($month) $query->whereMonth('published_at', $month);
 
         $result = $query->get()
             ->groupBy(function ($item) {
@@ -63,6 +65,7 @@ readonly class DownloadService
             ->where('collection_name', '=', config('settings.media_collections_type.EconomicSurvey'));
 
         if ($year) $query->whereYear('created_at', $year);
+        if ($month) $query->whereMonth('published_at', $month);
 
         return $query->get()
             ->groupBy(function ($item) {
@@ -76,6 +79,7 @@ readonly class DownloadService
             ->where('collection_name', '=', config('settings.media_collections_type.Budget'));
 
         if ($year) $query->whereYear('created_at', $year);
+        if ($month) $query->whereMonth('published_at', $month);
 
         return  $query->get()
             ->groupBy(function ($item) {
@@ -89,6 +93,7 @@ readonly class DownloadService
             ->where('collection_name', '=', config('settings.media_collections_type.ValueAddedMaterial'));
 
         if ($year) $query->whereYear('created_at', $year);
+        if ($month) $query->whereMonth('published_at', $month);
 
         return $query->get()
             ->groupBy(function ($item) {
@@ -102,6 +107,7 @@ readonly class DownloadService
             ->where('collection_name', '=', config('settings.media_collections_type.ValueAddedMaterialOptional'));
 
         if ($year) $query->whereYear('created_at', $year);
+        if ($month) $query->whereMonth('published_at', $month);
 
         return $query->get()
             ->groupBy(function ($item) {
@@ -115,6 +121,7 @@ readonly class DownloadService
             ->where('collection_name', '=', config('settings.media_collections_type.QuarterlyRevisionDocument'));
 
         if ($year) $query->whereYear('created_at', $year);
+        if ($month) $query->whereMonth('published_at', $month);
 
         return $query->get()
             ->groupBy(function ($item) {
