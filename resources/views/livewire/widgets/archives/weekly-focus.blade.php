@@ -100,7 +100,7 @@
                                         </div>
                                         <ul class="flex justify-start space-x-4 mt-[15px]">
                                             <li class="text-[#3362CC] text-sm font-normal">
-                                                <a href="{{url('weekly-focus'). "weekly-focus-archive-section.blade.php/". $article['published_at']. "/". $article['topic']."/". $article['slug']}}"
+                                                <a href="{{App\Services\ArticleService::getArticleUrlFromSlug($article['slug'])}}"
                                                    class="hover:underline">
                                                     Read
                                                 </a>
