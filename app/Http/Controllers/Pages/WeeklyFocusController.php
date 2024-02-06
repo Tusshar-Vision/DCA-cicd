@@ -95,6 +95,7 @@ class WeeklyFocusController extends Controller
         $query = Article::where('initiative_id', config('settings.initiatives.WEEKLY_FOCUS'));
 
         if ($year) $query->whereYear('published_at', $year);
+        if ($month) $query->whereMonth('published_at', $month);
 
         $data = $query->select(
             DB::raw('YEAR(published_at) as year'),
