@@ -417,8 +417,8 @@ trait ArticleResourceSchema
                                         $record->publishedInitiative->save();
                                     }
                                 }
-
-                                $this->sendNotificationOfArticlePublished($record);
+                                $articleResource = new self();
+                                $articleResource->sendNotificationOfArticlePublished($record);
                             });
                         })
                         ->deselectRecordsAfterCompletion(),
