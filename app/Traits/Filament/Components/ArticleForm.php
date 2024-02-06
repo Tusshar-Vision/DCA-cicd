@@ -3,9 +3,9 @@
 namespace App\Traits\Filament\Components;
 
 use AmidEsfahani\FilamentTinyEditor\TinyEditor;
+use App\Filament\Components\Repeater;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -19,8 +19,8 @@ use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use RalphJSmit\Filament\SEO\SEO;
 use Livewire\Component as Livewire;
+use RalphJSmit\Filament\SEO\SEO;
 
 trait ArticleForm
 {
@@ -212,12 +212,13 @@ trait ArticleForm
                         Repeater::make('articles')
                             ->label('')
                             ->relationship('relatedArticles')
-                            ->schema([
+                            ->simple(
                                 Select::make('related_article_id')
                                     ->relationship('relatedArticle', 'title')
-                                    ->required(),
-                            ])
+                                    ->required()
+                            )
                             ->orderColumn('order_column')
+                            ->minItems(0)
                             ->reorderable()
                             ->addActionLabel('Add article')
                     ]),
@@ -226,11 +227,11 @@ trait ArticleForm
                         Repeater::make('videos')
                             ->label('')
                             ->relationship('relatedVideos')
-                            ->schema([
+                            ->simple(
                                 Select::make('video_id')
                                     ->relationship('video', 'title')
                                     ->required(),
-                            ])
+                            )
                             ->orderColumn('order_column')
                             ->reorderable()
                             ->addActionLabel('Add video')
@@ -240,11 +241,11 @@ trait ArticleForm
                         Repeater::make('terms')
                             ->label('')
                             ->relationship('relatedTerms')
-                            ->schema([
+                            ->simple(
                                 Select::make('related_term_id')
                                     ->relationship('term', 'term')
                                     ->required(),
-                            ])
+                            )
                             ->orderColumn('order_column')
                             ->reorderable()
                             ->addActionLabel('Add term')
