@@ -84,6 +84,8 @@ class InfographicsResource extends Resource
                         ->id('infographic')
                         ->collection('infographic')
                         ->required()
+                        ->visibility('private')
+                        ->openable()
                         ->acceptedFileTypes([
                             'application/pdf',
                             'image/jpeg',

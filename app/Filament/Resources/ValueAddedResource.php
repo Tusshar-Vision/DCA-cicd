@@ -87,6 +87,8 @@ class ValueAddedResource extends Resource
                         ->name('file')
                         ->acceptedFileTypes(['application/pdf'])
                         ->collection('value-added-material')
+                        ->visibility('private')
+                        ->openable()
                         ->required()
                         ->columnSpanFull(),
 

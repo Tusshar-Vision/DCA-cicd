@@ -84,6 +84,8 @@ class PT365Resource extends Resource
                             ->name('file')
                             ->acceptedFileTypes(['application/pdf'])
                             ->collection('pt-365')
+                            ->visibility('private')
+                            ->openable()
                             ->required()
                             ->columnSpanFull(),
 

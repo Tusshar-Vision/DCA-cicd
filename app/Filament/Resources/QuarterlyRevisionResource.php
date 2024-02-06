@@ -87,6 +87,8 @@ class QuarterlyRevisionResource extends Resource
                         ->name('file')
                         ->acceptedFileTypes(['application/pdf'])
                         ->collection('quarterly-revision-document')
+                        ->visibility('private')
+                        ->openable()
                         ->required()
                         ->columnSpanFull(),
 

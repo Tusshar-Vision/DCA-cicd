@@ -85,6 +85,8 @@ class Mains365Resource extends Resource
                             ->name('file')
                             ->acceptedFileTypes(['application/pdf'])
                             ->collection('mains-365')
+                            ->visibility('private')
+                            ->openable()
                             ->required()
                             ->columnSpanFull(),
 
