@@ -35,13 +35,13 @@
     }
 </style>
 
-<div x-data="{ isAnnouncementsOpen: false }" class="vi-highlights-sidebar w-full lg:w-auto">
+<div x-data="{ isAnnouncementsModalOpen: false, isAnnouncementsSelected: true, isLatestNewsSelected: false }" class="vi-highlights-sidebar w-full lg:w-auto">
     <div class="vi-announcement-wrap w-full lg:w-auto">
         <h5 class="vi-sidebar-title">What’s New</h5>
         <div class="vi-announcement-card">
             <div class="flex justify-between items-center">
                 <p class="vi-announcement-title">Announcements</p>
-                <a @click="isAnnouncementsOpen = !isAnnouncementsOpen" class="vi-announcement-title cursor-pointer hover:underline text-xs">View All</a>
+                <a @click="isAnnouncementsModalOpen = !isAnnouncementsModalOpen" class="vi-announcement-title cursor-pointer hover:underline text-xs">View All</a>
             </div>
             <div x-data="{ isHovered: false }" class="announcement-container">
                 <ul
@@ -69,7 +69,7 @@
             <ul>
                 @foreach($newsUpdates as $news)
                     <li>
-                        <a href="{{ ArticleService::getArticleUrlFromSlug($news->slug) }}">
+                        <a href="{{ ArticleService::getArticleUrlFromSlug($news->slug) }}" wire:navigate>
                             <span class="limited-text text-xs">{{ $news->title }}</span>
                             <div class="hidden-text">{{ $news->title }}</div>
                         </a>
@@ -78,12 +78,12 @@
             </ul>
         </div>
     </div>
-    <x-modals.modal-box x-show="isAnnouncementsOpen">
-        <ul class="flex justify-start align-middle my-4">
-            <li class="cursor-pointer border-b-2 border-b-transparent hover:border-gray-600 mr-4 pb-2 activeTab">Tab 1</li>
-            <li class="cursor-pointer border-b-2 border-b-transparent hover:border-gray-600 pb-1">Tab 2</li>
+    <x-modals.modal-box x-show="isAnnouncementsModalOpen">
+        <ul class="flex justify-start align-middle my-4" x-transition>
+            <li @click="isAnnouncementsSelected = true; isLatestNewsSelected = false" class="cursor-pointer border-b-2 border-b-transparent hover:border-gray-600 mr-4 pb-2" :class="isAnnouncementsSelected && 'activeTab'">Announcements</li>
+            <li @click="isAnnouncementsSelected = false; isLatestNewsSelected = true" class="cursor-pointer border-b-2 border-b-transparent hover:border-gray-600 pb-1" :class="isLatestNewsSelected && 'activeTab'">News Updates</li>
         </ul>
-        <ul class="text-left overflow-y-auto">
+        <ul x-show="isAnnouncementsSelected" class="text-left overflow-y-auto">
             @if($announcements->isNotEmpty())
                 @foreach($announcements as $announcement)
                     <li class="p-2 mb-1 rounded-md border-l-2 border-transparent hover:border-[#5A7184] hover:underline hover:bg-[#B3BAC5] hover:bg-opacity-10">
@@ -97,6 +97,15 @@
                     <span class="limited-text text-xs">No New Announcements</span>
                 </li>
             @endif
+        </ul>
+        <ul x-show="isLatestNewsSelected" class="text-left overflow-y-auto">
+            @foreach($newsUpdates as $news)
+                <li class="p-2 mb-1 rounded-md border-l-2 border-transparent hover:border-[#5A7184] hover:underline hover:bg-[#B3BAC5] hover:bg-opacity-10">
+                    <a href="{{ ArticleService::getArticleUrlFromSlug($news->slug) }}" wire:navigate>
+                        <p class="text-sm hover:text-blue-800">{{ $news->title }}</p>
+                    </a>
+                </li>
+            @endforeach
         </ul>
     </x-modals.modal-box>
 </div>
