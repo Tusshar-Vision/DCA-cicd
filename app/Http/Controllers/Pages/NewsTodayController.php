@@ -22,8 +22,7 @@ class NewsTodayController extends Controller
 
     public function __construct(
         private readonly PublishedInitiativeService $publishedInitiativeService,
-        private readonly ArticleService $articleService,
-        private readonly SuggestionService $suggestionService
+        private readonly ArticleService $articleService
     ) {
         $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY);
     }
@@ -66,10 +65,6 @@ class NewsTodayController extends Controller
 
         $article = $this->newsToday->getArticleFromSlug($slug);
 
-        $relatedTerms = $this->suggestionService->getRelatedTerms($article);
-        $relatedArticles = $this->suggestionService->getRelatedArticles($article);
-        $relatedVideos = $this->suggestionService->getRelatedVideos($article);
-
         $noteAvailable = null;
         $note = null;
         $isArticleBookmarked = false;
@@ -87,9 +82,6 @@ class NewsTodayController extends Controller
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
             "isArticleBookmarked" => $isArticleBookmarked,
-            "relatedTerms" => $relatedTerms,
-            "relatedArticles" => $relatedArticles,
-            "relatedVideos" => $relatedVideos,
             "newsTodayCalendar" => $newsTodayCalendar
         ]);
     }

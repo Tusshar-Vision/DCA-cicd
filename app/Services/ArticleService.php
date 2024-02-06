@@ -63,6 +63,7 @@ readonly class ArticleService
         $query = $this->articles::where('initiative_id', $initiative_id)->where('published_at', '!=', null);
 
         if ($year) $query->whereYear('published_at', $year);
+        if ($month) $query->whereMonth('published_at', $month);
 
         $archive = $query->select(DB::raw('YEAR(published_at) as year, MONTH(published_at) as month'))
             ->groupBy(DB::raw('YEAR(published_at), MONTH(published_at)'))

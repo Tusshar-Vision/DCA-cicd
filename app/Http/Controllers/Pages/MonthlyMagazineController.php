@@ -27,7 +27,6 @@ class MonthlyMagazineController extends Controller
     public function __construct(
         private readonly PublishedInitiativeService $publishedInitiativeService,
         private readonly PublishedInitiative        $publishedInitiatives,
-        private readonly SuggestionService $suggestionService
     ) {
         $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE);
     }
@@ -63,9 +62,6 @@ class MonthlyMagazineController extends Controller
         );
 
         $article = $this->monthlyMagazine->getArticleFromSlug($slug);
-        $relatedTerms = $this->suggestionService->getRelatedTerms($article);
-        $relatedArticles = $this->suggestionService->getRelatedArticles($article);
-        $relatedVideos = $this->suggestionService->getRelatedVideos($article);
 
         $noteAvailable = null;
         $note = null;
@@ -96,16 +92,12 @@ class MonthlyMagazineController extends Controller
             "note" => $note,
             "sortedArticlesWithTopics" => $this->monthlyMagazine->sortedArticlesWithTopic,
             "tableOfContent" => $tableOfContent,
-            "isArticleBookmarked" => $isArticleBookmarked,
-            "relatedTerms" => $relatedTerms,
-            "relatedArticles" => $relatedArticles,
-            "relatedVideos" => $relatedVideos
+            "isArticleBookmarked" => $isArticleBookmarked
         ]);
     }
 
     public function archive()
     {
-
         $year = request()->input('year');
         $month = request()->input('month');
 
@@ -114,6 +106,7 @@ class MonthlyMagazineController extends Controller
             ->isPublished();
 
         if ($year) $query->whereYear('published_at', $year);
+        if ($month) $query->whereMonth('published_at', $month);
 
         $articles = $query->with('articles.topic')
             ->orderByDesc('published_at')

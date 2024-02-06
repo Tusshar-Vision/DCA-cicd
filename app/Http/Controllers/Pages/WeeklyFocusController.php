@@ -24,9 +24,7 @@ class WeeklyFocusController extends Controller
     private WeeklyFocusDTO $weeklyFocus;
 
     public function __construct(
-        private readonly ArticleService $articleService,
         private readonly PublishedInitiativeService $publishedInitiativeService,
-        private readonly SuggestionService $suggestionService
     ) {
         $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS);
     }
@@ -63,9 +61,6 @@ class WeeklyFocusController extends Controller
         );
 
         $article = $this->weeklyFocus->getArticleFromSlug($slug);
-        $relatedTerms = $this->suggestionService->getRelatedTerms($article);
-        $relatedArticles = $this->suggestionService->getRelatedArticles($article);
-        $relatedVideos = $this->suggestionService->getRelatedVideos($article);
 
         $noteAvailable = null;
         $note = null;
@@ -88,10 +83,7 @@ class WeeklyFocusController extends Controller
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
             "tableOfContent" => $tableOfContent,
-            "isArticleBookmarked" => $isArticleBookmarked,
-            "relatedTerms" => $relatedTerms,
-            "relatedArticles" => $relatedArticles,
-            "relatedVideos" => $relatedVideos
+            "isArticleBookmarked" => $isArticleBookmarked
         ]);
     }
 
@@ -103,6 +95,7 @@ class WeeklyFocusController extends Controller
         $query = Article::where('initiative_id', config('settings.initiatives.WEEKLY_FOCUS'));
 
         if ($year) $query->whereYear('published_at', $year);
+        if ($month) $query->whereMonth('published_at', $month);
 
         $data = $query->select(
             DB::raw('YEAR(published_at) as year'),
