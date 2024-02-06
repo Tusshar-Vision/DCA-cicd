@@ -2,7 +2,7 @@
 
 @section('content')
 
-{{-- <div class="dropdown relative inline-block" id="dropdown1">
+<div class="dropdown relative inline-block" id="dropdown1">
     <button class="dropdown-button cursor-pointer p-1 text-[#374957] rotate-90 font-bold text-xs tracking-[5px]" onclick="toggleDropdown('dropdown1')">...</button>
     <div class="dropdown-content absolute right-0 hidden z-10 shadow-lg py-2">
         <!-- Dropdown content goes here -->
@@ -60,7 +60,7 @@
                         <path d="M16 1H5C2.79086 1 1 2.79086 1 5V15C1 17.2091 2.79086 19 5 19H17.76C19.9691 19 21.76 17.2091 21.76 15V8.57895M16 1L21.76 8.57895M16 1V8.57895H21.76" stroke="#E9E9E9" stroke-width="0.8"/>
                     </svg> GS-4
                 </li>
-                <li class="p-[10px] cursor-pointer hover:bg-[#ECECEC] flex">
+                <li class="p-[10px] cursor-pointer hover:bg-[#ECECEC] current-folder flex">
                     <svg xmlns="http://www.w3.org/2000/svg" width="23" height="20" viewBox="0 0 23 20" fill="none" class="mr-[10px]">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M21.76 15C21.76 17.2091 19.9691 19 17.76 19H5C2.79086 19 1 17.2091 1 15V5C1 2.79086 2.79086 1 5 1H16V8.57895H21.76V15Z" fill="white"/>
                         <path d="M16 1L21.76 8.57895H16V1Z" fill="#8F93A3"/>
@@ -88,6 +88,26 @@
                     <span class="text-ellipsis whitespace-nowrap overflow-hidden px-[20px] block">Banking and Fi....</span>
                 </li>
             </ul>
+
+            <!-- create new folder -->
+            <ul class="flex flex-wrap justify-between">
+                <li class="relative rounded-sm text-[#000] border-[#E9E9E9] border-[1px] py-[10px] mb-4 w-[47%] cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="15" class="mx-auto" viewBox="0 0 18 15" fill="none">
+                        <path d="M17.4528 9.45818C17.4528 7.65546 15.9855 6.18818 14.1828 6.18818C12.3801 6.18818 10.9128 7.65546 10.9128 9.45818C10.9128 11.2609 12.3801 12.7282 14.1828 12.7282C14.2591 12.7282 14.3328 12.7227 14.4091 12.7173C14.2591 13.1564 13.8555 13.4564 13.381 13.4564H1.82006C1.37006 13.4864 0.603692 13.0527 0.75642 12.1309L2.48006 4.35818H16.2746L15.9255 5.92364C15.8819 6.12 16.0046 6.31364 16.201 6.35727C16.3973 6.39818 16.591 6.27818 16.6346 6.08182L17.0791 4.07455C17.1037 3.96818 17.0846 3.67091 16.7246 3.63273H15.271V1.82182C15.271 1.62 15.1073 1.45909 14.9082 1.45909H5.97369L4.62642 0.111818C4.55824 0.0381818 4.46551 0 4.36733 0H0.371874C0.170056 0 0.00914699 0.163636 0.00914699 0.362727V12.2618C-0.0753985 12.9055 0.418238 14.1136 1.82006 14.1818H13.3782C14.2373 14.1818 14.9655 13.5955 15.1537 12.7582L15.1973 12.5645C16.5037 12.1391 17.4528 10.9064 17.4528 9.45818ZM4.21733 0.725455L5.5646 2.07273C5.63278 2.14091 5.72551 2.17909 5.82097 2.17909H14.5428V3.62727H2.18824C2.01915 3.62727 1.86915 3.74455 1.83369 3.91091L0.734602 8.86636V0.725455H4.21733ZM14.1828 12.0027C12.781 12.0027 11.6382 10.86 11.6382 9.45818C11.6382 8.05637 12.781 6.91364 14.1828 6.91364C15.5846 6.91364 16.7273 8.05637 16.7273 9.45818C16.7246 10.86 15.5846 12.0027 14.1828 12.0027Z" fill="#040404"/>
+                      </svg>
+                      <div class="card-corner">
+						<div class="card-corner-triangle"></div>
+					</div>
+                    <span class="text-ellipsis whitespace-nowrap overflow-hidden px-[20px] block text-center">Create Folder</span>
+                </li>
+                <li class="relative rounded-sm text-[#000] border-[#E9E9E9] border-[1px] py-[10px] mb-4 w-[47%] cursor-pointer">
+                    <div class="card-corner">
+						<div class="card-corner-triangle"></div>
+					</div>
+                    <span class="text-ellipsis whitespace-nowrap overflow-hidden px-[20px] block">Labour-1</span>
+                </li>
+            </ul>
+            <!-- create new folder -->
         </div>
 
     </div>
@@ -102,7 +122,7 @@
             <button class="py-[5px] px-[30px] rounded-[4px] bg-[#3362CC] text-white border-2 border-[#3362CC] hover:text-[#3362CC] hover:bg-transparent">Move</button>
         </div>
     </div>
-</div> --}}
+</div>
 
 
 {{-- <div class="dropdown" id="dropdown2">
@@ -118,7 +138,7 @@
   </div> --}}
 
   {{-- Enter OTP start --}}
-  <div class="flex min-h-[680px] justify-center text-center items-stretch bg-white">
+  {{-- <div class="flex min-h-[680px] justify-center text-center items-stretch bg-white">
     <div class="w-6/12 flex items-center bg-[#F5F7F8]">
         <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
 
@@ -148,7 +168,7 @@
         </div>
       </form>
     </div>
-</div>
+</div> --}}
 {{-- Enter OTP end --}}
 <br><br>
 {{-- Announcements start  --}}
