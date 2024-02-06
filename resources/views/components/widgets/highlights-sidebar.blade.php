@@ -79,7 +79,11 @@
         </div>
     </div>
     <x-modals.modal-box x-show="isAnnouncementsOpen">
-        <ul>
+        <ul class="flex justify-start align-middle my-4">
+            <li class="cursor-pointer border-b-2 border-b-transparent hover:border-gray-600 mr-4 pb-2 activeTab">Tab 1</li>
+            <li class="cursor-pointer border-b-2 border-b-transparent hover:border-gray-600 pb-1">Tab 2</li>
+        </ul>
+        <ul class="text-left overflow-y-auto">
             @if($announcements->isNotEmpty())
                 @foreach($announcements as $announcement)
                     <li class="p-2 mb-1 rounded-md border-l-2 border-transparent hover:border-[#5A7184] hover:underline hover:bg-[#B3BAC5] hover:bg-opacity-10">

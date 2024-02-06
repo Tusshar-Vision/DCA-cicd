@@ -6,13 +6,16 @@
     <div class="space-y-5">
         @foreach($relatedArticles as $article)
             <div class="group flex items-center h-full">
-                <a href="{{ \App\Services\ArticleService::getArticleUrlFromSlug($article->slug) }}">
+                @php
+                    $featuredImage = $article->relatedArticle->getFirstMediaUrl('article-featured-image');
+                @endphp
+                <a href="{{ \App\Services\ArticleService::getArticleUrlFromSlug($article->relatedArticle->slug) }}">
                     <div class="flex space-y-1 items-center space-x-2">
-                        <img src="{{ $article->getFirstMediaUrl('article-featured-image') ?? 'https://placehold.co/600x400' }}" width="150px" />
+                        <img src="{{ $featuredImage === '' ? 'https://placehold.co/600x400' : $featuredImage }}" width="150px" />
                         <div>
                             <div>
                                 <p class="group-hover:underline text-black text-sm">
-                                    {{ $article->title }}
+                                    {{ $article->relatedArticle->title }}
                                 </p>
                             </div>
                         </div>

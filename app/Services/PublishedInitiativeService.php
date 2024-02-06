@@ -31,7 +31,7 @@ readonly class PublishedInitiativeService
             $query = $query->whereDate('published_at', '=', Carbon::parse($date)->format('Y-m-d'));
 
         $publishedInitiative = $query->with('articles', function ($article) {
-                    $article->language()->isPublished()->Ordered()->with('topic');
+                    $article->language()->isPublished()->Ordered()->with(['topic', 'relatedArticles', 'relatedVideos', 'relatedTerms']);
                 })
                 ->first();
 
