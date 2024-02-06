@@ -22,6 +22,7 @@ $year = request()->input('year');
     </div>
   </div>
 
+@if (request()->is('monthly-magazine*') || request()->is('weekly-focus*') || request()->is('news-today*'))
   <div>
     <button @click="isMonthOpen = !isMonthOpen" type="button" class="inline-flex w-full justify-center gap-x-1.5 rounded-sm bg-white px-3 py-2 text-sm font-semibold text-visionLineGray shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
       Month
@@ -30,7 +31,6 @@ $year = request()->input('year');
       </svg>
     </button>
   </div>
-
   <div x-show="isMonthOpen" @click.away="isMonthOpen = false" class="absolute right-0 top-8 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
     <div class="py-1" role="none">
       <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
@@ -46,8 +46,8 @@ $year = request()->input('year');
       <a href="{{$year ? request()->url()."?year=$year&month=10" : request()->url()."?month=10"}}" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">October</a>
       <a href="{{$year ? request()->url()."?year=$year&month=11" : request()->url()."?month=11"}}" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">November</a>
       <a href="{{$year ? request()->url()."?year=$year&month=12" : request()->url()."?month=12"}}" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">December</a>
-
     </div>
   </div>
+@endif
 </div>
 
