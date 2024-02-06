@@ -96,7 +96,8 @@
                              class="{{ $type == 'sections' ? 'active' : '' }}">{{ $topic }}</a></li>
                  @endif
                  @if ($section)
-                     <li><a href="javascript:void(0)"
+                     <li><a href="javascript:void
+                        (0)"
                              class="{{ $type == 'articles' ? 'active' : '' }}">{{ $section }}</a></li>
                  @endif
              </ul>
