@@ -69,9 +69,9 @@
         <div class="flex flex-col justify-center items-center w-full">
             <div class="flex flex-col w-full">
                 <div class="grid grid-cols-1 gap-0 lg:grid-cols-3 lg:gap-3">
-                    <x-widgets.related-terms :related-terms="$relatedTerms" />
-                    <x-widgets.related-articles :related-articles="$relatedArticles" />
-                    <x-widgets.related-videos :related-videos="$relatedVideos" />
+                    <x-widgets.related-terms :related-terms="$article->relatedTerms" />
+                    <x-widgets.related-articles :related-articles="$article->relatedArticles" />
+                    <x-widgets.related-videos :related-videos="$article->relatedVideos" />
                 </div>
 
 {{--                <div class="mt-[25px]">--}}
