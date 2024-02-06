@@ -165,6 +165,9 @@ trait ArticleForm
                             ->schema([
                                 TinyEditor::make('content')
                                     ->columnSpanFull()
+                                    ->fileAttachmentsDisk('public')
+                                    ->fileAttachmentsVisibility('public')
+                                    ->fileAttachmentsDirectory('uploads')
                                     ->profile('full')
                                     ->maxHeight(500)
                                     ->hiddenLabel(),
