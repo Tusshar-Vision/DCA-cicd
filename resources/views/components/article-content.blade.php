@@ -94,6 +94,13 @@
 </div>
 
 <script>
+
+    tinymce.init({
+        selector: 'textarea#notes-text-area',
+        plugins: 'code table lists',
+        menubar: false,
+        toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table',
+    });
     @if (Auth::guard('cognito')->check())
         window.onload = addReadArticle
 
@@ -125,6 +132,7 @@
     }
 
     function hidePopup() {
+        
         let editorContent = tinymce.get('notes-text-area').getContent()
         var selectedHTML = getSelectedHTML();
 
