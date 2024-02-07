@@ -147,9 +147,9 @@ class NewsTodayResource extends Resource
                     Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
                         ->acceptedFileTypes(['application/pdf'])
                         ->collection('news-today')
+                        ->visibility('private')
+                        ->openable()
                         ->columnSpanFull(),
-
-
 
                 ])->columns(2),
             ]);

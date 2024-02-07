@@ -158,9 +158,8 @@
         }
     }
 
-    const url = "{{ route('lang.change') }}";
-
     function switchLang() {
+        const url = "{{ route('lang.change') }}";
         let ele = document.getElementById("lang");
         let toConvertLang, msg;
 

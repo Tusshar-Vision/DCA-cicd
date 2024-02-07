@@ -437,6 +437,8 @@ trait ArticleRelationSchema
                             $records->each(function ($record) {
                                 if ($record->status === 'Published') {
                                     $record->setStatus('Improve');
+                                    $record->featured = false;
+                                    $record->save();
                                 }
                             });
                         })
@@ -445,13 +447,17 @@ trait ArticleRelationSchema
                     BulkAction::make('Set Featured')
                         ->color(Color::hex('#00569e'))
                         ->icon('heroicon-s-star')
+                        ->requiresConfirmation()
+                        ->modalDescription('Only the articles that have a status of published will be featured.')
                         ->visible(function () {
                             return Auth::user()->can('publish_article');
                         })
                         ->action(function (Collection $records) {
                             $records->each(function($article) {
-                                $article->featured = true;
-                                $article->save();
+                                if ($article->status === 'Published') {
+                                    $article->featured = true;
+                                    $article->save();
+                                }
                             });
                         })->deselectRecordsAfterCompletion(),
 

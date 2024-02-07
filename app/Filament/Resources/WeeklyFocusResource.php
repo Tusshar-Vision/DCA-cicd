@@ -79,7 +79,7 @@ class WeeklyFocusResource extends Resource
                                                     ->format('Y-m-d') === Carbon::parse($value)->format('Y-m-d')
                                             ) {}
 
-                                            elseif  (
+                                            else if  (
                                                 $publishedInitiativeService
                                                     ->checkIfExists(
                                                         InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS),
@@ -163,6 +163,8 @@ class WeeklyFocusResource extends Resource
                         ->label('Upload pdf file')
                         ->acceptedFileTypes(['application/pdf'])
                         ->collection('weekly-focus')
+                        ->visibility('private')
+                        ->openable()
                         ->columnSpanFull(),
 
                 ])

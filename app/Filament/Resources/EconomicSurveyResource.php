@@ -88,6 +88,8 @@ class EconomicSurveyResource extends Resource
                         ->name('file')
                         ->acceptedFileTypes(['application/pdf'])
                         ->collection('economic-survey')
+                        ->visibility('private')
+                        ->openable()
                         ->required()
                         ->columnSpanFull(),
 

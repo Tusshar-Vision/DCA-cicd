@@ -8,6 +8,7 @@ use App\Models\Article;
 use App\Models\User;
 use App\Services\ArticleService;
 use App\Traits\Filament\Components\ArticleForm;
+use App\Traits\HasNotifications;
 use AymanAlhattami\FilamentDateScopesFilter\DateScopeFilter;
 use Carbon\Carbon;
 use Filament\Forms\Components\Group;
@@ -43,7 +44,7 @@ use Spatie\Tags\Tag;
 
 trait ArticleResourceSchema
 {
-    use ArticleForm;
+    use ArticleForm, HasNotifications;
     public static function form(Form $form): Form
     {
         $articleResource = new self();
@@ -410,22 +411,14 @@ trait ArticleResourceSchema
                                 if ($record->status === 'Final') {
                                     $record->setStatus('Published');
                                     $record->update(['published_at' => Carbon::now()]);
+
+                                    if ($record->publishedInitiative->is_published === false) {
+                                        $record->publishedInitiative->is_published = true;
+                                        $record->publishedInitiative->save();
+                                    }
                                 }
-
-                                $articleUrl = ArticleService::getArticleUrlFromSlug($record->slug);
-                                $notificationBody = "<a href=\" $articleUrl \" target='_blank'>Click here to check it out</a>";;
-
-                                Notification::make()
-                                    ->title('Your article just got published!')
-                                    ->body($notificationBody)
-                                    ->success()
-                                    ->sendToDatabase($record->author);
-
-                                Notification::make()
-                                    ->title('Article you reviewed just got published!')
-                                    ->body($notificationBody)
-                                    ->success()
-                                    ->sendToDatabase($record->reviewer);
+                                $articleResource = new self();
+                                $articleResource->sendNotificationOfArticlePublished($record);
                             });
                         })
                         ->deselectRecordsAfterCompletion(),
@@ -442,6 +435,8 @@ trait ArticleResourceSchema
                             $records->each(function ($record) {
                                 if ($record->status === 'Published') {
                                     $record->setStatus('Improve');
+                                    $record->featured = false;
+                                    $record->save();
                                 }
                             });
                         })
@@ -450,13 +445,17 @@ trait ArticleResourceSchema
                     BulkAction::make('Set Featured')
                         ->color(Color::hex('#00569e'))
                         ->icon('heroicon-s-star')
+                        ->requiresConfirmation()
+                        ->modalDescription('Only the articles that have a status of published will be featured.')
                         ->visible(function () {
                             return Auth::user()->can('publish_article');
                         })
                         ->action(function (Collection $records) {
                             $records->each(function($article) {
-                                $article->featured = true;
-                                $article->save();
+                                if ($article->status === 'Published') {
+                                    $article->featured = true;
+                                    $article->save();
+                                }
                             });
                         })->deselectRecordsAfterCompletion(),
 
