@@ -99,7 +99,7 @@ class WeeklyFocusResource extends Resource
                                                         $value
                                                     )
                                             ) {
-                                            $fail('This week cannot be used as it already exists for this initiative, you can search it and add your articles in it.');
+                                            $fail('This date cannot be used as it already exists for this initiative, you can search it and add your articles in it.');
                                         }
                                     };
                                 }
