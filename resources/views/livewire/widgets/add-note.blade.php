@@ -94,9 +94,7 @@
         const tagsNodes = document.querySelectorAll('.tag-name');
         let tags = [];
         for (let i = 0; i < tagsNodes.length; i++) tags.push(tagsNodes[i].innerText)
-        @if (Auth::guard('cognito')->check())
-            const user_id = "{{ Auth::guard('cognito')->check() ? Auth::guard('cognito')->user()->id : '' }}";
-        @endif
+        const user_id = "{{ Auth::guard('cognito')->check() ? Auth::guard('cognito')->user()->id : '' }}";
         const article_id = "{{ $article->getID() }}";
         const topic_id = "{{ $article->getTopicID() }}";
         const topic_section_id = "{{ $article->getSectionID() }}";
@@ -105,7 +103,6 @@
         const note_title = document.getElementById("note-title").innerHTML;
         const _token = '{{ csrf_token() }}';
 
-        @if (Auth::guard('cognito')->check())
             saveData("{{ route('notes.add') }}", {
                 user_id,
                 article_id,
@@ -119,33 +116,6 @@
             }).then(data => {
                 tinymce.get('notes-text-area').setContent(data.data.content)
             })
-        @else
-            console.log("unauthenticated");
-            let notes;
-            if (localStorage.getItem('notes')) {
-                notes = JSON.parse(localStorage.getItem('notes'));
-                const idx = notes.findIndex(note => note.article_id = article_id)
-                if (idx != -1) {
-                    notes[idx].note += note;
-                    tinymce.get('notes-text-area').setContent(notes[idx].note)
-                } else {
-                    tinymce.get('notes-text-area').setContent(note)
-                }
-            } else {
-                notes = []
-                tinymce.get('notes-text-area').setContent(note)
-            }
-            notes.push({
-                article_id,
-                topic_id,
-                topic_section_id,
-                topic_sub_section_id,
-                note_title,
-                note,
-                tags
-            })
-            localStorage.setItem("notes", JSON.stringify(notes));
-        @endif
     }
 
 
