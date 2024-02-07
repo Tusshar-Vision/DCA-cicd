@@ -88,6 +88,8 @@ class BudgetResource extends Resource
                         ->name('file')
                         ->acceptedFileTypes(['application/pdf'])
                         ->collection('budget')
+                        ->visibility('private')
+                        ->openable()
                         ->required()
                         ->columnSpanFull(),
 

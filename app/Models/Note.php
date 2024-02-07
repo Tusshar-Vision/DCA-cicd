@@ -18,6 +18,7 @@ class Note extends Model
         'user_id',
         'article_id',
         'title',
+        'content',
         'topic_id',
         'topic_section_id',
         'topic_sub_section_id'
@@ -25,17 +26,17 @@ class Note extends Model
 
     // Define the relationships with other models
 
-    public function user() : BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(Student::class, 'user_id');
     }
 
-    public function article() : BelongsTo
+    public function article(): BelongsTo
     {
         return $this->belongsTo(Article::class, 'article_id');
     }
 
-    public function noteContents() : HasMany
+    public function noteContents(): HasMany
     {
         return $this->hasMany(NoteContent::class);
     }

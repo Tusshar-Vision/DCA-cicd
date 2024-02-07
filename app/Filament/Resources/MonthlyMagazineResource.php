@@ -147,6 +147,8 @@ class MonthlyMagazineResource extends Resource
                     Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
                         ->collection('monthly-magazine')
                         ->acceptedFileTypes(['application/pdf'])
+                        ->visibility('private')
+                        ->openable()
                         ->columnSpanFull(),
 
 

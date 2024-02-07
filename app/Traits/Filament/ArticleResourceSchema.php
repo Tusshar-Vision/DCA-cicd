@@ -26,6 +26,7 @@ use Filament\Support\Colors\Color;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
@@ -392,7 +393,21 @@ trait ArticleResourceSchema
                             ($data['body'] !== null) ? $record->review($data['body'], $author, 0) : null;
 
                         $record->setStatus($data['status']);
-                    })->iconButton()
+                    })->iconButton(),
+
+                DeleteAction::make()
+                    ->iconButton()
+                    ->tooltip('Delete')
+                    ->visible(function (Model $record) {
+                        return $record->status === 'Draft';
+                    })
+                    ->action(function (Article $record) {
+                        $record->content->delete();
+                        $record->relatedTerms()->delete();
+                        $record->relatedVideos()->delete();
+                        $record->relatedArticles()->delete();
+                        $record->delete();
+                    }),
 
             ], ActionsPosition::BeforeColumns)
             ->bulkActions([
@@ -435,6 +450,8 @@ trait ArticleResourceSchema
                             $records->each(function ($record) {
                                 if ($record->status === 'Published') {
                                     $record->setStatus('Improve');
+                                    $record->featured = false;
+                                    $record->save();
                                 }
                             });
                         })
@@ -443,13 +460,17 @@ trait ArticleResourceSchema
                     BulkAction::make('Set Featured')
                         ->color(Color::hex('#00569e'))
                         ->icon('heroicon-s-star')
+                        ->requiresConfirmation()
+                        ->modalDescription('Only the articles that have a status of published will be featured.')
                         ->visible(function () {
                             return Auth::user()->can('publish_article');
                         })
                         ->action(function (Collection $records) {
                             $records->each(function($article) {
-                                $article->featured = true;
-                                $article->save();
+                                if ($article->status === 'Published') {
+                                    $article->featured = true;
+                                    $article->save();
+                                }
                             });
                         })->deselectRecordsAfterCompletion(),
 
@@ -482,7 +503,7 @@ trait ArticleResourceSchema
                         })
                         ->deselectRecordsAfterCompletion(),
 
-                    DeleteBulkAction::make()
+//                    DeleteBulkAction::make()
                 ])
             ]);
     }

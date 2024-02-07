@@ -79,7 +79,7 @@ class WeeklyFocusResource extends Resource
                                                     ->format('Y-m-d') === Carbon::parse($value)->format('Y-m-d')
                                             ) {}
 
-                                            elseif  (
+                                            else if  (
                                                 $publishedInitiativeService
                                                     ->checkIfExists(
                                                         InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS),
@@ -99,7 +99,7 @@ class WeeklyFocusResource extends Resource
                                                         $value
                                                     )
                                             ) {
-                                            $fail('This week cannot be used as it already exists for this initiative, you can search it and add your articles in it.');
+                                            $fail('This date cannot be used as it already exists for this initiative, you can search it and add your articles in it.');
                                         }
                                     };
                                 }
@@ -163,6 +163,8 @@ class WeeklyFocusResource extends Resource
                         ->label('Upload pdf file')
                         ->acceptedFileTypes(['application/pdf'])
                         ->collection('weekly-focus')
+                        ->visibility('private')
+                        ->openable()
                         ->columnSpanFull(),
 
                 ])

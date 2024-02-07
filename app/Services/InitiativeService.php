@@ -42,8 +42,11 @@ readonly class InitiativeService
         $data = $this->publishedInitiatives
             ->whereInitiative($initiativeId)
             ->isPublished()
-            ->with('articles.topic')
             ->hasPublishedArticle()
+            ->with(['articles' => function ($query) {
+                // Eager load published articles
+                $query->isPublished();
+            }])
             ->limit(10)
             ->orderByDesc('published_at')
             ->groupByMonth();
