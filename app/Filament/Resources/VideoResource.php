@@ -92,6 +92,8 @@ class VideoResource extends Resource
                         })
                         ->id('video')
                         ->collection('video')
+                        ->visibility('private')
+                        ->openable()
                         ->required()
                         ->acceptedFileTypes([
                             'video/mp4',         // MP4 videos

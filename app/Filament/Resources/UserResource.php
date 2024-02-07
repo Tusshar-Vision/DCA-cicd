@@ -45,7 +45,8 @@ class UserResource extends Resource implements HasShieldPermissions
                             ->endsWith(['@visionias.in'])
                             ->email()
                             ->required()
-                            ->unique()
+                            ->unique(ignorable: fn (Model|null $record) => $record)
+                            ->reactive()
                             ->placeholder('example@visionias.in')
                             ->disabledOn('edit'),
                         TextInput::make('password')

@@ -5,7 +5,7 @@
 @endphp
 
 <div class="flex w-full flex-col md:justify-between justify-center bg-visionGray mt-14">
-    <div class="flex flex-col xl:flex-row border-b-2 border-gray-300 mt-14 justify-between mx-auto w-full px-[20px] lg:px-0 lg:max-w-[90%] pb-[25px]">
+    <div class="flex flex-col 2xl:flex-row border-b-2 border-gray-300 mt-14 justify-between mx-auto w-full px-[20px] lg:px-0 lg:max-w-[90%] pb-[25px]">
         <div class="flex flex-col md:mb-4 xl:mb-0">
             <div class="m-auto md:m-0 text-center">
                 <a href="{{ UrlHelper::linkToVision('/') }}" class="inline-block">
@@ -13,7 +13,7 @@
                 </a>
             </div>
 
-            <div class="flex flex-col text-center xl:text-justify text-sm pb-4 mt-4">
+            <div class="flex flex-col text-center 2xl:text-justify text-sm pb-4 mt-4">
                 <span>
                     <h5 class="text-gray-400">{{ __('footer.call_us') }}</h5>
                     <p class="text-sm">
@@ -29,7 +29,7 @@
                 </span>
             </div>
         </div>
-        <div class="flex flex-col md:flex-row justify-between md:space-x-8 xl:space-x-28 mt-[25px] md:mt-0">
+        <div class="flex flex-col md:flex-row justify-between md:space-x-8 2xl:space-x-28 mt-[25px]">
             <div class="space-y-2 border-t-[1px] border-b-[1px] md:border-t-0 md:border-b-0 py-[15px] md:py-0">
                 <h5 class="font-bold hidden md:block uppercase">COURSES</h5>
                 <h5 class="font-bold flex justify-between md:hidden uppercase" onclick="toggleList(this)">COURSES<span class="plus block md:hidden">+</span></h5>
@@ -105,7 +105,7 @@
             </div>
         </div>
     </div>
-    <div class="mx-auto w-full lg:max-w-[90%] mt-8 border-b-2 border-gray-300 pb-8 px-[20px] xl:px-0">
+    <div class="mx-auto w-full lg:max-w-[90%] mt-8 border-b-2 border-gray-300 pb-8 px-[20px] lg:px-0">
         <div class="mb-4">
             <h4 class="font-bold font-sans text-base md:text-xl mb-2">About UPSC Civil Services Examination (UPSC CSE)</h4>
             <p>The UPSC Civil Services Examination (CSE) is one of India's most prestigious tests, aimed at selecting candidates for diverse civil services roles such as IAS, IPS, and IFS. Administered annually by the UPSC, this examination is known for its rigorous selection procedure, encompassing Prelims, Mains, and a Personality Test/Interview.</p>
