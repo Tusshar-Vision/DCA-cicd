@@ -45,8 +45,6 @@ readonly class DownloadService
                 return $item->created_at->format('Y');
             });
 
-        logger("skldfj", [$result]);
-
         return $result;
     }
 
