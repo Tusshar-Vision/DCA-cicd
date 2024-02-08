@@ -33,27 +33,19 @@ readonly class DownloadService
 
         $query = $this->publishedInitiative
             ->isPublished()
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::MAINS_365));
-
-        // $query =  $this->media->where('mime_type', 'application/pdf')
-        //     ->where('collection_name', '=', config('settings.media_collections_type.Mains365'));
+            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::MAINS_365))
+            ->has('media')
+            ->with('media');
 
         if ($year) $query->whereYear('created_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
 
-        $initiatives = $query->get();
-
-        $result  = new Collection;
-
-        foreach ($initiatives as $initiative) {
-            $media = $initiative->getMedia();
-            $result = $result->merge($media);
-        }
-
-        $result = $result
+        $result = $query->get()
             ->groupBy(function ($item) {
                 return $item->created_at->format('Y');
             });
+
+        logger("skldfj", [$result]);
 
         return $result;
     }
@@ -62,24 +54,14 @@ readonly class DownloadService
     {
         $query = $this->publishedInitiative
             ->isPublished()
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::PT_365));
-
-        // $query = $this->media->where('mime_type', 'application/pdf')
-        //     ->where('collection_name', '=', config('settings.media_collections_type.PT365'));
+            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::PT_365))
+            ->has('media')
+            ->with('media');
 
         if ($year) $query->whereYear('created_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
 
-        $initiatives = $query->get();
-
-        $result  = new Collection;
-
-        foreach ($initiatives as $initiative) {
-            $media = $initiative->getMedia();
-            $result = $result->merge($media);
-        }
-
-        $result = $result
+        $result = $query->get()
             ->groupBy(function ($item) {
                 return $item->created_at->format('Y');
             });
@@ -91,23 +73,14 @@ readonly class DownloadService
     {
         $query = $this->publishedInitiative
             ->isPublished()
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::ECONOMIC_SURVEY));
-        // $query =  $this->media->where('mime_type', 'application/pdf')
-        //     ->where('collection_name', '=', config('settings.media_collections_type.EconomicSurvey'));
+            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::ECONOMIC_SURVEY))
+            ->has('media')
+            ->with('media');
 
         if ($year) $query->whereYear('created_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
 
-        $initiatives = $query->get();
-
-        $result  = new Collection;
-
-        foreach ($initiatives as $initiative) {
-            $media = $initiative->getMedia();
-            $result = $result->merge($media);
-        }
-
-        $result = $result
+        $result = $query->get()
             ->groupBy(function ($item) {
                 return $item->created_at->format('Y');
             });
@@ -119,24 +92,11 @@ readonly class DownloadService
     {
         $query = $this->publishedInitiative
             ->isPublished()
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::BUDGET));
+            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::BUDGET))
+            ->has('media')
+            ->with('media');
 
-        // $query =  $this->media->where('mime_type', 'application/pdf')
-        //     ->where('collection_name', '=', config('settings.media_collections_type.Budget'));
-
-        if ($year) $query->whereYear('created_at', $year);
-        if ($month) $query->whereMonth('published_at', $month);
-
-        $initiatives = $query->get();
-
-        $result  = new Collection;
-
-        foreach ($initiatives as $initiative) {
-            $media = $initiative->getMedia();
-            $result = $result->merge($media);
-        }
-
-        $result = $result
+        $result = $query->get()
             ->groupBy(function ($item) {
                 return $item->created_at->format('Y');
             });
@@ -148,24 +108,14 @@ readonly class DownloadService
     {
         $query = $this->publishedInitiative
             ->isPublished()
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::VALUE_ADDED_MATERIAL));
-
-        $query =  $this->media->where('mime_type', 'application/pdf')
-            ->where('collection_name', '=', config('settings.media_collections_type.ValueAddedMaterial'));
+            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::VALUE_ADDED_MATERIAL))
+            ->has('media')
+            ->with('media');
 
         if ($year) $query->whereYear('created_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
 
-        $initiatives = $query->get();
-
-        $result  = new Collection;
-
-        foreach ($initiatives as $initiative) {
-            $media = $initiative->getMedia();
-            $result = $result->merge($media);
-        }
-
-        $result = $result
+        $result = $query->get()
             ->groupBy(function ($item) {
                 return $item->created_at->format('Y');
             });
@@ -177,24 +127,14 @@ readonly class DownloadService
     {
         $query = $this->publishedInitiative
             ->isPublished()
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::VALUE_ADDED_MATERIAL_OPTIONAL));
-
-        // $query = $this->media->where('mime_type', 'application/pdf')
-        //     ->where('collection_name', '=', config('settings.media_collections_type.ValueAddedMaterialOptional'));
+            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::VALUE_ADDED_MATERIAL_OPTIONAL))
+            ->has('media')
+            ->with('media');
 
         if ($year) $query->whereYear('created_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
 
-        $initiatives = $query->get();
-
-        $result  = new Collection;
-
-        foreach ($initiatives as $initiative) {
-            $media = $initiative->getMedia();
-            $result = $result->merge($media);
-        }
-
-        $result = $result
+        $result = $query->get()
             ->groupBy(function ($item) {
                 return $item->created_at->format('Y');
             });
@@ -206,24 +146,14 @@ readonly class DownloadService
     {
         $query = $this->publishedInitiative
             ->isPublished()
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::QUARTERLY_REVISION_DOCUMENTS));
-
-        // $query = $this->media->where('mime_type', 'application/pdf')
-        //     ->where('collection_name', '=', config('settings.media_collections_type.QuarterlyRevisionDocument'));
+            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::QUARTERLY_REVISION_DOCUMENTS))
+            ->has('media')
+            ->with('media');
 
         if ($year) $query->whereYear('created_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
 
-        $initiatives = $query->get();
-
-        $result  = new Collection;
-
-        foreach ($initiatives as $initiative) {
-            $media = $initiative->getMedia();
-            $result = $result->merge($media);
-        }
-
-        $result = $result
+        $result = $query->get()
             ->groupBy(function ($item) {
                 return $item->created_at->format('Y');
             });

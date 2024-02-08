@@ -151,6 +151,37 @@ class WeeklyFocusResource extends Resource
 
                     ])->columns(2)->columnSpanFull(),
 
+                    Select::make('initiative_topic_id')
+                        ->relationship('topic', 'name')
+                        ->required()
+                        ->label('Subject')
+                        ->reactive()
+                        ->afterStateUpdated(function (Set $set, ?string $state) {
+                            $set('topic_section_id', null);
+                            $set('topic_sub_section_id', null);
+                        }),
+
+                    Select::make('topic_section_id')
+                        ->relationship('topicSection', 'name', function ($query, callable $get) {
+                            $topic = $get('initiative_topic_id');
+
+                            return $query->where('topic_id', '=', $topic);
+                        })
+                        ->reactive()
+                        ->label('Section')
+                        ->afterStateUpdated(function (Set $set, ?string $state) {
+                            $set('topic_sub_section_id', null);
+                        }),
+
+                    Select::make('topic_sub_section_id')
+                        ->relationship('topicSubSection', 'name', function ($query, callable $get) {
+                            $topicSectionId = $get('topic_section_id');
+
+                            return $query->where('section_id', '=', $topicSectionId);
+                        })
+                        ->reactive()
+                        ->label('Sub Section'),
+
                     Select::make('language_id')
                         ->relationship('language', 'name', function ($query) {
                             return $query->orderBy('order_column');
@@ -165,6 +196,7 @@ class WeeklyFocusResource extends Resource
                         ->collection('weekly-focus')
                         ->visibility('private')
                         ->openable()
+                        ->deletable(false)
                         ->columnSpanFull(),
 
                 ])

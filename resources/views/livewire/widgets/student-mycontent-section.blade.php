@@ -7,7 +7,7 @@
                 <li><a href="javascript:void(0)" class="hover:text-[#3362CC] activeSubTab">Paper</a></li>
                 <li><a href="javascript:void(0)" class="ml-5 hover:text-[#3362CC]">Most Recent Notes</a></li>
             </ul>
-            <div class="vi-dropdown">
+            {{-- <div class="vi-dropdown">
                 <div class="vi-dropbtn">Time<span class="vi-icons vi-drop-arrow"></span></div>
                 <div class="vi-dropdown-content">
                     <a href="javascript:void(0)">This Year</a>
@@ -18,7 +18,7 @@
                     <a href="javascript:void(0)">Custom</a>
                     <a href="javascript:void(0)">Clear Filter</a>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <!-- most recent tab newly added -->
 

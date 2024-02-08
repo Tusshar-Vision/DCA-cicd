@@ -133,6 +133,33 @@
     </div>
 </div>
 
+<!-- latest video UI section --> 
+<div>
+    <h2 class="text-[40px] text-[#040404] mb-4">Latest Video</h2>
+    <ul class="grid grid-cols-4 gap-6 text-center">
+        <li class="bg-slate-400 min-h-[190px] flex items-center justify-center">1</li>
+        <li class="bg-slate-600 min-h-[190px] flex items-center justify-center">2</li>
+        <li class="bg-slate-400 min-h-[190px] flex items-center justify-center">3</li>
+        <li class="bg-slate-600 min-h-[190px] flex items-center justify-center">4</li>
+    </ul>
+</div>
+<!-- latest video UI section -->
+
+<br>
+<br>
+
+<!-- save note to my content start -->
+<div class="flex flex-col justify-center">
+    <button class="w-[210px] m-auto text-sm py-[12px] px-[30px] mb-4 rounded-[6px] bg-[#3362CC] text-white border-2 border-[#3362CC] hover:text-[#3362CC] hover:bg-transparent font-semibold">Save note</button>
+
+    <button class="w-[210px] m-auto text-sm py-[12px] px-[30px] mb-4 rounded-[6px] bg-transparent text-[#3362CC] border-2 border-[#3362CC] hover:text-white hover:bg-[#3362CC] font-semibold">Add new note</button>
+
+    <button class="w-[210px] m-auto text-sm py-[12px] px-[30px] mb-4 rounded-[6px] bg-transparent text-[#3362CC] border-2 border-[#3362CC] hover:text-white hover:bg-[#3362CC] font-semibold">Add to existing note</button>
+
+    <p class="text-[#E22526] text-sm text-center">You don’t have any saved note yet!</p>
+</div>
+<!-- save note to my content start -->
+
 
 {{-- <div class="dropdown" id="dropdown2">
     <button class="dropdown-button" onclick="toggleDropdown('dropdown2')">

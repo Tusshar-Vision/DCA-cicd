@@ -114,6 +114,9 @@ trait ArticleForm
                                     ->relationship('topic', 'name')
                                     ->required()
                                     ->label('Subject')
+                                    ->default(function (Livewire $livewire) {
+                                        return $livewire->ownerRecord->initiative_topic_id;
+                                    })
                                     ->reactive()
                                     ->afterStateUpdated(function (Set $set, ?string $state) {
                                         $set('topic_section_id', null);
@@ -126,6 +129,9 @@ trait ArticleForm
 
                                         return $query->where('topic_id', '=', $topic);
                                     })
+                                    ->default(function (Livewire $livewire) {
+                                        return $livewire->ownerRecord->topic_section_id;
+                                    })
                                     ->reactive()
                                     ->label('Section')
                                     ->afterStateUpdated(function (Set $set, ?string $state) {
@@ -137,6 +143,9 @@ trait ArticleForm
                                         $topicSectionId = $get('topic_section_id');
 
                                         return $query->where('section_id', '=', $topicSectionId);
+                                    })
+                                    ->default(function (Livewire $livewire) {
+                                        return $livewire->ownerRecord->topic_sub_section_id;
                                     })
                                     ->reactive()
                                     ->label('Sub Section'),
@@ -165,6 +174,9 @@ trait ArticleForm
                             ->schema([
                                 TinyEditor::make('content')
                                     ->columnSpanFull()
+                                    ->fileAttachmentsDisk('public')
+                                    ->fileAttachmentsVisibility('public')
+                                    ->fileAttachmentsDirectory('uploads')
                                     ->profile('full')
                                     ->maxHeight(500)
                                     ->hiddenLabel(),
