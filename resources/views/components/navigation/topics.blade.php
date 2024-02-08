@@ -13,7 +13,7 @@
     </li>
     <li>
         @foreach ($topics as $topic)
-            <a>{{ ucwords($topic) }}</a>
+            <a class="mr-4 inline-block">{{ ucwords($topic) }}</a>
         @endforeach
     </li>
 </ul>
