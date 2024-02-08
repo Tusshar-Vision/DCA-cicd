@@ -3,7 +3,9 @@
 namespace App\Traits\Filament\Components;
 
 use AmidEsfahani\FilamentTinyEditor\TinyEditor;
+use App\Enums\Initiatives;
 use App\Filament\Components\Repeater;
+use App\Helpers\InitiativesHelper;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\RichEditor;
@@ -67,14 +69,25 @@ trait ArticleForm
 
                                 Select::make('author_id')
                                     ->id('expert_id')
-                                    ->relationship('author', 'name', function ($query) {
-                                        return $query->whereHas('roles', function($subQuery) {
-                                            return $subQuery->whereIn('name', ['expert', 'news_today_expert']);
+                                    ->relationship('author', 'name', function ($query, Livewire $livewire) {
+                                        $initiative_id = $livewire->ownerRecord->initiative_id;
+                                        $roles = collect(['expert']);
+
+                                        if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)) {
+                                            $roles->add('news_today_expert');
+                                        } else if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)) {
+                                            $roles->add('weekly_focus_expert');
+                                        } else if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE)) {
+                                            $roles->add('monthly_magazine_expert');
+                                        }
+
+                                        return $query->whereHas('roles', function($subQuery) use($roles) {
+                                            return $subQuery->whereIn('name', $roles->toArray());
                                         });
                                     })
                                     ->label('Expert')
                                     ->visible(function () {
-                                        return Auth::user()->hasRole(['admin', 'super_admin']);
+                                        return Auth::user()->can('assign_article');
                                     })
                                     ->default(Auth::user()->id)
                                     ->reactive()
@@ -86,13 +99,24 @@ trait ArticleForm
                                     }),
 
                                 Select::make('reviewer_id')
-                                    ->relationship('reviewer', 'name', function ($query) {
-                                        return $query->whereHas('roles', function($subQuery) {
-                                            return $subQuery->whereIn('name', ['reviewer', 'news_today_reviewer']);
+                                    ->relationship('reviewer', 'name', function ($query, Livewire $livewire) {
+                                        $initiative_id = $livewire->ownerRecord->initiative_id;
+                                        $roles = collect(['reviewer']);
+
+                                        if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)) {
+                                            $roles->add('news_today_reviewer');
+                                        } else if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)) {
+                                            $roles->add('weekly_focus_reviewer');
+                                        } else if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE)) {
+                                            $roles->add('monthly_magazine_reviewer');
+                                        }
+
+                                        return $query->whereHas('roles', function($subQuery) use($roles) {
+                                            return $subQuery->whereIn('name', $roles->toArray());
                                         });
                                     })
                                     ->visible(function () {
-                                        return Auth::user()->hasRole(['admin', 'super_admin']);
+                                        return Auth::user()->can('assign_article');
                                     })
                                     ->label('Reviewer')
                                     ->default(Auth::user()->id)
