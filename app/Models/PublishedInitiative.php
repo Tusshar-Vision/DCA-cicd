@@ -80,6 +80,15 @@ class PublishedInitiative extends Model implements HasMedia
     {
         return $this->belongsTo(InitiativeTopic::class, 'initiative_topic_id');
     }
+    public function topicSection(): BelongsTo
+    {
+        return $this->belongsTo(TopicSection::class, 'topic_section_id');
+    }
+
+    public function topicSubSection(): BelongsTo
+    {
+        return $this->belongsTo(TopicSubSection::class, 'topic_sub_section_id');
+    }
 
     public function infographic(): BelongsTo
     {
