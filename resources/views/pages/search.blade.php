@@ -1,5 +1,5 @@
 @extends('layouts.base')
-@section('title', 'Search Results')
+@section('title', 'Search Results | Current Affairs')
 
 @php
     use App\Services\ArticleService;

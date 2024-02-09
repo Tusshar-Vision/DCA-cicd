@@ -33,10 +33,10 @@ class Register extends Component
     {
         $validated = $this->validate();
         $attributes = [
-                'email' => $this->email,
-                'name' => $this->first_name . " " . $this->last_name,
-                'phone_number' => "+91" . $this->mobile,
-                'gender' => 'male'
+            'email' => $this->email,
+            'name' => $this->first_name . " " . $this->last_name,
+            'phone_number' => "+91" . $this->mobile,
+            'gender' => 'male'
         ];
         $userExists = $authService->checkIfUserExists($validated['email']);
 
@@ -51,7 +51,6 @@ class Register extends Component
                 $this->dispatch('renderComponent', 'forms.login');
             } else {
                 session(['verify_email' => $this->email]);
-                $authService->resendCode($this->email);
                 $this->dispatch('renderComponent', 'forms.email-verification');
             }
         } else {

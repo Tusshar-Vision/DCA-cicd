@@ -25,6 +25,7 @@ readonly class PublishedInitiativeService
         $query = $this->publishedInitiatives
                     ->whereInitiative($initiativeId)
                     ->isPublished()
+                    ->hasPublishedArticle()
                     ->latest('published_at');
 
         if ($date !== null)

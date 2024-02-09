@@ -6,7 +6,7 @@
         <h2 class="font-medium text-base mb-5">Password Reset Successful</h2>
         <p class="text-sm	font-normal mb-[50px]">Your password has been changed successfully!</p>
         <form class="w-full">
-            <button type="submit" class="login-btn">continue to login</button>
+            <button type="button" wire:click="$dispatch('renderComponent', { component: 'forms.login' })" class="login-btn">Continue to Login</button>
         </form>
     </div>
 </div>
