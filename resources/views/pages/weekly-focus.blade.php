@@ -10,7 +10,7 @@
     <div class="space-y-4">
         <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />
         <x-common.article-heading :title="$article->title" />
-        <x-widgets.articles-nav :createdAt="$article->createdAt" :updatedAt="$article->updatedAt" />
+        <x-widgets.articles-nav :createdAt="$articles->publishedAt" :updatedAt="$article->updatedAt" />
     </div>
 
     <div x-data="{ isHighlightsOpen: false, isNotesOpen: false }">

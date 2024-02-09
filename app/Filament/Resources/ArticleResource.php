@@ -39,6 +39,7 @@ class ArticleResource extends Resource implements HasShieldPermissions
             'delete',
             'restore',
             'reorder',
+            'assign',
             'review',
             'publish'
         ];

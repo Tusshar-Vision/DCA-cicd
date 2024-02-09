@@ -9,7 +9,7 @@
         <span class="font-bold"></span> {{ $file->name ?? $file->media->first()->name}}
     </p>
     <div class="vi-card-footer">
-        <a href="{{ route('download', ['media' => $file->media->first()]) }}" class="flex items-center vi-downloads-links downloads">
+        <a href="{{ route('download', ['media' => $file->media->first()]) }}" class="flex items-center vi-downloads-links downloads" target="_blank">
             <span>Download</span>
         </a>
         <span class="vi-divider"></span>
