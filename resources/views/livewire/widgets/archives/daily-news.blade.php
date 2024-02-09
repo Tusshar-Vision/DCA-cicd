@@ -26,7 +26,7 @@
 <?php $i = 0; ?>
 
 @foreach ($articles as $year => $months)
-    <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: {{$i==0 ? 'true': 'false'}} }" @click="expanded = ! expanded">
+    <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: {{$i==0 ? 'true': 'false'}}, newsTodayContainer: false }" @click="expanded = ! expanded, newsTodayContainer = false">
     <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]">
         <h4 class="text-[#040404] text-[32px] font-normal">{{$year}} <span id="month"></span></h4>
         <div>
@@ -42,10 +42,10 @@
                     </div>
                 </div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent border-b-2 mb-[35px] pb-[35px]" id="news-today-container">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent border-b-2 mb-[35px] pb-[35px]" id="news-today-container" x-show="newsTodayContainer == true">
     </div>
     @foreach ($months as $month)
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true" @click.stop onclick="showArticleCards({{$year}}, {{$month}}, `{{date('F', mktime(0, 0, 0, $month, 1))}}`)">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true" @click.stop onclick="showArticleCards({{$year}}, {{$month}}, `{{date('F', mktime(0, 0, 0, $month, 1))}}`)" @click="newsTodayContainer =! newsTodayContainer">
         <div class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
                 <div class="weekly-focus-progress-single-bar border-b-2">
