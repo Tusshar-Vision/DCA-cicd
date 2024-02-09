@@ -118,9 +118,10 @@ class CognitoAuthService
      *
      * @param $email
      * @param $code
-     * @return bool
+     * @return CognitoErrorCodes|bool
+     * @throws \Exception
      */
-    public function confirmSignup($email, $code): bool
+    public function confirmSignup($email, $code): CognitoErrorCodes|bool
     {
         try
         {
@@ -129,13 +130,17 @@ class CognitoAuthService
                 'Username' => $email,
                 'ConfirmationCode' => $code
             ]);
-        }
-        catch (CognitoIdentityProviderException $exception) {
-            if ($exception->getAwsErrorCode() === CognitoErrorCodes::CODE_MISMATCH || $exception->getAwsErrorCode() === CognitoErrorCodes::EXPIRED_CODE) {
-                return false;
-            }
+        } catch (CognitoIdentityProviderException $exception)
+        {
+            $errorCode = $exception->getAwsErrorCode();
 
-            throw $exception;
+            return match ($errorCode) {
+                CognitoErrorCodes::CODE_MISMATCH->value => CognitoErrorCodes::CODE_MISMATCH,
+                CognitoErrorCodes::EXPIRED_CODE->value => CognitoErrorCodes::EXPIRED_CODE,
+                CognitoErrorCodes::TOO_MANY_REQUESTS->value => CognitoErrorCodes::TOO_MANY_REQUESTS,
+                CognitoErrorCodes::LIMIT_EXCEEDED->value => CognitoErrorCodes::LIMIT_EXCEEDED,
+                default => throw new \Exception("Unhandled AWS Cognito error code: $errorCode"),
+            };
         }
 
         return (bool) $response['UserConfirmed'];
@@ -165,6 +170,9 @@ class CognitoAuthService
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     public function confirmForgotPassword($email, $newPassword, $confirmationCode): CognitoErrorCodes|Result
     {
         try {
@@ -212,6 +220,8 @@ class CognitoAuthService
 
             return match ($errorCode) {
                 CognitoErrorCodes::NOT_AUTHORIZED->value => CognitoErrorCodes::NOT_AUTHORIZED,
+                CognitoErrorCodes::TOO_MANY_REQUESTS->value => CognitoErrorCodes::TOO_MANY_REQUESTS,
+                CognitoErrorCodes::LIMIT_EXCEEDED->value => CognitoErrorCodes::LIMIT_EXCEEDED,
                 default => throw new \Exception("Unhandled AWS Cognito error code: $errorCode"),
             };
         }

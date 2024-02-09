@@ -3,7 +3,7 @@
         @php
             $mediaEmbed = new MediaEmbed\MediaEmbed();
             $mediaObject =  $mediaEmbed->parseUrl($source->url);
-            echo "<div class='max-w-96 max-h-52'>";
+            echo "<div class='max-w-96 max-h-52 min-w-80 min-h-52'>";
                 echo $mediaObject->getEmbedCode();
             echo "</div>"
         @endphp

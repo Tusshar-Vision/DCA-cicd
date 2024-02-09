@@ -30,8 +30,8 @@
                     <p class="text-xs text-[#C10000] text-left mt-2">{{ $message }}</p>
                 @enderror
             </div>
-            <button type="submit" wire:loading.attr="disabled" wire:loading.class="bg-[#3362CC]" class="login-btn text-center transition-colors">
-                <p wire:loading.class="text-white" class="flex items-center justify-center">
+            <button type="submit" wire:loading.attr="disabled" wire:loading.class="bg-[#3362CC]" class="login-btn text-center transition-colors" wire:target="submit">
+                <p wire:loading.class="text-white" class="flex items-center justify-center" wire:target="submit">
                     <span wire:loading.delay class="mr-1" wire:target="submit"> {!! SvgIconsHelper::getSvgIcon('loading') !!} </span>
                     <span>Continue</span>
                 </p>

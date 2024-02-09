@@ -61,29 +61,29 @@
             <a href="javascript:void(0)" wire:click="$dispatch('renderComponent', { component: 'forms.reset-password' })" class="inline-block text-right forgetpass mb-[20px]">Forgot password?</a>
         </div>
 
-        <button wire:click="login" wire:keydown.enter="login" wire:loading.attr="disabled" wire:loading.class="bg-[#3362CC]" class="login-btn text-center transition-colors">
-            <p wire:loading.class="text-white" class="flex items-center justify-center">
+        <button wire:click="login" wire:keydown.enter="login" wire:target="login" wire:loading.attr="disabled" wire:loading.class="bg-[#3362CC]" class="login-btn text-center transition-colors">
+            <p wire:loading.class="text-white" wire:target="login" class="flex items-center justify-center">
                 <span wire:loading.delay class="mr-1" wire:target="login"> {!! SvgIconsHelper::getSvgIcon('loading') !!} </span>
                 <span>Login</span>
             </p>
         </button>
 
-        <span class="divider-or mt-[20px]">OR</span>
-        <ul class="flex justify-center items-center my-[20px]">
-            <li class="mx-[7px]">
-                <a href="#" class="log-google flex items-center px-[20px] py-[10px]">
-                    {!! SvgIconsHelper::getSvgIcon('google-icon') !!}
-                    Google
-                </a>
-            </li>
-            <li class="mx-[7px]">
-                <a href="#" class="log-fb flex items-center px-[20px] py-[10px]">
-                    {!! SvgIconsHelper::getSvgIcon('facebook-icon') !!}
-                    Facebook
-                </a>
-            </li>
-        </ul>
+{{--        <span class="divider-or mt-[20px]">OR</span>--}}
+{{--        <ul class="flex justify-center items-center my-[20px]">--}}
+{{--            <li class="mx-[7px]">--}}
+{{--                <a href="#" class="log-google flex items-center px-[20px] py-[10px]">--}}
+{{--                    {!! SvgIconsHelper::getSvgIcon('google-icon') !!}--}}
+{{--                    Google--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--            <li class="mx-[7px]">--}}
+{{--                <a href="#" class="log-fb flex items-center px-[20px] py-[10px]">--}}
+{{--                    {!! SvgIconsHelper::getSvgIcon('facebook-icon') !!}--}}
+{{--                    Facebook--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--        </ul>--}}
 
-        <button type="button" class="sign-up" wire:click="$dispatch('renderComponent', { component: 'forms.register' })">New User? Sign up</button>
+        <button type="button" class="sign-up mt-[20px]" wire:click="$dispatch('renderComponent', { component: 'forms.register' })">New User? Sign up</button>
     </div>
 </div>

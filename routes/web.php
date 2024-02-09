@@ -21,6 +21,7 @@ use App\Http\Controllers\Pages;
 
 // Routes for all the pages
 Route::get('/', [Pages\HomeController::class, 'index'])->name('home');
+Route::get('/videos', [Pages\VideosController::class, 'index'])->name('videos');
 Route::get('/search', [Pages\SearchController::class, 'index'])->name('search');
 Route::get('/search/{query}', [Pages\SearchController::class, 'searchQuery'])->name('search.query');
 

@@ -5,9 +5,9 @@
 
     <x-cards.quiz-banner />
 
-    <div class="grid gap-2 mt-4">
-        @foreach([1, 2, 3, 4, 5] as $user)
-            <x-cards.user-score :index="$user" :score="rand(100,400)"/>
-        @endforeach
-    </div>
+{{--    <div class="grid gap-2 mt-4">--}}
+{{--        @foreach([1, 2, 3, 4, 5] as $user)--}}
+{{--            <x-cards.user-score :index="$user" :score="rand(100,400)"/>--}}
+{{--        @endforeach--}}
+{{--    </div>--}}
 </div>

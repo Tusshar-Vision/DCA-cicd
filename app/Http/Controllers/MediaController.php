@@ -30,7 +30,7 @@ class MediaController extends Controller
     {
         // Get the URL of the media item from the S3 bucket
         $url = $media->getFullUrl();
-        $name = $media->name . $media->extension;
+        $name = $media->name . '.' . $media->extension;
 
         // Generate a pre-signed URL with a temporary access token
         $temporaryUrl = \Storage::disk('s3')->temporaryUrl(

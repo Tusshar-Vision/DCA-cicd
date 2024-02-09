@@ -108,29 +108,29 @@
                     <p class="text-xs text-[#C10000] text-left mt-2">{{ $message }}</p>
                 @enderror
             </div>
-            <button type="submit" wire:loading.attr="disabled" wire:loading.class="bg-[#3362CC]" class="login-btn text-center transition-colors">
-                <p wire:loading.class="text-white" class="flex items-center justify-center">
+            <button type="submit" wire:loading.attr="disabled" wire:loading.class="bg-[#3362CC]" wire:target="register" class="login-btn text-center transition-colors">
+                <p wire:loading.class="text-white" wire:target="register" class="flex items-center justify-center">
                     <span wire:loading.delay class="mr-1" wire:target="register"> {!! SvgIconsHelper::getSvgIcon('loading') !!} </span>
                     <span>Sign up</span>
                 </p>
             </button>
 
-            <span class="divider-or mt-[20px]">OR</span>
-            <ul class="flex justify-center items-center my-[20px]">
-                <li class="mx-[7px]">
-                    <a href="#" class="log-google flex items-center px-[40px] py-[10px]">
-                        {!! SvgIconsHelper::getSvgIcon('google-icon') !!}
-                        Google
-                    </a>
-                </li>
-                <li class="mx-[7px]">
-                    <a href="#" class="log-fb flex items-center p-[40px] py-[10px]">
-                        {!! SvgIconsHelper::getSvgIcon('facebook-icon') !!}
-                        Facebook
-                    </a>
-                </li>
-            </ul>
-            <h5 class="text-base text-[#3D3D3D]">Already Registered?
+{{--            <span class="divider-or mt-[20px]">OR</span>--}}
+{{--            <ul class="flex justify-center items-center my-[20px]">--}}
+{{--                <li class="mx-[7px]">--}}
+{{--                    <a href="#" class="log-google flex items-center px-[40px] py-[10px]">--}}
+{{--                        {!! SvgIconsHelper::getSvgIcon('google-icon') !!}--}}
+{{--                        Google--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                <li class="mx-[7px]">--}}
+{{--                    <a href="#" class="log-fb flex items-center p-[40px] py-[10px]">--}}
+{{--                        {!! SvgIconsHelper::getSvgIcon('facebook-icon') !!}--}}
+{{--                        Facebook--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--            </ul>--}}
+            <h5 class="text-base text-[#3D3D3D] mt-[20px]">Already Registered?
                 <a href="#" class="text-[#3362CC] hover:underline" wire:click="$dispatch('renderComponent', { component: 'forms.login' })">
                     Login
                 </a>
