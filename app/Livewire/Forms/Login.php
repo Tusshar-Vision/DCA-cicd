@@ -13,7 +13,9 @@ class Login extends Component
     #[Validate('required|email')]
     public $email;
 
-    #[Validate('required|min:6')]
+    #[Validate('regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/', message: 'Password must include at least one digit, uppercase, and lowercase letter.')]
+    #[Validate('required')]
+    #[Validate('min:6')]
     public $password;
 
     /**
