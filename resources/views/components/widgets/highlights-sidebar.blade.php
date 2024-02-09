@@ -79,7 +79,7 @@
             </ul>
         </div>
     </div>
-    <x-modals.modal-box x-show="isAnnouncementsModalOpen">
+    <x-modals.modal-box x-show="isAnnouncementsModalOpen" heading="What's New">
         <ul class="flex justify-start align-middle my-4" x-transition>
             <li @click="isAnnouncementsSelected = true; isLatestNewsSelected = false" class="cursor-pointer border-b-2 border-b-transparent hover:border-gray-600 mr-4 pb-2" :class="isAnnouncementsSelected && 'activeTab'">Announcements</li>
             <li @click="isAnnouncementsSelected = false; isLatestNewsSelected = true" class="cursor-pointer border-b-2 border-b-transparent hover:border-gray-600 pb-1" :class="isLatestNewsSelected && 'activeTab'">News Updates</li>
