@@ -42,9 +42,10 @@
                             <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z" fill="#8F93A3"/>
                         </svg>
                     </div>
-                </div>
+    </div>
     </div>
 
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true" @click.stop>
     @foreach ($article as $a)
        <?php
         $date = Carbon\Carbon::parse($a['publishedAt'])->format('Y-m-d');
@@ -52,7 +53,6 @@
         $topic = $a['article'][0]['topic'];
         $slug = $a['article'][0]['slug'];
         ?>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true" @click.stop>
         <div class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
                 <div class="weekly-focus-progress-single-bar border-b-2">
@@ -74,9 +74,9 @@
                     </ul>
                 </div>
             </div>
-        </div>
-    </div>
+        </div>  
     @endforeach
+        </div>
 </div>
 <?php $i++; ?>
 @endforeach
