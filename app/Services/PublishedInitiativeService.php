@@ -2,13 +2,10 @@
 
 namespace App\Services;
 
-use App\Enums\Initiatives;
 use App\Exceptions\ArticleNotFoundException;
 use App\Exceptions\PublishedInitiativeNotFoundException;
-use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
 
 readonly class PublishedInitiativeService
 {

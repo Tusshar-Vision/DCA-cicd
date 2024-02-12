@@ -21,6 +21,7 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
 class ValueAddedResource extends Resource
@@ -88,7 +89,19 @@ class ValueAddedResource extends Resource
                         ->acceptedFileTypes(['application/pdf'])
                         ->collection('value-added-material')
                         ->visibility('private')
+                        ->visible(function (?PublishedInitiative $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer'])) return true;
+                            else if ($record !== null && $record->hasMedia('value-added-material')) return true;
+                            else return false;
+                        })
                         ->openable()
+                        ->deletable(function (?PublishedInitiative $record) {
+                            if ($record !== null && $record->is_published === true) {
+                                return Auth::user()->hasAnyRole(['admin', 'super_admin']);
+                            } else {
+                                return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer']);
+                            }
+                        })
                         ->required()
                         ->columnSpanFull(),
 
@@ -109,7 +122,9 @@ class ValueAddedResource extends Resource
             ->where(
                 'initiative_id',
                 InitiativesHelper::getInitiativeID(Initiatives::VALUE_ADDED_MATERIAL)
-            );
+            )->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
 
         if ($tenant = Filament::getTenant()) {
             static::scopeEloquentQueryToTenant($query, $tenant);
@@ -134,37 +149,41 @@ class ValueAddedResource extends Resource
 
     public static function canEdit(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('edit_value::added');
+        return Auth::user()->can('edit_value::added');
     }
 
     public static function canCreate(): bool
     {
-        $user = Auth::user();
-        return $user->can('create_value::added');
+        return Auth::user()->can('create_value::added');
     }
 
     public static function canDelete(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_value::added');
+        return Auth::user()->can('delete_value::added');
     }
 
     public static function canDeleteAny(): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_value::added');
+        return Auth::user()->can('delete_value::added');
     }
 
     public static function canForceDelete(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_value::added');
+        return Auth::user()->can('delete_value::added');
     }
 
     public static function canForceDeleteAny(): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_value::added');
+        return Auth::user()->can('delete_value::added');
+    }
+
+    public static function canRestore(Model $record): bool
+    {
+        return Auth::user()->can('delete_value::added');
+    }
+
+    public static function canRestoreAny(): bool
+    {
+        return Auth::user()->can('delete_value::added');
     }
 }

@@ -80,17 +80,19 @@
     /***/
 </style>
 
-<div class="text-tooltip-comp" id="tooltip-box">
-    <button>Copy</button>
-    <button onclick="highlightText()" id="btn"
-        @click="{{ !Auth::guard('cognito')->check() ? 'isLoginFormOpen = true' : '' }}">Highlight</button>
-    <button @click="{{ Auth::guard('cognito')->check() ? 'isNoteOpen = true' : 'isLoginFormOpen=true' }}"
-        onclick="hidePopup()">Add
-        Note</button>
-</div>
+<div class="w-full">
+    <div class="text-tooltip-comp" id="tooltip-box">
+        <button>Copy</button>
+        <button onclick="highlightText()" id="btn"
+            @click="{{ !Auth::guard('cognito')->check() ? 'isLoginFormOpen = true' : '' }}">Highlight</button>
+        <button @click="{{ Auth::guard('cognito')->check() ? 'isNoteOpen = true' : 'isLoginFormOpen=true' }}"
+            onclick="hidePopup()">Add
+            Note</button>
+    </div>
 
-<div id="article-content" onmouseup="handleSelection()" class="mt-4 printable-area">
-    {!! $article->content !!}
+    <div id="article-content" onmouseup="handleSelection()" class="mt-4 printable-area">
+        {!! $article->content !!}
+    </div>
 </div>
 
 <script>

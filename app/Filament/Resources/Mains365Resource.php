@@ -23,6 +23,7 @@ use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
 class Mains365Resource extends Resource
@@ -86,7 +87,19 @@ class Mains365Resource extends Resource
                             ->acceptedFileTypes(['application/pdf'])
                             ->collection('mains-365')
                             ->visibility('private')
+                            ->visible(function (?PublishedInitiative $record) {
+                                if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer'])) return true;
+                                else if ($record !== null && $record->hasMedia('mains-365')) return true;
+                                else return false;
+                            })
                             ->openable()
+                            ->deletable(function (?PublishedInitiative $record) {
+                                if ($record !== null && $record->is_published === true) {
+                                    return Auth::user()->hasAnyRole(['admin', 'super_admin']);
+                                } else {
+                                    return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer']);
+                                }
+                            })
                             ->required()
                             ->columnSpanFull(),
 
@@ -112,7 +125,11 @@ class Mains365Resource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $query = static::getModel()::query()->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::MAINS_365));
+        $query = static::getModel()::query()
+            ->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::MAINS_365))
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
 
         if ($tenant = Filament::getTenant()) {
             static::scopeEloquentQueryToTenant($query, $tenant);
@@ -128,37 +145,41 @@ class Mains365Resource extends Resource
 
     public static function canEdit(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('edit_mains365');
+        return Auth::user()->can('edit_mains365');
     }
 
     public static function canCreate(): bool
     {
-        $user = Auth::user();
-        return $user->can('create_mains365');
+        return Auth::user()->can('create_mains365');
     }
 
     public static function canDelete(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_mains365');
+        return Auth::user()->can('delete_mains365');
     }
 
     public static function canDeleteAny(): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_mains365');
+        return Auth::user()->can('delete_mains365');
     }
 
     public static function canForceDelete(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_mains365');
+        return Auth::user()->can('delete_mains365');
     }
 
     public static function canForceDeleteAny(): bool
     {
-        $user = Auth::user();
-        return $user->can('delete_mains365');
+        return Auth::user()->can('delete_mains365');
+    }
+
+    public static function canRestore(Model $record): bool
+    {
+        return Auth::user()->can('delete_mains365');
+    }
+
+    public static function canRestoreAny(): bool
+    {
+        return Auth::user()->can('delete_mains365');
     }
 }

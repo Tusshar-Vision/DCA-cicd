@@ -25,6 +25,7 @@ use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
 class MonthlyMagazineResource extends Resource
@@ -148,7 +149,19 @@ class MonthlyMagazineResource extends Resource
                         ->collection('monthly-magazine')
                         ->acceptedFileTypes(['application/pdf'])
                         ->visibility('private')
+                        ->visible(function (?PublishedInitiative $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'monthly_magazine_reviewer'])) return true;
+                            else if ($record !== null && $record->hasMedia('monthly-magazine')) return true;
+                            else return false;
+                        })
                         ->openable()
+                        ->deletable(function (?PublishedInitiative $record) {
+                            if ($record !== null && $record->is_published === true) {
+                                return Auth::user()->hasAnyRole(['admin', 'super_admin']);
+                            } else {
+                                return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer', 'monthly_magazine_reviewer']);
+                            }
+                        })
                         ->columnSpanFull(),
 
 
@@ -177,7 +190,10 @@ class MonthlyMagazineResource extends Resource
     {
         $query = static::getModel()::query()
             ->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE))
-            ->with('articles');;
+            ->with('articles')
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
 
         if ($tenant = Filament::getTenant()) {
             static::scopeEloquentQueryToTenant($query, $tenant);
@@ -217,6 +233,16 @@ class MonthlyMagazineResource extends Resource
     }
 
     public static function canForceDeleteAny(): bool
+    {
+        return Auth::user()->can('delete_monthly::magazine');
+    }
+
+    public static function canRestore(Model $record): bool
+    {
+        return Auth::user()->can('delete_monthly::magazine');
+    }
+
+    public static function canRestoreAny(): bool
     {
         return Auth::user()->can('delete_monthly::magazine');
     }

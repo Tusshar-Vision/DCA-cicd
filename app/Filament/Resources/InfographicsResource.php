@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\InfographicsResource\Pages;
 use App\Filament\Resources\InfographicsResource\RelationManagers;
 use App\Models\Infographic;
+use App\Models\PublishedInitiative;
 use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Components\Group;
@@ -85,7 +86,19 @@ class InfographicsResource extends Resource
                         ->collection('infographic')
                         ->required()
                         ->visibility('private')
+                        ->visible(function (?Infographic $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer'])) return true;
+                            else if ($record !== null && $record->hasMedia('infographic')) return true;
+                            else return false;
+                        })
                         ->openable()
+                        ->deletable(function (?Infographic $record) {
+                            if ($record !== null && $record->is_published === true) {
+                                return Auth::user()->hasAnyRole(['admin', 'super_admin']);
+                            } else {
+                                return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer']);
+                            }
+                        })
                         ->acceptedFileTypes([
                             'application/pdf',
                             'image/jpeg',
@@ -153,17 +166,13 @@ class InfographicsResource extends Resource
                 //
             ])
             ->actions([
-//                Tables\Actions\Action::make('View')
-//                    ->icon('heroicon-s-eye')
-//                    ->tooltip('Preview')
-//                    ->iconButton(),
                 Tables\Actions\EditAction::make()
                     ->tooltip('Edit')
                     ->iconButton(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+
                 ]),
             ]);
     }

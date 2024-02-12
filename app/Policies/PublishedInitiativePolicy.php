@@ -41,7 +41,7 @@ class PublishedInitiativePolicy
      */
     public function update(User $user, PublishedInitiative $publishedInitiative): bool
     {
-        return $user->can('edit_mains365');
+        return $user->can('edit_weekly::focus');
     }
 
     /**
@@ -99,7 +99,7 @@ class PublishedInitiativePolicy
      */
     public function restore(User $user, PublishedInitiative $publishedInitiative): bool
     {
-        return $user->can('{{ Restore }}');
+        return $user->can('delete_weekly::focus');
     }
 
     /**
@@ -110,7 +110,7 @@ class PublishedInitiativePolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('{{ RestoreAny }}');
+        return $user->can('delete_weekly::focus');
     }
 
     /**

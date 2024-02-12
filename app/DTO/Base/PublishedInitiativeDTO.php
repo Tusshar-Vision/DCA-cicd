@@ -3,6 +3,7 @@
 namespace App\DTO\Base;
 
 use App\DTO\ArticleDTO;
+use App\Exceptions\ArticleNotFoundException;
 use App\Models\PublishedInitiative;
 use Carbon\Carbon;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
@@ -21,9 +22,12 @@ abstract class PublishedInitiativeDTO extends Data
         public string $updatedAt
     ) {}
 
+    /**
+     * @throws ArticleNotFoundException
+     */
     public function getArticleFromSlug($slug): ArticleDTO
     {
-        return $this->articles->where('slug', '=', $slug)->first();
+        return $this->articles->where('slug', '=', $slug)->first() ?? throw new ArticleNotFoundException('There are no articles');
     }
 
     public function getArticleIndexFromSlug($slug): int|null

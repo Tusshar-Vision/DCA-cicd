@@ -8,6 +8,7 @@ use App\Models\InitiativeTopic;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Guava\Filament\NestedResources\Resources\NestedResource;
@@ -36,6 +37,13 @@ class SubjectResource extends NestedResource
     public static function table(Table $table): Table
     {
         return $table
+            ->reorderable('order_column')
+            ->reorderRecordsTriggerAction(
+                fn (Action $action, bool $isReordering) => $action
+                    ->button()
+                    ->label($isReordering ? 'Disable reordering' : 'Enable reordering'),
+            )
+            ->defaultSort('order_column')
             ->columns([
                 TextColumn::make('id')->label('Topic ID'),
                 TextColumn::make('name')
