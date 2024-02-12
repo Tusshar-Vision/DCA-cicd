@@ -21,6 +21,7 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
 class QuarterlyRevisionResource extends Resource
@@ -88,7 +89,19 @@ class QuarterlyRevisionResource extends Resource
                         ->acceptedFileTypes(['application/pdf'])
                         ->collection('quarterly-revision-document')
                         ->visibility('private')
+                        ->visible(function (?PublishedInitiative $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer'])) return true;
+                            else if ($record !== null && $record->hasMedia('quarterly-revision-document')) return true;
+                            else return false;
+                        })
                         ->openable()
+                        ->deletable(function (?PublishedInitiative $record) {
+                            if ($record !== null && $record->is_published === true) {
+                                return Auth::user()->hasAnyRole(['admin', 'super_admin']);
+                            } else {
+                                return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer']);
+                            }
+                        })
                         ->required()
                         ->columnSpanFull(),
 
@@ -105,7 +118,11 @@ class QuarterlyRevisionResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $query = static::getModel()::query()->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::QUARTERLY_REVISION_DOCUMENTS));
+        $query = static::getModel()::query()
+            ->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::QUARTERLY_REVISION_DOCUMENTS))
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
 
         if ($tenant = Filament::getTenant()) {
             static::scopeEloquentQueryToTenant($query, $tenant);
@@ -154,6 +171,16 @@ class QuarterlyRevisionResource extends Resource
     }
 
     public static function canForceDeleteAny(): bool
+    {
+        return Auth::user()->can('delete_quarterly::revision');
+    }
+
+    public static function canRestore(Model $record): bool
+    {
+        return Auth::user()->can('delete_quarterly::revision');
+    }
+
+    public static function canRestoreAny(): bool
     {
         return Auth::user()->can('delete_quarterly::revision');
     }

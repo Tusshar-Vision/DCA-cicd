@@ -10,7 +10,7 @@
                     $featuredImage = $article->relatedArticle->getFirstMediaUrl('article-featured-image');
                 @endphp
                 <a href="{{ \App\Services\ArticleService::getArticleUrlFromSlug($article->relatedArticle->slug) }}">
-                    <div class="flex space-y-1 items-center space-x-2">
+                    <div class="flex space-y-1 space-x-2">
                         <img src="{{ $featuredImage === '' ? 'https://placehold.co/600x400' : $featuredImage }}" width="150px" />
                         <div>
                             <div>

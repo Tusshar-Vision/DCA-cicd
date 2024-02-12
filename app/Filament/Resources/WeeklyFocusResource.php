@@ -35,6 +35,7 @@ use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -195,8 +196,19 @@ class WeeklyFocusResource extends Resource
                         ->acceptedFileTypes(['application/pdf'])
                         ->collection('weekly-focus')
                         ->visibility('private')
+                        ->visible(function (?PublishedInitiative $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'weekly_focus_reviewer'])) return true;
+                            else if ($record !== null && $record->hasMedia('weekly-focus')) return true;
+                            else return false;
+                        })
                         ->openable()
-                        ->deletable(false)
+                        ->deletable(function (?PublishedInitiative $record) {
+                            if ($record !== null && $record->is_published === true) {
+                                return Auth::user()->hasAnyRole(['admin', 'super_admin']);
+                            } else {
+                                return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer', 'weekly_focus_reviewer']);
+                            }
+                        })
                         ->columnSpanFull(),
 
                 ])
@@ -292,7 +304,10 @@ class WeeklyFocusResource extends Resource
     {
         $query = static::getModel()::query()
             ->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
-            ->with('articles');
+            ->with('articles')
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
 
         if ($tenant = Filament::getTenant()) {
             static::scopeEloquentQueryToTenant($query, $tenant);

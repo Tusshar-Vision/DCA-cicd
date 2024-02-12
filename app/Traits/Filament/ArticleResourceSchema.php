@@ -29,6 +29,8 @@ use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ForceDeleteBulkAction;
+use Filament\Tables\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -36,6 +38,7 @@ use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -229,8 +232,9 @@ trait ArticleResourceSchema
                         "1" => 'is Featured',
                         "0" => 'is Not Featured'
                     ])
-                    ->attribute('featured')
+                    ->attribute('featured'),
 
+                TrashedFilter::make(),
             ], layout: FiltersLayout::AboveContent)->filtersTriggerAction(
                 fn (Action $action) => $action
                     ->button()
@@ -239,7 +243,6 @@ trait ArticleResourceSchema
             ->filtersFormColumns(4)
             ->filtersFormMaxHeight('400px')
             ->actions([
-
                EditAction::make('Edit')
                     ->iconButton()
                     ->tooltip('Edit')
@@ -254,7 +257,7 @@ trait ArticleResourceSchema
                     }),
 
                 Action::make('View')
-                    ->visible(function (Model $record) {
+                    ->visible(function (Article $record) {
                         if ($record->status === 'Published') return true;
 
                         $user = Auth::user();
@@ -398,14 +401,10 @@ trait ArticleResourceSchema
                 DeleteAction::make()
                     ->iconButton()
                     ->tooltip('Delete')
-                    ->visible(function (Model $record) {
-                        return $record->status === 'Draft';
+                    ->visible(function (Article $record) {
+                        return $record->status === 'Reject' || $record->status === 'Draft';
                     })
                     ->action(function (Article $record) {
-                        $record->content->delete();
-                        $record->relatedTerms()->delete();
-                        $record->relatedVideos()->delete();
-                        $record->relatedArticles()->delete();
                         $record->delete();
                     }),
 
@@ -503,7 +502,17 @@ trait ArticleResourceSchema
                         })
                         ->deselectRecordsAfterCompletion(),
 
-//                    DeleteBulkAction::make()
+                    ForceDeleteBulkAction::make()
+                        ->action(function (Collection $records) {
+                            $records->each(function (Article $record) {
+                                $record->content()->delete();
+                                $record->relatedTerms()->delete();
+                                $record->relatedVideos()->delete();
+                                $record->relatedArticles()->delete();
+                                $record->forceDelete();
+                            });
+                        }),
+                    RestoreBulkAction::make(),
                 ])
             ]);
     }

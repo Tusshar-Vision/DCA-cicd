@@ -2,18 +2,20 @@
 
 namespace App\Traits\Filament;
 
+use App\Models\PublishedInitiative;
 use Carbon\Carbon;
 use Filament\Support\Colors\Color;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ForceDeleteBulkAction;
+use Filament\Tables\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 trait OtherUploadsResourceSchema
@@ -22,13 +24,12 @@ trait OtherUploadsResourceSchema
     {
         return $table
             ->columns([
-
                 TextColumn::make('id')
                     ->label('ID')
                     ->sortable(),
 
                 TextColumn::make('name'),
-                
+
                 TextColumn::make('topic.name')->label('Subject'),
 
                 IconColumn::make('is_published')
@@ -42,17 +43,17 @@ trait OtherUploadsResourceSchema
 
             ])->defaultSort('published_at', 'desc')
             ->filters([
-                //
+                TrashedFilter::make(),
             ])
             ->actions([
                 Action::make('Publish')
                     ->icon('heroicon-s-eye')
                     ->requiresConfirmation()
                     ->button()
-                    ->hidden(function(Model $record) {
-                        return $record->is_published;
+                    ->hidden(function(PublishedInitiative $record) {
+                        return $record->is_published === true;
                     })
-                    ->action(function (Model $record) {
+                    ->action(function (PublishedInitiative $record) {
                         if ($record->is_published === false) {
                             $record->is_published = true;
                             $record->save();
@@ -63,6 +64,9 @@ trait OtherUploadsResourceSchema
                     ->iconButton(),
                 DeleteAction::make()
                     ->tooltip('Delete')
+                    ->hidden(function(PublishedInitiative $record) {
+                        return $record->is_published === true;
+                    })
                     ->iconButton()
             ])
             ->bulkActions([
@@ -79,7 +83,8 @@ trait OtherUploadsResourceSchema
                             });
                         })
                         ->deselectRecordsAfterCompletion(),
-                    DeleteBulkAction::make(),
+                    ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                 ]),
             ]);
     }

@@ -6,8 +6,10 @@ use App\Enums\Initiatives;
 use App\Filament\Resources\NewsTodayResource\Pages;
 use App\Filament\Resources\NewsTodayResource\RelationManagers\ArticlesRelationManager;
 use App\Helpers\InitiativesHelper;
+use App\Models\Announcement;
 use App\Models\Article;
 use App\Models\PublishedInitiative;
+use App\Models\User;
 use App\Services\PublishedInitiativeService;
 use App\Traits\Filament\InitiativeResourceSchema;
 use Carbon\Carbon;
@@ -22,6 +24,7 @@ use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
 class NewsTodayResource extends Resource
@@ -37,7 +40,6 @@ class NewsTodayResource extends Resource
     protected static ?int $navigationSort = 1;
 
     use InitiativeResourceSchema;
-
 
     public static function form(Form $form): Form
     {
@@ -148,7 +150,19 @@ class NewsTodayResource extends Resource
                         ->acceptedFileTypes(['application/pdf'])
                         ->collection('news-today')
                         ->visibility('private')
+                        ->visible(function (?PublishedInitiative $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'news_today_reviewer'])) return true;
+                            else if ($record !== null && $record->hasMedia('news-today')) return true;
+                            else return false;
+                        })
                         ->openable()
+                        ->deletable(function (?PublishedInitiative $record) {
+                            if ($record !== null && $record->is_published === true) {
+                                return Auth::user()->hasAnyRole(['admin', 'super_admin']);
+                            } else {
+                                return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer', 'news_today_reviewer']);
+                            }
+                        })
                         ->columnSpanFull(),
 
                 ])->columns(2),
@@ -175,7 +189,10 @@ class NewsTodayResource extends Resource
     {
         $query = static::getModel()::query()
             ->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
-            ->with('articles');
+            ->with('articles')
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
 
         if ($tenant = Filament::getTenant()) {
             static::scopeEloquentQueryToTenant($query, $tenant);
@@ -215,6 +232,16 @@ class NewsTodayResource extends Resource
     }
 
     public static function canForceDeleteAny(): bool
+    {
+        return Auth::user()->can('delete_news::today');
+    }
+
+    public static function canRestore(Model $record): bool
+    {
+        return Auth::user()->can('delete_news::today');
+    }
+
+    public static function canRestoreAny(): bool
     {
         return Auth::user()->can('delete_news::today');
     }

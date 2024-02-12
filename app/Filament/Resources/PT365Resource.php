@@ -85,7 +85,19 @@ class PT365Resource extends Resource
                             ->acceptedFileTypes(['application/pdf'])
                             ->collection('pt-365')
                             ->visibility('private')
+                            ->visible(function (?PublishedInitiative $record) {
+                                if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer'])) return true;
+                                else if ($record !== null && $record->hasMedia('pt-365')) return true;
+                                else return false;
+                            })
                             ->openable()
+                            ->deletable(function (?PublishedInitiative $record) {
+                                if ($record !== null && $record->is_published === true) {
+                                    return Auth::user()->hasAnyRole(['admin', 'super_admin']);
+                                } else {
+                                    return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer']);
+                                }
+                            })
                             ->required()
                             ->columnSpanFull(),
 

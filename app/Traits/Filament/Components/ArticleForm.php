@@ -6,6 +6,8 @@ use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use App\Enums\Initiatives;
 use App\Filament\Components\Repeater;
 use App\Helpers\InitiativesHelper;
+use App\Models\Article;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\RichEditor;
@@ -178,13 +180,10 @@ trait ArticleForm
 
                             Group::make()->schema([
 
-                                Select::make('language_id')
-                                    ->relationship('language', 'name', function ($query) {
-                                        return $query->orderBy('order_column');
-                                    })
-                                    ->label('Language')
-                                    ->required()
-                                    ->default(1),
+                                Hidden::make('language_id')
+                                    ->default(function (Livewire $livewire) {
+                                        return $livewire->ownerRecord->language_id;
+                                    }),
 
                                 SpatieTagsInput::make('tags')
                                     ->required(),
@@ -206,8 +205,8 @@ trait ArticleForm
                                     ->hiddenLabel(),
 
                         ])->headerActions([
-                            \Filament\Forms\Components\Actions\Action::make('Reviews')
-                                ->fillForm(function (Model $record) {
+                            Action::make('Reviews')
+                                ->fillForm(function (Article $record) {
                                     return [
                                         "body" => $record->latestReview()->review ?? 'No reviewer comments available on this article.',
                                     ];
@@ -227,14 +226,14 @@ trait ArticleForm
                                     return $record !== null;
                                 }),
 
-                            \Filament\Forms\Components\Actions\Action::make('Changes Incorporated')
+                            Action::make('Changes Incorporated')
                                 ->requiresConfirmation()
                                 ->modalHeading('Are you sure you want to change the status')
                                 ->modalDescription('Make sure you have gone through all the reviews and incorporated them in the article.')
-                                ->visible(function (?Model $record) {
+                                ->visible(function (?Article $record) {
                                     return $record !== null && $record->status === 'Improve';
                                 })
-                                ->action(function(Model $record) {
+                                ->action(function(Article $record) {
                                     $record->setStatus('Changes Incorporated');
                                 }),
                         ])->collapsible(),
@@ -254,7 +253,7 @@ trait ArticleForm
                                     ->required()
                             )
                             ->orderColumn('order_column')
-                            ->minItems(0)
+                            ->maxItems(4)
                             ->reorderable()
                             ->addActionLabel('Add article')
                     ]),
@@ -269,6 +268,7 @@ trait ArticleForm
                                     ->required(),
                             )
                             ->orderColumn('order_column')
+                            ->maxItems(5)
                             ->reorderable()
                             ->addActionLabel('Add video')
                     ]),
@@ -283,6 +283,7 @@ trait ArticleForm
                                     ->required(),
                             )
                             ->orderColumn('order_column')
+                            ->maxItems(3)
                             ->reorderable()
                             ->addActionLabel('Add term')
                     ]),

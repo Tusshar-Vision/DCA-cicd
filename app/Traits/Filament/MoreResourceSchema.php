@@ -2,6 +2,7 @@
 
 namespace App\Traits\Filament;
 
+use App\Models\PublishedInitiative;
 use Carbon\Carbon;
 use Filament\Support\Colors\Color;
 use Filament\Tables\Actions\Action;
@@ -10,8 +11,11 @@ use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ForceDeleteBulkAction;
+use Filament\Tables\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -40,17 +44,17 @@ trait MoreResourceSchema
 
             ])->defaultSort('published_at', 'desc')
             ->filters([
-                //
+                TrashedFilter::make(),
             ])
             ->actions([
                 Action::make('Publish')
                     ->icon('heroicon-s-eye')
                     ->requiresConfirmation()
                     ->button()
-                    ->hidden(function(Model $record) {
+                    ->hidden(function(PublishedInitiative $record) {
                         return $record->is_published;
                     })
-                    ->action(function (Model $record) {
+                    ->action(function (PublishedInitiative $record) {
                         if ($record->is_published === false) {
                             $record->is_published = true;
                             $record->save();
@@ -61,6 +65,9 @@ trait MoreResourceSchema
                     ->iconButton(),
                 DeleteAction::make()
                     ->tooltip('Delete')
+                    ->hidden(function(PublishedInitiative $record) {
+                        return $record->is_published;
+                    })
                     ->iconButton()
             ])
             ->bulkActions([
@@ -77,7 +84,8 @@ trait MoreResourceSchema
                             });
                         })
                         ->deselectRecordsAfterCompletion(),
-                    DeleteBulkAction::make(),
+                    ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                 ]),
             ]);
     }

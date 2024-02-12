@@ -7,7 +7,9 @@ use App\Models\Article;
 use App\Traits\Filament\ArticleResourceSchema;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Resources\Resource;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleResource extends Resource implements HasShieldPermissions
@@ -20,6 +22,14 @@ class ArticleResource extends Resource implements HasShieldPermissions
     protected static ?int $navigationSort = 4;
 
     use ArticleResourceSchema;
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
+    }
 
     public static function getPages(): array
     {

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\VideoResource\Pages;
+use App\Models\Infographic;
 use App\Models\Video;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
@@ -93,7 +94,19 @@ class VideoResource extends Resource
                         ->id('video')
                         ->collection('video')
                         ->visibility('private')
+                        ->visible(function (?Video $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer'])) return true;
+                            else if ($record !== null && $record->hasMedia('infographic')) return true;
+                            else return false;
+                        })
                         ->openable()
+                        ->deletable(function (?Video $record) {
+                            if ($record !== null && $record->is_published === true) {
+                                return Auth::user()->hasAnyRole(['admin', 'super_admin']);
+                            } else {
+                                return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer']);
+                            }
+                        })
                         ->required()
                         ->acceptedFileTypes([
                             'video/mp4',         // MP4 videos
@@ -181,7 +194,7 @@ class VideoResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+//                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

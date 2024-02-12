@@ -21,6 +21,7 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
 class BudgetResource extends Resource
@@ -89,7 +90,19 @@ class BudgetResource extends Resource
                         ->acceptedFileTypes(['application/pdf'])
                         ->collection('budget')
                         ->visibility('private')
+                        ->visible(function (?PublishedInitiative $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer'])) return true;
+                            else if ($record !== null && $record->hasMedia('budget')) return true;
+                            else return false;
+                        })
                         ->openable()
+                        ->deletable(function (?PublishedInitiative $record) {
+                            if ($record !== null && $record->is_published === true) {
+                                return Auth::user()->hasAnyRole(['admin', 'super_admin']);
+                            } else {
+                                return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer']);
+                            }
+                        })
                         ->required()
                         ->columnSpanFull(),
 
@@ -110,7 +123,9 @@ class BudgetResource extends Resource
             ->where(
                 'initiative_id',
                 InitiativesHelper::getInitiativeID(Initiatives::BUDGET)
-            );
+            )->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
 
         if ($tenant = Filament::getTenant()) {
             static::scopeEloquentQueryToTenant($query, $tenant);

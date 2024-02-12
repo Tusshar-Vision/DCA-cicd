@@ -1,4 +1,4 @@
-<div class="flex flex-col rounded bg-visionGray">
+<div class="flex flex-col rounded bg-visionGray lg:mt-0 mt-8">
     <div class="my-8 mx-6">
         @if($initiative !== 'weekly-focus')
             <a @click.prevent="printDiv('printable-area')" href="#">

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 use RalphJSmit\Laravel\SEO\Support\HasSEO;
 use Spatie\EloquentSortable\Sortable;
@@ -30,7 +31,7 @@ use LaracraftTech\LaravelDateScopes\DateScopes;
 
 class Article extends Model implements HasMedia, Sortable
 {
-    use Searchable, InteractsWithMedia, DateScopes, SortableTrait, WithData;
+    use Searchable, InteractsWithMedia, DateScopes, SortableTrait, WithData, SoftDeletes;
 
     use HasFactory,  HasSlug, HasTags, HasSEO, HasComments,  HasReviewRating,  HasStatuses;
     protected string $dataClass = ArticleDTO::class;
