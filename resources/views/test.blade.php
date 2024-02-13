@@ -148,8 +148,106 @@
 <br>
 <br>
 
+<div class="border-2 border-visionSelectedGray rounded px-4 py-2 mb-6">
+    <div class="cursor-pointer text-[#183B56] hover:text-[#3362CC] flex justify-between border-b-[1px] border-b-[#183B56] hover:border-b-[#3362CC] w-full pb-2 svgHover accorActive">
+        <h1 class="text-lg">Mi sit amet mauris commodo quis imperdiet massa.</h1>
+        <div>
+            {{-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <g clip-path="url(#clip0_3420_22852)">
+                <path d="M11.9544 13.0913L6.86307 8L5.40872 9.45436L11.9544 16L18.5 9.45436L17.0456 8L11.9544 13.0913Z" fill="#183B56"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_3420_22852">
+                <rect width="24" height="24" fill="white" transform="matrix(-1 0 0 1 24 0)"/>
+                </clipPath>
+                </defs>
+            </svg> --}}
+            
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <g clip-path="url(#clip0_3420_22861)">
+                <path d="M11.9544 10.9087L6.86307 16L5.40872 14.5456L11.9544 8L18.5 14.5456L17.0456 16L11.9544 10.9087Z" fill="#183B56"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_3420_22861">
+                <rect width="24" height="24" fill="white" transform="matrix(-1 0 0 -1 24 24)"/>
+                </clipPath>
+                </defs>
+            </svg>
+           
+        </div>
+    </div>
+    <div class="text-[#3D3D3D] text-sm font-light flex flex-col mt-4 pb-2">
+        <p>Magna fermentum iaculis eu non diam phasellus vestibulum lorem. Id faucibus nisl tincidunt eget nullam. Suspendisse potenti nullam ac tortor vitae purus faucibus. Eu consequat ac felis donec et odio pellentesque. Risus nec feugiat in fermentum posuere. In fermentum posuere urna nec. Aliquet eget sit amet tellus cras adipiscing enim eu turpis. Nec ullamcorper sit amet risus nullam. Elementum sagittis vitae et leo duis ut. Integer malesuada nunc vel risus commodo viverra maecenas accumsan lacus. Fames ac turpis egestas sed tempus urna et. Nisl rhoncus mattis rhoncus urna neque viverra justo nec. Mi sit amet mauris commodo quis imperdiet massa. Rhoncus mattis rhoncus urna neque. Cursus metus aliquam eleifend mi. Dolor sed viverra ipsum nunc aliquet bibendum enim facilisis.</p>
+        <ul class="flex justify-start items-baseline mt-4">
+            <li class="text-[#3D3D3D] text-base mr-2">Tags :</li>
+            <li class="mr-2 bg-[#F4F6F8] text-xs rounded-sm py-1 px-2 cursor-pointer">GS Paper - 1</li>
+            <li class="mr-2 bg-[#F4F6F8] text-xs rounded-sm py-1 px-2 cursor-pointer">GS Paper - 2</li>
+            <li class="mr-2 bg-[#F4F6F8] text-xs rounded-sm py-1 px-2 cursor-pointer">GS Paper - 3</li>
+        </ul>
+
+        <!-- inner accordion start -->
+        <div class="border-2 border-visionSelectedGray rounded mt-[20px] px-4 py-2">
+            <div class="cursor-pointer text-[#3D3D3D] hover:text-[#3362CC] flex justify-between border-b-[1px] hover:border-b-[#3362CC] w-full pb-2 svgHover">
+                <h1 class="text-lg">Articles Sources</h1>
+                <div>
+                    {{-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z" fill="#3D3D3D"/>
+                      </svg>   --}}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 14 3" fill="none">
+                        <path d="M14 0.5V2.5H0V0.5H14Z" fill="#3D3D3D"/>
+                      </svg>                 
+                </div>
+            </div>
+            <div class="text-[#3D3D3D] text-sm font-light flex flex-col mt-4 pb-2">
+                <p>Magna fermentum iaculis eu non diam phasellus vestibulum lorem. Id faucibus nisl tincidunt eget nullam. Suspendisse potenti nullam ac tortor vitae purus faucibus. Eu consequat ac felis donec et odio pellentesque. Risus nec feugiat in fermentum posuere. In fermentum posuere urna nec. Aliquet eget sit amet tellus cras adipiscing enim eu turpis. Nec ullamcorper sit amet risus nullam. Elementum sagittis vitae et leo duis ut. Integer malesuada nunc vel risus commodo viverra maecenas accumsan lacus. Fames ac turpis egestas sed tempus urna et. Nisl rhoncus mattis rhoncus urna neque viverra justo nec. Mi sit amet mauris commodo quis imperdiet massa. Rhoncus mattis rhoncus urna neque. Cursus metus aliquam eleifend mi. Dolor sed viverra ipsum nunc aliquet bibendum enim facilisis.</p>       
+            </div>
+        </div>
+        <!-- inner accordion start -->
+    </div>
+</div>
+
+<div class="border-2 border-visionSelectedGray rounded px-4 py-2">
+    <div class="cursor-pointer text-[#183B56] hover:text-[#3362CC] flex justify-between border-b-[1px] border-b-[#183B56] hover:border-b-[#3362CC] w-full pb-2 svgHover">
+        <h1 class="text-lg">Mi sit amet mauris commodo quis imperdiet massa.</h1>
+        <div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <g clip-path="url(#clip0_3420_22852)">
+                <path d="M11.9544 13.0913L6.86307 8L5.40872 9.45436L11.9544 16L18.5 9.45436L17.0456 8L11.9544 13.0913Z" fill="#183B56"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_3420_22852">
+                <rect width="24" height="24" fill="white" transform="matrix(-1 0 0 1 24 0)"/>
+                </clipPath>
+                </defs>
+            </svg>
+            
+            {{-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <g clip-path="url(#clip0_3420_22861)">
+                <path d="M11.9544 10.9087L6.86307 16L5.40872 14.5456L11.9544 8L18.5 14.5456L17.0456 16L11.9544 10.9087Z" fill="#183B56"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_3420_22861">
+                <rect width="24" height="24" fill="white" transform="matrix(-1 0 0 -1 24 24)"/>
+                </clipPath>
+                </defs>
+            </svg> --}}
+           
+        </div>
+    </div>
+    <div class="text-[#3D3D3D] text-sm font-light flex flex-col mt-4 pb-2 hidden">
+        <p>Magna fermentum iaculis eu non diam phasellus vestibulum lorem. Id faucibus nisl tincidunt eget nullam. Suspendisse potenti nullam ac tortor vitae purus faucibus. Eu consequat ac felis donec et odio pellentesque. Risus nec feugiat in fermentum posuere. In fermentum posuere urna nec. Aliquet eget sit amet tellus cras adipiscing enim eu turpis. Nec ullamcorper sit amet risus nullam. Elementum sagittis vitae et leo duis ut. Integer malesuada nunc vel risus commodo viverra maecenas accumsan lacus. Fames ac turpis egestas sed tempus urna et. Nisl rhoncus mattis rhoncus urna neque viverra justo nec. Mi sit amet mauris commodo quis imperdiet massa. Rhoncus mattis rhoncus urna neque. Cursus metus aliquam eleifend mi. Dolor sed viverra ipsum nunc aliquet bibendum enim facilisis.</p>
+        <ul class="flex justify-start items-baseline mt-4">
+            <li class="text-[#3D3D3D] text-base mr-2">Tags :</li>
+            <li class="mr-2 bg-[#F4F6F8] text-xs rounded-sm py-1 px-2 cursor-pointer">GS Paper - 1</li>
+            <li class="mr-2 bg-[#F4F6F8] text-xs rounded-sm py-1 px-2 cursor-pointer">GS Paper - 2</li>
+            <li class="mr-2 bg-[#F4F6F8] text-xs rounded-sm py-1 px-2 cursor-pointer">GS Paper - 3</li>
+        </ul>
+</div>
+
+
+
 <!-- save note to my content start -->
-<div class="flex flex-col justify-center">
+{{-- <div class="flex flex-col justify-center">
     <button class="w-[210px] m-auto text-sm py-[12px] px-[30px] mb-4 rounded-[6px] bg-[#3362CC] text-white border-2 border-[#3362CC] hover:text-[#3362CC] hover:bg-transparent font-semibold">Save note</button>
 
     <button class="w-[210px] m-auto text-sm py-[12px] px-[30px] mb-4 rounded-[6px] bg-transparent text-[#3362CC] border-2 border-[#3362CC] hover:text-white hover:bg-[#3362CC] font-semibold">Add new note</button>
@@ -157,7 +255,7 @@
     <button class="w-[210px] m-auto text-sm py-[12px] px-[30px] mb-4 rounded-[6px] bg-transparent text-[#3362CC] border-2 border-[#3362CC] hover:text-white hover:bg-[#3362CC] font-semibold">Add to existing note</button>
 
     <p class="text-[#E22526] text-sm text-center">You don’t have any saved note yet!</p>
-</div>
+</div> --}}
 <!-- save note to my content start -->
 
 

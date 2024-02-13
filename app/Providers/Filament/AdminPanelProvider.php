@@ -46,6 +46,7 @@ class AdminPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->id('admin')
             ->plugins([
                 OverlookPlugin::make()
                     ->includes([
@@ -102,7 +103,6 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->default()
-            ->id('admin')
             ->path('admin')
             ->login()
             ->profile(EditProfile::class)

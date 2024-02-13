@@ -71,8 +71,8 @@ trait ArticleForm
 
                                 Select::make('author_id')
                                     ->id('expert_id')
-                                    ->relationship('author', 'name', function ($query, Livewire $livewire) {
-                                        $initiative_id = $livewire->ownerRecord->initiative_id;
+                                    ->relationship('author', 'name', function ($query, Livewire $livewire, Article $article) {
+                                        $initiative_id = $livewire->ownerRecord?->initiative_id ?? $article->initiative_id;
                                         $roles = collect(['expert']);
 
                                         if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)) {
@@ -101,8 +101,8 @@ trait ArticleForm
                                     }),
 
                                 Select::make('reviewer_id')
-                                    ->relationship('reviewer', 'name', function ($query, Livewire $livewire) {
-                                        $initiative_id = $livewire->ownerRecord->initiative_id;
+                                    ->relationship('reviewer', 'name', function ($query, Livewire $livewire, Article $article) {
+                                        $initiative_id = $livewire->ownerRecord?->initiative_id ?? $article->initiative_id;
                                         $roles = collect(['reviewer']);
 
                                         if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)) {
@@ -190,7 +190,9 @@ trait ArticleForm
 
                             ])->columns(1)
 
-                        ])->columns(2)->collapsible(),
+                        ])
+                            ->columns(2)
+                            ->collapsible(),
 
                         Section::make('Content')
                             ->relationship('content')
