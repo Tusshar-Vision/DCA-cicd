@@ -3303,7 +3303,7 @@
         },
         {
             "name": "filament/actions",
-            "version": "v3.2.32",
+            "version": "v3.2.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/actions.git",
@@ -3356,16 +3356,16 @@
         },
         {
             "name": "filament/filament",
-            "version": "v3.2.32",
+            "version": "v3.2.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/panels.git",
-                "reference": "1fc9421caeff210a3d2acb72b01d63e8acbdf5d4"
+                "reference": "a34a651b083201090cfd94b410f2b75b6b0ff734"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filamentphp/panels/zipball/1fc9421caeff210a3d2acb72b01d63e8acbdf5d4",
-                "reference": "1fc9421caeff210a3d2acb72b01d63e8acbdf5d4",
+                "url": "https://api.github.com/repos/filamentphp/panels/zipball/a34a651b083201090cfd94b410f2b75b6b0ff734",
+                "reference": "a34a651b083201090cfd94b410f2b75b6b0ff734",
                 "shasum": ""
             },
             "require": {
@@ -3417,11 +3417,11 @@
                 "issues": "https://github.com/filamentphp/filament/issues",
                 "source": "https://github.com/filamentphp/filament"
             },
-            "time": "2024-02-12T17:10:21+00:00"
+            "time": "2024-02-13T06:30:19+00:00"
         },
         {
             "name": "filament/forms",
-            "version": "v3.2.32",
+            "version": "v3.2.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/forms.git",
@@ -3477,7 +3477,7 @@
         },
         {
             "name": "filament/infolists",
-            "version": "v3.2.32",
+            "version": "v3.2.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/infolists.git",
@@ -3528,7 +3528,7 @@
         },
         {
             "name": "filament/notifications",
-            "version": "v3.2.32",
+            "version": "v3.2.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/notifications.git",
@@ -3580,7 +3580,7 @@
         },
         {
             "name": "filament/spatie-laravel-media-library-plugin",
-            "version": "v3.2.32",
+            "version": "v3.2.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/spatie-laravel-media-library-plugin.git",
@@ -3617,7 +3617,7 @@
         },
         {
             "name": "filament/spatie-laravel-tags-plugin",
-            "version": "v3.2.32",
+            "version": "v3.2.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/spatie-laravel-tags-plugin.git",
@@ -3654,16 +3654,16 @@
         },
         {
             "name": "filament/support",
-            "version": "v3.2.32",
+            "version": "v3.2.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/support.git",
-                "reference": "293e18a96ee4ccfe19ec25221ed9580937bb482e"
+                "reference": "c2be482587352c21bd9dc215b2e489c3598a9a06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filamentphp/support/zipball/293e18a96ee4ccfe19ec25221ed9580937bb482e",
-                "reference": "293e18a96ee4ccfe19ec25221ed9580937bb482e",
+                "url": "https://api.github.com/repos/filamentphp/support/zipball/c2be482587352c21bd9dc215b2e489c3598a9a06",
+                "reference": "c2be482587352c21bd9dc215b2e489c3598a9a06",
                 "shasum": ""
             },
             "require": {
@@ -3707,11 +3707,11 @@
                 "issues": "https://github.com/filamentphp/filament/issues",
                 "source": "https://github.com/filamentphp/filament"
             },
-            "time": "2024-02-12T17:10:18+00:00"
+            "time": "2024-02-13T06:30:24+00:00"
         },
         {
             "name": "filament/tables",
-            "version": "v3.2.32",
+            "version": "v3.2.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/tables.git",
@@ -3764,7 +3764,7 @@
         },
         {
             "name": "filament/widgets",
-            "version": "v3.2.32",
+            "version": "v3.2.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/widgets.git",
@@ -14312,16 +14312,16 @@
     "packages-dev": [
         {
             "name": "barryvdh/laravel-debugbar",
-            "version": "v3.10.1",
+            "version": "v3.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-debugbar.git",
-                "reference": "665069c452c30f64c07b6e7ede68c338b96678c7"
+                "reference": "60d3f5d6298a8b23028927302318856e50cbe59b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/665069c452c30f64c07b6e7ede68c338b96678c7",
-                "reference": "665069c452c30f64c07b6e7ede68c338b96678c7",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/60d3f5d6298a8b23028927302318856e50cbe59b",
+                "reference": "60d3f5d6298a8b23028927302318856e50cbe59b",
                 "shasum": ""
             },
             "require": {
@@ -14380,7 +14380,7 @@
             ],
             "support": {
                 "issues": "https://github.com/barryvdh/laravel-debugbar/issues",
-                "source": "https://github.com/barryvdh/laravel-debugbar/tree/v3.10.1"
+                "source": "https://github.com/barryvdh/laravel-debugbar/tree/v3.10.2"
             },
             "funding": [
                 {
@@ -14392,7 +14392,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-02-12T14:22:59+00:00"
+            "time": "2024-02-13T09:14:41+00:00"
         },
         {
             "name": "fakerphp/faker",
@@ -16830,5 +16830,5 @@
         "php": "^8.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }

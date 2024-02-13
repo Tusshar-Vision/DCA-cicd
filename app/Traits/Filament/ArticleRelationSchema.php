@@ -9,6 +9,7 @@ use App\Models\Article;
 use App\Models\User;
 use App\Services\ArticleService;
 use App\Traits\Filament\Components\ArticleForm;
+use App\Traits\Filament\Components\ExpertReviewColumn;
 use App\Traits\HasNotifications;
 use Carbon\Carbon;
 use Filament\Forms\Components\Group;
@@ -50,7 +51,7 @@ use Spatie\Tags\Tag;
 
 trait ArticleRelationSchema
 {
-    use ArticleForm, HasNotifications;
+    use ArticleForm, HasNotifications, ExpertReviewColumn;
     public function form(Form $form): Form
     {
         return $this->articleForm($form);
@@ -122,14 +123,10 @@ trait ArticleRelationSchema
                     ->toggleable(isToggledHiddenByDefault: true),
                 SpatieTagsColumn::make('tags')
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('author.name')
-                    ->searchable()
-                    ->label('Expert')
-                    ->toggleable(),
-                TextColumn::make('reviewer.name')
-                    ->searchable()
-                    ->label('Reviewer')
-                    ->toggleable(),
+
+                $this->getExpertColumn(Auth::user()->can('assign_article')),
+                $this->getReviewColumn(Auth::user()->can('assign_article')),
+
                 TextColumn::make('updated_at')
                     ->label('Last Modified')
                     ->date('d M Y h:i a')
@@ -307,13 +304,13 @@ trait ArticleRelationSchema
                     ->iconButton()
                     ->slideOver()
                     ->tooltip('Edit')
-                    ->visible(function (Model $record) {
+                    ->visible(function (Article $record) {
                         $user = Auth::user();
                         return
                             (
-                                $user->can('edit_article') && $record->status !== 'Published'
+                                $user->can('edit_article') && ($record->status !== 'Published')
                             ) && (
-                                $user->hasRole(['super_admin', 'admin']) || $record->author_id === $user->id
+                                $record->reviewer_id === $user->id || ($record->author_id === $user->id && $record->status !== 'Final') || $user->hasRole(['admin', 'super_admin'])
                             );
                     }),
 
