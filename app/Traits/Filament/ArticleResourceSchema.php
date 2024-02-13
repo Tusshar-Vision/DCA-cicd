@@ -3,11 +3,14 @@
 namespace App\Traits\Filament;
 
 use AmidEsfahani\FilamentTinyEditor\TinyEditor;
+use App\Enums\Initiatives;
+use App\Helpers\InitiativesHelper;
 use App\Jobs\GenerateArticlePDF;
 use App\Models\Article;
 use App\Models\User;
 use App\Services\ArticleService;
 use App\Traits\Filament\Components\ArticleForm;
+use App\Traits\Filament\Components\ExpertReviewColumn;
 use App\Traits\HasNotifications;
 use AymanAlhattami\FilamentDateScopesFilter\DateScopeFilter;
 use Carbon\Carbon;
@@ -32,6 +35,7 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ForceDeleteBulkAction;
 use Filament\Tables\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\ActionsPosition;
@@ -44,11 +48,13 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Component as Livewire;
 use Spatie\Tags\Tag;
 
 trait ArticleResourceSchema
 {
-    use ArticleForm, HasNotifications;
+    use ArticleForm, HasNotifications, ExpertReviewColumn;
+
     public static function form(Form $form): Form
     {
         $articleResource = new self();
@@ -57,6 +63,8 @@ trait ArticleResourceSchema
 
     public static function table(Table $table): Table
     {
+        $articleResource = new self();
+
         return $table
             ->deferLoading()
             ->recordUrl(null)
@@ -120,14 +128,10 @@ trait ArticleResourceSchema
                     ->toggleable(isToggledHiddenByDefault: true),
                 SpatieTagsColumn::make('tags')
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('author.name')
-                    ->searchable()
-                    ->label('Expert')
-                    ->toggleable(),
-                TextColumn::make('reviewer.name')
-                    ->searchable()
-                    ->label('Reviewer')
-                    ->toggleable(),
+
+                $articleResource->getExpertColumn(Auth::user()->can('assign_article')),
+                $articleResource->getReviewColumn(Auth::user()->can('assign_article')),
+
                 TextColumn::make('updated_at')
                     ->label('Last Modified')
                     ->date('d M Y h:i a')
@@ -250,9 +254,9 @@ trait ArticleResourceSchema
                         $user = Auth::user();
                         return
                             (
-                                $user->can('edit_article') && $record->status !== 'Published'
+                                $user->can('edit_article') && ($record->status !== 'Published')
                             ) && (
-                                $user->hasRole(['super_admin', 'admin']) || $record->author_id === $user->id
+                                $record->reviewer_id === $user->id || ($record->author_id === $user->id && $record->status !== 'Final') || $user->hasRole(['admin', 'super_admin'])
                             );
                     }),
 
