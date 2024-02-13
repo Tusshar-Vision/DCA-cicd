@@ -64,7 +64,6 @@ return [
             'bucket' => env('AWS_PUBLIC_BUCKET'),
             'url' => env('AWS_PUBLIC_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
-            'acl' => 'public-read',
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
         ],

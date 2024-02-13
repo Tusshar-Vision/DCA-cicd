@@ -1,6 +1,3 @@
-<!-- activity tab start -->
-
-{{-- <?php dd($readHistories); ?> --}}
 <div class="vigrid-wide"> 
 <div class="vi-profile-tab-container tabc-activity">
     <div class="activity-tab-wrapper">
@@ -64,32 +61,10 @@
                         <li>Nov</li>
                         <li>Dec</li>
                     </ul>
-                    <ul class="con-squares">
-                        <!-- added via javascript -->
-                        <script>
-                            document.addEventListener("DOMContentLoaded", () => {
-                                const squares = document.querySelector('.con-squares');
-
-                                 @foreach ($newsTodayConsumption as $day => $value)
-                                <?php 
-                                $level = null; 
-                                if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
-                                   if($value['total_read'] == $value['total_article']) $level = 1;
-                                   else if($value['total_read'] < $value['total_article']) $level = 2;
-                                } else {
-                                    if($value == null) $level =4;
-                                    else $level = 3;
-                                }
-                                ?>
-
-                                squares.insertAdjacentHTML('beforeend',
-                                        `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : ""}}"></li>`);
-                                @endforeach
-                            });
-                        </script>
+                    <ul class="con-squares" id="daily-news">
                     </ul>
                 </div>
-                <!-- Weekly Content Consumption graph -->
+
                 <p class="con-title">Weekly Focus</p>
                 <div class="weekly-con-graph">
                     <ul class="con-months">
@@ -106,33 +81,10 @@
                         <li>Nov</li>
                         <li>Dec</li>
                     </ul>
-                    <ul class="con-squares">
-                        <!-- added via javascript -->
-                        <script>
-                            document.addEventListener("DOMContentLoaded", () => {
-                                const squares = document.querySelector('.weekly-con-graph .con-squares');
-
-                                
-                                @foreach ($weeklyFocusConsumption as $week => $value)
-                                <?php 
-                                $level = null; 
-                                if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
-                                   if($value['total_read'] == $value['total_article']) $level = 1;
-                                   else if($value['total_read'] < $value['total_article']) $level = 2;
-                                } else {
-                                    if($value == null) $level =4;
-                                    else $level = 3;
-                                }
-                                ?>
-
-                                squares.insertAdjacentHTML('beforeend',
-                                        `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : ""}}"></li>`);
-                                @endforeach
-                            });
-                        </script>
+                    <ul class="con-squares" id="weekly-focus">
                     </ul>
                 </div>
-                <!-- Monthly Content Consumption graph -->
+
                 <p class="con-title">Monthly magazine</p>
                 <div class="monthly-con-graph">
                     <ul class="con-months">
@@ -150,10 +102,73 @@
                         <li>Dec</li>
                     </ul>
 
-                    <ul class="con-squares">
-                        <script>
-                            document.addEventListener("DOMContentLoaded", () => {
-                                const squares = document.querySelector('.monthly-con-graph .con-squares');
+                    <ul class="con-squares" id="monthly-magazine">
+                    </ul>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+
+<script>
+    const onfocus = document.querySelector('.search-focus');
+    const showlist = document.querySelector('.focus-show');
+
+    onfocus.addEventListener("focus", () => {
+        showlist.style.display = 'block';
+    });
+
+    onfocus.addEventListener("blur", () => {
+        showlist.style.display = 'none';
+    });
+
+ function showDailyNews() {
+                                  const square = document.getElementById('daily-news');
+                                 @foreach ($newsTodayConsumption as $day => $value)
+    
+                                <?php 
+                                $level = null; 
+                                if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
+                                   if($value['total_read'] == $value['total_article']) $level = 1;
+                                   else if($value['total_read'] < $value['total_article']) $level = 2;
+                                } else {
+                                    if($value == null) $level =4;
+                                    else $level = 3;
+                                }
+                                ?>
+                               
+                                square.innerHTML += `<li data-level="{{$level}}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : ""}}"></li>`
+                                        
+                                @endforeach
+ }
+
+ function showWeeklyFocus() {
+    const square = document.getElementById('weekly-focus');
+
+                                
+                                @foreach ($weeklyFocusConsumption as $week => $value)
+                                <?php 
+                                $level = null; 
+                                if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
+                                   if($value['total_read'] == $value['total_article']) $level = 1;
+                                   else if($value['total_read'] < $value['total_article']) $level = 2;
+                                } else {
+                                    if($value == null) $level =4;
+                                    else $level = 3;
+                                }
+                                ?>
+
+                                square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : ""}}"></li>`
+                                @endforeach
+ }
+
+ function showMonthlyMagazine() {
+                                    const square = document.getElementById('monthly-magazine');
 
                                 @foreach ($montlyMagazineConsumption as $month => $value)
                                 <?php 
@@ -167,31 +182,12 @@
                                 }
                                 ?>
 
-                                squares.insertAdjacentHTML('beforeend',
-                                        `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : ""}}"></li>`);
+                                square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : ""}}"></li>`
                                 @endforeach
-                            });
-                        </script>
-                    </ul>
-                </div>
-            </div>
-        </div>
+}
 
-    </div>
-</div>
-</div>
-<!-- activity tab start -->
+ showDailyNews()
+ showWeeklyFocus()
+ showMonthlyMagazine()
 
-<script>
-    /* on focus show dropdown */
-    const onfocus = document.querySelector('.search-focus');
-    const showlist = document.querySelector('.focus-show');
-
-    onfocus.addEventListener("focus", () => {
-        showlist.style.display = 'block';
-    });
-
-    onfocus.addEventListener("blur", () => {
-        showlist.style.display = 'none';
-    });
 </script>

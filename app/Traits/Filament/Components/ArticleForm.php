@@ -59,6 +59,9 @@ trait ArticleForm
                                         'image/svg',
                                         'image/webp'
                                     ])
+                                    ->customHeaders([
+                                        'ACL' => 'public-read'
+                                    ])
                                     ->disk('s3_public')
                                     ->collection('article-featured-image')
                                     ->responsiveImages()

@@ -54,7 +54,7 @@ trait ExpertReviewColumn
                 ->label('Reviewer')
                 ->toggleable();
         }
-        
+
         return SelectColumn::make('reviewer_id')
             ->options(function (Livewire $livewire, Article $article) {
                 $initiative_id = $livewire->ownerRecord?->initiative_id ?? $article->initiative_id;
