@@ -77,6 +77,7 @@ function showArticleCards(year, month, monthName) {
          res.map(article => {
             html += `<div @click.stop class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
+                <a href=${article.url}>
                 <div class="weekly-focus-progress-single-bar border-b-2">
                     <p>News Today - <span>${article.formatted_published_at}</span></p>
                     <div class="progress-bar">
@@ -88,6 +89,7 @@ function showArticleCards(year, month, monthName) {
                         <li class="text-[#3362CC] text-sm font-normal"><a href="javascript:void(0)" class="hover:underline">Download</a></li>
                     </ul>
                 </div>
+                </a>
             </div>
         </div>`
          })
