@@ -28,7 +28,7 @@
 @foreach ($articles as $year => $months)
     <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: {{$i==0 ? 'true': 'false'}}, newsTodayContainer: false }" @click="expanded = ! expanded, newsTodayContainer = false">
     <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]">
-        <h4 class="text-[#040404] text-[32px] font-normal">{{$year}} <span id="month"></span></h4>
+        <h4 class="text-[#040404] text-[32px] font-normal">{{$year}} <span id="month" x-show="newsTodayContainer === true"></span></h4>
         <div>
                     <div x-show="expanded === true">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
