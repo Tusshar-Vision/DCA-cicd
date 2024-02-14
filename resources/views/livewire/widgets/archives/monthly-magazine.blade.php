@@ -45,7 +45,7 @@
     </div>
     </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true" @click.stop>
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 archiveContent pb-[30px]" x-show="expanded === true" @click.stop>
     @foreach ($article as $a)
        <?php
         $date = Carbon\Carbon::parse($a['publishedAt'])->format('Y-m-d');
