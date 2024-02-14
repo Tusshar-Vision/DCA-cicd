@@ -52,7 +52,7 @@
                 <div class="weekly-focus-progress-single-bar border-b-2">
                     <p>{{ date('F', mktime(0, 0, 0, $month, 1)) }}</p>
                     <div class="progress-bar">
-                        <div class="bar" style="width:35%; background-color: #89D38C;">
+                        <div class="bar" style="width:100%; background-color: #89D38C;">
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@ function showArticleCards(year, month, monthName) {
                 <div class="weekly-focus-progress-single-bar border-b-2">
                     <p>News Today - <span>${article.formatted_published_at}</span></p>
                     <div class="progress-bar">
-                        <div class="bar" style="width:35%; background-color: #89D38C;">
+                        <div class="bar" style="width:100%; background-color: #89D38C;">
                         </div>
                     </div>
                     <ul class="flex justify-start space-x-4 mt-[15px]">
