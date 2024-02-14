@@ -49,7 +49,7 @@
     @foreach ($months as $month)
         <div class="weekly-focus-single-card" @click.stop onclick="showArticleCards({{$year}}, {{$month}}, `{{date('F', mktime(0, 0, 0, $month, 1))}}`)" @click="newsTodayContainer =! newsTodayContainer">
             <div class="weekly-focus-progress-list mt-0">
-                <div class="weekly-focus-progress-single-bar border-b-2">
+                <div class="weekly-focus-progress-single-bar cursor-pointer border-b-2 ">
                     <p>{{ date('F', mktime(0, 0, 0, $month, 1)) }}</p>
                     <div class="progress-bar">
                         <div class="bar" style="width:35%; background-color: #89D38C;">
@@ -74,9 +74,8 @@ function showArticleCards(year, month, monthName) {
     document.getElementById("month").innerHTML = "- " + monthName
     getData(url).then(res => {
           let html = ""
-         console.log("data", res);
          res.map(article => {
-            html += `<div class="weekly-focus-single-card">
+            html += `<div @click.stop class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
                 <div class="weekly-focus-progress-single-bar border-b-2">
                     <p>News Today - <span>${article.formatted_published_at}</span></p>
