@@ -55,6 +55,7 @@
         ?>
         <div class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
+                <a href="{{App\Services\ArticleService::getArticleUrlFromSlug($slug)}}">
                 <div class="weekly-focus-progress-single-bar border-b-2">
                     <p>{{$title}}</p>
                     <div class="progress-bar">
@@ -62,17 +63,11 @@
                         </div>
                     </div>
                     <ul class="flex justify-start space-x-4 mt-[15px]">
-                        <li class="text-[#3362CC] text-sm font-normal"><a href="{{route(
-                                    'monthly-magazine.article',
-                                    [
-                                        'date' => $date,
-                                        'topic' => strtolower($topic),
-                                        'article_slug' =>$slug
-                                    ]
-                                )}}" class="hover:underline">Read</a></li>
+                        <li class="text-[#3362CC] text-sm font-normal"><a href="{{App\Services\ArticleService::getArticleUrlFromSlug($slug)}}" class="hover:underline">Read</a></li>
                         <li class="text-[#3362CC] text-sm font-normal"><a href="javascript:void(0)" class="hover:underline">Download</a></li>
                     </ul>
                 </div>
+                </a>
             </div>
         </div>  
     @endforeach

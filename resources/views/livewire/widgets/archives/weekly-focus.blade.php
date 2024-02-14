@@ -92,6 +92,7 @@
                         <div class="weekly-focus-progress-list">
                             @foreach ($monthData as $week => $weekData)
                                 @foreach ($weekData as $article)
+                                    <a href="{{App\Services\ArticleService::getArticleUrlFromSlug($article['slug'])}}">
                                     <div class="weekly-focus-progress-single-bar border-b-2 pb-[15px]">
                                         <p>{{$article['title']}}</p>
                                         <div class="progress-bar">
@@ -110,6 +111,7 @@
                                             </li>
                                         </ul>
                                     </div>
+                                    </a>
                                 @endforeach
                             @endforeach
                         </div>

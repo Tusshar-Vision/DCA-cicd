@@ -550,6 +550,10 @@ $gray-686E70: #686E70;
     border: 0;
   }
 
+  .weekly-focus-progress-single-bar {
+    cursor: pointer;
+  }
+
   .vi-download-card {
     padding: 8px 16px;
     border: 1px solid #E9E9E9;
@@ -3191,7 +3195,7 @@ iframe {
   width: 100% !important;
 }
 
-.activeCard{
+.activeCard {
   background-color: #d3ffd5;
   border-color: #89D38C;
 }
