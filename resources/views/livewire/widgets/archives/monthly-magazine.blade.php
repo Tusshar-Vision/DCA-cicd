@@ -56,7 +56,7 @@
         <div class="weekly-focus-single-card">
             <div class="weekly-focus-progress-list mt-0">
                 <div class="weekly-focus-progress-single-bar border-b-2">
-                    <p>January</p>
+                    <p>{{$title}}</p>
                     <div class="progress-bar">
                         <div class="bar" style="width:100%; background-color: #89D38C;">
                         </div>
