@@ -38,6 +38,7 @@ class Article extends Model implements HasMedia, Sortable
 
     protected $fillable = [
         'title',
+        'short_title',
         'slug',
         'featured_image',
         'excerpt',

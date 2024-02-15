@@ -43,6 +43,7 @@ trait ArticleForm
 
                                 Group::make()->schema([
                                     TextInput::make('title')->required(),
+                                    TextInput::make('short_title')->label('Short Title'),
                                     Textarea::make('excerpt')->label('Description'),
                                 ])->columnSpan(1),
 

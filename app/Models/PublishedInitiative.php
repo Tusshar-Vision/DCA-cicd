@@ -24,7 +24,8 @@ class PublishedInitiative extends Model implements HasMedia
         'language_id',
         'is_published',
         'initiative_topic_id',
-        'infographics_id'
+        'infographics_id',
+        'video_id'
     ];
 
     protected $casts = [
@@ -94,6 +95,11 @@ class PublishedInitiative extends Model implements HasMedia
     public function infographic(): BelongsTo
     {
         return $this->belongsTo(Infographic::class);
+    }
+
+    public function video(): BelongsTo
+    {
+        return $this->belongsTo(Video::class);
     }
 
     public function language(): BelongsTo

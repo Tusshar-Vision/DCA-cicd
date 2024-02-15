@@ -219,6 +219,7 @@ class WeeklyFocusResource extends Resource
                     ->schema([
                         Select::make('infographic_id')
                             ->label('Infographic')
+                            ->searchable()
                             ->relationship('infographic', 'title')
                             ->createOptionForm([
                                     TextInput::make('title')->required(),
