@@ -47,7 +47,7 @@ class PaperResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+//                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -55,7 +55,7 @@ class PaperResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\TopicsRelationManager::class
         ];
     }
 

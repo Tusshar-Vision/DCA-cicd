@@ -17,4 +17,5 @@ enum Initiatives : string {
     case VALUE_ADDED_MATERIAL_OPTIONAL = 'Value Added Material (Optional)';
     case QUARTERLY_REVISION_DOCUMENTS = 'Quarterly Revision Documents';
     case BUDGET = "Budget";
+    case YEAR_END_REVIEW = "Year End Review";
 }

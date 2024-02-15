@@ -40,7 +40,12 @@ class PublishedInitiative extends Model implements HasMedia
 
     public function articles(): HasMany
     {
-        return $this->hasMany(Article::class);
+        return $this->hasMany(Article::class)->where('is_short', false);
+    }
+
+    public function shortArticles(): HasMany
+    {
+        return $this->hasMany(Article::class)->where('is_short', true);
     }
 
     /**

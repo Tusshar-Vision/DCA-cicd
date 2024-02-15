@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Enums\Initiatives;
 use App\Filament\Resources\NewsTodayResource\Pages;
 use App\Filament\Resources\NewsTodayResource\RelationManagers\ArticlesRelationManager;
+use App\Filament\Resources\NewsTodayResource\RelationManagers\ShortArticlesRelationManager;
 use App\Helpers\InitiativesHelper;
 use App\Models\Announcement;
 use App\Models\Article;
@@ -194,8 +195,8 @@ class NewsTodayResource extends Resource
                                         ->label('Subject')
                                         ->reactive()
                                         ->afterStateUpdated(function (Set $set, ?string $state) {
-                                            $set('topic_section_id', 0);
-                                            $set('topic_sub_section_id', 0);
+                                            $set('topic_section_id', null);
+                                            $set('topic_sub_section_id', null);
                                         }),
 
                                     Select::make('topic_section_id')
@@ -206,7 +207,7 @@ class NewsTodayResource extends Resource
                                         ->reactive()
                                         ->label('Section')
                                         ->afterStateUpdated(function (Set $set, ?string $state) {
-                                            $set('topic_sub_section_id', 0);
+                                            $set('topic_sub_section_id', null);
                                         }),
 
                                     Select::make('topic_sub_section_id')
@@ -289,7 +290,7 @@ class NewsTodayResource extends Resource
     {
         return [
             ArticlesRelationManager::class,
-            ArticlesRelationManager::class
+            ShortArticlesRelationManager::class
         ];
     }
 
