@@ -5,6 +5,7 @@ namespace App\Traits\Filament\Components;
 use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use App\Enums\Initiatives;
 use App\Filament\Components\Repeater;
+use App\Forms\Components\CKEditor;
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
 use Filament\Forms\Components\Actions\Action;
@@ -201,14 +202,15 @@ trait ArticleForm
                         Section::make('Content')
                             ->relationship('content')
                             ->schema([
-                                TinyEditor::make('content')
-                                    ->columnSpanFull()
-                                    ->fileAttachmentsDisk('public')
-                                    ->fileAttachmentsVisibility('public')
-                                    ->fileAttachmentsDirectory('uploads')
-                                    ->profile('full')
-                                    ->maxHeight(500)
-                                    ->hiddenLabel(),
+                                CKEditor::make('content')
+//                                TinyEditor::make('content')
+//                                    ->columnSpanFull()
+//                                    ->fileAttachmentsDisk('public')
+//                                    ->fileAttachmentsVisibility('public')
+//                                    ->fileAttachmentsDirectory('uploads')
+//                                    ->profile('full')
+//                                    ->maxHeight(500)
+//                                    ->hiddenLabel(),
 
                         ])->headerActions([
                             Action::make('Reviews')
