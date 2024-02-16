@@ -84,7 +84,7 @@
                         <div class="weekly-focus-progress-single-bar border-b-2 pb-[15px]">
                     <p>{{$article['title']}}</p>
                     <div class="progress-bar">
-                        <div class="bar" style="width:35%;background-color: #89D38C;">
+                        <div class="bar" style="width:100%;background-color: #89D38C;">
                         </div>
                     </div>
                     <ul class="flex justify-start space-x-4 mt-[15px]">

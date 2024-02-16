@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Traits\Filament\Components;
+namespace App\Filament\Resources\NewsTodayResource\RelationManagers;
 
 use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use App\Enums\Initiatives;
 use App\Filament\Components\Repeater;
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
+use App\Traits\Filament\ArticleRelationSchema;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
@@ -21,15 +22,22 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
+use Filament\Resources\RelationManagers\RelationManager;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component as Livewire;
 use RalphJSmit\Filament\SEO\SEO;
 
-trait ArticleForm
+class ShortArticlesRelationManager extends RelationManager
 {
-    public function articleForm(Form $form): Form {
+    protected static string $relationship = 'shortArticles';
 
+    protected static ?string $title = 'Also in News';
+
+    use ArticleRelationSchema;
+
+    public function form(Form $form): Form
+    {
         return $form
             ->schema([
 
@@ -40,31 +48,7 @@ trait ArticleForm
                         Section::make('General')->schema([
 
                             Group::make()->schema([
-
-                                Group::make()->schema([
-                                    TextInput::make('title')->required(),
-                                    TextInput::make('short_title')->label('Short Title'),
-                                    Textarea::make('excerpt')->label('Description'),
-                                ])->columnSpan(1),
-
-                                SpatieMediaLibraryFileUpload::make('featured_image')
-                                    ->imageEditor()
-                                    ->imageEditorAspectRatios([
-                                        '16:9',
-                                        '4:3',
-                                        '1:1',
-                                    ])
-                                    ->acceptedFileTypes([
-                                        'image/jpeg',
-                                        'image/png',
-                                        'image/svg',
-                                        'image/webp'
-                                    ])
-                                    ->disk('s3_public')
-                                    ->collection('article-featured-image')
-                                    ->responsiveImages()
-                                    ->conversion('thumb'),
-
+                                TextInput::make('title')->required(),
                             ])->columns(2),
 
 
@@ -137,6 +121,8 @@ trait ArticleForm
                                     return $livewire->ownerRecord->initiative_id;
                                 }),
 
+                                Hidden::make('is_short')->default(true),
+
                                 Select::make('initiative_topic_id')
                                     ->relationship('topic', 'name')
                                     ->required()
@@ -207,96 +193,44 @@ trait ArticleForm
                                     ->maxHeight(500)
                                     ->hiddenLabel(),
 
-                        ])->headerActions([
-                            Action::make('Reviews')
-                                ->fillForm(function (Article $record) {
-                                    return [
-                                        "body" => $record->latestReview()->review ?? 'No reviewer comments available on this article.',
-                                    ];
-                                })
-                                ->form([
-                                    RichEditor::make('body')
-                                        ->label('')
-                                        ->disabled()
-                                        ->disableToolbarButtons([
-                                            'attachFiles',
-                                            'codeBlock',
-                                        ])
-                                        ->maxLength(200)
-                                        ->required(),
-                                ])
-                                ->visible(function (?Model $record) {
-                                    return $record !== null;
-                                }),
+                            ])->headerActions([
+                                Action::make('Reviews')
+                                    ->fillForm(function (Article $record) {
+                                        return [
+                                            "body" => $record->latestReview()->review ?? 'No reviewer comments available on this article.',
+                                        ];
+                                    })
+                                    ->form([
+                                        RichEditor::make('body')
+                                            ->label('')
+                                            ->disabled()
+                                            ->disableToolbarButtons([
+                                                'attachFiles',
+                                                'codeBlock',
+                                            ])
+                                            ->maxLength(200)
+                                            ->required(),
+                                    ])
+                                    ->visible(function (?Model $record) {
+                                        return $record !== null;
+                                    }),
 
-                            Action::make('Changes Incorporated')
-                                ->requiresConfirmation()
-                                ->modalHeading('Are you sure you want to change the status')
-                                ->modalDescription('Make sure you have gone through all the reviews and incorporated them in the article.')
-                                ->visible(function (?Article $record) {
-                                    return $record !== null && $record->status === 'Improve';
-                                })
-                                ->action(function(Article $record) {
-                                    $record->setStatus('Changes Incorporated');
-                                }),
-                        ])->collapsible(),
+                                Action::make('Changes Incorporated')
+                                    ->requiresConfirmation()
+                                    ->modalHeading('Are you sure you want to change the status')
+                                    ->modalDescription('Make sure you have gone through all the reviews and incorporated them in the article.')
+                                    ->visible(function (?Article $record) {
+                                        return $record !== null && $record->status === 'Improve';
+                                    })
+                                    ->action(function(Article $record) {
+                                        $record->setStatus('Changes Incorporated');
+                                    }),
+                            ])->collapsible(),
 
                         TagsInput::make('sources')
                             ->separator(',')
                             ->placeholder('New Source')
                     ]),
-
-                    Tabs\Tab::make('Related Articles')->schema([
-                        Repeater::make('articles')
-                            ->label('')
-                            ->relationship('relatedArticles')
-                            ->simple(
-                                Select::make('related_article_id')
-                                    ->relationship('relatedArticle', 'title')
-                                    ->required()
-                            )
-                            ->orderColumn('order_column')
-                            ->maxItems(4)
-                            ->reorderable()
-                            ->addActionLabel('Add article')
-                    ]),
-
-                    Tabs\Tab::make('Related Videos')->schema([
-                        Repeater::make('videos')
-                            ->label('')
-                            ->relationship('relatedVideos')
-                            ->simple(
-                                Select::make('video_id')
-                                    ->relationship('video', 'title')
-                                    ->required(),
-                            )
-                            ->orderColumn('order_column')
-                            ->maxItems(5)
-                            ->reorderable()
-                            ->addActionLabel('Add video')
-                    ]),
-
-                    Tabs\Tab::make('Related Terms')->schema([
-                        Repeater::make('terms')
-                            ->label('')
-                            ->relationship('relatedTerms')
-                            ->simple(
-                                Select::make('related_term_id')
-                                    ->relationship('term', 'term')
-                                    ->required(),
-                            )
-                            ->orderColumn('order_column')
-                            ->maxItems(3)
-                            ->reorderable()
-                            ->addActionLabel('Add term')
-                    ]),
-
-                    Tabs\Tab::make('SEO')->schema([
-                        Section::make('Meta Information')->schema([
-                            SEO::make()
-                        ])
-                    ]),
-
                 ])->columnSpanFull(),
             ]);
     }

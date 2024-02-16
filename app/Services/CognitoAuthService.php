@@ -146,6 +146,9 @@ class CognitoAuthService
         return (bool) $response['UserConfirmed'];
     }
 
+    /**
+     * @throws \Exception
+     */
     public function forgotPassword($email): CognitoErrorCodes|Result
     {
         try {
@@ -203,7 +206,8 @@ class CognitoAuthService
      * Generates and resends the confirmation code for the given user
      *
      * @param $email
-     * @return bool
+     * @return bool|CognitoErrorCodes
+     * @throws \Exception
      */
     public function resendCode($email): bool|CognitoErrorCodes
     {

@@ -5,21 +5,34 @@ namespace App\Filament\Resources;
 use App\Enums\Initiatives;
 use App\Filament\Resources\NewsTodayResource\Pages;
 use App\Filament\Resources\NewsTodayResource\RelationManagers\ArticlesRelationManager;
+use App\Filament\Resources\NewsTodayResource\RelationManagers\ShortArticlesRelationManager;
 use App\Helpers\InitiativesHelper;
 use App\Models\Announcement;
 use App\Models\Article;
+use App\Models\InitiativeTopic;
 use App\Models\PublishedInitiative;
+use App\Models\TopicSection;
+use App\Models\TopicSubSection;
 use App\Models\User;
+use App\Models\Video;
 use App\Services\PublishedInitiativeService;
 use App\Traits\Filament\InitiativeResourceSchema;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\SpatieTagsInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
@@ -164,15 +177,120 @@ class NewsTodayResource extends Resource
                             }
                         })
                         ->columnSpanFull(),
+                ])->columnSpan(1),
+                Forms\Components\Section::make("Upload Today's Video")
+                    ->schema([
+                        Select::make('video_id')
+                            ->label('Video')
+                            ->searchable()
+                            ->relationship('video', 'title')
+                            ->createOptionForm([
+                                Section::make()->schema([
+                                    TextInput::make('title')->required(),
+                                    Textarea::make('description')->label('Description'),
 
-                ])->columns(2),
+                                    Select::make('initiative_topic_id')
+                                        ->options(InitiativeTopic::all()->pluck('name', 'id'))
+                                        ->required()
+                                        ->label('Subject')
+                                        ->reactive()
+                                        ->afterStateUpdated(function (Set $set, ?string $state) {
+                                            $set('topic_section_id', null);
+                                            $set('topic_sub_section_id', null);
+                                        }),
+
+                                    Select::make('topic_section_id')
+                                        ->options(function (Get $get) {
+                                            $topicID = $get('initiative_topic_id');
+                                            return TopicSection::where('topic_id', '=', $topicID)->pluck('name', 'id');
+                                        })
+                                        ->reactive()
+                                        ->label('Section')
+                                        ->afterStateUpdated(function (Set $set, ?string $state) {
+                                            $set('topic_sub_section_id', null);
+                                        }),
+
+                                    Select::make('topic_sub_section_id')
+                                        ->options(function (Get $get) {
+                                            $sectionID = $get('topic_section_id');
+                                            return TopicSubSection::where('section_id', '=', $sectionID)->pluck('name', 'id');
+                                        })
+                                        ->reactive()
+                                        ->label('Sub Section'),
+                                ])->columnSpan(1),
+
+                                Section::make()->schema([
+
+                                    Toggle::make('is_url')
+                                        ->label('Provide URL')
+                                        ->reactive(),
+
+                                    SpatieMediaLibraryFileUpload::make('Video')
+                                        ->hidden(function (callable $get) {
+                                            return $get('is_url');
+                                        })
+                                        ->id('video')
+                                        ->collection('video')
+                                        ->visibility('private')
+                                        ->visible(function (?Video $record) {
+                                            if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer'])) return true;
+                                            else if ($record !== null && $record->hasMedia('infographic')) return true;
+                                            else return false;
+                                        })
+                                        ->openable()
+                                        ->deletable(function (?Video $record) {
+                                            if ($record !== null && $record->is_published === true) {
+                                                return Auth::user()->hasAnyRole(['admin', 'super_admin']);
+                                            } else {
+                                                return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer']);
+                                            }
+                                        })
+                                        ->required()
+                                        ->acceptedFileTypes([
+                                            'video/mp4',         // MP4 videos
+                                            'video/webm',        // WebM videos
+                                            'video/ogg',
+                                        ])
+                                        ->previewable(),
+
+                                    TextInput::make('url')
+                                        ->visible(function (callable $get) {
+                                            return $get('is_url');
+                                        })
+                                        ->label('Video URL')
+                                        ->required()
+                                        ->activeUrl(true),
+
+                                    Group::make()->schema([
+
+                                        Select::make('language_id')
+                                            ->relationship('language', 'name', function ($query) {
+                                                return $query->orderBy('order_column');
+                                            })
+                                            ->label('Language')
+                                            ->required()
+                                            ->default(1),
+
+                                        SpatieTagsInput::make('tags')
+                                            ->required(),
+
+                                    ])->columns(1),
+
+                                    Hidden::make('author_id')->default(function () {
+                                        return Auth::user()->id;
+                                    })
+
+                                ])->columnSpan(1)
+                            ]),
+                    ])->columnSpan(1)
             ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            ArticlesRelationManager::class
+            ArticlesRelationManager::class,
+            ShortArticlesRelationManager::class
         ];
     }
 

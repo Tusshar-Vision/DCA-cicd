@@ -24,7 +24,8 @@ class PublishedInitiative extends Model implements HasMedia
         'language_id',
         'is_published',
         'initiative_topic_id',
-        'infographics_id'
+        'infographics_id',
+        'video_id'
     ];
 
     protected $casts = [
@@ -39,7 +40,12 @@ class PublishedInitiative extends Model implements HasMedia
 
     public function articles(): HasMany
     {
-        return $this->hasMany(Article::class);
+        return $this->hasMany(Article::class)->where('is_short', false);
+    }
+
+    public function shortArticles(): HasMany
+    {
+        return $this->hasMany(Article::class)->where('is_short', true);
     }
 
     /**
@@ -94,6 +100,11 @@ class PublishedInitiative extends Model implements HasMedia
     public function infographic(): BelongsTo
     {
         return $this->belongsTo(Infographic::class);
+    }
+
+    public function video(): BelongsTo
+    {
+        return $this->belongsTo(Video::class);
     }
 
     public function language(): BelongsTo
