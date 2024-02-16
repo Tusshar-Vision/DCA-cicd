@@ -89,6 +89,14 @@
                     Quarterly Revision Documents
                 </a>
             </li>
+            <li class="font-semibold text-base text-[#183B56] mb-1">
+                <a href="{{ route('year-end-reviews') }}"
+                   wire:navigate
+                   class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('year-end-reviews*') ? 'activeSidebar' : '' }}"
+                >
+                    Year End Reviews
+                </a>
+            </li>
 
     {{-- These initiatives will be enabled in future, don't remove --}}
 

@@ -158,4 +158,22 @@ readonly class DownloadService
 
         return $result;
     }
+
+    public function getYearEndReviews($year)
+    {
+        $query = $this->publishedInitiative
+            ->isPublished()
+            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::YEAR_END_REVIEW))
+            ->has('media')
+            ->with('media');
+
+        if ($year) $query->whereYear('created_at', $year);
+
+        $result = $query->get()
+            ->groupBy(function ($item) {
+                return $item->created_at->format('Y');
+            });
+
+        return $result;
+    }
 }
