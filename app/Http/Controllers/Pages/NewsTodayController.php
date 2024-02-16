@@ -64,6 +64,7 @@ class NewsTodayController extends Controller
         );
 
         $article = $this->newsToday->getArticleFromSlug($slug);
+        $videoUrl = $this->newsToday->videoUrl;
 
         $noteAvailable = null;
         $note = null;
@@ -82,7 +83,8 @@ class NewsTodayController extends Controller
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
             "isArticleBookmarked" => $isArticleBookmarked,
-            "newsTodayCalendar" => $newsTodayCalendar
+            "newsTodayCalendar" => $newsTodayCalendar,
+            'videoUrl' => $videoUrl
         ]);
     }
 

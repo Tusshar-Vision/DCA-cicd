@@ -19,8 +19,10 @@ abstract class PublishedInitiativeDTO extends Data
         public DataCollection $articles,
         public string $publishedAt,
         public string $createdAt,
-        public string $updatedAt
-    ) {}
+        public string $updatedAt,
+        public string $videoUrl
+    ) {
+    }
 
     /**
      * @throws ArticleNotFoundException
@@ -52,7 +54,8 @@ abstract class PublishedInitiativeDTO extends Data
             ArticleDTO::collection($publishedInitiative->articles),
             Carbon::parse($publishedInitiative->published_at)->format('Y-m-d'),
             $publishedInitiative->created_at,
-            $publishedInitiative->updated_at
+            $publishedInitiative->updated_at,
+            $publishedInitiative->video?->url
         );
     }
 }

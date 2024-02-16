@@ -12,9 +12,10 @@ class SideBarDownloadMenu extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public $initiative = null
-    )
-    {}
+        public $initiative = null,
+        public $videoUrl = ""
+    ) {
+    }
 
     /**
      * Get the view / contents that represent the component.

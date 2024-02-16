@@ -20,18 +20,19 @@ readonly class PublishedInitiativeService
     public function getLatest($initiativeId, $date = null): PublishedInitiative|null
     {
         $query = $this->publishedInitiatives
-                    ->whereInitiative($initiativeId)
-                    ->isPublished()
-                    ->hasPublishedArticle()
-                    ->latest('published_at');
+            ->whereInitiative($initiativeId)
+            ->isPublished()
+            ->hasPublishedArticle()
+            ->with('video')
+            ->latest('published_at');
 
         if ($date !== null)
             $query = $query->whereDate('published_at', '=', Carbon::parse($date)->format('Y-m-d'));
 
         $publishedInitiative = $query->with('articles', function ($article) {
-                    $article->language()->isPublished()->Ordered()->with(['topic', 'relatedArticles', 'relatedVideos', 'relatedTerms']);
-                })
-                ->first();
+            $article->language()->isPublished()->Ordered()->with(['topic', 'relatedArticles', 'relatedVideos', 'relatedTerms']);
+        })
+            ->first();
 
         throw_if(
             $publishedInitiative === null,
