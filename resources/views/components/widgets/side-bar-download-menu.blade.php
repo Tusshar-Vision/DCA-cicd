@@ -36,7 +36,7 @@
                     <span>
                         {{
                             ($initiative === 'weekly-focus') ?
-                            'Download Weekly Focus' :
+                            'Watch iConversation' :
                             (
                                 $initiative === 'news-today' ?
                                 "Watch Today's News" :
