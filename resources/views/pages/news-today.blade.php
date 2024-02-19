@@ -5,6 +5,9 @@
     use Carbon\Carbon;
     $highlightsHeading = 'My Highlights';
     $notesHeading = 'My Notes';
+    $inShort = request()->is('news-today/also-in-news*');
+
+    logger("articless", [$articles]);
 @endphp
 
 @section('content')
@@ -49,7 +52,12 @@
 
                     <x-header.article readTime="{{ $article->readTime }}" />
 
+                    @if($inShort)
+                    <x-inshort-article :articles="$articles->articles" class="m-0" />
+                    @else
                     <x-article-content :article="$article" class="m-0" />
+                    @endif
+
 
                     <div class="mt-12">
                         <x-widgets.article-pagination :current-initiative="$articles" :current-article-slug="$article->slug" />

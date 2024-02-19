@@ -48,6 +48,43 @@ class NewsTodayController extends Controller
             );
     }
 
+    public function alsoInNews(InitiativeService $initiativeService)
+    {
+        $this->newsToday = NewsTodayDTO::fromModel(
+            $this->publishedInitiativeService
+                ->getLatest($this->initiativeId)
+        );
+
+        $newsTodayCalendar = NewsTodayMenuDTO::fromNewsTodayDTO(
+            $this->newsToday,
+            $initiativeService->getMenuData(Initiatives::NEWS_TODAY)
+        );
+
+        $article = $this->newsToday->getArticleInNews();
+        $videoUrl = $this->newsToday->videoUrl;
+
+        $noteAvailable = null;
+        $note = null;
+        $isArticleBookmarked = false;
+
+        if (Auth::guard('cognito')->check()) {
+            $noteAvailable = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->count() > 0;
+            $note = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
+            $bookmark =  Bookmark::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
+            if ($bookmark) $isArticleBookmarked = true;
+        }
+
+        return View('pages.news-today', [
+            "articles" => $this->newsToday,
+            "article" => $article,
+            "noteAvailable"  => $noteAvailable,
+            "note" => $note,
+            "isArticleBookmarked" => $isArticleBookmarked,
+            "newsTodayCalendar" => $newsTodayCalendar,
+            'videoUrl' => $videoUrl
+        ]);
+    }
+
     /**
      * @throws \Throwable
      */

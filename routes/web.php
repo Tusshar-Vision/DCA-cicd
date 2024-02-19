@@ -35,6 +35,7 @@ Route::controller(Pages\NewsTodayController::class)
                         Route::get('/{date}/{topic}/{article_slug}', 'renderArticle')->name('news-today.article');
                         Route::get('/getbymonth', 'getByYearAndMonth')->name('news-today.getByYearAndMonth');
                         Route::get('/archive', 'archive')->name('news-today.archive');
+                        Route::get('/also-in-news', 'alsoInNews')->name('news-today.alsoInNews');
                     }
                 );
         }

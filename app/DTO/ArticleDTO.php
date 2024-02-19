@@ -26,6 +26,7 @@ class ArticleDTO extends Data implements Wireable
         public string            $visibility,
         public string            $language,
         public bool              $isFeatured,
+        public int $isShort,
         public array|Collection  $tags,
         public array|Collection|null  $relatedTerms,
         public array|Collection|null  $relatedArticles,
@@ -42,7 +43,8 @@ class ArticleDTO extends Data implements Wireable
         private readonly int  $publishedInitiativeID,
         private readonly int  $author,
         private readonly ?int $reviewer
-    ) {}
+    ) {
+    }
 
     public function getID(): int
     {
@@ -83,6 +85,7 @@ class ArticleDTO extends Data implements Wireable
             $article->visibility,
             $article->language,
             $article->featured,
+            $article->is_short,
             $article->tags,
             $article->relatedTerms,
             $article->relatedArticles,

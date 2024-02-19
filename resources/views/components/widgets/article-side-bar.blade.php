@@ -7,6 +7,7 @@
         <h4 class="font-bold text-base[16px] py-[16px] border-bottom">Table of Content</h4>
         <div class="h-[220px] customScroll overflow-y-auto">
             <ul class="list-none ml-0">
+            <?php $i = 0; ?>
                 @foreach($tableOfContent as $key => $header)
                         @if(is_array($header))
                             @if (isset($header['id']))
@@ -27,7 +28,16 @@
                                 </a>
                             </li>
                         @endif
+                        <?php $i = $loop->iteration; ?>
                 @endforeach
+                            <li class="py-[15px] border-bottom last:border-0 hover:brand-color">
+                                <a href="{{ route('news-today.alsoInNews') }}"
+                                   wire:navigate
+                                   class="flex text-base[16px] font-normal hover:brand-color {{ request()->is('news-today/also-in-news*') ? 'brand-color' : '' }}"
+                                >
+                                    <span class="mr-1">{{ $i + 1 }}<em>.</em></span>Also in news
+                                </a>
+                            </li>
             </ul>
         </div>
     </div>
