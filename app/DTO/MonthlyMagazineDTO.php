@@ -27,7 +27,8 @@ class MonthlyMagazineDTO extends PublishedInitiativeDTO
             ArticleDTO::collection($publishedInitiative->articles),
             Carbon::parse($publishedInitiative->published_at)->format('Y-m-d'),
             $publishedInitiative->created_at,
-            $publishedInitiative->updated_at
+            $publishedInitiative->updated_at,
+            $publishedInitiative->video?->url
         );
 
         foreach ($dto->articles as $article) {
