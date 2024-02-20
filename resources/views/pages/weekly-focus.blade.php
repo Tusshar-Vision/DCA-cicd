@@ -31,7 +31,7 @@
         <div x-data="{ isTopicAtGlanceOpen: false }" class="flex justify-between mt-[20px] md:mt-0">
             <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8 ">
                 <div class="flex w-full lg:md:w-2/6 flex-col space-y-6 leftsticky">
-                                <h2 class="text-[20px] font-bold mt-[26px] pb-3 border-b border-color">Weekly focus</h2>
+                                <h2 class="text-[20px] font-bold mt-[26px] pb-3 border-b border-color">Weekly Focus</h2>
 
                     <x-widgets.article-side-bar :table-of-content="$tableOfContent" />
 

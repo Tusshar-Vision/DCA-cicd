@@ -42,7 +42,7 @@ readonly class DownloadService
 
         $result = $query->get()
             ->groupBy(function ($item) {
-                return $item->created_at->format('Y');
+                return $item->published_at->format('Y');
             });
 
         return $result;
@@ -61,7 +61,7 @@ readonly class DownloadService
 
         $result = $query->get()
             ->groupBy(function ($item) {
-                return $item->created_at->format('Y');
+                return $item->published_at->format('Y');
             });
 
         return $result;
@@ -80,7 +80,7 @@ readonly class DownloadService
 
         $result = $query->get()
             ->groupBy(function ($item) {
-                return $item->created_at->format('Y');
+                return $item->published_at->format('Y');
             });
 
         return $result;
@@ -96,7 +96,7 @@ readonly class DownloadService
 
         $result = $query->get()
             ->groupBy(function ($item) {
-                return $item->created_at->format('Y');
+                return $item->published_at->format('Y');
             });
 
         return $result;
@@ -115,7 +115,7 @@ readonly class DownloadService
 
         $result = $query->get()
             ->groupBy(function ($item) {
-                return $item->created_at->format('Y');
+                return $item->published_at->format('Y');
             });
 
         return $result;
@@ -134,7 +134,7 @@ readonly class DownloadService
 
         $result = $query->get()
             ->groupBy(function ($item) {
-                return $item->created_at->format('Y');
+                return $item->published_at->format('Y');
             });
 
         return $result;
@@ -153,7 +153,7 @@ readonly class DownloadService
 
         $result = $query->get()
             ->groupBy(function ($item) {
-                return $item->created_at->format('Y');
+                return $item->published_at->format('Y');
             });
 
         return $result;
@@ -171,7 +171,7 @@ readonly class DownloadService
 
         $result = $query->get()
             ->groupBy(function ($item) {
-                return $item->created_at->format('Y');
+                return $item->published_at->format('Y');
             });
 
         return $result;
