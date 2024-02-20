@@ -75,7 +75,6 @@ class NewsTodayResource extends Resource
                             ->default(Carbon::now()->format('Y-m-d'))
                             ->rules([
                                 function (PublishedInitiativeService $publishedInitiativeService, ?Model $record) {
-
                                     if ($record !== null) {
                                         return function (string $attribute, $value, \Closure $fail) use($publishedInitiativeService, $record) {
                                             if (
@@ -179,7 +178,12 @@ class NewsTodayResource extends Resource
                             }
                         })
                         ->columnSpanFull(),
-                ])->columnSpan(1),
+                ])
+                ->disabled(function (?PublishedInitiative $record) {
+                    if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                    else if ($record->is_published) return true;
+                })
+                ->columnSpan(1),
                 Forms\Components\Section::make("News Today's Video")
                     ->schema([
                         Select::make('video_id')
@@ -305,7 +309,10 @@ class NewsTodayResource extends Resource
 
     public static function canEdit(Model $record): bool
     {
-        return Auth::user()->can('edit_news::today');
+        $userId = Auth::id(); // Get the current authenticated user's ID
+        return Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'news_today_reviewer']) || (Auth::user()->can('edit_news::today') && $record->articles->contains(function ($article) use ($userId) {
+                return $article->reviewer_id == $userId || $article->expert_id == $userId;
+            }));
     }
 
     public static function canCreate(): bool

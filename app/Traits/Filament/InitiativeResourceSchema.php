@@ -31,9 +31,10 @@ trait InitiativeResourceSchema
 
                 TextColumn::make('id')
                     ->label('ID')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
-                TextColumn::make('name'),
+                TextColumn::make('name')->toggleable(),
 
                 IconColumn::make('is_published')
                     ->alignCenter()
@@ -45,7 +46,8 @@ trait InitiativeResourceSchema
                     ->default(function (Model $record) {
                         return $record->articles->count();
                     })
-                    ->badge(),
+                    ->badge()
+                    ->toggleable(),
 
                 TextColumn::make('progress')
                     ->alignCenter()
@@ -89,17 +91,20 @@ trait InitiativeResourceSchema
                             return Color::Green;
                         }
                     })
-                    ->badge(),
+                    ->badge()
+                    ->toggleable(),
 
                 TextColumn::make('published_at')
                     ->dateTime('d M Y')
                     ->label('Publish On')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
 
                 TextColumn::make('created_at')
                     ->dateTime('d M Y H:i')
                     ->label('Created At')
                     ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
             ])->defaultSort('published_at', 'desc')
             ->filters([
