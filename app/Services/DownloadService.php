@@ -37,7 +37,7 @@ readonly class DownloadService
             ->has('media')
             ->with('media');
 
-        if ($year) $query->whereYear('created_at', $year);
+        if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
 
         $result = $query->get()
@@ -56,7 +56,7 @@ readonly class DownloadService
             ->has('media')
             ->with('media');
 
-        if ($year) $query->whereYear('created_at', $year);
+        if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
 
         $result = $query->get()
@@ -75,7 +75,7 @@ readonly class DownloadService
             ->has('media')
             ->with('media');
 
-        if ($year) $query->whereYear('created_at', $year);
+        if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
 
         $result = $query->get()
@@ -110,7 +110,7 @@ readonly class DownloadService
             ->has('media')
             ->with('media');
 
-        if ($year) $query->whereYear('created_at', $year);
+        if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
 
         $result = $query->get()
@@ -129,7 +129,7 @@ readonly class DownloadService
             ->has('media')
             ->with('media');
 
-        if ($year) $query->whereYear('created_at', $year);
+        if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
 
         $result = $query->get()
@@ -148,8 +148,26 @@ readonly class DownloadService
             ->has('media')
             ->with('media');
 
-        if ($year) $query->whereYear('created_at', $year);
+        if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
+
+        $result = $query->get()
+            ->groupBy(function ($item) {
+                return $item->created_at->format('Y');
+            });
+
+        return $result;
+    }
+
+    public function getYearEndReviews($year)
+    {
+        $query = $this->publishedInitiative
+            ->isPublished()
+            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::YEAR_END_REVIEW))
+            ->has('media')
+            ->with('media');
+
+        if ($year) $query->whereYear('published_at', $year);
 
         $result = $query->get()
             ->groupBy(function ($item) {

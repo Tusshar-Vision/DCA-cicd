@@ -1,20 +1,19 @@
 <?php
 
-namespace App\View\Components\Widgets;
+namespace App\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class SideBarDownloadMenu extends Component
+class InshortArticle extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(
-        public $initiative = null,
-        public $videoUrl = ""
-    ) {
+    public function __construct(public $articles)
+    {
+        //
     }
 
     /**
@@ -22,6 +21,6 @@ class SideBarDownloadMenu extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.widgets.side-bar-download-menu');
+        return view('components.inshort-article');
     }
 }

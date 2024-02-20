@@ -107,4 +107,16 @@ class DownloadsController extends Controller
             "data" => $medias
         ]);
     }
+
+    public function renderYearEndReviews()
+    {
+        $year = request()->input('year');
+
+        $medias = $this->downloadService->getYearEndReviews($year);
+
+        return View('pages.archives.year-end-reviews', [
+            "title" => "Year End Reviews Archive",
+            "data" => $medias
+        ]);
+    }
 }
