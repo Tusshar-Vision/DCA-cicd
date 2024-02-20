@@ -28,7 +28,7 @@ class InitiativesHelper {
         "VALUE_ADDED_MATERIAL_OPTIONAL" => 14,
         "QUARTERLY_REVISION_DOCUMENTS" => 15,
         "BUDGET" => 17,
-        "YEAR_END_REVIEW" => 19
+        "YEAR_END_REVIEW" => 22
     ];
     private const InitiativeTopics = [
         "POLITY" => 1,
@@ -40,7 +40,8 @@ class InitiativesHelper {
         "SCIENCE_AND_TECH" => 7,
         "CULTURE" => 8,
         "ETHICS" => 9,
-        "GOVT_SCHEMES" => 10
+        "GOVT_SCHEMES" => 10,
+        "All" => 16
     ];
 
     public static function getInitiativeID(Initiatives $initiative) : int {

@@ -14,4 +14,6 @@ enum InitiativeTopics : string
     case CULTURE = "Culture";
     case ETHICS = "Ethics";
     case GOVT_SCHEMES = "Govt Schemes";
+
+    case ALL = "All";
 }

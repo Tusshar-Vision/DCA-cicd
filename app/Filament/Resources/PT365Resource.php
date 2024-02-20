@@ -139,7 +139,7 @@ class PT365Resource extends Resource
 
     public static function canEdit(Model $record): bool
     {
-        return Auth::user()->can('edit_p::t365');
+        return Auth::user()->can('edit_p::t365') && $record->is_published !== true;
     }
 
     public static function canCreate(): bool
@@ -149,7 +149,7 @@ class PT365Resource extends Resource
 
     public static function canDelete(Model $record): bool
     {
-        return Auth::user()->can('delete_p::t365');
+        return Auth::user()->can('delete_p::t365') && $record->is_published !== true;
     }
 
     public static function canDeleteAny(): bool
@@ -159,7 +159,7 @@ class PT365Resource extends Resource
 
     public static function canForceDelete(Model $record): bool
     {
-        return Auth::user()->can('delete_p::t365');
+        return Auth::user()->can('delete_p::t365') && $record->is_published !== true;
     }
 
     public static function canForceDeleteAny(): bool
