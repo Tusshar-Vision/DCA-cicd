@@ -43,7 +43,7 @@ class PaperResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->iconButton()->tooltip('Edit'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

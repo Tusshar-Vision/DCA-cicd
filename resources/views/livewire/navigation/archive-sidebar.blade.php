@@ -1,7 +1,7 @@
 <div class="w-2/6 leftArchiveMenu" id="myDIV">
     <div class="py-[40px] px-[14px] bg-[#F7F8F9] rounded-md relative">
         <div class="flex justify-between align-middle relative">
-            <h3 class="text-[#242424] text-xl mb-[25px] font-semibold ml-2">Current Affairs</h3>
+            <h3 class="text-[#242424] text-xl mb-[25px] font-semibold ml-2">Current Affairs Archives</h3>
             <a href="javascript:void(0)"
                class="text-lg border-[1px] border-black rounded-full w-[25px] h-[25px] text-center leading-[125%] block xl:hidden" onclick="myFunction()"
             >
@@ -14,7 +14,7 @@
                    wire:navigate
                    class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('monthly-magazine*') ? 'activeSidebar' : '' }}"
                 >
-                    Monthly Magazine Archives
+                    Monthly Magazine
                 </a>
             </li>
             <li class="font-semibold text-base text-[#183B56] mb-1">
@@ -22,7 +22,7 @@
                    wire:navigate
                    class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('weekly-focus*') ? 'activeSidebar' : '' }}"
                 >
-                    Weekly Focus Archives
+                    Weekly Focus 
                 </a>
             </li>
             <li class="font-semibold text-base text-[#183B56] mb-1">
@@ -30,7 +30,7 @@
                    wire:navigate
                    class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('news-today*') ? 'activeSidebar' : '' }}"
                 >
-                    Daily News Archives
+                    Daily News
                 </a>
             </li>
             <li class="font-semibold text-base text-[#183B56] mb-1">

@@ -151,7 +151,7 @@ class BudgetResource extends Resource
     public static function canEdit(Model $record): bool
     {
         $user = Auth::user();
-        return $user->can('edit_budget');
+        return $user->can('edit_budget') && $record->is_published !== true;
     }
 
     public static function canCreate(): bool
@@ -163,7 +163,7 @@ class BudgetResource extends Resource
     public static function canDelete(Model $record): bool
     {
         $user = Auth::user();
-        return $user->can('delete_budget');
+        return $user->can('delete_budget') && $record->is_published !== true;
     }
 
     public static function canDeleteAny(): bool
@@ -175,7 +175,7 @@ class BudgetResource extends Resource
     public static function canForceDelete(Model $record): bool
     {
         $user = Auth::user();
-        return $user->can('delete_budget');
+        return $user->can('delete_budget') && $record->is_published !== true;
     }
 
     public static function canForceDeleteAny(): bool
