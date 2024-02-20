@@ -65,7 +65,7 @@
                     Budget
                 </a>
             </li>
-            <li class="font-semibold text-base text-[#183B56] mb-1">
+            {{-- <li class="font-semibold text-base text-[#183B56] mb-1">
                 <a href="{{ route('value-added-material') }}"
                    wire:navigate
                    class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('value-added-material') ? 'activeSidebar' : '' }}"
@@ -80,7 +80,7 @@
                 >
                     Value Added Material (Optional)
                 </a>
-            </li>
+            </li> --}}
             <li class="font-semibold text-base text-[#183B56] mb-1">
                 <a href="{{ route('quarterly-revision-document') }}"
                    wire:navigate
