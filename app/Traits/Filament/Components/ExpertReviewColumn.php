@@ -12,7 +12,7 @@ use Livewire\Component as Livewire;
 
 trait ExpertReviewColumn
 {
-    public function getExpertColumn(bool $canAssignArticle, $closure)
+    public function getExpertColumn(bool $canAssignArticle, callable $closure)
     {
         if ($canAssignArticle === false) {
             return TextColumn::make('author.name')
