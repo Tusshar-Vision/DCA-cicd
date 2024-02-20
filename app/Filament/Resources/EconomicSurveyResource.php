@@ -150,7 +150,7 @@ class EconomicSurveyResource extends Resource
 
     public static function canEdit(Model $record): bool
     {
-        return Auth::user()->can('edit_economic::survey');
+        return Auth::user()->can('edit_economic::survey') && $record->is_published !== true;
     }
 
     public static function canCreate(): bool
@@ -160,7 +160,7 @@ class EconomicSurveyResource extends Resource
 
     public static function canDelete(Model $record): bool
     {
-        return Auth::user()->can('delete_economic::survey');
+        return Auth::user()->can('delete_economic::survey') && $record->is_published !== true;
     }
 
     public static function canDeleteAny(): bool
@@ -170,7 +170,7 @@ class EconomicSurveyResource extends Resource
 
     public static function canForceDelete(Model $record): bool
     {
-        return Auth::user()->can('delete_economic::survey');
+        return Auth::user()->can('delete_economic::survey') && $record->is_published !== true;
     }
 
     public static function canForceDeleteAny(): bool

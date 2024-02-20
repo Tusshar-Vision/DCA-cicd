@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Enums\Initiatives;
+use App\Enums\InitiativeTopics;
 use App\Filament\Resources\WeeklyFocusResource\RelationManagers\ArticlesRelationManager;
 use App\Filament\Resources\WeeklyFocusResource\Pages;
 use App\Helpers\InitiativesHelper;
@@ -11,6 +12,7 @@ use App\Models\InitiativeTopic;
 use App\Models\PublishedInitiative;
 use App\Models\TopicSection;
 use App\Models\TopicSubSection;
+use App\Models\Video;
 use App\Services\MediaService;
 use App\Services\PublishedInitiativeService;
 use App\Traits\Filament\InitiativeResourceSchema;
@@ -20,8 +22,11 @@ use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\SpatieTagsInput;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Wizard\Step;
@@ -37,6 +42,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Component as Livewire;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class WeeklyFocusResource extends Resource
@@ -61,7 +67,6 @@ class WeeklyFocusResource extends Resource
 
                     Forms\Components\Hidden::make('initiative_id')
                         ->default(InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)),
-
 
                     Forms\Components\Group::make()->schema([
                         DatePicker::make('published_at')
@@ -213,58 +218,41 @@ class WeeklyFocusResource extends Resource
 
                 ])
                 ->columnSpan(1)
-                ->columns(2),
+                ->columns(),
 
-                Forms\Components\Section::make('Topic at a glance')
-                    ->schema([
-                        Select::make('infographic_id')
-                            ->label('Infographic')
-                            ->searchable()
-                            ->relationship('infographic', 'title')
-                            ->createOptionForm([
+                Group::make()->schema([
+                    Forms\Components\Section::make('Topic at a glance')
+                        ->schema([
+                            Select::make('infographic_id')
+                                ->hiddenLabel()
+                                ->searchable()
+                                ->relationship('infographic', 'title')
+                                ->createOptionForm([
                                     TextInput::make('title')->required(),
+                                    SpatieTagsInput::make('tags')
+                                        ->required(),
 
-                                    Group::make()->schema([
-                                        Select::make('initiative_topic_id')
-                                            ->options(InitiativeTopic::all()->pluck('name', 'id'))
-                                            ->required()
-                                            ->label('Subject')
-                                            ->reactive()
-                                            ->afterStateUpdated(function (Set $set, ?string $state) {
-                                                $set('topic_section_id', 0);
-                                                $set('topic_sub_section_id', 0);
-                                            }),
+                                    Hidden::make('initiative_topic_id')
+                                        ->default(function (Livewire $livewire) {
+                                            return $livewire->getRecord()?->getAttribute('initiative_topic_id');
+                                        })
+                                        ->required(),
 
-                                        Select::make('topic_section_id')
-                                            ->options(function (Get $get) {
-                                                $topicID = $get('initiative_topic_id');
-                                                return TopicSection::where('topic_id', '=', $topicID)->pluck('name', 'id');
-                                            })
-                                            ->reactive()
-                                            ->label('Section')
-                                            ->afterStateUpdated(function (Set $set, ?string $state) {
-                                                $set('topic_sub_section_id', 0);
-                                            }),
+                                    Hidden::make('topic_section_id')
+                                        ->default(function (Livewire $livewire) {
+                                            return $livewire->getRecord()?->getAttribute('topic_section_id');
+                                        }),
 
-                                        Select::make('topic_sub_section_id')
-                                            ->options(function (Get $get) {
-                                                $sectionID = $get('topic_section_id');
-                                                return TopicSubSection::where('section_id', '=', $sectionID)->pluck('name', 'id');
-                                            })
-                                            ->reactive()
-                                            ->label('Sub Section'),
-                                    ])->columns(3),
+                                    Hidden::make('topic_sub_section_id')
+                                        ->default(function (Livewire $livewire) {
+                                            return $livewire->getRecord()?->getAttribute('topic_sub_section_id');
+                                        }),
 
-                                    Group::make()->schema([
-
-                                        Select::make('language_id')
-                                            ->relationship('language', 'name', function ($query) {
-                                                return $query->orderBy('order_column');
-                                            })
-                                            ->required()
-                                            ->default(1),
-
-                                    ])->columns(1),
+                                    Hidden::make('language_id')
+                                        ->required()
+                                        ->default(function (Livewire $livewire) {
+                                            return $livewire->getRecord()?->getAttribute('language_id');
+                                        }),
 
                                     Hidden::make('author_id')->default(function () {
                                         return Auth::user()->id;
@@ -280,9 +268,108 @@ class WeeklyFocusResource extends Resource
                                             'image/png',
                                             'image/svg'
                                         ]),
-                            ]),
-                    ])->columnSpan(1)
+                                ])
+                                ->disabledOn('create')
+                                ->disabled(function () {
+                                    if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'weekly_focus_reviewer'])) return false;
+                                    else return true;
+                                }),
+                        ])->columnSpan(1),
+
+                    Forms\Components\Section::make("In Conversation")
+                        ->schema([
+                            Select::make('video_id')
+                                ->hiddenLabel()
+                                ->searchable()
+                                ->relationship('video', 'title')
+                                ->createOptionForm([
+                                    Section::make()->schema([
+                                        TextInput::make('title')->required(),
+                                        Textarea::make('description')->label('Description'),
+                                        SpatieTagsInput::make('tags')
+                                            ->required(),
+
+                                        Hidden::make('initiative_topic_id')
+                                            ->default(function (Livewire $livewire) {
+                                                return $livewire->getRecord()?->getAttribute('initiative_topic_id');
+                                            })
+                                            ->required(),
+
+                                        Hidden::make('topic_section_id')
+                                            ->default(function (Livewire $livewire) {
+                                                return $livewire->getRecord()?->getAttribute('topic_section_id');
+                                            }),
+
+                                        Hidden::make('topic_sub_section_id')
+                                            ->default(function (Livewire $livewire) {
+                                                return $livewire->getRecord()?->getAttribute('topic_sub_section_id');
+                                            }),
+
+                                    ])->columnSpan(1),
+
+                                    Section::make()->schema([
+
+                                        Toggle::make('is_url')
+                                            ->label('Provide URL')
+                                            ->reactive(),
+
+                                        SpatieMediaLibraryFileUpload::make('Video')
+                                            ->hidden(function (callable $get) {
+                                                return $get('is_url');
+                                            })
+                                            ->id('video')
+                                            ->collection('video')
+                                            ->visibility('private')
+                                            ->visible(function (?Video $record) {
+                                                if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer'])) return true;
+                                                else if ($record !== null && $record->hasMedia('infographic')) return true;
+                                                else return false;
+                                            })
+                                            ->openable()
+                                            ->deletable(function (?Video $record) {
+                                                if ($record !== null && $record->is_published === true) {
+                                                    return Auth::user()->hasAnyRole(['admin', 'super_admin']);
+                                                } else {
+                                                    return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer']);
+                                                }
+                                            })
+                                            ->required()
+                                            ->acceptedFileTypes([
+                                                'video/mp4',         // MP4 videos
+                                                'video/webm',        // WebM videos
+                                                'video/ogg',
+                                            ])
+                                            ->previewable(),
+
+                                        TextInput::make('url')
+                                            ->visible(function (callable $get) {
+                                                return $get('is_url');
+                                            })
+                                            ->label('Video URL')
+                                            ->required()
+                                            ->activeUrl(true),
+
+                                        Hidden::make('language_id')
+                                            ->required()
+                                            ->default(function (Livewire $livewire) {
+                                                return $livewire->record->language_id;
+                                            }),
+
+                                        Hidden::make('author_id')->default(function () {
+                                            return Auth::user()->id;
+                                        })
+
+                                    ])->columnSpan(1)
+                                ])
+                                ->disabledOn('create')
+                                ->disabled(function () {
+                                    if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'weekly_focus_reviewer'])) return false;
+                                    else return true;
+                                }),
+                        ])->columnSpan(1)
+                ])
             ]);
+
     }
 
     public static function getRelations(): array
