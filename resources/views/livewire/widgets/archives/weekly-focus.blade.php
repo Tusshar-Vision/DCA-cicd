@@ -19,7 +19,7 @@
                     </svg>
                 </div>
                 <div class="hidden xl:block ml-4">
-                    <livewire:widgets.filter/>
+                    <livewire:widgets.filter :data="$data"/>
                 </div>
             </div>
         </div>

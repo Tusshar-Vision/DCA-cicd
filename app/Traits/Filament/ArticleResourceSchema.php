@@ -129,7 +129,9 @@ trait ArticleResourceSchema
                 SpatieTagsColumn::make('tags')
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                $articleResource->getExpertColumn(Auth::user()->can('assign_article')),
+                $articleResource->getExpertColumn(Auth::user()->can('assign_article'), function (Model $record) {
+                    return $record->status;
+                }),
                 $articleResource->getReviewColumn(Auth::user()->can('assign_article')),
 
                 TextColumn::make('updated_at')
