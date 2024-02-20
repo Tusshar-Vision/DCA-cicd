@@ -133,9 +133,10 @@ class MonthlyMagazineResource extends Resource
                                     }
                                 };
                             }
-                        ])
-                            ->required(),
-                    ])->columns(2)->columnSpanFull(),
+                        ])->required(),
+                    ])
+                    ->columns()
+                    ->columnSpanFull(),
 
                     Select::make('language_id')
                         ->relationship('language', 'name', function ($query) {
@@ -166,7 +167,12 @@ class MonthlyMagazineResource extends Resource
 
 
 
-                ])->columns(2),
+                ])
+                ->columns()
+                ->disabled(function (?PublishedInitiative $record) {
+                    if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                    else if ($record->is_published) return true;
+                }),
             ]);
     }
 
