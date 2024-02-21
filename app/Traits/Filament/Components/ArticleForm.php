@@ -199,7 +199,7 @@ trait ArticleForm
                         Section::make('Content')
                             ->relationship('content')
                             ->schema([
-                                CKEditor::make('content')
+                                CKEditor::make('content'),
 //                                TinyEditor::make('content')
 //                                    ->columnSpanFull()
 //                                    ->fileAttachmentsDisk('public')

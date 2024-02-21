@@ -14,29 +14,37 @@
     :required="$isRequired()"
     wire:ignore
 >
-	<textarea wire:ignore
-              wire:model.lazy="{{ $getId() }}"
-              id="content"
-		{{ $attributes->merge(['class' => 'form-control']) }}>
-    </textarea>
+    <style>
+        #editor {
+            height: 700px;
+        }
+    </style>
+    <div
+        id="editor"
+        x-data="{
+            init() {
+                // Initialize CKEditor
+                ClassicEditor.create(this.$refs.editor)
+                    .then(editor => {
+                        // Set initial data
+                        editor.setData(@js($this->data['content']['content']));
+
+                        // Listen for changes in the editor and update Livewire data
+                        editor.model.document.on('change:data', () => {
+                            this.$dispatch('editorInput', [editor.getData()]);
+                        });
+                    })
+                    .catch(error => console.error(error));
+            }
+        }"
+        wire:ignore
+    >
+        <textarea x-ref="editor" wire:model="data.title" hidden></textarea>
+    </div>
 
     @once
         @push('scripts')
             <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
-
-            <script>
-                function initializeCKEditor() {
-                    ClassicEditor
-                        .create( document.querySelector( '#content' ))
-                        .catch( error => {
-                            console.log( error );
-                        } );
-                }
-
-                initializeCKEditor();
-
-                document.addEventListener('livewire:dom:afterUpdate', initializeCKEditor);
-            </script>
         @endpush
     @endonce
 </x-dynamic-component>
