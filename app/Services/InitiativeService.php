@@ -83,7 +83,10 @@ readonly class InitiativeService
         $data = $this->publishedInitiatives
             ->whereInitiative($initiativeId)
             ->isPublished()
-            ->with('articles.topic')
+            ->with(['articles' => function ($query) {
+                // Eager load published articles
+                $query->isPublished();
+            }])
             ->hasPublishedArticle()
             ->limit(10)
             ->orderByDesc('published_at')
@@ -111,7 +114,10 @@ readonly class InitiativeService
         $data = $this->publishedInitiatives
             ->whereInitiative($initiativeId)
             ->isPublished()
-            ->with('articles.topic')
+            ->with(['articles' => function ($query) {
+                // Eager load published articles
+                $query->isPublished();
+            }])
             ->hasPublishedArticle()
             ->limit(10)
             ->orderByDesc('published_at')
