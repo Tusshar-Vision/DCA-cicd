@@ -87,9 +87,9 @@ toggleActive(ele)
                         <div class="bar" style="width:100%; background-color: #89D38C;">
                         </div>
                     </div>
-                    <ul class="flex justify-start space-x-4 mt-[15px]">
-                        <li class="text-[#3362CC] text-sm font-normal"><a href=${article.url} class="hover:underline">Read</a></li>
-                        <li class="text-[#3362CC] text-sm font-normal"><a href="javascript:void(0)" class="hover:underline">Download</a></li>
+                    <ul class="flex justify-start mt-[15px]">
+                        <li class="text-[#3362CC] mr-4 text-sm font-normal"><a href=${article.url} class="hover:underline">Read</a></li>
+                        <li class="text-[#3362CC] mr-4 text-sm font-normal"><a href="javascript:void(0)" class="hover:underline">Download</a></li>
                     </ul>
                 </div>
                 </a>
