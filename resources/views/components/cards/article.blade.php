@@ -36,7 +36,7 @@
                 <p><strong>Updated</strong> {{ Carbon::parse($article->updated_at)->format('d M Y')  }}</p>
             </div>
             <div>
-                <h2 class="text-xl font-bold">{{ $article->title }}</h2>
+                <h2 class="text-xl line-clamp-2 font-bold">{{ $article->title }}</h2>
             </div>
             <div class="max-w-prose">
                 <p class="text-visionLineGray line-clamp-3 text-sm">{{ $article->excerpt }}</p>

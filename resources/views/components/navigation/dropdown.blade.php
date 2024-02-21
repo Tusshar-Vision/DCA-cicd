@@ -7,7 +7,8 @@
 <div {{ $attributes }} x-cloak>
     <ul x-data="{ isMenuOpen: null }" class="absolute font-normal bgcolor-FFF shadow w-72 border rounded-md mt-2 py-1 z-50">
         <div class="border-bottom">
-       <x-buttons.primary button-text="{!! $buttonText !!}" button-link="{{ $buttonLink }}"  /> 
+       {{-- <x-buttons.primary button-text="{!! $buttonText !!}" button-link="{{ $buttonLink }}"  />  --}}
+       <p>Latest Edition</p>
        @if($menuData['initiative_id'] === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE) && count($menuData['data']) > 0 )
        <p class="text-sm flex px-4 pb-[15px] font-medium">{{Carbon::parse($menuData['data'][array_key_first($menuData['data'])][0]->publishedAt)->monthName}}</p>
        @endif

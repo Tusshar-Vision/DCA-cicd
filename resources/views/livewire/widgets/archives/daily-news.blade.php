@@ -16,7 +16,7 @@
                 </svg>
             </div>
             <div class="hidden xl:block ml-4">
-                <livewire:widgets.filter :data="$articles"/>
+                <livewire:widgets.filter :data="$years"/>
             </div>
         </div>
     </div>

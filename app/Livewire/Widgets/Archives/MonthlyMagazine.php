@@ -7,12 +7,12 @@ use Livewire\Component;
 
 class MonthlyMagazine extends Component
 {
-    public $articles;
+    public $articles, $years;
 
-    public function mount($articles): void
+    public function mount($articles, $years): void
     {
         $this->articles = json_decode($articles, true);
-        // $this->articles = $articles;
+        $this->years = $years;
     }
     public function render(): View
     {

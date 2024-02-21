@@ -116,9 +116,11 @@ class WeeklyFocusController extends Controller
             ->get();
 
         $organizedData = [];
+        $years = [];
 
         foreach ($data as $item) {
             $year = $item->year;
+            $years[] = $year;
             $month = $item->month;
             $week = "Week " . $item->week;
 
@@ -132,7 +134,7 @@ class WeeklyFocusController extends Controller
 
         return View('pages.archives.weekly-focus', [
             "title" => "Weekly Focus Archive",
-            'data' => $organizedData
+            'data' => [$years, $organizedData]
         ]);
     }
 }
