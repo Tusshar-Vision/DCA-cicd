@@ -19,7 +19,7 @@
                     </svg>
                 </div>
                 <div class="hidden xl:block ml-4">
-                    <livewire:widgets.filter :data="$data"/>
+                    <livewire:widgets.filter :data="$years"/>
                 </div>
             </div>
         </div>
@@ -99,14 +99,14 @@
                                             <div class="bar" style="width:100%;background-color: #89D38C;">
                                             </div>
                                         </div>
-                                        <ul class="flex justify-start space-x-4 mt-[15px]">
-                                            <li class="text-[#3362CC] text-sm font-normal">
+                                        <ul class="flex justify-start mt-[15px]">
+                                            <li class="text-[#3362CC] text-sm font-normal mr-4">
                                                 <a href="{{App\Services\ArticleService::getArticleUrlFromSlug($article['slug'])}}"
                                                    class="hover:underline">
                                                     Read
                                                 </a>
                                             </li>
-                                            <li class="text-[#3362CC] text-sm font-normal">
+                                            <li class="text-[#3362CC] text-sm font-normal mr-4">
                                                 <a href="javascript:void(0)" class="hover:underline">Download</a>
                                             </li>
                                         </ul>

@@ -101,6 +101,9 @@ class MonthlyMagazineController extends Controller
             ->whereInitiative(config('settings.initiatives.MONTHLY_MAGAZINE'))
             ->isPublished();
 
+
+        $years = $query->orderByDesc('published_at')->groupByYear()->keys();
+
         if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
 
@@ -122,11 +125,11 @@ class MonthlyMagazineController extends Controller
         // $data = collect($data);
         $data = json_encode($data);
 
-        logger("Data", [$data]);
+
 
         return View('pages.archives.monthly-magazine', [
             "title" => "Monthly Magazine Archives",
-            'data' => $data
+            'data' => [$years, $data]
         ]);
     }
 }

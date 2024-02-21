@@ -32,10 +32,16 @@ readonly class DownloadService
     {
 
         $query = $this->publishedInitiative
-            ->isPublished()
+            // ->isPublished()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::MAINS_365))
-            ->has('media')
-            ->with('media');
+            ->has('media');
+
+        $years = $query->get()
+            ->groupBy(function ($item) {
+                return $item->published_at->format('Y');
+            })->keys();
+
+        $query->with('media');
 
         if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
@@ -45,7 +51,7 @@ readonly class DownloadService
                 return $item->published_at->format('Y');
             });
 
-        return $result;
+        return [$years, $result];
     }
 
     public function getPT365($year, $month): Collection|array
@@ -53,8 +59,14 @@ readonly class DownloadService
         $query = $this->publishedInitiative
             ->isPublished()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::PT_365))
-            ->has('media')
-            ->with('media');
+            ->has('media');
+
+        $years = $query->get()
+            ->groupBy(function ($item) {
+                return $item->published_at->format('Y');
+            })->keys();
+
+        $query->with('media');
 
         if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
@@ -64,7 +76,7 @@ readonly class DownloadService
                 return $item->published_at->format('Y');
             });
 
-        return $result;
+        return [$years, $result];
     }
 
     public function getEconomicSurvey($year, $month): Collection|array
@@ -72,8 +84,14 @@ readonly class DownloadService
         $query = $this->publishedInitiative
             ->isPublished()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::ECONOMIC_SURVEY))
-            ->has('media')
-            ->with('media');
+            ->has('media');
+
+        $years = $query->get()
+            ->groupBy(function ($item) {
+                return $item->published_at->format('Y');
+            })->keys();
+
+        $query->with('media');
 
         if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
@@ -83,7 +101,7 @@ readonly class DownloadService
                 return $item->published_at->format('Y');
             });
 
-        return $result;
+        return [$years, $result];
     }
 
     public function getBudget($year, $month): Collection|array
@@ -91,15 +109,21 @@ readonly class DownloadService
         $query = $this->publishedInitiative
             ->isPublished()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::BUDGET))
-            ->has('media')
-            ->with('media');
+            ->has('media');
+
+        $years = $query->get()
+            ->groupBy(function ($item) {
+                return $item->published_at->format('Y');
+            })->keys();
+
+        $query->with('media');
 
         $result = $query->get()
             ->groupBy(function ($item) {
                 return $item->published_at->format('Y');
             });
 
-        return $result;
+        return [$years, $result];
     }
 
     public function getValueAddedMaterial($year, $month): Collection|array
@@ -107,8 +131,14 @@ readonly class DownloadService
         $query = $this->publishedInitiative
             ->isPublished()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::VALUE_ADDED_MATERIAL))
-            ->has('media')
-            ->with('media');
+            ->has('media');
+
+        $years = $query->get()
+            ->groupBy(function ($item) {
+                return $item->published_at->format('Y');
+            })->keys();
+
+        $query->with('media');
 
         if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
@@ -118,7 +148,7 @@ readonly class DownloadService
                 return $item->published_at->format('Y');
             });
 
-        return $result;
+        return [$years, $result];
     }
 
     public function getValueAddedMaterialOptional($year, $month): Collection|array
@@ -126,8 +156,14 @@ readonly class DownloadService
         $query = $this->publishedInitiative
             ->isPublished()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::VALUE_ADDED_MATERIAL_OPTIONAL))
-            ->has('media')
-            ->with('media');
+            ->has('media');
+
+        $years = $query->get()
+            ->groupBy(function ($item) {
+                return $item->published_at->format('Y');
+            })->keys();
+
+        $query->with('media');
 
         if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
@@ -137,7 +173,7 @@ readonly class DownloadService
                 return $item->published_at->format('Y');
             });
 
-        return $result;
+        return [$years, $result];
     }
 
     public function getQuarterlyRevisionDocument($year, $month): Collection|array
@@ -145,8 +181,14 @@ readonly class DownloadService
         $query = $this->publishedInitiative
             ->isPublished()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::QUARTERLY_REVISION_DOCUMENTS))
-            ->has('media')
-            ->with('media');
+            ->has('media');
+
+        $years = $query->get()
+            ->groupBy(function ($item) {
+                return $item->published_at->format('Y');
+            })->keys();
+
+        $query->with('media');
 
         if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
@@ -156,7 +198,7 @@ readonly class DownloadService
                 return $item->published_at->format('Y');
             });
 
-        return $result;
+        return [$years, $result];
     }
 
     public function getYearEndReviews($year)
@@ -164,8 +206,14 @@ readonly class DownloadService
         $query = $this->publishedInitiative
             ->isPublished()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::YEAR_END_REVIEW))
-            ->has('media')
-            ->with('media');
+            ->has('media');
+
+        $years = $query->get()
+            ->groupBy(function ($item) {
+                return $item->published_at->format('Y');
+            })->keys();
+
+        $query->with('media');
 
         if ($year) $query->whereYear('published_at', $year);
 
@@ -174,6 +222,6 @@ readonly class DownloadService
                 return $item->published_at->format('Y');
             });
 
-        return $result;
+        return [$years, $result];
     }
 }

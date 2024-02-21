@@ -96,6 +96,11 @@ class WeeklyFocusController extends Controller
 
         $query = Article::where('initiative_id', config('settings.initiatives.WEEKLY_FOCUS'));
 
+        $years = $query->select(DB::raw('YEAR(published_at) as year'))
+            ->where('published_at', '!=', null)
+            ->orderBy('year')
+            ->pluck('year');
+
         if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
 
@@ -116,9 +121,11 @@ class WeeklyFocusController extends Controller
             ->get();
 
         $organizedData = [];
+        $years = [];
 
         foreach ($data as $item) {
             $year = $item->year;
+            $years[] = $year;
             $month = $item->month;
             $week = "Week " . $item->week;
 
@@ -132,7 +139,7 @@ class WeeklyFocusController extends Controller
 
         return View('pages.archives.weekly-focus', [
             "title" => "Weekly Focus Archive",
-            'data' => $organizedData
+            'data' => [$years, $organizedData]
         ]);
     }
 }

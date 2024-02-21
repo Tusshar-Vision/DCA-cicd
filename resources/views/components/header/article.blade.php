@@ -1,4 +1,4 @@
-<div class="flex h-10 text-gray-500 items-center border-t-2 border-b-2 justify-between">
+<div class="flex justify-between mt-2 md:mt-0">
     <p>{{ (empty($readTime)) ? '5' : $readTime }} min read</p>
 
     

@@ -16,7 +16,7 @@
                 </svg>
             </div>
             <div class="hidden xl:block ml-4">
-                <livewire:widgets.filter :data="$articles"/>
+                <livewire:widgets.filter :data="$years"/>
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
 <?php $i = 0; ?>
 
 @foreach ($articles as $year => $months)
-    <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: {{$i==0 ? 'true': 'false'}}, newsTodayContainer: false }" @click="expanded = ! expanded, newsTodayContainer = false">
+    <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: {{$i==0 ? 'true': 'false'}}, newsTodayContainer: false }" @click="expanded = ! expanded, newsTodayContainer = false" onclick="resetActive()">
     <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]">
         <h4 class="text-[#040404] text-[32px] font-normal">{{$year}} <span id="month" x-show="newsTodayContainer === true"></span></h4>
         <div>
@@ -47,7 +47,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true">
     @foreach ($months as $month)
-        <div class="weekly-focus-single-card" @click.stop onclick="showArticleCards({{$year}}, {{$month}}, `{{date('F', mktime(0, 0, 0, $month, 1))}}`)" @click="newsTodayContainer =! newsTodayContainer">
+        <div class="month-card weekly-focus-single-card" @click.stop onclick="showArticleCards(this, {{$year}}, {{$month}}, `{{date('F', mktime(0, 0, 0, $month, 1))}}`)" @click="newsTodayContainer =! newsTodayContainer">
             <div class="weekly-focus-progress-list mt-0">
                 <div class="weekly-focus-progress-single-bar cursor-pointer border-b-2 ">
                     <p>{{ date('F', mktime(0, 0, 0, $month, 1)) }}</p>
@@ -68,7 +68,10 @@
 
 <script>
 
-function showArticleCards(year, month, monthName) {
+function showArticleCards(ele, year, month, monthName) {
+
+toggleActive(ele)
+
     let url = "{{url('news-today')}}";
     url += `/getbymonth?year=${year}&month=${month}`;
     document.getElementById("month").innerHTML = "- " + monthName
@@ -84,9 +87,9 @@ function showArticleCards(year, month, monthName) {
                         <div class="bar" style="width:100%; background-color: #89D38C;">
                         </div>
                     </div>
-                    <ul class="flex justify-start space-x-4 mt-[15px]">
-                        <li class="text-[#3362CC] text-sm font-normal"><a href=${article.url} class="hover:underline">Read</a></li>
-                        <li class="text-[#3362CC] text-sm font-normal"><a href="javascript:void(0)" class="hover:underline">Download</a></li>
+                    <ul class="flex justify-start mt-[15px]">
+                        <li class="text-[#3362CC] mr-4 text-sm font-normal"><a href=${article.url} class="hover:underline">Read</a></li>
+                        <li class="text-[#3362CC] mr-4 text-sm font-normal"><a href="javascript:void(0)" class="hover:underline">Download</a></li>
                     </ul>
                 </div>
                 </a>
@@ -94,6 +97,26 @@ function showArticleCards(year, month, monthName) {
         </div>`
          })
           document.getElementById("news-today-container").innerHTML = html
+    })
+}
+
+function toggleActive(ele) {
+        if(ele.classList.contains("activeCard")) {
+        console.log("asdf")
+        ele.classList.remove("activeCard")
+    } else {
+    let divs = document.querySelectorAll('.month-card');
+    divs.forEach(function(div) {
+       div.classList.remove("activeCard")
+    })
+        ele.classList.add("activeCard")
+    }
+}
+
+function resetActive() {
+        let divs = document.querySelectorAll('.month-card');
+    divs.forEach(function(div) {
+       div.classList.remove("activeCard")
     })
 }
 </script>

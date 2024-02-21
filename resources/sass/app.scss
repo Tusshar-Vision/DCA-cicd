@@ -3204,3 +3204,26 @@ iframe {
   height: 230px;
   object-fit: cover;
 }
+
+
+.categoryList {
+  li{
+    &::after {
+      content: '';
+      background: url("/images/main-sprite.svg") -100px -87px no-repeat;
+      display: inline-block;
+      vertical-align: middle;
+      width: 24px;
+      height: 24px;
+    }
+    &:last-child{
+      &::after{
+        display: none;
+      }
+    }
+  }
+}
+
+.stickyMl-0{
+  margin-left: 0 !important;
+}

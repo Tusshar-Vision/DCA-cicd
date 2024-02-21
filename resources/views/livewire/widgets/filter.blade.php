@@ -16,7 +16,7 @@ $year = request()->input('year');
   <div x-show="isYearOpen" @click.away="isYearOpen = false" class="absolute right-0 top-8 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
     <div class="py-1" role="none">
       <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-      @foreach ($data as $year => $files)
+      @foreach ($data as $year)
           <a href="{{request()->url()."?year=$year"}}" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">{{$year}}</a>
       {{-- <a href="{{request()->url()."?year=2023"}}" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">2023</a> --}}
       @endforeach
