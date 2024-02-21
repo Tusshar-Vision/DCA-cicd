@@ -145,7 +145,7 @@ class Mains365Resource extends Resource
 
     public static function canEdit(Model $record): bool
     {
-        return Auth::user()->can('edit_mains365');
+        return Auth::user()->hasAnyRole(['super_admin', 'admin']) || (Auth::user()->can('edit_mains365') && $record->is_published !== true);
     }
 
     public static function canCreate(): bool
@@ -155,7 +155,7 @@ class Mains365Resource extends Resource
 
     public static function canDelete(Model $record): bool
     {
-        return Auth::user()->can('delete_mains365');
+        return Auth::user()->can('delete_mains365') && $record->is_published !== true;
     }
 
     public static function canDeleteAny(): bool
@@ -165,7 +165,7 @@ class Mains365Resource extends Resource
 
     public static function canForceDelete(Model $record): bool
     {
-        return Auth::user()->can('delete_mains365');
+        return Auth::user()->can('delete_mains365') && $record->is_published !== true;
     }
 
     public static function canForceDeleteAny(): bool

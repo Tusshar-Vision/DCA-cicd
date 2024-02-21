@@ -20,6 +20,7 @@ use Illuminate\Support\Collection;
 
 trait OtherUploadsResourceSchema
 {
+    use HelperMethods;
     public static function table(Table $table): Table
     {
         return $table
@@ -47,9 +48,12 @@ trait OtherUploadsResourceSchema
             ])
             ->actions([
                 Action::make('Publish')
-                    ->icon('heroicon-s-eye')
+                    ->icon('heroicon-s-paper-airplane')
                     ->requiresConfirmation()
                     ->button()
+                    ->visible(function () {
+                        return \Auth::user()->hasAnyRole(['super_admin', 'admin']);
+                    })
                     ->hidden(function(PublishedInitiative $record) {
                         return $record->is_published === true;
                     })
@@ -59,14 +63,17 @@ trait OtherUploadsResourceSchema
                             $record->save();
                         }
                     }),
+                Action::make('View')
+                    ->icon('heroicon-s-eye')
+                    ->tooltip('View')
+                    ->iconButton()
+                    ->url(fn (PublishedInitiative $record): string|null => $record->getFirstMedia(static::getCollectionName())?->getTemporaryUrl(now()->add('minutes', 120)))
+                    ->openUrlInNewTab(),
                 EditAction::make()
                     ->tooltip('Edit')
                     ->iconButton(),
                 DeleteAction::make()
                     ->tooltip('Delete')
-                    ->hidden(function(PublishedInitiative $record) {
-                        return $record->is_published === true;
-                    })
                     ->iconButton()
             ])
             ->bulkActions([
@@ -76,6 +83,9 @@ trait OtherUploadsResourceSchema
                         ->color(Color::Yellow)
                         ->requiresConfirmation()
                         ->modalDescription('This action would unpublish all the selected files')
+                        ->visible(function () {
+                            return \Auth::user()->hasAnyRole(['super_admin', 'admin']);
+                        })
                         ->action(function (?Collection $records) {
                             $records->each(function ($record) {
                                 $record->is_published = false;
@@ -87,15 +97,5 @@ trait OtherUploadsResourceSchema
                     RestoreBulkAction::make(),
                 ]),
             ]);
-    }
-
-    private static function generateName(string $date): array|string
-    {
-        return str_replace(
-            ' ',
-            '_',
-            static::$modelLabel . ' ' . Carbon::parse($date)
-                ->format('Y-m-d')
-        );
     }
 }

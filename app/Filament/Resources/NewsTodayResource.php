@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Enums\Initiatives;
+use App\Enums\InitiativeTopics;
 use App\Filament\Resources\NewsTodayResource\Pages;
 use App\Filament\Resources\NewsTodayResource\RelationManagers\ArticlesRelationManager;
 use App\Filament\Resources\NewsTodayResource\RelationManagers\ShortArticlesRelationManager;
@@ -39,6 +40,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Component as Livewire;
 
 class NewsTodayResource extends Resource
 {
@@ -73,7 +75,6 @@ class NewsTodayResource extends Resource
                             ->default(Carbon::now()->format('Y-m-d'))
                             ->rules([
                                 function (PublishedInitiativeService $publishedInitiativeService, ?Model $record) {
-
                                     if ($record !== null) {
                                         return function (string $attribute, $value, \Closure $fail) use($publishedInitiativeService, $record) {
                                             if (
@@ -177,46 +178,28 @@ class NewsTodayResource extends Resource
                             }
                         })
                         ->columnSpanFull(),
-                ])->columnSpan(1),
-                Forms\Components\Section::make("Upload Today's Video")
+                ])
+                ->disabled(function (?PublishedInitiative $record) {
+                    if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                    else if ($record->is_published) return true;
+                })
+                ->columnSpan(1),
+                Forms\Components\Section::make("News Today's Video")
                     ->schema([
                         Select::make('video_id')
-                            ->label('Video')
+                            ->hiddenLabel()
                             ->searchable()
                             ->relationship('video', 'title')
                             ->createOptionForm([
                                 Section::make()->schema([
                                     TextInput::make('title')->required(),
                                     Textarea::make('description')->label('Description'),
+                                    SpatieTagsInput::make('tags')
+                                        ->required(),
 
-                                    Select::make('initiative_topic_id')
-                                        ->options(InitiativeTopic::all()->pluck('name', 'id'))
+                                    Hidden::make('initiative_topic_id')
+                                        ->default(InitiativesHelper::getInitiativeTopicID(InitiativeTopics::ALL))
                                         ->required()
-                                        ->label('Subject')
-                                        ->reactive()
-                                        ->afterStateUpdated(function (Set $set, ?string $state) {
-                                            $set('topic_section_id', null);
-                                            $set('topic_sub_section_id', null);
-                                        }),
-
-                                    Select::make('topic_section_id')
-                                        ->options(function (Get $get) {
-                                            $topicID = $get('initiative_topic_id');
-                                            return TopicSection::where('topic_id', '=', $topicID)->pluck('name', 'id');
-                                        })
-                                        ->reactive()
-                                        ->label('Section')
-                                        ->afterStateUpdated(function (Set $set, ?string $state) {
-                                            $set('topic_sub_section_id', null);
-                                        }),
-
-                                    Select::make('topic_sub_section_id')
-                                        ->options(function (Get $get) {
-                                            $sectionID = $get('topic_section_id');
-                                            return TopicSubSection::where('section_id', '=', $sectionID)->pluck('name', 'id');
-                                        })
-                                        ->reactive()
-                                        ->label('Sub Section'),
                                 ])->columnSpan(1),
 
                                 Section::make()->schema([
@@ -263,16 +246,11 @@ class NewsTodayResource extends Resource
 
                                     Group::make()->schema([
 
-                                        Select::make('language_id')
-                                            ->relationship('language', 'name', function ($query) {
-                                                return $query->orderBy('order_column');
-                                            })
-                                            ->label('Language')
+                                        Hidden::make('language_id')
                                             ->required()
-                                            ->default(1),
-
-                                        SpatieTagsInput::make('tags')
-                                            ->required(),
+                                            ->default(function (Livewire $livewire) {
+                                                return $livewire->record->language_id;
+                                            }),
 
                                     ])->columns(1),
 
@@ -281,7 +259,12 @@ class NewsTodayResource extends Resource
                                     })
 
                                 ])->columnSpan(1)
-                            ]),
+                            ])
+                            ->disabledOn('create')
+                            ->disabled(function () {
+                                if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'news_today_reviewer'])) return false;
+                                else return true;
+                            }),
                     ])->columnSpan(1)
             ]);
     }
@@ -326,7 +309,10 @@ class NewsTodayResource extends Resource
 
     public static function canEdit(Model $record): bool
     {
-        return Auth::user()->can('edit_news::today');
+        $userId = Auth::id(); // Get the current authenticated user's ID
+        return Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'news_today_reviewer']) || (Auth::user()->can('edit_news::today') && $record->articles->contains(function ($article) use ($userId) {
+                return $article->reviewer_id == $userId || $article->expert_id == $userId;
+            }));
     }
 
     public static function canCreate(): bool

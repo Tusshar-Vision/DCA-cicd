@@ -20,6 +20,7 @@ use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
@@ -136,5 +137,50 @@ class YearEndReviewResource extends Resource
             'create' => Pages\CreateYearEndReview::route('/create'),
             'edit' => Pages\EditYearEndReview::route('/{record}/edit'),
         ];
+    }
+
+    public static function canViewAny(): bool
+    {
+        return Auth::user()->can('view_year::end::review');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return Auth::user()->hasAnyRole(['super_admin', 'admin']) || (Auth::user()->can('edit_year::end::review') && $record->is_published !== true);
+    }
+
+    public static function canCreate(): bool
+    {
+        return Auth::user()->can('create_year::end::review');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return Auth::user()->can('delete_year::end::review') && $record->is_published !== true;
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        return Auth::user()->can('delete_year::end::review');
+    }
+
+    public static function canForceDelete(Model $record): bool
+    {
+        return Auth::user()->can('delete_year::end::review') && $record->is_published !== true;
+    }
+
+    public static function canForceDeleteAny(): bool
+    {
+        return Auth::user()->can('delete_year::end::review');
+    }
+
+    public static function canRestore(Model $record): bool
+    {
+        return Auth::user()->can('delete_year::end::review');
+    }
+
+    public static function canRestoreAny(): bool
+    {
+        return Auth::user()->can('delete_year::end::review');
     }
 }
