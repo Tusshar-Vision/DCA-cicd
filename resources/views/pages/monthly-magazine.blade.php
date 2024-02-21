@@ -8,11 +8,7 @@
 
 @section('content')
 
-    <div class="space-y-4">
-        <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />
-        <x-common.article-heading :title="$article->title" />
-        <x-widgets.articles-nav :createdAt="$articles->publishedAt" :updatedAt="$article->updatedAt" />
-    </div>
+    
 
     <div x-data="{ isHighlightsOpen: false, isNotesOpen: false }">
         <x-widgets.side-notes-and-highlights-menu :noteAvailable="$noteAvailable" />
@@ -32,8 +28,8 @@
     <div class="space-y-12">
         <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8 mt-[20px] md:mt-0">
 
-            <div class="flex min-w-full lg:min-w-[340px] lg:w-2/6 flex-col space-y-6 leftsticky">
-                <h2 class="text-[20px] font-bold mt-[26px] pb-3 border-b border-color">Monthly Magazine</h2>
+            <div class="flex min-w-full lg:min-w-[340px] lg:w-2/6 flex-col space-y-6 leftsticky stickyMl-0">
+                <h2 class="text-[25px] font-bold mt-[26px] pb-3 border-b border-color text-[#0358A3]">Monthly <span class="text-[#E22526]">Magazine</span></h2>
 
                 <livewire:widgets.articles-side-bar :topics="$topics" :articles="$sortedArticlesWithTopics" :table-of-content="$tableOfContent" />
                 <div class="hidden lg:block">
@@ -42,14 +38,23 @@
             </div>
 
             <div class="flex flex-col w-full mt-[20px]">
-                    <x-header.article readTime="{{ $article->readTime }}" />
-                    <x-article-content :article="$article" />
-                    <div class="mt-12">
-                        <x-widgets.article-pagination :current-initiative="$articles" :current-article-slug="$article->slug" />
+                <div class="space-y-4">
+                    <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />
+                    <x-common.article-heading :title="$article->title" />
+                    <div class="flex flex-col md:flex-row justify-between items-center w-full py-2 my-[30px] text-gray-500 border-t-2 border-b-2">
+                        <x-widgets.articles-nav :createdAt="$articles->publishedAt" :updatedAt="$article->updatedAt" />
+                        <x-header.article readTime="{{ $article->readTime }}" />
                     </div>
-                    <div class="block lg:hidden">
-                        <x-widgets.side-bar-download-menu />
-                    </div>
+                </div>
+
+                
+                <x-article-content :article="$article" />
+                <div class="mt-12">
+                    <x-widgets.article-pagination :current-initiative="$articles" :current-article-slug="$article->slug" />
+                </div>
+                <div class="block lg:hidden">
+                    <x-widgets.side-bar-download-menu />
+                </div>
             </div>
 
         </div>

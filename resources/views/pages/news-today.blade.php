@@ -39,7 +39,7 @@
             <livewire:widgets.today-news-video :videoUrl="$videoUrl" />
         </x-modals.modal-box>
 
-                <div class="flex w-full lg:w-2/6 flex-col space-y-4 leftsticky" style="margin-left: 0">
+                <div class="flex w-full lg:w-2/6 flex-col space-y-4 leftsticky stickyMl-0">
                     <h2 class="text-[25px] font-bold mt-[26px] pb-3 border-b border-color text-[#0358A3]">News <span class="text-[#E22526]">Today</span></h2>
                     <livewire:widgets.news-today-calendar :calendar-data="$newsTodayCalendar" />
                     <x-widgets.article-side-bar :table-of-content="$articles->articles" />
