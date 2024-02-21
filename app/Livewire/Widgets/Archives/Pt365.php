@@ -8,10 +8,11 @@ use Livewire\Component;
 class Pt365 extends Component
 {
 
-    public $data;
-    public function mount($data): void
+    public $data, $years;
+    public function mount($data, $years): void
     {
         $this->data = collect($data);
+        $this->years = $years;
     }
 
     public function render(): View

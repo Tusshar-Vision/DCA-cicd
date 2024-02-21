@@ -34,8 +34,9 @@ readonly class DownloadService
         $query = $this->publishedInitiative
             ->isPublished()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::MAINS_365))
-            ->has('media')
-            ->with('media');
+            ->has('media');
+
+        $query->with('media');
 
         if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
@@ -45,7 +46,9 @@ readonly class DownloadService
                 return $item->published_at->format('Y');
             });
 
-        return $result;
+        $years = $result->keys();
+
+        return [$years, $result];
     }
 
     public function getPT365($year, $month): Collection|array
@@ -64,7 +67,9 @@ readonly class DownloadService
                 return $item->published_at->format('Y');
             });
 
-        return $result;
+        $years = $result->keys();
+
+        return [$years, $result];
     }
 
     public function getEconomicSurvey($year, $month): Collection|array
@@ -83,7 +88,9 @@ readonly class DownloadService
                 return $item->published_at->format('Y');
             });
 
-        return $result;
+        $years = $result->keys();
+
+        return [$years, $result];
     }
 
     public function getBudget($year, $month): Collection|array
@@ -99,7 +106,9 @@ readonly class DownloadService
                 return $item->published_at->format('Y');
             });
 
-        return $result;
+        $years = $result->keys();
+
+        return [$years, $result];
     }
 
     public function getValueAddedMaterial($year, $month): Collection|array
@@ -118,7 +127,9 @@ readonly class DownloadService
                 return $item->published_at->format('Y');
             });
 
-        return $result;
+        $years = $result->keys();
+
+        return [$years, $result];
     }
 
     public function getValueAddedMaterialOptional($year, $month): Collection|array
@@ -137,7 +148,9 @@ readonly class DownloadService
                 return $item->published_at->format('Y');
             });
 
-        return $result;
+        $years = $result->keys();
+
+        return [$years, $result];
     }
 
     public function getQuarterlyRevisionDocument($year, $month): Collection|array
@@ -156,7 +169,9 @@ readonly class DownloadService
                 return $item->published_at->format('Y');
             });
 
-        return $result;
+        $years = $result->keys();
+
+        return [$years, $result];
     }
 
     public function getYearEndReviews($year)
@@ -174,6 +189,8 @@ readonly class DownloadService
                 return $item->published_at->format('Y');
             });
 
-        return $result;
+        $years = $result->keys();
+
+        return [$years, $result];
     }
 }

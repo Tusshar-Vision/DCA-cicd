@@ -119,14 +119,16 @@ class MonthlyMagazineController extends Controller
             $data[$year] = $publishedInitiatives;
         }
 
+        $years = array_keys($data);
+
         // $data = collect($data);
         $data = json_encode($data);
 
-        logger("Data", [$data]);
+
 
         return View('pages.archives.monthly-magazine', [
             "title" => "Monthly Magazine Archives",
-            'data' => $data
+            'data' => [$years, $data]
         ]);
     }
 }
