@@ -1,7 +1,9 @@
-<div class="flex h-14 items-center justify-between text-base">
-    <div class="-ml-4 text-visionLineGray">
+<div class="flex items-center justify-between text-base">
         {{--        {{ Breadcrumbs::render('home') }} --}}
-    </div>
+        <ul class="text-[#8F93A3] text-base flex items-center categoryList">
+            <li class="mr-4 relative">Category</li>
+            <li class="mr-4 relative">Sub-category</li>
+        </ul>
 
     <div class="flex px-[20px] md:px-0">
         @auth('cognito')

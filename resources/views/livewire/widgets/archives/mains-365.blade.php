@@ -48,9 +48,9 @@
                 <a href="{{ route('view-file', ['media' => $file->media->first()]) }}">
                 <div class="weekly-focus-progress-single-bar border-b-2">
                     <p>{{ucfirst($file->name ?? $file->media->first()->name)}}</p>
-                    <ul class="flex justify-start space-x-4 mt-[15px]">
-                        <li class="text-[#3362CC] text-sm font-normal"><a href="{{ route('view-file', ['media' => $file->media->first()]) }}" class="hover:underline" target="_blank">Read</a></li>
-                        <li class="text-[#3362CC] text-sm font-normal"><a href="{{ route('download', ['media' => $file->media->first()]) }}" class="hover:underline">Download</a></li>
+                    <ul class="flex justify-start mt-[15px]">
+                        <li class="text-[#3362CC] mr-4 text-sm font-normal"><a href="{{ route('view-file', ['media' => $file->media->first()]) }}" class="hover:underline" target="_blank">Read</a></li>
+                        <li class="text-[#3362CC] mr-4 text-sm font-normal"><a href="{{ route('download', ['media' => $file->media->first()]) }}" class="hover:underline">Download</a></li>
                     </ul>
                 </div>
                 </a>
