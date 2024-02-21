@@ -18,6 +18,10 @@
         #editor {
             height: 700px;
         }
+
+        #editor ul {
+            margin-left: 15px;
+        }
     </style>
     <div
         id="editor"
