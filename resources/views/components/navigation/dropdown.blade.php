@@ -5,9 +5,16 @@
 @endphp
 
 <div {{ $attributes }} x-cloak>
-
     <ul x-data="{ isMenuOpen: null }" class="absolute font-normal bgcolor-FFF shadow w-72 border rounded-md mt-2 py-1 z-50">
-        <x-buttons.primary button-text="{!! $buttonText !!}" button-link="{{ $buttonLink }}" class="border-bottom" />
+        <div class="border-bottom">
+       <x-buttons.primary button-text="{!! $buttonText !!}" button-link="{{ $buttonLink }}"  /> 
+       @if($menuData['initiative_id'] === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE) && count($menuData['data']) > 0 )
+       <p>{{Carbon::parse($menuData['data'][array_key_first($menuData['data'])][0]->publishedAt)->monthName}}</p>
+       @endif
+       @if($menuData['initiative_id'] === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
+       <p>{{$menuData['data'][array_key_first($menuData['data'])][0]->article[0]->title}}</p>
+       @endif
+        </div>
             @foreach ($menuData['data'] as $mainMenu => $subMenu)
                 @if(!empty($subMenu))
                     <li class="relative">
