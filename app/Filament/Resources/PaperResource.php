@@ -43,11 +43,11 @@ class PaperResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->iconButton()->tooltip('Edit'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+//                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -55,7 +55,7 @@ class PaperResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\TopicsRelationManager::class
         ];
     }
 

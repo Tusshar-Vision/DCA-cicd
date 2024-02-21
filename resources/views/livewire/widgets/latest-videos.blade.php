@@ -4,7 +4,7 @@
         <a href="{{ route('videos') }}" class="vi-view-all">{{__('home_page.view_all')}}</a>
     </div>
 
-    <div class="grid gap-6 featureVideo">
+    <div class="flex flex-col sm:flex-row sm:space-x-6 lg:flex-col lg:space-x-0 featureVideo">
         @foreach($latestVideos as $key => $video)
             <x-cards.video :source="$video" />
         @endforeach

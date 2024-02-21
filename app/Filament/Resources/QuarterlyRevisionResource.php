@@ -147,7 +147,7 @@ class QuarterlyRevisionResource extends Resource
 
     public static function canEdit(Model $record): bool
     {
-        return Auth::user()->can('edit_quarterly::revision');
+        return Auth::user()->hasAnyRole(['super_admin', 'admin']) || (Auth::user()->can('edit_quarterly::revision') && $record->is_published !== true);
     }
 
     public static function canCreate(): bool
@@ -157,7 +157,7 @@ class QuarterlyRevisionResource extends Resource
 
     public static function canDelete(Model $record): bool
     {
-        return Auth::user()->can('delete_quarterly::revision');
+        return Auth::user()->can('delete_quarterly::revision') && $record->is_published !== true;
     }
 
     public static function canDeleteAny(): bool
@@ -167,7 +167,7 @@ class QuarterlyRevisionResource extends Resource
 
     public static function canForceDelete(Model $record): bool
     {
-        return Auth::user()->can('delete_quarterly::revision');
+        return Auth::user()->can('delete_quarterly::revision') && $record->is_published !== true;
     }
 
     public static function canForceDeleteAny(): bool

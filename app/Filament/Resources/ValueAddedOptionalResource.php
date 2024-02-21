@@ -147,7 +147,7 @@ class ValueAddedOptionalResource extends Resource
 
     public static function canEdit(Model $record): bool
     {
-        return Auth::user()->can('edit_value::added::optional');
+        return Auth::user()->hasAnyRole(['super_admin', 'admin']) || (Auth::user()->can('edit_value::added::optional') && $record->is_published !== true);
     }
 
     public static function canCreate(): bool
@@ -157,7 +157,7 @@ class ValueAddedOptionalResource extends Resource
 
     public static function canDelete(Model $record): bool
     {
-        return Auth::user()->can('delete_value::added::optional');
+        return Auth::user()->can('delete_value::added::optional') && $record->is_published !== true;
     }
 
     public static function canDeleteAny(): bool
@@ -167,7 +167,7 @@ class ValueAddedOptionalResource extends Resource
 
     public static function canForceDelete(Model $record): bool
     {
-        return Auth::user()->can('delete_value::added::optional');
+        return Auth::user()->can('delete_value::added::optional') && $record->is_published !== true;
     }
 
     public static function canForceDeleteAny(): bool

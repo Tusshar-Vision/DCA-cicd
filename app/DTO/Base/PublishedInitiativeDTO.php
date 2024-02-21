@@ -19,8 +19,10 @@ abstract class PublishedInitiativeDTO extends Data
         public DataCollection $articles,
         public string $publishedAt,
         public string $createdAt,
-        public string $updatedAt
-    ) {}
+        public string $updatedAt,
+        public ?string $videoUrl
+    ) {
+    }
 
     /**
      * @throws ArticleNotFoundException
@@ -28,6 +30,11 @@ abstract class PublishedInitiativeDTO extends Data
     public function getArticleFromSlug($slug): ArticleDTO
     {
         return $this->articles->where('slug', '=', $slug)->first() ?? throw new ArticleNotFoundException('There are no articles');
+    }
+
+    public function getArticleInNews()
+    {
+        return $this->articles->where('is_short', '=', 0)->first() ?? throw new ArticleNotFoundException('There are no articles');
     }
 
     public function getArticleIndexFromSlug($slug): int|null
@@ -52,7 +59,8 @@ abstract class PublishedInitiativeDTO extends Data
             ArticleDTO::collection($publishedInitiative->articles),
             Carbon::parse($publishedInitiative->published_at)->format('Y-m-d'),
             $publishedInitiative->created_at,
-            $publishedInitiative->updated_at
+            $publishedInitiative->updated_at,
+            $publishedInitiative->video?->url
         );
     }
 }

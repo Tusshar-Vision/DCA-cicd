@@ -33,6 +33,8 @@
         <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8 mt-[20px] md:mt-0">
 
             <div class="flex min-w-full lg:min-w-[340px] lg:w-2/6 flex-col space-y-6 leftsticky">
+                <h2 class="text-[20px] font-bold mt-[26px] pb-3 border-b border-color">Monthly Magazine</h2>
+
                 <livewire:widgets.articles-side-bar :topics="$topics" :articles="$sortedArticlesWithTopics" :table-of-content="$tableOfContent" />
                 <div class="hidden lg:block">
                     <x-widgets.side-bar-download-menu />

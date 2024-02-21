@@ -35,6 +35,7 @@ Route::controller(Pages\NewsTodayController::class)
                         Route::get('/{date}/{topic}/{article_slug}', 'renderArticle')->name('news-today.article');
                         Route::get('/getbymonth', 'getByYearAndMonth')->name('news-today.getByYearAndMonth');
                         Route::get('/archive', 'archive')->name('news-today.archive');
+                        Route::get('/also-in-news', 'alsoInNews')->name('news-today.alsoInNews');
                     }
                 );
         }
@@ -78,6 +79,7 @@ Route::controller(Pages\DownloadsController::class)->group(function () {
     Route::get('/value-added-material', 'renderValueAddedMaterial')->name('value-added-material');
     Route::get('/value-added-material-optional', 'renderValueAddedMaterialOptional')->name('value-added-material-optional');
     Route::get('/quarterly-revision-documents', 'renderQuarterlyRevisionDocument')->name('quarterly-revision-document');
+    Route::get('/year-end-reviews', 'renderYearEndReviews')->name('year-end-reviews');
 
     //    Route::get('/weekly-round-table', 'getWeeklyRoundTable')->name('weekly-round-table');
     //    Route::get('/animated-shorts', 'getAnimatedShorts')->name('animated-shorts');

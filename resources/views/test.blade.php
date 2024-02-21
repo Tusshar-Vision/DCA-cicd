@@ -148,6 +148,8 @@
 <br>
 <br>
 
+<!-- also in news start -->
+
 <div class="border-2 border-visionSelectedGray rounded px-4 py-2 mb-6">
     <div class="cursor-pointer text-[#183B56] hover:text-[#3362CC] flex justify-between border-b-[1px] border-b-[#183B56] hover:border-b-[#3362CC] w-full pb-2 svgHover accorActive">
         <h1 class="text-lg">Mi sit amet mauris commodo quis imperdiet massa.</h1>
@@ -244,6 +246,8 @@
         </ul>
 </div>
 
+
+<!-- also in news end -->
 
 
 <!-- save note to my content start -->
