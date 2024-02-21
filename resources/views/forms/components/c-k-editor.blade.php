@@ -15,8 +15,8 @@
     wire:ignore
 >
     <style>
-        #editor {
-            height: 700px;
+        .ck-editor__editable {
+            min-height: 500px; /* Adjust the height as needed */
         }
 
         #editor ul {
@@ -31,7 +31,7 @@
                 ClassicEditor.create(this.$refs.editor)
                     .then(editor => {
                         // Set initial data
-                        editor.setData(@js($this->data['content']['content']));
+                        editor.setData(@js($this->data['content']['content'] ?? ''));
 
                         // Listen for changes in the editor and update Livewire data
                         editor.model.document.on('change:data', () => {
