@@ -3199,3 +3199,8 @@ iframe {
   background-color: #d3ffd5;
   border-color: #89D38C;
 }
+
+.autoHeight img{
+  height: 230px;
+  object-fit: cover;
+}

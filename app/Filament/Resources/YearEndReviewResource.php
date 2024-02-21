@@ -146,7 +146,7 @@ class YearEndReviewResource extends Resource
 
     public static function canEdit(Model $record): bool
     {
-        return Auth::user()->can('edit_year::end::review') && $record->is_published !== true;
+        return Auth::user()->hasAnyRole(['super_admin', 'admin']) || (Auth::user()->can('edit_year::end::review') && $record->is_published !== true);
     }
 
     public static function canCreate(): bool

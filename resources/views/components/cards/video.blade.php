@@ -1,9 +1,9 @@
-<div class="w-full">
+<div class="w-full mb-4">
     @if($source->is_url)
         @php
             $mediaEmbed = new MediaEmbed\MediaEmbed();
             $mediaObject =  $mediaEmbed->parseUrl($source->url);
-            echo "<div class='max-w-[100%] max-h-52'>";
+            echo "<div class='max-w-[100%] max-h-52 overflow-hidden'>";
                 echo $mediaObject->getEmbedCode();
             echo "</div>"
         @endphp

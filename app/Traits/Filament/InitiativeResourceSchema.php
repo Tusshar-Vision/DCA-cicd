@@ -112,7 +112,7 @@ trait InitiativeResourceSchema
             ])
             ->actions([
                 Action::make('Publish')
-                    ->icon('heroicon-s-eye')
+                    ->icon('heroicon-s-paper-airplane')
                     ->requiresConfirmation()
                     ->button()
                     ->visible(function () {

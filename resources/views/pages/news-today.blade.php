@@ -12,11 +12,11 @@
 
 @section('content')
 
-    <div class="space-y-4">
+    {{-- <div class="space-y-4">
         <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />
         <x-common.article-heading :title="$article->title" />
         <x-widgets.articles-nav :createdAt="$articles->publishedAt" :updatedAt="$article->updatedAt" />
-    </div>
+    </div> --}}
 
     <div x-data="{ isHighlightsOpen: false, isNotesOpen: false }">
         <x-widgets.side-notes-and-highlights-menu :noteAvailable="$noteAvailable" />
@@ -49,7 +49,14 @@
                 </div>
 
                 <div class="flex flex-col mt-[30px] w-full">
-
+                    <!-- replaced header section -->
+                    <div class="space-y-4">
+                        <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />
+                        <x-common.article-heading :title="$article->title" />
+                        <x-widgets.articles-nav :createdAt="$articles->publishedAt" :updatedAt="$article->updatedAt" />
+                    </div>
+                    <!-- replaced header section -->
+                    
                     <x-header.article readTime="{{ $article->readTime }}" />
 
                     @if($inShort)
