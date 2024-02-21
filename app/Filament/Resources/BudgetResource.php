@@ -150,8 +150,7 @@ class BudgetResource extends Resource
 
     public static function canEdit(Model $record): bool
     {
-        $user = Auth::user();
-        return $user->can('edit_budget') && $record->is_published !== true;
+        return Auth::user()->hasAnyRole(['super_admin', 'admin']) || (Auth::user()->can('edit_budget') && $record->is_published !== true);
     }
 
     public static function canCreate(): bool
