@@ -27,10 +27,10 @@
 <div class="group cursor-pointer flex-col max-w-2xl">
     <a href="{{ $articleUrl }}" class="space-y-2">
         <div class="space-y-2">
-            <div class="overflow-hidden coverImage">
+            <div class="overflow-hidden coverImage autoHeight">
                 <img
                     src="{{ ($featuredImage === '') ? 'https://placehold.co/1596x930' : $featuredImage }}"
-                    width="{{ $width }}" height="{{ $height }}" alt="" class="group-hover:scale-105 transition-all"/>
+                    width="{{ $width }}" height="{{ $height }}" alt="" class="group-hover:scale-105 transition-all object-cover"/>
             </div>
             <div class="text-visionLineGray flex items-center space-x-3 text-sm">
                 <p><strong>Updated</strong> {{ Carbon::parse($article->updated_at)->format('d M Y')  }}</p>
