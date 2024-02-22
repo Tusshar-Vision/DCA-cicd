@@ -14,7 +14,7 @@
        <a class="text-sm flex px-4 pb-[15px] font-medium brand-color" href="{{ $buttonLink }}"><p>{{Carbon::parse($menuData['data'][array_key_first($menuData['data'])][0]->publishedAt)->monthName}}</p></a>
        @endif
        @if($menuData['initiative_id'] === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
-       <a class="text-sm flex px-4 pb-[15px] font-medium brand-color" href="{{ $buttonLink }}"><p>{{$menuData['data'][array_key_first($menuData['data'])][0]->article[0]->title}}</p></a>
+       <a class="text-sm flex px-4 pb-[15px] font-medium brand-color" href="{{ $buttonLink }}"><p>{{$menuData['data'] && $menuData['data'][array_key_first($menuData['data'])][0]->article[0]->title}}</p></a>
 
        @endif
         </div>
