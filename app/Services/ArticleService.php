@@ -72,11 +72,13 @@ readonly class ArticleService
             ->get();
 
         $groupedArchive = [];
+        $years = [];
         foreach ($archive as $item) {
+            $years[] = $item->year;
             $groupedArchive[$item->year][] = $item->month;
         }
 
-        return $groupedArchive;
+        return [$years, $groupedArchive];
     }
 
     public function getByYearAndMonth($initiative_id, $year, $month)

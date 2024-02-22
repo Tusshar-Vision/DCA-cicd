@@ -7,11 +7,6 @@
 @endphp
 
 @section('content')
-    <div class="space-y-4">
-        <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />
-        <x-common.article-heading :title="$article->title" />
-        <x-widgets.articles-nav :createdAt="$articles->publishedAt" :updatedAt="$article->updatedAt" />
-    </div>
 
     <div x-data="{ isHighlightsOpen: false, isNotesOpen: false }">
         <x-widgets.side-notes-and-highlights-menu :noteAvailable="$noteAvailable" />
@@ -34,8 +29,8 @@
             <livewire:widgets.today-news-video :videoUrl="$videoUrl" />
         </x-modals.modal-box>
 
-                <div class="flex w-full lg:md:w-2/6 flex-col space-y-6 leftsticky">
-                                <h2 class="text-[20px] font-bold mt-[26px] pb-3 border-b border-color">Weekly Focus</h2>
+                <div class="flex w-full lg:md:w-2/6 flex-col space-y-6 leftsticky stickyMl-0">
+                    <h2 class="text-[25px] font-bold mt-[26px] pb-3 border-b border-color text-[#0358A3]">Weekly <span class="text-[#E22526]">Focus</span></h2>
 
                     <x-widgets.article-side-bar :table-of-content="$tableOfContent" />
 
@@ -53,7 +48,15 @@
                 </div>
 
                 <div class="flex flex-col w-full mt-[40px]">
-                    <x-header.article readTime="{{ $article->readTime }}" />
+                    <div class="space-y-4">
+                        <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />
+                        <x-common.article-heading :title="$article->title" />
+                        <div class="flex flex-col md:flex-row justify-between items-center w-full py-2 my-[30px] text-gray-500 border-t-2 border-b-2">
+                            <x-widgets.articles-nav :createdAt="$articles->publishedAt" :updatedAt="$article->updatedAt" />
+                            <x-header.article readTime="{{ $article->readTime }}" />
+                        </div>
+                    </div>
+                    
 
                     <x-article-content :article="$article" class="m-0" />
 
