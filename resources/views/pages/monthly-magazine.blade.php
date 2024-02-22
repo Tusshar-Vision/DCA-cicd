@@ -25,11 +25,11 @@
     </div>
 
 
-    <div class="space-y-12">
+    <div class="space-y-12 mt-10">
         <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8 mt-[20px] md:mt-0">
 
             <div class="flex min-w-full lg:min-w-[340px] lg:w-2/6 flex-col space-y-6 leftsticky stickyMl-0">
-                <h2 class="text-[25px] font-bold mt-[26px] pb-3 border-b border-color text-[#0358A3]">Monthly <span class="text-[#E22526]">Magazine</span></h2>
+                <h2 class="text-[25px] font-bold pb-3 border-b border-color text-[#0358A3]">Monthly <span class="text-[#E22526]">Magazine</span></h2>
 
                 <livewire:widgets.articles-side-bar :topics="$topics" :articles="$sortedArticlesWithTopics" :table-of-content="$tableOfContent" />
                 <div class="hidden lg:block">
@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="flex flex-col w-full mt-[20px]">
+            <div class="flex flex-col w-full">
                 <div class="space-y-4">
                     <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />
                     <x-common.article-heading :title="$article->title" />
