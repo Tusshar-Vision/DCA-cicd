@@ -62,6 +62,11 @@ readonly class ArticleService
     {
         $query = $this->articles::where('initiative_id', $initiative_id)->where('published_at', '!=', null);
 
+        $years = $query->select(DB::raw('YEAR(published_at) as year'))
+            ->groupBy(DB::raw('YEAR(published_at)'))
+            ->orderBy('year', 'desc')
+            ->pluck('year');
+
         if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
 
@@ -72,9 +77,7 @@ readonly class ArticleService
             ->get();
 
         $groupedArchive = [];
-        $years = [];
         foreach ($archive as $item) {
-            $years[] = $item->year;
             $groupedArchive[$item->year][] = $item->month;
         }
 
