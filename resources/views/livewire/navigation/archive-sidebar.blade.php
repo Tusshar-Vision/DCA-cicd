@@ -30,7 +30,7 @@
                    wire:navigate
                    class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('news-today*') ? 'activeSidebar' : '' }}"
                 >
-                    Daily News
+                    News's Today
                 </a>
             </li>
             <li class="font-semibold text-base text-[#183B56] mb-1">

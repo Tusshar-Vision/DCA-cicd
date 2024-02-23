@@ -8,7 +8,12 @@
                         </svg>
                         <span>
                         @if($initiative !== 'weekly-focus')
-                        Download Current Article
+                        @if ($initiative == 'news-today')
+                            Download Today's News
+                        @else 
+                            Download Current Article
+                        @endif
+                        
                         @else
                         Download Weekly Focus
                         @endif

@@ -25,8 +25,8 @@
     <!-- PT 365 -->
 <?php $i = 0; ?>
     @foreach ($data as $year => $files)
-        <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: {{$i==0 ? 'true': 'false'}} }" @click="expanded = ! expanded" x-transition>
-            <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]">
+        <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: {{$i==0 ? 'true': 'false'}} }"  x-transition>
+            <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]" @click="expanded = ! expanded">
                 <h4 class="text-[#040404] text-[32px] font-normal">{{$year}}</h4>
                 <div>
                     <div x-show="expanded === true">
