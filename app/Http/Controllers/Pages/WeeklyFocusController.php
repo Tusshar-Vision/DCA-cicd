@@ -11,6 +11,7 @@ use App\Models\Article;
 use App\Models\Bookmark;
 use App\Models\Note;
 use App\Services\ArticleService;
+use App\Services\DownloadService;
 use App\Services\MediaService;
 use App\Services\PublishedInitiativeService;
 use App\Services\SuggestionService;
@@ -25,6 +26,7 @@ class WeeklyFocusController extends Controller
 
     public function __construct(
         private readonly PublishedInitiativeService $publishedInitiativeService,
+        private readonly DownloadService $downloadService
     ) {
         $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS);
     }
@@ -62,6 +64,7 @@ class WeeklyFocusController extends Controller
 
         $article = $this->weeklyFocus->getArticleFromSlug($slug);
         $videoUrl = $this->weeklyFocus->videoUrl;
+        $media = $this->weeklyFocus->media;
 
         $noteAvailable = null;
         $note = null;
@@ -85,7 +88,8 @@ class WeeklyFocusController extends Controller
             "note" => $note,
             "tableOfContent" => $tableOfContent,
             "isArticleBookmarked" => $isArticleBookmarked,
-            'videoUrl' => $videoUrl
+            'videoUrl' => $videoUrl,
+            'media' => $media
         ]);
     }
 
@@ -94,52 +98,54 @@ class WeeklyFocusController extends Controller
         $year = request()->input('year');
         $month = request()->input('month');
 
-        $query = Article::where('initiative_id', config('settings.initiatives.WEEKLY_FOCUS'));
+        // $query = Article::where('initiative_id', config('settings.initiatives.WEEKLY_FOCUS'));
 
-        $years = $query->select(DB::raw('YEAR(published_at) as year'))
-            ->where('published_at', '!=', null)
-            ->orderBy('year')
-            ->pluck('year');
+        $data = $this->downloadService->getWeeklyFocusArchive($year, $month);
 
-        if ($year) $query->whereYear('published_at', $year);
-        if ($month) $query->whereMonth('published_at', $month);
+        // $years = $query->select(DB::raw('YEAR(published_at) as year'))
+        //     ->where('published_at', '!=', null)
+        //     ->orderBy('year')
+        //     ->pluck('year');
 
-        $data = $query->select(
-            DB::raw('YEAR(published_at) as year'),
-            DB::raw('MONTHNAME(published_at) as month'),
-            DB::raw('WEEK(published_at) as week'),
-            'articles.slug',
-            'articles.title',
-            'articles.published_at',
-            'initiative_topics.name'
-        )
-            ->where('published_at', '!=', null)
-            ->leftJoin('initiative_topics', 'articles.initiative_topic_id', '=', 'initiative_topics.id')
-            ->orderBy('year')
-            ->orderBy('month')
-            ->orderBy('week')
-            ->get();
+        // if ($year) $query->whereYear('published_at', $year);
+        // if ($month) $query->whereMonth('published_at', $month);
 
-        $organizedData = [];
-        $years = [];
+        // $data = $query->select(
+        //     DB::raw('YEAR(published_at) as year'),
+        //     DB::raw('MONTHNAME(published_at) as month'),
+        //     DB::raw('WEEK(published_at) as week'),
+        //     'articles.slug',
+        //     'articles.title',
+        //     'articles.published_at',
+        //     'initiative_topics.name'
+        // )
+        //     ->where('published_at', '!=', null)
+        //     ->leftJoin('initiative_topics', 'articles.initiative_topic_id', '=', 'initiative_topics.id')
+        //     ->orderBy('year')
+        //     ->orderBy('month')
+        //     ->orderBy('week')
+        //     ->get();
 
-        foreach ($data as $item) {
-            $year = $item->year;
-            $years[] = $year;
-            $month = $item->month;
-            $week = "Week " . $item->week;
+        // $organizedData = [];
+        // $years = [];
 
-            $organizedData[$year][$month][$week][] = [
-                'slug' => $item->slug,
-                'title' => $item->title,
-                'published_at' => Carbon::parse($item->published_at)->format('Y-m-d'),
-                'topic' => strtolower($item->name)
-            ];
-        }
+        // foreach ($data as $item) {
+        //     $year = $item->year;
+        //     $years[] = $year;
+        //     $month = $item->month;
+        //     $week = "Week " . $item->week;
+
+        //     $organizedData[$year][$month][$week][] = [
+        //         'slug' => $item->slug,
+        //         'title' => $item->title,
+        //         'published_at' => Carbon::parse($item->published_at)->format('Y-m-d'),
+        //         'topic' => strtolower($item->name)
+        //     ];
+        // }
 
         return View('pages.archives.weekly-focus', [
             "title" => "Weekly Focus Archive",
-            'data' => [$years, $organizedData]
+            'data' => $data
         ]);
     }
 }
