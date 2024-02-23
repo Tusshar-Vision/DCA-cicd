@@ -34,8 +34,8 @@ readonly class DownloadService
 
         $query = $this->publishedInitiative
             ->isPublished()
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS));
-        // ->has('media');
+            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
+            ->has('media');
 
         $years = $query->get()
             ->groupBy(function ($item) {
@@ -45,7 +45,7 @@ readonly class DownloadService
         if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
 
-        // $query->with('media');
+        $query->with('media');
 
         $data = $query->select(
             DB::raw('YEAR(published_at) as year'),
@@ -59,9 +59,6 @@ readonly class DownloadService
             ->orderBy('month', 'desc')
             ->get();
 
-        logger("Data");
-        logger($data);
-
         $organizedData = [];
 
         foreach ($data as $item) {
@@ -73,9 +70,6 @@ readonly class DownloadService
                 'id' => $item->id,
             ];
         }
-
-        logger("organised data");
-        logger($organizedData);
 
         return [$years, $organizedData];
     }
