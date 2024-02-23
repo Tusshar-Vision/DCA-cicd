@@ -26,7 +26,7 @@
     </div>
 
     <!-- responsive filter section start -->
-    <div id="myFilter" class="menuOverlay">
+    {{-- <div id="myFilter" class="menuOverlay">
         <div class="menuOverlayContent">
             <div class="flex justify-between align-middle mb-[20px]">
                 <span class="text-[#3362CC] text-sm font-bold">Select Filters</span>
@@ -61,7 +61,7 @@
                 </button>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- responsive filter section end -->
 
     <!-- Weekly Focus section -->
