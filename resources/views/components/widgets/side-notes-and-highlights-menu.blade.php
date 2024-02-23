@@ -66,7 +66,7 @@
                     <svg id="Layer_1" enable-background="new 0 0 128 128" height="50" viewBox="0 0 128 128" width="50" xmlns="http://www.w3.org/2000/svg"><g><g clip-rule="evenodd" fill-rule="evenodd"><path d="m30.3 24.4h7.7l52 79.3v7.7c0 4.7-3.8 8.5-8.5 8.5h-51.2c-4.7 0-8.5-3.8-8.5-8.5v-78.5c0-4.7 3.8-8.5 8.5-8.5z" fill="#ffcb6c"/><path d="m48.8 40.8 41.2 62.9v7.7c0 .4 0 .7-.1 1h-32.6c-4.7 0-8.5-3.9-8.5-8.5z" fill="#ffbc42"/></g><g><path clip-rule="evenodd" d="m46.5 8.1h25.6l34.1 34.1v52.9c0 4.7-3.9 8.5-8.5 8.5h-51.2c-4.7 0-8.5-3.9-8.5-8.5v-78.4c0-4.7 3.8-8.6 8.5-8.6z" fill="#a7c3e3" fill-rule="evenodd"/><g clip-rule="evenodd" fill-rule="evenodd"><path d="m81.7 17.8 24.5 24.5v7.2h-16c-4.7 0-8.5-3.8-8.5-8.5z" fill="#7ba4d4"/><path d="m72.1 8.1v25.6c0 4.7 3.8 8.5 8.5 8.5h25.6z" fill="#d3e1f1"/></g><g><g><path d="m59.2 49.4h12.9v2h-12.9z" fill="#d3e1f1"/></g><g><path d="m59.2 63h25.7v2h-25.7z" fill="#d3e1f1"/></g><g><path d="m59.2 76.6h25.7v2h-25.7z" fill="#d3e1f1"/></g></g></g></g></svg>
                       <p class="text-xs text-[#183B56] mt-2">Copylink</p>
                 </a>
-                <span class="hidden" id="copyText">http://visionias.in/resources/...</span>
+                <span class="hidden" id="copyText">https://visionias.in/resources/</span>
 
                 <div id="successMessage" class="text-[#242424] text-sm absolute w-[130px] hidden flex justify-center items-center top-[15px] right-[15px] rounded-md bg-[#a9ebac] p-1">Link copied</div>
             </li>
