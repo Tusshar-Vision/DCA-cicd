@@ -19,7 +19,8 @@ class WeeklyFocusDTO extends PublishedInitiativeDTO
             Carbon::parse($publishedInitiative->published_at)->format('Y-m-d'),
             $publishedInitiative->created_at,
             $publishedInitiative->updated_at,
-            $publishedInitiative->video?->url
+            $publishedInitiative->video?->url,
+            $publishedInitiative->media->first()
         );
         $dto->topicAtGlance = $publishedInitiative->infographic;
 

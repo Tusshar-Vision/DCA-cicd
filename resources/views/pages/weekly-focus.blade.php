@@ -43,7 +43,7 @@
                         <livewire:widgets.pdf-viewer :pdf="$articles->topicAtGlance" />
                     </x-modals.modal-box>
                     <div class="hidden lg:block">
-                        <x-widgets.side-bar-download-menu initiative="weekly-focus" />
+                        <x-widgets.side-bar-download-menu initiative="weekly-focus" :media="$media" />
                     </div>
                 </div>
 
@@ -69,7 +69,7 @@
                         </div>
                     @endif
                     <div class="block lg:hidden">
-                        <x-widgets.side-bar-download-menu initiative="weekly-focus" />
+                        <x-widgets.side-bar-download-menu initiative="weekly-focus" :media="$media/>
                     </div>
                 </div>
             </div>
