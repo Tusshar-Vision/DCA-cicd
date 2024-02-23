@@ -35,6 +35,7 @@
                             @if($menuData['menu']->isEmpty())
                                 <a href="javascript:void(0)" data-status="" class="date-disabled">
                                     {{ $day }}
+                                    <span class="shadow-xl rounded-md bg-[#fff] border-[1px] border-[#ccc] w-[100px] absolute left-[-75%] bottom-[-15px] z-[1]">No article</span>
                                 </a>
                             @else
                                 <a href="{{ ArticleService::getArticleUrlFromSlug($menuData['menu']->first()->article->first()->slug) }}"
