@@ -4,7 +4,7 @@
         <path d="M11.8945 9.72656C11.0261 9.72656 10.2609 10.1537 9.78026 10.8034L5.62471 8.67551C5.6937 8.44034 5.74219 8.19662 5.74219 7.93945C5.74219 7.59064 5.67067 7.25903 5.54713 6.95402L9.8961 4.33699C10.3801 4.905 11.0915 5.27344 11.8945 5.27344C13.3485 5.27344 14.5312 4.09069 14.5312 2.63672C14.5312 1.18274 13.3485 0 11.8945 0C10.4406 0 9.25781 1.18274 9.25781 2.63672C9.25781 2.97179 9.32681 3.28963 9.44127 3.58471L5.07935 6.20941C4.59577 5.65828 3.89464 5.30273 3.10547 5.30273C1.65149 5.30273 0.46875 6.48548 0.46875 7.93945C0.46875 9.39343 1.65149 10.5762 3.10547 10.5762C3.98818 10.5762 4.76634 10.1365 5.24517 9.46857L9.38704 11.5895C9.31075 11.8358 9.25781 12.0923 9.25781 12.3633C9.25781 13.8173 10.4406 15 11.8945 15C13.3485 15 14.5312 13.8173 14.5312 12.3633C14.5312 10.9093 13.3485 9.72656 11.8945 9.72656Z" fill="white"/>
         </svg>
     </button>
-    <div class="absolute right-[60px] top-0 hidden bg-[#eef3ff] p-6 shadow-2xl" id="mysocial">
+    <div class="absolute w-[300px] md:w-auto right-[60px] top-0 hidden bg-[#eef3ff] pb-4 p-6 md:p-6 shadow-2xl" id="mysocial">
         <button onclick="closeSocial()" class="absolute left-[-12px] top-[-12px] bg-[#eef3ff] rounded-full shadow-lg">
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
                 <g clip-path="url(#clip0_3607_4565)">
@@ -19,8 +19,8 @@
               </svg>
         </button>
         <h5 class="text-[#242424] text-xl font-medium mb-4">Share</h5>
-        <ul class="flex space-x-4">
-            <li class="text-center">
+        <ul class="flex flex-wrap md:flex-nowrap justify-evenly space-x-4">
+            <li class="text-center mb-4 md:mb-0">
                 <a href="javascript:void(0)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none" class="m-auto">
                         <path d="M25 50C38.8071 50 50 38.8071 50 25C50 11.1929 38.8071 0 25 0C11.1929 0 0 11.1929 0 25C0 38.8071 11.1929 50 25 50Z" fill="#25D366"/>
@@ -30,7 +30,7 @@
                     <p class="text-xs text-[#183B56] mt-2">WhatsApp</p> 
                 </a>
             </li>
-            <li class="text-center">
+            <li class="text-center mb-4 md:mb-0">
                 <a href="javascript:void(0)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none" class="m-auto">
                         <path d="M25 50C38.8071 50 50 38.8071 50 25C50 11.1929 38.8071 0 25 0C11.1929 0 0 11.1929 0 25C0 38.8071 11.1929 50 25 50Z" fill="#3B5998"/>
@@ -39,7 +39,7 @@
                       <p class="text-xs text-[#183B56] mt-2">Facebook</p> 
                 </a>
             </li>
-            <li class="text-center">
+            <li class="text-center mb-4 md:mb-0">
                 <a href="javascript:void(0)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none" class="m-auto">
                         <path d="M25 50C38.8071 50 50 38.8071 50 25C50 11.1929 38.8071 0 25 0C11.1929 0 0 11.1929 0 25C0 38.8071 11.1929 50 25 50Z" fill="#CFD8DC"/>
@@ -52,7 +52,7 @@
                       <p class="text-xs text-[#183B56] mt-2">Email</p> 
                 </a>
             </li>
-            <li class="text-center">
+            <li class="text-center mb-4 md:mb-0">
                 <a href="javascript:void(0)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none" class="m-auto">
                         <path d="M25 50C38.8071 50 50 38.8071 50 25C50 11.1929 38.8071 0 25 0C11.1929 0 0 11.1929 0 25C0 38.8071 11.1929 50 25 50Z" fill="#2FA3D9"/>
@@ -61,7 +61,7 @@
                       <p class="text-xs text-[#183B56] mt-2">Telegram</p>
                 </a>
             </li>
-            <li class="text-center">
+            <li class="text-center mb-4 md:mb-0">
                 <a href="javascript:void(0)" onclick="copyToClipboard()">
                     <svg id="Layer_1" enable-background="new 0 0 128 128" height="50" viewBox="0 0 128 128" width="50" xmlns="http://www.w3.org/2000/svg"><g><g clip-rule="evenodd" fill-rule="evenodd"><path d="m30.3 24.4h7.7l52 79.3v7.7c0 4.7-3.8 8.5-8.5 8.5h-51.2c-4.7 0-8.5-3.8-8.5-8.5v-78.5c0-4.7 3.8-8.5 8.5-8.5z" fill="#ffcb6c"/><path d="m48.8 40.8 41.2 62.9v7.7c0 .4 0 .7-.1 1h-32.6c-4.7 0-8.5-3.9-8.5-8.5z" fill="#ffbc42"/></g><g><path clip-rule="evenodd" d="m46.5 8.1h25.6l34.1 34.1v52.9c0 4.7-3.9 8.5-8.5 8.5h-51.2c-4.7 0-8.5-3.9-8.5-8.5v-78.4c0-4.7 3.8-8.6 8.5-8.6z" fill="#a7c3e3" fill-rule="evenodd"/><g clip-rule="evenodd" fill-rule="evenodd"><path d="m81.7 17.8 24.5 24.5v7.2h-16c-4.7 0-8.5-3.8-8.5-8.5z" fill="#7ba4d4"/><path d="m72.1 8.1v25.6c0 4.7 3.8 8.5 8.5 8.5h25.6z" fill="#d3e1f1"/></g><g><g><path d="m59.2 49.4h12.9v2h-12.9z" fill="#d3e1f1"/></g><g><path d="m59.2 63h25.7v2h-25.7z" fill="#d3e1f1"/></g><g><path d="m59.2 76.6h25.7v2h-25.7z" fill="#d3e1f1"/></g></g></g></g></svg>
                       <p class="text-xs text-[#183B56] mt-2">Copylink</p>
