@@ -68,8 +68,8 @@
 <?php $i = 0; ?>
 
     @foreach ($data as $year => $yearData)
-        <div x-data="{ expanded: {{$i==0 ? 'true': 'false'}} }" @click="expanded = ! expanded" class="archiveWrapper mb-[15px] border-b-2" x-transition>
-            <div class="flex justify-between items-center archiveHeader cursor-pointer">
+        <div x-data="{ expanded: {{$i==0 ? 'true': 'false'}} }"  class="archiveWrapper mb-[15px] border-b-2" x-transition>
+            <div class="flex justify-between items-center archiveHeader cursor-pointer" @click="expanded = ! expanded">
                 <h4 class="text-[#040404] text-[32px] font-normal mb-[15px]">{{$year}}</h4>
                 <div>
                     <div x-show="expanded === true">
@@ -88,31 +88,32 @@
                 <div x-show="expanded === true" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-collapse @click.stop>
             @foreach ($yearData as $month => $monthData)
                     <div class="weekly-focus-single-card">
-                        <div class="weekly-focus-month-name">{{$month}}</div>
+                        <div class="weekly-focus-month-name">{{date('F', mktime(0, 0, 0, $month, 1))}}</div>
                         <div class="weekly-focus-progress-list">
-                            @foreach ($monthData as $week => $weekData)
-                                @foreach ($weekData as $article)
-                                    <a href="{{App\Services\ArticleService::getArticleUrlFromSlug($article['slug'])}}">
+                            @foreach ($monthData as $article)
+                            <?php $media = \App\Models\PublishedInitiative::find($article['id'])->media->first(); ?>
+                                    {{-- <a href="{{App\Services\ArticleService::getArticleUrlFromSlug($article['slug'])}}"> --}}
+                                <a>
                                     <div class="weekly-focus-progress-single-bar border-b-2 pb-[15px]">
-                                        <p>{{$article['title']}}</p>
+                                        <p>{{$article['name']}}</p>
                                         <div class="progress-bar">
                                             <div class="bar" style="width:100%;background-color: #89D38C;">
                                             </div>
                                         </div>
                                         <ul class="flex justify-start mt-[15px]">
                                             <li class="text-[#3362CC] text-sm font-normal mr-4">
-                                                <a href="{{App\Services\ArticleService::getArticleUrlFromSlug($article['slug'])}}"
+                                                {{-- <a href="{{App\Services\ArticleService::getArticleUrlFromSlug($article['slug'])}}" --}}
+                                                <a href="{{ $media ? route('view-file', ['media' => $media]) : "#" }}"
                                                    class="hover:underline">
                                                     Read
                                                 </a>
                                             </li>
                                             <li class="text-[#3362CC] text-sm font-normal mr-4">
-                                                <a href="javascript:void(0)" class="hover:underline">Download</a>
+                                                <a href="{{ $media ? route('download', ['media' => $media]) : "#" }}" class="hover:underline">Download</a>
                                             </li>
                                         </ul>
                                     </div>
                                     </a>
-                                @endforeach
                             @endforeach
                         </div>
                     </div>

@@ -22,7 +22,7 @@
         </x-modals.modal-box>
     </div>
 
-    <div class="space-y-12" x-data="{ isVideoOpen: false }">
+    <div class="space-y-12 mt-6" x-data="{ isVideoOpen: false }">
         <div x-data="{ isTopicAtGlanceOpen: false }" class="flex justify-between mt-[20px] md:mt-0">
             <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8 ">
                     <x-modals.modal-box x-show="isVideoOpen" heading="Watch Today's News">
@@ -30,8 +30,8 @@
         </x-modals.modal-box>
 
                 <div class="flex w-full lg:md:w-2/6 flex-col space-y-6 leftsticky stickyMl-0">
-                    <h2 class="text-[25px] font-bold mt-[26px] pb-3 border-b border-color text-[#0358A3]">Weekly <span class="text-[#E22526]">Focus</span></h2>
-
+                    {{-- <h2 class="text-[25px] font-bold mt-[26px] pb-3 border-b border-color text-[#0358A3]">Weekly <span class="text-[#E22526]">Focus</span></h2> --}}
+                    <img class="w-[120px]" src="{{ asset('images/WeeklyfocusLogo.png') }}" alt="news today Logo" />
                     <x-widgets.article-side-bar :table-of-content="$tableOfContent" />
 
                     @if($articles->topicAtGlance !== null)
@@ -43,11 +43,11 @@
                         <livewire:widgets.pdf-viewer :pdf="$articles->topicAtGlance" />
                     </x-modals.modal-box>
                     <div class="hidden lg:block">
-                        <x-widgets.side-bar-download-menu initiative="weekly-focus" />
+                        <x-widgets.side-bar-download-menu initiative="weekly-focus" :media="$media" />
                     </div>
                 </div>
 
-                <div class="flex flex-col w-full mt-[40px]">
+                <div class="flex flex-col w-full">
                     <div class="space-y-4">
                         <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />
                         <x-common.article-heading :title="$article->title" />
@@ -69,7 +69,7 @@
                         </div>
                     @endif
                     <div class="block lg:hidden">
-                        <x-widgets.side-bar-download-menu initiative="weekly-focus" />
+                        <x-widgets.side-bar-download-menu initiative="weekly-focus" :media="$media/>
                     </div>
                 </div>
             </div>

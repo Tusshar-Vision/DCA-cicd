@@ -58,6 +58,8 @@ class MonthlyMagazineController extends Controller
         );
 
         $article = $this->monthlyMagazine->getArticleFromSlug($slug);
+        $media = $this->monthlyMagazine->media;
+        logger("mediaa", [$media]);
 
         $noteAvailable = null;
         $note = null;
@@ -88,7 +90,8 @@ class MonthlyMagazineController extends Controller
             "note" => $note,
             "sortedArticlesWithTopics" => $this->monthlyMagazine->sortedArticlesWithTopic,
             "tableOfContent" => $tableOfContent,
-            "isArticleBookmarked" => $isArticleBookmarked
+            "isArticleBookmarked" => $isArticleBookmarked,
+            "media" => $media
         ]);
     }
 
@@ -100,6 +103,9 @@ class MonthlyMagazineController extends Controller
         $query = $this->publishedInitiatives
             ->whereInitiative(config('settings.initiatives.MONTHLY_MAGAZINE'))
             ->isPublished();
+
+
+        $years = $query->orderByDesc('published_at')->groupByYear()->keys();
 
         if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
@@ -118,8 +124,6 @@ class MonthlyMagazineController extends Controller
             }
             $data[$year] = $publishedInitiatives;
         }
-
-        $years = array_keys($data);
 
         // $data = collect($data);
         $data = json_encode($data);
