@@ -98,50 +98,7 @@ class WeeklyFocusController extends Controller
         $year = request()->input('year');
         $month = request()->input('month');
 
-        // $query = Article::where('initiative_id', config('settings.initiatives.WEEKLY_FOCUS'));
-
         $data = $this->downloadService->getWeeklyFocusArchive($year, $month);
-
-        // $years = $query->select(DB::raw('YEAR(published_at) as year'))
-        //     ->where('published_at', '!=', null)
-        //     ->orderBy('year')
-        //     ->pluck('year');
-
-        // if ($year) $query->whereYear('published_at', $year);
-        // if ($month) $query->whereMonth('published_at', $month);
-
-        // $data = $query->select(
-        //     DB::raw('YEAR(published_at) as year'),
-        //     DB::raw('MONTHNAME(published_at) as month'),
-        //     DB::raw('WEEK(published_at) as week'),
-        //     'articles.slug',
-        //     'articles.title',
-        //     'articles.published_at',
-        //     'initiative_topics.name'
-        // )
-        //     ->where('published_at', '!=', null)
-        //     ->leftJoin('initiative_topics', 'articles.initiative_topic_id', '=', 'initiative_topics.id')
-        //     ->orderBy('year')
-        //     ->orderBy('month')
-        //     ->orderBy('week')
-        //     ->get();
-
-        // $organizedData = [];
-        // $years = [];
-
-        // foreach ($data as $item) {
-        //     $year = $item->year;
-        //     $years[] = $year;
-        //     $month = $item->month;
-        //     $week = "Week " . $item->week;
-
-        //     $organizedData[$year][$month][$week][] = [
-        //         'slug' => $item->slug,
-        //         'title' => $item->title,
-        //         'published_at' => Carbon::parse($item->published_at)->format('Y-m-d'),
-        //         'topic' => strtolower($item->name)
-        //     ];
-        // }
 
         return View('pages.archives.weekly-focus', [
             "title" => "Weekly Focus Archive",
