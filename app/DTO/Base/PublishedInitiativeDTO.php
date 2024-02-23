@@ -20,7 +20,7 @@ abstract class PublishedInitiativeDTO extends Data
         public string $publishedAt,
         public string $createdAt,
         public string $updatedAt,
-        public ?string $videoUrl
+        public ?string $video
     ) {
     }
 
@@ -60,7 +60,7 @@ abstract class PublishedInitiativeDTO extends Data
             Carbon::parse($publishedInitiative->published_at)->format('Y-m-d'),
             $publishedInitiative->created_at,
             $publishedInitiative->updated_at,
-            $publishedInitiative->video?->url
+            $publishedInitiative->video
         );
     }
 }

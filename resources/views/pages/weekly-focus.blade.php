@@ -26,7 +26,7 @@
         <div x-data="{ isTopicAtGlanceOpen: false }" class="flex justify-between mt-[20px] md:mt-0">
             <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8 ">
                     <x-modals.modal-box x-show="isVideoOpen" heading="Watch Today's News">
-            <livewire:widgets.today-news-video :videoUrl="$videoUrl" />
+            <livewire:widgets.today-news-video :videoUrl="$articles->video" />
         </x-modals.modal-box>
 
                 <div class="flex w-full lg:md:w-2/6 flex-col space-y-6 leftsticky stickyMl-0">
@@ -56,7 +56,7 @@
                             <x-header.article readTime="{{ $article->readTime }}" />
                         </div>
                     </div>
-                    
+
 
                     <x-article-content :article="$article" class="m-0" />
 
