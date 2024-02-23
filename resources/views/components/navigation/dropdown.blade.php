@@ -6,15 +6,15 @@
 
 <div {{ $attributes }} x-cloak>
     <ul x-data="{ isMenuOpen: null }" class="absolute font-normal bgcolor-FFF shadow w-72 border rounded-md mt-2 py-1 z-50">
-        <div class="border-bottom">
+        <div class="border-bottom mx-4">
        {{-- <x-buttons.primary button-text="{!! $buttonText !!}" button-link="{{ $buttonLink }}"  />  --}}
-       <p class="text-sm flex px-4 py-[15px] font-medium">Latest Edition</p>
+       <p class="text-sm flex py-[15px] font-medium">Latest Edition</p>
        @if($menuData['initiative_id'] === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE) && count($menuData['data']) > 0 )
    
-       <a class="text-sm flex px-4 pb-[15px] font-medium brand-color" href="{{ $buttonLink }}"><p>{{Carbon::parse($menuData['data'][array_key_first($menuData['data'])][0]->publishedAt)->monthName}}</p></a>
+       <a class="text-sm flex pb-[15px] font-medium brand-color" href="{{ $buttonLink }}"><p>{{Carbon::parse($menuData['data'][array_key_first($menuData['data'])][0]->publishedAt)->monthName}}</p></a>
        @endif
        @if($menuData['initiative_id'] === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
-       <a class="text-sm flex px-4 pb-[15px] font-medium brand-color" href="{{ $buttonLink }}"><p>{{$menuData['data'] && $menuData['data'][array_key_first($menuData['data'])][0]->article[0]->title}}</p></a>
+       <a class="text-sm flex pb-[15px] font-medium brand-color" href="{{ $buttonLink }}"><p>{{$menuData['data'][array_key_first($menuData['data'])][0]->article[0]->title}}</p></a>
 
        @endif
         </div>

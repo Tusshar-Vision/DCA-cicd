@@ -590,6 +590,10 @@ $gray-686E70: #686E70;
   align-items: flex-start;
   align-self: stretch;
 
+  img{
+    width: 100%;
+  }
+
   table {
     width: 100%;
     border: 1px solid #333333;
@@ -683,6 +687,26 @@ $gray-686E70: #686E70;
 
   h4 {
     font-size: 20px;
+    line-height: 110%;
+
+    @media screen and (min-width: 1024px) {
+      font-size: 2.5rem;
+      line-height: 3rem;
+    }
+  }
+
+  h5 {
+    font-size: 18px;
+    line-height: 110%;
+
+    @media screen and (min-width: 1024px) {
+      font-size: 2.5rem;
+      line-height: 3rem;
+    }
+  }
+
+  h6 {
+    font-size: 14px;
     line-height: 110%;
 
     @media screen and (min-width: 1024px) {
