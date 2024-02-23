@@ -58,6 +58,8 @@ class MonthlyMagazineController extends Controller
         );
 
         $article = $this->monthlyMagazine->getArticleFromSlug($slug);
+        $media = $this->monthlyMagazine->media;
+        logger("mediaa", [$media]);
 
         $noteAvailable = null;
         $note = null;
@@ -88,7 +90,8 @@ class MonthlyMagazineController extends Controller
             "note" => $note,
             "sortedArticlesWithTopics" => $this->monthlyMagazine->sortedArticlesWithTopic,
             "tableOfContent" => $tableOfContent,
-            "isArticleBookmarked" => $isArticleBookmarked
+            "isArticleBookmarked" => $isArticleBookmarked,
+            "media" => $media
         ]);
     }
 

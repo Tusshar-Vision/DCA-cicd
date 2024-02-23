@@ -36,7 +36,7 @@
                     </svg> <span class="ml-2 text-sm font-medium text-[#242424]">Back to Main Website</span></a> --}}
                 <livewire:widgets.articles-side-bar :topics="$topics" :articles="$sortedArticlesWithTopics" :table-of-content="$tableOfContent" />
                 <div class="hidden lg:block">
-                    <x-widgets.side-bar-download-menu />
+                    <x-widgets.side-bar-download-menu :media="$media"/>
                 </div>
             </div>
 
@@ -56,7 +56,7 @@
                     <x-widgets.article-pagination :current-initiative="$articles" :current-article-slug="$article->slug" />
                 </div>
                 <div class="block lg:hidden">
-                    <x-widgets.side-bar-download-menu />
+                    <x-widgets.side-bar-download-menu :media="$media"/>
                 </div>
             </div>
 

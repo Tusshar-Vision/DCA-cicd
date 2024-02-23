@@ -6,8 +6,6 @@
     $highlightsHeading = 'My Highlights';
     $notesHeading = 'My Notes';
     $inShort = request()->is('news-today/also-in-news*');
-
-    logger("articless", [$articles]);
 @endphp
 
 @section('content')
@@ -45,7 +43,7 @@
                     <livewire:widgets.news-today-calendar :calendar-data="$newsTodayCalendar" />
                     <x-widgets.article-side-bar :table-of-content="$articles->articles" />
                     <div class="hidden lg:block">
-                        <x-widgets.side-bar-download-menu initiative="news-today"/>
+                        <x-widgets.side-bar-download-menu initiative="news-today" :media="$media"/>
                     </div>
                 </div>
 
@@ -67,12 +65,11 @@
                     <x-article-content :article="$article" class="m-0" />
                     @endif
 
-
                     <div class="mt-12">
                         <x-widgets.article-pagination :current-initiative="$articles" :current-article-slug="$article->slug" />
                     </div>
                     <div class="block lg:hidden mt-4">
-                        <x-widgets.side-bar-download-menu initiative="news-today"/>
+                        <x-widgets.side-bar-download-menu initiative="news-today" :media="$media"/>
                     </div>
                 </div>
         </div>
