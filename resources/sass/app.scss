@@ -3134,10 +3134,28 @@ li[data-level="4"] {
 }
 
 .date-disabled {
+  position: relative;
   color: #ccc;
   cursor: not-allowed;
   border: transparent;
-  pointer-events: none;
+  pointer-events: all;
+  span{
+    display: none;
+    &::after{
+      content: "";
+      position: absolute;
+      left: 46%;
+      top: -6px;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 6px solid #ccc;
+    }
+  }
+  &:hover{
+    span{
+      display: block;
+    }
+  }
 }
 
 .calender-wrap .vi-daily-news-card .vi-calender-grid a.date-disabled:hover {

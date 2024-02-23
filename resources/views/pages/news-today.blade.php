@@ -32,7 +32,7 @@
         </x-modals.modal-box>
     </div>
 
-    <div class="space-y-12" x-data="{ isVideoOpen: false }">
+    <div class="space-y-12 mt-6" x-data="{ isVideoOpen: false }">
         <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8">
 
         <x-modals.modal-box x-show="isVideoOpen" heading="Watch Today's News">
@@ -40,7 +40,8 @@
         </x-modals.modal-box>
 
                 <div class="flex w-full lg:w-2/6 flex-col space-y-4 leftsticky stickyMl-0">
-                    <h2 class="text-[25px] font-bold mt-[26px] pb-3 border-b border-color text-[#0358A3]">News <span class="text-[#E22526]">Today</span></h2>
+                    {{-- <h2 class="text-[25px] font-bold mt-[26px] pb-3 border-b border-color text-[#0358A3]">News <span class="text-[#E22526]">Today</span></h2> --}}
+                    <img class="w-[120px]" src="{{ asset('images/NewstodayLogo.png') }}" alt="news today Logo" />
                     <livewire:widgets.news-today-calendar :calendar-data="$newsTodayCalendar" />
                     <x-widgets.article-side-bar :table-of-content="$articles->articles" />
                     <div class="hidden lg:block">
@@ -48,7 +49,7 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col mt-[30px] w-full">
+                <div class="flex flex-col w-full">
                     <!-- replaced header section -->
                     <div class="space-y-4">
                         <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />
