@@ -1,6 +1,8 @@
 <div class="flex flex-col rounded bg-visionGray lg:mt-0 mt-8">
     <div class="my-8 mx-6">
-            <a @click.prevent="printDiv('printable-area')" href="#">
+            <?php $file = $media; logger("media", [$initiative, $file]); ?>
+            
+            <a {{$initiative!='news-today'?`@click.prevent="printDiv('printable-area')"`:""}} href="{{ $initiative == 'news-today' ? route('download', ['media' => $file]) : "" }}">
                 <div class="flex items-center justify-between">
                     <div class="flex space-x-2">
                         <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -8,7 +10,12 @@
                         </svg>
                         <span>
                         @if($initiative !== 'weekly-focus')
-                        Download Current Article
+                        @if ($initiative == 'news-today')
+                            Download Today's News
+                        @else 
+                            Download Current Article
+                        @endif
+                        
                         @else
                         Download Weekly Focus
                         @endif
