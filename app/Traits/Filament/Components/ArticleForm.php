@@ -30,16 +30,7 @@ use RalphJSmit\Filament\SEO\SEO;
 
 trait ArticleForm
 {
-    private PublishedInitiative|null $publishedInitiativeRecord = null;
     public function articleForm(Form $form): Form {
-
-        $publishedInitiative = null;
-
-        if ( request()->has('initiative_id') ) {
-            $publishedInitiative = request()->input('initiative_id');
-        }
-
-        $this->publishedInitiativeRecord = PublishedInitiative::find($publishedInitiative);
 
         return $form
             ->schema([
@@ -145,7 +136,7 @@ trait ArticleForm
                             Group::make()->schema([
 
                                 Hidden::make('initiative_id')->default(function(Livewire $livewire) {
-                                    return $livewire?->ownerRecord?->initiative_id ?? $this->publishedInitiativeRecord->initiative_id;
+                                    return $livewire?->ownerRecord?->initiative_id;
                                 }),
 
                                 Select::make('initiative_topic_id')
@@ -153,7 +144,7 @@ trait ArticleForm
                                     ->required()
                                     ->label('Subject')
                                     ->default(function (Livewire $livewire) {
-                                        return $livewire->ownerRecord->initiative_topic_id ?? $this->publishedInitiativeRecord->initiative_topic_id;
+                                        return $livewire->ownerRecord->initiative_topic_id;
                                     })
                                     ->reactive()
                                     ->afterStateUpdated(function (Set $set, ?string $state) {
@@ -168,7 +159,7 @@ trait ArticleForm
                                         return $query->where('topic_id', '=', $topic);
                                     })
                                     ->default(function (Livewire $livewire) {
-                                        return $livewire->ownerRecord->topic_section_id ?? $this->publishedInitiativeRecord->topic_section_id;
+                                        return $livewire->ownerRecord->topic_section_id;
                                     })
                                     ->reactive()
                                     ->label('Section')
@@ -183,7 +174,7 @@ trait ArticleForm
                                         return $query->where('section_id', '=', $topicSectionId);
                                     })
                                     ->default(function (Livewire $livewire) {
-                                        return $livewire->ownerRecord->topic_sub_section_id ?? $this->publishedInitiativeRecord->topic_sub_section_id;
+                                        return $livewire->ownerRecord->topic_sub_section_id;
                                     })
                                     ->reactive()
                                     ->label('Sub Section'),
@@ -194,7 +185,7 @@ trait ArticleForm
 
                                 Hidden::make('language_id')
                                     ->default(function (Livewire $livewire) {
-                                        return $livewire->ownerRecord->language_id  ?? $this->publishedInitiativeRecord->language_id;
+                                        return $livewire->ownerRecord->language_id;
                                     }),
 
                                 SpatieTagsInput::make('tags')
@@ -210,15 +201,6 @@ trait ArticleForm
                             ->relationship('content')
                             ->schema([
                                 CKEditor::make('content'),
-//                                TinyEditor::make('content')
-//                                    ->columnSpanFull()
-//                                    ->fileAttachmentsDisk('public')
-//                                    ->fileAttachmentsVisibility('public')
-//                                    ->fileAttachmentsDirectory('uploads')
-//                                    ->profile('full')
-//                                    ->maxHeight(500)
-//                                    ->hiddenLabel(),
-
                         ])->headerActions([
                             Action::make('Reviews')
                                 ->fillForm(function (Article $record) {
