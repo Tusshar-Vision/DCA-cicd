@@ -14,6 +14,7 @@ class ListArticles extends ListRecords
     public function getTabs(): array
     {
         return [
+            'All' => Tab::make(),
             'In Progress' => Tab::make()
                 ->modifyQueryUsing(fn (Builder $query) => $query->currentStatus(['Draft', 'Improve', 'Changes Incorporated'])),
             'Final' => Tab::make()
@@ -27,7 +28,7 @@ class ListArticles extends ListRecords
 
     public function getDefaultActiveTab(): string | int | null
     {
-        return 'In Progress';
+        return 'All';
     }
     protected function getHeaderActions(): array
     {
