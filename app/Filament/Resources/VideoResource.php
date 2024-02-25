@@ -184,13 +184,15 @@ class VideoResource extends Resource
                 //
             ])
             ->actions([
-//                Tables\Actions\Action::make('View')
-//                    ->icon('heroicon-s-eye')
-//                    ->tooltip('Preview')
-//                    ->iconButton(),
                 Tables\Actions\EditAction::make()
                     ->tooltip('Edit')
                     ->iconButton(),
+                Tables\Actions\DeleteAction::make()
+                    ->tooltip('Delete')
+                    ->visible(function(Video $record) {
+                        return $record->publishedInitiatives()->count() === 0;
+                    })
+                    ->iconButton()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

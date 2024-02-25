@@ -3,10 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\InfographicsResource\Pages;
-use App\Filament\Resources\InfographicsResource\RelationManagers;
 use App\Models\Infographic;
-use App\Models\PublishedInitiative;
-use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
@@ -22,7 +19,6 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Livewire\Component as Livewire;
 
 class InfographicsResource extends Resource
 {
@@ -169,6 +165,12 @@ class InfographicsResource extends Resource
                 Tables\Actions\EditAction::make()
                     ->tooltip('Edit')
                     ->iconButton(),
+                Tables\Actions\DeleteAction::make()
+                    ->tooltip('Delete')
+                    ->visible(function(Infographic $record) {
+                        return $record->publishedInitiatives()->count() === 0;
+                    })
+                    ->iconButton()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

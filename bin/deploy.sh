@@ -20,4 +20,7 @@ bun run build
 php artisan migrate --force
 # Clear caches
 php artisan optimize:clear
-php artisan optimize
+php artisan config:cache
+php artisan event:cache
+php artisan route:cache
+php artisan view:cache
