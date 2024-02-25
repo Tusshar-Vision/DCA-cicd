@@ -1,24 +1,41 @@
 #!/bin/bash
-# Setting Up ssh for pulling code from repository
+
+# Script to Setup SSH for Pulling Code with Option Flags for Branch and SSH Key
+
+# Default values
+BRANCH_NAME="main"
+SSH_KEY_NAME="github"
+
+# Parse option flags using getopts
+while getopts "b:k:" opt; do
+  case $opt in
+    b) BRANCH_NAME=$OPTARG ;;
+    k) SSH_KEY_NAME=$OPTARG ;;
+    \?) echo "Invalid option -$OPTARG" >&2
+        exit 1
+        ;;
+  esac
+done
+
+# Setup SSH agent and add the specified SSH key
 eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/github
-# bun
-#export BUN_INSTALL="$HOME/.bun"
-#export PATH=$BUN_INSTALL/bin:$PATH
-## Node Setup
-#export NVM_DIR="$HOME/.nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-## Navigate to the Laravel project directory
+ssh-add ~/.ssh/${SSH_KEY_NAME}
+
+# Optional setup for bun and Node can go here
+
+# Navigate to the project directory
 cd /var/www/html/vision-ca-api/
-# Pull the latest changes from the GitHub repository
-git pull origin main
-# Install/update dependencies
+
+# Pull the latest changes from the specified branch
+git pull origin ${BRANCH_NAME}
+
+# Install/update dependencies using Composer and Bun
 composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 bun install
 bun run build
-# Run database migrations
+
+# Run database migrations and clear caches
 php artisan migrate --force
-# Clear caches
 php artisan optimize:clear
 php artisan config:cache
 php artisan event:cache

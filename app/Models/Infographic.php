@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -13,7 +14,7 @@ use Spatie\Tags\HasTags;
 
 class Infographic extends Model implements HasMedia
 {
-    use Searchable, InteractsWithMedia, HasTags;
+    use Searchable, InteractsWithMedia, HasTags, SoftDeletes;
 
     protected $fillable = [
         'title',

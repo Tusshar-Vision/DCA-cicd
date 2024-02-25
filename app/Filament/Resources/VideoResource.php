@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\VideoResource\Pages;
 use App\Models\Infographic;
 use App\Models\Video;
+use Filament\Facades\Filament;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Section;
@@ -18,10 +19,15 @@ use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ForceDeleteBulkAction;
+use Filament\Tables\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
 class VideoResource extends Resource
@@ -181,7 +187,7 @@ class VideoResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                //
+                TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
@@ -196,7 +202,8 @@ class VideoResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-//                    Tables\Actions\DeleteBulkAction::make(),
+                    ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                 ]),
             ]);
     }
@@ -206,6 +213,20 @@ class VideoResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = static::getModel()::query()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
+
+        if ($tenant = Filament::getTenant()) {
+            static::scopeEloquentQueryToTenant($query, $tenant);
+        }
+
+        return $query;
     }
 
     public static function getPages(): array
