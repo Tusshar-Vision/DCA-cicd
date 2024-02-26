@@ -18,6 +18,9 @@
             <div class="hidden xl:block ml-4">
                 <livewire:widgets.filter :data="$years"/>
             </div>
+            <div>
+             <livewire:widgets.mobile-filter :data="$years"/>
+            </div>
         </div>
     </div>
 </div>
