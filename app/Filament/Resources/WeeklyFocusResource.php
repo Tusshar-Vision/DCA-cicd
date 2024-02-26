@@ -220,7 +220,7 @@ class WeeklyFocusResource extends Resource
                 ->columnSpan(1)
                 ->disabled(function (?PublishedInitiative $record) {
                     if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
-                    else if ($record->is_published) return true;
+                    else if ($record?->is_published) return true;
                 })
                 ->columns(),
 

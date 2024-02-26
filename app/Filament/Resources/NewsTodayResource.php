@@ -178,12 +178,10 @@ class NewsTodayResource extends Resource
                             }
                         })
                         ->columnSpanFull(),
-                ])
-                ->disabled(function (?PublishedInitiative $record) {
+                ])->disabled(function (?PublishedInitiative $record) {
                     if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
-                    else if ($record->is_published) return true;
-                })
-                ->columnSpan(1),
+                    else if ($record?->is_published) return true;
+                })->columnSpan(1),
                 Forms\Components\Section::make("News Today's Video")
                     ->schema([
                         Select::make('video_id')
@@ -222,7 +220,7 @@ class NewsTodayResource extends Resource
                                         })
                                         ->openable()
                                         ->deletable(function (?Video $record) {
-                                            if ($record !== null && $record->is_published === true) {
+                                            if ($record !== null && $record?->is_published === true) {
                                                 return Auth::user()->hasAnyRole(['admin', 'super_admin']);
                                             } else {
                                                 return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer']);
