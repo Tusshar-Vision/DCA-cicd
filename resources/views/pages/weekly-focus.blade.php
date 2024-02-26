@@ -9,7 +9,7 @@
 @section('content')
 
     <div x-data="{ isHighlightsOpen: false, isNotesOpen: false }">
-        <x-widgets.side-notes-and-highlights-menu :noteAvailable="$noteAvailable" />
+        {{-- <x-widgets.side-notes-and-highlights-menu :noteAvailable="$noteAvailable" /> --}}
 
         <x-modals.modal-box x-show="isHighlightsOpen" :heading="$highlightsHeading">
             <x-widgets.article-highlights />
