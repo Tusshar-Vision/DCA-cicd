@@ -45,7 +45,7 @@ readonly class InitiativeService
             ->hasPublishedArticle()
             ->with(['articles' => function ($query) {
                 // Eager load published articles
-                $query->isPublished();
+                $query->with('topic')->isPublished();
             }])
             ->limit(10)
             ->orderByDesc('published_at')
@@ -85,7 +85,7 @@ readonly class InitiativeService
             ->isPublished()
             ->with(['articles' => function ($query) {
                 // Eager load published articles
-                $query->isPublished();
+                $query->with('topic')->isPublished();
             }])
             ->hasPublishedArticle()
             ->limit(10)
@@ -116,7 +116,7 @@ readonly class InitiativeService
             ->isPublished()
             ->with(['articles' => function ($query) {
                 // Eager load published articles
-                $query->isPublished();
+                $query->with('topic')->isPublished();
             }])
             ->hasPublishedArticle()
             ->limit(10)
@@ -146,7 +146,7 @@ readonly class InitiativeService
                     ->where(
                         'parent_id',
                         '=',
-                                InitiativesHelper::getInitiativeID(Initiatives::MORE))
+                        InitiativesHelper::getInitiativeID(Initiatives::MORE))
                     ->orderBy('order_column')
                     ->get()
                     ->pluck('name', 'path');

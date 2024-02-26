@@ -6,6 +6,8 @@ use App\Enums\Initiatives;
 use App\Models\Initiative;
 use App\Services\InitiativeService;
 use Filament\Facades\Filament;
+use Filament\Support\Assets\AlpineComponent;
+use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Health\Checks\Checks\UsedDiskSpaceCheck;
@@ -35,6 +37,10 @@ class AppServiceProvider extends ServiceProvider
             DebugModeCheck::new(),
             EnvironmentCheck::new(),
             UsedDiskSpaceCheck::new(),
+        ]);
+
+        FilamentAsset::register([
+            AlpineComponent::make('ck-editor-component', __DIR__ . '/../../resources/js/dist/components/ck-editor-component.js'),
         ]);
     }
 }

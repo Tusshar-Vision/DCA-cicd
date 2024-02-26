@@ -5,8 +5,10 @@ namespace App\Traits\Filament\Components;
 use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use App\Enums\Initiatives;
 use App\Filament\Components\Repeater;
+use App\Forms\Components\CKEditor;
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
+use App\Models\PublishedInitiative;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
@@ -134,7 +136,7 @@ trait ArticleForm
                             Group::make()->schema([
 
                                 Hidden::make('initiative_id')->default(function(Livewire $livewire) {
-                                    return $livewire->ownerRecord->initiative_id;
+                                    return $livewire?->ownerRecord?->initiative_id;
                                 }),
 
                                 Select::make('initiative_topic_id')
@@ -198,15 +200,7 @@ trait ArticleForm
                         Section::make('Content')
                             ->relationship('content')
                             ->schema([
-                                TinyEditor::make('content')
-                                    ->columnSpanFull()
-                                    ->fileAttachmentsDisk('public')
-                                    ->fileAttachmentsVisibility('public')
-                                    ->fileAttachmentsDirectory('uploads')
-                                    ->profile('full')
-                                    ->maxHeight(500)
-                                    ->hiddenLabel(),
-
+                                CKEditor::make('content'),
                         ])->headerActions([
                             Action::make('Reviews')
                                 ->fillForm(function (Article $record) {

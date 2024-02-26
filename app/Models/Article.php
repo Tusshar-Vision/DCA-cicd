@@ -180,14 +180,29 @@ class Article extends Model implements HasMedia, Sortable
         return $this->hasMany(RelatedVideo::class);
     }
 
-    public function infographics(): HasOne
-    {
-        return $this->hasOne(Infographic::class);
-    }
-
     public function relatedArticles(): HasMany
     {
         return $this->hasMany(RelatedArticle::class);
+    }
+
+    public function relatedToArticle(): HasMany
+    {
+        return $this->hasMany(RelatedArticle::class, 'related_article_id');
+    }
+
+    public function bookmarks(): HasMany
+    {
+        return $this->hasMany(Bookmark::class);
+    }
+
+    public function readHistories(): HasMany
+    {
+        return $this->hasMany(ReadHistory::class);
+    }
+
+    public function infographics(): HasOne
+    {
+        return $this->hasOne(Infographic::class);
     }
 
     public function scopeIsFeatured(Builder $query): Builder

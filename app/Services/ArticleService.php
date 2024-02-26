@@ -55,7 +55,9 @@ readonly class ArticleService
 
     public static function getArticleUrlFromSlug($slug): string
     {
-        return self::getArticleURL(Article::findBySlug($slug));
+        return self::getArticleURL(
+            Article::select('slug', 'initiative_id', 'initiative_topic_id', 'published_initiative_id')->with(['initiative', 'topic', 'publishedInitiative'])->where('slug', $slug)->first()
+        );
     }
 
     public function archive($initiative_id, $year, $month): array

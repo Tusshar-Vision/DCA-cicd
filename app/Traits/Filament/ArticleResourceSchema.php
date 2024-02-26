@@ -513,6 +513,9 @@ trait ArticleResourceSchema
                                 $record->relatedTerms()->delete();
                                 $record->relatedVideos()->delete();
                                 $record->relatedArticles()->delete();
+                                $record->relatedToArticle()->delete();
+                                $record->bookmarks()->delete();
+                                $record->readHistories()->delete();
                                 $record->forceDelete();
                             });
                         }),
