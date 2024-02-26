@@ -99,6 +99,7 @@ class NewsTodayController extends Controller
         );
 
         $article = $this->newsToday->getArticleFromSlug($slug);
+        $isAlsoInNews = $this->newsToday->getArticleInNews();
 
         $noteAvailable = null;
         $note = null;
@@ -117,7 +118,8 @@ class NewsTodayController extends Controller
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
             "isArticleBookmarked" => $isArticleBookmarked,
-            "newsTodayCalendar" => $newsTodayCalendar
+            "newsTodayCalendar" => $newsTodayCalendar,
+            "isAlsoInNews" => $isAlsoInNews
         ]);
     }
 

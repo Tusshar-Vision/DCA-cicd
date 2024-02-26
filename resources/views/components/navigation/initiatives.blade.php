@@ -22,6 +22,7 @@
         </a>
 
         @foreach ($initiatives as $initiative)
+        
             @if ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
 
                 <a class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px] {{ request()->is('news-today*') ? 'text-[#005FAF]' : '' }}"
