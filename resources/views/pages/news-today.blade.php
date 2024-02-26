@@ -9,7 +9,6 @@
 @endphp
 
 @section('content')
-
     {{-- <div class="space-y-4">
         <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />
         <x-common.article-heading :title="$article->title" />
@@ -17,7 +16,7 @@
     </div> --}}
 
     <div x-data="{ isHighlightsOpen: false, isNotesOpen: false }">
-        {{-- <x-widgets.side-notes-and-highlights-menu :noteAvailable="$noteAvailable" /> --}}
+         <x-widgets.side-notes-and-highlights-menu :noteAvailable="$noteAvailable" />
 
         <x-modals.modal-box x-show="isHighlightsOpen" :heading="$highlightsHeading">
             <x-widgets.article-highlights />
