@@ -31,9 +31,9 @@
             <div class="flex min-w-full lg:min-w-[340px] lg:w-2/6 flex-col space-y-6 leftsticky stickyMl-0">
                 {{-- <h2 class="font-black pb-3 border-b border-color text-center uppercase leading-[110%] text-[#1f2442] text-4xl grid">Monthly <span>Magazine</span></h2> --}}
                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 200 100" style="enable-background:new 0 0 200 100;" xml:space="preserve">
+	 viewBox="0 0 200 75" style="enable-background:new 0 0 200 50;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#CE3232;stroke:#CE3232;stroke-width:0.8982;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st0{fill:#CE3232;stroke:#CE3232;stroke-width:0.8`82;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 	.st1{opacity:0.12;}
 	.st2{stroke:#000000;stroke-width:0.4783;stroke-miterlimit:10;}
 	.st3{fill:#3B1515;stroke:#3B1515;stroke-width:0.3587;stroke-miterlimit:10;}
