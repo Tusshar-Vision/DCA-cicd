@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Paper;
 use App\Policies\ActivityPolicy;
 use App\Policies\MediaPolicy;
+use App\Policies\PaperPolicy;
 use App\Policies\QueueMonitorPolicy;
 use App\Policies\RolePolicy;
 use App\Policies\TagPolicy;

@@ -52,9 +52,7 @@ trait MoreResourceSchema
                     ->icon('heroicon-s-paper-airplane')
                     ->requiresConfirmation()
                     ->button()
-                    ->visible(function () {
-                        return \Auth::user()->hasAnyRole(['super_admin', 'admin']);
-                    })
+                    ->visible(fn () => auth()->user()->can(static::getActionPermission()))
                     ->hidden(function(PublishedInitiative $record) {
                         return $record->is_published;
                     })

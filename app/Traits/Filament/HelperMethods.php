@@ -2,6 +2,14 @@
 
 namespace App\Traits\Filament;
 
+use App\Filament\Resources\BudgetResource;
+use App\Filament\Resources\EconomicSurveyResource;
+use App\Filament\Resources\Mains365Resource;
+use App\Filament\Resources\PT365Resource;
+use App\Filament\Resources\QuarterlyRevisionResource;
+use App\Filament\Resources\ValueAddedOptionalResource;
+use App\Filament\Resources\ValueAddedResource;
+use App\Filament\Resources\YearEndReviewResource;
 use Carbon\Carbon;
 
 trait HelperMethods
@@ -30,5 +38,19 @@ trait HelperMethods
         // Optionally, you might want to remove leading, trailing, or multiple consecutive dashes
         $label = trim($label, '-');
         return preg_replace('/-+/', '-', $label);
+    }
+
+    public static function getActionPermission(): string {
+        return match(static::class) {
+            Mains365Resource::class => 'publish_mains365',
+            PT365Resource::class => 'publish_p::t365',
+            EconomicSurveyResource::class => 'publish_economic::survey',
+            BudgetResource::class => 'publish_budget',
+            ValueAddedResource::class => 'publish_value::added',
+            ValueAddedOptionalResource::class => 'publish_value::added::optional',
+            QuarterlyRevisionResource::class => 'publish_quarterly::revision',
+            YearEndReviewResource::class => 'publish_year::end::review',
+            default => throw new \Exception("Permission not defined for resource."),
+        };
     }
 }

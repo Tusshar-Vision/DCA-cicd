@@ -6,6 +6,7 @@ use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use App\Infolists\Components\ArticleBody;
 use App\Jobs\GenerateArticlePDF;
 use App\Models\Article;
+use App\Models\PublishedInitiative;
 use App\Models\User;
 use App\Services\ArticleService;
 use App\Traits\Filament\Components\ArticleForm;
@@ -48,6 +49,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use phpDocumentor\Reflection\Types\False_;
 use Spatie\Tags\Tag;
+use function Clue\StreamFilter\fun;
 
 trait ArticleRelationSchema
 {
@@ -230,10 +232,15 @@ trait ArticleRelationSchema
             ->filtersFormColumns(4)
             ->filtersFormMaxHeight('400px')
             ->headerActions([
-                CreateAction::make()->slideOver()->after(function (Model $record) {
-                    $record->setStatus('Draft', 'New Entry Created');
-                    $this->sendNotificationOfArticleCreation($record);
-                })
+                CreateAction::make()
+//                    ->url(fn (): string => '/admin/articles/create?initiative_id=' . \Livewire::current()->ownerRecord->id)
+//                    ->openUrlInNewTab()
+                    ->slideOver()
+
+                    ->after(function (Model $record) {
+                        $record->setStatus('Draft', 'New Entry Created');
+                        $this->sendNotificationOfArticleCreation($record);
+                    })
             ])
             ->actions([
 
@@ -302,8 +309,8 @@ trait ArticleRelationSchema
 
                 EditAction::make('Edit')
                     ->iconButton()
-                    ->slideOver()
                     ->tooltip('Edit')
+                    ->slideOver()
                     ->visible(function (Article $record) {
                         $user = Auth::user();
                         return
@@ -510,6 +517,9 @@ trait ArticleRelationSchema
                                 $record->relatedTerms()->delete();
                                 $record->relatedVideos()->delete();
                                 $record->relatedArticles()->delete();
+                                $record->relatedToArticle()->delete();
+                                $record->bookmarks()->delete();
+                                $record->readHistories()->delete();
                                 $record->forceDelete();
                             });
                     }),

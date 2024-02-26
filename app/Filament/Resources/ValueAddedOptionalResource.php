@@ -8,6 +8,7 @@ use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
 use App\Traits\Filament\MoreResourceSchema;
 use App\Traits\Filament\OtherUploadsResourceSchema;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
@@ -27,7 +28,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
-class ValueAddedOptionalResource extends Resource
+class ValueAddedOptionalResource extends Resource implements HasShieldPermissions
 {
     use MoreResourceSchema;
 
@@ -138,6 +139,17 @@ class ValueAddedOptionalResource extends Resource
         }
 
         return $query;
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'create',
+            'edit',
+            'delete',
+            'publish'
+        ];
     }
 
     public static function canViewAny(): bool

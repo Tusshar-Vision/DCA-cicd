@@ -21,48 +21,12 @@
                 <div class="hidden xl:block ml-4">
                     <livewire:widgets.filter :data="$years"/>
                 </div>
+                            <div>
+             <livewire:widgets.mobile-filter :data="$years"/>
+            </div>
             </div>
         </div>
     </div>
-
-    <!-- responsive filter section start -->
-    <div id="myFilter" class="menuOverlay">
-        <div class="menuOverlayContent">
-            <div class="flex justify-between align-middle mb-[20px]">
-                <span class="text-[#3362CC] text-sm font-bold">Select Filters</span>
-                <a href="javascript:void(0)" class="closebtn" onclick="closeFilter()">&times;</a>
-            </div>
-            <div>
-                <div class="mb-[20px]">
-                    <label class="block mb-[10px] text-[#183B56] text-sm">
-                        Select Year
-                        <select class="w-full rounded">
-                            <option>2023</option>
-                            <option>2022</option>
-                            <option>2024</option>
-                        </select>
-                    </label>
-                </div>
-                <div class="mb-[20px]">
-                    <label class="block mb-[10px] text-[#183B56] text-sm">
-                        Select Month
-                        <select class="w-full rounded">
-                            <option>December</option>
-                            <option>November</option>
-                            <option>October</option>
-                        </select>
-                    </label>
-                </div>
-                <button class="w-full bg-[#3362CC] text-white rounded text-center text-sm font-bold py-[12px]">
-                    Apply Filters
-                </button>
-                <button class="w-full text-[#485153] rounded text-center text-sm font-semibold py-[12px] mt-4">
-                    Clear Filters
-                </button>
-            </div>
-        </div>
-    </div>
-    <!-- responsive filter section end -->
 
     <!-- Weekly Focus section -->
 <?php $i = 0; ?>
@@ -88,31 +52,32 @@
                 <div x-show="expanded === true" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-collapse @click.stop>
             @foreach ($yearData as $month => $monthData)
                     <div class="weekly-focus-single-card">
-                        <div class="weekly-focus-month-name">{{$month}}</div>
+                        <div class="weekly-focus-month-name">{{date('F', mktime(0, 0, 0, $month, 1))}}</div>
                         <div class="weekly-focus-progress-list">
-                            @foreach ($monthData as $week => $weekData)
-                                @foreach ($weekData as $article)
-                                    <a href="{{App\Services\ArticleService::getArticleUrlFromSlug($article['slug'])}}">
+                            @foreach ($monthData as $article)
+                            <?php $media = \App\Models\PublishedInitiative::find($article['id'])->media->first(); ?>
+                                    {{-- <a href="{{App\Services\ArticleService::getArticleUrlFromSlug($article['slug'])}}"> --}}
+                                <a>
                                     <div class="weekly-focus-progress-single-bar border-b-2 pb-[15px]">
-                                        <p>{{$article['title']}}</p>
+                                        <p>{{$article['name']}}</p>
                                         <div class="progress-bar">
                                             <div class="bar" style="width:100%;background-color: #89D38C;">
                                             </div>
                                         </div>
                                         <ul class="flex justify-start mt-[15px]">
                                             <li class="text-[#3362CC] text-sm font-normal mr-4">
-                                                <a href="{{App\Services\ArticleService::getArticleUrlFromSlug($article['slug'])}}"
+                                                {{-- <a href="{{App\Services\ArticleService::getArticleUrlFromSlug($article['slug'])}}" --}}
+                                                <a href="{{ $media ? route('view-file', ['media' => $media]) : "#" }}"
                                                    class="hover:underline">
                                                     Read
                                                 </a>
                                             </li>
                                             <li class="text-[#3362CC] text-sm font-normal mr-4">
-                                                <a href="javascript:void(0)" class="hover:underline">Download</a>
+                                                <a href="{{ $media ? route('download', ['media' => $media]) : "#" }}" class="hover:underline">Download</a>
                                             </li>
                                         </ul>
                                     </div>
                                     </a>
-                                @endforeach
                             @endforeach
                         </div>
                     </div>
@@ -121,14 +86,3 @@
         </div>
     @endforeach
 </div>
-
-<script>
-    // responsive menu show hide script
-    function openFilter() {
-        document.getElementById("myFilter").style.height = "100%";
-    }
-
-    function closeFilter() {
-        document.getElementById("myFilter").style.height = "0%";
-    }
-</script>

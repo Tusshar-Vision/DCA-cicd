@@ -11,9 +11,11 @@
 //}
 
 :root {
-  --square-size: 12px;
-  --square-gap: 2px;
-  --week-width: calc(var(--square-size) + var(--square-gap));
+    --square-size: 12px;
+    --square-gap: 2px;
+    --week-width: calc(var(--square-size) + var(--square-gap));
+    --ck-image-style-spacing: 1.5em;
+    --ck-inline-image-style-spacing: calc(var(--ck-image-style-spacing) / 2);
 }
 
 
@@ -590,10 +592,6 @@ $gray-686E70: #686E70;
   align-items: flex-start;
   align-self: stretch;
 
-  img{
-    width: 100%;
-  }
-
   table {
     width: 100%;
     border: 1px solid #333333;
@@ -725,6 +723,71 @@ $gray-686E70: #686E70;
     padding-left: 1.5rem;
   }
 
+    & .image-style-block-align-left,
+    & .image-style-block-align-right {
+        max-width: calc(100% - var(--ck-image-style-spacing));
+    }
+
+    /* Allows displaying multiple floating images in the same line.
+    See https://github.com/ckeditor/ckeditor5/issues/9183#issuecomment-804988132 */
+    & .image-style-align-left,
+    & .image-style-align-right {
+        clear: none;
+    }
+
+    & .image-style-side {
+        float: right;
+        margin-left: var(--ck-image-style-spacing);
+        max-width: 50%;
+    }
+
+    & .image-style-align-left {
+        float: left;
+        margin-right: var(--ck-image-style-spacing);
+    }
+
+    & .image-style-align-center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    & .image-style-align-right {
+        float: right;
+        margin-left: var(--ck-image-style-spacing);
+    }
+
+    & .image-style-block-align-right {
+        margin-right: 0;
+        margin-left: auto;
+    }
+
+    & .image-style-block-align-left {
+        margin-left: 0;
+        margin-right: auto;
+    }
+
+    /* Simulates margin collapsing with the preceding paragraph, which does not work for the floating elements. */
+    & p + .image-style-align-left,
+    & p + .image-style-align-right,
+    & p + .image-style-side {
+        margin-top: 0;
+    }
+
+    & .image-inline {
+        &.image-style-align-left,
+        &.image-style-align-right {
+            margin-top: var(--ck-inline-image-style-spacing);
+            margin-bottom: var(--ck-inline-image-style-spacing);
+        }
+
+        &.image-style-align-left {
+            margin-right: var(--ck-inline-image-style-spacing);
+        }
+
+        &.image-style-align-right {
+            margin-left: var(--ck-inline-image-style-spacing);
+        }
+    }
 }
 
 .printable-area ul ul {
@@ -735,7 +798,6 @@ $gray-686E70: #686E70;
 [x-cloak] {
   display: none !important;
 }
-
 
 /* comments section */
 
@@ -1542,7 +1604,6 @@ $gray-686E70: #686E70;
 .search-field-container {
   position: relative;
   display: block;
-  // float: left;
   margin-right: 20px;
   height: 35px;
 
@@ -1922,18 +1983,22 @@ $gray-686E70: #686E70;
 }
 
 .vigrid-wide {
-  max-width: 1300px;
-  padding: 0 30px;
-  width: 100%;
-  margin: 0 auto;
+  max-width: inherit;
+  padding: 0;
+  @media screen and (min-width:1024px) {
+    max-width: 1300px;
+    padding: 0 30px;
+    width: 100%;
+    margin: 0 auto;
+  }
 }
 
 .vi-profile-tab-container {
   margin-top: 32px;
 
   .activity-tab-wrapper {
-    display: flex;
-    gap: 32px;
+    // display: flex;
+    // gap: 32px;
 
     .vi-tab-title {
       font-size: 20px;
@@ -1944,11 +2009,11 @@ $gray-686E70: #686E70;
 
     .activity-tab-left-itmes {
       padding: 24px;
-      height: 574px;
+      // height: 574px;
       border: 1px solid #E9E9E9;
       border-radius: 4px;
       overflow-y: auto;
-      max-width: 400px;
+      // max-width: 400px;
       -ms-overflow-style: none;
       scrollbar-width: none;
 
@@ -2012,9 +2077,9 @@ $gray-686E70: #686E70;
 }
 
 .vi-article-card.vi-inline {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  // display: flex;
+  // align-items: center;
+  // gap: 12px;
 
   .vi-article {
     img {
@@ -3238,8 +3303,8 @@ iframe {
 }
 
 .activeCard {
-  background-color: #d3ffd5;
-  border-color: #89D38C;
+  background-color: #f0f0f0;
+  border-color: #b3b3b3;
 }
 
 .autoHeight img{
@@ -3268,4 +3333,48 @@ iframe {
 
 .stickyMl-0{
   margin-left: 0 !important;
+}
+
+
+
+
+/* student search CSS */
+.student-search-field-container {
+  position: relative;
+  display: block;
+  height: 35px;
+  &.absoluteSearch{
+    position: absolute;
+    right: 2%;
+    width: 98%;
+  }
+  .student-search-field {
+    font-size: 14px;
+    padding: 8px 20px 8px;
+    border: 0;
+    outline: none;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    width: 32px;
+    height: 40px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    -webkit-transition: all 0.25s ease-in-out;
+    -moz-transition: all 0.25s ease-in-out;
+    -o-transition: all 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
+    background: rgba(244, 246, 252, 1);
+    cursor: pointer;
+    background: url("/images/search.svg") left center no-repeat;
+
+    &:focus {
+      width: 100%;
+      background: #fff;
+      cursor: inherit;
+      padding-right: 10px;
+      padding-left: 35px;
+      background: #fff url("/images/navsearch.png") 10px center no-repeat;
+    }
+  }
 }

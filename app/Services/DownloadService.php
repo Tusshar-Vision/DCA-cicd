@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -28,11 +29,56 @@ readonly class DownloadService
             ->get();
     }
 
+    public function getWeeklyFocusArchive($year, $month): Collection|array
+    {
+
+        $query = $this->publishedInitiative
+            ->isPublished()
+            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
+            ->has('media');
+
+        $years = $query->get()
+            ->groupBy(function ($item) {
+                return $item->published_at->format('Y');
+            })->keys();
+
+        if ($year) $query->whereYear('published_at', $year);
+        if ($month) $query->whereMonth('published_at', $month);
+
+        $query->with('media');
+
+        $data = $query->select(
+            DB::raw('YEAR(published_at) as year'),
+            DB::raw('MONTH(published_at) as month'),
+            DB::raw('COUNT(*) as article_count'),
+            'published_initiatives.name as published_initiative_name',
+            'published_initiatives.id as id'
+        )
+            ->groupBy('year', 'month', 'published_initiative_name', 'id')
+            ->orderBy('year', 'desc')
+            ->orderBy('month', 'desc')
+            ->get();
+
+        $organizedData = [];
+
+        foreach ($data as $item) {
+            $year = $item->year;
+            $month = $item->month;
+
+            $organizedData[$year][$month][] = [
+                'name' => $item->published_initiative_name,
+                'id' => $item->id,
+            ];
+        }
+
+        return [$years, $organizedData];
+    }
+
     public function getMains365($year, $month): Collection|array
     {
 
         $query = $this->publishedInitiative
-            // ->isPublished()
+            ->isPublished()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::MAINS_365))
             ->has('media');
 

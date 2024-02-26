@@ -1,10 +1,13 @@
 <div class="vigrid-wide"> 
 <div class="vi-profile-tab-container tabc-activity">
-    <div class="activity-tab-wrapper">
-        <div class="activity-tab-left-itmes">
-            <div class="flex justify-between">
+    <div class="activity-tab-wrapper flex flex-col lg:flex-row gap-[32px]">
+        <div class="activity-tab-left-itmes w-full lg:w-2/6">
+            <div class="flex justify-between relative">
                 <p class="vi-tab-title">Reading History</p>
-                <div class="my-content-search w-[150px]">
+                <div class="student-search-field-container">
+                    <input type="search" placeholder="Search" class="student-search-field">
+                </div>
+                {{-- <div class="my-content-search w-[150px]">
                     <div class="search-bar-wrapper">
                         <input type="search" class="vi-search-bar search-focus" placeholder="Search" required="">
                         <span class="vi-icons search"></span>
@@ -15,12 +18,12 @@
                             <li class="px-[10px] cursor-pointer hover:bg-[#F4F6FC]">Search 3</li>
                         </ul>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="vi-left-child-item-list">
                 <!-- Single card -->
                 @foreach ($readHistories as $history)
-                    <div class="vi-article-card vi-inline">
+                    <div class="vi-article-card vi-inline flex items-start gap-[12px]">
                         <a href="#" class="vi-article">
                             <img src="{{ URL::asset('images/card-image-small.png') }}" alt="">
                         </a>
@@ -33,7 +36,7 @@
             </div>
         </div>
 
-        <div class="activity-tab-right-itmes">
+        <div class="activity-tab-right-itmes w-full lg:w-4/6">
             <div class="graph-box-title-wrap">
                 <p class="vi-tab-title">Content Consumption</p>
                 <div class="graph-represent-list">
@@ -116,15 +119,15 @@
 
 
 <script>
-    const onfocus = document.querySelector('.search-focus');
-    const showlist = document.querySelector('.focus-show');
+    const onfocus = document.querySelector('.student-search-field');
+    const showlist = document.querySelector('.student-search-field-container');
 
     onfocus.addEventListener("focus", () => {
-        showlist.style.display = 'block';
+        showlist.classList.add("absoluteSearch");
     });
 
     onfocus.addEventListener("blur", () => {
-        showlist.style.display = 'none';
+        showlist.classList.remove("absoluteSearch");
     });
 
  function showDailyNews() {
@@ -142,7 +145,7 @@
                                 }
                                 ?>
                                
-                                square.innerHTML += `<li data-level="{{$level}}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : ""}}"></li>`
+                                square.innerHTML += `<li data-level="{{$level}}" data-complete="{{$level == 4 ? "NO ARTICLE FOUND FOR THIS MONTH" : ""}}"></li>`
                                         
                                 @endforeach
  }
@@ -163,7 +166,7 @@
                                 }
                                 ?>
 
-                                square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : ""}}"></li>`
+                                square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO WEEKLY FOCUS FOUND FOR THIS WEEK" : ""}}"></li>`
                                 @endforeach
  }
 
@@ -182,7 +185,7 @@
                                 }
                                 ?>
 
-                                square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : ""}}"></li>`
+                                square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO MAGAZINE FOUND FOR THIS MONTH" : ""}}"></li>`
                                 @endforeach
 }
 

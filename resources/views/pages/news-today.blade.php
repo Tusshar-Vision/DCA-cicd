@@ -1,4 +1,4 @@
-@extends('layouts.reading-ecosystem')
+@extends('layouts.base')
 @section('title', 'News Today | Current Affairs')
 
 @php
@@ -9,9 +9,14 @@
 @endphp
 
 @section('content')
+    {{-- <div class="space-y-4">
+        <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />
+        <x-common.article-heading :title="$article->title" />
+        <x-widgets.articles-nav :createdAt="$articles->publishedAt" :updatedAt="$article->updatedAt" />
+    </div> --}}
 
     <div x-data="{ isHighlightsOpen: false, isNotesOpen: false }">
-        <x-widgets.side-notes-and-highlights-menu :noteAvailable="$noteAvailable" />
+         <x-widgets.side-notes-and-highlights-menu :noteAvailable="$noteAvailable" />
 
         <x-modals.modal-box x-show="isHighlightsOpen" :heading="$highlightsHeading">
             <x-widgets.article-highlights />
@@ -27,15 +32,16 @@
     <div class="space-y-12 mt-6" x-data="{ isVideoOpen: false }">
         <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8">
 
-        @if($articles->video !== null)
-            <x-modals.modal-box x-show="isVideoOpen" heading="Watch Today's News">
-                <livewire:widgets.today-news-video :videoUrl="$articles->video" />
-            </x-modals.modal-box>
-        @endif
+        <x-modals.modal-box x-show="isVideoOpen" heading="Watch Today's News">
+            <livewire:widgets.today-news-video :videoUrl="$videoUrl" />
+        </x-modals.modal-box>
 
                 <div class="flex w-full lg:w-2/6 flex-col space-y-4 leftsticky stickyMl-0">
                     {{-- <h2 class="text-[25px] font-bold mt-[26px] pb-3 border-b border-color text-[#0358A3]">News <span class="text-[#E22526]">Today</span></h2> --}}
-                    <img class="w-[120px]" src="{{ asset('images/NewstodayLogo.png') }}" alt="news today Logo" />
+                    {{-- <img class="w-[120px]" src="{{ asset('images/NewstodayLogo.png') }}" alt="news today Logo" /> --}}
+
+                    {!! \App\Helpers\SvgIconsHelper::getSvgIcon('news-today-logo') !!}
+
                     <livewire:widgets.news-today-calendar :calendar-data="$newsTodayCalendar" />
                     <x-widgets.article-side-bar :table-of-content="$articles->articles" />
                     <div class="hidden lg:block">
@@ -43,7 +49,7 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col w-full">
+                <div class="flex flex-col w-full mt-6 lg:mt-0">
                     <!-- replaced header section -->
                     <div class="space-y-4">
                         <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />
