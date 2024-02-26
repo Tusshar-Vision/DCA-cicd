@@ -9,18 +9,20 @@ use Carbon\Carbon;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 
 abstract class PublishedInitiativeDTO extends Data
 {
     public function __construct(
-        public string $name,
-        public bool $isPublished,
+        public string           $name,
+        public bool             $isPublished,
         #[DataCollectionOf(ArticleDTO::class)]
-        public DataCollection $articles,
-        public string $publishedAt,
-        public string $createdAt,
-        public string $updatedAt,
-        public ?string $video
+        public DataCollection   $articles,
+        public string           $publishedAt,
+        public string           $createdAt,
+        public string           $updatedAt,
+        public ?string $video,
+        public ?MediaCollection $media
     ) {
     }
 
@@ -60,7 +62,8 @@ abstract class PublishedInitiativeDTO extends Data
             Carbon::parse($publishedInitiative->published_at)->format('Y-m-d'),
             $publishedInitiative->created_at,
             $publishedInitiative->updated_at,
-            $publishedInitiative->video
+            $publishedInitiative->video,
+            $publishedInitiative->media
         );
     }
 }

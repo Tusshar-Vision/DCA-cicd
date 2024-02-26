@@ -33,7 +33,7 @@
         <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8">
 
         <x-modals.modal-box x-show="isVideoOpen" heading="Watch Today's News">
-            <livewire:widgets.today-news-video :videoUrl="$videoUrl" />
+            <livewire:widgets.today-news-video :videoUrl="$articles?->video" />
         </x-modals.modal-box>
 
                 <div class="flex w-full lg:w-2/6 flex-col space-y-4 leftsticky stickyMl-0">
@@ -45,7 +45,7 @@
                     <livewire:widgets.news-today-calendar :calendar-data="$newsTodayCalendar" />
                     <x-widgets.article-side-bar :table-of-content="$articles->articles" />
                     <div class="hidden lg:block">
-                        <x-widgets.side-bar-download-menu initiative="news-today" :media="$media"/>
+                        <x-widgets.side-bar-download-menu initiative="news-today" :media="$articles?->media"/>
                     </div>
                 </div>
 
@@ -71,7 +71,7 @@
                         <x-widgets.article-pagination :current-initiative="$articles" :current-article-slug="$article->slug" />
                     </div>
                     <div class="block lg:hidden mt-4">
-                        <x-widgets.side-bar-download-menu initiative="news-today" :media="$media"/>
+                        <x-widgets.side-bar-download-menu initiative="news-today" :media="$articles?->media"/>
                     </div>
                 </div>
         </div>

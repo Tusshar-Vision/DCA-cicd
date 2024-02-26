@@ -61,9 +61,6 @@ class NewsTodayController extends Controller
         );
 
         $article = $this->newsToday->getArticleInNews();
-        $videoUrl = $this->newsToday->videoUrl;
-        $media = $this->newsToday->media;
-
 
         $noteAvailable = null;
         $note = null;
@@ -82,9 +79,7 @@ class NewsTodayController extends Controller
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
             "isArticleBookmarked" => $isArticleBookmarked,
-            "newsTodayCalendar" => $newsTodayCalendar,
-            'videoUrl' => $videoUrl,
-            "media" => $media
+            "newsTodayCalendar" => $newsTodayCalendar
         ]);
     }
 
@@ -104,8 +99,6 @@ class NewsTodayController extends Controller
         );
 
         $article = $this->newsToday->getArticleFromSlug($slug);
-        $videoUrl = $this->newsToday->videoUrl;
-        $media = $this->newsToday->media;
 
         $noteAvailable = null;
         $note = null;
@@ -124,9 +117,7 @@ class NewsTodayController extends Controller
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
             "isArticleBookmarked" => $isArticleBookmarked,
-            "newsTodayCalendar" => $newsTodayCalendar,
-            'videoUrl' => $videoUrl,
-            "media" => $media
+            "newsTodayCalendar" => $newsTodayCalendar
         ]);
     }
 

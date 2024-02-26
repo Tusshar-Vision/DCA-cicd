@@ -31,7 +31,7 @@
 
                 <livewire:widgets.articles-side-bar :topics="$topics" :articles="$sortedArticlesWithTopics" :table-of-content="$tableOfContent" />
                 <div class="hidden lg:block">
-                    <x-widgets.side-bar-download-menu :media="$media"/>
+                    <x-widgets.side-bar-download-menu :media="$articles?->media"/>
                 </div>
             </div>
 
@@ -51,7 +51,7 @@
                     <x-widgets.article-pagination :current-initiative="$articles" :current-article-slug="$article->slug" />
                 </div>
                 <div class="block lg:hidden">
-                    <x-widgets.side-bar-download-menu :media="$media"/>
+                    <x-widgets.side-bar-download-menu :$articles?->media"/>
                 </div>
             </div>
 

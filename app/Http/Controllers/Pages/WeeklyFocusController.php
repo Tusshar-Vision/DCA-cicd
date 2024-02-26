@@ -63,8 +63,6 @@ class WeeklyFocusController extends Controller
         );
 
         $article = $this->weeklyFocus->getArticleFromSlug($slug);
-        $videoUrl = $this->weeklyFocus->videoUrl;
-        $media = $this->weeklyFocus->media;
 
         $noteAvailable = null;
         $note = null;
@@ -87,9 +85,7 @@ class WeeklyFocusController extends Controller
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
             "tableOfContent" => $tableOfContent,
-            "isArticleBookmarked" => $isArticleBookmarked,
-            'videoUrl' => $videoUrl,
-            'media' => $media
+            "isArticleBookmarked" => $isArticleBookmarked
         ]);
     }
 
