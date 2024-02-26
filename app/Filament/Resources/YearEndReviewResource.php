@@ -7,6 +7,7 @@ use App\Filament\Resources\YearEndReviewResource\Pages;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
 use App\Traits\Filament\MoreResourceSchema;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\DatePicker;
@@ -24,7 +25,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
-class YearEndReviewResource extends Resource
+class YearEndReviewResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = PublishedInitiative::class;
 
@@ -136,6 +137,17 @@ class YearEndReviewResource extends Resource
             'index' => Pages\ListYearEndReviews::route('/'),
             'create' => Pages\CreateYearEndReview::route('/create'),
             'edit' => Pages\EditYearEndReview::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'create',
+            'edit',
+            'delete',
+            'publish'
         ];
     }
 

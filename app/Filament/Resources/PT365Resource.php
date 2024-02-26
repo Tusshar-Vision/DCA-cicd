@@ -8,6 +8,7 @@ use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
 use App\Services\PublishedInitiativeService;
 use App\Traits\Filament\OtherUploadsResourceSchema;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
@@ -26,7 +27,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class PT365Resource extends Resource
+class PT365Resource extends Resource implements HasShieldPermissions
 {
     use OtherUploadsResourceSchema;
 
@@ -130,6 +131,17 @@ class PT365Resource extends Resource
         }
 
         return $query;
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'create',
+            'edit',
+            'delete',
+            'publish'
+        ];
     }
 
     public static function canViewAny(): bool

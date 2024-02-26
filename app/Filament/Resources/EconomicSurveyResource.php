@@ -7,6 +7,7 @@ use App\Filament\Resources\EconomicSurveyResource\Pages;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
 use App\Traits\Filament\MoreResourceSchema;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\DatePicker;
@@ -24,7 +25,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
-class EconomicSurveyResource extends Resource
+class EconomicSurveyResource extends Resource implements HasShieldPermissions
 {
     use MoreResourceSchema;
 
@@ -140,6 +141,17 @@ class EconomicSurveyResource extends Resource
             'index' => Pages\ListEconomicSurveys::route('/'),
             'create' => Pages\CreateEconomicSurvey::route('/create'),
             'edit' => Pages\EditEconomicSurvey::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'create',
+            'edit',
+            'delete',
+            'publish'
         ];
     }
 
