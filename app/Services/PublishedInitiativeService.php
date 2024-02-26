@@ -23,7 +23,7 @@ readonly class PublishedInitiativeService
             ->whereInitiative($initiativeId)
             ->isPublished()
             ->hasPublishedArticle()
-            ->with('video')
+            ->with(['video', 'media'])
             ->latest('published_at');
 
         if ($date !== null)
