@@ -10,10 +10,10 @@
         @foreach ($topics as $topic)
             <div class="mt-4">
                 <button class="flex justify-between items-center w-full" @click="
-                    if(expanded === 'topic-{{ Str::slug($topic) }}') expanded = false;
-                    else expanded = 'topic-{{ Str::slug($topic) }}'
+                    if (expanded === 'topic-{{ Str::slug(str_replace('&', 'and', $topic)) }}') expanded = false;
+                    else expanded = 'topic-{{ Str::slug(str_replace('&', 'and', $topic)) }}'
                 ">
-                    <div x-show="expanded === 'topic-{{ Str::slug($topic) }}'" class="flex justify-between items-center w-full">
+                    <div x-show="expanded === 'topic-{{ Str::slug(str_replace('&', 'and', $topic)) }}'" class="flex justify-between items-center w-full">
                         <div class="flex">
                             <div class="w-6">
                                 <strong>
@@ -22,7 +22,7 @@
                             </div>
                             <div>
                                 <strong>
-                                    {{ ucwords($topic) }}
+                                    {{ $this->formatString($topic) }}
                                 </strong>
                             </div>
                         </div>
@@ -30,13 +30,13 @@
                             <path d="M5 11V13H19V11H5Z" fill="#8F93A3"/>
                         </svg>
                     </div>
-                    <div x-show="expanded !== 'topic-{{ Str::slug($topic) }}'" class="flex justify-between items-center w-full">
+                    <div x-show="expanded !== 'topic-{{ Str::slug(str_replace('&', 'and', $topic)) }}'" class="flex justify-between items-center w-full">
                         <div class="flex">
                             <div class="w-6">
                                 {{ $loop->iteration . '.' }}
                             </div>
                             <div>
-                                {{ ucwords($topic) }}
+                                {{ $this->formatString($topic) }}
                             </div>
                         </div>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -46,11 +46,11 @@
 
                 </button>
 
-                <div x-show="expanded === 'topic-{{ Str::slug($topic) }}'" x-collapse>
+                <div x-show="expanded === 'topic-{{ Str::slug(str_replace('&', 'and', $topic)) }}'" x-collapse>
                     <ul class="mt-2 space-y-4 ml-6">
                         @foreach ($articles[$topic] as $article)
                             <li class="text-clip text-sm">
-                                <a href="{{ ArticleService::getArticleUrlFromSlug($article->slug) }}" class="cursor-pointer hover:underline {{ ($article->slug === $currentArticle) ? 'font-bold' : '' }}">
+                                <a href="{{ ArticleService::getArticleUrlFromSlug($article->slug) }}" class="cursor-pointer hover:underline {{ ($article->slug === $currentArticle) ? 'font-bold' : '' }}" wire:navigate>
                                     {{ $loop->parent->iteration }}.{{ $loop->iteration }} {{ $article->title }}
                                 </a>
                             </li>
