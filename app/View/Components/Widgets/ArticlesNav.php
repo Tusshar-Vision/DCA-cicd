@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Widgets;
 
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -15,7 +16,10 @@ class ArticlesNav extends Component
         public $createdAt,
         public $updatedAt
     )
-    {}
+    {
+        $this->createdAt = Carbon::parse($this->createdAt);
+        $this->updatedAt = Carbon::parse($this->updatedAt);
+    }
 
     /**
      * Get the view / contents that represent the component.

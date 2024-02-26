@@ -90,7 +90,11 @@
             Note</button>
     </div>
 
-    <div id="article-content" onmouseup="handleSelection()" class="mt-4 printable-area">
+    {{-- <div id="article-content" onmouseup="handleSelection()" class="mt-4 printable-area">
+        {!! $article->content !!}
+    </div> --}}
+
+    <div id="article-content" class="mt-4 printable-area">
         {!! $article->content !!}
     </div>
 
@@ -129,7 +133,7 @@
     @endif
 
     const doc = document.getElementById("article-content");
-    doc.addEventListener('mouseup', handleSelection);
+    // doc.addEventListener('mouseup', handleSelection);
     var pageX, pageY;
 
     function getSelectionText() {

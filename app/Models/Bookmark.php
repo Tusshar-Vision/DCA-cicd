@@ -15,7 +15,7 @@ class Bookmark extends Model
 
     public function user()
     {
-        return $this->belongsTo(Student::class, 'user_id');
+        return $this->belongsTo(Student::class, 'student_id');
     }
 
     public function article()

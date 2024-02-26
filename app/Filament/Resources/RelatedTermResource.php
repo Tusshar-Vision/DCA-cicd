@@ -48,6 +48,12 @@ class RelatedTermResource extends Resource
                 Tables\Actions\EditAction::make()
                     ->tooltip('Edit')
                     ->iconButton(),
+                Tables\Actions\DeleteAction::make()
+                    ->tooltip('Delete')
+                    ->visible(function (RelatedTerm $record) {
+                        return $record->relatedArticles()->count() === 0;
+                    })
+                    ->iconButton(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
