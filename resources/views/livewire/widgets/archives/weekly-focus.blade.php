@@ -21,48 +21,12 @@
                 <div class="hidden xl:block ml-4">
                     <livewire:widgets.filter :data="$years"/>
                 </div>
+                            <div>
+             <livewire:widgets.mobile-filter :data="$years"/>
+            </div>
             </div>
         </div>
     </div>
-
-    <!-- responsive filter section start -->
-    {{-- <div id="myFilter" class="menuOverlay">
-        <div class="menuOverlayContent">
-            <div class="flex justify-between align-middle mb-[20px]">
-                <span class="text-[#3362CC] text-sm font-bold">Select Filters</span>
-                <a href="javascript:void(0)" class="closebtn" onclick="closeFilter()">&times;</a>
-            </div>
-            <div>
-                <div class="mb-[20px]">
-                    <label class="block mb-[10px] text-[#183B56] text-sm">
-                        Select Year
-                        <select class="w-full rounded">
-                            <option>2023</option>
-                            <option>2022</option>
-                            <option>2024</option>
-                        </select>
-                    </label>
-                </div>
-                <div class="mb-[20px]">
-                    <label class="block mb-[10px] text-[#183B56] text-sm">
-                        Select Month
-                        <select class="w-full rounded">
-                            <option>December</option>
-                            <option>November</option>
-                            <option>October</option>
-                        </select>
-                    </label>
-                </div>
-                <button class="w-full bg-[#3362CC] text-white rounded text-center text-sm font-bold py-[12px]">
-                    Apply Filters
-                </button>
-                <button class="w-full text-[#485153] rounded text-center text-sm font-semibold py-[12px] mt-4">
-                    Clear Filters
-                </button>
-            </div>
-        </div>
-    </div> --}}
-    <!-- responsive filter section end -->
 
     <!-- Weekly Focus section -->
 <?php $i = 0; ?>
@@ -122,14 +86,3 @@
         </div>
     @endforeach
 </div>
-
-<script>
-    // responsive menu show hide script
-    function openFilter() {
-        document.getElementById("myFilter").style.height = "100%";
-    }
-
-    function closeFilter() {
-        document.getElementById("myFilter").style.height = "0%";
-    }
-</script>

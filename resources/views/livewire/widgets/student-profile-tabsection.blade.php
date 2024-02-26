@@ -7,16 +7,16 @@
                       class="tab-item tab-activity {{ $segment == 'activity' ? 'active' : '' }}">Activity</a>
                   <a href="{{ route('bookmarks') }}"
                       class="tab-item tab-activity {{ $segment == 'bookmarks' ? 'active' : '' }}"">Bookmarks </a>
-                  <a href="{{ route('user.content') }}"
+                  {{-- <a href="{{ route('user.content') }}"
                       class="tab-item tab-my-content {{ $segment == 'content' ? 'active' : '' }}"">My Content</a>
-                  <div class="tab-item tab-leaderboard">Leaderboard</div>
+                  <div class="tab-item tab-leaderboard">Leaderboard</div> --}}
               </div>
               <!-- right side tab link newly added -->
-              <ul class="flex justify-start mt-[30px] xl:mt-0 xl:justify-between text-[16px] text-[#8F93A3]">
+              {{-- <ul class="flex justify-start mt-[30px] xl:mt-0 xl:justify-between text-[16px] text-[#8F93A3]">
                 <li><a href="javascript:void(0)" class="hover:text-[#3362CC] activeSubTab">Note</a></li>
                 <li><a href="javascript:void(0)" class="ml-5 hover:text-[#3362CC]">Draft</a></li>
                 <li><a href="javascript:void(0)" class="ml-5 hover:text-[#3362CC]">Delete</a></li>
-              </ul>
+              </ul> --}}
               <!-- right side tab link newly added -->
           </div>
           

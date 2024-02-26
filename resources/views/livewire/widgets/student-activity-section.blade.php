@@ -142,7 +142,7 @@
                                 }
                                 ?>
                                
-                                square.innerHTML += `<li data-level="{{$level}}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : ""}}"></li>`
+                                square.innerHTML += `<li data-level="{{$level}}" data-complete="{{$level == 4 ? "NO ARTICLE FOUND FOR THIS MONTH" : ""}}"></li>`
                                         
                                 @endforeach
  }
@@ -163,7 +163,7 @@
                                 }
                                 ?>
 
-                                square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : ""}}"></li>`
+                                square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO WEEKLY FOCUS FOUND FOR THIS WEEK" : ""}}"></li>`
                                 @endforeach
  }
 
@@ -182,7 +182,7 @@
                                 }
                                 ?>
 
-                                square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO ISSUE FOUND FOR THIS MONTH" : ""}}"></li>`
+                                square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO MAGAZINE FOUND FOR THIS MONTH" : ""}}"></li>`
                                 @endforeach
 }
 
