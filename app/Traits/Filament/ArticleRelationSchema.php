@@ -233,14 +233,14 @@ trait ArticleRelationSchema
             ->filtersFormMaxHeight('400px')
             ->headerActions([
                 CreateAction::make()
-                    ->url(fn (): string => '/admin/articles/create?initiative_id=' . \Livewire::current()->ownerRecord->id)
-                    ->openUrlInNewTab()
-//                    ->slideOver()
-//
-//                    ->after(function (Model $record) {
-//                        $record->setStatus('Draft', 'New Entry Created');
-//                        $this->sendNotificationOfArticleCreation($record);
-//                    })
+//                    ->url(fn (): string => '/admin/articles/create?initiative_id=' . \Livewire::current()->ownerRecord->id)
+//                    ->openUrlInNewTab()
+                    ->slideOver()
+
+                    ->after(function (Model $record) {
+                        $record->setStatus('Draft', 'New Entry Created');
+                        $this->sendNotificationOfArticleCreation($record);
+                    })
             ])
             ->actions([
 
@@ -310,8 +310,7 @@ trait ArticleRelationSchema
                 EditAction::make('Edit')
                     ->iconButton()
                     ->tooltip('Edit')
-                    ->url(fn (Article $record): string => '/admin/articles/' . $record->slug . '/edit')
-                    ->openUrlInNewTab()
+                    ->slideOver()
                     ->visible(function (Article $record) {
                         $user = Auth::user();
                         return
@@ -518,6 +517,9 @@ trait ArticleRelationSchema
                                 $record->relatedTerms()->delete();
                                 $record->relatedVideos()->delete();
                                 $record->relatedArticles()->delete();
+                                $record->relatedToArticle()->delete();
+                                $record->bookmarks()->delete();
+                                $record->readHistories()->delete();
                                 $record->forceDelete();
                             });
                     }),

@@ -48,6 +48,7 @@ class TagsResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
+                    ->tooltip('Edit')
                     ->iconButton(),
             ])
             ->bulkActions([

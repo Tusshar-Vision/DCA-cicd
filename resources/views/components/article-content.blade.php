@@ -90,7 +90,11 @@
             Note</button>
     </div>
 
-    <div id="article-content" onmouseup="handleSelection()" class="mt-4 printable-area">
+    {{-- <div id="article-content" onmouseup="handleSelection()" class="mt-4 printable-area">
+        {!! $article->content !!}
+    </div> --}}
+
+    <div id="article-content" class="mt-4 printable-area">
         {!! $article->content !!}
     </div>
 
@@ -98,7 +102,7 @@
             <li class="text-[#3D3D3D] text-base mr-2">Tags :</li>
             @foreach ($article->tags as $tag)
                 <li class="mr-2 bg-[#F4F6F8] text-xs rounded-sm py-1 px-2 cursor-pointer">{{ $tag->name }}</li>
-            @endforeach     
+            @endforeach
         </ul>
 </div>
 
@@ -129,7 +133,7 @@
     @endif
 
     const doc = document.getElementById("article-content");
-    doc.addEventListener('mouseup', handleSelection);
+    // doc.addEventListener('mouseup', handleSelection);
     var pageX, pageY;
 
     function getSelectionText() {
@@ -141,7 +145,7 @@
     }
 
     function hidePopup() {
-        
+
         let editorContent = tinymce.get('notes-text-area').getContent()
         var selectedHTML = getSelectedHTML();
 

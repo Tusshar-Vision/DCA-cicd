@@ -9,7 +9,6 @@
 @endphp
 
 @section('content')
-
     {{-- <div class="space-y-4">
         <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />
         <x-common.article-heading :title="$article->title" />
@@ -17,7 +16,7 @@
     </div> --}}
 
     <div x-data="{ isHighlightsOpen: false, isNotesOpen: false }">
-        <x-widgets.side-notes-and-highlights-menu :noteAvailable="$noteAvailable" />
+         <x-widgets.side-notes-and-highlights-menu :noteAvailable="$noteAvailable" />
 
         <x-modals.modal-box x-show="isHighlightsOpen" :heading="$highlightsHeading">
             <x-widgets.article-highlights />
@@ -39,7 +38,10 @@
 
                 <div class="flex w-full lg:w-2/6 flex-col space-y-4 leftsticky stickyMl-0">
                     {{-- <h2 class="text-[25px] font-bold mt-[26px] pb-3 border-b border-color text-[#0358A3]">News <span class="text-[#E22526]">Today</span></h2> --}}
-                    <img class="w-[120px]" src="{{ asset('images/NewstodayLogo.png') }}" alt="news today Logo" />
+                    {{-- <img class="w-[120px]" src="{{ asset('images/NewstodayLogo.png') }}" alt="news today Logo" /> --}}
+
+                    {!! \App\Helpers\SvgIconsHelper::getSvgIcon('news-today-logo') !!}
+
                     <livewire:widgets.news-today-calendar :calendar-data="$newsTodayCalendar" />
                     <x-widgets.article-side-bar :table-of-content="$articles->articles" />
                     <div class="hidden lg:block">
@@ -47,7 +49,7 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col w-full">
+                <div class="flex flex-col w-full mt-6 lg:mt-0">
                     <!-- replaced header section -->
                     <div class="space-y-4">
                         <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />

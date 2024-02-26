@@ -11,11 +11,16 @@ class UploadController extends Controller
     {
         if ($request->hasFile('upload')) {
             $file = $request->file('upload');
-            $path = $file->store('public/uploads'); // Adjust the path as necessary
+
+            // Store the file on the S3 disk
+            $path = $file->store('uploads', 's3_public');
+
+            // Generate a URL to the stored file
+            $url = Storage::disk('s3_public')->url($path);
 
             return response()->json([
                 'uploaded' => true,
-                'url' => Storage::url($path)
+                'url' => $url // Return the URL to the uploaded file
             ]);
         }
 

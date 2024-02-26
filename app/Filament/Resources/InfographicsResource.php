@@ -2,11 +2,11 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Initiatives;
 use App\Filament\Resources\InfographicsResource\Pages;
-use App\Filament\Resources\InfographicsResource\RelationManagers;
+use App\Helpers\InitiativesHelper;
 use App\Models\Infographic;
-use App\Models\PublishedInitiative;
-use Filament\Actions\Action;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
@@ -17,12 +17,16 @@ use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ForceDeleteBulkAction;
+use Filament\Tables\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
-use Livewire\Component as Livewire;
 
 class InfographicsResource extends Resource
 {
@@ -163,16 +167,23 @@ class InfographicsResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                //
+                TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->tooltip('Edit')
                     ->iconButton(),
+                Tables\Actions\DeleteAction::make()
+                    ->tooltip('Delete')
+                    ->visible(function(Infographic $record) {
+                        return $record->publishedInitiatives()->count() === 0;
+                    })
+                    ->iconButton()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-
+                    ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                 ]),
             ]);
     }
@@ -182,6 +193,20 @@ class InfographicsResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = static::getModel()::query()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
+
+        if ($tenant = Filament::getTenant()) {
+            static::scopeEloquentQueryToTenant($query, $tenant);
+        }
+
+        return $query;
     }
 
     public static function getPages(): array

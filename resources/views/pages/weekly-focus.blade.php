@@ -9,7 +9,7 @@
 @section('content')
 
     <div x-data="{ isHighlightsOpen: false, isNotesOpen: false }">
-        <x-widgets.side-notes-and-highlights-menu :noteAvailable="$noteAvailable" />
+         <x-widgets.side-notes-and-highlights-menu :noteAvailable="$noteAvailable" />
 
         <x-modals.modal-box x-show="isHighlightsOpen" :heading="$highlightsHeading">
             <x-widgets.article-highlights />
@@ -25,13 +25,13 @@
     <div class="space-y-12 mt-6" x-data="{ isVideoOpen: false }">
         <div x-data="{ isTopicAtGlanceOpen: false }" class="flex justify-between mt-[20px] md:mt-0">
             <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8 ">
-                    <x-modals.modal-box x-show="isVideoOpen" heading="Watch Today's News">
-            <livewire:widgets.today-news-video :videoUrl="$videoUrl" />
-        </x-modals.modal-box>
+                <x-modals.modal-box x-show="isVideoOpen" heading="Watch Today's News">
+                    <livewire:widgets.today-news-video :videoUrl="$videoUrl" />
+                </x-modals.modal-box>
 
                 <div class="flex w-full lg:md:w-2/6 flex-col space-y-6 leftsticky stickyMl-0">
-                    {{-- <h2 class="text-[25px] font-bold mt-[26px] pb-3 border-b border-color text-[#0358A3]">Weekly <span class="text-[#E22526]">Focus</span></h2> --}}
-                    <img class="w-[120px]" src="{{ asset('images/WeeklyfocusLogo.png') }}" alt="news today Logo" />
+
+                    {!! \App\Helpers\SvgIconsHelper::getSvgIcon('weekly-focus-logo') !!}
                     <x-widgets.article-side-bar :table-of-content="$tableOfContent" />
 
                     @if($articles->topicAtGlance !== null)
@@ -47,7 +47,7 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col w-full">
+                <div class="flex flex-col w-full mt-6 lg:mt-0">
                     <div class="space-y-4">
                         <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />
                         <x-common.article-heading :title="$article->title" />
@@ -56,7 +56,7 @@
                             <x-header.article readTime="{{ $article->readTime }}" />
                         </div>
                     </div>
-                    
+
 
                     <x-article-content :article="$article" class="m-0" />
 
@@ -69,7 +69,7 @@
                         </div>
                     @endif
                     <div class="block lg:hidden">
-                        <x-widgets.side-bar-download-menu initiative="weekly-focus" :media="$media/>
+                        <x-widgets.side-bar-download-menu initiative="weekly-focus" :media="$media" />
                     </div>
                 </div>
             </div>
@@ -92,5 +92,5 @@
                 </div>
             </div>
         </div>
-        <div>
-        @endsection
+    <div>
+@endsection
