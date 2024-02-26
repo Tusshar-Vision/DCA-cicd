@@ -7,6 +7,7 @@ use App\Filament\Resources\ValueAddedResource\Pages;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
 use App\Traits\Filament\MoreResourceSchema;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\DatePicker;
@@ -24,7 +25,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
-class ValueAddedResource extends Resource
+class ValueAddedResource extends Resource implements HasShieldPermissions
 {
     use MoreResourceSchema;
 
@@ -139,6 +140,17 @@ class ValueAddedResource extends Resource
             'index' => Pages\ListValueAddeds::route('/'),
             'create' => Pages\CreateValueAdded::route('/create'),
             'edit' => Pages\EditValueAdded::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'create',
+            'edit',
+            'delete',
+            'publish'
         ];
     }
 

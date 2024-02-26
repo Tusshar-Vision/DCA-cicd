@@ -7,6 +7,7 @@ use App\Filament\Resources\QuarterlyRevisionResource\Pages;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
 use App\Traits\Filament\MoreResourceSchema;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\DatePicker;
@@ -24,7 +25,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
-class QuarterlyRevisionResource extends Resource
+class QuarterlyRevisionResource extends Resource implements HasShieldPermissions
 {
     use MoreResourceSchema;
 
@@ -137,6 +138,17 @@ class QuarterlyRevisionResource extends Resource
             'index' => Pages\ListQuarterlyRevisions::route('/'),
             'create' => Pages\CreateQuarterlyRevision::route('/create'),
             'edit' => Pages\EditQuarterlyRevision::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'create',
+            'edit',
+            'delete',
+            'publish'
         ];
     }
 
