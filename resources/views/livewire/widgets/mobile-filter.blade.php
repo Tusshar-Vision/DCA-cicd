@@ -12,7 +12,7 @@ $year = request()->input('year');
                 <div class="mb-[20px]">
                     <label class="block mb-[10px] text-[#183B56] text-sm">
                         Select Year
-                        <select onchange="setYear(this)" class="w-full rounded">
+                        <select onchange="setYear(this)" class="w-full rounded mt-2">
                         <option></option>
                         @foreach ($data as $year)
                             <option onchange="setYear(this)" value="{{$year}}">{{$year}}</option>
@@ -24,7 +24,7 @@ $year = request()->input('year');
                 <div class="mb-[20px]">
                     <label class="block mb-[10px] text-[#183B56] text-sm">
                         Select Month
-                        <select onchange="setMonth(this)" class="w-full rounded">
+                        <select onchange="setMonth(this)" class="w-full rounded mt-2">
                         <option></option>
                             <option value="1">january</option>
                             <option value="2">February</option>

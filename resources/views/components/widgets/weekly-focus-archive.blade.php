@@ -32,7 +32,7 @@
       <div>
         <div class="mb-[20px]">
             <label class="block mb-[10px] text-[#183B56] text-sm">Select Year</label>
-            <select class="w-full rounded">
+            <select class="w-full rounded mt-2">
                 <option>2023</option>
                 <option>2022</option>
                 <option>2024</option>
@@ -40,7 +40,7 @@
         </div>
         <div class="mb-[20px]">
             <label class="block mb-[10px] text-[#183B56] text-sm">Select Month</label>
-            <select class="w-full rounded">
+            <select class="w-full rounded mt-2">
                 <option>December</option>
                 <option>November</option>
                 <option>October</option>
