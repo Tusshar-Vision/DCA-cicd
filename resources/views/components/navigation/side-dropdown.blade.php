@@ -9,7 +9,7 @@
                    wire:navigate
                 >
                     <span class="ml-2 font-medium text-sm">
-                        {{ $data['title'] }}
+                        {{ $data['name'] }}
                     </span>
                 </a>
             </li>

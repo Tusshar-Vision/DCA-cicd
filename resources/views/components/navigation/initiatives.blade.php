@@ -103,7 +103,7 @@
                     </div>
                     <div class="accordion-content">
                         <a href="{{ $initiative->path }}" wire:navigate class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]" wire:navigate>
-                            Latest Edition
+                            Latest Editions
                         </a>
                         <ul>
 

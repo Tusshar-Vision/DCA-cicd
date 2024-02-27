@@ -13,15 +13,18 @@ class MainMenuDTO extends Data implements Wireable
 {
     use WireableData;
     public function __construct(
+        public string $name,
         public string $publishedAt,
 
         #[DataCollectionOf(SideMenuDTO::class)]
         public DataCollection $article
-    ) {}
+    ) {
+    }
 
     public static function fromArray($payloads): static
     {
         return new self(
+            $payloads['name'] ?? $payloads['name'],
             $payloads['published_at'] ?? $payloads['publishedAt'],
             SideMenuDTO::collection($payloads['articles'] ?? $payloads['article'])
         );
