@@ -53,7 +53,7 @@
                     <!-- replaced header section -->
                     <div class="space-y-4">
                         <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />
-                        <x-common.article-heading :title="$article->title" />
+                        <x-common.article-heading :title="$article->short_title ?? $article->title" />
                     </div>
                     <!-- replaced header section -->
                     <div class="flex flex-col md:flex-row justify-between items-center w-full py-2 my-[30px] text-gray-500 border-t-2 border-b-2">
