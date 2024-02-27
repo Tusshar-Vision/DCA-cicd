@@ -2,12 +2,10 @@
 
 namespace App\Traits\Filament;
 
-use AmidEsfahani\FilamentTinyEditor\TinyEditor;
-use App\Infolists\Components\ArticleBody;
+use App\Forms\Components\CKEditor;
 use App\Jobs\GenerateArticlePDF;
 use App\Models\Article;
 use App\Models\User;
-use App\Services\ArticleService;
 use App\Traits\Filament\Components\ArticleForm;
 use App\Traits\Filament\Components\ExpertReviewColumn;
 use App\Traits\HasNotifications;
@@ -20,8 +18,6 @@ use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
 use Filament\Support\Colors\Color;
 use Filament\Tables\Actions\Action;
@@ -29,7 +25,6 @@ use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ForceDeleteBulkAction;
 use Filament\Tables\Actions\RestoreBulkAction;
@@ -46,7 +41,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use phpDocumentor\Reflection\Types\False_;
 use Spatie\Tags\Tag;
 
 trait ArticleRelationSchema
@@ -230,10 +224,12 @@ trait ArticleRelationSchema
             ->filtersFormColumns(4)
             ->filtersFormMaxHeight('400px')
             ->headerActions([
-                CreateAction::make()->slideOver()->after(function (Model $record) {
-                    $record->setStatus('Draft', 'New Entry Created');
-                    $this->sendNotificationOfArticleCreation($record);
-                })
+                CreateAction::make()
+                    ->slideOver()
+                    ->after(function (Model $record) {
+                        $record->setStatus('Draft', 'New Entry Created');
+                        $this->sendNotificationOfArticleCreation($record);
+                    })
             ])
             ->actions([
 
@@ -285,10 +281,8 @@ trait ArticleRelationSchema
                             TextInput::make('author')->disabled(),
                             TextInput::make('reviewer')->disabled(),
                         ])->columns(),
-                        TinyEditor::make('content')
-                            ->columnSpanFull()
-                            ->profile('review')
-                            ->maxHeight(500),
+                        CKEditor::make('content')
+                            ->columnSpanFull(),
 
                         RichEditor::make('body')
                             ->label('Review Comments')
@@ -302,8 +296,8 @@ trait ArticleRelationSchema
 
                 EditAction::make('Edit')
                     ->iconButton()
-                    ->slideOver()
                     ->tooltip('Edit')
+                    ->slideOver()
                     ->visible(function (Article $record) {
                         $user = Auth::user();
                         return
@@ -351,11 +345,8 @@ trait ArticleRelationSchema
                         Section::make('Article Content')
                             ->relationship('content')
                             ->schema([
-                                TinyEditor::make('content')
-                                    ->columnSpanFull()
-                                    ->profile('review')
-                                    ->maxHeight(500)
-                                    ->hiddenLabel(),
+                                CKEditor::make('content')
+                                    ->columnSpanFull(),
                             ])->collapsible(),
 
                         Section::make('Review Comment')->schema([
@@ -510,6 +501,9 @@ trait ArticleRelationSchema
                                 $record->relatedTerms()->delete();
                                 $record->relatedVideos()->delete();
                                 $record->relatedArticles()->delete();
+                                $record->relatedToArticle()->delete();
+                                $record->bookmarks()->delete();
+                                $record->readHistories()->delete();
                                 $record->forceDelete();
                             });
                     }),

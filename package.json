@@ -20,6 +20,7 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^41.1.0",
     "@dotlottie/player-component": "^2.7.8",
+    "esbuild": "^0.20.1",
     "pdfjs-dist": "^4.0.379",
     "swiper": "^10.3.1"
   }

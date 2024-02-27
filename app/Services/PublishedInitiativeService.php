@@ -23,16 +23,25 @@ readonly class PublishedInitiativeService
             ->whereInitiative($initiativeId)
             ->isPublished()
             ->hasPublishedArticle()
-            ->with('video')
+            ->with(['video', 'media'])
             ->latest('published_at');
 
         if ($date !== null)
             $query = $query->whereDate('published_at', '=', Carbon::parse($date)->format('Y-m-d'));
 
         $publishedInitiative = $query->with('articles', function ($article) {
-            $article->language()->isPublished()->Ordered()->with(['topic', 'relatedArticles', 'relatedVideos', 'relatedTerms']);
-        })
-            ->first();
+            $article
+                ->language()
+                ->isPublished()
+                ->Ordered()
+                ->with([
+                    'topic',
+                    'language',
+                    'relatedArticles',
+                    'relatedVideos',
+                    'relatedTerms'
+                ]);
+        })->first();
 
         throw_if(
             $publishedInitiative === null,

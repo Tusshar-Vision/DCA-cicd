@@ -55,7 +55,18 @@ readonly class ArticleService
 
     public static function getArticleUrlFromSlug($slug): string
     {
-        return self::getArticleURL(Article::findBySlug($slug));
+        try {
+            $article = Article::with(['initiative', 'publishedInitiative', 'topic'])
+                ->where('slug', $slug)
+                ->firstOrFail(); // Use firstOrFail to automatically throw an exception if not found.
+
+            return self::getArticleURL($article);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            Log::error("Article with slug '{$slug}' not found.");
+            // Handle the case where the article is not found. For example:
+            // return a default URL, or throw a custom exception, etc.
+            return '/article-not-found'; // Example default URL or you could throw an exception
+        }
     }
 
     public function archive($initiative_id, $year, $month): array

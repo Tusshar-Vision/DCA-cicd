@@ -5,6 +5,7 @@ namespace App\Filament\Resources\NewsTodayResource\RelationManagers;
 use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use App\Enums\Initiatives;
 use App\Filament\Components\Repeater;
+use App\Forms\Components\CKEditor;
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
 use App\Traits\Filament\ArticleRelationSchema;
@@ -184,14 +185,7 @@ class ShortArticlesRelationManager extends RelationManager
                         Section::make('Content')
                             ->relationship('content')
                             ->schema([
-                                TinyEditor::make('content')
-                                    ->columnSpanFull()
-                                    ->fileAttachmentsDisk('public')
-                                    ->fileAttachmentsVisibility('public')
-                                    ->fileAttachmentsDirectory('uploads')
-                                    ->profile('full')
-                                    ->maxHeight(500)
-                                    ->hiddenLabel(),
+                                CKEditor::make('content'),
 
                             ])->headerActions([
                                 Action::make('Reviews')

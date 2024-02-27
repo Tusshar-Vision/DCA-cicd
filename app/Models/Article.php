@@ -20,6 +20,7 @@ use Spatie\LaravelData\WithData;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\ModelStatus\HasStatuses;
+use Spatie\ModelStatus\Status;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Tags\HasTags;
@@ -68,6 +69,8 @@ class Article extends Model implements HasMedia, Sortable
         'published_at' => 'datetime',
         'is_short' => 'bool'
     ];
+
+    protected $with = ['initiative', 'topic', 'publishedInitiative'];
 
     // This method will automatically be called when creating or updating an article.
     public static function boot(): void
@@ -125,6 +128,11 @@ class Article extends Model implements HasMedia, Sortable
         return $this->belongsTo(Language::class, 'language_id');
     }
 
+    public function status(): HasOne
+    {
+        return $this->hasOne(Status::class)->latest();
+    }
+
     public function tableOfContent(): HasOne
     {
         return $this->hasOne(TableOfContent::class);
@@ -180,14 +188,29 @@ class Article extends Model implements HasMedia, Sortable
         return $this->hasMany(RelatedVideo::class);
     }
 
-    public function infographics(): HasOne
-    {
-        return $this->hasOne(Infographic::class);
-    }
-
     public function relatedArticles(): HasMany
     {
         return $this->hasMany(RelatedArticle::class);
+    }
+
+    public function relatedToArticle(): HasMany
+    {
+        return $this->hasMany(RelatedArticle::class, 'related_article_id');
+    }
+
+    public function bookmarks(): HasMany
+    {
+        return $this->hasMany(Bookmark::class);
+    }
+
+    public function readHistories(): HasMany
+    {
+        return $this->hasMany(ReadHistory::class);
+    }
+
+    public function infographics(): HasOne
+    {
+        return $this->hasOne(Infographic::class);
     }
 
     public function scopeIsFeatured(Builder $query): Builder

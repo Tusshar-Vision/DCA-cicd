@@ -21,6 +21,8 @@ use Illuminate\Support\Collection;
 trait OtherUploadsResourceSchema
 {
     use HelperMethods;
+
+
     public static function table(Table $table): Table
     {
         return $table
@@ -51,9 +53,7 @@ trait OtherUploadsResourceSchema
                     ->icon('heroicon-s-paper-airplane')
                     ->requiresConfirmation()
                     ->button()
-                    ->visible(function () {
-                        return \Auth::user()->hasAnyRole(['super_admin', 'admin']);
-                    })
+                    ->visible(fn () => auth()->user()->can(static::getActionPermission()))
                     ->hidden(function(PublishedInitiative $record) {
                         return $record->is_published === true;
                     })

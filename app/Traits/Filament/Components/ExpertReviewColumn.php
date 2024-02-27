@@ -38,6 +38,9 @@ trait ExpertReviewColumn
                         $query->whereIn('name', $roles->toArray());
                     })->get()->pluck('name', 'id');
                 })
+                ->disabled(function (Article $record) {
+                    return $record->status === 'Final' || $record->status === 'Published';
+                })
                 ->searchable()
                 ->default(function (Article $record) {
                     return $record->author_id;
@@ -71,6 +74,9 @@ trait ExpertReviewColumn
                 return User::whereHas('roles', function ($query) use ($roles) {
                     $query->whereIn('name', $roles->toArray());
                 })->get()->pluck('name', 'id');
+            })
+            ->disabled(function (Article $record) {
+                return $record->status === 'Final' || $record->status === 'Published';
             })
             ->searchable()
             ->label('Current Assigned Reviewer')
