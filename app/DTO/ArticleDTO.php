@@ -26,7 +26,7 @@ class ArticleDTO extends Data implements Wireable
         public string            $visibility,
         public string            $language,
         public bool              $isFeatured,
-        public int $isShort,
+        public int $is_short,
         public array|Collection  $tags,
         public array|Collection|null  $relatedTerms,
         public array|Collection|null  $relatedArticles,
