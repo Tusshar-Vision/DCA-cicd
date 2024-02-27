@@ -359,11 +359,11 @@
 
     // search mpdal show hide script
     function openSearch() {
-        document.getElementById("searchCont").style.display = "block";
+        document.getElementById("searchCont").classList.add('inModal')
     }
 
     function closeSearch() {
-        document.getElementById("searchCont").style.display = "none";
+        document.getElementById("searchCont").classList.remove('inModal')
     }
 
 
