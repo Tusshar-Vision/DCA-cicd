@@ -184,7 +184,7 @@
          
 
                     <livewire:widgets.news-today-calendar :calendar-data="$newsTodayCalendar" />
-                    <x-widgets.article-side-bar :table-of-content="$articles->articles" />
+                    <x-widgets.article-side-bar :table-of-content="$articles->articles" :isAlsoInNews="$isAlsoInNews" />
                     <div class="hidden lg:block">
                         <x-widgets.side-bar-download-menu initiative="news-today" :media="$media"/>
                     </div>

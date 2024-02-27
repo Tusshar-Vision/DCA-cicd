@@ -30,6 +30,7 @@
                         @endif
                         <?php $i = $loop->iteration; ?>
                 @endforeach
+                            @if($isAlsoInNews) 
                             <li class="py-[15px] border-bottom last:border-0 hover:brand-color">
                                 <a href="{{ route('news-today.alsoInNews') }}"
                                    wire:navigate
@@ -38,6 +39,7 @@
                                     <span class="mr-1">{{ $i + 1 }}<em>.</em></span>Also in news
                                 </a>
                             </li>
+                            @endif
             </ul>
         </div>
     </div>
