@@ -51,7 +51,7 @@
                         @foreach ($articles[$topic] as $article)
                             <li class="text-clip text-sm">
                                 <a href="{{ ArticleService::getArticleUrlFromSlug($article->slug) }}" class="cursor-pointer hover:underline {{ ($article->slug === $currentArticle) ? 'font-bold' : '' }}">
-                                    {{ $loop->parent->iteration }}.{{ $loop->iteration }} {{ $article->title }}
+                                    {{ $loop->parent->iteration }}.{{ $loop->iteration }} {{ $article->shortTitle ?? $article->title }}
                                 </a>
                             </li>
                             @if($article->slug === $currentArticle)
