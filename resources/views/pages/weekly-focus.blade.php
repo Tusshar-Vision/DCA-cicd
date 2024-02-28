@@ -5,8 +5,8 @@
     <div class="flex justify-between mt-[20px] md:mt-0" x-data="{ isVideoOpen: false, isTopicAtGlanceOpen: false }">
         <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8 ">
 
-            <x-modals.modal-box x-show="isVideoOpen" heading="Watch Today's News">
-                <livewire:widgets.today-news-video :videoUrl="$articles?->video" />
+            <x-modals.modal-box x-show="isVideoOpen" heading="Watch In Conversation">
+                <x-cards.video :source="$articles->video"/>
             </x-modals.modal-box>
 
             <div class="flex w-full lg:md:w-2/6 flex-col space-y-4 leftsticky stickyMl-0">
@@ -23,6 +23,7 @@
 
                 <div class="hidden lg:block">
                     <x-widgets.side-bar-download-menu initiative="weekly-focus" :media="$articles?->media" />
+                    <x-widgets.sidebar-video-menu initiative="weekly-focus" :video="$articles?->video" />
                 </div>
             </div>
 
@@ -48,6 +49,7 @@
 
                 <div class="block lg:hidden">
                     <x-widgets.side-bar-download-menu initiative="weekly-focus" :media="$articles?->media" />
+                    <x-widgets.sidebar-video-menu initiative="weekly-focus" :video="$articles?->video" />
                 </div>
             </div>
         </div>

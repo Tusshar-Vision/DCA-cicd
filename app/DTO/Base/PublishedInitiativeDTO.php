@@ -5,6 +5,7 @@ namespace App\DTO\Base;
 use App\DTO\ArticleDTO;
 use App\Exceptions\ArticleNotFoundException;
 use App\Models\PublishedInitiative;
+use App\Models\Video;
 use Carbon\Carbon;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
@@ -23,7 +24,7 @@ abstract class PublishedInitiativeDTO extends Data
         public string           $publishedAt,
         public string           $createdAt,
         public string           $updatedAt,
-        public ?string $video,
+        public ?Video $video,
         public ?MediaCollection $media
     ) {
     }
