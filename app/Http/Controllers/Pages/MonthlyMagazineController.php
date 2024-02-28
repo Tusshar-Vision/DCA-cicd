@@ -41,7 +41,7 @@ class MonthlyMagazineController extends Controller
             'monthly-magazine.article',
             [
                 'date' => $this->monthlyMagazine->publishedAt,
-                'topic' => $this->monthlyMagazine->articles->first()->topic,
+                'topic' => str_replace('&', 'and', $this->monthlyMagazine->articles->first()->topic),
                 'article_slug' => $this->monthlyMagazine->articles->first()->slug
             ]
         );

@@ -17,6 +17,18 @@ class Topics extends Component
     )
     {}
 
+    public function formatString($inputString): string
+    {
+        // Replace hyphens and similar characters with a space
+        $formattedString = str_replace(['-', '_'], ' ', $inputString);
+
+        // Convert "and" symbols (&) back to "&", if they were converted to "and"
+        $formattedString = str_replace(' and ', ' & ', $formattedString);
+
+        // Capitalize the first letter of each word
+        return ucwords($formattedString);
+    }
+
     /**
      * Get the view / contents that represent the component.
      */

@@ -50,29 +50,6 @@ window.addEventListener('onHomePage', () => {
     initializeSwiper();
 });
 
-// remove tag function
-// let container = document.getElementById('note-tag');
-// container.addEventListener('click', function (event) {
-//     const span = document.getElementById(event.target.id + "span");
-//     span.remove()
-// });
-
-// text lenght for whats new section
-
-// search dropdown js
-
-// const onfocus = document.querySelector('.focus');
-// const showlist = document.querySelector('.updatedText');
-
-// onfocus.addEventListener("focus", () => {
-//   showlist.style.display = 'block';
-// });
-
-// onfocus.addEventListener("blur", () => {
-//   showlist.style.display = 'none';
-// });
-
-
 // accordion toggle
 const accordionItems= document.querySelectorAll(".vi-acrticle-highligh-coll");
     accordionItems.forEach(item =>

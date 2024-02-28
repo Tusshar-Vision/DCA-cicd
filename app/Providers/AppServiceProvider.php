@@ -7,6 +7,8 @@ use App\Models\Initiative;
 use App\Services\InitiativeService;
 use Filament\Facades\Filament;
 use Filament\Support\Assets\AlpineComponent;
+use Filament\Support\Assets\Css;
+use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
@@ -41,6 +43,7 @@ class AppServiceProvider extends ServiceProvider
         ]);
 
         FilamentAsset::register([
+            Js::make('ckeditor', __DIR__ . '/../../resources/js/ckeditor.js'),
             AlpineComponent::make('ck-editor-component', __DIR__ . '/../../resources/js/dist/components/ck-editor-component.js'),
         ]);
     }
