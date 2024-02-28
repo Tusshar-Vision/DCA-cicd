@@ -32,9 +32,9 @@ trait InitiativeResourceSchema
                 TextColumn::make('id')
                     ->label('ID')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true)->searchable(),
 
-                TextColumn::make('name')->toggleable(),
+                TextColumn::make('name')->toggleable()->searchable(),
 
                 IconColumn::make('is_published')
                     ->alignCenter()

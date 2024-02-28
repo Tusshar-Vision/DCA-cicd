@@ -396,7 +396,9 @@ class WeeklyFocusResource extends Resource
     {
         $query = static::getModel()::query()
             ->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
-            ->with('articles')
+            ->with('articles', function ($query) {
+                return $query->with(['statuses']);
+            })
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);

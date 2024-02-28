@@ -288,7 +288,9 @@ class NewsTodayResource extends Resource
     {
         $query = static::getModel()::query()
             ->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
-            ->with('articles')
+            ->with('articles', function ($query) {
+                return $query->with(['statuses']);
+            })
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);

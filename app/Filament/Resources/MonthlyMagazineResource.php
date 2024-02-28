@@ -196,7 +196,9 @@ class MonthlyMagazineResource extends Resource
     {
         $query = static::getModel()::query()
             ->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE))
-            ->with('articles')
+            ->with('articles', function ($query) {
+                return $query->with(['statuses']);
+            })
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
