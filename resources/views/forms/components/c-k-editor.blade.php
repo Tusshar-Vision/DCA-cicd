@@ -21,6 +21,9 @@
         .ck-editor__editable ol {
             margin-left: 25px;
         }
+        .ck.ck-toolbar.ck-toolbar_grouping>.ck-toolbar__items{
+            flex-wrap: wrap !important;
+        }
     </style>
 
     <div
