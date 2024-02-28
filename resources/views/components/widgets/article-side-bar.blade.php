@@ -24,7 +24,7 @@
                                    wire:navigate
                                    class="flex text-base[16px] font-normal hover:brand-color {{ ($header->slug === $currentArticle) ? 'brand-color' : '' }}"
                                 >
-                                    <span class="mr-1">{{ $loop->iteration }}<em>.</em></span> {{ "$header->shortTitle ?? $header->title" }}
+                                    <span class="mr-1">{{ $loop->iteration }}<em>.</em></span> {{ $header->shortTitle ?? $header->title }}
                                 </a>
                             </li>
                         @endif
