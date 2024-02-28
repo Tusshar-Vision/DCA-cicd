@@ -73,6 +73,7 @@ trait ArticleRelationSchema
                     ->boolean()
                     ->trueIcon('heroicon-o-check-badge')
                     ->falseIcon('heroicon-o-x-mark')
+                    ->alignCenter()
                     ->toggleable(),
                 TextColumn::make('title')
                     ->limit(40)
