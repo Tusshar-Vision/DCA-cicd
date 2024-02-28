@@ -6,6 +6,10 @@
     :field="$field"
 >
     <style>
+        .ck-editor-container {
+            display: flex;
+            width: 100%;
+        }
         .ck-editor__editable {
             min-height: 500px; /* Adjust the height as needed */
         }
@@ -23,8 +27,10 @@
         wire:ignore
         x-ignore
         ax-load
+        x-load-js="[@js(\Filament\Support\Facades\FilamentAsset::getScriptSrc('ckeditor'))]"
         ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('ck-editor-component') }}"
         x-data="ckEditorComponent({ state: $wire.{{ $applyStateBindingModifiers("entangle('{$statePath}')", isOptimisticallyLive: false) }} })"
+        class="ck-editor-container"
     >
         <textarea x-ref="editor" hidden></textarea>
     </div>

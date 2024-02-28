@@ -16,7 +16,7 @@
     </div> --}}
 
     <div x-data="{ isHighlightsOpen: false, isNotesOpen: false }">
-         <x-widgets.side-notes-and-highlights-menu :noteAvailable="$noteAvailable" />
+        <x-widgets.side-notes-and-highlights-menu :noteAvailable="$noteAvailable" />
 
         <x-modals.modal-box x-show="isHighlightsOpen" :heading="$highlightsHeading">
             <x-widgets.article-highlights />
@@ -62,9 +62,9 @@
                     </div>
 
                     @if($inShort)
-                    <x-inshort-article :articles="$articles->articles" class="m-0" />
+                        <x-inshort-article :articles="$articles->articles" class="m-0" />
                     @else
-                    <x-article-content :article="$article" class="m-0" />
+                        <x-article-content :article="$article" class="m-0" />
                     @endif
 
                     <div class="mt-12">

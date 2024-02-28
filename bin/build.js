@@ -1,4 +1,5 @@
 import * as esbuild from 'esbuild'
+import svgPlugin from 'esbuild-plugin-svg';
 
 const isDev = process.argv.includes('--dev')
 
@@ -40,7 +41,7 @@ const defaultOptions = {
                 }
             })
         }
-    }],
+    }, svgPlugin()],
 }
 
 compile({

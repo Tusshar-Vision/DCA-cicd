@@ -1,5 +1,3 @@
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-
 export default function ckEditorComponent({
     state,
 }) {
@@ -10,7 +8,7 @@ export default function ckEditorComponent({
 
         init: function () {
             // Initialise the Alpine component here, if you need to.
-            ClassicEditor.create(this.$refs.editor,  {
+            ClassicEditor.create(this.$refs.editor, {
                 extraPlugins: [SimpleUploadAdapterPlugin],
             })
                 .then(editor => {
