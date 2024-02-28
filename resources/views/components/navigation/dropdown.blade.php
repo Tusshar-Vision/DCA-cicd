@@ -3,7 +3,6 @@
     use App\Helpers\InitiativesHelper;
     use App\Enums\Initiatives;
 @endphp
-{{logger("menudata", [$menuData]);}}
 <div {{ $attributes }} x-cloak>
     <ul x-data="{ isMenuOpen: null }" class="absolute font-normal bgcolor-FFF shadow w-72 border rounded-md mt-2 py-1 z-50">
         <div class="border-bottom mx-4">
@@ -14,7 +13,8 @@
        <a class="text-sm flex pb-[15px] font-medium brand-color" href="{{ $buttonLink }}" wire:navigate><p>{{Carbon::parse($menuData['data'][array_key_first($menuData['data'])][0]->publishedAt)->monthName}}</p></a>
        @endif
        @if($menuData['initiative_id'] === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
-       <a class="text-sm flex pb-[15px] font-medium brand-color" href="{{ $buttonLink }}" wire:navigate><p>{{$menuData['data'] ? $menuData['data'][array_key_first($menuData['data'])][0]->article[0]->title : ""}}</p></a>
+       {{logger("menuda", [$menuData]);}}
+       <a class="text-sm flex pb-[15px] font-medium brand-color" href="{{ $buttonLink }}" wire:navigate><p>{{$menuData['data'] ? $menuData['data'][array_key_first($menuData['data'])][0]->name : ""}}</p></a>
 
        @endif
         </div>

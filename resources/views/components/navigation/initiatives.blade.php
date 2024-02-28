@@ -103,7 +103,7 @@
                     </div>
                     <div class="accordion-content">
                         <a href="{{ $initiative->path }}" wire:navigate class="text-sm text-[#3362CC] underline font-semibold mb-[20px] py-[10px] px-[10px]" wire:navigate>
-                            Latest Edition
+                            Latest Editions
                         </a>
                         <ul>
 
@@ -192,9 +192,9 @@
 
 <!-- responsive menu end -->
 
-<div class="flex py-[20px] bg-[#fff] items-center justify-between">
+<div class="flex py-[20px] bg-[#fff] items-center justify-between relative">
     <div class="w-3/4">
-        <div class="xl:hidden block">
+        <div class="xl:hidden block">   
             <a href="{{ route('home') }}" wire:navigate>
                 <img width="112px" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
             </a>
@@ -296,10 +296,10 @@
 
     <div class="login-wrapper">
         <ul class="flex items-center">
-            <li>
-                <div class="search-field-container">
-                    <livewire:widgets.search-box />
-                </div>
+            <li class="pr-4">
+                <a href="javascript:void(0)" onclick="openSearch()">
+                    {!! \App\Helpers\SvgIconsHelper::getSvgIcon('search-open') !!}
+                </a>
             </li>
             @auth('cognito')
                 <div class="flex items-center font-bold cursor-pointer user-style" x-data="{ isUserMenuOpen: false }"
@@ -338,10 +338,35 @@
                 </li>
         </ul>
     </div>
+
+    <div id="searchCont" class="hidden modalCont fixed h-full w-full left-0 top-0 z-10 py-10 px-6 md:py-10 md:px-14">
+        <div class="w-full md:w-[500px] m-auto">
+            <div class="flex justify-end mt-6">
+                <button onclick="closeSearch()">
+                    {!! \App\Helpers\SvgIconsHelper::getSvgIcon('search-close') !!}
+                </button>
+            </div>
+            <div class="mt-4 flex justify-center">
+                <livewire:widgets.search-box />
+            </div>
+        </div>
+    </div>
+
 </div>
 
 
 <script>
+
+    // search mpdal show hide script
+    function openSearch() {
+        document.getElementById("searchCont").classList.add('inModal')
+    }
+
+    function closeSearch() {
+        document.getElementById("searchCont").classList.remove('inModal')
+    }
+
+
     // responsive menu show hide script
     function openNav() {
         document.getElementById("myNav").style.height = "100%";
@@ -351,7 +376,7 @@
         document.getElementById("myNav").style.height = "0%";
     }
 
-    // manu toggle script
+    // menu toggle script
     function toggleAccordion(element) {
         const content = element.nextElementSibling;
         const arrow = element.querySelector('.arrow');
@@ -364,4 +389,5 @@
             arrow.style.transform = 'rotate(-90deg)';
         }
     }
+
 </script>

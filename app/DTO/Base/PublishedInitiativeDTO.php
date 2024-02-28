@@ -18,6 +18,8 @@ abstract class PublishedInitiativeDTO extends Data
         public bool             $isPublished,
         #[DataCollectionOf(ArticleDTO::class)]
         public DataCollection   $articles,
+        #[DataCollectionOf(ArticleDTO::class)]
+        public DataCollection   $shortArticles,
         public string           $publishedAt,
         public string           $createdAt,
         public string           $updatedAt,
@@ -36,7 +38,7 @@ abstract class PublishedInitiativeDTO extends Data
 
     public function getArticleInNews()
     {
-        return $this->articles->where('is_short', '=', 1)->first();
+        return $this->shortArticles->first();
     }
 
     public function getArticleIndexFromSlug($slug): int|null
@@ -59,6 +61,7 @@ abstract class PublishedInitiativeDTO extends Data
             $publishedInitiative->name,
             $publishedInitiative->is_published,
             ArticleDTO::collection($publishedInitiative->articles),
+            ArticleDTO::collection($publishedInitiative->shortArticles),
             Carbon::parse($publishedInitiative->published_at)->format('Y-m-d'),
             $publishedInitiative->created_at,
             $publishedInitiative->updated_at,
