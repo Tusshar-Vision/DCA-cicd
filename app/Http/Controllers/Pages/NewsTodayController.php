@@ -79,7 +79,8 @@ class NewsTodayController extends Controller
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
             "isArticleBookmarked" => $isArticleBookmarked,
-            "newsTodayCalendar" => $newsTodayCalendar
+            "newsTodayCalendar" => $newsTodayCalendar,
+            "isAlsoInNews" => $article
         ]);
     }
 
