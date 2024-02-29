@@ -32,8 +32,9 @@ readonly class ArticleService
     public function getLatestNews(int $limit = 2): Collection|array
     {
         return $this->articles
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
+            ->whereInitiative(InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
             ->isPublished()
+            ->isNotShort()
             ->language()
             ->latest()
             ->limit($limit)

@@ -18,7 +18,7 @@
                 </div>
 
                 <x-modals.modal-box x-show="isTopicAtGlanceOpen">
-                    <livewire:widgets.pdf-viewer :pdf="$articles->topicAtGlance" />
+                    <livewire:widgets.pdf-viewer :infographic="$articles->topicAtGlance" />
                 </x-modals.modal-box>
 
                 <div class="hidden lg:block">

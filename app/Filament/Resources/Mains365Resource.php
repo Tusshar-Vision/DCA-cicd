@@ -70,6 +70,7 @@ class Mains365Resource extends Resource implements HasShieldPermissions
                         })->required(),
 
                         Select::make('initiative_topic_id')
+                            ->searchable()
                             ->relationship('topic', 'name')
                             ->required()
                             ->label('Subject')
@@ -81,6 +82,7 @@ class Mains365Resource extends Resource implements HasShieldPermissions
                             })
                             ->label('Language')
                             ->required()
+                            ->selectablePlaceholder(false)
                             ->default(1),
 
                         Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')

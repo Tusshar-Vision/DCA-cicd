@@ -227,4 +227,25 @@ class Article extends Model implements HasMedia, Sortable
     {
         return $query->where('language_id', config("settings.language." . app()->getLocale()));
     }
+
+    public function scopeIsShort(Builder $query): Builder
+    {
+        return $query->where('is_short', true);
+    }
+
+    public function scopeIsNotShort(Builder $query): Builder
+    {
+        return $query->where('is_short', false);
+    }
+
+    public function whereInitiative($initiative_ids): Builder
+    {
+        // Check if $initiative_ids is an array
+        if (is_array($initiative_ids)) {
+            return $this->whereIn('initiative_id', $initiative_ids);
+        }
+
+        // If it's a single id, use where condition
+        return $this->where('initiative_id', '=', $initiative_ids);
+    }
 }

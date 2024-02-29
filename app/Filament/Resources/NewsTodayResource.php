@@ -158,6 +158,7 @@ class NewsTodayResource extends Resource
                         })
                         ->label('Language')
                         ->required()
+                        ->selectablePlaceholder(false)
                         ->default(1),
 
                     Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
@@ -258,11 +259,11 @@ class NewsTodayResource extends Resource
 
                                 ])->columnSpan(1)
                             ])
-                            ->disabledOn('create')
                             ->disabled(function () {
                                 if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'news_today_reviewer'])) return false;
                                 else return true;
-                            }),
+                            })
+                            ->disabledOn('create'),
                     ])->columnSpan(1)
             ]);
     }

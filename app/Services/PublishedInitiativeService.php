@@ -41,6 +41,15 @@ readonly class PublishedInitiativeService
                     'relatedVideos',
                     'relatedTerms'
                 ]);
+        })->with('shortArticles', function ($article) {
+            $article
+                ->language()
+                ->isPublished()
+                ->Ordered()
+                ->with([
+                    'topic',
+                    'language'
+                ]);
         })->first();
 
         throw_if(

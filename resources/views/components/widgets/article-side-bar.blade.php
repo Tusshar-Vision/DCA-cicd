@@ -1,6 +1,7 @@
 @php
     use App\Services\ArticleService;
     $currentArticle = request()->segment(4);
+    $date = request()->segment(2);
 @endphp
 
 <div class="flex flex-col rounded bg-visionGray pb-4 lg:mt-10 mt-0">
@@ -31,13 +32,14 @@
                             @endif
                             <?php $i = $loop->iteration; ?>
                     @endforeach
+
                     @if($isAlsoInNews)
                         <li class="py-[15px] border-bottom last:border-0 hover:brand-color">
-                            <a href="{{ route('news-today.alsoInNews') }}"
+                            <a href="{{ route('news-today.alsoInNews', ['date' => $date]) }}"
                                wire:navigate
-                               class="flex text-base[16px] font-normal hover:brand-color {{ request()->is('news-today/also-in-news*') ? 'brand-color' : '' }}"
+                               class="flex text-base[16px] font-normal hover:brand-color {{ request()->is('news-today/*/also-in-news') ? 'brand-color' : '' }}"
                             >
-                                <span class="mr-1">{{ $i + 1 }}<em>.</em></span>Also in news
+                                <span class="mr-1">{{ $i + 1 }}<em>.</em></span>Also in News
                             </a>
                         </li>
                     @endif

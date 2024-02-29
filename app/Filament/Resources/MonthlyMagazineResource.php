@@ -144,6 +144,7 @@ class MonthlyMagazineResource extends Resource
                         })
                         ->label('Language')
                         ->required()
+                        ->selectablePlaceholder(false)
                         ->default(1),
 
                     Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')

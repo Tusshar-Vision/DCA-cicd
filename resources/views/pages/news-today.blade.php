@@ -2,7 +2,7 @@
 @section('title', 'News Today | Current Affairs')
 
 @php
-    $inShort = request()->is('news-today/also-in-news*');
+    $inShort = request()->is('news-today/*/also-in-news');
 @endphp
 
 @section('article-content')
@@ -10,7 +10,7 @@
         <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8">
 
             <x-modals.modal-box x-show="isVideoOpen" heading="Watch Today's News">
-                <x-cards.video :source="$articles->video"/>
+                <x-cards.video :source="$articles?->video"/>
             </x-modals.modal-box>
 
             <div class="flex w-full lg:w-2/6 flex-col space-y-4 leftsticky stickyMl-0">
@@ -41,7 +41,7 @@
                 </div>
 
                 @if($inShort)
-                    <x-inshort-article :articles="$articles->articles" class="m-0" />
+                    <x-inshort-article :articles="$articles->shortArticles" class="m-0" />
                 @else
                     <x-article-content :article="$article" class="m-0" />
                 @endif
