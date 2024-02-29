@@ -2,7 +2,7 @@
     use Carbon\Carbon;
 @endphp
 
-<ul class="flex h-10 text-white items-center bg-visionBlue space-x-8 whitespace-nowrap overflow-x-auto pr-4">
+<ul class="flex h-10 text-white items-center bg-visionBlue space-x-8 whitespace-nowrap overflow-x-auto pr-4 scroll-style">
     <li>
         <p class="text-sm font-bold pl-2">{{ Carbon::parse($publishedDate)->format('F Y') }}</p>
     </li>
