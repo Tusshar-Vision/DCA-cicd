@@ -119,6 +119,11 @@ class PublishedInitiative extends Model implements HasMedia
         });
     }
 
+    public function scopeLanguage(Builder $query): Builder
+    {
+        return $query->where('language_id', config("settings.language." . app()->getLocale()));
+    }
+
     public function whereInitiative($initiative_ids): Builder
     {
         // Check if $initiative_ids is an array

@@ -22,6 +22,7 @@ readonly class PublishedInitiativeService
         $query = $this->publishedInitiatives
             ->whereInitiative($initiativeId)
             ->isPublished()
+            ->language()
             ->hasPublishedArticle()
             ->with(['video', 'media'])
             ->latest('published_at');
