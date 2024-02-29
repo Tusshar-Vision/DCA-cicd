@@ -43,6 +43,11 @@
                 </div>
             </div>
         </div>
+        <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top" class="fixed bottom-[100px] right-0 bg-[#005faf] px-[18px] py-4 text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 9 12" fill="none" class="rotate-[-90deg]">
+                <path d="M7.91994 6.27427L0.854171 10.9848C0.700998 11.0869 0.494038 11.0455 0.391918 10.8923C0.355418 10.8376 0.335938 10.7733 0.335938 10.7075V1.28646C0.335938 1.10237 0.485177 0.953125 0.669271 0.953125C0.735077 0.953125 0.799418 0.972605 0.854171 1.00911L7.91994 5.71961C8.07307 5.82174 8.11447 6.02867 8.01234 6.18187C7.98794 6.21847 7.95654 6.24987 7.91994 6.27427Z" fill="white"/>
+            </svg>
+        </button>
     </div>
 
     @push('scripts')
@@ -55,3 +60,24 @@
 {{--        <script src="{{ asset('vendor/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>--}}
     @endpush
 @endsection
+
+<script>
+    // Function to scroll to the top of the page
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // Show/hide scroll to top button based on scroll position
+    window.onscroll = function() {
+        var scrollToTopBtn = document.getElementById('scrollToTopBtn');
+        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+            scrollToTopBtn.style.display = 'block';
+        } else {
+            scrollToTopBtn.style.display = 'none';
+        }
+    };
+
+</script>
