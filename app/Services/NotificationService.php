@@ -12,22 +12,17 @@ readonly class NotificationService
 {
     public function __construct(
         private Announcement $announcement,
-        private Article      $article
+        private ArticleService $articleService
     )
     {}
 
-    public function getAnnouncementsForToday($limit = 3): Collection
+    public function getAnnouncementsForToday($limit = 10): Collection
     {
         return $this->announcement->isVisible()->latest()->limit($limit)->get();
     }
 
-    public function getNewsUpdatesForToday($limit = 6): Collection
+    public function getNewsUpdatesForToday(): Collection
     {
-        return $this->article
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
-            ->isPublished()
-            ->latest()
-            ->limit($limit)
-            ->get(['title', 'slug']);
+        return $this->articleService->getLatestNews(6);
     }
 }

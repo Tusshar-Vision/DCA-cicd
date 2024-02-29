@@ -8,6 +8,7 @@ use App\Models\Article;
 use App\Models\User;
 use App\Traits\Filament\Components\ArticleForm;
 use App\Traits\Filament\Components\ExpertReviewColumn;
+use App\Traits\Filament\Components\StatusColumn;
 use App\Traits\HasNotifications;
 use AymanAlhattami\FilamentDateScopesFilter\DateScopeFilter;
 use Carbon\Carbon;
@@ -29,6 +30,7 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ForceDeleteBulkAction;
 use Filament\Tables\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\ActionsPosition;
@@ -45,7 +47,7 @@ use Spatie\Tags\Tag;
 
 trait ArticleResourceSchema
 {
-    use ArticleForm, HasNotifications, ExpertReviewColumn;
+    use ArticleForm, HasNotifications, ExpertReviewColumn, StatusColumn;
 
     public static function form(Form $form): Form
     {
@@ -67,31 +69,12 @@ trait ArticleResourceSchema
                     ->searchable()
                     ->label('id')
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('article.status')
-                    ->label('Status')
-                    ->default(function (Model $record) {
-                        return mb_substr($record->status, 0, 1);
-                    })
-                    ->tooltip(function (Model $record) {
-                        return $record->status;
-                    })
-                    ->badge()
-                    ->color(function (Model $record) {
-                        switch ($record->status) {
-                            case 'Draft': return Color::Gray;
-                            case 'Improve': return Color::Yellow;
-                            case 'Changes Incorporated': return Color::Blue;
-                            case 'Reject': return Color::Red;
-                            case 'Final': return Color::Orange;
-                            case 'Published': return Color::Green;
-                            case 'Final Database': return Color::Indigo;
-                        }
-                    })
-                    ->toggleable(),
+                $articleResource->getStatusColumn(Auth::user()->can('review_article')),
                 IconColumn::make('featured')
                     ->boolean()
                     ->trueIcon('heroicon-o-check-badge')
                     ->falseIcon('heroicon-o-x-mark')
+                    ->alignCenter()
                     ->toggleable(),
                 TextColumn::make('initiative.name')
                     ->searchable()

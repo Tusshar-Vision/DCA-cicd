@@ -26,6 +26,7 @@ class ArticleResource extends Resource implements HasShieldPermissions
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
+            ->with(['statuses'])
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);

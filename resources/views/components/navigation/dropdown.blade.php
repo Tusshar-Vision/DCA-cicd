@@ -13,7 +13,6 @@
        <a class="text-sm flex pb-[15px] font-medium brand-color" href="{{ $buttonLink }}" wire:navigate><p>{{Carbon::parse($menuData['data'][array_key_first($menuData['data'])][0]->publishedAt)->monthName}}</p></a>
        @endif
        @if($menuData['initiative_id'] === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
-       {{logger("menuda", [$menuData]);}}
        <a class="text-sm flex pb-[15px] font-medium brand-color" href="{{ $buttonLink }}" wire:navigate><p>{{$menuData['data'] ? $menuData['data'][array_key_first($menuData['data'])][0]->name : ""}}</p></a>
 
        @endif

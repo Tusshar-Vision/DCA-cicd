@@ -69,7 +69,6 @@ trait ArticleForm
 
                             ])->columns(2),
 
-
                             Group::make()->schema([
 
                                 Select::make('author_id')
@@ -140,6 +139,7 @@ trait ArticleForm
                                 }),
 
                                 Select::make('initiative_topic_id')
+                                    ->searchable()
                                     ->relationship('topic', 'name')
                                     ->required()
                                     ->label('Subject')
@@ -153,6 +153,7 @@ trait ArticleForm
                                     }),
 
                                 Select::make('topic_section_id')
+                                    ->searchable()
                                     ->relationship('topicSection', 'name', function ($query, callable $get) {
                                         $topic = $get('initiative_topic_id');
 
@@ -168,6 +169,7 @@ trait ArticleForm
                                     }),
 
                                 Select::make('topic_sub_section_id')
+                                    ->searchable()
                                     ->relationship('topicSubSection', 'name', function ($query, callable $get) {
                                         $topicSectionId = $get('topic_section_id');
 
@@ -246,6 +248,7 @@ trait ArticleForm
                             ->relationship('relatedArticles')
                             ->simple(
                                 Select::make('related_article_id')
+                                    ->searchable()
                                     ->relationship('relatedArticle', 'title')
                                     ->required()
                             )
@@ -261,6 +264,7 @@ trait ArticleForm
                             ->relationship('relatedVideos')
                             ->simple(
                                 Select::make('video_id')
+                                    ->searchable()
                                     ->relationship('video', 'title')
                                     ->required(),
                             )
@@ -276,6 +280,7 @@ trait ArticleForm
                             ->relationship('relatedTerms')
                             ->simple(
                                 Select::make('related_term_id')
+                                    ->searchable()
                                     ->relationship('term', 'term')
                                     ->required(),
                             )

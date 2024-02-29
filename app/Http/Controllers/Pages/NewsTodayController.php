@@ -48,11 +48,14 @@ class NewsTodayController extends Controller
             );
     }
 
-    public function alsoInNews(InitiativeService $initiativeService)
+    /**
+     * @throws \Throwable
+     */
+    public function alsoInNews($date, InitiativeService $initiativeService)
     {
         $this->newsToday = NewsTodayDTO::fromModel(
             $this->publishedInitiativeService
-                ->getLatest($this->initiativeId)
+                ->getLatest($this->initiativeId, $date)
         );
 
         $newsTodayCalendar = NewsTodayMenuDTO::fromNewsTodayDTO(
@@ -79,7 +82,8 @@ class NewsTodayController extends Controller
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
             "isArticleBookmarked" => $isArticleBookmarked,
-            "newsTodayCalendar" => $newsTodayCalendar
+            "newsTodayCalendar" => $newsTodayCalendar,
+            "isAlsoInNews" => $article
         ]);
     }
 

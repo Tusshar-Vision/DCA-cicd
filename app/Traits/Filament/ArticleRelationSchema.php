@@ -8,6 +8,7 @@ use App\Models\Article;
 use App\Models\User;
 use App\Traits\Filament\Components\ArticleForm;
 use App\Traits\Filament\Components\ExpertReviewColumn;
+use App\Traits\Filament\Components\StatusColumn;
 use App\Traits\HasNotifications;
 use Carbon\Carbon;
 use Filament\Forms\Components\Group;
@@ -45,7 +46,7 @@ use Spatie\Tags\Tag;
 
 trait ArticleRelationSchema
 {
-    use ArticleForm, HasNotifications, ExpertReviewColumn;
+    use ArticleForm, HasNotifications, ExpertReviewColumn, StatusColumn;
     public function form(Form $form): Form
     {
         return $this->articleForm($form);
@@ -67,31 +68,12 @@ trait ArticleRelationSchema
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->label('id'),
-                TextColumn::make('article.status')
-                    ->label('Status')
-                    ->default(function (Model $record) {
-                        return mb_substr($record->status, 0, 1);
-                    })
-                    ->tooltip(function (Model $record) {
-                        return $record->status;
-                    })
-                    ->badge()
-                    ->color(function (Model $record) {
-                        switch ($record->status) {
-                            case 'Draft': return Color::Gray;
-                            case 'Improve': return Color::Yellow;
-                            case 'Changes Incorporated': return Color::Blue;
-                            case 'Reject': return Color::Red;
-                            case 'Final': return Color::Orange;
-                            case 'Published': return Color::Green;
-                            case 'Final Database': return Color::Indigo;
-                        }
-                    })
-                    ->toggleable(),
+                $this->getStatusColumn(Auth::user()->can('review_article')),
                 IconColumn::make('featured')
                     ->boolean()
                     ->trueIcon('heroicon-o-check-badge')
                     ->falseIcon('heroicon-o-x-mark')
+                    ->alignCenter()
                     ->toggleable(),
                 TextColumn::make('title')
                     ->limit(40)
@@ -281,6 +263,7 @@ trait ArticleRelationSchema
                             TextInput::make('author')->disabled(),
                             TextInput::make('reviewer')->disabled(),
                         ])->columns(),
+
                         CKEditor::make('content')
                             ->columnSpanFull(),
 

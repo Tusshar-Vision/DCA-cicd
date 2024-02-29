@@ -144,6 +144,7 @@ class MonthlyMagazineResource extends Resource
                         })
                         ->label('Language')
                         ->required()
+                        ->selectablePlaceholder(false)
                         ->default(1),
 
                     Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
@@ -196,7 +197,9 @@ class MonthlyMagazineResource extends Resource
     {
         $query = static::getModel()::query()
             ->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE))
-            ->with('articles')
+            ->with('articles', function ($query) {
+                return $query->with(['statuses']);
+            })
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);

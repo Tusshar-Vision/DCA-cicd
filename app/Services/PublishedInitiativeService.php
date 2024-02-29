@@ -22,6 +22,7 @@ readonly class PublishedInitiativeService
         $query = $this->publishedInitiatives
             ->whereInitiative($initiativeId)
             ->isPublished()
+            ->language()
             ->hasPublishedArticle()
             ->with(['video', 'media'])
             ->latest('published_at');
@@ -40,6 +41,15 @@ readonly class PublishedInitiativeService
                     'relatedArticles',
                     'relatedVideos',
                     'relatedTerms'
+                ]);
+        })->with('shortArticles', function ($article) {
+            $article
+                ->language()
+                ->isPublished()
+                ->Ordered()
+                ->with([
+                    'topic',
+                    'language'
                 ]);
         })->first();
 
