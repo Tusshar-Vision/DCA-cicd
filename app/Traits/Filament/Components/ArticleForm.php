@@ -2,13 +2,11 @@
 
 namespace App\Traits\Filament\Components;
 
-use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use App\Enums\Initiatives;
 use App\Filament\Components\Repeater;
 use App\Forms\Components\CKEditor;
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
-use App\Models\PublishedInitiative;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;

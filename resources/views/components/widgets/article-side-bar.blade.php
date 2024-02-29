@@ -22,7 +22,7 @@
                                     </li>
                                 @endif
                             @else
-                                <li @click="openItem = (openItem == {{$key}} ? '-1' : {{$key}})" class="py-[15px] border-bottom last:border-0 hover:brand-color">
+                                <li @click="openItem = (openItem == {{$key}} ? '-1' : {{$key}})" class="py-[15px] cursor-pointer border-bottom last:border-0 hover:brand-color">
                                    @if($initiative == 'weekly-focus')
                                     <a class="flex text-base[16px] font-normal hover:brand-color }}"
                                     :class="{'brand-color': openItem == {{$key}}}"

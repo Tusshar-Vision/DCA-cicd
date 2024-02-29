@@ -1,4 +1,4 @@
-<div>
+<div {{ $attributes }}>
     @foreach ($articles as $key => $article)
 
         <div class="border-2 border-visionSelectedGray rounded px-4 py-2 mb-6">

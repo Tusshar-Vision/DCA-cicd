@@ -200,6 +200,10 @@ class WeeklyFocusResource extends Resource
                         ->selectablePlaceholder(false)
                         ->default(1),
 
+                    SpatieTagsInput::make('tags')
+                        ->columnSpanFull()
+                        ->required(),
+
                     Forms\Components\SpatieMediaLibraryFileUpload::make('pdf')
                         ->label('Upload pdf file')
                         ->acceptedFileTypes(['application/pdf'])
@@ -229,6 +233,26 @@ class WeeklyFocusResource extends Resource
                 ->columns(),
 
                 Group::make()->schema([
+                    Forms\Components\Section::make('Featured Image')->schema([
+                        SpatieMediaLibraryFileUpload::make('featured_image')
+                            ->hiddenLabel()
+                            ->imageEditor()
+                            ->imageEditorAspectRatios([
+                                '16:9',
+                                '4:3',
+                                '1:1',
+                            ])
+                            ->acceptedFileTypes([
+                                'image/jpeg',
+                                'image/png',
+                                'image/svg',
+                                'image/webp'
+                            ])
+                            ->disk('s3_public')
+                            ->collection('article-featured-image')
+                            ->responsiveImages()
+                            ->conversion('thumb'),
+                    ]),
                     Forms\Components\Section::make('Topic at a glance')
                         ->schema([
                             Select::make('infographic_id')

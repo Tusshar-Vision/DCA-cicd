@@ -6,7 +6,7 @@
 @endphp
 
 @section('article-content')
-    <div x-data="{ openItem: 0, expanded: false }" class="mt-6" x-data="{ isVideoOpen: false }">
+    <div x-data="{ openItem: 0, expanded: false, isVideoOpen: false }" class="mt-6">
         <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8">
 
             <x-modals.modal-box x-show="isVideoOpen" heading="Watch Today's News">

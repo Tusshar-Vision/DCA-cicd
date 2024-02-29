@@ -12,10 +12,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Tags\HasTags;
 
 class PublishedInitiative extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia, SoftDeletes;
+    use HasFactory, InteractsWithMedia, SoftDeletes, HasTags;
 
     protected $fillable = [
         'initiative_id',
