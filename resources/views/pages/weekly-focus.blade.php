@@ -3,7 +3,7 @@
 
 @section('article-content')
     <div class="flex justify-between mt-[20px] md:mt-0" x-data="{ isVideoOpen: false, isTopicAtGlanceOpen: false }">
-        <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8 ">
+        <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8 w-full">
 
             <x-modals.modal-box x-show="isVideoOpen" heading="Watch In Conversation">
                 <x-cards.video :source="$articles->video"/>
