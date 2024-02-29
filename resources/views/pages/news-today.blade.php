@@ -10,7 +10,7 @@
         <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8">
 
             <x-modals.modal-box x-show="isVideoOpen" heading="Watch Today's News">
-                <livewire:widgets.today-news-video :videoUrl="$articles?->video" />
+                <x-cards.video :source="$articles->video"/>
             </x-modals.modal-box>
 
             <div class="flex w-full lg:w-2/6 flex-col space-y-4 leftsticky stickyMl-0">
@@ -23,6 +23,7 @@
 
                 <div class="hidden lg:block">
                     <x-widgets.side-bar-download-menu initiative="news-today" :media="$articles?->media"/>
+                    <x-widgets.sidebar-video-menu initiative="news-today" :video="$articles?->video" />
                 </div>
 
             </div>
@@ -50,6 +51,7 @@
                 </div>
                 <div class="block lg:hidden mt-4">
                     <x-widgets.side-bar-download-menu initiative="news-today" :media="$articles?->media"/>
+                    <x-widgets.sidebar-video-menu @click="isVideoOpen = true" initiative="news-today" :video="$articles?->video" />
                 </div>
             </div>
 
