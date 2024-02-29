@@ -66,6 +66,36 @@ readonly class PublishedInitiativeService
         return $publishedInitiative;
     }
 
+    /**
+     * @throws \Throwable
+     */
+    public static function getLastPreviousPublishedInitiative($initiativeId, $today): PublishedInitiative|null
+    {
+        return (new PublishedInitiative)
+            ->whereInitiative($initiativeId)
+            ->isPublished()
+            ->whereDate('published_at', '<', $today) // Adjust for initiatives published before today
+            ->language()
+            ->hasPublishedArticle()
+            ->latest('published_at')
+            ->first();
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public static function getNextPublishedInitiative($initiativeId, $today): PublishedInitiative|null
+    {
+        return (new PublishedInitiative)
+            ->whereInitiative($initiativeId)
+            ->isPublished()
+            ->whereDate('published_at', '>', $today) // Adjust for initiatives published before today
+            ->language()
+            ->hasPublishedArticle()
+            ->latest('published_at')
+            ->first();
+    }
+
     public function checkIfExists($initiative_id, $published_at): bool
     {
         $publishedRecords = $this->publishedInitiatives

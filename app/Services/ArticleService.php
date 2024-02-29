@@ -100,6 +100,8 @@ readonly class ArticleService
     {
         return $this->articles
             ->where('initiative_id', $initiative_id)
+            ->language()
+            ->isNotShort()
             ->isPublished()
             ->whereYear('published_at', $year)
             ->whereMonth('published_at', $month)

@@ -98,7 +98,8 @@ class MonthlyMagazineController extends Controller
         $month = request()->input('month');
 
         $query = $this->publishedInitiatives
-            ->whereInitiative(config('settings.initiatives.MONTHLY_MAGAZINE'))
+            ->whereInitiative($this->initiativeId)
+            ->language()
             ->isPublished();
 
 
@@ -124,8 +125,6 @@ class MonthlyMagazineController extends Controller
 
         // $data = collect($data);
         $data = json_encode($data);
-
-
 
         return View('pages.archives.monthly-magazine', [
             "title" => "Monthly Magazine Archives",

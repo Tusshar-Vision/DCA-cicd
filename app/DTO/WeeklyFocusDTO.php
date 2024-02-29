@@ -15,6 +15,7 @@ class WeeklyFocusDTO extends PublishedInitiativeDTO
         $dto = new WeeklyFocusDTO(
             $publishedInitiative->name,
             $publishedInitiative->is_published,
+            $publishedInitiative->initiative->id,
             ArticleDTO::collection($publishedInitiative->articles),
             ArticleDTO::collection($publishedInitiative->shortAarticles),
             Carbon::parse($publishedInitiative->published_at)->format('Y-m-d'),

@@ -73,7 +73,7 @@
 
 function showArticleCards(ele, year, month, monthName) {
 
-toggleActive(ele)
+    toggleActive(ele);
 
     let url = "{{url('news-today')}}";
     url += `/getbymonth?year=${year}&month=${month}`;
@@ -104,22 +104,21 @@ toggleActive(ele)
 }
 
 function toggleActive(ele) {
-        if(ele.classList.contains("activeCard")) {
-        console.log("asdf")
+    if(ele.classList.contains("activeCard")) {
         ele.classList.remove("activeCard")
     } else {
-    let divs = document.querySelectorAll('.month-card');
-    divs.forEach(function(div) {
-       div.classList.remove("activeCard")
-    })
+        let divs = document.querySelectorAll('.month-card');
+        divs.forEach(function(div) {
+            div.classList.remove("activeCard")
+        })
         ele.classList.add("activeCard")
     }
 }
 
 function resetActive() {
-        let divs = document.querySelectorAll('.month-card');
-    divs.forEach(function(div) {
-       div.classList.remove("activeCard")
+    let divs = document.querySelectorAll('.month-card');
+        divs.forEach(function(div) {
+        div.classList.remove("activeCard")
     })
 }
 </script>

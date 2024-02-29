@@ -2,12 +2,14 @@
 
 namespace App\View\Components\Navigation;
 
+use App\Traits\StringFormatting;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class Topics extends Component
 {
+    use StringFormatting;
     /**
      * Create a new component instance.
      */
@@ -16,18 +18,6 @@ class Topics extends Component
         public $publishedDate
     )
     {}
-
-    public function formatString($inputString): string
-    {
-        // Replace hyphens and similar characters with a space
-        $formattedString = str_replace(['-', '_'], ' ', $inputString);
-
-        // Convert "and" symbols (&) back to "&", if they were converted to "and"
-        $formattedString = str_replace(' and ', ' & ', $formattedString);
-
-        // Capitalize the first letter of each word
-        return ucwords($formattedString);
-    }
 
     /**
      * Get the view / contents that represent the component.

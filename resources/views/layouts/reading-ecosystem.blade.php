@@ -56,7 +56,6 @@
 {{--        <script type="text/javascript" src="{{ URL::asset('js/rangy/rangy-classapplier.js') }}"></script>--}}
 {{--        <script type="text/javascript" src="{{ URL::asset('js/rangy/rangy-highlighter.js') }}"></script>--}}
 {{--        <script type="text/javascript" src="{{ URL::asset('js/rangy/highlighter.js') }}"></script>--}}
-{{--        <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>--}}
 {{--        <script src="{{ asset('vendor/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>--}}
     @endpush
 @endsection

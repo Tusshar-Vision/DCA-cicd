@@ -33,6 +33,8 @@ class PublishedInitiative extends Model implements HasMedia
         'is_published' => 'bool'
     ];
 
+    protected $with = ['initiative'];
+
     public function initiative(): BelongsTo
     {
         return $this->belongsTo(Initiative::class);

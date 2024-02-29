@@ -17,6 +17,7 @@ abstract class PublishedInitiativeDTO extends Data
     public function __construct(
         public string           $name,
         public bool             $isPublished,
+        public int              $initiative_id,
         #[DataCollectionOf(ArticleDTO::class)]
         public DataCollection   $articles,
         #[DataCollectionOf(ArticleDTO::class)]
@@ -61,6 +62,7 @@ abstract class PublishedInitiativeDTO extends Data
         return new static(
             $publishedInitiative->name,
             $publishedInitiative->is_published,
+            $publishedInitiative->initiative->id,
             ArticleDTO::collection($publishedInitiative->articles),
             ArticleDTO::collection($publishedInitiative->shortArticles),
             Carbon::parse($publishedInitiative->published_at)->format('Y-m-d'),

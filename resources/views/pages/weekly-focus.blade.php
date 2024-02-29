@@ -13,7 +13,7 @@
                 {!! \App\Helpers\SvgIconsHelper::getSvgIcon('weekly-focus-logo') !!}
                 <x-widgets.article-side-bar :table-of-content="$tableOfContent" />
 
-                <div @click="isTopicAtGlanceOpen = !isTopicAtGlanceOpen" class="hidden lg:block">
+                <div class="hidden lg:block">
                     <x-widgets.topic-at-a-glance :infographic="$articles->topicAtGlance"/>
                 </div>
 
