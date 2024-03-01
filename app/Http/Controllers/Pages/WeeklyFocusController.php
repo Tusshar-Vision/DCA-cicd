@@ -78,7 +78,6 @@ class WeeklyFocusController extends Controller
         $article->content = $contents->fromText($article->content ?? '')->getHandledText();
         $tableOfContent = $contents->getContentsArray();
 
-
         return View('pages.weekly-focus', [
             "articles" => $this->weeklyFocus,
             "article" => $article,

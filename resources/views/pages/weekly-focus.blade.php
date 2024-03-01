@@ -2,7 +2,7 @@
 @section('title', 'Weekly Focus | Current Affairs')
 
 @section('article-content')
-    <div class="flex justify-between mt-[20px] md:mt-0" x-data="{ isVideoOpen: false, isTopicAtGlanceOpen: false }">
+    <div x-data="{ openItem: 0, expanded: false }" class="flex justify-between mt-[20px] md:mt-0" x-data="{ isVideoOpen: false, isTopicAtGlanceOpen: false }">
         <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8 w-full">
 
             <x-modals.modal-box x-show="isVideoOpen" heading="Watch In Conversation">
@@ -11,7 +11,9 @@
 
             <div class="flex w-full lg:md:w-2/6 flex-col space-y-4 leftsticky stickyMl-0">
                 {!! \App\Helpers\SvgIconsHelper::getSvgIcon('weekly-focus-logo') !!}
-                <x-widgets.article-side-bar :table-of-content="$tableOfContent" />
+                {{-- <x-widgets.article-side-bar :table-of-content="$tableOfContent" /> --}}
+                <x-widgets.article-side-bar :table-of-content="$articles->articles"/>
+
 
                 <div @click="isTopicAtGlanceOpen = !isTopicAtGlanceOpen" class="hidden lg:block">
                     <x-widgets.topic-at-a-glance :infographic="$articles->topicAtGlance"/>
@@ -37,7 +39,8 @@
                     </div>
                 </div>
 
-                <x-article-content :article="$article" class="m-0" />
+                {{-- <x-article-content :article="$article" class="m-0" /> --}}
+                <x-inshort-article :articles="$articles->articles" class="m-0" />
 
                 <div class="mt-12">
                     <x-widgets.article-pagination :current-initiative="$articles" :current-article-slug="$article->slug" />
