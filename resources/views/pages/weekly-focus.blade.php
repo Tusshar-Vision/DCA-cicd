@@ -17,9 +17,9 @@
                     <x-widgets.topic-at-a-glance :infographic="$articles->topicAtGlance"/>
                 </div>
 
-                <x-modals.modal-box x-show="isTopicAtGlanceOpen">
+                <x-modals.wide-modal x-show="isTopicAtGlanceOpen" heading="Topic at a Glance">
                     <livewire:widgets.pdf-viewer :infographic="$articles->topicAtGlance" />
-                </x-modals.modal-box>
+                </x-modals.wide-modal>
 
                 <div class="hidden lg:block">
                     <x-widgets.side-bar-download-menu initiative="weekly-focus" :media="$articles?->media" />
