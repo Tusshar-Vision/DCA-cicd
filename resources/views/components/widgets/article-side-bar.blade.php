@@ -2,6 +2,7 @@
     use App\Services\ArticleService;
     $currentArticle = request()->segment(4);
     $date = request()->segment(2);
+    $initiative = request()->segment(1);
 @endphp
 
 <div class="flex flex-col rounded bg-visionGray pb-4 lg:mt-10 mt-0">
@@ -21,11 +22,17 @@
                                     </li>
                                 @endif
                             @else
-                                <li class="py-[15px] border-bottom last:border-0 hover:brand-color">
+                                <li @click="openItem = (openItem == {{$key}} ? '-1' : {{$key}})" class="py-[15px] border-bottom last:border-0 hover:brand-color">
+                                   @if($initiative == 'weekly-focus')
+                                    <a class="flex text-base[16px] font-normal hover:brand-color }}"
+                                    :class="{'brand-color': openItem == {{$key}}}"
+                                    >
+                                    @else
                                     <a href="{{ ArticleService::getArticleUrlFromSlug($header->slug) }}"
                                        wire:navigate
                                        class="flex text-base[16px] font-normal hover:brand-color {{ ($header->slug === $currentArticle) ? 'brand-color' : '' }}"
                                     >
+                                   @endif
                                         <span class="mr-1">{{ $loop->iteration }}<em>.</em></span> {{ $header->shortTitle ?? $header->title }}
                                     </a>
                                 </li>
