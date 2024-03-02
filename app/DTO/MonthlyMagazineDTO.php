@@ -24,7 +24,9 @@ class MonthlyMagazineDTO extends PublishedInitiativeDTO
         $dto = new MonthlyMagazineDTO(
             $publishedInitiative->name,
             $publishedInitiative->is_published,
+            $publishedInitiative->initiative->id,
             ArticleDTO::collection($publishedInitiative->articles),
+            ArticleDTO::collection($publishedInitiative->shortArticles),
             Carbon::parse($publishedInitiative->published_at)->format('Y-m-d'),
             $publishedInitiative->created_at,
             $publishedInitiative->updated_at,

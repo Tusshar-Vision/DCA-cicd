@@ -35,7 +35,7 @@
                 </button>
             </div>
         @endauth
-        <div x-data="{ isFullScreen: false }" class="md:flex hidden">
+        {{-- <div x-data="{ isFullScreen: false }" class="md:flex hidden">
             <button class="flex items-center" @click="toggleFullScreen()">
                 <svg width="20" height="18" viewBox="0 0 20 18" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
@@ -44,7 +44,7 @@
                 </svg>
                 <span class="pl-2 text-visionLineGray">Fullscreen</span>
             </button>
-        </div>
+        </div> --}}
     </div>
     <script>
         function toggleFullScreen() {

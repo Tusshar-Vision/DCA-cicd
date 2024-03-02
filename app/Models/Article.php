@@ -20,6 +20,7 @@ use Spatie\LaravelData\WithData;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\ModelStatus\HasStatuses;
+use Spatie\ModelStatus\Status;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Tags\HasTags;
@@ -68,6 +69,8 @@ class Article extends Model implements HasMedia, Sortable
         'published_at' => 'datetime',
         'is_short' => 'bool'
     ];
+
+    protected $with = ['initiative', 'topic', 'publishedInitiative'];
 
     // This method will automatically be called when creating or updating an article.
     public static function boot(): void
@@ -123,6 +126,11 @@ class Article extends Model implements HasMedia, Sortable
     public function language(): BelongsTo
     {
         return $this->belongsTo(Language::class, 'language_id');
+    }
+
+    public function status(): HasOne
+    {
+        return $this->hasOne(Status::class)->latest();
     }
 
     public function tableOfContent(): HasOne
@@ -218,5 +226,26 @@ class Article extends Model implements HasMedia, Sortable
     public function scopeLanguage(Builder $query): Builder
     {
         return $query->where('language_id', config("settings.language." . app()->getLocale()));
+    }
+
+    public function scopeIsShort(Builder $query): Builder
+    {
+        return $query->where('is_short', true);
+    }
+
+    public function scopeIsNotShort(Builder $query): Builder
+    {
+        return $query->where('is_short', false);
+    }
+
+    public function whereInitiative($initiative_ids): Builder
+    {
+        // Check if $initiative_ids is an array
+        if (is_array($initiative_ids)) {
+            return $this->whereIn('initiative_id', $initiative_ids);
+        }
+
+        // If it's a single id, use where condition
+        return $this->where('initiative_id', '=', $initiative_ids);
     }
 }

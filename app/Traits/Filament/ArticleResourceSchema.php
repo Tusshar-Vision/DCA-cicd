@@ -2,15 +2,13 @@
 
 namespace App\Traits\Filament;
 
-use AmidEsfahani\FilamentTinyEditor\TinyEditor;
-use App\Enums\Initiatives;
-use App\Helpers\InitiativesHelper;
+use App\Forms\Components\CKEditor;
 use App\Jobs\GenerateArticlePDF;
 use App\Models\Article;
 use App\Models\User;
-use App\Services\ArticleService;
 use App\Traits\Filament\Components\ArticleForm;
 use App\Traits\Filament\Components\ExpertReviewColumn;
+use App\Traits\Filament\Components\StatusColumn;
 use App\Traits\HasNotifications;
 use AymanAlhattami\FilamentDateScopesFilter\DateScopeFilter;
 use Carbon\Carbon;
@@ -18,19 +16,16 @@ use Filament\Forms\Components\Group;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Support\Colors\Color;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ForceDeleteBulkAction;
 use Filament\Tables\Actions\RestoreBulkAction;
@@ -48,12 +43,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Livewire\Component as Livewire;
 use Spatie\Tags\Tag;
 
 trait ArticleResourceSchema
 {
-    use ArticleForm, HasNotifications, ExpertReviewColumn;
+    use ArticleForm, HasNotifications, ExpertReviewColumn, StatusColumn;
 
     public static function form(Form $form): Form
     {
@@ -75,31 +69,12 @@ trait ArticleResourceSchema
                     ->searchable()
                     ->label('id')
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('article.status')
-                    ->label('Status')
-                    ->default(function (Model $record) {
-                        return mb_substr($record->status, 0, 1);
-                    })
-                    ->tooltip(function (Model $record) {
-                        return $record->status;
-                    })
-                    ->badge()
-                    ->color(function (Model $record) {
-                        switch ($record->status) {
-                            case 'Draft': return Color::Gray;
-                            case 'Improve': return Color::Yellow;
-                            case 'Changes Incorporated': return Color::Blue;
-                            case 'Reject': return Color::Red;
-                            case 'Final': return Color::Orange;
-                            case 'Published': return Color::Green;
-                            case 'Final Database': return Color::Indigo;
-                        }
-                    })
-                    ->toggleable(),
+                $articleResource->getStatusColumn(Auth::user()->can('review_article')),
                 IconColumn::make('featured')
                     ->boolean()
                     ->trueIcon('heroicon-o-check-badge')
                     ->falseIcon('heroicon-o-x-mark')
+                    ->alignCenter()
                     ->toggleable(),
                 TextColumn::make('initiative.name')
                     ->searchable()
@@ -307,10 +282,8 @@ trait ArticleResourceSchema
                             TextInput::make('author')->disabled(),
                             TextInput::make('reviewer')->disabled(),
                         ])->columns(),
-                        TinyEditor::make('content')
-                            ->columnSpanFull()
-                            ->profile('review')
-                            ->maxHeight(500),
+                        CKEditor::make('content')
+                            ->columnSpanFull(),
 
                         RichEditor::make('body')
                             ->label('Review Comments')
@@ -358,11 +331,7 @@ trait ArticleResourceSchema
                         Section::make('Article Content')
                             ->relationship('content')
                             ->schema([
-                                TinyEditor::make('content')
-                                    ->columnSpanFull()
-                                    ->profile('review')
-                                    ->maxHeight(500)
-                                    ->hiddenLabel(),
+                                CKEditor::make('content'),
                         ])->collapsible(),
 
                         Section::make('Review Comment')->schema([

@@ -159,6 +159,7 @@ class WeeklyFocusResource extends Resource
 
                     Select::make('initiative_topic_id')
                         ->relationship('topic', 'name')
+                        ->searchable()
                         ->required()
                         ->label('Subject')
                         ->reactive()
@@ -168,6 +169,7 @@ class WeeklyFocusResource extends Resource
                         }),
 
                     Select::make('topic_section_id')
+                        ->searchable()
                         ->relationship('topicSection', 'name', function ($query, callable $get) {
                             $topic = $get('initiative_topic_id');
 
@@ -180,6 +182,7 @@ class WeeklyFocusResource extends Resource
                         }),
 
                     Select::make('topic_sub_section_id')
+                        ->searchable()
                         ->relationship('topicSubSection', 'name', function ($query, callable $get) {
                             $topicSectionId = $get('topic_section_id');
 
@@ -194,7 +197,12 @@ class WeeklyFocusResource extends Resource
                         })
                         ->label('Language')
                         ->required()
+                        ->selectablePlaceholder(false)
                         ->default(1),
+
+                    SpatieTagsInput::make('tags')
+                        ->columnSpanFull()
+                        ->required(),
 
                     Forms\Components\SpatieMediaLibraryFileUpload::make('pdf')
                         ->label('Upload pdf file')
@@ -225,6 +233,26 @@ class WeeklyFocusResource extends Resource
                 ->columns(),
 
                 Group::make()->schema([
+                    Forms\Components\Section::make('Featured Image')->schema([
+                        SpatieMediaLibraryFileUpload::make('featured_image')
+                            ->hiddenLabel()
+                            ->imageEditor()
+                            ->imageEditorAspectRatios([
+                                '16:9',
+                                '4:3',
+                                '1:1',
+                            ])
+                            ->acceptedFileTypes([
+                                'image/jpeg',
+                                'image/png',
+                                'image/svg',
+                                'image/webp'
+                            ])
+                            ->disk('s3_public')
+                            ->collection('article-featured-image')
+                            ->responsiveImages()
+                            ->conversion('thumb'),
+                    ]),
                     Forms\Components\Section::make('Topic at a glance')
                         ->schema([
                             Select::make('infographic_id')
@@ -273,11 +301,11 @@ class WeeklyFocusResource extends Resource
                                             'image/svg'
                                         ]),
                                 ])
-                                ->disabledOn('create')
                                 ->disabled(function () {
                                     if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'weekly_focus_reviewer'])) return false;
                                     else return true;
-                                }),
+                                })
+                                ->disabledOn('create'),
                         ])->columnSpan(1),
 
                     Forms\Components\Section::make("In Conversation")
@@ -365,11 +393,11 @@ class WeeklyFocusResource extends Resource
 
                                     ])->columnSpan(1)
                                 ])
-                                ->disabledOn('create')
                                 ->disabled(function () {
                                     if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'weekly_focus_reviewer'])) return false;
                                     else return true;
-                                }),
+                                })
+                                ->disabledOn('create'),
                         ])->columnSpan(1)
                 ])
             ]);
@@ -396,7 +424,9 @@ class WeeklyFocusResource extends Resource
     {
         $query = static::getModel()::query()
             ->where('initiative_id', InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
-            ->with('articles')
+            ->with('articles', function ($query) {
+                return $query->with(['statuses']);
+            })
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);

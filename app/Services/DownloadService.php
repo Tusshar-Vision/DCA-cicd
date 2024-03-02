@@ -22,6 +22,7 @@ readonly class DownloadService
     {
         return $this->publishedInitiative
             ->isPublished()
+            ->language()
             ->latest()
             ->has('media')
             ->with('media')
@@ -34,6 +35,7 @@ readonly class DownloadService
 
         $query = $this->publishedInitiative
             ->isPublished()
+            ->language()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
             ->has('media');
 
@@ -79,6 +81,7 @@ readonly class DownloadService
 
         $query = $this->publishedInitiative
             ->isPublished()
+            ->language()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::MAINS_365))
             ->has('media');
 
@@ -104,6 +107,7 @@ readonly class DownloadService
     {
         $query = $this->publishedInitiative
             ->isPublished()
+            ->language()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::PT_365))
             ->has('media');
 
@@ -129,6 +133,7 @@ readonly class DownloadService
     {
         $query = $this->publishedInitiative
             ->isPublished()
+            ->language()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::ECONOMIC_SURVEY))
             ->has('media');
 
@@ -154,6 +159,7 @@ readonly class DownloadService
     {
         $query = $this->publishedInitiative
             ->isPublished()
+            ->language()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::BUDGET))
             ->has('media');
 
@@ -176,6 +182,7 @@ readonly class DownloadService
     {
         $query = $this->publishedInitiative
             ->isPublished()
+            ->language()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::VALUE_ADDED_MATERIAL))
             ->has('media');
 
@@ -201,6 +208,7 @@ readonly class DownloadService
     {
         $query = $this->publishedInitiative
             ->isPublished()
+            ->language()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::VALUE_ADDED_MATERIAL_OPTIONAL))
             ->has('media');
 
@@ -226,6 +234,7 @@ readonly class DownloadService
     {
         $query = $this->publishedInitiative
             ->isPublished()
+            ->language()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::QUARTERLY_REVISION_DOCUMENTS))
             ->has('media');
 
@@ -251,6 +260,7 @@ readonly class DownloadService
     {
         $query = $this->publishedInitiative
             ->isPublished()
+            ->language()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::YEAR_END_REVIEW))
             ->has('media');
 

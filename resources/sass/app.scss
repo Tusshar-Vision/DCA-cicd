@@ -3378,3 +3378,46 @@ iframe {
     }
   }
 }
+
+.modalCont{
+  background: rgba(0,0,0,0.9);
+}
+
+/* search modal animation */
+
+@keyframes opacity {
+  0% {
+    display: none;
+    opacity: 0;
+  }
+
+  100% {
+      display: block;
+      opacity: 1;
+  }
+}
+
+.inModal{
+  display: block;
+  -webkit-animation: opacity 0.2s ease-in-out;
+  -moz-animation: opacity 0.2s ease-in-out;
+  -o-animation: opacity 0.2s ease-in-out;
+  animation: opacity 0.2s ease-in-out;
+}
+
+
+
+#scrollToTopBtn {
+  display: none;
+  z-index: 99;
+  cursor: pointer;
+}
+
+// #scrollToTopBtn.show {
+//   display: block;
+// }
+
+.scroll-style {
+    scrollbar-color: #CCC;
+    scrollbar-width: thin;
+}

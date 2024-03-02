@@ -42,6 +42,7 @@ readonly class InitiativeService
         $data = $this->publishedInitiatives
             ->whereInitiative($initiativeId)
             ->isPublished()
+            ->language()
             ->hasPublishedArticle()
             ->with(['articles' => function ($query) {
                 // Eager load published articles
@@ -83,6 +84,7 @@ readonly class InitiativeService
         $data = $this->publishedInitiatives
             ->whereInitiative($initiativeId)
             ->isPublished()
+            ->language()
             ->with(['articles' => function ($query) {
                 // Eager load published articles
                 $query->with('topic')->isPublished();
@@ -114,6 +116,7 @@ readonly class InitiativeService
         $data = $this->publishedInitiatives
             ->whereInitiative($initiativeId)
             ->isPublished()
+            ->language()
             ->with(['articles' => function ($query) {
                 // Eager load published articles
                 $query->with('topic')->isPublished();

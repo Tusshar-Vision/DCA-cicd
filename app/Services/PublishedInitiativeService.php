@@ -22,8 +22,9 @@ readonly class PublishedInitiativeService
         $query = $this->publishedInitiatives
             ->whereInitiative($initiativeId)
             ->isPublished()
+            ->language()
             ->hasPublishedArticle()
-            ->with('video')
+            ->with(['video', 'media'])
             ->latest('published_at');
 
         if ($date !== null)
@@ -41,6 +42,15 @@ readonly class PublishedInitiativeService
                     'relatedVideos',
                     'relatedTerms'
                 ]);
+        })->with('shortArticles', function ($article) {
+            $article
+                ->language()
+                ->isPublished()
+                ->Ordered()
+                ->with([
+                    'topic',
+                    'language'
+                ]);
         })->first();
 
         throw_if(
@@ -54,6 +64,36 @@ readonly class PublishedInitiativeService
         );
 
         return $publishedInitiative;
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public static function getLastPreviousPublishedInitiative($initiativeId, $today): PublishedInitiative|null
+    {
+        return (new PublishedInitiative)
+            ->whereInitiative($initiativeId)
+            ->isPublished()
+            ->whereDate('published_at', '<', $today) // Adjust for initiatives published before today
+            ->language()
+            ->hasPublishedArticle()
+            ->latest('published_at')
+            ->first();
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public static function getNextPublishedInitiative($initiativeId, $today): PublishedInitiative|null
+    {
+        return (new PublishedInitiative)
+            ->whereInitiative($initiativeId)
+            ->isPublished()
+            ->whereDate('published_at', '>', $today) // Adjust for initiatives published before today
+            ->language()
+            ->hasPublishedArticle()
+            ->latest('published_at')
+            ->first();
     }
 
     public function checkIfExists($initiative_id, $published_at): bool

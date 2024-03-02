@@ -1,11 +1,11 @@
-<div>
+<div class="w-full">
     <label>
         <input
             type="search"
             placeholder="Search"
             wire:model="query"
             wire:keydown.enter="search"
-            class="search-field"
+            class="w-full rounded-md"
             @focusout="$wire.query = ''"
         >
     </label>

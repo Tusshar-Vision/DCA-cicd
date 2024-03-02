@@ -17,6 +17,7 @@ class ArticleDTO extends Data implements Wireable
     public function __construct(
         private readonly int $id,
         public string $title,
+        public ?string $shortTitle,
         public string $topic,
         public string $slug,
         public ?string $excerpt,
@@ -26,7 +27,7 @@ class ArticleDTO extends Data implements Wireable
         public string            $visibility,
         public string            $language,
         public bool              $isFeatured,
-        public int $isShort,
+        public int $is_short,
         public array|Collection  $tags,
         public array|Collection|null  $relatedTerms,
         public array|Collection|null  $relatedArticles,
@@ -76,6 +77,7 @@ class ArticleDTO extends Data implements Wireable
         return new self(
             $article->id,
             $article->title,
+            $article->short_title,
             str_replace(' ', '-', strtolower($article->topic->name)),
             $article->slug,
             $article->excerpt,

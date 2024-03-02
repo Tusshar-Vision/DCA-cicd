@@ -12,10 +12,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Tags\HasTags;
 
 class PublishedInitiative extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia, SoftDeletes;
+    use HasFactory, InteractsWithMedia, SoftDeletes, HasTags;
 
     protected $fillable = [
         'initiative_id',
@@ -32,6 +33,8 @@ class PublishedInitiative extends Model implements HasMedia
         'published_at' => 'datetime',
         'is_published' => 'bool'
     ];
+
+    protected $with = ['initiative'];
 
     public function initiative(): BelongsTo
     {
@@ -117,6 +120,11 @@ class PublishedInitiative extends Model implements HasMedia
         return $query->whereHas('articles', function ($query) {
             $query->currentStatus('Published');
         });
+    }
+
+    public function scopeLanguage(Builder $query): Builder
+    {
+        return $query->where('language_id', config("settings.language." . app()->getLocale()));
     }
 
     public function whereInitiative($initiative_ids): Builder

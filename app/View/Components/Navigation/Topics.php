@@ -2,12 +2,14 @@
 
 namespace App\View\Components\Navigation;
 
+use App\Traits\StringFormatting;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class Topics extends Component
 {
+    use StringFormatting;
     /**
      * Create a new component instance.
      */

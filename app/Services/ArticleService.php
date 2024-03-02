@@ -32,8 +32,9 @@ readonly class ArticleService
     public function getLatestNews(int $limit = 2): Collection|array
     {
         return $this->articles
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
+            ->whereInitiative(InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
             ->isPublished()
+            ->isNotShort()
             ->language()
             ->latest()
             ->limit($limit)
@@ -55,9 +56,18 @@ readonly class ArticleService
 
     public static function getArticleUrlFromSlug($slug): string
     {
-        return self::getArticleURL(
-            Article::select('slug', 'initiative_id', 'initiative_topic_id', 'published_initiative_id')->with(['initiative', 'topic', 'publishedInitiative'])->where('slug', $slug)->first()
-        );
+        try {
+            $article = Article::with(['initiative', 'publishedInitiative', 'topic'])
+                ->where('slug', $slug)
+                ->firstOrFail(); // Use firstOrFail to automatically throw an exception if not found.
+
+            return self::getArticleURL($article);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            Log::error("Article with slug '{$slug}' not found.");
+            // Handle the case where the article is not found. For example:
+            // return a default URL, or throw a custom exception, etc.
+            return '/article-not-found'; // Example default URL or you could throw an exception
+        }
     }
 
     public function archive($initiative_id, $year, $month): array
@@ -90,6 +100,8 @@ readonly class ArticleService
     {
         return $this->articles
             ->where('initiative_id', $initiative_id)
+            ->language()
+            ->isNotShort()
             ->isPublished()
             ->whereYear('published_at', $year)
             ->whereMonth('published_at', $month)

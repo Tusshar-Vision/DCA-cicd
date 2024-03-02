@@ -7,17 +7,11 @@ use App\DTO\WeeklyFocusDTO;
 use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
-use App\Models\Article;
 use App\Models\Bookmark;
 use App\Models\Note;
-use App\Services\ArticleService;
 use App\Services\DownloadService;
-use App\Services\MediaService;
 use App\Services\PublishedInitiativeService;
-use App\Services\SuggestionService;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class WeeklyFocusController extends Controller
 {
@@ -63,8 +57,6 @@ class WeeklyFocusController extends Controller
         );
 
         $article = $this->weeklyFocus->getArticleFromSlug($slug);
-        $videoUrl = $this->weeklyFocus->videoUrl;
-        $media = $this->weeklyFocus->media;
 
         $noteAvailable = null;
         $note = null;
@@ -77,19 +69,12 @@ class WeeklyFocusController extends Controller
             if ($bookmark) $isArticleBookmarked = true;
         }
 
-        $article->content = $contents->fromText($article->content ?? '')->getHandledText();
-        $tableOfContent = $contents->getContentsArray();
-
-
         return View('pages.weekly-focus', [
             "articles" => $this->weeklyFocus,
             "article" => $article,
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
-            "tableOfContent" => $tableOfContent,
-            "isArticleBookmarked" => $isArticleBookmarked,
-            'videoUrl' => $videoUrl,
-            'media' => $media
+            "isArticleBookmarked" => $isArticleBookmarked
         ]);
     }
 

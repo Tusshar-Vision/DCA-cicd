@@ -45,8 +45,8 @@ class SubjectResource extends NestedResource
             )
             ->defaultSort('order_column')
             ->columns([
-                TextColumn::make('id')->label('Topic ID'),
-                TextColumn::make('name')
+                TextColumn::make('id')->label('ID'),
+                TextColumn::make('name')->searchable()
             ])
             ->filters([
 

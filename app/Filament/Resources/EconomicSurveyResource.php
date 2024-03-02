@@ -68,6 +68,7 @@ class EconomicSurveyResource extends Resource implements HasShieldPermissions
                         })->required(),
 
                         Select::make('initiative_topic_id')
+                            ->searchable()
                             ->relationship('topic', 'name', function ($query) {
                                 return $query->orderBy('order_column');
                             })
@@ -77,6 +78,7 @@ class EconomicSurveyResource extends Resource implements HasShieldPermissions
                             ->required(),
 
                         Select::make('language_id')
+                            ->selectablePlaceholder(false)
                             ->relationship('language', 'name', function ($query) {
                                 return $query->orderBy('order_column');
                             })

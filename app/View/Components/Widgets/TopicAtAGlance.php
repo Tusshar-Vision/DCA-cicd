@@ -9,7 +9,7 @@ use Illuminate\View\Component;
 
 class TopicAtAGlance extends Component
 {
-    public function __construct(public Infographic $infographic) {}
+    public function __construct(public ?Infographic $infographic) {}
 
     /**
      * Get the view / contents that represent the component.

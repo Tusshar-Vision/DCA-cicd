@@ -68,6 +68,7 @@ class PT365Resource extends Resource implements HasShieldPermissions
                         })->required(),
 
                         Select::make('initiative_topic_id')
+                            ->searchable()
                             ->relationship('topic', 'name')
                             ->required()
                             ->label('Subject')
@@ -78,6 +79,7 @@ class PT365Resource extends Resource implements HasShieldPermissions
                                 return $query->orderBy('order_column');
                             })
                             ->label('Language')
+                            ->selectablePlaceholder(false)
                             ->required()
                             ->default(1),
 

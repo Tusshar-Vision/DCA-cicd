@@ -17,7 +17,6 @@ class PaperSeeder extends Seeder
             ['id' => 2, 'name' => 'GS-2'],
             ['id' => 3, 'name' => 'GS-3'],
             ['id' => 4, 'name' => 'GS-4'],
-            ['id' => 5, 'name' => 'GS-5'],
             ['id' => 6, 'name' => 'Others'],
         ];
 

@@ -21,7 +21,7 @@ trait HasNotifications
     public function sendNotificationOfArticleCreation(Model $article): void
     {
         $title = 'You got assigned to a new article!';
-        $articleUrl = ArticleResource::getUrl('edit', ['record' => $article]);
+        $articleUrl = '/admin/articles/' . $article->slug . '/edit';
         $message = "<a href=\" $articleUrl \" target='_blank'>Click here to check it out</a>";
 
         $this->sendNotification($article, $title, $message);

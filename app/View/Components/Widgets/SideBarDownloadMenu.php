@@ -15,8 +15,7 @@ class SideBarDownloadMenu extends Component
 
     public function __construct(
         public $initiative = null,
-        public $videoUrl = "",
-        public $media = ""
+        public $media = null
     ) {
     }
 

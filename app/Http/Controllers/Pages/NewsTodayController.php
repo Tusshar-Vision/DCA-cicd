@@ -48,11 +48,14 @@ class NewsTodayController extends Controller
             );
     }
 
-    public function alsoInNews(InitiativeService $initiativeService)
+    /**
+     * @throws \Throwable
+     */
+    public function alsoInNews($date, InitiativeService $initiativeService)
     {
         $this->newsToday = NewsTodayDTO::fromModel(
             $this->publishedInitiativeService
-                ->getLatest($this->initiativeId)
+                ->getLatest($this->initiativeId, $date)
         );
 
         $newsTodayCalendar = NewsTodayMenuDTO::fromNewsTodayDTO(
@@ -61,9 +64,6 @@ class NewsTodayController extends Controller
         );
 
         $article = $this->newsToday->getArticleInNews();
-        $videoUrl = $this->newsToday->videoUrl;
-        $media = $this->newsToday->media;
-
 
         $noteAvailable = null;
         $note = null;
@@ -83,8 +83,7 @@ class NewsTodayController extends Controller
             "note" => $note,
             "isArticleBookmarked" => $isArticleBookmarked,
             "newsTodayCalendar" => $newsTodayCalendar,
-            'videoUrl' => $videoUrl,
-            "media" => $media
+            "isAlsoInNews" => $article
         ]);
     }
 
@@ -104,8 +103,7 @@ class NewsTodayController extends Controller
         );
 
         $article = $this->newsToday->getArticleFromSlug($slug);
-        $videoUrl = $this->newsToday->videoUrl;
-        $media = $this->newsToday->media;
+        $isAlsoInNews = $this->newsToday->getArticleInNews();
 
         $noteAvailable = null;
         $note = null;
@@ -125,8 +123,7 @@ class NewsTodayController extends Controller
             "note" => $note,
             "isArticleBookmarked" => $isArticleBookmarked,
             "newsTodayCalendar" => $newsTodayCalendar,
-            'videoUrl' => $videoUrl,
-            "media" => $media
+            "isAlsoInNews" => $isAlsoInNews
         ]);
     }
 

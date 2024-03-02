@@ -22,6 +22,6 @@ class RelatedArticle extends Model
 
     public function relatedArticle(): BelongsTo
     {
-        return $this->belongsTo(Article::class, 'related_article_id');
+        return $this->belongsTo(Article::class, 'related_article_id')->where('is_short', false);
     }
 }

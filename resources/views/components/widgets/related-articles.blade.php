@@ -5,7 +5,7 @@
 
     <div class="space-y-5">
         @foreach($relatedArticles as $article)
-            <div class="group flex items-center h-full">
+            <div class="group flex items-center">
                 @php
                     $featuredImage = $article->relatedArticle->getFirstMediaUrl('article-featured-image');
                 @endphp
