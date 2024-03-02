@@ -135,6 +135,7 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
+            ->font('Poppins')
             ->databaseNotifications()
             ->navigationGroups([
                 'System',

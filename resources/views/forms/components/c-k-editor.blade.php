@@ -9,11 +9,9 @@
         .ck-editor__editable {
             min-height: 500px; /* Adjust the height as needed */
         }
-
         .ck-editor__editable ul {
             margin-left: 25px;
         }
-
         .ck-editor__editable ol {
             margin-left: 25px;
         }
@@ -24,6 +22,7 @@
         x-ignore
         ax-load
         x-load-js="[@js(\Filament\Support\Facades\FilamentAsset::getScriptSrc('ckeditor'))]"
+        x-load-css="[@js(\Filament\Support\Facades\FilamentAsset::getStyleHref('ckeditor-css'))]"
         ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('ck-editor-component') }}"
         x-data="ckEditorComponent({ state: $wire.{{ $applyStateBindingModifiers("entangle('{$statePath}')", isOptimisticallyLive: false) }} })"
     >
