@@ -21,7 +21,7 @@
 
             <div x-show="openItem == {{$key}}" class="text-[#3D3D3D] text-sm font-light flex flex-col mt-4 pb-2" x-collapse>
 
-                <p>{!! $article->content !!}</p>
+                <div class="printable-area">{!! $article->content !!}</div>
 
                 <ul class="flex justify-start items-baseline mt-4">
                     <li class="text-[#3D3D3D] text-base mr-2">Tags :</li>
