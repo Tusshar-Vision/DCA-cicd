@@ -22,7 +22,7 @@
         </a>
 
         @foreach ($initiatives as $initiative)
-        
+
             @if ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
 
                 <a class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px] {{ request()->is('news-today*') ? 'text-[#005FAF]' : '' }}"
@@ -194,7 +194,7 @@
 
 <div class="flex py-[20px] bg-[#fff] items-center justify-between relative">
     <div class="w-3/4">
-        <div class="xl:hidden block">   
+        <div class="xl:hidden block">
             <a href="{{ route('home') }}" wire:navigate>
                 <img width="112px" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
             </a>

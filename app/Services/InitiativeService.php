@@ -41,12 +41,12 @@ readonly class InitiativeService
     {
         $data = $this->publishedInitiatives
             ->whereInitiative($initiativeId)
-            ->isPublished()
             ->language()
+            ->isPublished()
             ->hasPublishedArticle()
             ->with(['articles' => function ($query) {
                 // Eager load published articles
-                $query->with('topic')->isPublished();
+                $query->language()->ordered()->isPublished();
             }])
             ->limit(10)
             ->orderByDesc('published_at')
@@ -83,13 +83,13 @@ readonly class InitiativeService
     {
         $data = $this->publishedInitiatives
             ->whereInitiative($initiativeId)
-            ->isPublished()
             ->language()
+            ->isPublished()
+            ->hasPublishedArticle()
             ->with(['articles' => function ($query) {
                 // Eager load published articles
-                $query->with('topic')->isPublished();
+                $query->language()->ordered()->isPublished();
             }])
-            ->hasPublishedArticle()
             ->limit(10)
             ->orderByDesc('published_at')
             ->groupByMonth();
@@ -115,13 +115,13 @@ readonly class InitiativeService
     {
         $data = $this->publishedInitiatives
             ->whereInitiative($initiativeId)
-            ->isPublished()
             ->language()
+            ->isPublished()
+            ->hasPublishedArticle()
             ->with(['articles' => function ($query) {
                 // Eager load published articles
-                $query->with('topic')->isPublished();
+                $query->language()->ordered()->isPublished();
             }])
-            ->hasPublishedArticle()
             ->limit(10)
             ->orderByDesc('published_at')
             ->groupByYear();

@@ -25,7 +25,7 @@ abstract class PublishedInitiativeDTO extends Data
         public string           $publishedAt,
         public string           $createdAt,
         public string           $updatedAt,
-        public ?Video $video,
+        public ?Video           $video,
         public ?MediaCollection $media
     ) {
     }
