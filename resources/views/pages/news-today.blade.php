@@ -61,21 +61,4 @@
 
         </div>
     </div>
-
-    @pushonce('scripts')
-        <script>
-            function pauseVideo(isVideoOpenValue) {
-                if (!isVideoOpenValue) {
-                    let videoPlayer = document.querySelector('.video');
-
-                    if (videoPlayer !== null) {
-                        videoPlayer.pause();
-                    } else {
-                        videoPlayer = document.querySelector('.videoEmbed');
-                        if (videoPlayer !== null) videoPlayer.src = videoPlayer.src;
-                    }
-                }
-            }
-        </script>
-    @endpushonce
 @endsection
