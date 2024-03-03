@@ -8,6 +8,7 @@ use App\Models\Article;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 readonly class ArticleService
@@ -44,6 +45,7 @@ readonly class ArticleService
 
     public static function getArticleURL($article): string
     {
+        // Generate URL from article attributes
         $initiative = $article->initiative->name;
         $date = Carbon::parse($article->publishedInitiative->published_at)->format('Y-m-d');
         $topic = $article->topic->name;
@@ -51,23 +53,28 @@ readonly class ArticleService
 
         $url = '/' . $initiative . '/' . $date . '/' . $topic . '/' . $slug;
 
-        return strtolower(str_replace('&', 'AND', str_replace(' ', '-', $url))); // To convert name into code.
+        // Convert spaces to dashes and '&' to 'AND' in URL, then return lowercased URL
+        return strtolower(str_replace('&', 'AND', str_replace(' ', '-', $url)));
     }
+
 
     public static function getArticleUrlFromSlug($slug): string
     {
-        try {
-            $article = Article::with(['initiative', 'publishedInitiative', 'topic'])
-                ->where('slug', $slug)
-                ->firstOrFail(); // Use firstOrFail to automatically throw an exception if not found.
+        // Use caching to avoid duplicated queries
+        return Cache::remember("article_url_{$slug}", 60, function () use ($slug) {
+            try {
+                // Eager load relationships to reduce number of queries
+                $article = Article::with(['initiative', 'publishedInitiative', 'topic'])
+                    ->where('slug', $slug)
+                    ->firstOrFail(); // Automatically throw an exception if not found
 
-            return self::getArticleURL($article);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            Log::error("Article with slug '{$slug}' not found.");
-            // Handle the case where the article is not found. For example:
-            // return a default URL, or throw a custom exception, etc.
-            return '/article-not-found'; // Example default URL or you could throw an exception
-        }
+                return self::getArticleURL($article);
+            } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+                Log::error("Article with slug '{$slug}' not found.");
+                // Handle not found article by returning a default URL
+                return '/article-not-found'; // Example default URL or could throw an exception
+            }
+        });
     }
 
     public function archive($initiative_id, $year, $month): array
