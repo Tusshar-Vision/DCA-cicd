@@ -2,7 +2,11 @@
 @section('title', 'Weekly Focus | Current Affairs')
 
 @section('article-content')
-    <div x-data="{ openItem: 0, expanded: false, isVideoOpen: false, isTopicAtGlanceOpen: false }" class="flex justify-between mt-[20px] md:mt-0">
+    <div
+        x-data="{ openItem: 0, expanded: false, isVideoOpen: false, isTopicAtGlanceOpen: false }"
+        x-init="$watch('isVideoOpen', value => pauseVideo(value))"
+        class="flex justify-between mt-[20px] md:mt-0"
+    >
         <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8 w-full">
 
             <x-modals.modal-box x-show="isVideoOpen" heading="Watch In Conversation">

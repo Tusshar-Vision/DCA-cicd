@@ -56,6 +56,13 @@ export default function ckEditorComponent({
                     editor.model.document.on('change:data', () => {
                         this.state = editor.getData();
                     });
+
+                    const prefersDark = document.querySelector('html').classList.contains('dark');
+                    const editorDiv = document.querySelector('.ck-editor');
+
+                    if (prefersDark === true) {
+                        editorDiv.classList.add('ck-custom-dark-mode');
+                    }
                 })
                 .catch(error => console.error(error));
         },

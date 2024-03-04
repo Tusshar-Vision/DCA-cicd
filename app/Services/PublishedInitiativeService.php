@@ -66,10 +66,8 @@ readonly class PublishedInitiativeService
         return $publishedInitiative;
     }
 
-    /**
-     * @throws \Throwable
-     */
-    public static function getLastPreviousPublishedInitiative($initiativeId, $today): PublishedInitiative|null
+
+    public static function getPreviousPublishedInitiative($initiativeId, $today): PublishedInitiative|null
     {
         return (new PublishedInitiative)
             ->whereInitiative($initiativeId)
@@ -78,12 +76,17 @@ readonly class PublishedInitiativeService
             ->language()
             ->hasPublishedArticle()
             ->latest('published_at')
+            ->with('articles', function ($query) {
+                $query
+                    ->language()
+                    ->isPublished()
+                    ->Ordered()
+                    ->first();
+            })
             ->first();
     }
 
-    /**
-     * @throws \Throwable
-     */
+
     public static function getNextPublishedInitiative($initiativeId, $today): PublishedInitiative|null
     {
         return (new PublishedInitiative)
@@ -93,6 +96,13 @@ readonly class PublishedInitiativeService
             ->language()
             ->hasPublishedArticle()
             ->latest('published_at')
+            ->with('articles', function ($query) {
+                $query
+                    ->language()
+                    ->isPublished()
+                    ->Ordered()
+                    ->first();
+            })
             ->first();
     }
 

@@ -6,7 +6,7 @@
 @endphp
 
 @section('article-content')
-    <div x-data="{ openItem: 0, expanded: false, isVideoOpen: false }" class="mt-6">
+    <div x-data="{ openItem: 0, expanded: false, isVideoOpen: false }" x-init="$watch('isVideoOpen', value => pauseVideo(value))" class="mt-6">
         <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8">
 
             <x-modals.modal-box x-show="isVideoOpen" heading="Watch Today's News">
@@ -55,7 +55,7 @@
                 </div>
                 <div class="block lg:hidden mt-4">
                     <x-widgets.side-bar-download-menu initiative="news-today" :media="$articles?->media"/>
-                    <x-widgets.sidebar-video-menu @click="isVideoOpen = true" initiative="news-today" :video="$articles?->video" />
+                    <x-widgets.sidebar-video-menu initiative="news-today" :video="$articles?->video" />
                 </div>
             </div>
 

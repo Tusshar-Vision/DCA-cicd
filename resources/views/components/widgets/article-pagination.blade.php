@@ -30,7 +30,7 @@
     @else
         @php
             $today = request()->segment(2);
-            $previousPublishedInitiative = \App\Services\PublishedInitiativeService::getLastPreviousPublishedInitiative($currentInitiative->initiative_id, $today);
+            $previousPublishedInitiative = \App\Services\PublishedInitiativeService::getPreviousPublishedInitiative($currentInitiative->initiative_id, $today);
             if ($previousPublishedInitiative !== null)
                 $firstArticle = $previousPublishedInitiative->articles->first();
         @endphp
@@ -101,7 +101,7 @@
         @endphp
 
         @if($nextPublishedInitiative !== null)
-            <div class="flex flex-col cursor-pointer w-3/6 md:w-2/6 {{ $previousArticleIndex === null ? 'noPrevious' : '' }}">
+            <div class="flex flex-col cursor-pointer w-3/6 md:w-2/6 {{ ($previousArticleIndex === null && $previousPublishedInitiative === null) ? 'noPrevious' : '' }}">
                 <a wire:navigate
                    id="nxt-article-btn"
                    href="{{ ArticleService::getArticleUrlFromSlug($firstArticle->slug) }}"
