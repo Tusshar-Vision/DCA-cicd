@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Pages;
 
-use App\Actions\Contents;
 use App\DTO\WeeklyFocusDTO;
 use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
@@ -49,7 +48,7 @@ class WeeklyFocusController extends Controller
     /**
      * @throws \Throwable
      */
-    public function renderArticle($date, $topic, $slug, Contents $contents)
+    public function renderArticle($date, $topic, $slug)
     {
         $this->weeklyFocus = WeeklyFocusDTO::fromModel(
             $this->publishedInitiativeService

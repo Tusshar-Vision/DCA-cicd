@@ -12,7 +12,6 @@ use App\Models\Note;
 use App\Services\ArticleService;
 use App\Services\InitiativeService;
 use App\Services\PublishedInitiativeService;
-use App\Services\SuggestionService;
 use Illuminate\Support\Facades\Auth;
 
 class NewsTodayController extends Controller
