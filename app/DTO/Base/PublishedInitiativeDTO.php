@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
-use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 abstract class PublishedInitiativeDTO extends Data
 {
@@ -26,7 +26,7 @@ abstract class PublishedInitiativeDTO extends Data
         public string           $createdAt,
         public string           $updatedAt,
         public ?Video           $video,
-        public ?MediaCollection $media
+        public ?Media           $media
     ) {
     }
 
