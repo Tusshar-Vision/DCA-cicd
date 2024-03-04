@@ -83,7 +83,8 @@ readonly class DownloadService
             ->isPublished()
             ->language()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::MAINS_365))
-            ->has('media');
+            ->has('media')
+            ->orderBy('published_at', 'desc');
 
         $years = $query->get()
             ->groupBy(function ($item) {
