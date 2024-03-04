@@ -48,7 +48,7 @@ class WeeklyFocusController extends Controller
     /**
      * @throws \Throwable
      */
-    public function renderArticle($date, $topic, $slug)
+    public function renderArticle($date, $topic, $sluggi)
     {
         $this->weeklyFocus = WeeklyFocusDTO::fromModel(
             $this->publishedInitiativeService
