@@ -10,23 +10,24 @@ use Carbon\Carbon;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 abstract class PublishedInitiativeDTO extends Data
 {
     public function __construct(
-        public string           $name,
-        public bool             $isPublished,
-        public int              $initiative_id,
+        public string                     $name,
+        public bool                       $isPublished,
+        public int                        $initiative_id,
         #[DataCollectionOf(ArticleDTO::class)]
-        public DataCollection   $articles,
+        public DataCollection             $articles,
         #[DataCollectionOf(ArticleDTO::class)]
-        public DataCollection   $shortArticles,
-        public string           $publishedAt,
-        public string           $createdAt,
-        public string           $updatedAt,
-        public ?Video           $video,
-        public ?Media           $media
+        public DataCollection             $shortArticles,
+        public string                     $publishedAt,
+        public string                     $createdAt,
+        public string                     $updatedAt,
+        public ?Video                     $video,
+        public null|Media|MediaCollection $media
     ) {
     }
 
