@@ -29,7 +29,7 @@ class SyllabusSeeder extends Seeder
                 'Miscellaneous',
             ],
             'Evolution & Making of the Constitution' => [
-                'Constituent Assembly- Composition, Working and Committees, etc',
+                'Constituent Assembly - Composition, Working and Committees, etc',
                 'Enactment and Enforcement of the Constitution',
                 'Miscellaneous',
             ],
@@ -41,7 +41,7 @@ class SyllabusSeeder extends Seeder
             'The Union & Its Territory' => [
                 'Expressions Union of States and Federation of States',
                 "Parliament's Power to reorganize states",
-                'Evolution of States and UT\'s',
+                "Evolution of States and UT's",
                 'Related Amendments - Article 368 etc',
                 'Miscellaneous',
             ],
