@@ -46,7 +46,7 @@ readonly class InitiativeService
             ->hasPublishedArticle()
             ->with(['articles' => function ($query) {
                 // Eager load published articles
-                $query->language()->ordered()->isPublished();
+                $query->isPublished()->ordered();
             }])
             ->limit(10)
             ->orderByDesc('published_at')
@@ -88,7 +88,7 @@ readonly class InitiativeService
             ->hasPublishedArticle()
             ->with(['articles' => function ($query) {
                 // Eager load published articles
-                $query->language()->ordered()->isPublished();
+                $query->isPublished()->ordered();
             }])
             ->limit(10)
             ->orderByDesc('published_at')
@@ -120,7 +120,7 @@ readonly class InitiativeService
             ->hasPublishedArticle()
             ->with(['articles' => function ($query) {
                 // Eager load published articles
-                $query->language()->ordered()->isPublished();
+                $query->isPublished()->ordered();
             }])
             ->limit(10)
             ->orderByDesc('published_at')

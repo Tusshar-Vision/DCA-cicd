@@ -32,24 +32,20 @@ readonly class PublishedInitiativeService
 
         $publishedInitiative = $query->with('articles', function ($article) {
             $article
-                ->language()
                 ->isPublished()
                 ->Ordered()
                 ->with([
                     'topic',
-                    'language',
                     'relatedArticles',
                     'relatedVideos',
                     'relatedTerms'
                 ]);
         })->with('shortArticles', function ($article) {
             $article
-                ->language()
                 ->isPublished()
                 ->Ordered()
                 ->with([
-                    'topic',
-                    'language'
+                    'topic'
                 ]);
         })->first();
 
@@ -78,7 +74,6 @@ readonly class PublishedInitiativeService
             ->latest('published_at')
             ->with('articles', function ($query) {
                 $query
-                    ->language()
                     ->isPublished()
                     ->Ordered()
                     ->first();
@@ -98,7 +93,6 @@ readonly class PublishedInitiativeService
             ->latest('published_at')
             ->with('articles', function ($query) {
                 $query
-                    ->language()
                     ->isPublished()
                     ->Ordered()
                     ->first();
@@ -109,7 +103,7 @@ readonly class PublishedInitiativeService
     public function checkIfExists($initiative_id, $published_at): bool
     {
         $publishedRecords = $this->publishedInitiatives
-            ->where('initiative_id', '=', $initiative_id);
+            ->whereInitiative($initiative_id);
 
         if ($initiative_id == 1 || $initiative_id == 3) {
             // For News Today and Weekly Focus, check if an initiative exists for the same date

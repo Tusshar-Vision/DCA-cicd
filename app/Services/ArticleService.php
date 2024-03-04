@@ -22,7 +22,6 @@ readonly class ArticleService
     {
         return $this->articles
             ->isPublished()
-            ->language()
             ->isFeatured()
             ->latest()
             ->limit($limit)
@@ -36,7 +35,6 @@ readonly class ArticleService
             ->whereInitiative(InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
             ->isPublished()
             ->isNotShort()
-            ->language()
             ->latest()
             ->limit($limit)
             ->with('author')
@@ -79,7 +77,9 @@ readonly class ArticleService
 
     public function archive($initiative_id, $year, $month): array
     {
-        $query = $this->articles::where('initiative_id', $initiative_id)->where('published_at', '!=', null);
+        $query = $this->articles
+            ->whereInitiative($initiative_id)
+            ->isPublished();
 
         $years = $query->select(DB::raw('YEAR(published_at) as year'))
             ->groupBy(DB::raw('YEAR(published_at)'))
@@ -106,8 +106,7 @@ readonly class ArticleService
     public function getByYearAndMonth($initiative_id, $year, $month)
     {
         return $this->articles
-            ->where('initiative_id', $initiative_id)
-            ->language()
+            ->whereInitiative($initiative_id)
             ->isNotShort()
             ->isPublished()
             ->whereYear('published_at', $year)
