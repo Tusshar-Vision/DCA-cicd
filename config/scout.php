@@ -134,7 +134,7 @@ return [
         'key' => env('MEILISEARCH_KEY'),
         'index-settings' => [
              'articles' => [
-                 'filterableAttributes'=> ['id', 'published_at'],
+                 'filterableAttributes'=> ['id', 'published_at', 'initiative_id'],
              ],
             'infographics' => [
 

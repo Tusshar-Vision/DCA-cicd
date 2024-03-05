@@ -10,9 +10,12 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class SearchService
 {
 
-    public function search(string $query): Collection|array|LengthAwarePaginator
+    public function search(string $query, int $initiative_id = null, $date = null): Collection|array|LengthAwarePaginator
     {
-        return Article::search($query)->get();
+        return Article::search($query, [
+            'initiative_id' => $initiative_id,
+            'published_at' => $date
+        ])->get();
     }
 
     public function searchArticles() {
