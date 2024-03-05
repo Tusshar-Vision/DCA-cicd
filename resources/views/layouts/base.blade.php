@@ -12,7 +12,7 @@
         @vite('resources/js/app.js')
     </head>
 
-    <body x-data="{ isAuthFormOpen: false }">
+    <body x-data="{ isAuthFormOpen: false, isDarkModeEnabled: false }" :class="{isDarkModeEnabled : 'dark'}">
         <div class="mx-auto w-full px-[20px] lg:px-0 lg:max-w-[90%]">
             <header>
                 <x-header />
