@@ -3429,5 +3429,6 @@ iframe {
 }
 
 .w-full-90{
-  width: 90% !important;
+    width: 90% !important;
+    max-width: inherit !important;
 }
