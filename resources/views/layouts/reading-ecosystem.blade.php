@@ -37,10 +37,6 @@
                 {{--                <div>--}}
                 {{--                    <livewire:widgets.comments />--}}
                 {{--                </div>--}}
-
-                <div>
-                    <x-widgets.article-sources :sources="$article->sources" />
-                </div>
             </div>
         </div>
         <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top" class="fixed bottom-[100px] right-0 bg-[#005faf] px-[18px] py-4 text-white">
