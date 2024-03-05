@@ -98,12 +98,16 @@
         {!! $article->content !!}
     </div>
 
-            <ul class="flex justify-start items-baseline mt-4">
-            <li class="text-[#3D3D3D] text-base mr-2">Tags :</li>
-            @foreach ($article->tags as $tag)
-                <li class="mr-2 bg-[#F4F6F8] text-xs rounded-sm py-1 px-2 cursor-pointer">{{ $tag->name }}</li>
-            @endforeach
-        </ul>
+    <ul class="flex justify-start items-baseline mt-4">
+        <li class="text-[#3D3D3D] text-base mr-2">Tags :</li>
+        @foreach ($article->tags as $tag)
+            <li class="mr-2 bg-[#F4F6F8] text-xs rounded-sm py-1 px-2 cursor-pointer">{{ $tag->name }}</li>
+        @endforeach
+    </ul>
+
+    @if ((count($article->sources) > 0 && $article->sources[0] !== ''))
+        <x-widgets.article-sources :sources="$article->sources" />
+    @endif
 </div>
 
 {{--<script>--}}
