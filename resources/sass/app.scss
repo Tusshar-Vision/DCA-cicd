@@ -2582,7 +2582,7 @@ li[data-level="4"] {
   .my-contnet-tab-filter {
     display: flex;
     gap: 64px;
-    justify-content: end;
+    justify-content: flex-end;
 
     &.justify-between {
       justify-content: space-between;

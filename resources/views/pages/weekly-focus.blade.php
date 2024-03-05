@@ -17,7 +17,6 @@
                 {!! \App\Helpers\SvgIconsHelper::getSvgIcon('weekly-focus-logo') !!}
                 <x-widgets.article-side-bar :table-of-content="$articles->articles"/>
 
-
                 <div class="hidden lg:block">
                     <x-widgets.topic-at-a-glance :infographic="$articles->topicAtGlance"/>
                 </div>
