@@ -4,7 +4,7 @@
 
 
 export default {
-    darkMode: 'class',
+    darkMode: 'selector',
     content: [
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
