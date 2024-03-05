@@ -14,16 +14,21 @@
                 {{ $heading }}
               </div>
               <div>
-                {{-- <button>Download</button>
-                <button>Zoom in and out</button> --}}
+                <button class="cursor-pointer">
+                  {!! \App\Helpers\SvgIconsHelper::getSvgIcon('download-topic') !!}
+                </button>
+                <button id="showButton" class="cursor-pointer md:hidden">
+                  {!! \App\Helpers\SvgIconsHelper::getSvgIcon('fullscreen') !!}
+                </button>
+                <button id="hideButton" class="hidden cursor-pointer md:hidden">
+                  {!! \App\Helpers\SvgIconsHelper::getSvgIcon('fullscreen-remove') !!}
+                </button>
                 <button @click="{{ $attributes['x-show'] }} = false">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12.0007 10.5865L16.9504 5.63672L18.3646 7.05093L13.4149 12.0007L18.3646 16.9504L16.9504 18.3646L12.0007 13.4149L7.05093 18.3646L5.63672 16.9504L10.5865 12.0007L5.63672 7.05093L7.05093 5.63672L12.0007 10.5865Z" fill="black"/>
-                  </svg>
+                  {!! \App\Helpers\SvgIconsHelper::getSvgIcon('close-topic-modal') !!}
                 </button>
               </div>
             </div>
-            <div class="mt-3 text-center sm:mt-0 sm:text-left flex-grow w-full">
+            <div class="mt-3 text-center sm:mt-0 sm:text-left flex-grow w-full" id="target">
                 {{ $slot }}
             </div>
           </div>
@@ -32,3 +37,25 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      var targetDiv = document.getElementById('target');
+      var showButton = document.getElementById('showButton');
+      var hideButton = document.getElementById('hideButton');
+
+      // Add event listener to the show button
+      showButton.addEventListener('click', function() {
+          targetDiv.classList.add('w-full-90');
+          showButton.classList.add('hidden');
+          hideButton.classList.remove('hidden');
+      });
+
+      // Add event listener to the hide button
+      hideButton.addEventListener('click', function() {
+          targetDiv.classList.remove('w-full-90');
+          hideButton.classList.add('hidden');
+          showButton.classList.remove('hidden');
+      });
+    });
+</script>
