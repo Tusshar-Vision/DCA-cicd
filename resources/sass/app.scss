@@ -3422,7 +3422,12 @@ iframe {
     scrollbar-width: thin;
 }
 
+.fitscreen{
+  transition: width 0.5s ease-in-out;
+  -moz-transition: width 0.5s ease-in-out;
+  -webkit-transition: width 0.5s ease-in-out;
+}
 
 .w-full-90{
-  width: 90%;
+  width: 90% !important;
 }
