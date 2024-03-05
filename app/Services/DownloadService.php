@@ -24,8 +24,12 @@ readonly class DownloadService
             ->isPublished()
             ->language()
             ->latest()
-            ->has('media')
-            ->with('media')
+            ->whereHas('media', function ($query) {
+                $query->where('collection_name', '!=', 'article-featured-image');
+            })
+            ->with(['media' => function ($query) {
+                $query->where('collection_name', '!=', 'article-featured-image');
+            }])
             ->limit($limit)
             ->get();
     }
