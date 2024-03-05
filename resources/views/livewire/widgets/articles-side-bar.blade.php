@@ -65,9 +65,9 @@
                                 @foreach($tableOfContent as $key => $header)
                                     <ul class="ml-6">
                                         <li class="text-clip text-sm">
-                                            <a href="#header-{{$header['id']}}"
+                                            <a href="{{$header['link']}}"
                                                class="cursor-pointer hover:underline">
-                                                    {{ $loop->parent->parent->iteration }}.{{ $loop->parent->iteration }}.{{ $loop->iteration }} {{ strip_tags($header['header']) }}
+                                                    {{ $loop->parent->parent->iteration }}.{{ $loop->parent->iteration }}.{{ $loop->iteration }} {{ strip_tags($header['text']) }}
                                             </a>
                                         </li>
                                     </ul>

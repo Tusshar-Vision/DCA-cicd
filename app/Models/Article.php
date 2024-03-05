@@ -46,7 +46,6 @@ class Article extends Model implements HasMedia, Sortable
         'read_time',
         'views',
         'visibility',
-        'language_id',
         'featured',
         'published_at',
         'created_at',
@@ -221,11 +220,6 @@ class Article extends Model implements HasMedia, Sortable
     public function scopeIsPublished(Builder $query): Builder
     {
         return $query->currentStatus('Published');
-    }
-
-    public function scopeLanguage(Builder $query): Builder
-    {
-        return $query->where('language_id', config("settings.language." . app()->getLocale()));
     }
 
     public function scopeIsShort(Builder $query): Builder
