@@ -18,7 +18,7 @@ class Register extends Component
     #[Validate('required|email')]
     public $email;
 
-    #[Validate('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).+$', message: 'Password must include at least one digit, special character, uppercase, and lowercase letter.')]
+    #[Validate('regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).+$/', message: 'Password must include at least one digit, special character, uppercase, and lowercase letter.')]
     #[Validate('required')]
     #[Validate('min:6')]
     public $password;
