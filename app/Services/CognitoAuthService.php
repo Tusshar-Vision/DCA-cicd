@@ -86,9 +86,9 @@ class CognitoAuthService
      * @param $email
      * @param $password
      * @param array $attributes
-     * @return bool
+     * @throws \Exception
      */
-    public function register($email, $password, array $attributes = []): bool
+    public function register($email, $password, array $attributes = []): bool|CognitoErrorCodes
     {
         $attributes['email'] = $email;
 
@@ -101,13 +101,16 @@ class CognitoAuthService
                 'UserAttributes' => $this->formatAttributes($attributes),
                 'Username' => $email
             ]);
-        }
-        catch (CognitoIdentityProviderException $exception) {
-            if ($exception->getAwsErrorCode() === CognitoErrorCodes::USERNAME_EXISTS) {
-                return false;
-            }
+        }catch (CognitoIdentityProviderException $exception)
+        {
+            $errorCode = $exception->getAwsErrorCode();
 
-            throw $exception;
+            return match ($errorCode) {
+                CognitoErrorCodes::TOO_MANY_REQUESTS->value => CognitoErrorCodes::TOO_MANY_REQUESTS,
+                CognitoErrorCodes::LIMIT_EXCEEDED->value => CognitoErrorCodes::LIMIT_EXCEEDED,
+                CognitoErrorCodes::USERNAME_EXISTS->value => CognitoErrorCodes::USERNAME_EXISTS,
+                default => throw new \Exception("Unhandled AWS Cognito error code: $errorCode"),
+            };
         }
 
         return (bool) $response['UserConfirmed'];
