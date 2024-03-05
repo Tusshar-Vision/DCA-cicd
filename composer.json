@@ -43,7 +43,8 @@
         "spatie/laravel-model-status": "^1.14",
         "spatie/laravel-sluggable": "^3.5",
         "webklex/laravel-pdfmerger": "^1.3",
-        "z3d0x/filament-logger": "^0.6.1"
+        "z3d0x/filament-logger": "^0.6.1",
+        "ext-dom": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.9",
