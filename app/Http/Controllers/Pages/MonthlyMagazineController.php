@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Pages;
 
-use App\Actions\Contents;
 use App\DTO\Menu\MainMenuDTO;
 use App\DTO\MonthlyMagazineDTO;
 use App\Enums\Initiatives;
+use App\Helpers\ContentsFromHeadersGenerator;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Bookmark;
@@ -71,12 +71,14 @@ class MonthlyMagazineController extends Controller
             if ($bookmark) $isArticleBookmarked = true;
         }
 
-        $contents = new Contents();
-        $temporaryContent = $contents->fromText($article->content ?? '')->getHandledText();
-        $tableOfContent = $contents->getContentsArray();
+        $toc['toc'] = [];
+        if (!($article->content === '' || $article->content === null))  {
+            $contents = new ContentsFromHeadersGenerator();
+            $toc = $contents->generateTOC($article->content);
 
-        if (!empty($tableOfContent)) {
-            $article->content = $temporaryContent;
+            if (!empty($toc)) {
+                $article->content = $toc['updatedHTMLContent'];
+            }
         }
 
         return View('pages.monthly-magazine', [
@@ -87,7 +89,7 @@ class MonthlyMagazineController extends Controller
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
             "sortedArticlesWithTopics" => $this->monthlyMagazine->sortedArticlesWithTopic,
-            "tableOfContent" => $tableOfContent,
+            "tableOfContent" => $toc['toc'],
             "isArticleBookmarked" => $isArticleBookmarked,
         ]);
     }

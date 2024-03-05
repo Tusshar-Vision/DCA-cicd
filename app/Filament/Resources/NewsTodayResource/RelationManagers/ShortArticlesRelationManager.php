@@ -168,11 +168,6 @@ class ShortArticlesRelationManager extends RelationManager
 
                             Group::make()->schema([
 
-                                Hidden::make('language_id')
-                                    ->default(function (Livewire $livewire) {
-                                        return $livewire->ownerRecord->language_id;
-                                    }),
-
                                 SpatieTagsInput::make('tags')
                                     ->required(),
 
