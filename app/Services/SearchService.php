@@ -12,10 +12,7 @@ class SearchService
 
     public function search(string $query, int $initiative_id = null, $date = null): Collection|array|LengthAwarePaginator
     {
-        return Article::search($query, [
-            'initiative_id' => $initiative_id,
-            'published_at' => $date
-        ])->get();
+        return Article::search($query)->get();
     }
 
     public function searchArticles() {
