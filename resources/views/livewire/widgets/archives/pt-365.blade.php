@@ -1,6 +1,6 @@
 <div class="w-full">
-<div class="pt-[25px] border-t-2">
-    <div class="flex w-full items-center justify-between xl:justify-end space-x-4 mb-[25px]">
+    <div class="pt-[25px] border-t-2">
+        <div class="flex w-full items-center justify-between xl:justify-end space-x-4 mb-[25px]">
         <div class="block xl:hidden flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="8" height="16" viewBox="0 0 8 16" fill="none" onclick="myFunction()" class="cursor-pointer">
                 <path d="M6.86719 15.0156L0.99998 8.49977" stroke="#242424" stroke-linecap="round"/>
@@ -18,8 +18,8 @@
             <div class="hidden xl:block ml-4">
                 <livewire:widgets.filter :data="$years"/>
             </div>
-                        <div>
-             <livewire:widgets.mobile-filter :data="$years"/>
+            <div>
+                <livewire:widgets.mobile-filter :data="$years"/>
             </div>
         </div>
     </div>
@@ -27,127 +27,29 @@
 
 <!-- PT 365 -->
 <?php $i = 0; ?>
-
-@foreach ($data as $year => $files)
-    <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: {{$i==0 ? 'true': 'false'}} }"  x-transition>
-    <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]" @click="expanded = ! expanded">
-        <h4 class="text-[#040404] text-[32px] font-normal">PT 365 - {{$year}}</h4>
-        <div>
-                    <div x-show="expanded === true">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 11V13H19V11H5Z" fill="#8F93A3"/>
-                        </svg>
-                    </div>
-                    <div x-show="expanded === false">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z" fill="#8F93A3"/>
-                        </svg>
-                    </div>
+    @foreach ($data as $year => $files)
+        <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: {{$i==0 ? 'true': 'false'}} }" x-cloak>
+        <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]" @click="expanded = ! expanded">
+            <h4 class="text-[#040404] text-[32px] font-normal">PT 365 - {{$year}}</h4>
+            <div>
+                <div x-show="expanded === true">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 11V13H19V11H5Z" fill="#8F93A3"/>
+                    </svg>
                 </div>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true">
-        @foreach ($files as $file)
-            <div class="weekly-focus-single-card" @click.stop>
-            <div class="weekly-focus-progress-list mt-0">
-                <a href="{{ route('view-file', ['media' => $file->media->first()]) }}">
-                <div class="weekly-focus-progress-single-bar border-b-2">
-                      <p>{{ucfirst($file->name ?? $file->media->first()->name)}}</p>
-                    <ul class="flex justify-start mt-[15px]">
-                        <li class="text-[#3362CC] mr-4 text-sm font-normal"><a href="{{ route('view-file', ['media' => $file->media->first()]) }}" class="hover:underline" target="_blank">Read</a></li>
-                        <li class="text-[#3362CC] mr-4 text-sm font-normal"><a href="{{ route('download', ['media' => $file->media->first()]) }}" class="hover:underline">Download</a></li>
-                    </ul>
+                <div x-show="expanded === false">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z" fill="#8F93A3"/>
+                    </svg>
                 </div>
-                </a>
             </div>
         </div>
-        @endforeach
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true" x-collapse>
+            @foreach ($files as $file)
+                <x-cards.archive-download :file="$file" />
+            @endforeach
+        </div>
     </div>
-</div>
-
 <?php $i++; ?>
-
-@endforeach
-
-{{-- <div class="archiveWrapper mb-[15px] border-b-2">
-    <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]">
-        <h4 class="text-[#040404] text-[32px] font-normal">2022</h4>
-        <div>
-            <svg class="hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5 11V13H19V11H5Z" fill="#8F93A3"/>
-            </svg>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z" fill="#8F93A3"/>
-            </svg>
-        </div>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px] hidden">
-        <div class="weekly-focus-single-card">
-            <div class="weekly-focus-progress-list mt-0">
-                <div class="weekly-focus-progress-single-bar border-b-2">
-                    <p>Science and Technology Aug22-May23</p>
-                    <ul class="flex justify-start space-x-4 mt-[15px]">
-                        <li class="text-[#3362CC] text-sm font-normal"><a href="javascript:void(0)" class="hover:underline">Read</a></li>
-                        <li class="text-[#3362CC] text-sm font-normal"><a href="javascript:void(0)" class="hover:underline">Download</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="weekly-focus-single-card">
-            <div class="weekly-focus-progress-list mt-0">
-                <div class="weekly-focus-progress-single-bar border-b-2">
-                    <p>Environment Aug22-May23</p>
-                    <ul class="flex justify-start space-x-4 mt-[15px]">
-                        <li class="text-[#3362CC] text-sm font-normal"><a href="javascript:void(0)" class="hover:underline">Read</a></li>
-                        <li class="text-[#3362CC] text-sm font-normal"><a href="javascript:void(0)" class="hover:underline">Download</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="weekly-focus-single-card">
-            <div class="weekly-focus-progress-list mt-0">
-                <div class="weekly-focus-progress-single-bar border-b-2">
-                    <p>Social Issues Aug22-May23</p>
-                    <ul class="flex justify-start space-x-4 mt-[15px]">
-                        <li class="text-[#3362CC] text-sm font-normal"><a href="javascript:void(0)" class="hover:underline">Read</a></li>
-                        <li class="text-[#3362CC] text-sm font-normal"><a href="javascript:void(0)" class="hover:underline">Download</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="weekly-focus-single-card">
-            <div class="weekly-focus-progress-list mt-0">
-                <div class="weekly-focus-progress-single-bar border-b-2">
-                    <p>Social Issues Aug22-May23</p>
-                    <ul class="flex justify-start space-x-4 mt-[15px]">
-                        <li class="text-[#3362CC] text-sm font-normal"><a href="javascript:void(0)" class="hover:underline">Read</a></li>
-                        <li class="text-[#3362CC] text-sm font-normal"><a href="javascript:void(0)" class="hover:underline">Download</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="weekly-focus-single-card">
-            <div class="weekly-focus-progress-list mt-0">
-                <div class="weekly-focus-progress-single-bar border-b-2">
-                    <p>Updated Part 1</p>
-                    <ul class="flex justify-start space-x-4 mt-[15px]">
-                        <li class="text-[#3362CC] text-sm font-normal"><a href="javascript:void(0)" class="hover:underline">Read</a></li>
-                        <li class="text-[#3362CC] text-sm font-normal"><a href="javascript:void(0)" class="hover:underline">Download</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="weekly-focus-single-card">
-            <div class="weekly-focus-progress-list mt-0">
-                <div class="weekly-focus-progress-single-bar border-b-2">
-                    <p>Social Issues</p>
-                    <ul class="flex justify-start space-x-4 mt-[15px]">
-                        <li class="text-[#3362CC] text-sm font-normal"><a href="javascript:void(0)" class="hover:underline">Read</a></li>
-                        <li class="text-[#3362CC] text-sm font-normal"><a href="javascript:void(0)" class="hover:underline">Download</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> --}}
-
+    @endforeach
 </div>
