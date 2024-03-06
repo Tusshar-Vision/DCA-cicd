@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Pages;
 
-use App\DTO\Menu\MainMenuDTO;
+use App\DTO\ArchiveDTO;
 use App\DTO\MonthlyMagazineDTO;
 use App\Enums\Initiatives;
 use App\Helpers\ContentsFromHeadersGenerator;
@@ -102,17 +102,22 @@ class MonthlyMagazineController extends Controller
         $query = $this->publishedInitiatives
             ->whereInitiative($this->initiativeId)
             ->language()
-            ->isPublished();
-
+            ->isPublished()
+            ->hasPublishedArticle()
+            ->with('media', function ($query) {
+                $query->where('collection_name', '=', 'monthly-magazine');
+            });
 
         $years = $query->orderByDesc('published_at')->groupByYear()->keys();
 
         if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
 
-        $articles = $query->with('articles.topic')
-            ->orderByDesc('published_at')
-            ->groupByYear();
+        $articles = $query->with('articles', function ($query) {
+            $query->isPublished()->ordered();
+        })
+        ->orderByDesc('published_at')
+        ->groupByYear();
 
         $data = [];
 
@@ -120,13 +125,10 @@ class MonthlyMagazineController extends Controller
             $publishedInitiatives = [];
 
             foreach ($groupedInitiatives as $initiative) {
-                $publishedInitiatives[] = MainMenuDTO::fromArray($initiative);
+                $publishedInitiatives[] = ArchiveDTO::fromArray($initiative);
             }
             $data[$year] = $publishedInitiatives;
         }
-
-        // $data = collect($data);
-        $data = json_encode($data);
 
         return View('pages.archives.monthly-magazine', [
             "title" => "Monthly Magazine Archives",
