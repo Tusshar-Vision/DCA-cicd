@@ -91,8 +91,8 @@ function showArticleCards(ele, year, month, monthName, id) {
                             </div>
                         </div>
                         <ul class="flex justify-start mt-[15px]">
-                            <li class="text-[#3362CC] mr-4 text-sm font-normal"><a href=${article.url} class="hover:underline">Read</a></li>
-                            <li class="text-[#3362CC] mr-4 text-sm font-normal"><a href="javascript:void(0)" class="hover:underline">Download</a></li>
+                            <li class="text-[#3362CC] mr-4 text-sm font-normal"><a href=${article.url} class="hover:underline" wire:navigate>Read</a></li>
+                            <li class="text-[#3362CC] mr-4 text-sm font-normal"><a href="/download/${article.media}" class="hover:underline ${ article.media === false ? 'opacity-50 pointer-events-none' : '' }">Download</a></li>
                         </ul>
                     </div>
                 </a>

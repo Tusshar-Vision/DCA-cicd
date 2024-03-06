@@ -79,14 +79,19 @@ readonly class DownloadService
             ->with('articles', function ($query) {
                 $query->isPublished()->ordered();
             })
+            ->with('media', function ($query) {
+                $query->where('collection_name', '=', 'news-today');
+            })
             ->get()
             ->map(function ($package) {
                 $currentArticle = $package->articles->first();
+                $media = $package->media?->first();
                 // Select only the desired columns
                 return collect([
                     'title' => $currentArticle->title,
                     'url' => ArticleService::getArticleUrlFromSlug($currentArticle->slug),
-                    'formatted_published_at' => Carbon::parse($package->published_at)->format('Y-m-d')
+                    'formatted_published_at' => Carbon::parse($package->published_at)->format('Y-m-d'),
+                    'media' => ($media !== null ? $media->id : false)
                 ]);
             });
     }
