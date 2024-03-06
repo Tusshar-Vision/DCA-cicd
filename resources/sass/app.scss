@@ -544,7 +544,7 @@ $gray-686E70: #686E70;
 
   .weekly-focus-progress-list {
     display: grid;
-    grid-gap: 26px;
+    // grid-gap: 26px;
     margin-top: 10px;
   }
 
@@ -3123,7 +3123,7 @@ li[data-level="4"] {
 /* calender */
 .calender-wrap .vi-daily-news-card {
   border: 1px solid #E9E9E9;
-  background-color: #ffffff;
+  // background-color: #ffffff;
   border-radius: 4px;
   padding: 8px 10px;
   max-width: 100%;
@@ -3431,4 +3431,9 @@ iframe {
 .w-full-90{
     width: 90% !important;
     max-width: inherit !important;
+}
+
+.dark{
+  background: #292929;
+  color: #fff;
 }

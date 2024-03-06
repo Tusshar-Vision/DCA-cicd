@@ -1,14 +1,4 @@
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 200 50" style="enable-background:new 0 0 200 50;" xml:space="preserve">
-                        <style type="text/css">
-                            .st0{fill-rule:evenodd;clip-rule:evenodd;}
-                            .st1{fill-rule:evenodd;clip-rule:evenodd;fill:none;stroke:#EA2F27;stroke-width:0.7081;stroke-miterlimit:10;}
-                            .st2{fill:#EA2F27;}
-                            .st3{clip-path:url(#SVGID_00000092452892383485499480000010079007113138028161_);}
-                            .st4{fill:#FFFFFF;}
-                            .st5{fill:#1F2442;}
-                            .st6{fill:#202443;}
-                            .st7{clip-path:url(#SVGID_00000100384284200805683640000013458852240143854225_);fill:#202443;}
-                        </style>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 200 50" style="enable-background:new 0 0 200 50;" fill="#202443" class="dark:fill-white" xml:space="preserve">
     <g>
                             <g>
                                 <path class="st5" d="M62.22,1.16v21.12h-5.85l-8.03-9.6v9.6H41.4V1.16h5.85l8.03,9.6v-9.6H62.22z"/>

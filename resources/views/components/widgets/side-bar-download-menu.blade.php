@@ -3,7 +3,7 @@
 @endphp
 
 @if ($initiative === 'monthly-magazine')
-    <div class="flex flex-col rounded bg-visionGray mb-4" @click="printDiv">
+    <div class="flex flex-col rounded bg-visionGray dark:bg-[#373839] dark:text-white mb-4" @click="printDiv">
         <div class="my-8 mx-6">
             <div class="flex items-center justify-between cursor-pointer">
                 <div class="flex space-x-2">
@@ -19,7 +19,7 @@
     </div>
 @endif
 
-<div class="flex flex-col rounded bg-visionGray lg:mt-0 mt-8 {{ $mediaFile === null ? 'opacity-50 pointer-events-none' : '' }}">
+<div class="flex flex-col rounded bg-visionGray dark:bg-[#373839] dark:text-white lg:mt-0 mt-8 {{ $mediaFile === null ? 'opacity-50 pointer-events-none' : '' }}">
     <a href="{{ $mediaFile ? route('download', ['media' => $mediaFile]): "#"}}" target="_blank">
         <div class="my-8 mx-6">
             <div class="flex items-center justify-between">
@@ -38,8 +38,8 @@
                     </span>
                 </div>
                 <div>
-                    <svg width="24" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17 20H1C0.44772 20 0 19.5523 0 19V1C0 0.44772 0.44772 0 1 0H17C17.5523 0 18 0.44772 18 1V19C18 19.5523 17.5523 20 17 20ZM16 18V2H2V18H16ZM4 4H8V8H4V4ZM4 10H14V12H4V10ZM4 14H14V16H4V14ZM10 5H14V7H10V5Z" fill="#8F93A3"/>
+                    <svg width="24" height="20" viewBox="0 0 18 20" fill="#8F93A3" class="dark:fill-white"  xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 20H1C0.44772 20 0 19.5523 0 19V1C0 0.44772 0.44772 0 1 0H17C17.5523 0 18 0.44772 18 1V19C18 19.5523 17.5523 20 17 20ZM16 18V2H2V18H16ZM4 4H8V8H4V4ZM4 10H14V12H4V10ZM4 14H14V16H4V14ZM10 5H14V7H10V5Z"/>
                     </svg>
                 </div>
             </div>

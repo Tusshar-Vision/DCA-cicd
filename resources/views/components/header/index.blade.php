@@ -81,7 +81,7 @@
                         </div>
                     </li>
                     <li class="xl:pl-[20px] pl-[5px] flex items-center">
-                        <a href="mailto:enquiry@visionias.in">
+                        <a href="mailto:enquiry@visionias.in" class="dark:fill-white">
                             {!! SvgIconsHelper::getSvgIcon('mail-icon') !!}
                         </a>
 

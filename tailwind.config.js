@@ -4,7 +4,7 @@
 
 
 export default {
-    darkMode: 'selector',
+    darkMode: 'class',
     content: [
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
@@ -25,6 +25,14 @@ export default {
             },
             fontFamily: {
               sans: ['Poppins', 'Arial'],
+            },
+            backgroundColor: {
+                darkMode: "#292929",
+                dark373839: "#373839",
+                dark545557: "#545557",
+            },
+            stroke: {
+                whiteStrock: "#fff",
             },
         },
     },

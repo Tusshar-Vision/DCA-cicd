@@ -4,7 +4,7 @@
     use Carbon\Carbon;
 @endphp
 
-<div class="flex w-full flex-col md:justify-between justify-center bg-visionGray mt-14">
+<div class="flex w-full flex-col md:justify-between justify-center bg-visionGray mt-14 dark:bg-darkMode">
     <div class="flex flex-col 2xl:flex-row border-b-2 border-gray-300 mt-14 justify-between mx-auto w-full px-[20px] lg:px-0 lg:max-w-[90%] pb-[25px]">
         <div class="flex flex-col md:mb-4 xl:mb-0">
             <div class="m-auto md:m-0 text-center">
