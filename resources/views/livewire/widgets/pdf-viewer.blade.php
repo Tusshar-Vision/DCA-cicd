@@ -113,7 +113,6 @@
     increaseButton.addEventListener('click', increaseWidth);
     
     function decreaseWidth() {
-
     if (currentWidth >= 400) {
         currentWidth -= 100;
     } else if (currentWidth > 25) {
