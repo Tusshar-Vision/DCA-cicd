@@ -76,6 +76,10 @@
                                                 <li class="text-[#3362CC] text-sm font-normal mr-4">
                                                     <a href="{{ route('download', ['media' => $downloadLink]) }}" class="hover:underline">Download</a>
                                                 </li>
+                                            @else
+                                                <li class="text-[#3362CC] text-sm font-normal mr-4">
+                                                    <a href="#" class="hover:underline opacity-50 pointer-events-none">Download</a>
+                                                </li>
                                             @endif
                                         </ul>
                                     </div>

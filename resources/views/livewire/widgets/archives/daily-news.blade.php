@@ -54,10 +54,10 @@
                 <div class="weekly-focus-progress-list mt-0">
                     <div class="weekly-focus-progress-single-bar cursor-pointer border-b-2 ">
                         <p>{{ $currentMonth }}</p>
-                        <div class="progress-bar">
-                            <div class="bar" style="width:100%; background-color: #89D38C;">
-                            </div>
-                        </div>
+{{--                        <div class="progress-bar">--}}
+{{--                            <div class="bar" style="width:100%; background-color: #89D38C;">--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                     </div>
                 </div>
             </div>
@@ -86,10 +86,10 @@ function showArticleCards(ele, year, month, monthName, id) {
                 <a href=${article.url}>
                     <div class="weekly-focus-progress-single-bar border-b-2">
                         <p>News Today - <span>${article.formatted_published_at}</span></p>
-                        <div class="progress-bar">
-                            <div class="bar" style="width:100%; background-color: #89D38C;">
-                            </div>
-                        </div>
+<!--                        <div class="progress-bar">-->
+<!--                            <div class="bar" style="width:100%; background-color: #89D38C;">-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <ul class="flex justify-start mt-[15px]">
                             <li class="text-[#3362CC] mr-4 text-sm font-normal"><a href=${article.url} class="hover:underline" wire:navigate>Read</a></li>
                             <li class="text-[#3362CC] mr-4 text-sm font-normal"><a href="/download/${article.media}" class="hover:underline ${ article.media === false ? 'opacity-50 pointer-events-none' : '' }">Download</a></li>

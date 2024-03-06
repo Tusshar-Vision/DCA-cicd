@@ -49,5 +49,11 @@
         </div>
       </div>
     @endif
+
+    @if ($currentYear || $currentMonth)
+        <div class="flex justify-center items-center">
+            <a href="{{ request()->url() }}" class="text-xs cursor-pointer hover:text-visionRed text-visionBlue" wire:navigate>Clear</a>
+        </div>
+    @endif
 </div>
 

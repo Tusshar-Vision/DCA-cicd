@@ -45,7 +45,7 @@
                 <button onclick="applyFilters()" class="w-full bg-[#3362CC] text-white rounded text-center text-sm font-bold py-[12px]">
                     Apply Filters
                 </button>
-                <button class="w-full text-[#485153] rounded text-center text-sm font-semibold py-[12px] mt-4">
+                <button onclick="clearFilters()" class="w-full text-[#485153] rounded text-center text-sm font-semibold py-[12px] mt-4">
                     Clear Filters
                 </button>
             </div>
@@ -91,6 +91,22 @@
             // Optionally remove the month parameter if not provided
             searchParams.delete('month');
         }
+
+        // Update the search property of the current URL
+        currentUrl.search = searchParams.toString();
+
+        // Redirect to the new URL
+        Livewire.navigate(currentUrl.toString());
+    }
+
+    function clearFilters() {
+        // Construct a new URL object based on the current location
+        let currentUrl = new URL(window.location);
+        let searchParams = currentUrl.searchParams;
+
+        // Remove the 'year' and 'month' parameters from the URL
+        searchParams.delete('year');
+        searchParams.delete('month');
 
         // Update the search property of the current URL
         currentUrl.search = searchParams.toString();
