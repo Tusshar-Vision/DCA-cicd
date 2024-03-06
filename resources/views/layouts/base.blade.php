@@ -12,7 +12,18 @@
         @vite('resources/js/app.js')
     </head>
 
-    <body x-data="{ isAuthFormOpen: false, isDarkModeEnabled: false }" :class="{ 'dark' : isDarkModeEnabled }">
+    <body x-data="{
+        isAuthFormOpen: false,
+        isDarkModeEnabled: false,
+        init() {
+            const storedPreference = localStorage.getItem('isDarkModeEnabled');
+            if (storedPreference !== null) {
+                this.isDarkModeEnabled = storedPreference === 'true';
+            } else {
+                this.isDarkModeEnabled = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            }
+        }
+    }" :class="{ 'dark' : isDarkModeEnabled }">
         <div class="mx-auto w-full px-[20px] lg:px-0 lg:max-w-[90%]">
             <header>
                 <x-header />

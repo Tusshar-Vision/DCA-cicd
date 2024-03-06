@@ -91,16 +91,24 @@
                         </div>
                     </li>
                     <li class="block pl-[15px] mx-[15px] modeSvg">
-                        <a href="javascript:void(0)" @click="isDarkModeEnabled = true">
-                            {!! SvgIconsHelper::getSvgIcon('dark-mode-toggle') !!}
+                        <a href="javascript:void(0)"
+                            @click="isDarkModeEnabled = !isDarkModeEnabled;
+                            localStorage.setItem('isDarkModeEnabled', isDarkModeEnabled);">
+                            <template x-if="!isDarkModeEnabled">
+                                {!! SvgIconsHelper::getSvgIcon('dark-mode-toggle') !!}
+                            </template>
+
+                            <template x-if="isDarkModeEnabled">
+                                {!! SvgIconsHelper::getSvgIcon('light-mode-toggle') !!}
+                            </template>
                         </a>
                     </li>
-                    <li class="block pl-[15px] modeSvg">
-                        <button class="flex" onclick="switchLang()">
-                            {!! SvgIconsHelper::getSvgIcon('lang-icon') !!}
-                            <span id="lang">{{__('header.lang')}}</span>
-                        </button>
-                    </li>
+{{--                    <li class="block pl-[15px] modeSvg">--}}
+{{--                        <button class="flex" onclick="switchLang()">--}}
+{{--                            {!! SvgIconsHelper::getSvgIcon('lang-icon') !!}--}}
+{{--                            <span id="lang">{{__('header.lang')}}</span>--}}
+{{--                        </button>--}}
+{{--                    </li>--}}
                 </ul>
             </div>
         </div>
