@@ -48,7 +48,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent border-b-2 mb-[35px] pb-[35px]" id="news-today-container" x-show="newsTodayContainer == true">
     </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true" x-collapse>
     @foreach ($months as $month)
         <div class="month-card weekly-focus-single-card" @click.stop onclick="showArticleCards(this, {{$year}}, {{$month}}, `{{date('F', mktime(0, 0, 0, $month, 1))}}`)" @click="newsTodayContainer =! newsTodayContainer">
             <div class="weekly-focus-progress-list mt-0">
