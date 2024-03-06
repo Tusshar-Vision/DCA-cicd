@@ -39,9 +39,10 @@ readonly class DownloadService
 
         $query = $this->publishedInitiative
             ->isPublished()
+            ->hasPublishedArticle()
             ->language()
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
-            ->has('media');
+            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS));
+        // ->has('media');
 
         $years = $query->get()
             ->groupBy(function ($item) {
@@ -87,7 +88,8 @@ readonly class DownloadService
             ->isPublished()
             ->language()
             ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::MAINS_365))
-            ->has('media');
+            ->has('media')
+            ->orderBy('published_at', 'desc');
 
         $years = $query->get()
             ->groupBy(function ($item) {
