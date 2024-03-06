@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Pages;
 
-use App\DTO\ArchiveDTO;
 use App\DTO\MonthlyMagazineDTO;
 use App\Enums\Initiatives;
 use App\Helpers\ContentsFromHeadersGenerator;
@@ -10,7 +9,7 @@ use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Bookmark;
 use App\Models\Note;
-use App\Models\PublishedInitiative;
+use App\Services\DownloadService;
 use App\Services\PublishedInitiativeService;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,7 +21,7 @@ class MonthlyMagazineController extends Controller
 
     public function __construct(
         private readonly PublishedInitiativeService $publishedInitiativeService,
-        private readonly PublishedInitiative        $publishedInitiatives,
+        private readonly DownloadService $downloadService
     ) {
         $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE);
     }
@@ -99,40 +98,11 @@ class MonthlyMagazineController extends Controller
         $year = request()->input('year');
         $month = request()->input('month');
 
-        $query = $this->publishedInitiatives
-            ->whereInitiative($this->initiativeId)
-            ->language()
-            ->isPublished()
-            ->hasPublishedArticle()
-            ->with('media', function ($query) {
-                $query->where('collection_name', '=', 'monthly-magazine');
-            });
-
-        $years = $query->orderByDesc('published_at')->groupByYear()->keys();
-
-        if ($year) $query->whereYear('published_at', $year);
-        if ($month) $query->whereMonth('published_at', $month);
-
-        $articles = $query->with('articles', function ($query) {
-            $query->isPublished()->ordered();
-        })
-        ->orderByDesc('published_at')
-        ->groupByYear();
-
-        $data = [];
-
-        foreach ($articles as $year => $groupedInitiatives) {
-            $publishedInitiatives = [];
-
-            foreach ($groupedInitiatives as $initiative) {
-                $publishedInitiatives[] = ArchiveDTO::fromArray($initiative);
-            }
-            $data[$year] = $publishedInitiatives;
-        }
+        $data = $this->downloadService->getMonthlyMagazineArchive($year, $month);
 
         return View('pages.archives.monthly-magazine', [
             "title" => "Monthly Magazine Archives",
-            'data' => [$years, $data]
+            'data' => [$data[0], $data[1]]
         ]);
     }
 }
