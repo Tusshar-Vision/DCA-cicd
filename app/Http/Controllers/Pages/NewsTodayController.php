@@ -9,7 +9,7 @@ use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Bookmark;
 use App\Models\Note;
-use App\Services\ArticleService;
+use App\Services\DownloadService;
 use App\Services\InitiativeService;
 use App\Services\PublishedInitiativeService;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +21,7 @@ class NewsTodayController extends Controller
 
     public function __construct(
         private readonly PublishedInitiativeService $publishedInitiativeService,
-        private readonly ArticleService $articleService
+        private readonly DownloadService $downloadService
     ) {
         $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY);
     }
@@ -130,7 +130,8 @@ class NewsTodayController extends Controller
     {
         $year = request()->input('year');
         $month = request()->input('month');
-        $articles = $this->articleService->getByYearAndMonth(config('settings.initiatives.NEWS_TODAY'), $year, $month);
+        $articles = $this->downloadService->getNewsTodayByYearAndMonth($year, $month);
+
         return response()->json($articles);
     }
 
@@ -139,7 +140,7 @@ class NewsTodayController extends Controller
         $year = request()->input('year');
         $month = request()->input('month');
 
-        $archiveData = $this->articleService->archive(config('settings.initiatives.NEWS_TODAY'), $year, $month);
+        $archiveData = $this->downloadService->getNewsTodayArchive($year, $month);
 
         return View('pages.archives.daily-news', [
             "title" => "Daily News Archive",

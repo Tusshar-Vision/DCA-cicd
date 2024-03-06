@@ -280,7 +280,7 @@ trait ArticleRelationSchema
                 EditAction::make('Edit')
                     ->iconButton()
                     ->tooltip('Edit')
-                    ->slideOver()
+                    ->url(fn ($record): string => route('filament.admin.resources.articles.edit', ['record' => $record]))
                     ->visible(function (Article $record) {
                         $user = Auth::user();
                         return

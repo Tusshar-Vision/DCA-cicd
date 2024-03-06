@@ -28,7 +28,7 @@
     <!-- PT 365 -->
 <?php $i = 0; ?>
     @foreach ($data as $year => $files)
-        <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: {{$i==0 ? 'true': 'false'}} }"  x-transition>
+        <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: {{$i==0 ? 'true': 'false'}} }" x-cloak>
             <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]" @click="expanded = ! expanded">
                 <h4 class="text-[#040404] text-[32px] font-normal">{{$year}}</h4>
                  <div>
@@ -44,21 +44,9 @@
                     </div>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true" x-collapse>
                 @foreach ($files as $file)
-                    <div class="weekly-focus-single-card" @click.stop>
-                        <div class="weekly-focus-progress-list mt-0">
-                            <a href="{{ route('view-file', ['media' => $file->media->first()]) }}">
-                            <div class="weekly-focus-progress-single-bar border-b-2">
-                                  <p>{{ucfirst($file->name ?? $file->media->first()->name)}}</p>
-                    <ul class="flex justify-start space-x-4 mt-[15px]">
-                        <li class="text-[#3362CC] text-sm font-normal"><a href="{{ route('view-file', ['media' => $file->media->first()]) }}" class="hover:underline" target="_blank">Read</a></li>
-                        <li class="text-[#3362CC] text-sm font-normal"><a href="{{ route('download', ['media' => $file->media->first()]) }}" class="hover:underline">Download</a></li>
-                    </ul>
-                            </div>
-                            </a>
-                        </div>
-                    </div>
+                    <x-cards.archive-download :file="$file" />
                 @endforeach
             </div>
         </div>
