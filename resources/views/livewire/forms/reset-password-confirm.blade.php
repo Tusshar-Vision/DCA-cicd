@@ -1,7 +1,7 @@
 @use('App\Helpers\SvgIconsHelper')
 
 <div class="flex md:min-h-[680px] min-h-[100vh] justify-center text-center items-stretch bg-white">
-    <div class="w-6/12 flex items-center bg-[#F5F7F8]">
+    <div class="w-6/12 flex items-center bg-[#F5F7F8] dark:bg-dark545557">
         <dotlottie-player
             src="https://lottie.host/9fdd8a19-696b-458b-b325-a74104e6b362/ZBlOCe4MDw.json"
             background="transparent"
@@ -10,7 +10,7 @@
         >
         </dotlottie-player>
     </div>
-    <div x-data="{ focusedResetPassword: false, focusedResetConfirmPassword: false, resetPasswordVisible: false }" class="w-6/12 flex flex-col justify-center px-[56px] loginwrap">
+    <div x-data="{ focusedResetPassword: false, focusedResetConfirmPassword: false, resetPasswordVisible: false }" class="w-6/12 flex flex-col justify-center px-[56px] loginwrap dark:bg-dark373839">
         <h2 class="font-medium text-base mb-[15px]">Enter OTP</h2>
         <p class="text-xs text-[#3D3D3D] mb-[15px]">Kindly, enter the six digit verification code sent to your e-mail ID, {{ $email }}</p>
         <form wire:submit="verify" class="w-full">

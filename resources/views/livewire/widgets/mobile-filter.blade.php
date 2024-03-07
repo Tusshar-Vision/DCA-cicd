@@ -3,16 +3,16 @@ $year = request()->input('year');
 ?>
    
     <div id="myFilter" class="menuOverlay">
-        <div class="menuOverlayContent">
+        <div class="menuOverlayContent dark:bg-dark373839">
             <div class="flex justify-between align-middle mb-[20px]">
                 <span class="text-[#3362CC] text-sm font-bold">Select Filters</span>
                 <a href="javascript:void(0)" class="closebtn" onclick="closeFilter()">&times;</a>
             </div>
             <div>
                 <div class="mb-[20px]">
-                    <label class="block mb-[10px] text-[#183B56] text-sm">
+                    <label class="block mb-[10px] text-[#183B56] text-sm dark:text-white">
                         Select Year
-                        <select onchange="setYear(this)" class="w-full rounded mt-2">
+                        <select onchange="setYear(this)" class="w-full rounded mt-2 dark:bg-dark545557">
                         <option></option>
                         @foreach ($data as $year)
                             <option onchange="setYear(this)" value="{{$year}}">{{$year}}</option>
@@ -22,9 +22,9 @@ $year = request()->input('year');
                 </div>
                 @if (request()->is('monthly-magazine*') || request()->is('weekly-focus*') || request()->is('news-today*'))
                 <div class="mb-[20px]">
-                    <label class="block mb-[10px] text-[#183B56] text-sm">
+                    <label class="block mb-[10px] text-[#183B56] text-sm dark:text-white">
                         Select Month
-                        <select onchange="setMonth(this)" class="w-full rounded mt-2">
+                        <select onchange="setMonth(this)" class="w-full rounded mt-2 dark:bg-dark545557">
                         <option></option>
                             <option value="1">january</option>
                             <option value="2">February</option>
