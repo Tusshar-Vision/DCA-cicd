@@ -90,7 +90,7 @@
                             <p class="text-xs"><a href="mailto:enquiry@visionias.in" class="hover:text-[#005FAF]">enquiry@visionias.in</a></p>
                         </div>
                     </li>
-                    <li class="block pl-[15px] mx-[15px] modeSvg">
+                    <li class="block pl-[15px] mx-0 xl:mx-[15px] modeSvg">
                         <a href="javascript:void(0)"
                             @click="isDarkModeEnabled = !isDarkModeEnabled;
                             localStorage.setItem('isDarkModeEnabled', isDarkModeEnabled);">

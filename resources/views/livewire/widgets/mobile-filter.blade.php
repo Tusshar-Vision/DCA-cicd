@@ -12,7 +12,7 @@
                 <div class="mb-[20px]">
                     <label class="block mb-[10px] text-[#183B56] text-sm dark:text-white">
                         Select Year
-                        <select onchange="setYear(this)" class="w-full rounded mt-2">
+                        <select onchange="setYear(this)" class="w-full rounded mt-2 dark:bg-dark545557">
                             <option>Select</option>
                             @foreach ($data as $year)
                                 <option onchange="setYear(this)" value="{{$year}}" {{ $currentYear == $year ? 'selected' : '' }}>{{$year}}</option>
@@ -24,7 +24,7 @@
                 <div class="mb-[20px]">
                     <label class="block mb-[10px] text-[#183B56] text-sm dark:text-white">
                         Select Month
-                        <select onchange="setMonth(this)" class="w-full rounded mt-2">
+                        <select onchange="setMonth(this)" class="w-full rounded mt-2 dark:bg-dark545557">
                             <option>Select</option>
                             <option value="1" {{ $currentMonth == 1 ? 'selected' : '' }}>January</option>
                             <option value="2" {{ $currentMonth == 2 ? 'selected' : '' }}>February</option>
@@ -45,7 +45,7 @@
                 <button onclick="applyFilters()" class="w-full bg-[#3362CC] text-white rounded text-center text-sm font-bold py-[12px]">
                     Apply Filters
                 </button>
-                <button onclick="clearFilters()" class="w-full text-[#485153] rounded text-center text-sm font-semibold py-[12px] mt-4">
+                <button onclick="clearFilters()" class="w-full text-[#ccc] hover:text-white rounded text-center text-sm font-semibold py-[12px] mt-4">
                     Clear Filters
                 </button>
             </div>

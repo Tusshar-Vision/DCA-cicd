@@ -3454,4 +3454,12 @@ iframe {
       background: #fff;
     }
   }
+
+  .month-card{
+    &.activeCard{
+      background-color: #575757;
+    }
+  }
+
+
 }
