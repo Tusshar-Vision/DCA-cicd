@@ -27,7 +27,7 @@ abstract class PublishedInitiativeDTO extends Data
         public string                     $createdAt,
         public string                     $updatedAt,
         public ?Video                     $video,
-        public null|Media|MediaCollection $media
+        public null|Media                 $media
     ) {
     }
 
@@ -70,7 +70,7 @@ abstract class PublishedInitiativeDTO extends Data
             $publishedInitiative->created_at,
             $publishedInitiative->updated_at,
             $publishedInitiative->video,
-            $publishedInitiative->media
+            $publishedInitiative->media->first()
         );
     }
 }
