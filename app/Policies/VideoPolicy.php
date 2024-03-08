@@ -41,6 +41,9 @@ class VideoPolicy
      */
     public function update(User $user, Video $video): bool
     {
+        if ($video->trashed()) {
+            return false;
+        }
         return $user->can('edit_video');
     }
 
