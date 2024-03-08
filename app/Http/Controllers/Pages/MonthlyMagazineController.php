@@ -62,7 +62,6 @@ class MonthlyMagazineController extends Controller
         $note = null;
         $isArticleBookmarked = false;
 
-
         if (Auth::guard('cognito')->check()) {
             $noteAvailable = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->count() > 0 ? true : false;
             $note = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
