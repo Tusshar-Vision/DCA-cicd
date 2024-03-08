@@ -2,6 +2,8 @@
 
 namespace App\View\Components\Widgets;
 
+use App\Enums\Initiatives;
+use App\Helpers\InitiativesHelper;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -15,27 +17,29 @@ class ArticlePagination extends Component
      */
     public function __construct(public $currentInitiative, string $currentArticleSlug)
     {
-        if ($this->currentInitiative->articles->count() === 1) {
+        if ($this->currentInitiative->initiative_id !== InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)) {
+            if ($this->currentInitiative->articles->count() === 1) {
 
-            $this->nextArticleIndex = null;
-            $this->previousArticleIndex = null;
-
-        } else {
-
-            $currentArticleIndex = $this->currentInitiative->getArticleIndexFromSlug($currentArticleSlug);
-
-            if ($currentArticleIndex === 0) {
-                $this->nextArticleIndex = $currentArticleIndex + 1;
-            }
-
-            if ($currentArticleIndex > 0 && $currentArticleIndex < $this->currentInitiative->articles->count() - 1) {
-                $this->previousArticleIndex = $currentArticleIndex - 1;
-                $this->nextArticleIndex = $currentArticleIndex + 1;
-            }
-
-            if ($currentArticleIndex === $this->currentInitiative->articles->count() - 1) {
-                $this->previousArticleIndex = $currentArticleIndex - 1;
                 $this->nextArticleIndex = null;
+                $this->previousArticleIndex = null;
+
+            } else {
+
+                $currentArticleIndex = $this->currentInitiative->getArticleIndexFromSlug($currentArticleSlug);
+
+                if ($currentArticleIndex === 0) {
+                    $this->nextArticleIndex = $currentArticleIndex + 1;
+                }
+
+                if ($currentArticleIndex > 0 && $currentArticleIndex < $this->currentInitiative->articles->count() - 1) {
+                    $this->previousArticleIndex = $currentArticleIndex - 1;
+                    $this->nextArticleIndex = $currentArticleIndex + 1;
+                }
+
+                if ($currentArticleIndex === $this->currentInitiative->articles->count() - 1) {
+                    $this->previousArticleIndex = $currentArticleIndex - 1;
+                    $this->nextArticleIndex = null;
+                }
             }
         }
     }
