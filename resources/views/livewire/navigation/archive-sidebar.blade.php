@@ -89,7 +89,7 @@
             </a>
         </li>
         <li class="mb-1">
-            <a href="{{ route('year-end-reviews') }}"
+            <a href="{{ route('year-end-review') }}"
                 wire:navigate
                 class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('year-end-reviews*') ? 'activeSidebar' : '' }}"
             >
