@@ -25,7 +25,9 @@ readonly class DownloadService
             ->whereHas('media', function ($query) {
                 $query->where('collection_name', '!=', 'article-featured-image');
             })
-            ->with('media')
+            ->with('media', function ($query) {
+                $query->where('collection_name', '!=', 'article-featured-image');
+            })
             ->limit($limit)
             ->get();
     }
