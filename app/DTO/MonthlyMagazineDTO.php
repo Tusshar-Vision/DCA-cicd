@@ -14,8 +14,7 @@ class MonthlyMagazineDTO extends PublishedInitiativeDTO
 
     private function sortArticlesWithTopic(): void
     {
-        $articlesCollection = collect($this->articles->all());
-
+        $articlesCollection = collect($this->articles->all())->merge($this->shortArticles->all());
         $this->sortedArticlesWithTopic = $articlesCollection->groupBy('topic');
     }
 
