@@ -3,7 +3,7 @@
     $currentMonth = request()->input('month');
 @endphp
 
-<div x-data="{ isYearOpen: false, isMonthOpen: false }" class="relative flex text-left space-x-4" x-cloak>
+<div x-data="{ isYearOpen: false, isMonthOpen: false }" class="relative flex items-center text-left space-x-4" x-cloak>
   <div class="relative">
     <div>
         <button @click="isYearOpen = !isYearOpen" type="button" class="inline-flex w-full justify-center gap-x-1.5 rounded-sm bg-white px-3 py-2 text-sm font-semibold text-visionLineGray shadow-sm ring-1 ring-inset ring-gray-300 dark:bg-dark545557" id="menu-button" aria-expanded="true" aria-haspopup="true">
@@ -17,7 +17,7 @@
         <div class="py-1" role="none">
           <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
           @foreach ($data as $year)
-              <a href="{{request()->url()."?year=$year"}}" class="text-gray-700 dark:text-visionLineGray block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0" wire:navigate>{{$year}}</a>
+              <a href="{{request()->url()."?year=$year"}}" class="text-gray-700 dark:text-white block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0" wire:navigate>{{$year}}</a>
           @endforeach
         </div>
     </div>
@@ -54,7 +54,7 @@
 
     @if ($currentYear || $currentMonth)
         <div class="flex justify-center items-center">
-            <a href="{{ request()->url() }}" class="text-xs cursor-pointer text-visionBlue hover:text-visionRed dark:hover:text-white dark:text-[#ccc]" wire:navigate>Clear</a>
+            <a href="{{ request()->url() }}" class="text-md cursor-pointer text-visionBlue hover:text-visionRed dark:hover:text-white dark:text-[#ccc]" wire:navigate>Clear</a>
         </div>
     @endif
 </div>
