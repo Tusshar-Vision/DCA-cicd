@@ -152,14 +152,16 @@ class NewsTodayResource extends Resource
                         ->required(),
                     ])->columns(2)->columnSpanFull(),
 
-                    Select::make('language_id')
-                        ->relationship('language', 'name', function ($query) {
-                            return $query->orderBy('order_column');
-                        })
-                        ->label('Language')
-                        ->required()
-                        ->selectablePlaceholder(false)
-                        ->default(1),
+//                    Select::make('language_id')
+//                        ->relationship('language', 'name', function ($query) {
+//                            return $query->orderBy('order_column');
+//                        })
+//                        ->label('Language')
+//                        ->required()
+//                        ->selectablePlaceholder(false)
+//                        ->default(1),
+
+                Hidden::make('language_id')->default(1),
 
                     Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
                         ->acceptedFileTypes(['application/pdf'])

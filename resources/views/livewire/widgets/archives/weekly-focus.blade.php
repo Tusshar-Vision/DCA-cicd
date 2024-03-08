@@ -61,7 +61,7 @@
                                 @endphp
                                 <a href="{{ $url }}" wire:navigate>
                                     <div class="weekly-focus-progress-single-bar border-b-2 pb-[15px]">
-                                        <p>{{ $package->name }}</p>
+                                        <p class="mt-3">{{ $package->name }}</p>
 {{--                                        <div class="progress-bar">--}}
 {{--                                            <div class="bar" style="width:100%;background-color: #89D38C;">--}}
 {{--                                            </div>--}}
