@@ -70,9 +70,9 @@ readonly class PublishedInitiativeService
     {
         return (new PublishedInitiative)
             ->whereInitiative($initiativeId)
+            ->language()
             ->isPublished()
             ->whereDate('published_at', '<', $today) // Adjust for initiatives published before today
-            ->language()
             ->hasPublishedArticle()
             ->latest('published_at')
             ->with('articles', function ($query) {
@@ -89,11 +89,10 @@ readonly class PublishedInitiativeService
     {
         return (new PublishedInitiative)
             ->whereInitiative($initiativeId)
+            ->language()
             ->isPublished()
             ->whereDate('published_at', '>', $today) // Adjust for initiatives published before today
-            ->language()
             ->hasPublishedArticle()
-            ->latest('published_at')
             ->with('articles', function ($query) {
                 $query
                     ->isPublished()
