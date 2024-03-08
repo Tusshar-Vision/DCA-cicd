@@ -5,7 +5,7 @@
     $currentArticle = request()->segment(4);
 @endphp
 
-<div class="flex flex-col rounded bg-visionGray pb-4">
+<div class="flex flex-col rounded bg-visionGray pb-4 dark:bg-dark373839">
     <div class="my-4 mx-6" x-data="{ expanded: null }" x-init="expanded = 'topic-{{ Str::slug($currentTopic) }}'">
         @foreach ($topics as $topic)
             @php

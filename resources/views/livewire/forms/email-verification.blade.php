@@ -2,7 +2,7 @@
 
 <!-- Email verification OTP UI -->
 <div class="flex flex-col xl:flex-row md:min-h-[680px] min-h-[100vh] justify-center text-center items-stretch bg-white py-[50px] xl:py-0">
-    <div class="w-full xl:w-6/12 flex items-center bg-white xl:bg-[#F5F7F8]">
+    <div class="w-full xl:w-6/12 flex items-center bg-white xl:bg-[#F5F7F8] dark:bg-dark545557">
         <dotlottie-player
             src="https://lottie.host/5659d5fb-8a75-464f-9488-683967c8dd65/PyUWY2Jblu.json"
             background="transparent"
@@ -10,7 +10,7 @@
             loop autoplay>
         </dotlottie-player>
     </div>
-    <div class="w-full xl:w-6/12 flex flex-col justify-center px-[20px] md:px-[56px] py-[30px] loginwrap">
+    <div class="w-full xl:w-6/12 flex flex-col justify-center px-[20px] md:px-[56px] py-[30px] loginwrap dark:bg-dark373839">
         @if($attempt === 1)
             <h5 class="py-[20px] bg-[#C5F7DC4D] text-sm mb-[40px] px-[30px] rounded-md">
                 Kindly, enter the six digit verification code sent to your e-mail ID, {{ $email }}

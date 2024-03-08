@@ -1,7 +1,7 @@
 @use('App\Helpers\SvgIconsHelper')
 
 <div class="flex flex-col xl:flex-row md:min-h-[680px] min-h-[100vh] justify-center text-center items-stretch bg-white py-[50px] xl:py-0">
-    <div class="w-full xl:w-6/12 flex items-center bg-white xl:bg-[#F5F7F8] mb-0">
+    <div class="w-full xl:w-6/12 flex items-center bg-white xl:bg-[#F5F7F8] dark:bg-dark545557 mb-0">
         <dotlottie-player
             src="https://lottie.host/efd12853-25b1-4c36-bf27-3d0efb0eea46/mtnAb2oVRI.json"
             speed="1" style="width: 300px; height: 300px; margin: 0 auto;" loop
@@ -9,8 +9,8 @@
         >
         </dotlottie-player>
     </div>
-    <div x-data="{ focusedEmail: false, focusedPassword: false, passwordVisible: false }" class="w-full xl:w-6/12 flex flex-col justify-center px-[20px] md:px-[56px] py-[30px] loginwrap">
-        <h2 class="font-bold text-base mb-2">Welcome Back !</h2>
+    <div x-data="{ focusedEmail: false, focusedPassword: false, passwordVisible: false }" class="w-full xl:w-6/12 flex flex-col justify-center px-[20px] md:px-[56px] py-[30px] loginwrap dark:bg-dark373839">
+        <h2 class="font-bold text-base mb-2 dark:text-white">Welcome Back !</h2>
         <p class="text-xs font-normal mb-[40px]">Please log in to your account for a personalized experience.</p>
 
         <div class="form-item mb-[15px]">
@@ -58,7 +58,7 @@
         </div>
 
         <div class="flex justify-end w-full">
-            <a href="javascript:void(0)" wire:click="$dispatch('renderComponent', { component: 'forms.reset-password' })" class="inline-block text-right forgetpass mb-[20px]">Forgot password?</a>
+            <a href="javascript:void(0)" wire:click="$dispatch('renderComponent', { component: 'forms.reset-password' })" class="inline-block text-right forgetpass mb-[20px] text-[#3C4852] dark:text-white">Forgot password?</a>
         </div>
 
         <button wire:click="login" wire:keydown.enter="login" wire:target="login" wire:loading.attr="disabled" wire:loading.class="bg-[#3362CC]" class="login-btn text-center transition-colors">
