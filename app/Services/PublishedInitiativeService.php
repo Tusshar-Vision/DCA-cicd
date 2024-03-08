@@ -24,7 +24,10 @@ readonly class PublishedInitiativeService
             ->isPublished()
             ->language()
             ->hasPublishedArticle()
-            ->with(['video', 'media'])
+            ->with('video')
+            ->with('media', function ($query) {
+                $query->where('mime_type', '=', 'application/pdf');
+            })
             ->latest('published_at');
 
         if ($date !== null)
