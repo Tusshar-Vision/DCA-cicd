@@ -54,7 +54,7 @@
 
     @if ($currentYear || $currentMonth)
         <div class="flex justify-center items-center">
-            <a href="{{ request()->url() }}" class="text-md cursor-pointer hover:text-white text-[#ccc]" wire:navigate>Clear</a>
+            <a href="{{ request()->url() }}" class="text-xs cursor-pointer text-visionBlue hover:text-visionRed dark:hover:text-white dark:text-[#ccc]" wire:navigate>Clear</a>
         </div>
     @endif
 </div>
