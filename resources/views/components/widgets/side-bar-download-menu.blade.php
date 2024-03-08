@@ -1,5 +1,5 @@
 @php
-    $mediaFile = $media?->first();
+    $mediaFile = $media;
 @endphp
 
 @if ($initiative === 'monthly-magazine')

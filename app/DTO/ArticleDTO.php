@@ -79,7 +79,7 @@ class ArticleDTO extends Data implements Wireable
             str_replace(' ', '-', strtolower($article->topic->name)),
             $article->slug,
             $article->excerpt,
-            $article->content->content,
+            $article->content->content ?? '',
             $article->read_time,
             $article->views,
             $article->visibility,

@@ -163,6 +163,7 @@ class WeeklyFocusResource extends Resource
                         ->required()
                         ->label('Subject')
                         ->reactive()
+                        ->columnSpanFull()
                         ->afterStateUpdated(function (Set $set, ?string $state) {
                             $set('topic_section_id', null);
                             $set('topic_sub_section_id', null);
@@ -191,14 +192,16 @@ class WeeklyFocusResource extends Resource
                         ->reactive()
                         ->label('Sub Section'),
 
-                    Select::make('language_id')
-                        ->relationship('language', 'name', function ($query) {
-                            return $query->orderBy('order_column');
-                        })
-                        ->label('Language')
-                        ->required()
-                        ->selectablePlaceholder(false)
-                        ->default(1),
+//                    Select::make('language_id')
+//                        ->relationship('language', 'name', function ($query) {
+//                            return $query->orderBy('order_column');
+//                        })
+//                        ->label('Language')
+//                        ->required()
+//                        ->selectablePlaceholder(false)
+//                        ->default(1),
+
+                    Hidden::make('language_id')->default(1),
 
                     SpatieTagsInput::make('tags')
                         ->columnSpanFull()
