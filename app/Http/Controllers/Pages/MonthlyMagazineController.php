@@ -92,6 +92,10 @@ class MonthlyMagazineController extends Controller
         ]);
     }
 
+    public function newsInShorts() {
+
+    }
+
     public function archive()
     {
         $year = request()->input('year');

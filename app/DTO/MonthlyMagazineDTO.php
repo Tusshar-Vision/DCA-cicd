@@ -11,35 +11,19 @@ class MonthlyMagazineDTO extends PublishedInitiativeDTO
 {
     public array $topics;
     public Collection $sortedArticlesWithTopic;
-    private Collection $sortedArticlesWithoutTopic;
 
     private function sortArticlesWithTopic(): void
     {
         $articlesCollection = collect($this->articles->all())->merge($this->shortArticles->all());
         $this->sortedArticlesWithTopic = $articlesCollection->groupBy('topic');
-        $this->sortedArticlesWithoutTopic = collect();
 
-        $this->sortedArticlesWithTopic->map(function ($topic) {
-           $this->sortedArticlesWithoutTopic = $this->sortedArticlesWithoutTopic->merge($topic->all());
+        $sortedArticlesWithoutTopic = collect();
+        $this->sortedArticlesWithTopic->map(function ($topic) use (&$sortedArticlesWithoutTopic) {
+            $sortedArticlesWithoutTopic = $sortedArticlesWithoutTopic->merge($topic->all());
         });
 
-        $this->articles = ArticleDTO::collection($this->sortedArticlesWithoutTopic);
+        $this->articles = ArticleDTO::collection($sortedArticlesWithoutTopic);
     }
-
-    public function getArticleIndexFromSlug($slug): int|null
-    {
-        $foundIndex = null;
-
-        $this->sortedArticlesWithoutTopic->each(function ($article, $index) use ($slug, &$foundIndex) {
-            if ($article->slug === $slug) {
-                $foundIndex = $index;
-                return false; // Stop the iteration once the article is found
-            }
-        });
-
-        return $foundIndex;
-    }
-
 
     public static function fromModel(PublishedInitiative $publishedInitiative): MonthlyMagazineDTO
     {
