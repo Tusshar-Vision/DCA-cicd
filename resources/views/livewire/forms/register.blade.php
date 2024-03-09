@@ -1,7 +1,7 @@
 @use('App\Helpers\SvgIconsHelper')
 
 <div class="flex flex-col xl:flex-row md:min-h-[680px] min-h-[100vh] justify-center text-center items-stretch bg-white py-[50px] xl:py-0">
-    <div class="w-full xl:w-6/12 flex items-center bg-white xl:bg-[#F5F7F8] mb-0">
+    <div class="w-full xl:w-6/12 flex items-center bg-white xl:bg-[#F5F7F8] mb-0 dark:bg-dark545557">
         <dotlottie-player
             src="https://lottie.host/2b30c43d-ae5f-4db8-8698-2acbf3511801/m6u1iyrHdl.json"
             background="transparent"
@@ -12,7 +12,7 @@
         </dotlottie-player>
     </div>
     <div x-data="{ focusedFirstName: false, focusedLastName: false, focusedEmail: false, focusedMobile: false, focusedPassword: false, passwordVisible: false }"
-         class="w-full xl:w-6/12 flex flex-col justify-center px-[20px] md:px-[56px] py-[30px] loginwrap"
+         class="w-full xl:w-6/12 flex flex-col justify-center px-[20px] md:px-[56px] py-[30px] loginwrap dark:bg-dark373839"
     >
         <h2 class="font-medium text-base mb-5">Welcome!</h2>
         <p class="text-sm font-normal mb-[40px]">Please sign-up to your account for a personalised experience.</p>
@@ -130,12 +130,12 @@
 {{--                    </a>--}}
 {{--                </li>--}}
 {{--            </ul>--}}
-            <h5 class="text-base text-[#3D3D3D] mt-[20px]">Already Registered?
+            <h5 class="text-base text-[#3D3D3D] dark:text-white mt-[20px]">Already Registered?
                 <a href="#" class="text-[#3362CC] hover:underline" wire:click="$dispatch('renderComponent', { component: 'forms.login' })">
                     Login
                 </a>
             </h5>
-            <p class="text-[12px] text-[#3D3D3D]">By signing in, you confirm that you have read and agree to our
+            <p class="text-[12px] text-[#3D3D3D] dark:text-white">By signing in, you confirm that you have read and agree to our
                 <a href="{{ \App\Helpers\UrlHelper::linkToVision('/termsandcondition') }}" target="_blank" class="text-[#3362CC] block">Terms and Conditions</a>
             </p>
         </form>

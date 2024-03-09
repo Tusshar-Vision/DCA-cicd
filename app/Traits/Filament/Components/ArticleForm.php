@@ -183,57 +183,51 @@ trait ArticleForm
 
                             Group::make()->schema([
 
-                                Hidden::make('language_id')
-                                    ->default(function (Livewire $livewire) {
-                                        return $livewire->ownerRecord->language_id;
-                                    }),
-
                                 SpatieTagsInput::make('tags')
                                     ->required(),
 
                             ])->columns(1)
 
-                        ])
-                            ->columns(2)
-                            ->collapsible(),
+                        ])->columns(2)->collapsible(),
 
                         Section::make('Content')
                             ->relationship('content')
+                            ->hiddenOn('create')
                             ->schema([
                                 CKEditor::make('content'),
-                        ])->headerActions([
-                            Action::make('Reviews')
-                                ->fillForm(function (Article $record) {
-                                    return [
-                                        "body" => $record->latestReview()->review ?? 'No reviewer comments available on this article.',
-                                    ];
-                                })
-                                ->form([
-                                    RichEditor::make('body')
-                                        ->label('')
-                                        ->disabled()
-                                        ->disableToolbarButtons([
-                                            'attachFiles',
-                                            'codeBlock',
-                                        ])
-                                        ->maxLength(200)
-                                        ->required(),
-                                ])
-                                ->visible(function (?Model $record) {
-                                    return $record !== null;
-                                }),
+                            ])->headerActions([
+                                Action::make('Reviews')
+                                    ->fillForm(function (Article $record) {
+                                        return [
+                                            "body" => $record->latestReview()->review ?? 'No reviewer comments available on this article.',
+                                        ];
+                                    })
+                                    ->form([
+                                        RichEditor::make('body')
+                                            ->label('')
+                                            ->disabled()
+                                            ->disableToolbarButtons([
+                                                'attachFiles',
+                                                'codeBlock',
+                                            ])
+                                            ->maxLength(200)
+                                            ->required(),
+                                    ])
+                                    ->visible(function (?Model $record) {
+                                        return $record !== null;
+                                    }),
 
-                            Action::make('Changes Incorporated')
-                                ->requiresConfirmation()
-                                ->modalHeading('Are you sure you want to change the status')
-                                ->modalDescription('Make sure you have gone through all the reviews and incorporated them in the article.')
-                                ->visible(function (?Article $record) {
-                                    return $record !== null && $record->status === 'Improve';
-                                })
-                                ->action(function(Article $record) {
-                                    $record->setStatus('Changes Incorporated');
-                                }),
-                        ])->collapsible(),
+                                Action::make('Changes Incorporated')
+                                    ->requiresConfirmation()
+                                    ->modalHeading('Are you sure you want to change the status')
+                                    ->modalDescription('Make sure you have gone through all the reviews and incorporated them in the article.')
+                                    ->visible(function (?Article $record) {
+                                        return $record !== null && $record->status === 'Improve';
+                                    })
+                                    ->action(function(Article $record) {
+                                        $record->setStatus('Changes Incorporated');
+                                    }),
+                            ])->collapsible(),
 
                         TagsInput::make('sources')
                             ->separator(',')

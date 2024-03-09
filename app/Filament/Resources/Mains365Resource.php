@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
@@ -76,14 +77,16 @@ class Mains365Resource extends Resource implements HasShieldPermissions
                             ->label('Subject')
                             ->required(),
 
-                        Select::make('language_id')
-                            ->relationship('language', 'name', function ($query) {
-                                return $query->orderBy('order_column');
-                            })
-                            ->label('Language')
-                            ->required()
-                            ->selectablePlaceholder(false)
-                            ->default(1),
+//                        Select::make('language_id')
+//                            ->relationship('language', 'name', function ($query) {
+//                                return $query->orderBy('order_column');
+//                            })
+//                            ->label('Language')
+//                            ->required()
+//                            ->selectablePlaceholder(false)
+//                            ->default(1),
+
+                        Hidden::make('language_id')->default(1),
 
                         Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
                             ->name('file')
@@ -159,6 +162,9 @@ class Mains365Resource extends Resource implements HasShieldPermissions
 
     public static function canEdit(Model $record): bool
     {
+        if ($record->trashed()) {
+            return false;
+        }
         return Auth::user()->hasAnyRole(['super_admin', 'admin']) || (Auth::user()->can('edit_mains365') && $record->is_published !== true);
     }
 

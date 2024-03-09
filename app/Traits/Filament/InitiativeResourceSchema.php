@@ -2,6 +2,7 @@
 
 namespace App\Traits\Filament;
 
+use App\Models\PublishedInitiative;
 use App\Traits\HasNotifications;
 use Carbon\Carbon;
 use Filament\Support\Colors\Color;
@@ -9,7 +10,6 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ForceDeleteBulkAction;
 use Filament\Tables\Actions\RestoreBulkAction;
@@ -28,7 +28,6 @@ trait InitiativeResourceSchema
     {
         return $table
             ->columns([
-
                 TextColumn::make('id')
                     ->label('ID')
                     ->sortable()
@@ -186,7 +185,28 @@ trait InitiativeResourceSchema
                             });
                         })
                         ->deselectRecordsAfterCompletion(),
-                    ForceDeleteBulkAction::make(),
+                    ForceDeleteBulkAction::make()
+                        ->action(function (Collection $records) {
+                            $records->each(function (PublishedInitiative $publishedInitiative) {
+                                $publishedInitiative->articles()->withTrashed()->each(function ($record) {
+                                    $record->content()->delete();
+                                    $record->relatedTerms()->delete();
+                                    $record->relatedVideos()->delete();
+                                    $record->relatedArticles()->delete();
+                                    $record->relatedToArticle()->delete();
+                                    $record->bookmarks()->delete();
+                                    $record->readHistories()->delete();
+                                    $record->forceDelete();
+                                });
+                                $publishedInitiative->shortArticles()->withTrashed()->each(function ($record) {
+                                    $record->content()->delete();
+                                    $record->forceDelete();
+                                });
+
+                                // Now force delete the PublishedInitiative itself
+                                $publishedInitiative->forceDelete();
+                            });
+                        }),
                     RestoreBulkAction::make(),
                 ]),
             ]);

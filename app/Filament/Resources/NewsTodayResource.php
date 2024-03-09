@@ -152,14 +152,16 @@ class NewsTodayResource extends Resource
                         ->required(),
                     ])->columns(2)->columnSpanFull(),
 
-                    Select::make('language_id')
-                        ->relationship('language', 'name', function ($query) {
-                            return $query->orderBy('order_column');
-                        })
-                        ->label('Language')
-                        ->required()
-                        ->selectablePlaceholder(false)
-                        ->default(1),
+//                    Select::make('language_id')
+//                        ->relationship('language', 'name', function ($query) {
+//                            return $query->orderBy('order_column');
+//                        })
+//                        ->label('Language')
+//                        ->required()
+//                        ->selectablePlaceholder(false)
+//                        ->default(1),
+
+                Hidden::make('language_id')->default(1),
 
                     Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
                         ->acceptedFileTypes(['application/pdf'])
@@ -311,8 +313,11 @@ class NewsTodayResource extends Resource
     public static function canEdit(Model $record): bool
     {
         $userId = Auth::id(); // Get the current authenticated user's ID
+        if ($record->trashed()) {
+            return false;
+        }
         return Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'news_today_reviewer']) || (Auth::user()->can('edit_news::today') && $record->articles->contains(function ($article) use ($userId) {
-                return $article->reviewer_id == $userId || $article->expert_id == $userId;
+                return $article?->reviewer_id == $userId || $article->expert_id == $userId;
             }));
     }
 

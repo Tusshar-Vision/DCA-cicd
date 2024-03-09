@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
@@ -138,14 +139,16 @@ class MonthlyMagazineResource extends Resource
                     ->columns()
                     ->columnSpanFull(),
 
-                    Select::make('language_id')
-                        ->relationship('language', 'name', function ($query) {
-                            return $query->orderBy('order_column');
-                        })
-                        ->label('Language')
-                        ->required()
-                        ->selectablePlaceholder(false)
-                        ->default(1),
+//                    Select::make('language_id')
+//                        ->relationship('language', 'name', function ($query) {
+//                            return $query->orderBy('order_column');
+//                        })
+//                        ->label('Language')
+//                        ->required()
+//                        ->selectablePlaceholder(false)
+//                        ->default(1),
+
+                    Hidden::make('language_id')->default(1),
 
                     Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
                         ->collection('monthly-magazine')
@@ -218,7 +221,13 @@ class MonthlyMagazineResource extends Resource
 
     public static function canEdit(Model $record): bool
     {
-        return Auth::user()->can('edit_monthly::magazine');
+        $userId = Auth::id(); // Get the current authenticated user's ID
+        if ($record->trashed()) {
+            return false;
+        }
+        return Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'monthly_magazine_reviewer']) || (Auth::user()->can('edit_monthly::magazine') && $record->articles->contains(function ($article) use ($userId) {
+            return $article?->reviewer_id == $userId || $article->expert_id == $userId;
+        }));
     }
 
     public static function canCreate(): bool

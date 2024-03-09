@@ -4,37 +4,42 @@ namespace App\Helpers;
 
 class ContentsFromHeadersGenerator
 {
-    /**
-     * Generating multi-dimensional array. For example if there are some <h3>
-     * tags after <h2> tag, then this <h2> tag has 'childs' array.
-     * @param array $headers
-     * @return array
-     */
-    public function generateFromHeaders(array $headers): array
+    public function generateTOC($htmlContent): array
     {
-        $newArr = [];
-        $level1 = 1;
-        for ($i = 0; $i < count($headers); $i++) {
-            $currentLevel = $headers[$i]['level'];
-            if ($currentLevel === 0) {
-                $newArr[] = $headers[$i];
-            } elseif ($currentLevel === 1) {
-                $newArr[$i-$level1]['childs'][] = $headers[$i];
-            } elseif ($currentLevel === 2) {
-                $childs =& $newArr[$i-$level1]['childs'];
-                $childs[count($childs)-1]['childs'][] = $headers[$i];
-            } elseif ($currentLevel === 3) {
-                $childs =& $newArr[$i-$level1]['childs'];
-                $count = count($childs[count($childs)-1]['childs']);
-                $childs[count($childs)-1]['childs'][$count-1]['childs'][] = $headers[$i];
-            } elseif ($currentLevel === 4) {
-                $childs =& $newArr[$i-$level1]['childs'];
-                $subChilds =& $childs[count($childs)-1]['childs'];
-                $subChilds1 =& $subChilds[count($subChilds)-1]['childs'];
-                $subChilds1[count($subChilds1) - 1]['childs'][] = $headers[$i];
+        $dom = new \DOMDocument();
+        @$dom->loadHTML(mb_convert_encoding($htmlContent, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+        $xpath = new \DOMXPath($dom);
+        $headings = $xpath->query('//h1 | //h2 | //h3 | //h4 | //h5 | //h6');
+        $toc = [];
+        $ids = [];
+
+        foreach ($headings as $heading) {
+            $level = (int) substr($heading->tagName, 1);
+            $text = trim($heading->textContent);
+            $idBase = strtolower(str_replace(' ', '-', preg_replace('/[^a-zA-Z0-9\s]/', '', $text)));
+            $id = $idBase;
+            $counter = 1;
+
+            while (in_array($id, $ids)) {
+                $id = $idBase . '-' . $counter++;
             }
-            $level1 = $currentLevel > 0 ? $level1 + 1 : 1;
+
+            $ids[] = $id;
+            $heading->setAttribute('id', $id);
+
+            $toc[] = [
+                'level' => $level,
+                'text' => $text,
+                'link' => '#' . $id,
+            ];
         }
-        return $newArr;
+
+        $updatedHTMLContent = $dom->saveHTML();
+
+        return [
+            'toc' => $toc,
+            'updatedHTMLContent' => $updatedHTMLContent,
+        ];
     }
 }

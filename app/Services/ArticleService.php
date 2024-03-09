@@ -22,7 +22,6 @@ readonly class ArticleService
     {
         return $this->articles
             ->isPublished()
-            ->language()
             ->isFeatured()
             ->latest()
             ->limit($limit)
@@ -36,7 +35,6 @@ readonly class ArticleService
             ->whereInitiative(InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
             ->isPublished()
             ->isNotShort()
-            ->language()
             ->latest()
             ->limit($limit)
             ->with('author')
@@ -75,61 +73,5 @@ readonly class ArticleService
                 return '/article-not-found'; // Example default URL or could throw an exception
             }
         });
-    }
-
-    public function archive($initiative_id, $year, $month): array
-    {
-        $query = $this->articles::where('initiative_id', $initiative_id)->where('published_at', '!=', null);
-
-        $years = $query->select(DB::raw('YEAR(published_at) as year'))
-            ->groupBy(DB::raw('YEAR(published_at)'))
-            ->orderBy('year', 'desc')
-            ->pluck('year');
-
-        if ($year) $query->whereYear('published_at', $year);
-        if ($month) $query->whereMonth('published_at', $month);
-
-        $archive = $query->select(DB::raw('YEAR(published_at) as year, MONTH(published_at) as month'))
-            ->groupBy(DB::raw('YEAR(published_at), MONTH(published_at)'))
-            ->orderBy('year', 'desc')
-            ->orderBy('month', 'desc')
-            ->get();
-
-        $groupedArchive = [];
-        foreach ($archive as $item) {
-            $groupedArchive[$item->year][] = $item->month;
-        }
-
-        return [$years, $groupedArchive];
-    }
-
-    public function getByYearAndMonth($initiative_id, $year, $month)
-    {
-        return $this->articles
-            ->where('initiative_id', $initiative_id)
-            ->language()
-            ->isNotShort()
-            ->isPublished()
-            ->whereYear('published_at', $year)
-            ->whereMonth('published_at', $month)
-            ->with('topic') // Eager load the 'topic' relationship
-            ->get()
-            ->map(function ($article) {
-                // Perform date formatting here
-                $article->formatted_published_at = Carbon::parse($article->published_at)->format('Y-m-d');
-
-                // Check if the topic relationship exists
-                if ($article->topic) {
-                    $article->topic_name = strtolower($article->topic->name);
-                    // Add other properties if needed
-                } else {
-                    $article->topic_name = null;
-                }
-
-                $article->url = $this->getArticleURL($article);
-
-                // Select only the desired columns
-                return $article->only(['formatted_published_at', 'title', 'slug', 'topic_name', 'url']);
-            });
     }
 }

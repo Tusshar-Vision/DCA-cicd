@@ -10,42 +10,7 @@
                 <img class="w-60" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
             </a>
         </div>
-
         <div class="w-full flex xl:space-x-5 items-center xl:justify-end justify-between space-x-0">
-            <!-- <button class="flex" onclick="switchLang()">
-                <svg class="mr-2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M2 11.0196L2.98039 7.45923M8.86273 11.0196L7.93394 7.45923M2.98039 7.45923L4.48366 2H6.5098L7.93394 7.45923M2.98039 7.45923H7.93394" stroke="#8F93A3" stroke-width="2"/>
-                    <path d="M12.2617 14.2875C15.8565 10.6273 19.2226 17 14.2226 17.5556M14.2226 17.5556C19.2226 18.6667 15.3993 24.5979 12.2617 20.5127M14.2226 17.5556L19.8434 17.4902M19.8434 17.4902V13.307H22.0003M19.8434 17.4902V22.0002" stroke="#8F93A3" stroke-width="2"/>
-                    <path d="M12.9805 5.26776C16.1177 5.26776 16.706 5.5292 16.706 8.66645" stroke="#8F93A3" stroke-width="2"/>
-                    <path d="M8.79785 17.49C5.6606 17.49 5.07237 17.2285 5.07237 14.0913" stroke="#8F93A3" stroke-width="2"/>
-                </svg>
-                <span id="lang">{{__('header.lang')}}</span>
-            </button>
-
-
-            <svg width="2" height="32" viewBox="0 0 2 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path opacity="0.5" d="M1 0V32" stroke="#8F93A3"/>
-            </svg>
-
-            <div class="flex items-center space-x-2">
-                <button @click="document.body.style.fontSize = `${(isNaN(parseFloat(document.body.style.fontSize)) ? 1.1 : parseFloat(document.body.style.fontSize) + 0.1)}rem`">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="1" y="1" width="22" height="22" stroke="#8F93A3" stroke-width="2"/>
-                        <path d="M6.97869 17H5.34801L9.01207 6.81818H10.7869L14.451 17H12.8203L9.94176 8.66761H9.86222L6.97869 17ZM7.25213 13.0128H12.5419V14.3054H7.25213V13.0128ZM15.428 11.4964V7.19602H16.467V11.4964H15.428ZM13.6879 9.85582V8.83665H18.1822V9.85582H13.6879Z" fill="#8F93A3"/>
-                    </svg>
-                </button>
-
-                <button @click="document.body.style.fontSize = `${(isNaN(parseFloat(document.body.style.fontSize)) ? 0.9 : parseFloat(document.body.style.fontSize) - 0.1)}rem`">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="1" y="1" width="22" height="22" stroke="#8F93A3" stroke-width="2"/>
-                        <path d="M6.97869 17H5.34801L9.01207 6.81818H10.7869L14.451 17H12.8203L9.94176 8.66761H9.86222L6.97869 17ZM7.25213 13.0128H12.5419V14.3054H7.25213V13.0128ZM18.1822 8.83665V9.85582H13.6879V8.83665H18.1822Z" fill="#8F93A3"/>
-                    </svg>
-                </button>
-            </div>
-
-            <svg width="2" height="32" viewBox="0 0 2 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path opacity="0.5" d="M1 0V32" stroke="#8F93A3"/>
-            </svg> -->
             <div class="flex order-last xl:order-first topMenu">
                 <ul class="flex items-center">
                     <li class="ml-[10px] md:ml-[15px]">
@@ -96,23 +61,13 @@
                         </a>
                     </li>
                 </ul>
-                {{-- <a href="javascript:void(0)" class="block xl:hidden pl-[15px] mx-[15px] border-slate-300 border-solid border-l-[1px] modeSvg">
-                    {!! SvgIconsHelper::getSvgIcon('dark-mode-toggle') !!}
-                </a> --}}
                 <a href="javascript:void(0)" class="block xl:hidden text-[50px] leading-5 h-[23px] ml-4" id="toggleSocialbtn" onclick="toggleSocial()">
                     {!! SvgIconsHelper::getSvgIcon('right-arrow') !!}
                 </a>
             </div>
             <div class="order-first xl:order-last">
                 <ul class="flex items-center w-full connect-us">
-                    <li class="pl-[20px] xl:pr-[20px] hidden">
-                        {{-- xl:block --}}
-                        <a href="javascript:void(0)">
-                            {!! SvgIconsHelper::getSvgIcon('dark-mode-toggle') !!}
-                        </a>
-                    </li>
                     <li class="xl:pl-[20px] xl:pr-[20px] pr-[5px] flex items-center pl-0">
-
                         <a href="tel:+91 846 802 2022">
                             {!! SvgIconsHelper::getSvgIcon('call-icon') !!}
                         </a>
@@ -124,10 +79,9 @@
                                 <a href="tel:+91 901 906 6066" class="hover:text-[#005FAF] hidden lg:inline-block">+91 901 906 6066</a>
                             </p>
                         </div>
-
                     </li>
                     <li class="xl:pl-[20px] pl-[5px] flex items-center">
-                        <a href="mailto:enquiry@visionias.in">
+                        <a href="mailto:enquiry@visionias.in" class="dark:fill-white">
                             {!! SvgIconsHelper::getSvgIcon('mail-icon') !!}
                         </a>
 
@@ -136,6 +90,25 @@
                             <p class="text-xs"><a href="mailto:enquiry@visionias.in" class="hover:text-[#005FAF]">enquiry@visionias.in</a></p>
                         </div>
                     </li>
+                    <li class="block pl-[15px] mx-0 xl:mx-[15px] modeSvg">
+                        <a href="javascript:void(0)"
+                            @click="isDarkModeEnabled = !isDarkModeEnabled;
+                            localStorage.setItem('isDarkModeEnabled', isDarkModeEnabled);">
+                            <div x-show="!isDarkModeEnabled">
+                                {!! SvgIconsHelper::getSvgIcon('dark-mode-toggle') !!}
+                            </div>
+
+                            <div x-show="isDarkModeEnabled">
+                                {!! SvgIconsHelper::getSvgIcon('light-mode-toggle') !!}
+                            </div>
+                        </a>
+                    </li>
+{{--                    <li class="block pl-[15px] modeSvg">--}}
+{{--                        <button class="flex" onclick="switchLang()">--}}
+{{--                            {!! SvgIconsHelper::getSvgIcon('lang-icon') !!}--}}
+{{--                            <span id="lang">{{__('header.lang')}}</span>--}}
+{{--                        </button>--}}
+{{--                    </li>--}}
                 </ul>
             </div>
         </div>
@@ -147,7 +120,6 @@
     function toggleSocial() {
         const list = document.getElementById("socialList");
         const button = document.getElementById("toggleSocialbtn");
-
         // Toggle the visibility of the list
         if (list.style.display === "none") {
         list.style.display = "flex";

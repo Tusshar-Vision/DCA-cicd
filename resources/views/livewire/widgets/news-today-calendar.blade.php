@@ -1,12 +1,12 @@
 @php
     use App\Services\ArticleService;
 @endphp
-<div x-data="{ isCalendarOpen: false }" class="calendar-wrapper border-1 border-color-C3CAD9 bg-white border rounded relative">
+<div x-data="{ isCalendarOpen: false }" class="calendar-wrapper border-1 border-color-C3CAD9 bg-white border rounded relative dark:bg-dark373839">
     <div x-show="isCalendarOpen" @click.away="isCalendarOpen = false" class="calender-wrap absolute left-0 top-0 mt-[23px] w-full bar" x-cloak>
-        <div class="vi-daily-news-card">
+        <div class="vi-daily-news-card bg-white dark:bg-dark373839">
             <div class="flex justify-between items-center">
                 <label>
-                    <select wire:model.live="selectedMonth" title="month" class="py-1 h-[28px] text-sm border-none border-[#C3CAD9] text-[#3d3d3d] cursor-pointer">
+                    <select wire:model.live="selectedMonth" title="month" class="py-1 h-[28px] text-sm border-none border-[#C3CAD9] text-[#3d3d3d] cursor-pointer dark:bg-dark545557 dark:text-[#ccc]">
                         @foreach($calendarData->mainMenu as $month => $data)
                             <option value="{{ $month }}" {{ $selectedMonth === $month ? 'selected' : '' }}>
                                 {{ $month }}
@@ -79,7 +79,7 @@
     <input
         id="showCalendar"
         type="text"
-        class="border-0 focus:outline-none focus:border-0 w-full"
+        class="border-0 focus:outline-none focus:border-0 w-full dark:bg-dark373839"
         autocomplete="off"
         readonly
         wire:model="selectedDate"

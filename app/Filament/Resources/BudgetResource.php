@@ -77,14 +77,16 @@ class BudgetResource extends Resource implements HasShieldPermissions
                             ->default(3)
                             ->required(),
 
-                        Select::make('language_id')
-                            ->selectablePlaceholder(false)
-                            ->relationship('language', 'name', function ($query) {
-                                return $query->orderBy('order_column');
-                            })
-                            ->label('Language')
-                            ->required()
-                            ->default(1),
+//                        Select::make('language_id')
+//                            ->selectablePlaceholder(false)
+//                            ->relationship('language', 'name', function ($query) {
+//                                return $query->orderBy('order_column');
+//                            })
+//                            ->label('Language')
+//                            ->required()
+//                            ->default(1),
+
+                    Hidden::make('language_id')->default(1),
 
                     ])->columns(2)->columnSpanFull(),
 
@@ -164,6 +166,9 @@ class BudgetResource extends Resource implements HasShieldPermissions
 
     public static function canEdit(Model $record): bool
     {
+        if ($record->trashed()) {
+            return false;
+        }
         return Auth::user()->hasAnyRole(['super_admin', 'admin']) || (Auth::user()->can('edit_budget') && $record->is_published !== true);
     }
 

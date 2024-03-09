@@ -26,6 +26,14 @@ export default {
             fontFamily: {
               sans: ['Poppins', 'Arial'],
             },
+            backgroundColor: {
+                darkMode: "#292929",
+                dark373839: "#373839",
+                dark545557: "#545557",
+            },
+            stroke: {
+                whiteStrock: "#fff",
+            },
         },
     },
     plugins: [

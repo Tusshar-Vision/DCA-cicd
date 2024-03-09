@@ -8,10 +8,10 @@
         <livewire:widgets.highlights-section :featured-articles="$featuredArticles"/>
     </x-containers.grid-wide>
 
-    {{-- <x-containers.grid-wide class="mt-20 flex flex-col items-center">
-        <x-common.section-heading class="text-center">{{__('home_page.need_to_learn')}}</x-common.section-heading>
-        <livewire:widgets.search-bar-with-button />
-    </x-containers.grid-wide> --}}
+{{--    <x-containers.grid-wide class="mt-20 flex flex-col items-center">--}}
+{{--        <x-common.section-heading class="text-center">{{__('home_page.need_to_learn')}}</x-common.section-heading>--}}
+{{--        <livewire:widgets.search-bar-with-button />--}}
+{{--    </x-containers.grid-wide>--}}
 
     <x-containers.grid-wide class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 mt-12 gap-6">
         <livewire:widgets.latest-videos :latest-videos="$latestVideos"/>

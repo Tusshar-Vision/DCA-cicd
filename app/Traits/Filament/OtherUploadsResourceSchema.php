@@ -55,7 +55,7 @@ trait OtherUploadsResourceSchema
                     ->button()
                     ->visible(fn () => auth()->user()->can(static::getActionPermission()))
                     ->hidden(function(PublishedInitiative $record) {
-                        return $record->is_published === true;
+                        return $record->is_published === true || $record->trashed();
                     })
                     ->action(function (PublishedInitiative $record) {
                         if ($record->is_published === false) {

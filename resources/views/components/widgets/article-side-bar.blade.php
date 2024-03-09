@@ -5,7 +5,7 @@
     $initiative = request()->segment(1);
 @endphp
 
-<div class="flex flex-col rounded bg-visionGray pb-4 lg:mt-10 mt-0">
+<div class="flex flex-col rounded bg-visionGray pb-4 lg:mt-10 mt-0 dark:bg-[#373839] dark:text-white">
     <div class="my-4 mx-6">
         <h4 class="font-bold text-base[16px] py-[16px] border-bottom">Table of Content</h4>
         <div class="h-[220px] customScroll overflow-y-auto">

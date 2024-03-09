@@ -81,7 +81,7 @@ Route::controller(Pages\DownloadsController::class)->group(function () {
     Route::get('/value-added-material', 'renderValueAddedMaterial')->name('value-added-material');
     Route::get('/value-added-material-optional', 'renderValueAddedMaterialOptional')->name('value-added-material-optional');
     Route::get('/quarterly-revision-documents', 'renderQuarterlyRevisionDocument')->name('quarterly-revision-document');
-    Route::get('/year-end-reviews', 'renderYearEndReviews')->name('year-end-reviews');
+    Route::get('/year-end-reviews', 'renderYearEndReviews')->name('year-end-review');
 
     //    Route::get('/weekly-round-table', 'getWeeklyRoundTable')->name('weekly-round-table');
     //    Route::get('/animated-shorts', 'getAnimatedShorts')->name('animated-shorts');

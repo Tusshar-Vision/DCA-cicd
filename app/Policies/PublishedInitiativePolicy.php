@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use App\Models\PublishedInitiative;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class PublishedInitiativePolicy
 {
@@ -41,7 +42,12 @@ class PublishedInitiativePolicy
      */
     public function update(User $user, PublishedInitiative $publishedInitiative): bool
     {
-        return $user->can('edit_weekly::focus');
+        if ($publishedInitiative->trashed()) {
+            return false;
+        }
+        return $user->hasAnyRole(['super_admin', 'admin', 'reviewer', 'weekly_focus_reviewer']) || ($user->can('edit_weekly::focus') && $publishedInitiative->articles->contains(function ($article) use($user) {
+            return $article?->reviewer_id == $user->id || $article->expert_id == $user->id;
+        }));
     }
 
     /**

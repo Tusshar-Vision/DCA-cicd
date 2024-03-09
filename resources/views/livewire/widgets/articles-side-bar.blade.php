@@ -5,7 +5,7 @@
     $currentArticle = request()->segment(4);
 @endphp
 
-<div class="flex flex-col rounded bg-visionGray pb-4">
+<div class="flex flex-col rounded bg-visionGray pb-4 dark:bg-dark373839" x-cloak>
     <div class="my-4 mx-6" x-data="{ expanded: null }" x-init="expanded = 'topic-{{ Str::slug($currentTopic) }}'">
         @foreach ($topics as $topic)
             @php
@@ -65,9 +65,9 @@
                                 @foreach($tableOfContent as $key => $header)
                                     <ul class="ml-6">
                                         <li class="text-clip text-sm">
-                                            <a href="#header-{{$header['id']}}"
+                                            <a href="{{$header['link']}}"
                                                class="cursor-pointer hover:underline">
-                                                    {{ $loop->parent->parent->iteration }}.{{ $loop->parent->iteration }}.{{ $loop->iteration }} {{ strip_tags($header['header']) }}
+                                                    {{ $loop->parent->parent->iteration }}.{{ $loop->parent->iteration }}.{{ $loop->iteration }} {{ strip_tags($header['text']) }}
                                             </a>
                                         </li>
                                     </ul>

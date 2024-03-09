@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Pages;
 
-use App\Actions\Contents;
-use App\DTO\Menu\MainMenuDTO;
 use App\DTO\MonthlyMagazineDTO;
 use App\Enums\Initiatives;
+use App\Helpers\ContentsFromHeadersGenerator;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Bookmark;
 use App\Models\Note;
-use App\Models\PublishedInitiative;
+use App\Services\DownloadService;
 use App\Services\PublishedInitiativeService;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,7 +21,7 @@ class MonthlyMagazineController extends Controller
 
     public function __construct(
         private readonly PublishedInitiativeService $publishedInitiativeService,
-        private readonly PublishedInitiative        $publishedInitiatives,
+        private readonly DownloadService $downloadService
     ) {
         $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE);
     }
@@ -71,12 +70,14 @@ class MonthlyMagazineController extends Controller
             if ($bookmark) $isArticleBookmarked = true;
         }
 
-        $contents = new Contents();
-        $temporaryContent = $contents->fromText($article->content ?? '')->getHandledText();
-        $tableOfContent = $contents->getContentsArray();
+        $toc['toc'] = [];
+        if (!($article->content === '' || $article->content === null))  {
+            $contents = new ContentsFromHeadersGenerator();
+            $toc = $contents->generateTOC($article->content);
 
-        if (!empty($tableOfContent)) {
-            $article->content = $temporaryContent;
+            if (!empty($toc)) {
+                $article->content = $toc['updatedHTMLContent'];
+            }
         }
 
         return View('pages.monthly-magazine', [
@@ -87,7 +88,7 @@ class MonthlyMagazineController extends Controller
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
             "sortedArticlesWithTopics" => $this->monthlyMagazine->sortedArticlesWithTopic,
-            "tableOfContent" => $tableOfContent,
+            "tableOfContent" => $toc['toc'],
             "isArticleBookmarked" => $isArticleBookmarked,
         ]);
     }
@@ -97,38 +98,11 @@ class MonthlyMagazineController extends Controller
         $year = request()->input('year');
         $month = request()->input('month');
 
-        $query = $this->publishedInitiatives
-            ->whereInitiative($this->initiativeId)
-            ->language()
-            ->isPublished();
-
-
-        $years = $query->orderByDesc('published_at')->groupByYear()->keys();
-
-        if ($year) $query->whereYear('published_at', $year);
-        if ($month) $query->whereMonth('published_at', $month);
-
-        $articles = $query->with('articles.topic')
-            ->orderByDesc('published_at')
-            ->groupByYear();
-
-        $data = [];
-
-        foreach ($articles as $year => $groupedInitiatives) {
-            $publishedInitiatives = [];
-
-            foreach ($groupedInitiatives as $initiative) {
-                $publishedInitiatives[] = MainMenuDTO::fromArray($initiative);
-            }
-            $data[$year] = $publishedInitiatives;
-        }
-
-        // $data = collect($data);
-        $data = json_encode($data);
+        $data = $this->downloadService->getMonthlyMagazineArchive($year, $month);
 
         return View('pages.archives.monthly-magazine', [
             "title" => "Monthly Magazine Archives",
-            'data' => [$years, $data]
+            'data' => [$data[0], $data[1]]
         ]);
     }
 }

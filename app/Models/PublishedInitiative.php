@@ -77,6 +77,19 @@ class PublishedInitiative extends Model implements HasMedia
         });
     }
 
+    public static function scopeGroupByYearAndMonth(Builder $query): Collection
+    {
+        return $query->get()->groupBy(function ($item) {
+            // First group by year
+            return $item->published_at->format('Y');
+        })->map(function ($yearGroup) {
+            // Then within each year group, group by month
+            return $yearGroup->groupBy(function ($item) {
+                return $item->published_at->format('F');
+            });
+        });
+    }
+
     /**
      * @param Builder $query
      * @return Builder

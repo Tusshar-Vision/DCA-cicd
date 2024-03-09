@@ -4,7 +4,7 @@
     use App\Enums\Initiatives;
 @endphp
 <div {{ $attributes }} x-cloak>
-    <ul x-data="{ isMenuOpen: null }" class="absolute font-normal bgcolor-FFF shadow w-72 border rounded-md mt-2 py-1 z-50">
+    <ul x-data="{ isMenuOpen: null }" class="absolute font-normal bgcolor-FFF shadow w-72 border rounded-md mt-2 py-1 z-50 dark:bg-dark373839">
         <div class="border-bottom mx-4">
        {{-- <x-buttons.primary button-text="{!! $buttonText !!}" button-link="{{ $buttonLink }}"  />  --}}
        <p class="text-sm flex py-[15px] font-medium">Latest Edition</p>
@@ -21,7 +21,7 @@
                 @if(!empty($subMenu))
                     <li class="relative">
                         <a  href="#"
-                            class="flex items-center justify-between py-3 hover:brand-color hover:bgcolor-gray-F4F6FC firstlabelMenu"
+                            class="flex items-center justify-between py-3 hover:brand-color dark:hover:bg-transparent hover:bgcolor-gray-F4F6FC firstlabelMenu dark:bg-dark373839"
                             @mouseenter="isMenuOpen = 'menu{{ $menuData['initiative_id'] . $loop->iteration }}'"
                             @click.outside="isMenuOpen = null"
                         >

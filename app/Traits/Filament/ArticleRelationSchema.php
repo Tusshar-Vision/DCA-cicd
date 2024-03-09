@@ -248,7 +248,7 @@ trait ArticleRelationSchema
                         'reviewer' => $record->reviewer->name ?? '',
                         'tags' => $record->tags,
                         'body' => $record->latestReview()->review ?? 'No reviewer comments available on this article.',
-                        'content' => $record->content->content,
+                        'content' => $record->content->content ?? '',
                         'sources' => $record->sources
                     ])
                     ->form([
@@ -280,7 +280,7 @@ trait ArticleRelationSchema
                 EditAction::make('Edit')
                     ->iconButton()
                     ->tooltip('Edit')
-                    ->slideOver()
+                    ->url(fn ($record): string => route('filament.admin.resources.articles.edit', ['record' => $record]))
                     ->visible(function (Article $record) {
                         $user = Auth::user();
                         return

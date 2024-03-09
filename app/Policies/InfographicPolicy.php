@@ -41,6 +41,9 @@ class InfographicPolicy
      */
     public function update(User $user, Infographic $infographic): bool
     {
+        if ($infographic->trashed()) {
+            return false;
+        }
         return $user->can('edit_infographics');
     }
 
