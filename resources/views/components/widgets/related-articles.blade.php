@@ -14,7 +14,7 @@
                         <img src="{{ $featuredImage === '' ? 'https://placehold.co/600x400' : $featuredImage }}" width="150px" />
                         <div>
                             <div>
-                                <p class="group-hover:underline text-black text-sm">
+                                <p class="group-hover:underline text-black dark:text-white text-sm">
                                     {{ $article->relatedArticle->title }}
                                 </p>
                             </div>
