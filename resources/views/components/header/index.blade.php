@@ -7,7 +7,7 @@
     <div class="flex items-center justify-between md:w-full">
         <div class="hidden xl:block">
             <a href="{{ route('home') }}" wire:navigate>
-                <img class="w-60 block dark:hidden" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
+                <img class="w-60 dark:hidden" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
                 <img class="w-60 hidden dark:block" src="{{ asset('images/DarkLogo.svg') }}" alt="Dark VisionIAS Logo" />
             </a>
         </div>
