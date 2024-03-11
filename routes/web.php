@@ -25,7 +25,7 @@ Route::get('/videos', [Pages\VideosController::class, 'index'])->name('videos');
 Route::get('/search', [Pages\SearchController::class, 'index'])->name('search');
 Route::get('/search/{query}', [Pages\SearchController::class, 'searchQuery'])->name('search.query');
 
-Route::post('/upload', [\App\Http\Controllers\UploadController::class, 'store'])->name('ckeditor.upload');
+Route::post('/upload', [\App\Http\Controllers\CkEditorController::class, 'store'])->name('ck-editor.upload');
 
 Route::controller(Pages\NewsTodayController::class)
     ->group(

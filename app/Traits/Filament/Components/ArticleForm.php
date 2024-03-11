@@ -194,7 +194,18 @@ trait ArticleForm
                             ->relationship('content')
                             ->hiddenOn('create')
                             ->schema([
-                                CKEditor::make('content'),
+                                CKEditor::make('content')
+                                    ->live()
+                                    ->afterStateUpdated(function (?string $state, ?string $old, Livewire $livewire) {
+                                        if ($livewire->record->content()->exists()) {
+                                            // If content exists, update it
+                                            $livewire->record->content->content = $state; // Assuming 'text' is the attribute where you want to save the content
+                                            $livewire->record->content->save();
+                                        } else {
+                                            // If no content exists, create it
+                                            $livewire->record->content()->create(['content' => $state]); // Again, assuming 'text' is the correct attribute
+                                        }
+                                }),
                             ])->headerActions([
                                 Action::make('Reviews')
                                     ->fillForm(function (Article $record) {

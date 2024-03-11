@@ -275,6 +275,7 @@ trait ArticleRelationSchema
                         ])->columns(),
 
                         CKEditor::make('content')
+                            ->disabled()
                             ->columnSpanFull(),
 
                         RichEditor::make('body')
