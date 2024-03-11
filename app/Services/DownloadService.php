@@ -39,7 +39,7 @@ readonly class DownloadService
             ->language()
             ->isPublished()
             ->hasPublishedArticle()
-            ->orderBy('published_at', 'desc');;
+            ->orderBy('published_at', 'desc');
 
         $years = $query->groupByYear()->keys();
 

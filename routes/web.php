@@ -64,8 +64,8 @@ Route::controller(Pages\MonthlyMagazineController::class)
                 ->group(
                     function () {
                         Route::get('/', 'index')->name('monthly-magazine');
-                        Route::get('/{date}/{topic}/{article_slug}', 'renderArticle')->name('monthly-magazine.article');
                         Route::get('/{date}/{topic}/news-in-shorts', 'newsInShorts')->name('monthly-magazine.newsInShorts');
+                        Route::get('/{date}/{topic}/{article_slug}', 'renderArticle')->name('monthly-magazine.article');
                         Route::get('/archive', 'archive')->name('monthly-magazine.archive');
                     }
                 );
