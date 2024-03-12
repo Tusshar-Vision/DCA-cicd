@@ -340,6 +340,7 @@ trait ArticleRelationSchema
                             ->relationship('content')
                             ->schema([
                                 CKEditor::make('content')
+                                    ->disabled()
                                     ->columnSpanFull(),
                             ])->collapsible(),
 

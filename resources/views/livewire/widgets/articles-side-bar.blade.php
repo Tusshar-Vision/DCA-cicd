@@ -80,7 +80,7 @@
                                 @if (!$newsInShort)
                                     <li class="text-clip text-sm">
                                         <a href="{{ route('monthly-magazine.newsInShorts', ['date' => $date, 'topic' => $topic]) }}"
-                                           class="cursor-pointer hover:underline {{ request()->is(`monthly-magazine/{$date}/{$topic}/news-in-shorts`) ? 'font-bold' : '' }}" wire:navigate>
+                                           class="cursor-pointer hover:underline {{ request()->is('monthly-magazine/*/' . $topic  . '/news-in-shorts') ? 'font-bold' : '' }}" wire:navigate>
                                             {{ $loop->parent->iteration }}.{{ $loop->iteration }} News in Shorts
                                         </a>
                                     </li>
