@@ -23,7 +23,7 @@
                     {{
                         $currentInitiative->articles[$previousArticleIndex]->shortTitle
                         ??
-                        ($articleURL === null) ? 'News in Shorts' : $currentInitiative->articles[$previousArticleIndex]->title
+                        (($articleURL === null) ? 'News in Shorts' : $currentInitiative->articles[$previousArticleIndex]->title)
                     }}
                 </span>
             </a>
@@ -89,7 +89,7 @@
                     {{
                         $currentInitiative->articles[$nextArticleIndex]->shortTitle
                         ??
-                        ($articleURL === null) ? 'News in Shorts' : $currentInitiative->articles[$nextArticleIndex]->title
+                        (($articleURL === null) ? 'News in Shorts' : $currentInitiative->articles[$nextArticleIndex]->title)
                     }}
                 </span>
             </a>
