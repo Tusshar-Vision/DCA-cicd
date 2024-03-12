@@ -283,6 +283,7 @@ trait ArticleResourceSchema
                             TextInput::make('reviewer')->disabled(),
                         ])->columns(),
                         CKEditor::make('content')
+                            ->disabled()
                             ->columnSpanFull(),
 
                         RichEditor::make('body')
@@ -331,7 +332,7 @@ trait ArticleResourceSchema
                         Section::make('Article Content')
                             ->relationship('content')
                             ->schema([
-                                CKEditor::make('content'),
+                                CKEditor::make('content')->disabled(),
                         ])->collapsible(),
 
                         Section::make('Review Comment')->schema([

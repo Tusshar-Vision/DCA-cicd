@@ -196,7 +196,8 @@
     <div class="w-3/4">
         <div class="xl:hidden block">
             <a href="{{ route('home') }}" wire:navigate>
-                <img width="112px" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
+                <img width="112px" class="dark:hidden" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
+                <img width="112px" class="hidden dark:block" src="{{ asset('images/DarkLogo.svg') }}" alt="Dark VisionIAS Logo" />
             </a>
         </div>
         <ul class="items-center hidden xl:block">

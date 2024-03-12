@@ -62,7 +62,6 @@ class MonthlyMagazineController extends Controller
         $note = null;
         $isArticleBookmarked = false;
 
-
         if (Auth::guard('cognito')->check()) {
             $noteAvailable = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->count() > 0 ? true : false;
             $note = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
@@ -79,6 +78,40 @@ class MonthlyMagazineController extends Controller
                 $article->content = $toc['updatedHTMLContent'];
             }
         }
+
+        return View('pages.monthly-magazine', [
+            "publishedDate" => $this->monthlyMagazine->publishedAt,
+            "articles" => $this->monthlyMagazine,
+            "article" => $article,
+            "topics" => $this->monthlyMagazine->topics,
+            "noteAvailable"  => $noteAvailable,
+            "note" => $note,
+            "sortedArticlesWithTopics" => $this->monthlyMagazine->sortedArticlesWithTopic,
+            "tableOfContent" => $toc['toc'],
+            "isArticleBookmarked" => $isArticleBookmarked,
+        ]);
+    }
+
+    public function newsInShorts($date, string $topic) {
+        $this->monthlyMagazine = MonthlyMagazineDTO::fromModel(
+            $this->publishedInitiativeService
+                ->getLatest($this->initiativeId, $date)
+        );
+
+        $article = $this->monthlyMagazine->getShortNewsArticles();
+
+        $noteAvailable = null;
+        $note = null;
+        $isArticleBookmarked = false;
+
+        if (Auth::guard('cognito')->check()) {
+            $noteAvailable = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->count() > 0 ? true : false;
+            $note = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
+            $bookmark =  Bookmark::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
+            if ($bookmark) $isArticleBookmarked = true;
+        }
+
+        $toc['toc'] = [];
 
         return View('pages.monthly-magazine', [
             "publishedDate" => $this->monthlyMagazine->publishedAt,

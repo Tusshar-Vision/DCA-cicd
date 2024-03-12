@@ -1,6 +1,8 @@
 export default function ckEditorComponent({
-    state,
-}) {
+    state
+}, disabled) {
+    const component = this;
+
     return {
         state,
 
@@ -48,14 +50,23 @@ export default function ckEditorComponent({
                     language: "en",
                     image: {toolbar: ["imageTextAlternative", "toggleImageCaption", "imageStyle:inline", "imageStyle:block", "imageStyle:side"]},
                     table: {contentToolbar: ["tableColumn", "tableRow", "mergeTableCells", "tableCellProperties", "tableProperties"]},
+                    autosave: {
+                        waitingTime: 1000,
+                        save: (editor) => {
+                            return new Promise((resolve) => {
+                                this.state = editor.getData();
+                                resolve();
+                            });
+                        }
+                    },
                 })
                 .then(editor => {
+                    displayStatus( editor );
                     editor.setData(this.state ?? '');
 
-                    // Listen for changes in the editor and update Livewire data
-                    editor.model.document.on('change:data', () => {
-                        this.state = editor.getData();
-                    });
+                    if (disabled) {
+                        editor.enableReadOnlyMode( 'my-feature-id' );
+                    }
 
                     const prefersDark = document.querySelector('html').classList.contains('dark');
                     const editorDiv = document.querySelector('.ck-editor');
@@ -108,4 +119,18 @@ function SimpleUploadAdapterPlugin(editor) {
     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
         return new SimpleUploadAdapter(loader);
     };
+}
+
+// Update the "Status: Saving..." information.
+function displayStatus( editor ) {
+    const pendingActions = editor.plugins.get( 'PendingActions' );
+    const statusIndicator = document.querySelector( '#snippet-autosave-status' );
+
+    pendingActions.on( 'change:hasAny', ( evt, propertyName, newValue ) => {
+        if ( newValue ) {
+            statusIndicator.classList.add( 'busy' );
+        } else {
+            statusIndicator.classList.remove( 'busy' );
+        }
+    } );
 }

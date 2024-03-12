@@ -62,7 +62,7 @@ class NewsTodayController extends Controller
             $initiativeService->getMenuData(Initiatives::NEWS_TODAY)
         );
 
-        $article = $this->newsToday->getArticleInNews();
+        $article = $this->newsToday->getShortNewsArticles();
 
         $noteAvailable = null;
         $note = null;
@@ -102,7 +102,7 @@ class NewsTodayController extends Controller
         );
 
         $article = $this->newsToday->getArticleFromSlug($slug);
-        $isAlsoInNews = $this->newsToday->getArticleInNews();
+        $isAlsoInNews = $this->newsToday->getShortNewsArticles();
 
         $noteAvailable = null;
         $note = null;

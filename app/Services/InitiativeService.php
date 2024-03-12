@@ -48,7 +48,6 @@ readonly class InitiativeService
                 // Eager load published articles
                 $query->isPublished()->ordered();
             }])
-            ->limit(10)
             ->orderByDesc('published_at')
             ->groupByMonth();
 

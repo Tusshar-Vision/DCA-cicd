@@ -268,7 +268,7 @@ $gray-686E70: #686E70;
     width: 100%;
     min-height: 50px;
     background-color: #fff;
-    top: 50%;
+    top: 100%;
     left: 0;
     width: 100%;
     position: absolute;
@@ -3461,9 +3461,25 @@ iframe {
     }
   }
 
+  .vi-highlights-sidebar { 
+    .vi-announcement-card {
+      ul {
+        li { 
+          .hidden-text {
+            background: #545557;
+            color: #fff;
+            &::after{
+              border-bottom-color: #545557;
+            }
+          }
+        }
+      }
+    }
+  }
 
 }
 
 .large-text {
     font-size: 1.2rem;
 }
+

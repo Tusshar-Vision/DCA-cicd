@@ -52,7 +52,6 @@ class ShortArticlesRelationManager extends RelationManager
                                 TextInput::make('title')->required(),
                             ])->columns(2),
 
-
                             Group::make()->schema([
 
                                 Select::make('author_id')

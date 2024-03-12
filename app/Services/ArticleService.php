@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 readonly class ArticleService
 {
@@ -56,7 +57,7 @@ readonly class ArticleService
     }
 
 
-    public static function getArticleUrlFromSlug($slug): string
+    public static function getArticleUrlFromSlug($slug): string|null
     {
         // Use caching to avoid duplicated queries
         return Cache::remember("article_url_{$slug}", 60, function () use ($slug) {
@@ -70,7 +71,7 @@ readonly class ArticleService
             } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
                 Log::error("Article with slug '{$slug}' not found.");
                 // Handle not found article by returning a default URL
-                return '/article-not-found'; // Example default URL or could throw an exception
+                return null; // Example default URL or could throw an exception
             }
         });
     }
