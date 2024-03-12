@@ -194,11 +194,20 @@
 
 <div class="flex py-[20px] bg-[#fff] items-center justify-between relative dark:bg-darkMode dark:text-white">
     <div class="w-3/4">
-        <div class="xl:hidden block">
-            <a href="{{ route('home') }}" wire:navigate>
-                <img width="112px" class="dark:hidden" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
-                <img width="112px" class="hidden dark:block" src="{{ asset('images/DarkLogo.svg') }}" alt="Dark VisionIAS Logo" />
+        <div class="flex justify-start items-center">
+            <a href="javascript:void(0)" onclick="openNav()" class="mr-[15px] xl:hidden block">
+                <div class="hamMenu rotate-180">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </a>
+            <div class="xl:hidden block">
+                <a href="{{ route('home') }}" wire:navigate>
+                    <img width="112px" class="dark:hidden" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
+                    <img width="112px" class="hidden dark:block" src="{{ asset('images/DarkLogo.svg') }}" alt="Dark VisionIAS Logo" />
+                </a>
+            </div>
         </div>
         <ul class="items-center hidden xl:block">
             <li class="font-semibold pr-4 xl:pr-6 float-left">
@@ -206,7 +215,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path
                             d="M19 21.0002H5C4.44772 21.0002 4 20.5525 4 20.0002V11.0002H1L11.3273 1.61174C11.7087 1.265 12.2913 1.265 12.6727 1.61174L23 11.0002H20V20.0002C20 20.5525 19.5523 21.0002 19 21.0002ZM13 19.0002H18V9.15769L12 3.70314L6 9.15769V19.0002H11V13.0002H13V19.0002Z"
-                            fill="#005FAF" />
+                            fill="#005FAF" class="dark:fill-white" />
                     </svg>
                 </a>
             </li>
@@ -297,7 +306,7 @@
 
     <div class="login-wrapper">
         <ul class="flex items-center">
-            <li class="pr-4">
+            <li class="pr-1 lg:pr-4">
                 <a href="javascript:void(0)" onclick="openSearch()">
                     {!! \App\Helpers\SvgIconsHelper::getSvgIcon('search-open') !!}
                 </a>
@@ -305,7 +314,7 @@
             @auth('cognito')
                 <div class="flex items-center font-bold cursor-pointer user-style" x-data="{ isUserMenuOpen: false }"
                     @click="isUserMenuOpen = true">
-                    <div class="user-greet min-w-[80px] md:w-auto">
+                    <div class="user-greet min-w-[80px] md:w-auto hidden lg:block">
                         <p>Welcome,</p>
                         <div class="dark:text-white">{{ auth('cognito')->user()->first_name ?? 'No Name' }}</div>
                     </div>
@@ -328,15 +337,7 @@
                     </button>
                 </li>
             @endauth
-                <li class="ml-[15px] xl:hidden block">
-                    <a href="javascript:void(0)" onclick="openNav()">
-                        <div class="hamMenu">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </a>
-                </li>
+                
         </ul>
     </div>
 
