@@ -3477,7 +3477,51 @@ iframe {
     }
   }
 
+  .tab-item.active {
+    color: #000000;
+  }
+
+  .vi-user-profile-section {
+    .vi-user-profile-tab-wrapper {
+      .vi-profile-tab-list {
+        .tab-item.active{
+          color: #fff;    
+        }
+      }
+    }
+  }
+
+  .student-search-field-container {
+    .student-search-field {
+      &:focus{
+        color: #000;
+      }
+    }
+  }
+
+  .vi-article-card.vi-inline {
+    .vi-article { 
+      p{
+        color: #ccc;
+      }
+      .vi-article-date-name{
+        color: #545557;
+      }
+    }
+  }
+
+  .con-title{
+    color: #ccc;
+  }
+
+  .con-months{
+    li{
+      color: #9c9c9c;
+    }
+  }
+
 }
+
 
 .large-text {
     font-size: 1.2rem;

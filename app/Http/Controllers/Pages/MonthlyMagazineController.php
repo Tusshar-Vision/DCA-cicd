@@ -98,7 +98,7 @@ class MonthlyMagazineController extends Controller
                 ->getLatest($this->initiativeId, $date)
         );
 
-        $article = $this->monthlyMagazine->getShortNewsArticles();
+        $article = $this->monthlyMagazine->getShortNewsArticles($topic);
 
         $noteAvailable = null;
         $note = null;

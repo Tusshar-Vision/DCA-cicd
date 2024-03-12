@@ -24,7 +24,6 @@ class MonthlyMagazineDTO extends PublishedInitiativeDTO
                 $firstShortArticle = $shortArticles->first();
                 // Update the first short article with custom slug and title
                 $firstShortArticle->slug = '/monthly-magazine/' . $this->publishedAt . '/' . $firstShortArticle->topic . '/news-in-shorts';
-                $firstShortArticle->title = 'News in Shorts';
 
                 // Remove other short articles except the first one
                 $topic = $topic->filter(function ($article) use ($firstShortArticle) {

@@ -3,6 +3,7 @@
 
 @php
     $inShort = request()->is('monthly-magazine/*/news-in-shorts');
+    $currentTopic = request()->segment(3);
 @endphp
 
 @section('header')
@@ -36,7 +37,7 @@
             </div>
 
             @if($inShort)
-                <x-inshort-article :articles="$articles->shortArticles" class="m-0" />
+                <x-inshort-article :articles="$articles->shortArticles->where('topic', $currentTopic)" class="m-0" />
             @else
                 <x-article-content :article="$article" class="m-0" />
             @endif

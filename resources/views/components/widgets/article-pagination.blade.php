@@ -2,10 +2,13 @@
 
 <div class="flex justify-between items-center">
     @if($previousArticleIndex !== null)
+        @php
+            $articleURL = ArticleService::getArticleUrlFromSlug($currentInitiative->articles[$previousArticleIndex]->slug);
+        @endphp
         <div class="flex flex-col cursor-pointer w-3/6 md:w-2/6">
             <a wire:navigate
                id="prev-article-btn"
-               href="{{ ArticleService::getArticleUrlFromSlug($currentInitiative->articles[$previousArticleIndex]->slug) ?? $currentInitiative->articles[$previousArticleIndex]->slug }}"
+               href="{{  $articleURL ?? $currentInitiative->articles[$previousArticleIndex]->slug }}"
                class="items-center"
             >
                 <div class="flex-col text-left md:flex">
@@ -20,7 +23,7 @@
                     {{
                         $currentInitiative->articles[$previousArticleIndex]->shortTitle
                         ??
-                        $currentInitiative->articles[$previousArticleIndex]->title
+                        ($articleURL === null) ? 'News in Shorts' : $currentInitiative->articles[$previousArticleIndex]->title
                     }}
                 </span>
             </a>
@@ -70,7 +73,10 @@
 
     @if($nextArticleIndex !== null)
         <div class="flex flex-col cursor-pointer w-3/6 md:w-2/6 {{ ($previousArticleIndex === null && $previousPublishedInitiative === null) ? 'noPrevious' : '' }}">
-            <a wire:navigate id="nxt-article-btn" href="{{ ArticleService::getArticleUrlFromSlug($currentInitiative->articles[$nextArticleIndex]->slug) ?? $currentInitiative->articles[$nextArticleIndex]->slug }}">
+            @php
+                $articleURL = ArticleService::getArticleUrlFromSlug($currentInitiative->articles[$nextArticleIndex]->slug);
+            @endphp
+            <a wire:navigate id="nxt-article-btn" href="{{ $articleURL ?? $currentInitiative->articles[$nextArticleIndex]->slug }}">
                 <div class="flex-col text-right md:flex justify-end">
                     <span class="flex justify-end mb-2">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="black" class="dark:fill-white" xmlns="http://www.w3.org/2000/svg">
@@ -83,7 +89,7 @@
                     {{
                         $currentInitiative->articles[$nextArticleIndex]->shortTitle
                         ??
-                        $currentInitiative->articles[$nextArticleIndex]->title
+                        ($articleURL === null) ? 'News in Shorts' : $currentInitiative->articles[$nextArticleIndex]->title
                     }}
                 </span>
             </a>
