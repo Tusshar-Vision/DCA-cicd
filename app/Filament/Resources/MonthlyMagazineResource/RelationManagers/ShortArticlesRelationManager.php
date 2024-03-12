@@ -1,35 +1,40 @@
 <?php
 
-namespace App\Traits\Filament\Components;
+namespace App\Filament\Resources\MonthlyMagazineResource\RelationManagers;
 
 use App\Enums\Initiatives;
-use App\Filament\Components\Repeater;
 use App\Forms\Components\CKEditor;
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
+use App\Traits\Filament\ArticleRelationSchema;
+use Filament\Forms;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\TagsInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
+use Filament\Resources\RelationManagers\RelationManager;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component as Livewire;
-use RalphJSmit\Filament\SEO\SEO;
 
-trait ArticleForm
+class ShortArticlesRelationManager extends RelationManager
 {
-    public function articleForm(Form $form): Form {
+    protected static string $relationship = 'shortArticles';
 
+    protected static ?string $title = 'News in Short';
+
+    use ArticleRelationSchema;
+
+    public function form(Form $form): Form
+    {
         return $form
             ->schema([
 
@@ -40,31 +45,7 @@ trait ArticleForm
                         Section::make('General')->schema([
 
                             Group::make()->schema([
-
-                                Group::make()->schema([
-                                    TextInput::make('title')->required(),
-                                    TextInput::make('short_title')->maxLength(50)->label('Short Title'),
-                                    Textarea::make('excerpt')->label('Description'),
-                                ])->columnSpan(1),
-
-                                SpatieMediaLibraryFileUpload::make('featured_image')
-                                    ->imageEditor()
-                                    ->imageEditorAspectRatios([
-                                        '16:9',
-                                        '4:3',
-                                        '1:1',
-                                    ])
-                                    ->acceptedFileTypes([
-                                        'image/jpeg',
-                                        'image/png',
-                                        'image/svg',
-                                        'image/webp'
-                                    ])
-                                    ->disk('s3_public')
-                                    ->collection('article-featured-image')
-                                    ->responsiveImages()
-                                    ->conversion('thumb'),
-
+                                TextInput::make('title')->required(),
                             ])->columns(2),
 
                             Group::make()->schema([
@@ -133,11 +114,12 @@ trait ArticleForm
                             Group::make()->schema([
 
                                 Hidden::make('initiative_id')->default(function(Livewire $livewire) {
-                                    return $livewire?->ownerRecord?->initiative_id;
+                                    return $livewire->ownerRecord->initiative_id;
                                 }),
 
+                                Hidden::make('is_short')->default(true),
+
                                 Select::make('initiative_topic_id')
-                                    ->searchable()
                                     ->relationship('topic', 'name')
                                     ->required()
                                     ->label('Subject')
@@ -151,7 +133,6 @@ trait ArticleForm
                                     }),
 
                                 Select::make('topic_section_id')
-                                    ->searchable()
                                     ->relationship('topicSection', 'name', function ($query, callable $get) {
                                         $topic = $get('initiative_topic_id');
 
@@ -167,7 +148,6 @@ trait ArticleForm
                                     }),
 
                                 Select::make('topic_sub_section_id')
-                                    ->searchable()
                                     ->relationship('topicSubSection', 'name', function ($query, callable $get) {
                                         $topicSectionId = $get('topic_section_id');
 
@@ -188,24 +168,15 @@ trait ArticleForm
 
                             ])->columns(1)
 
-                        ])->columns(2)->collapsible(),
+                        ])
+                            ->columns(2)
+                            ->collapsible(),
 
                         Section::make('Content')
                             ->relationship('content')
-                            ->hiddenOn('create')
                             ->schema([
-                                CKEditor::make('content')
-                                    ->live()
-                                    ->afterStateUpdated(function (?string $state, ?string $old, Livewire $livewire) {
-                                        if ($livewire->record->content()->exists()) {
-                                            // If content exists, update it
-                                            $livewire->record->content->content = $state; // Assuming 'text' is the attribute where you want to save the content
-                                            $livewire->record->content->save();
-                                        } else {
-                                            // If no content exists, create it
-                                            $livewire->record->content()->create(['content' => $state]); // Again, assuming 'text' is the correct attribute
-                                        }
-                                }),
+                                CKEditor::make('content'),
+
                             ])->headerActions([
                                 Action::make('Reviews')
                                     ->fillForm(function (Article $record) {
@@ -244,61 +215,6 @@ trait ArticleForm
                             ->separator(',')
                             ->placeholder('New Source')
                     ]),
-
-                    Tabs\Tab::make('Related Articles')->schema([
-                        Repeater::make('articles')
-                            ->label('')
-                            ->relationship('relatedArticles')
-                            ->simple(
-                                Select::make('related_article_id')
-                                    ->searchable()
-                                    ->relationship('relatedArticle', 'title')
-                                    ->required()
-                            )
-                            ->orderColumn('order_column')
-                            ->maxItems(4)
-                            ->reorderable()
-                            ->addActionLabel('Add article')
-                    ]),
-
-                    Tabs\Tab::make('Related Videos')->schema([
-                        Repeater::make('videos')
-                            ->label('')
-                            ->relationship('relatedVideos')
-                            ->simple(
-                                Select::make('video_id')
-                                    ->searchable()
-                                    ->relationship('video', 'title')
-                                    ->required(),
-                            )
-                            ->orderColumn('order_column')
-                            ->maxItems(5)
-                            ->reorderable()
-                            ->addActionLabel('Add video')
-                    ]),
-
-                    Tabs\Tab::make('Related Terms')->schema([
-                        Repeater::make('terms')
-                            ->label('')
-                            ->relationship('relatedTerms')
-                            ->simple(
-                                Select::make('related_term_id')
-                                    ->searchable()
-                                    ->relationship('term', 'term')
-                                    ->required(),
-                            )
-                            ->orderColumn('order_column')
-                            ->maxItems(3)
-                            ->reorderable()
-                            ->addActionLabel('Add term')
-                    ]),
-
-                    Tabs\Tab::make('SEO')->schema([
-                        Section::make('Meta Information')->schema([
-                            SEO::make()
-                        ])
-                    ]),
-
                 ])->columnSpanFull(),
             ]);
     }

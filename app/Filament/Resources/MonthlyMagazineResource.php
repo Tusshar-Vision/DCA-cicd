@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Enums\Initiatives;
 use App\Filament\Resources\MonthlyMagazineResource\Pages;
 use App\Filament\Resources\MonthlyMagazineResource\RelationManagers\ArticlesRelationManager;
+use App\Filament\Resources\MonthlyMagazineResource\RelationManagers\ShortArticlesRelationManager;
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
 use App\Models\PublishedInitiative;
@@ -183,7 +184,8 @@ class MonthlyMagazineResource extends Resource
     public static function getRelations(): array
     {
         return [
-            ArticlesRelationManager::class
+            ArticlesRelationManager::class,
+            ShortArticlesRelationManager::class
         ];
     }
 

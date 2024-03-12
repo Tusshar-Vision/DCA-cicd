@@ -2,6 +2,7 @@
 
 namespace App\Traits\Filament;
 
+use App\Filament\Resources\WeeklyFocusResource;
 use App\Forms\Components\CKEditor;
 use App\Jobs\GenerateArticlePDF;
 use App\Models\Article;
@@ -62,6 +63,15 @@ trait ArticleRelationSchema
                     ->label($isReordering ? 'Disable reordering' : 'Enable reordering'),
             )
             ->defaultSort('order_column')
+            ->defaultGroup(
+                static::class !== WeeklyFocusResource\RelationManagers\ArticlesRelationManager::class
+                    ?
+                \Filament\Tables\Grouping\Group::make('topic.name')
+                    ->titlePrefixedWithLabel(false)
+                    ->collapsible()
+                    :
+                    null
+            )
             ->recordTitleAttribute('title')
             ->columns([
                 TextColumn::make('id')
@@ -265,6 +275,7 @@ trait ArticleRelationSchema
                         ])->columns(),
 
                         CKEditor::make('content')
+                            ->disabled()
                             ->columnSpanFull(),
 
                         RichEditor::make('body')
@@ -329,6 +340,7 @@ trait ArticleRelationSchema
                             ->relationship('content')
                             ->schema([
                                 CKEditor::make('content')
+                                    ->disabled()
                                     ->columnSpanFull(),
                             ])->collapsible(),
 

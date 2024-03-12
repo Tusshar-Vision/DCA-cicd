@@ -3,6 +3,7 @@
     use App\Services\ArticleService;
     $currentTopic = request()->segment(3);
     $currentArticle = request()->segment(4);
+    $date = request()->segment(2);
 @endphp
 
 <div class="flex flex-col rounded bg-visionGray pb-4 dark:bg-dark373839" x-cloak>
@@ -11,6 +12,7 @@
             @php
                 $topicSlug = Str::slug(str_replace('&', 'and', $topic));
                 $topicHeading = $this->formatString($topic);
+                $newsInShort = false;
             @endphp
             <div class="mt-4">
                 <button class="flex justify-between items-center w-full" @click="
@@ -56,22 +58,34 @@
                 <div x-show="expanded === 'topic-{{ $topicSlug }}'" x-collapse>
                     <ul class="mt-2 space-y-4 ml-6">
                         @foreach ($articles[$topic] as $article)
-                            <li class="text-clip text-sm">
-                                <a href="{{ ArticleService::getArticleUrlFromSlug($article->slug) }}" class="cursor-pointer hover:underline {{ ($article->slug === $currentArticle) ? 'font-bold' : '' }}" wire:navigate>
-                                    {{ $loop->parent->iteration }}.{{ $loop->iteration }} {{ $article->shortTitle ?? $article->title }}
-                                </a>
-                            </li>
-                            @if($article->slug === $currentArticle)
-                                @foreach($tableOfContent as $key => $header)
-                                    <ul class="ml-6">
-                                        <li class="text-clip text-sm">
-                                            <a href="{{$header['link']}}"
-                                               class="cursor-pointer hover:underline">
+                            @if (!$article->is_short)
+                                <li class="text-clip text-sm">
+                                    <a href="{{ ArticleService::getArticleUrlFromSlug($article->slug) }}" class="cursor-pointer hover:underline {{ ($article->slug === $currentArticle) ? 'font-bold' : '' }}" wire:navigate>
+                                        {{ $loop->parent->iteration }}.{{ $loop->iteration }} {{ $article->shortTitle ?? $article->title }}
+                                    </a>
+                                </li>
+                                @if($article->slug === $currentArticle)
+                                    @foreach($tableOfContent as $key => $header)
+                                        <ul class="ml-6">
+                                            <li class="text-clip text-sm">
+                                                <a href="{{$header['link']}}"
+                                                   class="cursor-pointer hover:underline">
                                                     {{ $loop->parent->parent->iteration }}.{{ $loop->parent->iteration }}.{{ $loop->iteration }} {{ strip_tags($header['text']) }}
-                                            </a>
-                                        </li>
-                                    </ul>
-                                @endforeach
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    @endforeach
+                                @endif
+                            @else
+                                @if (!$newsInShort)
+                                    <li class="text-clip text-sm">
+                                        <a href="{{ route('monthly-magazine.newsInShorts', ['date' => $date, 'topic' => $topic]) }}"
+                                           class="cursor-pointer hover:underline {{ request()->is('monthly-magazine/*/' . $topic  . '/news-in-shorts') ? 'font-bold' : '' }}" wire:navigate>
+                                            {{ $loop->parent->iteration }}.{{ $loop->iteration }} News in Shorts
+                                        </a>
+                                    </li>
+                                    @php $newsInShort = true; @endphp
+                                @endif
                             @endif
                         @endforeach
                     </ul>
