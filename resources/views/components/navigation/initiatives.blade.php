@@ -307,7 +307,7 @@
                     @click="isUserMenuOpen = true">
                     <div class="user-greet min-w-[80px] md:w-auto">
                         <p>Welcome,</p>
-                        <div>{{ auth('cognito')->user()->first_name ?? 'No Name' }}</div>
+                        <div class="dark:text-white">{{ auth('cognito')->user()->first_name ?? 'No Name' }}</div>
                     </div>
                     <span>{{ mb_substr(auth('cognito')->user()->first_name, 0, 1) ?? 'X' }}</span>
                     <x-auth.user-dropdown-menu x-show="isUserMenuOpen" />
