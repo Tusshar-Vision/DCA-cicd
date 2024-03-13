@@ -12,6 +12,7 @@ class ArticlePagination extends Component
 {
     public ?string $nextArticleIndex = null;
     public ?string $previousArticleIndex = null;
+    public string $shortArticlesHeading = 'News In Shorts';
     /**
      * Create a new component instance.
      */
@@ -41,6 +42,10 @@ class ArticlePagination extends Component
                     $this->nextArticleIndex = null;
                 }
             }
+        }
+
+        if ($this->currentInitiative->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)) {
+            $this->shortArticlesHeading = 'Also In News';
         }
     }
 

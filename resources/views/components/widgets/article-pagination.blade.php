@@ -8,7 +8,7 @@
         <div class="flex flex-col cursor-pointer w-3/6 md:w-2/6">
             <a wire:navigate
                id="prev-article-btn"
-               href="{{  $articleURL ?? $currentInitiative->articles[$previousArticleIndex]->slug }}"
+               href="{{ $articleURL ?? $currentInitiative->articles[$previousArticleIndex]->slug }}"
                class="items-center"
             >
                 <div class="flex-col text-left md:flex">
@@ -23,7 +23,7 @@
                     {{
                         $currentInitiative->articles[$previousArticleIndex]->shortTitle
                         ??
-                        ($articleURL === null) ? 'News in Shorts' : $currentInitiative->articles[$previousArticleIndex]->title
+                        (($articleURL === null) ? $shortArticlesHeading : $currentInitiative->articles[$previousArticleIndex]->title)
                     }}
                 </span>
             </a>
@@ -89,7 +89,7 @@
                     {{
                         $currentInitiative->articles[$nextArticleIndex]->shortTitle
                         ??
-                        ($articleURL === null) ? 'News in Shorts' : $currentInitiative->articles[$nextArticleIndex]->title
+                        (($articleURL === null) ? $shortArticlesHeading : $currentInitiative->articles[$nextArticleIndex]->title)
                     }}
                 </span>
             </a>

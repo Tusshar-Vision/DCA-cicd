@@ -11,12 +11,8 @@ class MonthlyMagazineDTO extends PublishedInitiativeDTO
 {
     public array $topics;
     public Collection $sortedArticlesWithTopic;
-
     private function sortArticlesWithTopic(): void
     {
-        $articlesCollection = collect($this->articles->all())->merge($this->shortArticles->all());
-        $this->sortedArticlesWithTopic = $articlesCollection->groupBy('topic');
-
         $this->sortedArticlesWithTopic->transform(function ($topic) {
             // Filter out the short articles but keep the first one
             $shortArticles = $topic->where('is_short', true);
@@ -57,11 +53,10 @@ class MonthlyMagazineDTO extends PublishedInitiativeDTO
             $publishedInitiative->media->first()
         );
 
-        foreach ($dto->articles as $article) {
-            $dto->topics[] = $article->topic;
-        }
+        $articlesCollection = collect($dto->articles->all())->merge($dto->shortArticles->all());
+        $dto->sortedArticlesWithTopic = $articlesCollection->groupBy('topic');
 
-        $dto->topics = array_unique($dto->topics);
+        $dto->topics = $dto->sortedArticlesWithTopic->keys()->toArray();
         $dto->sortArticlesWithTopic();
 
         return $dto;

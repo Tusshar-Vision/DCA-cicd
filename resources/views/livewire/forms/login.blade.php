@@ -1,6 +1,6 @@
 @use('App\Helpers\SvgIconsHelper')
 
-<div class="flex flex-col xl:flex-row md:min-h-[680px] min-h-[100vh] justify-center text-center items-stretch bg-white py-[50px] xl:py-0">
+<div class="flex flex-col xl:flex-row md:min-h-[680px] min-h-[100vh] justify-center text-center items-stretch bg-white py-[50px] xl:py-0 dark:bg-dark373839">
     <div class="w-full xl:w-6/12 flex items-center bg-white xl:bg-[#F5F7F8] dark:bg-dark545557 mb-0">
         <dotlottie-player
             src="https://lottie.host/efd12853-25b1-4c36-bf27-3d0efb0eea46/mtnAb2oVRI.json"
