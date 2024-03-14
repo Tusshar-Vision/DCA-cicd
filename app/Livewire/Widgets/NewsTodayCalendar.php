@@ -8,6 +8,7 @@ use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Services\InitiativeService;
 use App\Services\PublishedInitiativeService;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Request;
 use Livewire\Component;
@@ -17,6 +18,7 @@ class NewsTodayCalendar extends Component
     public NewsTodayMenuDTO $calendarData;
     public $selectedDate;
     public $selectedMonth;
+    public $selectedYear;
 
     public function mount(NewsTodayMenuDTO $calendarData): void
     {
@@ -29,6 +31,17 @@ class NewsTodayCalendar extends Component
 
         $this->selectedDate = $datePart;
         $this->selectedMonth = $calendarData->currentMonth;
+        $this->selectedYear = $calendarData->currentYear;
+    }
+
+    public function nextMonth(): void
+    {
+        $this->selectedMonth = Carbon::parse($this->selectedMonth)->addMonth()->format('F');
+    }
+
+    public function previousMonth(): void
+    {
+        $this->selectedMonth = Carbon::parse($this->selectedMonth)->subMonth()->format('F');
     }
 
     public function render(): View

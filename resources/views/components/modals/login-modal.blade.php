@@ -22,7 +22,7 @@
                 </button>
 
 
-                <div class="mt-3 text-center sm:mt-0 sm:text-left flex-grow w-full">
+                <div class="text-center sm:mt-0 sm:text-left flex-grow w-full dark:bg-black">
                     {{ $slot }}
                 </div>
 

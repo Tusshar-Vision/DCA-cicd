@@ -39,9 +39,15 @@ abstract class PublishedInitiativeDTO extends Data
         return $this->articles->where('slug', '=', $slug)->first() ?? throw new ArticleNotFoundException('There are no articles');
     }
 
-    public function getArticleInNews()
+    public function getShortNewsArticles($topic = null)
     {
-        return $this->shortArticles->first();
+        $query = $this->shortArticles;
+
+        if ($topic !== null) {
+            return $query->where('topic', $topic)->first();
+        }
+
+        return $query->first();
     }
 
     public function getArticleIndexFromSlug($slug): int|null

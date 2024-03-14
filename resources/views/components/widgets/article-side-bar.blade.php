@@ -11,45 +11,42 @@
         <div class="h-[220px] customScroll overflow-y-auto">
             <ul class="list-none ml-0">
                 <?php $i = 0; ?>
-                    @foreach($tableOfContent as $key => $header)
-                            @if(is_array($header))
-                                @if (isset($header['id']))
-                                    <li class="py-[15px] border-bottom last:border-0 hover:brand-color">
-                                        <a href="#header-{{ $header['id'] }}"
-                                           class="flex text-base[16px] font-normal black-040404 hover:brand-color">
-                                            <span class="mr-1">{{ $loop->iteration }}<em>.</em></span>{{ strip_tags($header['header']) }}
-                                        </a>
-                                    </li>
-                                @endif
-                            @else
-                                <li @click="openItem = (openItem == {{$key}} ? '-1' : {{$key}})" class="py-[15px] cursor-pointer border-bottom last:border-0 hover:brand-color">
-                                   @if($initiative == 'weekly-focus')
-                                    <a class="flex text-base[16px] font-normal hover:brand-color }}"
-                                    :class="{'brand-color': openItem == {{$key}}}"
-                                    >
-                                    @else
-                                    <a href="{{ ArticleService::getArticleUrlFromSlug($header->slug) }}"
+                @foreach($tableOfContent as $key => $header)
+                       @if($initiative == 'weekly-focus')
+                            <li @click="openItem = (openItem == {{$key}} ? '-1' : {{$key}})" class="py-[15px] cursor-pointer border-bottom last:border-0 hover:brand-color">
+                                <a class="flex text-base[16px] font-normal hover:brand-color }}"
+                                   :class="{'brand-color': openItem == {{$key}}}"
+                                >
+                                    <span class="mr-1">{{ $loop->iteration }}<em>.</em></span> {{ $header->shortTitle ?? $header->title }}
+                                </a>
+                            </li>
+                        @else
+                            @php
+                                $articleURL = ArticleService::getArticleUrlFromSlug($header->slug);
+                            @endphp
+                            @if ($articleURL !== null)
+                                <li class="py-[15px] cursor-pointer border-bottom last:border-0 hover:brand-color">
+                                    <a href="{{ $articleURL }}"
                                        wire:navigate
                                        class="flex text-base[16px] font-normal hover:brand-color {{ ($header->slug === $currentArticle) ? 'brand-color' : '' }}"
                                     >
-                                   @endif
                                         <span class="mr-1">{{ $loop->iteration }}<em>.</em></span> {{ $header->shortTitle ?? $header->title }}
                                     </a>
                                 </li>
                             @endif
-                            <?php $i = $loop->iteration; ?>
-                    @endforeach
-
-                    @if($isAlsoInNews)
-                        <li class="py-[15px] border-bottom last:border-0 hover:brand-color">
-                            <a href="{{ route('news-today.alsoInNews', ['date' => $date]) }}"
-                               wire:navigate
-                               class="flex text-base[16px] font-normal hover:brand-color {{ request()->is('news-today/*/also-in-news') ? 'brand-color' : '' }}"
-                            >
-                                <span class="mr-1">{{ $i + 1 }}<em>.</em></span>Also in News
-                            </a>
-                        </li>
-                    @endif
+                       @endif
+                    <?php $i = $loop->iteration; ?>
+                @endforeach
+                @if($isAlsoInNews)
+                    <li class="py-[15px] border-bottom last:border-0 hover:brand-color">
+                        <a href="{{ route('news-today.alsoInNews', ['date' => $date]) }}"
+                           wire:navigate
+                           class="flex text-base[16px] font-normal hover:brand-color {{ request()->is('news-today/*/also-in-news') ? 'brand-color' : '' }}"
+                        >
+                            <span class="mr-1">{{ $i }}<em>.</em></span>Also in News
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>
