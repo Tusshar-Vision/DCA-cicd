@@ -76,7 +76,7 @@ class NewsTodayController extends Controller
         }
 
         return View('pages.news-today', [
-            "articles" => $this->newsToday,
+            "package" => $this->newsToday,
             "article" => $article,
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
@@ -116,7 +116,7 @@ class NewsTodayController extends Controller
         }
 
         return View('pages.news-today', [
-            "articles" => $this->newsToday,
+            "package" => $this->newsToday,
             "article" => $article,
             "noteAvailable"  => $noteAvailable,
             "note" => $note,

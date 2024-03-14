@@ -104,7 +104,7 @@ class InfographicsResource extends Resource
                             }
                         })
                         ->acceptedFileTypes([
-                            'application/pdf',
+//                            'application/pdf',
                             'image/jpeg',
                             'image/png',
                             'image/svg'

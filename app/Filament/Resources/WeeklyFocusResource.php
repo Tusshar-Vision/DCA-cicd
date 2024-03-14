@@ -298,7 +298,7 @@ class WeeklyFocusResource extends Resource
                                         ->collection('infographic')
                                         ->required()
                                         ->acceptedFileTypes([
-                                            'application/pdf',
+//                                            'application/pdf',
                                             'image/jpeg',
                                             'image/png',
                                             'image/svg'
