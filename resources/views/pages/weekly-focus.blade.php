@@ -1,6 +1,9 @@
 @extends('layouts.reading-ecosystem')
 @section('title', 'Weekly Focus | Current Affairs')
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.js" integrity="sha512-EC3CQ+2OkM+ZKsM1dbFAB6OGEPKRxi6EDRnZW9ys8LghQRAq6cXPUgXCCujmDrXdodGXX9bqaaCRtwj4h4wgSQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.css" integrity="sha512-za6IYQz7tR0pzniM/EAkgjV1gf1kWMlVJHBHavKIvsNoUMKWU99ZHzvL6lIobjiE2yKDAKMDSSmcMAxoiWgoWA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 @section('article-content')
     <div
         x-data="{ openItem: 0, expanded: false, isVideoOpen: false, isTopicAtGlanceOpen: false }"
@@ -21,7 +24,7 @@
                     <x-widgets.topic-at-a-glance :infographic="$package->topicAtGlance"/>
                 </div>
 
-                <x-modals.wide-modal x-show="isTopicAtGlanceOpen" heading="Topic at a Glance">
+                <x-modals.wide-modal :file="$package->topicAtGlance" heading="Topic at a Glance" x-show="isTopicAtGlanceOpen">
                     <x-widgets.image-viewer :image="$package->topicAtGlance" />
                 </x-modals.wide-modal>
 

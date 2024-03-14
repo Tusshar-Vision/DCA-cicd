@@ -12,7 +12,8 @@ class WideModal extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public $heading = ''
+        public $file,
+        public $heading = '',
     )
     {}
 
