@@ -6,6 +6,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 import '@dotlottie/player-component';
+
 function initializeSwiper() {
     new Swiper('.swiper', {
         // configure Swiper to use modules

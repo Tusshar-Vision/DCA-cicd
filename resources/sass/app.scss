@@ -3424,7 +3424,7 @@ iframe {
 }
 
 .w-full-90{
-    width: 90% !important;
+    width: 60% !important;
     max-width: inherit !important;
 }
 
@@ -3461,10 +3461,10 @@ iframe {
     }
   }
 
-  .vi-highlights-sidebar { 
+  .vi-highlights-sidebar {
     .vi-announcement-card {
       ul {
-        li { 
+        li {
           .hidden-text {
             background: #545557;
             color: #fff;
@@ -3485,7 +3485,7 @@ iframe {
     .vi-user-profile-tab-wrapper {
       .vi-profile-tab-list {
         .tab-item.active{
-          color: #fff;    
+          color: #fff;
         }
       }
     }
@@ -3500,7 +3500,7 @@ iframe {
   }
 
   .vi-article-card.vi-inline {
-    .vi-article { 
+    .vi-article {
       p{
         color: #ccc;
       }

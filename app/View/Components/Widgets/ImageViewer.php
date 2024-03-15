@@ -1,19 +1,18 @@
 <?php
 
-namespace App\View\Components\Modals;
+namespace App\View\Components\Widgets;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class WideModal extends Component
+class ImageViewer extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public $file,
-        public $heading = '',
+        public $image
     )
     {}
 
@@ -22,6 +21,6 @@ class WideModal extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.modals.wide-modal');
+        return view('components.widgets.image-viewer');
     }
 }
