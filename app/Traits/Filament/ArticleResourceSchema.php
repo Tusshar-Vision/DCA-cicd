@@ -2,7 +2,9 @@
 
 namespace App\Traits\Filament;
 
+use App\Enums\Initiatives;
 use App\Forms\Components\CKEditor;
+use App\Helpers\InitiativesHelper;
 use App\Jobs\GenerateArticlePDF;
 use App\Models\Article;
 use App\Models\User;
@@ -79,6 +81,26 @@ trait ArticleResourceSchema
                 TextColumn::make('initiative.name')
                     ->searchable()
                     ->toggleable(),
+                TextColumn::make('type')
+                    ->label('Type')
+                    ->badge()
+                    ->alignCenter()
+                    ->default(function (Model $record) {
+                        if ($record->is_short) {
+                            return 'Short';
+                        } else {
+                            if ($record->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)) {
+                                return 'Section';
+                            }
+                            return 'Full';
+                        }
+                    })
+                    ->color(function (Model $record) {
+                        switch ($record->is_short) {
+                            case true: return Color::Gray;
+                            case false: return Color::Blue;
+                        }
+                    })->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('title')
                     ->limit(40)
                     ->tooltip(fn (Model $record): string => $record->title)

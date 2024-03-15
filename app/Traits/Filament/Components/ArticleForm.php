@@ -4,6 +4,7 @@ namespace App\Traits\Filament\Components;
 
 use App\Enums\Initiatives;
 use App\Filament\Components\Repeater;
+use App\Filament\Resources\NewsTodayResource\RelationManagers\ShortArticlesRelationManager;
 use App\Forms\Components\CKEditor;
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
@@ -30,6 +31,8 @@ trait ArticleForm
 {
     public function articleForm(Form $form): Form {
 
+        $isShortArticle = static::class === ShortArticlesRelationManager::class || static::class === \App\Filament\Resources\MonthlyMagazineResource\RelationManagers\ShortArticlesRelationManager::class;
+
         return $form
             ->schema([
 
@@ -43,7 +46,12 @@ trait ArticleForm
 
                                 Group::make()->schema([
                                     TextInput::make('title')->required(),
-                                    TextInput::make('short_title')->maxLength(50)->label('Short Title'),
+                                    TextInput::make('short_title')
+                                        ->maxLength(50)
+                                        ->label('Short Title')
+                                        ->hidden(function (?Article $record) use ($isShortArticle) {
+                                            return $record?->is_short || $isShortArticle;
+                                        }),
                                     Textarea::make('excerpt')->label('Description'),
                                 ])->columnSpan(1),
 
@@ -63,7 +71,10 @@ trait ArticleForm
                                     ->disk('s3_public')
                                     ->collection('article-featured-image')
                                     ->responsiveImages()
-                                    ->conversion('thumb'),
+                                    ->conversion('thumb')
+                                    ->hidden(function (?Article $record) use ($isShortArticle) {
+                                        return $record?->is_short || $isShortArticle;
+                                    }),
 
                             ])->columns(2),
 
@@ -71,9 +82,10 @@ trait ArticleForm
 
                                 Select::make('author_id')
                                     ->id('expert_id')
+                                    ->searchable()
                                     ->relationship('author', 'name', function ($query, Livewire $livewire, Article $article) {
                                         $initiative_id = $livewire->ownerRecord?->initiative_id ?? $article->initiative_id;
-                                        $roles = collect(['expert']);
+                                        $roles = collect(['expert', 'admin', 'super_admin']);
 
                                         if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)) {
                                             $roles->add('news_today_expert');
@@ -87,6 +99,7 @@ trait ArticleForm
                                             return $subQuery->whereIn('name', $roles->toArray());
                                         });
                                     })
+                                    ->preload()
                                     ->label('Expert')
                                     ->visible(function () {
                                         return Auth::user()->can('assign_article');
@@ -101,9 +114,10 @@ trait ArticleForm
                                     }),
 
                                 Select::make('reviewer_id')
+                                    ->searchable()
                                     ->relationship('reviewer', 'name', function ($query, Livewire $livewire, Article $article) {
                                         $initiative_id = $livewire->ownerRecord?->initiative_id ?? $article->initiative_id;
-                                        $roles = collect(['reviewer']);
+                                        $roles = collect(['reviewer', 'admin', 'super_admin']);
 
                                         if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)) {
                                             $roles->add('news_today_reviewer');
@@ -117,6 +131,7 @@ trait ArticleForm
                                             return $subQuery->whereIn('name', $roles->toArray());
                                         });
                                     })
+                                    ->preload()
                                     ->visible(function () {
                                         return Auth::user()->can('assign_article');
                                     })
@@ -139,6 +154,7 @@ trait ArticleForm
                                 Select::make('initiative_topic_id')
                                     ->searchable()
                                     ->relationship('topic', 'name')
+                                    ->preload()
                                     ->required()
                                     ->label('Subject')
                                     ->default(function (Livewire $livewire) {
@@ -157,6 +173,7 @@ trait ArticleForm
 
                                         return $query->where('topic_id', '=', $topic);
                                     })
+                                    ->preload()
                                     ->default(function (Livewire $livewire) {
                                         return $livewire->ownerRecord->topic_section_id;
                                     })
@@ -173,11 +190,18 @@ trait ArticleForm
 
                                         return $query->where('section_id', '=', $topicSectionId);
                                     })
+                                    ->preload()
                                     ->default(function (Livewire $livewire) {
                                         return $livewire->ownerRecord->topic_sub_section_id;
                                     })
                                     ->reactive()
                                     ->label('Sub Section'),
+
+                                Hidden::make('is_short')
+                                    ->default(true)
+                                    ->disabled(function () use($isShortArticle) {
+                                        return !$isShortArticle;
+                                    }),
 
                             ])->columns(1),
 
@@ -259,7 +283,9 @@ trait ArticleForm
                             ->maxItems(4)
                             ->reorderable()
                             ->addActionLabel('Add article')
-                    ]),
+                    ])->hidden(function (?Article $record) use ($isShortArticle) {
+                        return $record?->is_short || $isShortArticle;
+                    }),
 
                     Tabs\Tab::make('Related Videos')->schema([
                         Repeater::make('videos')
@@ -275,7 +301,9 @@ trait ArticleForm
                             ->maxItems(5)
                             ->reorderable()
                             ->addActionLabel('Add video')
-                    ]),
+                    ])->hidden(function (?Article $record) use ($isShortArticle) {
+                        return $record?->is_short || $isShortArticle;
+                    }),
 
                     Tabs\Tab::make('Related Terms')->schema([
                         Repeater::make('terms')
@@ -291,7 +319,9 @@ trait ArticleForm
                             ->maxItems(3)
                             ->reorderable()
                             ->addActionLabel('Add term')
-                    ]),
+                    ])->hidden(function (?Article $record) use ($isShortArticle) {
+                        return $record?->is_short || $isShortArticle;
+                    }),
 
                     Tabs\Tab::make('SEO')->schema([
                         Section::make('Meta Information')->schema([
