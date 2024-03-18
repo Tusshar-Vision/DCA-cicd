@@ -102,6 +102,10 @@
                 transform: rotate( 360deg );
             }
         }
+
+        .hidden {
+            display: none !important;
+        }
     </style>
 
     <div
@@ -117,8 +121,8 @@
         )"
     >
         <textarea x-ref="editor" hidden></textarea>
-        <div id="snippet-autosave-header">
-            <div id="snippet-autosave-status" class="">
+        <div id="snippet-autosave-header" class="{{ $disabled ? 'hidden' : '' }}">
+            <div id="snippet-autosave-status">
                 <div id="snippet-autosave-status_label">Status:</div>
                 <div id="snippet-autosave-status_spinner">
                     <span id="snippet-autosave-status_spinner-label"></span>

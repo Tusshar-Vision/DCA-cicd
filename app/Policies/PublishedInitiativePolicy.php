@@ -46,7 +46,7 @@ class PublishedInitiativePolicy
             return false;
         }
         return $user->hasAnyRole(['super_admin', 'admin', 'reviewer', 'weekly_focus_reviewer']) || ($user->can('edit_weekly::focus') && $publishedInitiative->articles->contains(function ($article) use($user) {
-            return $article?->reviewer_id == $user->id || $article->expert_id == $user->id;
+            return $article?->reviewer_id == $user->id || $article->author_id == $user->id;
         }));
     }
 
