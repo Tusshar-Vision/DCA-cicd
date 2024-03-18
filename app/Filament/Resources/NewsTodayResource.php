@@ -317,8 +317,8 @@ class NewsTodayResource extends Resource
             return false;
         }
         return Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'news_today_reviewer']) || (Auth::user()->can('edit_news::today') && $record->articles->contains(function ($article) use ($userId) {
-                return $article?->reviewer_id == $userId || $article->expert_id == $userId;
-            }));
+            return $article?->reviewer_id == $userId || $article->author_id == $userId;
+        }));
     }
 
     public static function canCreate(): bool

@@ -23,20 +23,24 @@ trait ExpertReviewColumn
 
         return SelectColumn::make('author_id')
                 ->options(function (Livewire $livewire, Article $article) {
-                    $initiative_id = $livewire->ownerRecord?->initiative_id ?? $article->initiative_id;
-                    $roles = collect(['expert']);
+                    if ($article->status !== 'Final' && $article->status !== 'Published') {
+                        $initiative_id = $livewire->ownerRecord?->initiative_id ?? $article->initiative_id;
+                        $roles = collect(['expert']);
 
-                    if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)) {
-                        $roles->add('news_today_expert');
-                    } else if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)) {
-                        $roles->add('weekly_focus_expert');
-                    } else if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE)) {
-                        $roles->add('monthly_magazine_expert');
+                        if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)) {
+                            $roles->add('news_today_expert');
+                        } else if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)) {
+                            $roles->add('weekly_focus_expert');
+                        } else if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE)) {
+                            $roles->add('monthly_magazine_expert');
+                        }
+
+                        return User::whereHas('roles', function ($query) use ($roles) {
+                            $query->whereIn('name', $roles->toArray());
+                        })->get()->pluck('name', 'id');
+                    } else {
+                        return $article->author->pluck('name', 'id');
                     }
-
-                    return User::whereHas('roles', function ($query) use ($roles) {
-                        $query->whereIn('name', $roles->toArray());
-                    })->get()->pluck('name', 'id');
                 })
                 ->disabled(function (Article $record) {
                     return $record->status === 'Final' || $record->status === 'Published';
@@ -60,20 +64,24 @@ trait ExpertReviewColumn
 
         return SelectColumn::make('reviewer_id')
             ->options(function (Livewire $livewire, Article $article) {
-                $initiative_id = $livewire->ownerRecord?->initiative_id ?? $article->initiative_id;
-                $roles = collect(['reviewer']);
+                if ($article->status !== 'Final' && $article->status !== 'Published') {
+                    $initiative_id = $livewire->ownerRecord?->initiative_id ?? $article->initiative_id;
+                    $roles = collect(['reviewer']);
 
-                if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)) {
-                    $roles->add('news_today_reviewer');
-                } else if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)) {
-                    $roles->add('weekly_focus_reviewer');
-                } else if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE)) {
-                    $roles->add('monthly_magazine_reviewer');
+                    if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)) {
+                        $roles->add('news_today_reviewer');
+                    } else if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)) {
+                        $roles->add('weekly_focus_reviewer');
+                    } else if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE)) {
+                        $roles->add('monthly_magazine_reviewer');
+                    }
+
+                    return User::whereHas('roles', function ($query) use ($roles) {
+                        $query->whereIn('name', $roles->toArray());
+                    })->get()->pluck('name', 'id');
+                } else {
+                    return $article->reviewer->pluck('name', 'id');
                 }
-
-                return User::whereHas('roles', function ($query) use ($roles) {
-                    $query->whereIn('name', $roles->toArray());
-                })->get()->pluck('name', 'id');
             })
             ->disabled(function (Article $record) {
                 return $record->status === 'Final' || $record->status === 'Published';

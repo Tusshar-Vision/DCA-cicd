@@ -228,7 +228,7 @@ class MonthlyMagazineResource extends Resource
             return false;
         }
         return Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'monthly_magazine_reviewer']) || (Auth::user()->can('edit_monthly::magazine') && $record->articles->contains(function ($article) use ($userId) {
-            return $article?->reviewer_id == $userId || $article->expert_id == $userId;
+            return $article?->reviewer_id == $userId || $article->author_id == $userId;
         }));
     }
 
