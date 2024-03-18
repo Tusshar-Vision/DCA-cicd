@@ -48,13 +48,10 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class WeeklyFocusResource extends Resource
 {
     protected static ?string $model = PublishedInitiative::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
-
     protected static ?string $navigationGroup = 'Create Articles';
     protected static ?string $modelLabel = 'Weekly Focus';
     protected static ?string $pluralLabel = 'Weekly Focus';
-
     protected static ?int $navigationSort = 2;
 
     use InitiativeResourceSchema;
@@ -160,6 +157,7 @@ class WeeklyFocusResource extends Resource
                     Select::make('initiative_topic_id')
                         ->relationship('topic', 'name')
                         ->searchable()
+                        ->preload()
                         ->required()
                         ->label('Subject')
                         ->reactive()
@@ -171,6 +169,7 @@ class WeeklyFocusResource extends Resource
 
                     Select::make('topic_section_id')
                         ->searchable()
+                        ->preload()
                         ->relationship('topicSection', 'name', function ($query, callable $get) {
                             $topic = $get('initiative_topic_id');
 
@@ -184,6 +183,7 @@ class WeeklyFocusResource extends Resource
 
                     Select::make('topic_sub_section_id')
                         ->searchable()
+                        ->preload()
                         ->relationship('topicSubSection', 'name', function ($query, callable $get) {
                             $topicSectionId = $get('topic_section_id');
 

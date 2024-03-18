@@ -5,6 +5,7 @@ namespace App\Traits\Filament\Components;
 use App\Enums\Initiatives;
 use App\Filament\Components\Repeater;
 use App\Filament\Resources\NewsTodayResource\RelationManagers\ShortArticlesRelationManager;
+use App\Filament\Resources\WeeklyFocusResource\RelationManagers\ArticlesRelationManager;
 use App\Forms\Components\CKEditor;
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
@@ -32,12 +33,12 @@ trait ArticleForm
     public function articleForm(Form $form): Form {
 
         $isShortArticle = static::class === ShortArticlesRelationManager::class || static::class === \App\Filament\Resources\MonthlyMagazineResource\RelationManagers\ShortArticlesRelationManager::class;
+        $isWeeklyFocusSection = static::class === ArticlesRelationManager::class;
 
         return $form
             ->schema([
 
                 Tabs::make('Tabs')->tabs([
-
                     Tabs\Tab::make('Article Content')->schema([
 
                         Section::make('General')->schema([
