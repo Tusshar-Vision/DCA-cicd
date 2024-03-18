@@ -12,7 +12,7 @@
     </div>
     <div class="w-full xl:w-6/12 flex flex-col justify-center px-[20px] md:px-[56px] py-[30px] loginwrap dark:bg-dark373839">
         @if($attempt === 1)
-            <h5 class="py-[20px] bg-[#C5F7DC4D] text-sm mb-[40px] px-[30px] rounded-md dark:text-black">
+            <h5 class="py-[20px] bg-[#C5F7DC4D] text-sm mb-[40px] px-[30px] rounded-md dark:text-white">
                 Kindly, enter the six digit verification code sent to your e-mail ID, {{ $email }}
             </h5>
         @endif
