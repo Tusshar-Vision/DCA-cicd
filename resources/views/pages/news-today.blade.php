@@ -11,10 +11,6 @@
     >
         <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8">
 
-            <x-modals.modal-box x-show="isVideoOpen" heading="Watch Today's News">
-                <x-cards.video :source="$package?->video"/>
-            </x-modals.modal-box>
-
             <div class="flex w-full lg:w-2/6 flex-col space-y-4 leftsticky stickyMl-0">
 
                 {!! \App\Helpers\SvgIconsHelper::getSvgIcon('news-today-logo') !!}
@@ -69,7 +65,10 @@
                     <x-widgets.sidebar-video-menu initiative="news-today" :video="$package?->video" />
                 </div>
             </div>
-
         </div>
+        <!-- video modal -->
+        <x-modals.modal-box x-show="isVideoOpen" heading="Watch Today's News">
+            <x-cards.video :source="$package?->video"/>
+        </x-modals.modal-box>
     </div>
 @endsection
