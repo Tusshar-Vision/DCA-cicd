@@ -63,7 +63,13 @@ class ArticleResource extends Resource implements HasShieldPermissions
 
     public static function canEdit(Model $record): bool
     {
-        return Auth::user()->can('edit_article') && $record->status !== 'Published';
+        $user = Auth::user();
+        return
+            (
+                $user->can('edit_article') && ($record->status !== 'Published')
+            ) && (
+                $record->reviewer_id === $user->id || ($record->author_id === $user->id && $record->status !== 'Final') || $user->hasRole(['admin', 'super_admin'])
+            );
     }
 
     public static function canCreate(): bool

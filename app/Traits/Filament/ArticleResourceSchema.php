@@ -32,7 +32,6 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ForceDeleteBulkAction;
 use Filament\Tables\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\ActionsPosition;
@@ -246,16 +245,7 @@ trait ArticleResourceSchema
             ->actions([
                EditAction::make('Edit')
                     ->iconButton()
-                    ->tooltip('Edit')
-                    ->visible(function (Model $record) {
-                        $user = Auth::user();
-                        return
-                            (
-                                $user->can('edit_article') && ($record->status !== 'Published')
-                            ) && (
-                                $record->reviewer_id === $user->id || ($record->author_id === $user->id && $record->status !== 'Final') || $user->hasRole(['admin', 'super_admin'])
-                            );
-                    }),
+                    ->tooltip('Edit'),
 
                 Action::make('View')
                     ->visible(function (Article $record) {
