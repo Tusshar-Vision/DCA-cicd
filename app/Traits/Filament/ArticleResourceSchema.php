@@ -2,7 +2,9 @@
 
 namespace App\Traits\Filament;
 
+use App\Enums\Initiatives;
 use App\Forms\Components\CKEditor;
+use App\Helpers\InitiativesHelper;
 use App\Jobs\GenerateArticlePDF;
 use App\Models\Article;
 use App\Models\User;
@@ -30,7 +32,6 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ForceDeleteBulkAction;
 use Filament\Tables\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\ActionsPosition;
@@ -79,6 +80,26 @@ trait ArticleResourceSchema
                 TextColumn::make('initiative.name')
                     ->searchable()
                     ->toggleable(),
+                TextColumn::make('type')
+                    ->label('Type')
+                    ->badge()
+                    ->alignCenter()
+                    ->default(function (Model $record) {
+                        if ($record->is_short) {
+                            return 'Short';
+                        } else {
+                            if ($record->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)) {
+                                return 'Section';
+                            }
+                            return 'Full';
+                        }
+                    })
+                    ->color(function (Model $record) {
+                        switch ($record->is_short) {
+                            case true: return Color::Gray;
+                            case false: return Color::Blue;
+                        }
+                    })->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('title')
                     ->limit(40)
                     ->tooltip(fn (Model $record): string => $record->title)
@@ -224,16 +245,7 @@ trait ArticleResourceSchema
             ->actions([
                EditAction::make('Edit')
                     ->iconButton()
-                    ->tooltip('Edit')
-                    ->visible(function (Model $record) {
-                        $user = Auth::user();
-                        return
-                            (
-                                $user->can('edit_article') && ($record->status !== 'Published')
-                            ) && (
-                                $record->reviewer_id === $user->id || ($record->author_id === $user->id && $record->status !== 'Final') || $user->hasRole(['admin', 'super_admin'])
-                            );
-                    }),
+                    ->tooltip('Edit'),
 
                 Action::make('View')
                     ->visible(function (Article $record) {
