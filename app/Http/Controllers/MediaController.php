@@ -31,18 +31,13 @@ class MediaController extends Controller
         $name = $media->name . '.' . $media->extension;
 
         // Generate a pre-signed URL with a temporary access token
-        $temporaryUrl = $media->getTemporaryUrl(now()->add('minutes', 120));
+        $temporaryUrl = $media->getTemporaryUrl(now()->add('minutes', 5));
+        $response = \Http::get($temporaryUrl);
 
-        // Create a StreamedResponse to stream the file content to the user
-        return response()->streamDownload(function () use ($temporaryUrl) {
-            $fileStream = fopen($temporaryUrl, 'r');
-
-            // Stream the file content to the client
-            fpassthru($fileStream);
-
-            // Close the file stream
-            fclose($fileStream);
-        }, $name);
+        return \response($response->body(), 200, [
+           'Content-Type' => 'application/pdf',
+           'Content-Disposition' => 'attachment;filename="' . $name . '"',
+        ]);
     }
 
     public function viewFile(Media $media)
