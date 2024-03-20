@@ -65,7 +65,6 @@ class NewsTodayResource extends Resource
                     Forms\Components\Hidden::make('initiative_id')
                         ->default(InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)),
 
-
                     Forms\Components\Group::make()->schema([
                         DatePicker::make('published_at')
                             ->native(false)
@@ -161,7 +160,7 @@ class NewsTodayResource extends Resource
 //                        ->selectablePlaceholder(false)
 //                        ->default(1),
 
-                Hidden::make('language_id')->default(1),
+                    Hidden::make('language_id')->default(1),
 
                     Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
                         ->acceptedFileTypes(['application/pdf'])
@@ -181,10 +180,12 @@ class NewsTodayResource extends Resource
                             }
                         })
                         ->columnSpanFull(),
+
                 ])->disabled(function (?PublishedInitiative $record) {
                     if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
                     else if ($record?->is_published) return true;
                 })->columnSpan(1),
+
                 Forms\Components\Section::make("News Today's Video")
                     ->schema([
                         Select::make('video_id')

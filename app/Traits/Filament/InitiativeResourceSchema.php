@@ -214,11 +214,7 @@ trait InitiativeResourceSchema
 
     private static function generateName(string $date): array|string
     {
-        return str_replace(
-            ' ',
-            '_',
-            static::$modelLabel . ' ' . Carbon::parse($date)
-                ->format('Y-m-d')
-        );
+        return static::$modelLabel . ' ' . Carbon::parse($date)
+                ->format('(M d, Y)');
     }
 }
