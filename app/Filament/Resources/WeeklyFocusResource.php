@@ -155,7 +155,9 @@ class WeeklyFocusResource extends Resource
                     ])->columns(2)->columnSpanFull(),
 
                     Select::make('initiative_topic_id')
-                        ->relationship('topic', 'name')
+                        ->relationship('topic', 'name', function ($query) {
+                            $query->where('name', '!=', 'All');
+                        })
                         ->searchable()
                         ->preload()
                         ->required()
@@ -298,7 +300,6 @@ class WeeklyFocusResource extends Resource
                                         ->collection('infographic')
                                         ->required()
                                         ->acceptedFileTypes([
-//                                            'application/pdf',
                                             'image/jpeg',
                                             'image/png',
                                             'image/svg'
