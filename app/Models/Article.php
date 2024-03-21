@@ -64,7 +64,6 @@ class Article extends Model implements HasMedia, Sortable
 
     protected $casts = [
         'sources' => 'array',
-        'is_published' => 'bool',
         'published_at' => 'datetime',
         'is_short' => 'bool'
     ];
