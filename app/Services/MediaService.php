@@ -21,7 +21,7 @@ readonly class MediaService
     }
 
     public function getLatestVideos(int $limit = 2): Collection|array {
-        return $this->video->latest()->with('media')->limit($limit)->get();
+        return $this->video->has('publishedInitiatives')->latest()->with('media')->limit($limit)->get();
     }
 
     public function getAllInfographics($limit): Collection|array  {

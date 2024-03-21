@@ -68,7 +68,7 @@
         </div>
         <!-- video modal -->
         <x-modals.modal-box x-show="isVideoOpen" heading="Watch Today's News">
-            <x-cards.video :source="$package?->video"/>
+            <x-cards.video :source="$package?->video" />
         </x-modals.modal-box>
     </div>
 @endsection
