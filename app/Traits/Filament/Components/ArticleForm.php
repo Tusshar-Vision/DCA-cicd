@@ -209,6 +209,7 @@ trait ArticleForm
                                 $isWeeklyFocusSection ||
                                 $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS);
                         })
+                            ->columns(2)
                         ->collapsible(),
 
                         Hidden::make('initiative_id')
