@@ -5,6 +5,7 @@ namespace App\Traits\Filament\Components;
 use App\Enums\Initiatives;
 use App\Filament\Components\Repeater;
 use App\Filament\Resources\NewsTodayResource\RelationManagers\ShortArticlesRelationManager;
+use App\Filament\Resources\WeeklyFocusResource\RelationManagers\ArticlesRelationManager;
 use App\Forms\Components\CKEditor;
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
@@ -32,13 +33,13 @@ trait ArticleForm
     public function articleForm(Form $form): Form {
 
         $isShortArticle = static::class === ShortArticlesRelationManager::class || static::class === \App\Filament\Resources\MonthlyMagazineResource\RelationManagers\ShortArticlesRelationManager::class;
+        $isWeeklyFocusSection = static::class === ArticlesRelationManager::class;
 
         return $form
             ->schema([
 
                 Tabs::make('Tabs')->tabs([
-
-                    Tabs\Tab::make('Article Content')->schema([
+                    Tabs\Tab::make('Content')->schema([
 
                         Section::make('General')->schema([
 
@@ -72,8 +73,12 @@ trait ArticleForm
                                     ->collection('article-featured-image')
                                     ->responsiveImages()
                                     ->conversion('thumb')
-                                    ->hidden(function (?Article $record) use ($isShortArticle) {
-                                        return $record?->is_short || $isShortArticle;
+                                    ->hidden(function (?Article $record) use ($isShortArticle, $isWeeklyFocusSection) {
+                                        return
+                                            $isWeeklyFocusSection ||
+                                            $isShortArticle ||
+                                            $record?->is_short ||
+                                            $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS);
                                     }),
 
                             ])->columns(2),
@@ -82,10 +87,9 @@ trait ArticleForm
 
                                 Select::make('author_id')
                                     ->id('expert_id')
-                                    ->searchable()
                                     ->relationship('author', 'name', function ($query, Livewire $livewire, Article $article) {
                                         $initiative_id = $livewire->ownerRecord?->initiative_id ?? $article->initiative_id;
-                                        $roles = collect(['expert', 'admin', 'super_admin']);
+                                        $roles = collect(['expert']);
 
                                         if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)) {
                                             $roles->add('news_today_expert');
@@ -99,7 +103,6 @@ trait ArticleForm
                                             return $subQuery->whereIn('name', $roles->toArray());
                                         });
                                     })
-                                    ->preload()
                                     ->label('Expert')
                                     ->visible(function () {
                                         return Auth::user()->can('assign_article');
@@ -114,10 +117,9 @@ trait ArticleForm
                                     }),
 
                                 Select::make('reviewer_id')
-                                    ->searchable()
                                     ->relationship('reviewer', 'name', function ($query, Livewire $livewire, Article $article) {
                                         $initiative_id = $livewire->ownerRecord?->initiative_id ?? $article->initiative_id;
-                                        $roles = collect(['reviewer', 'admin', 'super_admin']);
+                                        $roles = collect(['reviewer']);
 
                                         if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)) {
                                             $roles->add('news_today_reviewer');
@@ -131,7 +133,6 @@ trait ArticleForm
                                             return $subQuery->whereIn('name', $roles->toArray());
                                         });
                                     })
-                                    ->preload()
                                     ->visible(function () {
                                         return Auth::user()->can('assign_article');
                                     })
@@ -147,13 +148,11 @@ trait ArticleForm
 
                             Group::make()->schema([
 
-                                Hidden::make('initiative_id')->default(function(Livewire $livewire) {
-                                    return $livewire?->ownerRecord?->initiative_id;
-                                }),
-
                                 Select::make('initiative_topic_id')
                                     ->searchable()
-                                    ->relationship('topic', 'name')
+                                    ->relationship('topic', 'name', function ($query) {
+                                        $query->where('name', '!=', 'All');
+                                    })
                                     ->preload()
                                     ->required()
                                     ->label('Subject')
@@ -197,22 +196,32 @@ trait ArticleForm
                                     ->reactive()
                                     ->label('Sub Section'),
 
-                                Hidden::make('is_short')
-                                    ->default(true)
-                                    ->disabled(function () use($isShortArticle) {
-                                        return !$isShortArticle;
-                                    }),
-
                             ])->columns(1),
 
                             Group::make()->schema([
-
                                 SpatieTagsInput::make('tags')
                                     ->required(),
-
                             ])->columns(1)
 
-                        ])->columns(2)->collapsible(),
+                        ])
+                        ->hidden(function (?Article $record) use ($isWeeklyFocusSection) {
+                            return
+                                $isWeeklyFocusSection ||
+                                $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS);
+                        })
+                            ->columns(2)
+                        ->collapsible(),
+
+                        Hidden::make('initiative_id')
+                            ->default(function(Livewire $livewire) {
+                                return $livewire?->ownerRecord?->initiative_id;
+                            }),
+
+                        Hidden::make('is_short')
+                            ->default(true)
+                            ->disabled(function () use($isShortArticle) {
+                                return !$isShortArticle;
+                            }),
 
                         Section::make('Content')
                             ->relationship('content')
@@ -285,8 +294,12 @@ trait ArticleForm
                             ->maxItems(4)
                             ->reorderable()
                             ->addActionLabel('Add article')
-                    ])->hidden(function (?Article $record) use ($isShortArticle) {
-                        return $record?->is_short || $isShortArticle;
+                    ])->hidden(function (?Article $record) use ($isShortArticle, $isWeeklyFocusSection) {
+                        return
+                            $isWeeklyFocusSection ||
+                            $isShortArticle ||
+                            $record?->is_short ||
+                            $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS);
                     }),
 
                     Tabs\Tab::make('Related Videos')->schema([
@@ -303,8 +316,12 @@ trait ArticleForm
                             ->maxItems(5)
                             ->reorderable()
                             ->addActionLabel('Add video')
-                    ])->hidden(function (?Article $record) use ($isShortArticle) {
-                        return $record?->is_short || $isShortArticle;
+                    ])->hidden(function (?Article $record) use ($isShortArticle, $isWeeklyFocusSection) {
+                        return
+                            $isWeeklyFocusSection ||
+                            $isShortArticle ||
+                            $record?->is_short ||
+                            $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS);
                     }),
 
                     Tabs\Tab::make('Related Terms')->schema([
@@ -321,15 +338,25 @@ trait ArticleForm
                             ->maxItems(3)
                             ->reorderable()
                             ->addActionLabel('Add term')
-                    ])->hidden(function (?Article $record) use ($isShortArticle) {
-                        return $record?->is_short || $isShortArticle;
+                    ])->hidden(function (?Article $record) use ($isShortArticle, $isWeeklyFocusSection) {
+                        return
+                            $isWeeklyFocusSection ||
+                            $isShortArticle ||
+                            $record?->is_short ||
+                            $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS);
                     }),
 
                     Tabs\Tab::make('SEO')->schema([
                         Section::make('Meta Information')->schema([
                             SEO::make()
                         ])
-                    ]),
+                    ])->hidden(function (?Article $record) use ($isShortArticle, $isWeeklyFocusSection) {
+                        return
+                            $isWeeklyFocusSection ||
+                            $isShortArticle ||
+                            $record?->is_short ||
+                            $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS);
+                    }),
 
                 ])->columnSpanFull(),
             ]);

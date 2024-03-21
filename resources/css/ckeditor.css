@@ -1,3 +1,20 @@
+.ck-editor {
+    h2 {
+        font-size: 25px !important;
+        line-height: 110% !important;
+    }
+
+    h3 {
+        font-size: 22px !important;
+        line-height: 110% !important;
+    }
+
+    h4 {
+        font-size: 20px !important;
+        line-height: 110% !important;
+    }
+}
+
 .ck-custom-dark-mode {
     /* Overrides the border radius setting in the theme. */
     --ck-border-radius: 4px;

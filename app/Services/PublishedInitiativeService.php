@@ -93,6 +93,7 @@ readonly class PublishedInitiativeService
             ->isPublished()
             ->whereDate('published_at', '>', $today) // Adjust for initiatives published before today
             ->hasPublishedArticle()
+            ->orderBy('published_at')
             ->with('articles', function ($query) {
                 $query
                     ->isPublished()

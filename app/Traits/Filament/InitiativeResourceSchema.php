@@ -2,6 +2,8 @@
 
 namespace App\Traits\Filament;
 
+use App\Filament\Resources\WeeklyFocusResource;
+use App\Filament\Resources\WeeklyFocusResource\RelationManagers\ArticlesRelationManager;
 use App\Models\PublishedInitiative;
 use App\Traits\HasNotifications;
 use Carbon\Carbon;
@@ -26,6 +28,8 @@ trait InitiativeResourceSchema
     use HasNotifications;
     public static function table(Table $table): Table
     {
+        $isWeeklyFocus = static::class === WeeklyFocusResource::class;
+
         return $table
             ->columns([
                 TextColumn::make('id')
@@ -48,11 +52,20 @@ trait InitiativeResourceSchema
                     ->badge()
                     ->toggleable(),
 
+                TextColumn::make('short_articles_count')
+                    ->alignCenter()
+                    ->label('Short Articles')
+                    ->default(function (Model $record) {
+                        return $record->shortArticles->count();
+                    })
+                    ->badge()
+                    ->toggleable(),
+
                 TextColumn::make('progress')
                     ->alignCenter()
                     ->default(function (Model $record) {
 
-                        $totalCountOfArticles = $record->articles->count();
+                        $totalCountOfArticles = $record->articles->count() + $record->shortArticles->count();
 
                         if ($totalCountOfArticles === 0) {
                             return "0%";
@@ -214,11 +227,7 @@ trait InitiativeResourceSchema
 
     private static function generateName(string $date): array|string
     {
-        return str_replace(
-            ' ',
-            '_',
-            static::$modelLabel . ' ' . Carbon::parse($date)
-                ->format('Y-m-d')
-        );
+        return static::$modelLabel . ' ' . Carbon::parse($date)
+                ->format('(M d, Y)');
     }
 }

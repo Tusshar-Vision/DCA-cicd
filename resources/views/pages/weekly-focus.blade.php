@@ -12,10 +12,6 @@
     >
         <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8 w-full">
 
-            <x-modals.modal-box x-show="isVideoOpen" heading="Watch In Conversation">
-                <x-cards.video :source="$package->video"/>
-            </x-modals.modal-box>
-
             <div class="flex w-full lg:md:w-2/6 flex-col space-y-4 leftsticky stickyMl-0">
                 {!! \App\Helpers\SvgIconsHelper::getSvgIcon('weekly-focus-logo') !!}
                 <x-widgets.article-side-bar :table-of-content="$package->articles"/>
@@ -24,9 +20,7 @@
                     <x-widgets.topic-at-a-glance :infographic="$package->topicAtGlance"/>
                 </div>
 
-                <x-modals.wide-modal :file="$package->topicAtGlance" heading="Topic at a Glance" x-show="isTopicAtGlanceOpen">
-                    <x-widgets.image-viewer :image="$package->topicAtGlance" />
-                </x-modals.wide-modal>
+                
 
                 <div class="hidden lg:block">
                     <x-widgets.side-bar-download-menu initiative="weekly-focus" :media="$package?->media" />
@@ -65,5 +59,15 @@
                 </div>
             </div>
         </div>
+
+        <!-- video modal -->
+        <x-modals.modal-box x-show="isVideoOpen" heading="Watch In Conversation">
+            <x-cards.video :source="$package->video"/>
+        </x-modals.modal-box>
+        <!-- topic modal -->
+        <x-modals.wide-modal :file="$package->topicAtGlance" heading="Topic at a Glance" x-show="isTopicAtGlanceOpen">
+            <x-widgets.image-viewer :image="$package->topicAtGlance" />
+        </x-modals.wide-modal>
+    
     </div>
 @endsection

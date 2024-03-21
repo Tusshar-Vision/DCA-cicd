@@ -20,7 +20,7 @@ class Register extends Component
 
     #[Validate('regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).+$/', message: 'Password must include at least one digit, special character, uppercase, and lowercase letter.')]
     #[Validate('required')]
-    #[Validate('min:6')]
+    #[Validate('min:8')]
     public $password;
 
     #[Validate('required|min_digits:10|max_digits:10')]

@@ -23,5 +23,5 @@
         </video>
     @endif
 
-    <p class="font-semibold text-base mt-2 text-justify">{{ $source?->title }}</p>
+    <p class="font-semibold text-base text-justify">{{ $source?->title }}</p>
 </div>

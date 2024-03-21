@@ -14,8 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-         $schedule->job(new DisableExpiredAnnouncements)->everyMinute();
-         $schedule->job(new EnableAutomatedAnnouncements)->everyMinute();
+         $schedule->job(new DisableExpiredAnnouncements)->everySixHours();
+         $schedule->job(new EnableAutomatedAnnouncements)->everySixHours();
     }
 
     /**
