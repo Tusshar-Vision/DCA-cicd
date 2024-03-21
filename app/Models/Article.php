@@ -119,6 +119,11 @@ class Article extends Model implements HasMedia, Sortable
         return 'slug';
     }
 
+    public function shouldBeSearchable(): bool
+    {
+        return $this->status === 'Published';
+    }
+
     // Define the relationships with other models
 
     public function language(): BelongsTo
