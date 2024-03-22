@@ -144,6 +144,41 @@ trait ArticleForm
 
                         ])->columns(1)->collapsible(),
 
+                        Hidden::make('initiative_id')
+                            ->default(function(Livewire $livewire) {
+                                return $livewire?->ownerRecord?->initiative_id;
+                            }),
+
+                        Hidden::make('initiative_topic_id')
+                            ->default(function (Livewire $livewire) {
+                                return $livewire?->ownerRecord?->initiative_topic_id;
+                            })
+                            ->disabled(function (?Article $record) use ($isWeeklyFocusSection) {
+                                return
+                                    !($isWeeklyFocusSection ||
+                                        $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS));
+                            }),
+
+                        Hidden::make('topic_section_id')
+                            ->default(function (Livewire $livewire) {
+                                return $livewire?->ownerRecord?->topic_section_id;
+                            })
+                            ->disabled(function (?Article $record) use ($isWeeklyFocusSection) {
+                                return
+                                    !($isWeeklyFocusSection ||
+                                        $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS));
+                            }),
+
+                        Hidden::make('topic_sub_section_id')
+                            ->default(function (Livewire $livewire) {
+                                return $livewire?->ownerRecord?->topic_sub_section_id;
+                            })
+                            ->disabled(function (?Article $record) use ($isWeeklyFocusSection) {
+                                return
+                                    !($isWeeklyFocusSection ||
+                                        $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS));
+                            }),
+
                         Section::make('Category')->schema([
 
                             Group::make()->schema([
@@ -211,41 +246,6 @@ trait ArticleForm
                         })
                         ->columns(2)
                         ->collapsible(),
-
-                        Hidden::make('initiative_id')
-                            ->default(function(Livewire $livewire) {
-                                return $livewire?->ownerRecord?->initiative_id;
-                            }),
-
-                        Hidden::make('initiative_topic_id')
-                            ->default(function (Livewire $livewire) {
-                                return $livewire?->ownerRecord?->initiative_topic_id;
-                            })
-                            ->disabled(function (?Article $record) use ($isWeeklyFocusSection) {
-                                return
-                                    !($isWeeklyFocusSection ||
-                                    $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS));
-                            }),
-
-                        Hidden::make('topic_section_id')
-                            ->default(function (Livewire $livewire) {
-                                return $livewire?->ownerRecord?->topic_section_id;
-                            })
-                            ->disabled(function (?Article $record) use ($isWeeklyFocusSection) {
-                                return
-                                    !($isWeeklyFocusSection ||
-                                    $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS));
-                            }),
-
-                        Hidden::make('topic_sub_section_id')
-                            ->default(function (Livewire $livewire) {
-                                return $livewire?->ownerRecord?->topic_sub_section_id;
-                            })
-                            ->disabled(function (?Article $record) use ($isWeeklyFocusSection) {
-                                return
-                                    !($isWeeklyFocusSection ||
-                                    $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS));
-                            }),
 
                         Hidden::make('is_short')
                             ->default(true)

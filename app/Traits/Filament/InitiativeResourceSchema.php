@@ -3,7 +3,6 @@
 namespace App\Traits\Filament;
 
 use App\Filament\Resources\WeeklyFocusResource;
-use App\Filament\Resources\WeeklyFocusResource\RelationManagers\ArticlesRelationManager;
 use App\Models\PublishedInitiative;
 use App\Traits\HasNotifications;
 use Carbon\Carbon;
@@ -45,7 +44,9 @@ trait InitiativeResourceSchema
 
                 TextColumn::make('articles_count')
                     ->alignCenter()
-                    ->label('Articles')
+                    ->label(function () use($isWeeklyFocus) {
+                        return $isWeeklyFocus ? 'Sections' : 'Articles';
+                    })
                     ->default(function (Model $record) {
                         return $record->articles->count();
                     })
@@ -59,6 +60,9 @@ trait InitiativeResourceSchema
                         return $record->shortArticles->count();
                     })
                     ->badge()
+                    ->hidden(function () use ($isWeeklyFocus) {
+                        return $isWeeklyFocus;
+                    })
                     ->toggleable(),
 
                 TextColumn::make('progress')
@@ -74,6 +78,14 @@ trait InitiativeResourceSchema
                         if ($totalCountOfArticles > 0) {
                             $articleStatus = [];
                             $record->articles->each(function($article) use(&$articleStatus) {
+                                if (array_key_exists($article->status, $articleStatus)) {
+                                    $articleStatus[$article->status] += 1;
+                                } else {
+                                    $articleStatus[$article->status] = 1;
+                                }
+                            });
+
+                            $record->shortArticles->each(function($article) use(&$articleStatus) {
                                 if (array_key_exists($article->status, $articleStatus)) {
                                     $articleStatus[$article->status] += 1;
                                 } else {
@@ -131,11 +143,18 @@ trait InitiativeResourceSchema
                         return Auth::user()->can('publish_article');
                     })
                     ->hidden(function(Model $record) {
-                        if ($record->articles->count() === 0) return true;
+                        $totalArticlesCount = $record->articles->count() + $record->shortArticles->count();
+                        if ($totalArticlesCount === 0) return true;
 
                         $shouldBeHidden = true;
 
                         $record->articles->each(function($article) use(&$shouldBeHidden) {
+                            if ($article->status === 'Final') {
+                                $shouldBeHidden = false;
+                            }
+                        });
+
+                        $record->shortArticles->each(function($article) use(&$shouldBeHidden) {
                             if ($article->status === 'Final') {
                                 $shouldBeHidden = false;
                             }
@@ -159,6 +178,22 @@ trait InitiativeResourceSchema
                                 $notification->sendNotificationOfArticlePublished($article);
                             }
                         });
+
+                        $record->shortArticles->each(function($article) use($record) {
+
+                            if ($article->status === 'Final') {
+                                $article->setStatus('Published');
+                                $article->update(['published_at' => Carbon::now()]);
+
+                                if ($record->is_published === false) {
+                                    $record->is_published = true;
+                                    $record->save();
+                                }
+
+                                $notification = new self();
+                                $notification->sendNotificationOfArticlePublished($article);
+                            }
+                        });
                     }),
                 EditAction::make()
                     ->tooltip('Edit')
@@ -167,7 +202,7 @@ trait InitiativeResourceSchema
                     ->tooltip('Delete')
                     ->iconButton()
                     ->visible(function (Model $record) {
-                        return $record->articles->count() === 0;
+                        return $record->articles->count() + $record->shortArticles->count() === 0;
                     })
             ])
             ->bulkActions([
@@ -190,6 +225,12 @@ trait InitiativeResourceSchema
                                 }
 
                                 $record->articles->each(function($article) {
+                                    if ($article->status === 'Published') {
+                                        $article->setStatus('Improve');
+                                        $article->update(['published_at' => null]);
+                                    }
+                                });
+                                $record->shortArticles->each(function($article) {
                                     if ($article->status === 'Published') {
                                         $article->setStatus('Improve');
                                         $article->update(['published_at' => null]);
