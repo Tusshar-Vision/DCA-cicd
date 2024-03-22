@@ -217,9 +217,13 @@
 
         // Get the current query value
         var queryValue = event.target.value;
+        var currentUrl = new URL(window.location);
+        var searchParams = currentUrl.searchParams;
+        searchParams.set('query', queryValue)
+        currentUrl.search = searchParams.toString();
 
         // Navigate to the search page with the updated query
-        window.location.href = "http://localhost:8000/search?query=" + encodeURIComponent(queryValue);
+        Livewire.navigate(currentUrl.toString());
     }
     </script>
 @endsection
