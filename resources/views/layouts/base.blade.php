@@ -39,7 +39,6 @@
         <footer>
             @yield('footer')
                 <x-footer />
-            @stack('scripts')
         </footer>
 
         <x-modals.login-modal x-show="isAuthFormOpen">
@@ -48,4 +47,5 @@
             </template>
         </x-modals.login-modal>
     </body>
+    @stack('scripts')
 </html>

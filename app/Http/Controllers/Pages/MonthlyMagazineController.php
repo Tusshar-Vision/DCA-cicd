@@ -80,13 +80,10 @@ class MonthlyMagazineController extends Controller
         }
 
         return View('pages.monthly-magazine', [
-            "publishedDate" => $this->monthlyMagazine->publishedAt,
-            "articles" => $this->monthlyMagazine,
+            "package" => $this->monthlyMagazine,
             "article" => $article,
-            "topics" => $this->monthlyMagazine->topics,
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
-            "sortedArticlesWithTopics" => $this->monthlyMagazine->sortedArticlesWithTopic,
             "tableOfContent" => $toc['toc'],
             "isArticleBookmarked" => $isArticleBookmarked,
         ]);
@@ -114,13 +111,10 @@ class MonthlyMagazineController extends Controller
         $toc['toc'] = [];
 
         return View('pages.monthly-magazine', [
-            "publishedDate" => $this->monthlyMagazine->publishedAt,
-            "articles" => $this->monthlyMagazine,
+            "package" => $this->monthlyMagazine,
             "article" => $article,
-            "topics" => $this->monthlyMagazine->topics,
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
-            "sortedArticlesWithTopics" => $this->monthlyMagazine->sortedArticlesWithTopic,
             "tableOfContent" => $toc['toc'],
             "isArticleBookmarked" => $isArticleBookmarked,
         ]);

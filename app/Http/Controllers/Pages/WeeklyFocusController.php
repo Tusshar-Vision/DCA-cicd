@@ -69,7 +69,7 @@ class WeeklyFocusController extends Controller
         }
 
         return View('pages.weekly-focus', [
-            "articles" => $this->weeklyFocus,
+            "package" => $this->weeklyFocus,
             "article" => $article,
             "noteAvailable"  => $noteAvailable,
             "note" => $note,

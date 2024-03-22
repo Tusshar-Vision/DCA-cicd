@@ -8,11 +8,11 @@
     use Carbon\Carbon;
 @endphp
 @section('content')
-    <div class="ecosystem-wrap w-full lg:w-auto">
+    <div x-data="{ query: '{{ $query }}' }" class="ecosystem-wrap w-full lg:w-auto">
         <div class="search-bar-wrapper">
             <span class="vi-icons search"></span>
             <label>
-                <input type="text" class="vi-search-bar focus" placeholder="Search" required value="{{ $query }}">
+                <input @keydown.enter="navigateToSearchPage" x-model="query" type="text" class="vi-search-bar focus" placeholder="Search" value="{{ $query }}" required>
             </label>
 {{--            <ul class="w-full absolute left-0 top-[40px] py-2 border-[#ddd] border-2 rounded bg-white hidden updatedText">--}}
 {{--                <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 1</li>--}}
@@ -70,13 +70,13 @@
 {{--                <li>--}}
 {{--                    <a href="#">Others</a>--}}
 {{--                </li>--}}
-                @auth('cognito')
-                    <li>
-                        <a href="#">Notes</a>
-                    </li>
-                @endauth
+{{--                @auth('cognito')--}}
+{{--                    <li>--}}
+{{--                        <a href="#">Notes</a>--}}
+{{--                    </li>--}}
+{{--                @endauth--}}
             </ul>
-            <a href="javascript:void(0)" class="hybrid-filter" onclick="toggleFilter()">Filter</a>
+{{--            <a href="javascript:void(0)" class="hybrid-filter" onclick="toggleFilter()">Filter</a>--}}
         </div>
     </div>
     <div class="divider mt-[-2px]"></div>
@@ -136,11 +136,11 @@
 {{--            </div>--}}
             @foreach ($searchResults as $result)
                 <div class="hybrid-text-row">
-                    <a href="{{ ArticleService::getArticleUrlFromSlug($result->slug) }}">
+                    <a href="{{ ArticleService::getArticleUrlFromSlug($result->slug) }}" wire:navigate>
                         <h3>{{ $result->title }}</h3>
                     </a>
                     <p class="result-content">{{ $result->excerpt ?? 'No Description Available'}}</p>
-                    <span>{{ $result->initiative->name }} | {{ Carbon::parse($result->published_at)->format('Y-m-d') }}</span>
+                    <span>{{ $result->initiative->name }} | {{ Carbon::parse($result->publishedInitiative->published_at)->format('Y-m-d') }}</span>
                 </div>
             @endforeach
         </div>
@@ -203,12 +203,23 @@
             var dropdowns = document.getElementsByClassName("dropdown-content");
             var i;
             for (i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
             }
         }
+    }
+
+    function navigateToSearchPage(event) {
+        // Prevent the default form submission behavior
+        event.preventDefault();
+
+        // Get the current query value
+        var queryValue = event.target.value;
+
+        // Navigate to the search page with the updated query
+        window.location.href = "http://localhost:8000/search?query=" + encodeURIComponent(queryValue);
     }
     </script>
 @endsection

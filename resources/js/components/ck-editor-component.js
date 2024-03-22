@@ -70,9 +70,11 @@ export default function ckEditorComponent({
 
                     const prefersDark = document.querySelector('html').classList.contains('dark');
                     const editorDiv = document.querySelector('.ck-editor');
+                    const statusBar = document.querySelector('#snippet-autosave-header');
 
                     if (prefersDark === true) {
                         editorDiv.classList.add('ck-custom-dark-mode');
+                        statusBar.classList.add('ck-custom-dark-mode');
                     }
                 })
                 .catch(error => console.error(error));

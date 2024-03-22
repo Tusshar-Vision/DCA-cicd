@@ -4,6 +4,8 @@ namespace App\Traits\Filament\Components;
 
 use App\Enums\Initiatives;
 use App\Filament\Components\Repeater;
+use App\Filament\Resources\NewsTodayResource\RelationManagers\ShortArticlesRelationManager;
+use App\Filament\Resources\WeeklyFocusResource\RelationManagers\ArticlesRelationManager;
 use App\Forms\Components\CKEditor;
 use App\Helpers\InitiativesHelper;
 use App\Models\Article;
@@ -30,12 +32,14 @@ trait ArticleForm
 {
     public function articleForm(Form $form): Form {
 
+        $isShortArticle = static::class === ShortArticlesRelationManager::class || static::class === \App\Filament\Resources\MonthlyMagazineResource\RelationManagers\ShortArticlesRelationManager::class;
+        $isWeeklyFocusSection = static::class === ArticlesRelationManager::class;
+
         return $form
             ->schema([
 
                 Tabs::make('Tabs')->tabs([
-
-                    Tabs\Tab::make('Article Content')->schema([
+                    Tabs\Tab::make('Content')->schema([
 
                         Section::make('General')->schema([
 
@@ -43,7 +47,12 @@ trait ArticleForm
 
                                 Group::make()->schema([
                                     TextInput::make('title')->required(),
-                                    TextInput::make('short_title')->maxLength(50)->label('Short Title'),
+                                    TextInput::make('short_title')
+                                        ->maxLength(50)
+                                        ->label('Short Title')
+                                        ->hidden(function (?Article $record) use ($isShortArticle) {
+                                            return $record?->is_short || $isShortArticle;
+                                        }),
                                     Textarea::make('excerpt')->label('Description'),
                                 ])->columnSpan(1),
 
@@ -63,7 +72,14 @@ trait ArticleForm
                                     ->disk('s3_public')
                                     ->collection('article-featured-image')
                                     ->responsiveImages()
-                                    ->conversion('thumb'),
+                                    ->conversion('thumb')
+                                    ->hidden(function (?Article $record) use ($isShortArticle, $isWeeklyFocusSection) {
+                                        return
+                                            $isWeeklyFocusSection ||
+                                            $isShortArticle ||
+                                            $record?->is_short ||
+                                            $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS);
+                                    }),
 
                             ])->columns(2),
 
@@ -128,17 +144,51 @@ trait ArticleForm
 
                         ])->columns(1)->collapsible(),
 
+                        Hidden::make('initiative_id')
+                            ->default(function(Livewire $livewire) {
+                                return $livewire?->ownerRecord?->initiative_id;
+                            }),
+
+                        Hidden::make('initiative_topic_id')
+                            ->default(function (Livewire $livewire) {
+                                return $livewire?->ownerRecord?->initiative_topic_id;
+                            })
+                            ->disabled(function (?Article $record) use ($isWeeklyFocusSection) {
+                                return
+                                    !($isWeeklyFocusSection ||
+                                        $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS));
+                            }),
+
+                        Hidden::make('topic_section_id')
+                            ->default(function (Livewire $livewire) {
+                                return $livewire?->ownerRecord?->topic_section_id;
+                            })
+                            ->disabled(function (?Article $record) use ($isWeeklyFocusSection) {
+                                return
+                                    !($isWeeklyFocusSection ||
+                                        $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS));
+                            }),
+
+                        Hidden::make('topic_sub_section_id')
+                            ->default(function (Livewire $livewire) {
+                                return $livewire?->ownerRecord?->topic_sub_section_id;
+                            })
+                            ->disabled(function (?Article $record) use ($isWeeklyFocusSection) {
+                                return
+                                    !($isWeeklyFocusSection ||
+                                        $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS));
+                            }),
+
                         Section::make('Category')->schema([
 
                             Group::make()->schema([
 
-                                Hidden::make('initiative_id')->default(function(Livewire $livewire) {
-                                    return $livewire?->ownerRecord?->initiative_id;
-                                }),
-
                                 Select::make('initiative_topic_id')
                                     ->searchable()
-                                    ->relationship('topic', 'name')
+                                    ->relationship('topic', 'name', function ($query) {
+                                        $query->where('name', '!=', 'All');
+                                    })
+                                    ->preload()
                                     ->required()
                                     ->label('Subject')
                                     ->default(function (Livewire $livewire) {
@@ -157,6 +207,7 @@ trait ArticleForm
 
                                         return $query->where('topic_id', '=', $topic);
                                     })
+                                    ->preload()
                                     ->default(function (Livewire $livewire) {
                                         return $livewire->ownerRecord->topic_section_id;
                                     })
@@ -173,6 +224,7 @@ trait ArticleForm
 
                                         return $query->where('section_id', '=', $topicSectionId);
                                     })
+                                    ->preload()
                                     ->default(function (Livewire $livewire) {
                                         return $livewire->ownerRecord->topic_sub_section_id;
                                     })
@@ -182,13 +234,24 @@ trait ArticleForm
                             ])->columns(1),
 
                             Group::make()->schema([
-
                                 SpatieTagsInput::make('tags')
                                     ->required(),
-
                             ])->columns(1)
 
-                        ])->columns(2)->collapsible(),
+                        ])
+                        ->hidden(function (?Article $record) use ($isWeeklyFocusSection) {
+                            return
+                                $isWeeklyFocusSection ||
+                                $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS);
+                        })
+                        ->columns(2)
+                        ->collapsible(),
+
+                        Hidden::make('is_short')
+                            ->default(true)
+                            ->disabled(function () use($isShortArticle) {
+                                return !$isShortArticle;
+                            }),
 
                         Section::make('Content')
                             ->relationship('content')
@@ -197,13 +260,15 @@ trait ArticleForm
                                 CKEditor::make('content')
                                     ->live()
                                     ->afterStateUpdated(function (?string $state, ?string $old, Livewire $livewire) {
-                                        if ($livewire->record->content()->exists()) {
-                                            // If content exists, update it
-                                            $livewire->record->content->content = $state; // Assuming 'text' is the attribute where you want to save the content
-                                            $livewire->record->content->save();
-                                        } else {
-                                            // If no content exists, create it
-                                            $livewire->record->content()->create(['content' => $state]); // Again, assuming 'text' is the correct attribute
+                                        if ($livewire->record->status !== 'Published' && $livewire->record->status !== 'Final') {
+                                            if ($livewire->record->content()->exists()) {
+                                                // If content exists, update it
+                                                $livewire->record->content->content = $state; // Assuming 'text' is the attribute where you want to save the content
+                                                $livewire->record->content->save();
+                                            } else {
+                                                // If no content exists, create it
+                                                $livewire->record->content()->create(['content' => $state]); // Again, assuming 'text' is the correct attribute
+                                            }
                                         }
                                 }),
                             ])->headerActions([
@@ -259,7 +324,13 @@ trait ArticleForm
                             ->maxItems(4)
                             ->reorderable()
                             ->addActionLabel('Add article')
-                    ]),
+                    ])->hidden(function (?Article $record) use ($isShortArticle, $isWeeklyFocusSection) {
+                        return
+                            $isWeeklyFocusSection ||
+                            $isShortArticle ||
+                            $record?->is_short ||
+                            $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS);
+                    }),
 
                     Tabs\Tab::make('Related Videos')->schema([
                         Repeater::make('videos')
@@ -275,7 +346,13 @@ trait ArticleForm
                             ->maxItems(5)
                             ->reorderable()
                             ->addActionLabel('Add video')
-                    ]),
+                    ])->hidden(function (?Article $record) use ($isShortArticle, $isWeeklyFocusSection) {
+                        return
+                            $isWeeklyFocusSection ||
+                            $isShortArticle ||
+                            $record?->is_short ||
+                            $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS);
+                    }),
 
                     Tabs\Tab::make('Related Terms')->schema([
                         Repeater::make('terms')
@@ -291,13 +368,25 @@ trait ArticleForm
                             ->maxItems(3)
                             ->reorderable()
                             ->addActionLabel('Add term')
-                    ]),
+                    ])->hidden(function (?Article $record) use ($isShortArticle, $isWeeklyFocusSection) {
+                        return
+                            $isWeeklyFocusSection ||
+                            $isShortArticle ||
+                            $record?->is_short ||
+                            $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS);
+                    }),
 
                     Tabs\Tab::make('SEO')->schema([
                         Section::make('Meta Information')->schema([
                             SEO::make()
                         ])
-                    ]),
+                    ])->hidden(function (?Article $record) use ($isShortArticle, $isWeeklyFocusSection) {
+                        return
+                            $isWeeklyFocusSection ||
+                            $isShortArticle ||
+                            $record?->is_short ||
+                            $record?->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS);
+                    }),
 
                 ])->columnSpanFull(),
             ]);

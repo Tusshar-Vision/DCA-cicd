@@ -11,7 +11,7 @@
                     'type' => null,
                     'class' => 'videoEmbed',
                 ]);
-                echo "<div class='max-w-[100%] max-h-52 overflow-hidden'>";
+                echo "<div class='max-w-[100%] min-h-52 mt-4 overflow-hidden'>";
                     echo $mediaObject->getEmbedCode();
                 echo "</div>";
             }
@@ -23,5 +23,5 @@
         </video>
     @endif
 
-    <p class="font-semibold text-base mt-2 text-justify">{{ $source?->title }}</p>
+    <p class="font-semibold text-base text-justify">{{ $source?->title }}</p>
 </div>
