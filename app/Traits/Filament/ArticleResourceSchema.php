@@ -99,7 +99,7 @@ trait ArticleResourceSchema
                             case true: return Color::Gray;
                             case false: return Color::Blue;
                         }
-                    })->toggleable(isToggledHiddenByDefault: true),
+                    })->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('title')
                     ->limit(40)
                     ->tooltip(fn (Model $record): string => $record->title)
