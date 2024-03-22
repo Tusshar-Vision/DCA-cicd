@@ -64,7 +64,6 @@ class Article extends Model implements HasMedia, Sortable
 
     protected $casts = [
         'sources' => 'array',
-        'is_published' => 'bool',
         'published_at' => 'datetime',
         'is_short' => 'bool'
     ];
@@ -118,6 +117,11 @@ class Article extends Model implements HasMedia, Sortable
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function shouldBeSearchable(): bool
+    {
+        return $this->status === 'Published';
     }
 
     // Define the relationships with other models

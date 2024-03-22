@@ -27,7 +27,7 @@ class EditWeeklyFocus extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\Action::make('Set Featured'),
+//            Actions\Action::make('Set Featured'),
         ];
     }
 }

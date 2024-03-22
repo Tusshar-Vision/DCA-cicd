@@ -251,6 +251,7 @@ trait ArticleRelationSchema
                     ->tooltip('View')
                     ->fillForm(fn (Article $record): array => [
                         'title' => $record->title,
+                        'short_title' => $record->short_title,
                         'subject' => $record->topic->name,
                         'section' => $record->topicSection->name ?? '',
                         'subSection' => $record->topicSubSection->name ?? '',
@@ -263,6 +264,7 @@ trait ArticleRelationSchema
                     ])
                     ->form([
                         TextInput::make('title')->disabled(),
+                        TextInput::make('short_title')->disabled(),
                         Group::make()->schema([
                             TextInput::make('subject')->disabled(),
                             TextInput::make('section')->disabled(),
@@ -320,6 +322,7 @@ trait ArticleRelationSchema
                     })
                     ->fillForm(fn (Article $record): array => [
                         'title' => $record->title,
+                        'short_title' => $record->short_title,
                         'subject' => $record->topic->name,
                         'section' => $record->topicSection->name ?? '',
                         'subSection' => $record->topicSubSection->name ?? '',
@@ -330,6 +333,7 @@ trait ArticleRelationSchema
                     ->form([
 
                         TextInput::make('title')->disabled(),
+                        TextInput::make('short_title')->disabled(),
                         Group::make()->schema([
                             TextInput::make('subject')->disabled(),
                             TextInput::make('section')->disabled(),

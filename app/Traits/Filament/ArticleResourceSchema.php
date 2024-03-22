@@ -99,7 +99,7 @@ trait ArticleResourceSchema
                             case true: return Color::Gray;
                             case false: return Color::Blue;
                         }
-                    })->toggleable(isToggledHiddenByDefault: true),
+                    })->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('title')
                     ->limit(40)
                     ->tooltip(fn (Model $record): string => $record->title)
@@ -272,6 +272,7 @@ trait ArticleResourceSchema
                     ->tooltip('View')
                     ->fillForm(fn (Article $record): array => [
                         'title' => $record->title,
+                        'short_title' => $record->short_title,
                         'subject' => $record->topic->name,
                         'section' => $record->topicSection->name ?? '',
                         'subSection' => $record->topicSubSection->name ?? '',
@@ -284,6 +285,7 @@ trait ArticleResourceSchema
                     ])
                     ->form([
                         TextInput::make('title')->disabled(),
+                        TextInput::make('short_title')->disabled(),
                         Group::make()->schema([
                             TextInput::make('subject')->disabled(),
                             TextInput::make('section')->disabled(),
@@ -326,6 +328,7 @@ trait ArticleResourceSchema
                     })
                     ->fillForm(fn (Article $record): array => [
                         'title' => $record->title,
+                        'short_title' => $record->short_title,
                         'subject' => $record->topic->name,
                         'section' => $record->topicSection->name ?? '',
                         'subSection' => $record->topicSubSection->name ?? '',
@@ -335,6 +338,7 @@ trait ArticleResourceSchema
                     ])
                     ->form([
                         TextInput::make('title')->disabled(),
+                        TextInput::make('short_title')->disabled(),
                         Group::make()->schema([
                             TextInput::make('subject')->disabled(),
                             TextInput::make('section')->disabled(),
