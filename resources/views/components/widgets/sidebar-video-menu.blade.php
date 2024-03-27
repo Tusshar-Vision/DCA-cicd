@@ -14,7 +14,7 @@
                 @endif
                 <span>
                     {{
-                        ($initiative === 'weekly-focus') ? 'Watch In Conversation' : "Watch Today's News"
+                        ($initiative === 'weekly-focus') ? 'Watch In Conversation' : "Watch News Today"
                     }}
                 </span>
             </div>
