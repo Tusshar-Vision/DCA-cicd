@@ -107,15 +107,9 @@ class WeeklyFocusResource extends Resource
                                     };
                                 }
                             ])
-                            ->live()
-                            ->afterStateUpdated(function (Forms\Set $set, ?string $state) {
-                                if ($state !== null)
-                                    $set('name', static::generateName($state));
-                                }),
+                            ->live(),
 
-                        Forms\Components\TextInput::make('name')->default(function (callable $get) {
-                            return static::generateName($get('published_at'));
-                        })
+                        Forms\Components\TextInput::make('name')
                             ->rules([
                                 function (PublishedInitiativeService $publishedInitiativeService, ?Model $record) {
 
@@ -150,6 +144,13 @@ class WeeklyFocusResource extends Resource
                                     };
                                 }
                             ])
+                            ->suffixAction(Forms\Components\Actions\Action::make('Generate')
+                                ->icon('heroicon-s-cog-8-tooth')
+                                ->iconButton()
+                                ->action(function (callable $get, callable $set) {
+                                    $set('name', static::generateName($get('published_at')));
+                                })
+                            )
                             ->required(),
 
                     ])->columns(2)->columnSpanFull(),

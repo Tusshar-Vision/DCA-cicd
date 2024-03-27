@@ -36,7 +36,7 @@ class RelatedTermResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')->toggleable(),
-                Tables\Columns\TextColumn::make('term'),
+                Tables\Columns\TextColumn::make('term')->searchable(),
                 Tables\Columns\TextColumn::make('description')->limit(40)
                     ->tooltip(fn (Model $record): string => $record->description),
                 Tables\Columns\TextColumn::make('created_at')->date('d M Y h:i a')->sortable()->toggleable()

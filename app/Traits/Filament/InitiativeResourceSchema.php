@@ -5,6 +5,7 @@ namespace App\Traits\Filament;
 use App\Filament\Resources\WeeklyFocusResource;
 use App\Models\PublishedInitiative;
 use App\Traits\HasNotifications;
+use App\Traits\NameGenerator;
 use Carbon\Carbon;
 use Filament\Support\Colors\Color;
 use Filament\Tables\Actions\Action;
@@ -24,7 +25,7 @@ use Illuminate\Support\Facades\Auth;
 
 trait InitiativeResourceSchema
 {
-    use HasNotifications;
+    use HasNotifications, NameGenerator;
     public static function table(Table $table): Table
     {
         $isWeeklyFocus = static::class === WeeklyFocusResource::class;
@@ -40,7 +41,8 @@ trait InitiativeResourceSchema
 
                 IconColumn::make('is_published')
                     ->alignCenter()
-                    ->label('Is Published'),
+                    ->label('Is Published')
+                    ->sortable(),
 
                 TextColumn::make('articles_count')
                     ->alignCenter()
@@ -264,11 +266,5 @@ trait InitiativeResourceSchema
                     RestoreBulkAction::make(),
                 ]),
             ]);
-    }
-
-    private static function generateName(string $date): array|string
-    {
-        return static::$modelLabel . ' ' . Carbon::parse($date)
-                ->format('(M d, Y)');
     }
 }
