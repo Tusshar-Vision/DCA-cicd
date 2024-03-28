@@ -10,7 +10,8 @@ use Livewire\Component;
 
 class VerifyEmail extends Component
 {
-    #[Validate('required|email')]
+    #[Validate('regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', message: 'Please enter a valid email address.')]
+    #[Validate('required')]
     public $email;
 
     /**

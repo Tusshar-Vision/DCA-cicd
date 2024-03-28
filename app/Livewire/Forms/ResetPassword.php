@@ -6,11 +6,13 @@ use App\Enums\CognitoErrorCodes;
 use App\Services\CognitoAuthService;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Rule;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class ResetPassword extends Component
 {
-    #[Rule('required|email')]
+    #[Validate('regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', message: 'Please enter a valid email address.')]
+    #[Validate('required')]
     public $email;
 
     public $success;
