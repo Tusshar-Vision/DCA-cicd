@@ -33,7 +33,7 @@
                     width="{{ $width }}" height="{{ $height }}" alt="" class="group-hover:scale-105 transition-all object-cover"/>
             </div>
             <div class="text-visionLineGray flex items-center space-x-3 text-sm">
-                <p><strong>Updated</strong> {{ Carbon::parse($article->updated_at)->format('d M Y')  }}</p>
+                <p><strong>Posted</strong> {{ Carbon::parse($article->publishedInitiative->published_at)->format('d M Y')  }}</p>
             </div>
             <div>
                 <h2 class="text-xl line-clamp-2 font-bold">{{ $article->shortTitle ?? $article->title }}</h2>

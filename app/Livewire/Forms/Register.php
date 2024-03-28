@@ -18,9 +18,8 @@ class Register extends Component
     #[Validate('required|email')]
     public $email;
 
-    #[Validate('regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).+$/', message: 'Password must include at least one digit, special character, uppercase, and lowercase letter.')]
     #[Validate('required')]
-    #[Validate('min:8')]
+    #[Validate('min:6')]
     public $password;
 
     #[Validate('required|min_digits:10|max_digits:10')]
@@ -40,23 +39,21 @@ class Register extends Component
             'phone_number' => "+91" . $this->mobile,
             'gender' => 'male'
         ];
-        $userExists = $authService->checkIfUserExists($validated['email']);
 
-        if ($userExists === CognitoErrorCodes::USER_NOT_FOUND) {
-            $userConfirmed = $authService->register(
-                $this->email,
-                $this->password,
-                $attributes
-            );
+        $userConfirmed = $authService->register(
+            $this->email,
+            $this->password,
+            $attributes
+        );
 
-            if ($userConfirmed) {
-                $this->dispatch('renderComponent', 'forms.login');
-            } else {
-                session(['verify_email' => $this->email]);
-                $this->dispatch('renderComponent', 'forms.email-verification');
-            }
-        } else {
+        if ($userConfirmed === CognitoErrorCodes::USERNAME_EXISTS) {
             $this->addError('email', "Account already exists, Please Login.");
+        }
+        else if ($userConfirmed) {
+            $this->dispatch('renderComponent', 'forms.login');
+        } else {
+            session(['verify_email' => $this->email]);
+            $this->dispatch('renderComponent', 'forms.email-verification');
         }
     }
 

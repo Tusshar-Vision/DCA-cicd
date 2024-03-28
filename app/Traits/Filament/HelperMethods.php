@@ -10,19 +10,12 @@ use App\Filament\Resources\QuarterlyRevisionResource;
 use App\Filament\Resources\ValueAddedOptionalResource;
 use App\Filament\Resources\ValueAddedResource;
 use App\Filament\Resources\YearEndReviewResource;
+use App\Traits\NameGenerator;
 use Carbon\Carbon;
 
 trait HelperMethods
 {
-    private static function generateName(string $date): array|string
-    {
-        return str_replace(
-            ' ',
-            '_',
-            static::$modelLabel . ' ' . Carbon::parse($date)
-                ->format('Y-m-d')
-        );
-    }
+    use NameGenerator;
 
     private static function getCollectionName(): string
     {

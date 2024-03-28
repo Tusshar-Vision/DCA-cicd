@@ -13,7 +13,6 @@ class Login extends Component
     #[Validate('required|email')]
     public $email;
 
-    #[Validate('regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/', message: 'Password must include at least one digit, uppercase, and lowercase letter.')]
     #[Validate('required')]
     #[Validate('min:6')]
     public $password;
@@ -24,27 +23,29 @@ class Login extends Component
     public function login(CognitoAuthService $authService): void
     {
         $validated = $this->validate();
-        $userExists = $authService->checkIfUserExists($validated['email']);
 
-        if ($userExists === CognitoErrorCodes::USER_NOT_FOUND) {
-            $this->addError('email', "Email id doesn't exists, Please Sign Up.");
+        $response = $authService->authenticate($validated);
+
+        if ($response === true) {
+            $this->redirect(route('home'), navigate: true);
         }
-        else {
-            $response = $authService->authenticate($validated);
 
-            if ($response === true) {
-                $this->redirect(route('home'), navigate: true);
-            }
+        if ($response === CognitoErrorCodes::USER_NOT_FOUND) {
+            $this->addError('email', "User doesn't exist, please signup!");
+        }
 
-            if ($response === CognitoErrorCodes::NOT_AUTHORIZED) {
-                $this->addError('email', "Email id or password doesn't match.");
-            }
+        if ($response === CognitoErrorCodes::NOT_AUTHORIZED) {
+            $this->addError('email', "Email id or password doesn't match.");
+        }
 
-            if ($response === CognitoErrorCodes::USER_NOT_CONFIRMED) {
-                session(['verify_email' => $this->email]);
-                $authService->resendCode($this->email);
-                $this->dispatch('renderComponent', 'forms.email-verification');
-            }
+        if ($response === CognitoErrorCodes::USER_NOT_CONFIRMED) {
+            session(['verify_email' => $this->email]);
+            $authService->resendCode($this->email);
+            $this->dispatch('renderComponent', 'forms.email-verification');
+        }
+
+        if ($response === CognitoErrorCodes::USER_LAMBDA_VALIDATION) {
+            $this->addError('email', "Only staff members can login.");
         }
     }
 
