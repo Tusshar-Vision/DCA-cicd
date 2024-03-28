@@ -73,12 +73,11 @@
                     <input
                         type="tel"
                         id="mob"
-                        pattern="^[0-9]{10}$"
                         x-on:focus="focusedMobile = true"
                         x-on:blur="focusedMobile = false"
                         class="w-full rounded-lg"
                         wire:model.blur="mobile"
-                        x-on:input="if ($event.target.value.match(/[^0-9]/g)) $event.target.value = $event.target.value.replace(/[^0-9]/g, '')"
+                        x-on:input="$wire.mobile = $event.target.value.replace(/\D/g, '').substring(0, 10); if ($event.target.value.match(/[^0-9]/g)) $event.target.value = $event.target.value.replace(/[^0-9]/g, '')"
                         required
                     >
                     <label for="mob" :class="{ 'overlayLabel-focused': focusedMobile || $wire.mobile }">Mobile Number</label>

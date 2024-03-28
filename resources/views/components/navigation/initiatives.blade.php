@@ -337,7 +337,7 @@
                     </button>
                 </li>
             @endauth
-                
+
         </ul>
     </div>
 
@@ -361,7 +361,10 @@
 
     // search mpdal show hide script
     function openSearch() {
-        document.getElementById("searchCont").classList.add('inModal')
+        document.getElementById("searchCont").classList.add('inModal');
+        setTimeout(function() {
+            document.getElementById('navSearchInput').focus();
+        }, 100);
     }
 
     function closeSearch() {
