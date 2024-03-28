@@ -6,8 +6,8 @@
             id="navSearchInput"
             wire:model="query"
             wire:keydown.enter="search"
+            @keydown.escape="document.getElementById('searchCont').classList.remove('inModal')"
             class="w-full rounded-md dark:text-white dark:bg-dark545557"
-            @focusout="$wire.query = ''"
         >
     </label>
     <div id="nav-search-item-container" class="search-list overflow-scroll bg-white dark:text-white dark:bg-dark545557 p-2" style="display: none;">
