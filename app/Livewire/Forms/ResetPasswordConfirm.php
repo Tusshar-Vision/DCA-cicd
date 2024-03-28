@@ -16,6 +16,7 @@ class ResetPasswordConfirm extends Component
     #[Validate('required|min:1', as: 'OTP')]
     public $otp_first, $otp_sec, $otp_third, $otp_fourth, $otp_fifth, $otp_sixth;
 
+    #[Validate('regex:/^(?!\s)(?!.*\s$).+/', message: 'Password can’t start or end with a blank space.')]
     #[Validate('required')]
     #[Validate('min:6')]
     public $password;

@@ -15,9 +15,11 @@ class Register extends Component
     #[Validate('required|string|min:3')]
     public $last_name;
 
-    #[Validate('required|email')]
+    #[Validate('regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', message: 'Please enter a valid email address.')]
+    #[Validate('required')]
     public $email;
 
+    #[Validate('regex:/^(?!\s)(?!.*\s$).+/', message: 'Password can’t start or end with a blank space.')]
     #[Validate('required')]
     #[Validate('min:6')]
     public $password;
