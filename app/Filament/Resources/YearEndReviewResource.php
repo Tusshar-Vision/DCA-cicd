@@ -69,6 +69,7 @@ class YearEndReviewResource extends Resource implements HasShieldPermissions
 
                         Select::make('initiative_topic_id')
                             ->searchable()
+                            ->preload()
                             ->relationship('topic', 'name', function ($query) {
                                 return $query->orderBy('order_column');
                             })

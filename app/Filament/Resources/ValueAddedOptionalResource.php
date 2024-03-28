@@ -64,6 +64,7 @@ class ValueAddedOptionalResource extends Resource implements HasShieldPermission
 
                         Select::make('initiative_topic_id')
                             ->searchable()
+                            ->preload()
                             ->relationship('topic', 'name', function ($query) {
                                 return $query->orderBy('order_column');
                             })

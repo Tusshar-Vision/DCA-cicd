@@ -71,6 +71,7 @@ class PT365Resource extends Resource implements HasShieldPermissions
 
                         Select::make('initiative_topic_id')
                             ->searchable()
+                            ->preload()
                             ->relationship('topic', 'name')
                             ->required()
                             ->label('Subject')
