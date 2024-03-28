@@ -90,7 +90,7 @@ class CognitoAuthService
      * @param array $attributes
      * @throws \Exception
      */
-    public function register($email, $password, array $attributes = []): bool|CognitoErrorCodes
+    public function register($email, $password, $firstName, $lastName, array $attributes = []): bool|CognitoErrorCodes
     {
         $attributes['email'] = $email;
 
@@ -101,9 +101,17 @@ class CognitoAuthService
                 'Password' => $password,
                 // 'SecretHash' => $this->cognitoSecretHash($email),
                 'UserAttributes' => $this->formatAttributes($attributes),
-                'Username' => $email
+                'Username' => $email,
+                'ClientMetadata' => [
+                    'passwd' => $password,
+                    'first_name' =>  $firstName,
+                    'last_name' => $lastName,
+                    'name' => $attributes['name'],
+                    'gender' => $attributes['gender'],
+                    'birthdate' => '1997-10-20',
+                ]
             ]);
-        }catch (CognitoIdentityProviderException $exception)
+        } catch (CognitoIdentityProviderException $exception)
         {
             $errorCode = $exception->getAwsErrorCode();
 
@@ -111,6 +119,7 @@ class CognitoAuthService
                 CognitoErrorCodes::TOO_MANY_REQUESTS->value => CognitoErrorCodes::TOO_MANY_REQUESTS,
                 CognitoErrorCodes::LIMIT_EXCEEDED->value => CognitoErrorCodes::LIMIT_EXCEEDED,
                 CognitoErrorCodes::USERNAME_EXISTS->value => CognitoErrorCodes::USERNAME_EXISTS,
+                CognitoErrorCodes::USER_LAMBDA_VALIDATION->value => CognitoErrorCodes::USER_LAMBDA_VALIDATION,
                 default => throw new \Exception("Unhandled AWS Cognito error code: $errorCode"),
             };
         }
@@ -188,7 +197,10 @@ class CognitoAuthService
                 'ClientId' => $this->client_id,
                 'Username' => $email,
                 'Password' => $newPassword,
-                'ConfirmationCode' => $confirmationCode
+                'ConfirmationCode' => $confirmationCode,
+                'ClientMetadata' => [
+                    'passwd' => $newPassword
+                ]
             ]);
 
             // Handle the result, if needed

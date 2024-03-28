@@ -43,8 +43,15 @@ class Register extends Component
         $userConfirmed = $authService->register(
             $this->email,
             $this->password,
+            $this->first_name,
+            $this->last_name,
             $attributes
         );
+
+        if ($userConfirmed === CognitoErrorCodes::USER_LAMBDA_VALIDATION) {
+            $this->addError('email', "Account already exists, Please Login.");
+            return;
+        }
 
         if ($userConfirmed === CognitoErrorCodes::USERNAME_EXISTS) {
             $this->addError('email', "Account already exists, Please Login.");
