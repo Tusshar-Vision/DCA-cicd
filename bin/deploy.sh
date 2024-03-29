@@ -42,4 +42,6 @@ php artisan event:cache
 php artisan route:cache
 php artisan view:cache
 
+sudo supervisorctl reread
+sudo supervisorctl update
 sudo supervisorctl restart all
