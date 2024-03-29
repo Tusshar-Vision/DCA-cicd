@@ -265,6 +265,7 @@ trait ArticleForm
                                                 // If content exists, update it
                                                 $livewire->record->content->content = $state; // Assuming 'text' is the attribute where you want to save the content
                                                 $livewire->record->content->save();
+                                                $livewire->record->touch();
                                             } else {
                                                 // If no content exists, create it
                                                 $livewire->record->content()->create(['content' => $state]); // Again, assuming 'text' is the correct attribute
