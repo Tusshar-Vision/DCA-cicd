@@ -7,10 +7,10 @@ class ContentsFromHeadersGenerator
     public function generateTOC($htmlContent): array
     {
         $dom = new \DOMDocument();
-        @$dom->loadHTML(mb_convert_encoding($htmlContent, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        @$dom->loadHTML(mb_convert_encoding($htmlContent, 'HTML-ENTITIES', 'UTF-8'), LIBXML_NOERROR | LIBXML_HTML_NODEFDTD);
 
         $xpath = new \DOMXPath($dom);
-        $headings = $xpath->query('//h1 | //h2 | //h3 | //h4 | //h5 | //h6');
+        $headings = $xpath->query('//h2 | //h3 | //h4 | //h5 | //h6');
         $toc = [];
         $ids = [];
 
