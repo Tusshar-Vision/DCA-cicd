@@ -90,11 +90,7 @@
             Note</button>
     </div>
 
-    {{-- <div id="article-content" onmouseup="handleSelection()" class="mt-4 printable-area">
-        {!! $article->content !!}
-    </div> --}}
-
-    <div id="article-content" class="mt-4 printable-area">
+    <div id="article-content" class="mt-4 printable-area ck-content">
         {!! $article->content !!}
     </div>
 

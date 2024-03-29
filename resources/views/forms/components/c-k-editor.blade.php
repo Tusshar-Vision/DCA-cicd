@@ -7,8 +7,8 @@
     :field="$field"
 >
     <style>
-        .ck-editor__editable {
-            min-height: 500px; /* Adjust the height as needed */
+        .ck-content {
+            min-height: 500px;
         }
         .ck-editor__editable ul {
             margin-left: 25px;
@@ -102,10 +102,6 @@
                 transform: rotate( 360deg );
             }
         }
-
-        .hidden {
-            display: none !important;
-        }
     </style>
 
     <div
@@ -121,7 +117,7 @@
         )"
     >
         <textarea x-ref="editor" hidden></textarea>
-        <div id="snippet-autosave-header" class="{{ $disabled ? 'hidden' : '' }}">
+        <div id="snippet-autosave-header" style="{{ $disabled ? 'display: none;' : '' }}">
             <div id="snippet-autosave-status">
                 <div id="snippet-autosave-status_label">Status:</div>
                 <div id="snippet-autosave-status_spinner">
