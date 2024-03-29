@@ -83,9 +83,9 @@ class UserResource extends Resource implements HasShieldPermissions
 
         return $table
             ->columns([
-                TextColumn::make('id')->label('ID'),
-                TextColumn::make('name'),
-                TextColumn::make('email'),
+                TextColumn::make('id')->searchable()->label('ID'),
+                TextColumn::make('name')->searchable(),
+                TextColumn::make('email')->searchable(),
                 TextColumn::make('roles.name')->separator(',')->badge(),
                 IconColumn::make('is_disabled')->label('Is Enabled')
                     ->boolean()

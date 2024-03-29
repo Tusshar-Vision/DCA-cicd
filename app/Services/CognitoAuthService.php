@@ -9,6 +9,7 @@ use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Aws\Credentials\Credentials;
 use Aws\Result;
+use Illuminate\Log\Logger;
 
 class CognitoAuthService
 {
@@ -53,14 +54,15 @@ class CognitoAuthService
             $idToken = $result['AuthenticationResult']['IdToken'];
             $refreshToken = $result['AuthenticationResult']['RefreshToken'];
 
-            $studentData = $this->getUser($accessToken);
+            $studentData = $this->getUser($idToken);
 
-            $studentDTO = StudentDTO::fromAwsResult($studentData['UserAttributes']);
+            $studentDTO = StudentDTO::fromAwsResult($studentData['result']);
 
             $user = Student::createOrFirst([
+                'email' => $studentDTO->email,
+            ],[
                 'first_name' => $studentDTO->first_name,
                 'last_name' => $studentDTO->last_name,
-                'email' => $studentDTO->email,
                 'mobile_number' => $studentDTO->mobile_number,
             ]);
 
@@ -75,6 +77,7 @@ class CognitoAuthService
                 CognitoErrorCodes::USER_NOT_FOUND->value => CognitoErrorCodes::USER_NOT_FOUND,
                 CognitoErrorCodes::USER_NOT_CONFIRMED->value => CognitoErrorCodes::USER_NOT_CONFIRMED,
                 CognitoErrorCodes::NOT_AUTHORIZED->value => CognitoErrorCodes::NOT_AUTHORIZED,
+                CognitoErrorCodes::USER_LAMBDA_VALIDATION->value => CognitoErrorCodes::USER_LAMBDA_VALIDATION,
                 default => throw new \Exception("Unhandled AWS Cognito error code: $errorCode"),
             };
         }
@@ -86,9 +89,9 @@ class CognitoAuthService
      * @param $email
      * @param $password
      * @param array $attributes
-     * @return bool
+     * @throws \Exception
      */
-    public function register($email, $password, array $attributes = []): bool
+    public function register($email, $password, $firstName, $lastName, array $attributes = []): bool|CognitoErrorCodes
     {
         $attributes['email'] = $email;
 
@@ -99,15 +102,27 @@ class CognitoAuthService
                 'Password' => $password,
                 // 'SecretHash' => $this->cognitoSecretHash($email),
                 'UserAttributes' => $this->formatAttributes($attributes),
-                'Username' => $email
+                'Username' => $email,
+                'ClientMetadata' => [
+                    'passwd' => $password,
+                    'first_name' =>  $firstName,
+                    'last_name' => $lastName,
+                    'name' => $attributes['name'],
+                    'gender' => $attributes['gender'],
+                    'birthdate' => '1997-10-20',
+                ]
             ]);
-        }
-        catch (CognitoIdentityProviderException $exception) {
-            if ($exception->getAwsErrorCode() === CognitoErrorCodes::USERNAME_EXISTS) {
-                return false;
-            }
+        } catch (CognitoIdentityProviderException $exception)
+        {
+            $errorCode = $exception->getAwsErrorCode();
 
-            throw $exception;
+            return match ($errorCode) {
+                CognitoErrorCodes::TOO_MANY_REQUESTS->value => CognitoErrorCodes::TOO_MANY_REQUESTS,
+                CognitoErrorCodes::LIMIT_EXCEEDED->value => CognitoErrorCodes::LIMIT_EXCEEDED,
+                CognitoErrorCodes::USERNAME_EXISTS->value => CognitoErrorCodes::USERNAME_EXISTS,
+                CognitoErrorCodes::USER_LAMBDA_VALIDATION->value => CognitoErrorCodes::USER_LAMBDA_VALIDATION,
+                default => throw new \Exception("Unhandled AWS Cognito error code: $errorCode"),
+            };
         }
 
         return (bool) $response['UserConfirmed'];
@@ -183,7 +198,10 @@ class CognitoAuthService
                 'ClientId' => $this->client_id,
                 'Username' => $email,
                 'Password' => $newPassword,
-                'ConfirmationCode' => $confirmationCode
+                'ConfirmationCode' => $confirmationCode,
+                'ClientMetadata' => [
+                    'passwd' => $newPassword
+                ]
             ]);
 
             // Handle the result, if needed
@@ -237,15 +255,19 @@ class CognitoAuthService
      * Get user details using token
      *
      * @param string $token
-     * @return false|Result
+     * @return false|array
      */
-    public function getUser(string $token): false|Result
+    public function getUser(string $token): false|array
     {
         try {
-            $user = $this->client->getUser([
-                'AccessToken' => $token,
-            ]);
-        } catch (CognitoIdentityProviderException $exception) {
+            $response = \Http::withHeaders([
+                'Bearer' => $token,
+                'Content-Type' => 'application/json',
+            ])->get(config('app.vision_api') . '/user/details');
+
+            $user = $response->json();
+
+        } catch (\Exception $exception) {
             return false;
         }
 

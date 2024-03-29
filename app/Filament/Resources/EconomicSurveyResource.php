@@ -6,10 +6,11 @@ use App\Enums\Initiatives;
 use App\Filament\Resources\EconomicSurveyResource\Pages;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
-use App\Traits\Filament\MoreResourceSchema;
+use App\Traits\Filament\OtherUploadsResourceSchema;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
@@ -18,7 +19,6 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Auth;
 
 class EconomicSurveyResource extends Resource implements HasShieldPermissions
 {
-    use MoreResourceSchema;
+    use OtherUploadsResourceSchema;
 
     protected static ?string $model = PublishedInitiative::class;
 
@@ -56,19 +56,20 @@ class EconomicSurveyResource extends Resource implements HasShieldPermissions
                             ->label('Publish At')
                             ->required()
                             ->default(Carbon::now()->format('Y-m-d'))
-                            ->live()
-                            ->afterStateUpdated(
-                                function (Set $set, ?string $state) {
-                                    if ($state !== null)
-                                        $set('name', static::generateName($state));
-                                }),
+                            ->live(),
 
-                        TextInput::make('name')->default(function (callable $get) {
-                            return static::generateName($get('published_at'));
-                        })->required(),
+                        TextInput::make('name')
+                            ->suffixAction(Action::make('Generate')
+                                ->icon('heroicon-s-cog-8-tooth')
+                                ->iconButton()
+                                ->action(function (callable $get, callable $set) {
+                                    $set('name', static::generateName($get('published_at')));
+                                })
+                            )->required(),
 
                         Select::make('initiative_topic_id')
                             ->searchable()
+                            ->preload()
                             ->relationship('topic', 'name', function ($query) {
                                 return $query->orderBy('order_column');
                             })
@@ -86,7 +87,7 @@ class EconomicSurveyResource extends Resource implements HasShieldPermissions
 //                            ->required()
 //                            ->default(1),
 
-                    Hidden::make('language_id')->default(1),
+                        Hidden::make('language_id')->default(1),
 
                     ])->columns(2)->columnSpanFull(),
 

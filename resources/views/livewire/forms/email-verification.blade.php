@@ -75,7 +75,7 @@
                         <span wire:loading.remove wire:target="resendCode">{{ $success === null ? 'Resend' : 'Sent!' }}</span>
                     </p>
                 </button>
-                <button type="button" wire:click="$dispatch('renderComponent', { component: 'forms.verify-email' })" class="text-[18px] text-[#3362CC]">Change Email ID?</button>
+                <button type="button" wire:click="$dispatch('renderComponent', { component: 'forms.register' })" class="text-[18px] text-[#3362CC]">Change Email ID?</button>
             </div>
         </form>
     </div>

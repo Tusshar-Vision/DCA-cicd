@@ -40,11 +40,11 @@ class StudentDTO extends Data
 
     public static function fromAwsResult($userData): StudentDTO {
         return new self (
-            null,
-            explode(' ', $userData[3]['Value'])[0],
-            explode(' ', $userData[3]['Value'])[1],
-            $userData[6]['Value'],
-            $userData[5]['Value'],
+            $userData['item_list']['member_id'],
+            $userData['item_list']['firstname'],
+            $userData['item_list']['lastname'],
+            $userData['item_list']['login'],
+            $userData['item_list']['telephone_local'],
             null
         );
     }

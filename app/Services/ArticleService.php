@@ -7,9 +7,7 @@ use App\Helpers\InitiativesHelper;
 use App\Models\Article;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 readonly class ArticleService
@@ -23,6 +21,7 @@ readonly class ArticleService
     {
         return $this->articles
             ->isPublished()
+            ->isNotShort()
             ->isFeatured()
             ->latest()
             ->limit($limit)

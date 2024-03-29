@@ -59,6 +59,8 @@ return [
 
     'vision_url' => env('VISION_URL', 'https://visionias.in'),
 
+    'vision_api' => env('VISION_API', 'https://apis.visionias.in'),
+
     'asset_url' => env('ASSET_URL'),
 
     /*

@@ -15,12 +15,13 @@ class Register extends Component
     #[Validate('required|string|min:3')]
     public $last_name;
 
-    #[Validate('required|email')]
+    #[Validate('regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', message: 'Please enter a valid email address.')]
+    #[Validate('required')]
     public $email;
 
-    #[Validate('regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).+$/', message: 'Password must include at least one digit, special character, uppercase, and lowercase letter.')]
+    #[Validate('regex:/^(?!\s)(?!.*\s$).+/', message: 'Password can’t start or end with a blank space.')]
     #[Validate('required')]
-    #[Validate('min:8')]
+    #[Validate('min:6')]
     public $password;
 
     #[Validate('required|min_digits:10|max_digits:10')]
@@ -40,23 +41,28 @@ class Register extends Component
             'phone_number' => "+91" . $this->mobile,
             'gender' => 'male'
         ];
-        $userExists = $authService->checkIfUserExists($validated['email']);
 
-        if ($userExists === CognitoErrorCodes::USER_NOT_FOUND) {
-            $userConfirmed = $authService->register(
-                $this->email,
-                $this->password,
-                $attributes
-            );
+        $userConfirmed = $authService->register(
+            $this->email,
+            $this->password,
+            $this->first_name,
+            $this->last_name,
+            $attributes
+        );
 
-            if ($userConfirmed) {
-                $this->dispatch('renderComponent', 'forms.login');
-            } else {
-                session(['verify_email' => $this->email]);
-                $this->dispatch('renderComponent', 'forms.email-verification');
-            }
-        } else {
+        if ($userConfirmed === CognitoErrorCodes::USER_LAMBDA_VALIDATION) {
             $this->addError('email', "Account already exists, Please Login.");
+            return;
+        }
+
+        if ($userConfirmed === CognitoErrorCodes::USERNAME_EXISTS) {
+            $this->addError('email', "Account already exists, Please Login.");
+        }
+        else if ($userConfirmed) {
+            $this->dispatch('renderComponent', 'forms.login');
+        } else {
+            session(['verify_email' => $this->email]);
+            $this->dispatch('renderComponent', 'forms.email-verification');
         }
     }
 
