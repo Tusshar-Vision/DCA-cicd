@@ -50,6 +50,7 @@ export default function ckEditorComponent({
                     language: "en",
                     image: {toolbar: ["imageTextAlternative", "toggleImageCaption", "imageStyle:inline", "imageStyle:block", "imageStyle:side"]},
                     table: {contentToolbar: ["tableColumn", "tableRow", "mergeTableCells", "tableCellProperties", "tableProperties"]},
+                    mediaEmbed: {previewsInData: true},
                     autosave: {
                         waitingTime: 1000,
                         save: (editor) => {
