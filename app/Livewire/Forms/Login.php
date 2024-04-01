@@ -17,6 +17,7 @@ class Login extends Component
     #[Validate('regex:/^(?!\s)(?!.*\s$).+/', message: 'Password can’t start or end with a blank space.')]
     #[Validate('required')]
     #[Validate('min:6')]
+    #[Validate('max:16')]
     public $password;
 
     /**
