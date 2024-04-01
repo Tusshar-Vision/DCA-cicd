@@ -46,7 +46,9 @@ trait ArticleForm
                             Group::make()->schema([
 
                                 Group::make()->schema([
-                                    TextInput::make('title')->required(),
+                                    TextInput::make('title')
+                                        ->maxLength(250)
+                                        ->required(),
                                     TextInput::make('short_title')
                                         ->maxLength(50)
                                         ->label('Short Title')
@@ -71,8 +73,6 @@ trait ArticleForm
                                     ])
                                     ->disk('s3_public')
                                     ->collection('article-featured-image')
-                                    ->responsiveImages()
-                                    ->conversion('thumb')
                                     ->hidden(function (?Article $record) use ($isShortArticle, $isWeeklyFocusSection) {
                                         return
                                             $isWeeklyFocusSection ||

@@ -255,9 +255,7 @@ class WeeklyFocusResource extends Resource
                                 'image/webp'
                             ])
                             ->disk('s3_public')
-                            ->collection('article-featured-image')
-                            ->responsiveImages()
-                            ->conversion('thumb'),
+                            ->collection('article-featured-image'),
                     ]),
                     Forms\Components\Section::make('Topic at a glance')
                         ->schema([
