@@ -63,6 +63,10 @@ export default function ckEditorComponent({
                 .then(editor => {
                     displayStatus( editor );
                     editor.setData(this.state ?? '');
+                    const wordCountPlugin = editor.plugins.get( 'WordCount' );
+                    const wordCountWrapper = document.getElementById( 'word-count' );
+
+                    wordCountWrapper.appendChild( wordCountPlugin.wordCountContainer );
 
                     if (disabled) {
                         editor.enableReadOnlyMode( 'my-feature-id' );
