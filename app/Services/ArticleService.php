@@ -68,8 +68,6 @@ readonly class ArticleService
 
                 return self::getArticleURL($article);
             } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-                Log::error("Article with slug '{$slug}' not found.");
-                // Handle not found article by returning a default URL
                 return null; // Example default URL or could throw an exception
             }
         });

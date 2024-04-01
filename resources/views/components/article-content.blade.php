@@ -106,7 +106,7 @@
     @endif
 </div>
 
-{{--<script>--}}
+<script>
 
 {{--    tinymce.init({--}}
 {{--        selector: 'textarea#notes-text-area',--}}
@@ -114,23 +114,22 @@
 {{--        menubar: false,--}}
 {{--        toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table',--}}
 {{--    });--}}
-{{--    @if (Auth::guard('cognito')->check())--}}
-{{--        window.onload = addReadArticle--}}
+    @if (Auth::guard('cognito')->check())
+        window.onload = addReadArticle
 
-{{--        function addReadArticle() {--}}
-{{--            console.log("add read article", "{{ Auth::guard('cognito')->user()->name }}");--}}
-{{--            const article_id = "{{ $article->getID() }}";--}}
-{{--            const article_published_at = "{{$article->publishedAt}}"--}}
-{{--            const student_id = "{{ Auth::guard('cognito')->user()->id }}"--}}
-{{--            saveData("{{ route('user.read-history') }}", {--}}
-{{--                article_id,--}}
-{{--                student_id,--}}
-{{--                article_published_at,--}}
-{{--                read_percent: 0,--}}
-{{--                _token: "{{ csrf_token() }}"--}}
-{{--            })--}}
-{{--        }--}}
-{{--    @endif--}}
+        function addReadArticle() {
+            const article_id = "{{ $article->getID() }}";
+            const article_published_at = "{{$article->publishedAt}}"
+            const student_id = "{{ Auth::guard('cognito')->user()->id }}"
+            saveData("{{ route('user.read-history') }}", {
+                article_id,
+                student_id,
+                article_published_at,
+                read_percent: 0,
+                _token: "{{ csrf_token() }}"
+            })
+        }
+    @endif
 
 {{--    const doc = document.getElementById("article-content");--}}
 {{--    // doc.addEventListener('mouseup', handleSelection);--}}
@@ -282,4 +281,4 @@
 {{--            }, 4000);--}}
 {{--        }--}}
 {{--    @endif--}}
-{{--</script>--}}
+</script>
