@@ -121,7 +121,7 @@ class Article extends Model implements HasMedia, Sortable
 
     public function shouldBeSearchable(): bool
     {
-        return $this->status === 'Published';
+        return $this->status === 'Published' && $this->publishedInitiative !== null;
     }
 
     // Define the relationships with other models
