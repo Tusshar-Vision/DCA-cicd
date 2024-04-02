@@ -35,7 +35,7 @@ class WeeklyFocusController extends Controller
                 ->getLatest($this->initiativeId)
         );
 
-        // Define cache key based on newsToday published date
+        // Define cache key based on weeklyFocus published date
         $cacheKey = 'weekly-focus/' . $this->weeklyFocus->publishedAt;
 
         // Check if the weeklyFocus DTO exists in the cache
