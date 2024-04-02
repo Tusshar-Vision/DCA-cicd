@@ -93,13 +93,13 @@
                     </li>
                     <li class="block pl-[15px] mx-0 xl:mx-[15px] modeSvg">
                         <a href="javascript:void(0)"
-                            @click="isDarkModeEnabled = !isDarkModeEnabled;
-                            localStorage.setItem('isDarkModeEnabled', isDarkModeEnabled);">
-                            <div x-show="!isDarkModeEnabled">
+                            @click="$store.darkMode = ! $store.darkMode;
+                            localStorage.setItem('isDarkModeEnabled', $store.darkMode);">
+                            <div x-show="!$store.darkMode">
                                 {!! SvgIconsHelper::getSvgIcon('dark-mode-toggle') !!}
                             </div>
 
-                            <div x-show="isDarkModeEnabled">
+                            <div x-show="$store.darkMode">
                                 {!! SvgIconsHelper::getSvgIcon('light-mode-toggle') !!}
                             </div>
                         </a>

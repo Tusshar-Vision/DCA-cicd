@@ -112,3 +112,13 @@ window.saveData = async function (url, data) {
         console.error("Error:", error);
     }
 }
+
+document.addEventListener('alpine:init', () => {
+    Alpine.store('darkMode', false);
+    const storedPreference = localStorage.getItem('isDarkModeEnabled');
+    if (storedPreference !== null) {
+        $store.darkMode = storedPreference === 'true';
+    } else {
+        $store.darkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+})
