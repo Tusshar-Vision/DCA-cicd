@@ -12,15 +12,18 @@ use App\Models\Note;
 use App\Services\DownloadService;
 use App\Services\InitiativeService;
 use App\Services\PublishedInitiativeService;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 
 class NewsTodayController extends Controller
 {
     private int $initiativeId;
     private NewsTodayDTO $newsToday;
+    private NewsTodayMenuDTO $newsTodayCalendar;
 
     public function __construct(
         private readonly PublishedInitiativeService $publishedInitiativeService,
+        private readonly InitiativeService $initiativeService,
         private readonly DownloadService $downloadService
     ) {
         $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY);
@@ -31,10 +34,19 @@ class NewsTodayController extends Controller
      */
     public function index()
     {
+        // Create a NewsTodayDTO object from the latest published initiative
         $this->newsToday = NewsTodayDTO::fromModel(
-            $this->publishedInitiativeService
-                ->getLatest($this->initiativeId)
+            $this->publishedInitiativeService->getLatest($this->initiativeId)
         );
+
+        // Define cache key based on newsToday published date
+        $cacheKey = 'news-today/' . $this->newsToday->publishedAt;
+
+        // Check if the newsToday DTO exists in the cache
+        if (!Cache::has($cacheKey)) {
+            // Store the newsToday DTO in the cache for 60 minutes
+            Cache::put($cacheKey, $this->newsToday, 60);
+        }
 
         return redirect()
             ->route(
@@ -50,17 +62,9 @@ class NewsTodayController extends Controller
     /**
      * @throws \Throwable
      */
-    public function alsoInNews($date, InitiativeService $initiativeService)
+    public function alsoInNews($date)
     {
-        $this->newsToday = NewsTodayDTO::fromModel(
-            $this->publishedInitiativeService
-                ->getLatest($this->initiativeId, $date)
-        );
-
-        $newsTodayCalendar = NewsTodayMenuDTO::fromNewsTodayDTO(
-            $this->newsToday,
-            $initiativeService->getMenuData(Initiatives::NEWS_TODAY)
-        );
+        $this->hydrateData($date);
 
         $article = $this->newsToday->getShortNewsArticles();
 
@@ -81,7 +85,7 @@ class NewsTodayController extends Controller
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
             "isArticleBookmarked" => $isArticleBookmarked,
-            "newsTodayCalendar" => $newsTodayCalendar,
+            "newsTodayCalendar" => $this->newsTodayCalendar,
             "isAlsoInNews" => $article
         ]);
     }
@@ -89,17 +93,9 @@ class NewsTodayController extends Controller
     /**
      * @throws \Throwable
      */
-    public function renderArticle($date, $topic, $slug, InitiativeService $initiativeService)
+    public function renderArticle($date, $topic, $slug)
     {
-        $this->newsToday = NewsTodayDTO::fromModel(
-            $this->publishedInitiativeService
-                ->getLatest($this->initiativeId, $date)
-        );
-
-        $newsTodayCalendar = NewsTodayMenuDTO::fromNewsTodayDTO(
-            $this->newsToday,
-            $initiativeService->getMenuData(Initiatives::NEWS_TODAY)
-        );
+        $this->hydrateData($date);
 
         $article = $this->newsToday->getArticleFromSlug($slug);
         $isAlsoInNews = $this->newsToday->getShortNewsArticles();
@@ -121,9 +117,49 @@ class NewsTodayController extends Controller
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
             "isArticleBookmarked" => $isArticleBookmarked,
-            "newsTodayCalendar" => $newsTodayCalendar,
+            "newsTodayCalendar" => $this->newsTodayCalendar,
             "isAlsoInNews" => $isAlsoInNews
         ]);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    private function hydrateData($date) {
+        // Define cache key based on newsToday published date
+        $newsCacheKey = 'news-today/' . $date;
+
+        // Check if the newsToday DTO exists in the cache
+        if (Cache::has($newsCacheKey)) {
+            // Retrieve newsToday DTO from cache
+            $this->newsToday = Cache::get($newsCacheKey);
+        } else {
+            // Create a NewsTodayDTO object from the latest published initiative for the given date
+            $this->newsToday = NewsTodayDTO::fromModel(
+                $this->publishedInitiativeService->getLatest($this->initiativeId, $date)
+            );
+
+            // Store the newsToday DTO in the cache for 60 minutes
+            Cache::put($newsCacheKey, $this->newsToday, 60);
+        }
+
+        // Define cache key for newsToday calendar based on date
+        $calendarCacheKey = 'news-today/calendar/' . $date;
+
+        // Check if the newsToday calendar DTO exists in the cache
+        if (Cache::has($calendarCacheKey)) {
+            // Retrieve newsToday calendar DTO from cache
+            $this->newsTodayCalendar = Cache::get($calendarCacheKey);
+        } else {
+            // Create a NewsTodayMenuDTO object from newsToday DTO and menu data
+            $this->newsTodayCalendar = NewsTodayMenuDTO::fromNewsTodayDTO(
+                $this->newsToday,
+                $this->initiativeService->getMenuData(Initiatives::NEWS_TODAY)
+            );
+
+            // Store the newsToday calendar DTO in the cache for 60 minutes
+            Cache::put($calendarCacheKey, $this->newsTodayCalendar, 60);
+        }
     }
 
     public function getByYearAndMonth()
