@@ -3,6 +3,7 @@
 namespace App\Traits\Filament;
 
 use App\Enums\Initiatives;
+use App\Filament\Components\SourceInput;
 use App\Forms\Components\CKEditor;
 use App\Helpers\InitiativesHelper;
 use App\Jobs\GenerateArticlePDF;
@@ -19,7 +20,6 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieTagsInput;
-use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
@@ -307,7 +307,7 @@ trait ArticleResourceSchema
                                 'codeBlock',
                             ])->disabled(),
 
-                        TagsInput::make('sources')->placeholder('')->disabled()
+                        SourceInput::make('sources')->disabled()
                     ])->slideOver(),
 
                 Action::make('Review')

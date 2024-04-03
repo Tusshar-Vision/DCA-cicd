@@ -50,6 +50,7 @@ export default function ckEditorComponent({
                     language: "en",
                     image: {toolbar: ["imageTextAlternative", "toggleImageCaption", "imageStyle:inline", "imageStyle:block", "imageStyle:side"]},
                     table: {contentToolbar: ["tableColumn", "tableRow", "mergeTableCells", "tableCellProperties", "tableProperties"]},
+                    mediaEmbed: {previewsInData: true},
                     autosave: {
                         waitingTime: 1000,
                         save: (editor) => {
@@ -63,6 +64,10 @@ export default function ckEditorComponent({
                 .then(editor => {
                     displayStatus( editor );
                     editor.setData(this.state ?? '');
+                    const wordCountPlugin = editor.plugins.get( 'WordCount' );
+                    const wordCountWrapper = document.getElementById( 'word-count' );
+
+                    wordCountWrapper.appendChild( wordCountPlugin.wordCountContainer );
 
                     if (disabled) {
                         editor.enableReadOnlyMode( 'my-feature-id' );

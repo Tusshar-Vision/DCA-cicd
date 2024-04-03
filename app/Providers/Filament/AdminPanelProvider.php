@@ -148,7 +148,6 @@ class AdminPanelProvider extends PanelProvider
                 'Media'
             ])
             ->globalSearch(false)
-            ->sidebarCollapsibleOnDesktop()
-            ->spa();
+            ->sidebarCollapsibleOnDesktop();
     }
 }

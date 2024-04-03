@@ -4,6 +4,7 @@ namespace App\Traits\Filament\Components;
 
 use App\Enums\Initiatives;
 use App\Filament\Components\Repeater;
+use App\Filament\Components\SourceInput;
 use App\Filament\Resources\NewsTodayResource\RelationManagers\ShortArticlesRelationManager;
 use App\Filament\Resources\WeeklyFocusResource\RelationManagers\ArticlesRelationManager;
 use App\Forms\Components\CKEditor;
@@ -18,7 +19,6 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Components\Tabs;
-use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -46,7 +46,9 @@ trait ArticleForm
                             Group::make()->schema([
 
                                 Group::make()->schema([
-                                    TextInput::make('title')->required(),
+                                    TextInput::make('title')
+                                        ->maxLength(250)
+                                        ->required(),
                                     TextInput::make('short_title')
                                         ->maxLength(50)
                                         ->label('Short Title')
@@ -71,8 +73,6 @@ trait ArticleForm
                                     ])
                                     ->disk('s3_public')
                                     ->collection('article-featured-image')
-                                    ->responsiveImages()
-                                    ->conversion('thumb')
                                     ->hidden(function (?Article $record) use ($isShortArticle, $isWeeklyFocusSection) {
                                         return
                                             $isWeeklyFocusSection ||
@@ -306,8 +306,7 @@ trait ArticleForm
                                     }),
                             ])->collapsible(),
 
-                        TagsInput::make('sources')
-                            ->separator(',')
+                        SourceInput::make('sources')
                             ->placeholder('New Source')
                     ]),
 

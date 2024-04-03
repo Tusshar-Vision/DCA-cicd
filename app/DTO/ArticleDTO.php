@@ -15,7 +15,6 @@ class ArticleDTO extends Data implements Wireable
 {
     use WireableData;
     public function __construct(
-        private readonly int         $id,
         public string                $title,
         public ?string               $shortTitle,
         public string                $topic,
@@ -35,6 +34,7 @@ class ArticleDTO extends Data implements Wireable
         public ?string               $publishedAt,
         public ?string               $createdAt,
         public ?string               $updatedAt,
+        public  readonly int         $id,
         private readonly int         $initiativeID,
         private readonly int         $initiativeTopicID,
         private readonly ?int        $topicSectionID,
@@ -73,7 +73,6 @@ class ArticleDTO extends Data implements Wireable
     public static function fromModel(Article $article): self
     {
         return new self(
-            $article->id,
             $article->title,
             $article->short_title,
             str_replace(' ', '-', strtolower($article->topic->name)),
@@ -94,6 +93,7 @@ class ArticleDTO extends Data implements Wireable
             $article->created_at,
             $article->updated_at,
 
+            $article->id,
             $article->initiative_id,
             $article->initiative_topic_id,
             $article->topic_section_id,
