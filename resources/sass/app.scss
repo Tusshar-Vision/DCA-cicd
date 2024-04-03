@@ -3325,12 +3325,12 @@ iframe {
     transition: background-color 5000s ease-in-out 0s;
   }
 
-  
+
   .ck-content {
-   p,h2,h3,h4,h5,h6,li,b,span{
-    color: #fff;
-    background-color: transparent;
-   } 
+   p,h2,h3,h4,h5,h6,li,b,span,table{
+    color: #fff !important;
+    background-color: transparent !important;
+   }
   }
 
 }
@@ -3888,16 +3888,20 @@ iframe {
 
 
 .ck-content {
+
   ul {
     margin-left: 25px;
   }
+
   ol {
       margin-left: 25px;
   }
+
   h2,h3,h4,h5,h6{
     line-height: 150%;
     margin: 20px 0 10px;
   }
+
   h2 {
       font-size: 25px !important;
   }
@@ -3910,11 +3914,11 @@ iframe {
       font-size: 20px !important;
       line-height: 150% !important;
   }
-  p{
-      line-height: 170%;
+  p {
+      line-height: 160%;
       text-align: left;
   }
-  
+
   @media only screen and (max-width: 760px),
   (min-device-width: 768px) and (max-device-width: 1024px) {
 

@@ -68,7 +68,7 @@ class Article extends Model implements HasMedia, Sortable
         'is_short' => 'bool'
     ];
 
-    protected $with = ['initiative', 'topic', 'publishedInitiative'];
+    protected $with = ['topic', 'statuses'];
 
     // This method will automatically be called when creating or updating an article.
     public static function boot(): void
