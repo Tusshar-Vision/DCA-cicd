@@ -19,6 +19,7 @@ use App\Models\Video;
 use App\Services\PublishedInitiativeService;
 use App\Traits\Filament\InitiativeResourceSchema;
 use App\View\Components\Buttons\Primary;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
@@ -43,7 +44,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component as Livewire;
 
-class NewsTodayResource extends Resource
+class NewsTodayResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = PublishedInitiative::class;
 
@@ -170,7 +171,7 @@ class NewsTodayResource extends Resource
                         ->collection('news-today')
                         ->visibility('private')
                         ->visible(function (?PublishedInitiative $record) {
-                            if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'news_today_reviewer'])) return true;
+                            if (Auth::user()->can('upload_news::today')) return true;
                             else if ($record !== null && $record->hasMedia('news-today')) return true;
                             else return false;
                         })
@@ -179,7 +180,7 @@ class NewsTodayResource extends Resource
                             if ($record !== null && $record->is_published === true) {
                                 return Auth::user()->hasAnyRole(['admin', 'super_admin']);
                             } else {
-                                return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer', 'news_today_reviewer']);
+                                return Auth::user()->can('upload_news::today');
                             }
                         })
                         ->columnSpanFull(),
@@ -266,7 +267,7 @@ class NewsTodayResource extends Resource
                                 ])->columnSpan(1)
                             ])
                             ->disabled(function () {
-                                if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'news_today_reviewer'])) return false;
+                                if (Auth::user()->can('upload_news::today')) return false;
                                 else return true;
                             })
                             ->disabledOn('create'),
@@ -307,6 +308,17 @@ class NewsTodayResource extends Resource
         }
 
         return $query;
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'create',
+            'edit',
+            'upload',
+            'delete',
+        ];
     }
 
     public static function canViewAny(): bool

@@ -16,6 +16,7 @@ use App\Models\Video;
 use App\Services\MediaService;
 use App\Services\PublishedInitiativeService;
 use App\Traits\Filament\InitiativeResourceSchema;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
@@ -45,7 +46,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component as Livewire;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class WeeklyFocusResource extends Resource
+class WeeklyFocusResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = PublishedInitiative::class;
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
@@ -216,7 +217,7 @@ class WeeklyFocusResource extends Resource
                         ->collection('weekly-focus')
                         ->visibility('private')
                         ->visible(function (?PublishedInitiative $record) {
-                            if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'weekly_focus_reviewer'])) return true;
+                            if (Auth::user()->can('upload_weekly::focus')) return true;
                             else if ($record !== null && $record->hasMedia('weekly-focus')) return true;
                             else return false;
                         })
@@ -225,7 +226,7 @@ class WeeklyFocusResource extends Resource
                             if ($record !== null && $record->is_published === true) {
                                 return Auth::user()->hasAnyRole(['admin', 'super_admin']);
                             } else {
-                                return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer', 'weekly_focus_reviewer']);
+                                return Auth::user()->can('upload_weekly::focus');
                             }
                         })
                         ->columnSpanFull(),
@@ -305,7 +306,7 @@ class WeeklyFocusResource extends Resource
                                         ]),
                                 ])
                                 ->disabled(function () {
-                                    if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'weekly_focus_reviewer'])) return false;
+                                    if (Auth::user()->can('upload_weekly::focus')) return false;
                                     else return true;
                                 })
                                 ->disabledOn('create'),
@@ -397,7 +398,7 @@ class WeeklyFocusResource extends Resource
                                     ])->columnSpan(1)
                                 ])
                                 ->disabled(function () {
-                                    if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'weekly_focus_reviewer'])) return false;
+                                    if (Auth::user()->can('upload_weekly::focus')) return false;
                                     else return true;
                                 })
                                 ->disabledOn('create'),
@@ -439,6 +440,17 @@ class WeeklyFocusResource extends Resource
         }
 
         return $query;
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'create',
+            'edit',
+            'upload',
+            'delete',
+        ];
     }
 
 }
