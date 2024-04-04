@@ -216,7 +216,12 @@
         event.preventDefault();
 
         // Get the current query value
-        var queryValue = event.target.value;
+        var queryValue = event.target.value.trim(); // Trim whitespace from the beginning and end
+        if (queryValue.length < 2 || /^\s*$/.test(queryValue)) {
+            // If query is less than two characters or contains only whitespace
+            alert("Query must be at least two characters long.");
+            return; // Stop further execution
+        }
         var currentUrl = new URL(window.location);
         var searchParams = currentUrl.searchParams;
         searchParams.set('query', queryValue)
