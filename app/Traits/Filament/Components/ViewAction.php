@@ -75,7 +75,8 @@ trait ViewAction
                         'codeBlock',
                     ])->disabled(),
 
-                SourceInput::make('sources')->disabled()
+                SourceInput::make('sources')->placeholder('')->disabled(),
+                SourceInput::make('references')->placeholder('')->disabled()
             ])->slideOver();
     }
 }
