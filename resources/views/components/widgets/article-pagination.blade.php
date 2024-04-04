@@ -60,7 +60,7 @@
                             {{ $previousPublishedInitiative->name }}
                         @else
                             {{
-                                $firstArticle->shortTitle
+                                $firstArticle->short_title
                                 ??
                                 $firstArticle->title
                             }}
@@ -125,7 +125,7 @@
                             {{ $nextPublishedInitiative->name }}
                         @else
                             {{
-                                $firstArticle->shortTitle
+                                $firstArticle->short_title
                                 ??
                                 $firstArticle->title
                             }}

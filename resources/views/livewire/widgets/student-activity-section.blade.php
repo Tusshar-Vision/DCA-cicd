@@ -5,7 +5,7 @@
             <div class="flex justify-between relative">
                 <p class="vi-tab-title">Reading History</p>
                 <div class="student-search-field-container">
-                    <input type="search" placeholder="Search" class="student-search-field">
+                    <input type="search" placeholder="Search" class="student-search-field dark:bg-dark545557 border-[#686E70] dark:text-white">
                 </div>
                 {{-- <div class="my-content-search w-[150px]">
                     <div class="search-bar-wrapper">

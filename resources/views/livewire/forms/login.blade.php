@@ -11,7 +11,7 @@
     </div>
     <div x-data="{ focusedEmail: false, focusedPassword: false, passwordVisible: false }" class="w-full xl:w-6/12 flex flex-col justify-center px-[20px] md:px-[56px] py-[30px] loginwrap dark:bg-dark373839">
         <h2 class="font-bold text-base mb-2 dark:text-white">Welcome Back !</h2>
-        <p class="text-xs font-normal mb-[40px]">Please log in to your account for a personalized experience.</p>
+        <p class="text-xs font-normal mb-[40px]">Please login to your account for a personalized experience.</p>
 
         <div class="form-item mb-[15px]">
             <input
