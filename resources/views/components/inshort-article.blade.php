@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-            <div x-show="openItem == {{$key}}" class="text-[#3D3D3D] text-sm font-light flex flex-col mt-4 pb-2" x-collapse>
+            <div x-show="openItem == {{$key}}" class="text-[#3D3D3D] flex flex-col mt-4 pb-2" x-collapse>
 
                 <div class="printable-area dark:text-white ck-content">{!! $article->content !!}</div>
 
