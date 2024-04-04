@@ -58,8 +58,6 @@
         }
 
         function bookmark() {
-            console.log("bookmark")
-
             saveData("{{ route('bookmarks.add') }}", {
                 student_id: "{{ Auth::guard('cognito')?->user()?->id }}",
                 article_id: "{{ $articleId }}",

@@ -12,7 +12,7 @@
         <div class="search-bar-wrapper">
             <span class="vi-icons search"></span>
             <label>
-                <input @keydown.enter="navigateToSearchPage" x-model="query" type="text" class="vi-search-bar focus" placeholder="Search" value="{{ $query }}" required>
+                <input @keydown.enter="navigateToSearchPage" x-model="query" type="text" class="vi-search-bar focus dark:bg-dark545557 border-[#686E70]" placeholder="Search" value="{{ $query }}" required>
             </label>
 {{--            <ul class="w-full absolute left-0 top-[40px] py-2 border-[#ddd] border-2 rounded bg-white hidden updatedText">--}}
 {{--                <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 1</li>--}}
@@ -216,7 +216,12 @@
         event.preventDefault();
 
         // Get the current query value
-        var queryValue = event.target.value;
+        var queryValue = event.target.value.trim(); // Trim whitespace from the beginning and end
+        if (queryValue.length < 2 || /^\s*$/.test(queryValue)) {
+            // If query is less than two characters or contains only whitespace
+            alert("Query must be at least two characters long.");
+            return; // Stop further execution
+        }
         var currentUrl = new URL(window.location);
         var searchParams = currentUrl.searchParams;
         searchParams.set('query', queryValue)

@@ -7,7 +7,7 @@
 @endphp
 
 @section('header')
-    <x-navigation.topics :published-date="$package->publishedAt" :topics="$package->topics" />
+    <x-navigation.topics :published-date="$package->publishedAt" :topics="$package->sortedArticlesWithTopic" />
 @endsection
 
 @section('article-content')

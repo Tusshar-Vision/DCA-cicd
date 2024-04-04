@@ -33,8 +33,8 @@ use LaracraftTech\LaravelDateScopes\DateScopes;
 class Article extends Model implements HasMedia, Sortable
 {
     use Searchable, InteractsWithMedia, DateScopes, SortableTrait, WithData, SoftDeletes;
-
     use HasFactory,  HasSlug, HasTags, HasSEO, HasComments,  HasReviewRating,  HasStatuses;
+
     protected string $dataClass = ArticleDTO::class;
 
     protected $fillable = [
@@ -58,17 +58,19 @@ class Article extends Model implements HasMedia, Sortable
         'reviewer_id',
         'initiative_id',
         'sources',
+        'references',
         'order_column',
         'is_short'
     ];
 
     protected $casts = [
         'sources' => 'array',
+        'references' => 'array',
         'published_at' => 'datetime',
         'is_short' => 'bool'
     ];
 
-    protected $with = ['initiative', 'topic', 'publishedInitiative'];
+    protected $with = ['topic', 'statuses'];
 
     // This method will automatically be called when creating or updating an article.
     public static function boot(): void
@@ -89,6 +91,9 @@ class Article extends Model implements HasMedia, Sortable
         static::retrieved(function ($article) {
             $article->sources = $article->sources ?? [];
             $article->sources = is_string($article->sources) ? explode(',', $article->sources) : $article->sources;
+
+            $article->references = $article->references ?? [];
+            $article->references = is_string($article->references) ? explode(',', $article->references) : $article->references;
         });
     }
 
@@ -109,19 +114,9 @@ class Article extends Model implements HasMedia, Sortable
             ->saveSlugsTo('slug');
     }
 
-    /**
-     * Get the route key for the model.
-     *
-     * @return string
-     */
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
-
     public function shouldBeSearchable(): bool
     {
-        return $this->status === 'Published';
+        return $this->status === 'Published' && $this->publishedInitiative !== null;
     }
 
     // Define the relationships with other models

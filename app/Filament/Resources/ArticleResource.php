@@ -20,6 +20,7 @@ class ArticleResource extends Resource implements HasShieldPermissions
     protected static ?string $navigationGroup = 'Create Articles';
     protected static ?string $modelLabel = 'All Article';
     protected static ?int $navigationSort = 4;
+    protected static ?string $recordRouteKeyName = 'id';
 
     use ArticleResourceSchema;
 

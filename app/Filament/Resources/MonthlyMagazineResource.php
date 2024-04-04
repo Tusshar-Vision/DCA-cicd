@@ -7,7 +7,6 @@ use App\Filament\Resources\MonthlyMagazineResource\Pages;
 use App\Filament\Resources\MonthlyMagazineResource\RelationManagers\ArticlesRelationManager;
 use App\Filament\Resources\MonthlyMagazineResource\RelationManagers\ShortArticlesRelationManager;
 use App\Helpers\InitiativesHelper;
-use App\Models\Article;
 use App\Models\PublishedInitiative;
 use App\Services\PublishedInitiativeService;
 use App\Traits\Filament\InitiativeResourceSchema;
@@ -17,20 +16,14 @@ use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
-use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
-class MonthlyMagazineResource extends Resource
+class MonthlyMagazineResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = PublishedInitiative::class;
 
@@ -158,7 +151,7 @@ class MonthlyMagazineResource extends Resource
                         ->acceptedFileTypes(['application/pdf'])
                         ->visibility('private')
                         ->visible(function (?PublishedInitiative $record) {
-                            if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'monthly_magazine_reviewer'])) return true;
+                            if (Auth::user()->can('upload_monthly::magazine')) return true;
                             else if ($record !== null && $record->hasMedia('monthly-magazine')) return true;
                             else return false;
                         })
@@ -167,7 +160,7 @@ class MonthlyMagazineResource extends Resource
                             if ($record !== null && $record->is_published === true) {
                                 return Auth::user()->hasAnyRole(['admin', 'super_admin']);
                             } else {
-                                return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer', 'monthly_magazine_reviewer']);
+                                return Auth::user()->can('upload_monthly::magazine');
                             }
                         })
                         ->columnSpanFull(),
@@ -214,6 +207,17 @@ class MonthlyMagazineResource extends Resource
         }
 
         return $query;
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'create',
+            'edit',
+            'upload',
+            'delete',
+        ];
     }
 
     public static function canViewAny(): bool

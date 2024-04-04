@@ -90,23 +90,23 @@
             Note</button>
     </div>
 
-    <div id="article-content" class="mt-4 printable-area ck-content">
+    <div id="article-content" class="mt-4 w-full printable-area ck-content">
         {!! $article->content !!}
     </div>
-
-    <ul class="flex justify-start items-baseline mt-4">
-        <li class="text-[#3D3D3D] text-base mr-2 dark:text-white">Tags :</li>
-        @foreach ($article->tags as $tag)
-            <li class="mr-2 bg-[#F4F6F8] text-xs rounded-sm py-1 px-2 cursor-pointer dark:text-white dark:bg-dark545557">{{ $tag->name }}</li>
-        @endforeach
-    </ul>
-
-    @if ((count($article->sources) > 0 && $article->sources[0] !== ''))
-        <x-widgets.article-sources :sources="$article->sources" />
-    @endif
 </div>
 
-{{--<script>--}}
+<ul class="flex justify-start items-baseline mt-4">
+    <li class="text-[#3D3D3D] text-base mr-2 dark:text-white">Tags :</li>
+    @foreach ($article->tags as $tag)
+        <li class="mr-2 bg-[#F4F6F8] text-xs rounded-sm py-1 px-2 cursor-pointer dark:text-white dark:bg-dark545557">{{ $tag->name }}</li>
+    @endforeach
+</ul>
+
+@if ((count($article->sources) > 0 && $article->sources[0] !== ''))
+    <x-widgets.article-sources :sources="$article->sources" />
+@endif
+
+<script>
 
 {{--    tinymce.init({--}}
 {{--        selector: 'textarea#notes-text-area',--}}
@@ -114,23 +114,22 @@
 {{--        menubar: false,--}}
 {{--        toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table',--}}
 {{--    });--}}
-{{--    @if (Auth::guard('cognito')->check())--}}
-{{--        window.onload = addReadArticle--}}
+    @if (Auth::guard('cognito')->check())
+        window.onload = addReadArticle
 
-{{--        function addReadArticle() {--}}
-{{--            console.log("add read article", "{{ Auth::guard('cognito')->user()->name }}");--}}
-{{--            const article_id = "{{ $article->getID() }}";--}}
-{{--            const article_published_at = "{{$article->publishedAt}}"--}}
-{{--            const student_id = "{{ Auth::guard('cognito')->user()->id }}"--}}
-{{--            saveData("{{ route('user.read-history') }}", {--}}
-{{--                article_id,--}}
-{{--                student_id,--}}
-{{--                article_published_at,--}}
-{{--                read_percent: 0,--}}
-{{--                _token: "{{ csrf_token() }}"--}}
-{{--            })--}}
-{{--        }--}}
-{{--    @endif--}}
+        function addReadArticle() {
+            const article_id = "{{ $article->getID() }}";
+            const article_published_at = "{{$article->publishedAt}}"
+            const student_id = "{{ Auth::guard('cognito')->user()->id }}"
+            saveData("{{ route('user.read-history') }}", {
+                article_id,
+                student_id,
+                article_published_at,
+                read_percent: 0,
+                _token: "{{ csrf_token() }}"
+            })
+        }
+    @endif
 
 {{--    const doc = document.getElementById("article-content");--}}
 {{--    // doc.addEventListener('mouseup', handleSelection);--}}
@@ -282,4 +281,4 @@
 {{--            }, 4000);--}}
 {{--        }--}}
 {{--    @endif--}}
-{{--</script>--}}
+</script>

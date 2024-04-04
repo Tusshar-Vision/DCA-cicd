@@ -16,6 +16,12 @@
         .ck-editor__editable ol {
             margin-left: 25px;
         }
+        .ck-word-count {
+            display: flex;
+        }
+        .ck-word-count__words {
+            margin-right: 10px;
+        }
         #snippet-autosave-header{
             display: flex;
             justify-content: space-between;
@@ -125,6 +131,7 @@
                     <span id="snippet-autosave-status_spinner-loader"></span>
                 </div>
             </div>
+            <div id="word-count"></div>
         </div>
     </div>
 
