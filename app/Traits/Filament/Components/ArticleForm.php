@@ -307,7 +307,11 @@ trait ArticleForm
                             ])->collapsible(),
 
                         SourceInput::make('sources')
-                            ->placeholder('New Source')
+                            ->placeholder('New Source'),
+
+                        SourceInput::make('references')
+                            ->placeholder('')
+                            ->disabled(),
                     ]),
 
                     Tabs\Tab::make('Related Articles')->schema([
