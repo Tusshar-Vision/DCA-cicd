@@ -129,7 +129,7 @@
                                                    class="text-sm block px-[15px] mb-[10px]"
                                                    wire:navigate
                                                 >
-                                                    {{ $menu->article->first()->title }}
+                                                    {{ $menu->name }}
                                                 </a>
                                             </li>
                                         </ul>
