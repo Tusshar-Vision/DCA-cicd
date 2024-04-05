@@ -7,6 +7,7 @@ use App\Filament\Resources\EconomicSurveyResource;
 use App\Filament\Resources\Mains365Resource;
 use App\Filament\Resources\PT365Resource;
 use App\Filament\Resources\QuarterlyRevisionResource;
+use App\Filament\Resources\ThePlanetVisionResource;
 use App\Filament\Resources\ValueAddedOptionalResource;
 use App\Filament\Resources\ValueAddedResource;
 use App\Filament\Resources\YearEndReviewResource;
@@ -43,6 +44,7 @@ trait HelperMethods
             ValueAddedOptionalResource::class => 'publish_value::added::optional',
             QuarterlyRevisionResource::class => 'publish_quarterly::revision',
             YearEndReviewResource::class => 'publish_year::end::review',
+            ThePlanetVisionResource::class => 'publish_the::planet::vision',
             default => throw new \Exception("Permission not defined for resource."),
         };
     }

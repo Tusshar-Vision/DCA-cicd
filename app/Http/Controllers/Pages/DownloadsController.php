@@ -148,7 +148,7 @@ class DownloadsController extends Controller
             ->getDownloadableResources(InitiativesHelper::getInitiativeID(Initiatives::PLANET_VISION), $year, $month);
 
         return View('pages.archives.quarterly-revision-document', [
-            "title" => "Quarterly Revision Document Archive",
+            "title" => "The Planet Vision",
             "data" => $medias
         ]);
     }

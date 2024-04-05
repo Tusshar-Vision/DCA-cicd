@@ -7,6 +7,7 @@ use App\Filament\Resources\ThePlanetVisionResource\Pages;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
 use App\Traits\Filament\OtherUploadsResourceSchema;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\Actions\Action;
@@ -23,7 +24,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
-class ThePlanetVisionResource extends Resource
+class ThePlanetVisionResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = PublishedInitiative::class;
 
@@ -126,6 +127,17 @@ class ThePlanetVisionResource extends Resource
             'index' => Pages\ListThePlanetVisions::route('/'),
             'create' => Pages\CreateThePlanetVision::route('/create'),
             'edit' => Pages\EditThePlanetVision::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'create',
+            'edit',
+            'delete',
+            'publish'
         ];
     }
 

@@ -96,6 +96,14 @@
                 Year End Reviews
             </a>
         </li>
+        <li class="mb-1">
+            <a href="{{ route('planet-vision') }}"
+               wire:navigate
+               class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('the-planet-vision*') ? 'activeSidebar' : '' }}"
+            >
+                The Planet Vision
+            </a>
+        </li>
 
     {{-- These initiatives will be enabled in future, don't remove --}}
 
