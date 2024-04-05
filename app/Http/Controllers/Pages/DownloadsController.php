@@ -137,4 +137,19 @@ class DownloadsController extends Controller
             "data" => $medias
         ]);
     }
+
+    public function renderPlanetVision()
+    {
+        $year = request()->input('year');
+        $month = request()->input('month');
+
+        $medias = $this
+            ->downloadService
+            ->getDownloadableResources(InitiativesHelper::getInitiativeID(Initiatives::PLANET_VISION), $year, $month);
+
+        return View('pages.archives.quarterly-revision-document', [
+            "title" => "Quarterly Revision Document Archive",
+            "data" => $medias
+        ]);
+    }
 }

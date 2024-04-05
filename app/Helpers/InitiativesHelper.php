@@ -28,7 +28,8 @@ class InitiativesHelper {
         "VALUE_ADDED_MATERIAL_OPTIONAL" => 14,
         "QUARTERLY_REVISION_DOCUMENTS" => 15,
         "BUDGET" => 17,
-        "YEAR_END_REVIEW" => 22
+        "YEAR_END_REVIEW" => 22,
+        "PLANET_VISION" => 23
     ];
     private const InitiativeTopics = [
         "POLITY" => 1,
