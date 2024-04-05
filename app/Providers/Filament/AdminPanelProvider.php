@@ -9,6 +9,7 @@ use App\Filament\Resources\BudgetResource;
 use App\Filament\Resources\CommentResource;
 use App\Filament\Resources\EconomicSurveyResource;
 use App\Filament\Resources\QuarterlyRevisionResource;
+use App\Filament\Resources\ThePlanetVisionResource;
 use App\Filament\Resources\ValueAddedOptionalResource;
 use App\Filament\Resources\InfographicsResource;
 use App\Filament\Resources\Mains365Resource;
@@ -21,6 +22,8 @@ use App\Filament\Resources\SubSectionResource;
 use App\Filament\Resources\ValueAddedResource;
 use App\Filament\Resources\VideoResource;
 use App\Filament\Resources\WeeklyFocusResource;
+use App\Filament\Resources\YearEndReviewResource;
+use App\Livewire\Widgets\Archives\PlanetVision;
 use Awcodes\Overlook\OverlookPlugin;
 use Awcodes\Overlook\Widgets\OverlookWidget;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
@@ -64,6 +67,8 @@ class AdminPanelProvider extends PanelProvider
                         ValueAddedResource::class,
                         ValueAddedOptionalResource::class,
                         QuarterlyRevisionResource::class,
+                        YearEndReviewResource::class,
+                        ThePlanetVisionResource::class,
                         InfographicsResource::class,
                         VideoResource::class,
                         CommentResource::class,
