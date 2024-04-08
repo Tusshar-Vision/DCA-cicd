@@ -43,9 +43,9 @@ class AppServiceProvider extends ServiceProvider
         ]);
 
         FilamentAsset::register([
-            Js::make('ckeditor', __DIR__ . '/../../resources/js/ckeditor.js'),
-            Css::make('ckeditor-css', __DIR__ . '/../../resources/css/ckeditor.css'),
-            AlpineComponent::make('ck-editor-component', __DIR__ . '/../../resources/js/dist/components/ck-editor-component.js'),
+            Js::make('ckeditor', __DIR__ . '/../../resources/js/filament/components/ckeditor.js'),
+            Css::make('ckeditor', __DIR__ . '/../../resources/css/filament/components/ckeditor.css'),
+            AlpineComponent::make('ck-editor-component', __DIR__ . '/../../resources/dist/components/ck-editor-component.js'),
         ]);
     }
 }
