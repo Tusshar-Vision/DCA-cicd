@@ -43,6 +43,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Pboivin\FilamentPeek\FilamentPeekPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -108,6 +109,7 @@ class AdminPanelProvider extends PanelProvider
                         'default' => 1,
                         'sm' => 2,
                     ]),
+                FilamentPeekPlugin::make(),
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->default()
@@ -153,6 +155,7 @@ class AdminPanelProvider extends PanelProvider
                 'Media'
             ])
             ->globalSearch(false)
-            ->sidebarCollapsibleOnDesktop();
+            ->sidebarCollapsibleOnDesktop()
+            ->spa();
     }
 }
