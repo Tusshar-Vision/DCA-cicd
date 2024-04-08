@@ -21,6 +21,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
@@ -154,5 +155,47 @@ class ThePlanetVisionResource extends Resource implements HasShieldPermissions
         }
 
         return $query;
+    }
+    public static function canViewAny(): bool
+    {
+        return Auth::user()->can('view_the::planet::vision');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        if ($record->trashed()) {
+            return false;
+        }
+        return Auth::user()->hasAnyRole(['super_admin', 'admin']) || (Auth::user()->can('edit_the::planet::vision') && $record->is_published !== true);
+    }
+
+    public static function canCreate(): bool
+    {
+        $user = Auth::user();
+        return $user->can('create_the::planet::vision');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('delete_the::planet::vision') && $record->is_published !== true;
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        $user = Auth::user();
+        return $user->can('delete_the::planet::vision');
+    }
+
+    public static function canForceDelete(Model $record): bool
+    {
+        $user = Auth::user();
+        return $user->can('delete_the::planet::vision') && $record->is_published !== true;
+    }
+
+    public static function canForceDeleteAny(): bool
+    {
+        $user = Auth::user();
+        return $user->can('delete_the::planet::vision');
     }
 }
