@@ -9,6 +9,7 @@ use Carbon\Carbon;
 class WeeklyFocusDTO extends PublishedInitiativeDTO
 {
     public $topicAtGlance;
+    public $tags;
 
     public static function fromModel(PublishedInitiative $publishedInitiative): WeeklyFocusDTO|PublishedInitiativeDTO
     {
@@ -25,6 +26,7 @@ class WeeklyFocusDTO extends PublishedInitiativeDTO
             $publishedInitiative->media->first()
         );
         $dto->topicAtGlance = $publishedInitiative->infographic;
+        $dto->tags = $publishedInitiative->tags;
 
         return $dto;
     }

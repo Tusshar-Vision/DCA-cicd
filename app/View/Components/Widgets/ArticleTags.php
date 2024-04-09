@@ -6,12 +6,12 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class WeeklyFocusArchive extends Component
+class ArticleTags extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(public $tags)
     {
         //
     }
@@ -21,6 +21,6 @@ class WeeklyFocusArchive extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.widgets.weekly-focus-archive');
+        return view('components.widgets.article-tags');
     }
 }

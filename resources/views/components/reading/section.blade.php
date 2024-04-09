@@ -25,4 +25,8 @@
             </div>
         </div>
     @endforeach
+
+    @if (count($tags) > 0)
+        <x-widgets.article-tags :tags="$tags" />
+    @endif
 </div>
