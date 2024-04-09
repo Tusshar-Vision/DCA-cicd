@@ -32,11 +32,12 @@ class UserController extends Controller
     public function dashboard()
     {
         $read_histories = $this->student->readHistories()->with('article')->get()->map(function ($history) {
-            $history->title = $history->article->title;
+            $history->title = $history->article->short_title ?? $history->article->title;
             $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
             $history->url = ArticleService::getArticleUrl($history->article);
+            $history->img = $history->article->getFirstMediaUrl("article-featured-image");
 
-            return $history->only(['title', 'published_at', 'url']);
+            return $history->only(['title', 'published_at', 'url', 'img']);
         });
 
         // content consumption
