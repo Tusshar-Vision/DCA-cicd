@@ -31,12 +31,13 @@ class UserController extends Controller
     }
     public function dashboard()
     {
-        $read_histories = $this->student->readHistories()->with('article')->get()->map(function ($history) {
-            $history->title = $history->article->title;
+        $read_histories = $this->student->readHistories()->orderBy('created_at', 'desc')->with('article')->get()->map(function ($history) {
+            $history->title = $history->article->short_title ?? $history->article->title;
             $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
             $history->url = ArticleService::getArticleUrl($history->article);
+            $history->img = $history->article->getFirstMediaUrl("article-featured-image");
 
-            return $history->only(['title', 'published_at', 'url']);
+            return $history->only(['title', 'published_at', 'url', 'img']);
         });
 
         // content consumption
@@ -169,12 +170,13 @@ class UserController extends Controller
 
     public function bookmarks()
     {
-        $bookmarks = $this->student->bookmarks()->with('article')->get()->map(function ($history) {
+        $bookmarks = $this->student->bookmarks()->orderBy('created_at', 'desc')->with('article')->get()->map(function ($history) {
             $history->title = $history->article->title;
             $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
             $history->url = ArticleService::getArticleUrl($history->article);
+            $history->img = $history->article->getFirstMediaUrl("article-featured-image");
 
-            return $history->only(['title', 'published_at', 'url']);
+            return $history->only(['title', 'published_at', 'url', 'img']);
         });
 
         return view('pages.user.bookmarks', ['bookmarks' => $bookmarks]);
