@@ -5,6 +5,10 @@
     $notesHeading = 'My Notes';
 @endphp
 
+@section('styles')
+    @vite('resources/css/ck-content.css')
+@endsection
+
 @section('content')
     <div class="space-y-12">
     {{--Highlights and notes side menu buttons and modal box, this is common on all pages of the reading ecosystem--}}
