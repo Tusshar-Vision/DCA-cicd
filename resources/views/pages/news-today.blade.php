@@ -52,9 +52,9 @@
                 </div>
 
                 @if($inShort)
-                    <x-inshort-article :articles="$package->shortArticles" class="m-0" />
+                    <x-reading.short-article :articles="$package->shortArticles" class="m-0" />
                 @else
-                    <x-article-content :article="$article" class="m-0" />
+                    <x-reading.article-content :article="$article" class="m-0" />
                 @endif
 
                 <div class="mt-12">
