@@ -10,7 +10,9 @@
         <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8 w-full">
 
             <div class="flex w-full lg:md:w-2/6 flex-col space-y-4 leftsticky stickyMl-0">
-                {!! \App\Helpers\SvgIconsHelper::getSvgIcon('weekly-focus-logo') !!}
+
+                <img src="{{ asset('images/weekly-focus-logo.svg') }}" alt="Weekly Focus Logo" />
+
                 <x-widgets.article-side-bar :table-of-content="$package->articles"/>
 
                 <div class="hidden lg:block">

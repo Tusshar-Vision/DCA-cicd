@@ -13,7 +13,8 @@
 @section('article-content')
     <div x-data="{ openItem: 0, expanded: false }" class="flex flex-col lg:flex-row space-x-0 lg:space-x-8 mt-[20px] md:mt-0">
         <div class="flex min-w-full lg:min-w-[340px] lg:w-2/6 flex-col space-y-6 leftsticky stickyMl-0">
-            {!! \App\Helpers\SvgIconsHelper::getSvgIcon('monthly-magazine-logo') !!}
+
+            <img src="{{ asset('images/monthly-magazine-logo.svg') }}" alt="Monthly Magazine Logo" />
 
             <livewire:widgets.articles-side-bar :topics="$package->topics" :articles="$package->sortedArticlesWithTopic" :table-of-content="$tableOfContent" />
             <div class="hidden lg:block">
