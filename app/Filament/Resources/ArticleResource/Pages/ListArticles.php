@@ -6,6 +6,7 @@ use App\Filament\Resources\ArticleResource;
 use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
+use Pboivin\FilamentPeek\Pages\Concerns\HasPreviewModal;
 
 class ListArticles extends ListRecords
 {

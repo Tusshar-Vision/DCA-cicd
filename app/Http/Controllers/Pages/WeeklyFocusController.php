@@ -35,14 +35,14 @@ class WeeklyFocusController extends Controller
                 ->getLatest($this->initiativeId)
         );
 
-        // Define cache key based on weeklyFocus published date
-        $cacheKey = 'weekly-focus/' . $this->weeklyFocus->publishedAt;
-
-        // Check if the weeklyFocus DTO exists in the cache
-        if (!Cache::has($cacheKey)) {
-            // Store the weeklyFocus DTO in the cache for 60 minutes
-            Cache::put($cacheKey, $this->weeklyFocus, 60);
-        }
+//        // Define cache key based on weeklyFocus published date
+//        $cacheKey = 'weekly-focus/' . $this->weeklyFocus->publishedAt;
+//
+//        // Check if the weeklyFocus DTO exists in the cache
+//        if (!Cache::has($cacheKey)) {
+//            // Store the weeklyFocus DTO in the cache for 60 minutes
+//            Cache::put($cacheKey, $this->weeklyFocus, 60);
+//        }
 
         return redirect()
             ->route(
@@ -89,13 +89,13 @@ class WeeklyFocusController extends Controller
      */
     private function hydrateData($date) {
         // Define cache key based on newsToday published date
-        $weeklyCacheKey = 'weekly-focus/' . $date;
-
-        // Check if the newsToday DTO exists in the cache
-        if (Cache::has($weeklyCacheKey)) {
-            // Retrieve newsToday DTO from cache
-            $this->weeklyFocus = Cache::get($weeklyCacheKey);
-        } else {
+//        $weeklyCacheKey = 'weekly-focus/' . $date;
+//
+//        // Check if the newsToday DTO exists in the cache
+//        if (Cache::has($weeklyCacheKey)) {
+//            // Retrieve newsToday DTO from cache
+//            $this->weeklyFocus = Cache::get($weeklyCacheKey);
+//        } else {
             // Create a NewsTodayDTO object from the latest published initiative for the given date
             $this->weeklyFocus = WeeklyFocusDTO::fromModel(
                 $this->publishedInitiativeService
@@ -103,8 +103,8 @@ class WeeklyFocusController extends Controller
             );
 
             // Store the newsToday DTO in the cache for 60 minutes
-            Cache::put($weeklyCacheKey, $this->weeklyFocus, 60);
-        }
+//            Cache::put($weeklyCacheKey, $this->weeklyFocus, 60);
+//        }
     }
 
     public function archive()

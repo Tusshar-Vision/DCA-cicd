@@ -9,7 +9,12 @@ const laravelDevServer = 'http://localhost:8000';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/filament/admin/theme.css'],
+            input: [
+                'resources/sass/app.scss',
+                'resources/css/ck-content.css',
+                'resources/js/app.js',
+                'resources/css/filament/admin/theme.css'
+            ],
             refresh: [
                 ...refreshPaths,
                 'app/Livewire/**',

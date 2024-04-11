@@ -5,6 +5,7 @@ namespace App\Traits\Filament\Components;
 use App\Filament\Components\SourceInput;
 use App\Forms\Components\CKEditor;
 use App\Models\Article;
+use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
@@ -14,6 +15,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\Action;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Pboivin\FilamentPeek\Forms\Actions\InlinePreviewAction;
 
 trait ReviewAction
 {
@@ -89,7 +91,7 @@ trait ReviewAction
                 ]),
                 Section::make('References')->schema([
                     SourceInput::make('references')->hiddenLabel()->placeholder('Add References'),
-                ])
+                ]),
             ])->slideOver()
             ->action(function (array $data, Model $record) {
                 $author = Auth::user();
