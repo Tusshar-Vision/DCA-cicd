@@ -90,7 +90,7 @@
             Note</button>
     </div>
 
-    <div id="article-content" class="mt-4 w-full printable-area ck-content">
+    <div id="article-content" class="mt-4 w-full ck-content">
         {!! $article->content !!}
     </div>
 </div>
