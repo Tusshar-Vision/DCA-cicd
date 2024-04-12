@@ -5,7 +5,7 @@
     $initiative = request()->segment(1);
 @endphp
 
-<div x-data="{ isOpen: true }" class="flex flex-col rounded bg-visionGray pb-4 lg:mt-10 mt-0 dark:bg-[#373839] dark:text-white" x-cloak>
+<div x-data="{ isOpen: true }" x-init="isOpen = window.innerWidth > 768" class="flex flex-col rounded bg-visionGray pb-4 lg:mt-10 mt-0 dark:bg-[#373839] dark:text-white" x-cloak>
 
     <div class="my-4 mx-6">
 

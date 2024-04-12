@@ -7,7 +7,7 @@
 @endphp
 
 <div class="flex flex-col rounded bg-visionGray pb-4 dark:bg-dark373839" x-cloak>
-    <div class="my-4 mx-6" x-data="{ expanded: null, isOpen: true }" x-init="expanded = 'topic-{{ Str::slug($currentTopic) }}'">
+    <div class="my-4 mx-6" x-data="{ expanded: null, isOpen: true }" x-init="expanded = 'topic-{{ Str::slug($currentTopic) }}'; isOpen = window.innerWidth > 768">
 
         <div @click="isOpen = !isOpen" class="flex border-bottom justify-between items-start cursor-pointer" >
             <div>
