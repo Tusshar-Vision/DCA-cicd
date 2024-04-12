@@ -7,14 +7,24 @@
 @endphp
 
 <div class="flex flex-col rounded bg-visionGray pb-4 dark:bg-dark373839" x-cloak>
-    <div class="my-4 mx-6" x-data="{ expanded: null }" x-init="expanded = 'topic-{{ Str::slug($currentTopic) }}'">
+    <div class="my-4 mx-6" x-data="{ expanded: null, isOpen: true }" x-init="expanded = 'topic-{{ Str::slug($currentTopic) }}'">
+
+        <div @click="isOpen = !isOpen" class="flex border-bottom justify-between items-start cursor-pointer" >
+            <div>
+                <h4 class="font-bold text-base[16px] pb-[16px]">Table of Content</h4>
+            </div>
+            <div class="mt-0.5" :class="{ 'rotate-180' : isOpen }">
+                {!! \App\Helpers\SvgIconsHelper::getSvgIcon('arrow-down') !!}
+            </div>
+        </div>
+
         @foreach ($topics as $topic)
             @php
                 $topicSlug = Str::slug(str_replace('&', 'and', $topic));
                 $topicHeading = $this->formatString($topic);
                 $newsInShort = false;
             @endphp
-            <div class="mt-4">
+            <div x-show="isOpen" class="mt-4" x-transition>
                 <button class="flex justify-between items-center w-full" @click="
                     if (expanded === 'topic-{{ $topicSlug }}') expanded = false;
                     else expanded = 'topic-{{ $topicSlug }}'
