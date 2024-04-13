@@ -5,10 +5,20 @@
     $initiative = request()->segment(1);
 @endphp
 
-<div class="flex flex-col rounded bg-visionGray pb-4 lg:mt-10 mt-0 dark:bg-[#373839] dark:text-white">
+<div x-data="{ isOpen: true }" x-init="isOpen = window.innerWidth > 768" class="flex flex-col rounded bg-visionGray pb-4 lg:mt-10 mt-0 dark:bg-[#373839] dark:text-white" x-cloak>
+
     <div class="my-4 mx-6">
-        <h4 class="font-bold text-base[16px] py-[16px] border-bottom">Table of Content</h4>
-        <div class="h-[220px] customScroll overflow-y-auto">
+
+        <div @click="isOpen = !isOpen" class="flex border-bottom justify-between items-start cursor-pointer" >
+            <div>
+                <h4 class="font-bold text-base[16px] pb-[16px]">Table of Content</h4>
+            </div>
+            <div class="mt-0.5" :class="{ 'rotate-180' : isOpen }">
+                {!! \App\Helpers\SvgIconsHelper::getSvgIcon('arrow-down') !!}
+            </div>
+        </div>
+
+        <div x-show="isOpen" class="h-[220px] customScroll overflow-y-auto" x-transition>
             <ul class="list-none ml-0">
                 <?php $i = 0; ?>
                 @foreach($tableOfContent as $key => $header)
@@ -49,5 +59,6 @@
                 @endif
             </ul>
         </div>
+
     </div>
 </div>

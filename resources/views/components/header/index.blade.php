@@ -6,7 +6,7 @@
 <header class="h-auto lg:h-20 py-[20px] lg:py-0 border-b border-visionLineGray md:flex md:w-full md:align-middle">
     <div class="flex items-center justify-between md:w-full">
         <div class="hidden xl:block">
-            <a href="{{ UrlHelper::linkToVision('/') }}" wire:navigate>
+            <a href="{{ UrlHelper::linkToVision('/') }}">
                 <img class="w-60 dark:hidden" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
                 <img class="w-60 hidden dark:block" src="{{ asset('images/DarkLogo.svg') }}" alt="Dark VisionIAS Logo" />
             </a>
