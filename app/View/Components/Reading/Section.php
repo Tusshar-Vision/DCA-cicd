@@ -1,17 +1,17 @@
 <?php
 
-namespace App\View\Components\Widgets;
+namespace App\View\Components\Reading;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class WeeklyFocusArchive extends Component
+class Section extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(public $articles, public $tags)
     {
         //
     }
@@ -21,6 +21,6 @@ class WeeklyFocusArchive extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.widgets.weekly-focus-archive');
+        return view('components.reading.section');
     }
 }

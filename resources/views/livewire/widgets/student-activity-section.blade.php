@@ -25,7 +25,7 @@
                 @foreach ($readHistories as $history)
                     <div class="vi-article-card vi-inline flex items-start gap-[12px]">
                         <a href="#" class="vi-article">
-                            <img src="{{ URL::asset('images/card-image-small.png') }}" alt="">
+                            <img src="{{$history['img'] ?? URL::asset('images/card-image-small.png') }}" alt="">
                         </a>
                         <a href="{{$history['url']}}" class="vi-article">
                             <p class="vi-article-date-name">{{ $history['published_at'] }}</p>
@@ -135,17 +135,29 @@
                                  @foreach ($newsTodayConsumption as $day => $value)
     
                                 <?php 
-                                $level = null; 
+                                $level = null; $text = null;
                                 if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
-                                   if($value['total_read'] == $value['total_article']) $level = 1;
-                                   else if($value['total_read'] < $value['total_article']) $level = 2;
+                                   if($value['total_read'] == $value['total_article']) {
+                                    $level = 1;
+                                    $text = "Completed";
+                                   }
+                                   else if($value['total_read'] < $value['total_article']) {
+                                    $level = 2;
+                                     $text = "In Progress";
+                                   }
                                 } else {
-                                    if($value == null) $level =4;
-                                    else $level = 3;
+                                    if($value == null) {
+                                        $level =4;
+                                         $text = "NO ARTICLE FOUND FOR THIS MONTH";
+                                    }
+                                    else {
+                                        $level = 3;
+                                         $text = "Not Started";
+                                    }
                                 }
                                 ?>
                                
-                                square.innerHTML += `<li data-level="{{$level}}" data-complete="{{$level == 4 ? "NO ARTICLE FOUND FOR THIS MONTH" : ""}}"></li>`
+                                square.innerHTML += `<li data-level="{{$level}}" data-complete="{{$text}}"></li>`
                                         
                                 @endforeach
  }
@@ -156,17 +168,29 @@
                                 
                                 @foreach ($weeklyFocusConsumption as $week => $value)
                                 <?php 
-                                $level = null; 
+                                $level = null; $text = null;
                                 if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
-                                   if($value['total_read'] == $value['total_article']) $level = 1;
-                                   else if($value['total_read'] < $value['total_article']) $level = 2;
+                                   if($value['total_read'] == $value['total_article']) {
+                                    $level = 1;
+                                    $text = "Completed";
+                                   }
+                                   else if($value['total_read'] < $value['total_article']) {
+                                    $level = 2;
+                                     $text = "In Progress";
+                                   }
                                 } else {
-                                    if($value == null) $level =4;
-                                    else $level = 3;
+                                    if($value == null) {
+                                        $level =4;
+                                         $text = "NO ARTICLE FOUND FOR THIS MONTH";
+                                    }
+                                    else {
+                                        $level = 3;
+                                         $text = "Not Started";
+                                    }
                                 }
                                 ?>
 
-                                square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO WEEKLY FOCUS FOUND FOR THIS WEEK" : ""}}"></li>`
+                                square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$text}}"></li>`
                                 @endforeach
  }
 
@@ -175,17 +199,29 @@
 
                                 @foreach ($montlyMagazineConsumption as $month => $value)
                                 <?php 
-                                $level = null; 
+                                                                $level = null; $text = null;
                                 if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
-                                   if($value['total_read'] == $value['total_article']) $level = 1;
-                                   else if($value['total_read'] < $value['total_article']) $level = 2;
+                                   if($value['total_read'] == $value['total_article']) {
+                                    $level = 1;
+                                    $text = "Completed";
+                                   }
+                                   else if($value['total_read'] < $value['total_article']) {
+                                    $level = 2;
+                                     $text = "In Progress";
+                                   }
                                 } else {
-                                    if($value == null) $level =4;
-                                    else $level = 3;
+                                    if($value == null) {
+                                        $level =4;
+                                         $text = "NO ARTICLE FOUND FOR THIS MONTH";
+                                    }
+                                    else {
+                                        $level = 3;
+                                         $text = "Not Started";
+                                    }
                                 }
                                 ?>
 
-                                square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO MAGAZINE FOUND FOR THIS MONTH" : ""}}"></li>`
+                                square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$text}}"></li>`
                                 @endforeach
 }
 
