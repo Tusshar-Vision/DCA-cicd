@@ -48,6 +48,10 @@ export default function ckEditorComponent({
                         ]
                     },
                     language: "en",
+                    link: {
+                        // Automatically add target="_blank" and rel="noopener noreferrer" to all external links.
+                        addTargetToExternalLinks: true,
+                    },
                     image: {toolbar: ["imageTextAlternative", "toggleImageCaption", "imageStyle:inline", "imageStyle:block", "imageStyle:side"]},
                     table: {contentToolbar: ["tableColumn", "tableRow", "mergeTableCells", "tableCellProperties", "tableProperties"]},
                     mediaEmbed: {previewsInData: true},
