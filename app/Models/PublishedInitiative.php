@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\HasMedia;
@@ -25,16 +24,33 @@ class PublishedInitiative extends Model implements HasMedia
         'language_id',
         'is_published',
         'initiative_topic_id',
+        'topic_section_id',
+        'topic_sub_section_id',
         'infographics_id',
-        'video_id'
+        'video_id',
+        'sources',
+        'references'
     ];
 
     protected $casts = [
         'published_at' => 'datetime',
-        'is_published' => 'bool'
+        'is_published' => 'bool',
+        'sources' => 'array',
+        'references' => 'array',
     ];
 
     protected $with = ['initiative'];
+
+    protected static function booted(): void
+    {
+        static::retrieved(function ($article) {
+            $article->sources = $article->sources ?? [];
+            $article->sources = is_string($article->sources) ? explode(',', $article->sources) : $article->sources;
+
+            $article->references = $article->references ?? [];
+            $article->references = is_string($article->references) ? explode(',', $article->references) : $article->references;
+        });
+    }
 
     public function initiative(): BelongsTo
     {

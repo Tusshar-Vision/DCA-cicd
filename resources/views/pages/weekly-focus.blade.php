@@ -40,7 +40,7 @@
                     </div>
                 </div>
 
-                <x-reading.section :articles="$package->articles" :tags="$package->tags" class="mt-6" />
+                <x-reading.section :articles="$package->articles" :tags="$package->tags" :sources="$package->sources" class="mt-6" />
 
                 <div class="mt-12">
                     <x-widgets.article-pagination :current-initiative="$package" :current-article-slug="$article->slug" />

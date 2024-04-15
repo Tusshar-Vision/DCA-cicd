@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Enums\Initiatives;
 use App\Enums\InitiativeTopics;
+use App\Filament\Components\SourceInput;
 use App\Filament\Resources\WeeklyFocusResource\RelationManagers\ArticlesRelationManager;
 use App\Filament\Resources\WeeklyFocusResource\Pages;
 use App\Helpers\InitiativesHelper;
@@ -61,7 +62,7 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('General')->schema([
+                Section::make('General')->schema([
 
                     Forms\Components\Hidden::make('initiative_id')
                         ->default(InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)),
@@ -211,6 +212,13 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
                         ->columnSpanFull()
                         ->required(),
 
+                    SourceInput::make('sources')
+                        ->columnSpanFull()
+                        ->placeholder('Add sources'),
+                    SourceInput::make('references')
+                        ->columnSpanFull()
+                        ->placeholder('Add references'),
+
                     Forms\Components\SpatieMediaLibraryFileUpload::make('pdf')
                         ->label('Upload pdf file')
                         ->acceptedFileTypes(['application/pdf'])
@@ -240,7 +248,7 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
                 ->columns(),
 
                 Group::make()->schema([
-                    Forms\Components\Section::make('Featured Image')->schema([
+                    Section::make('Featured Image')->schema([
                         SpatieMediaLibraryFileUpload::make('featured_image')
                             ->hiddenLabel()
                             ->imageEditor()
@@ -258,7 +266,7 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
                             ->disk('s3_public')
                             ->collection('article-featured-image'),
                     ]),
-                    Forms\Components\Section::make('Topic at a glance')
+                    Section::make('Topic at a glance')
                         ->schema([
                             Select::make('infographic_id')
                                 ->hiddenLabel()
@@ -312,7 +320,7 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
                                 ->disabledOn('create'),
                         ])->columnSpan(1),
 
-                    Forms\Components\Section::make("In Conversation")
+                    Section::make("In Conversation")
                         ->schema([
                             Select::make('video_id')
                                 ->hiddenLabel()
@@ -402,7 +410,7 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
                                     else return true;
                                 })
                                 ->disabledOn('create'),
-                        ])->columnSpan(1)
+                        ])->columnSpan(1),
                 ])
             ]);
 

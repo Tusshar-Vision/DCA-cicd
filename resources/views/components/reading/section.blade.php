@@ -29,4 +29,8 @@
     @if (count($tags) > 0)
         <x-widgets.article-tags :tags="$tags" />
     @endif
+
+    @if ((count($sources) > 0 && $sources[0] !== ''))
+        <x-widgets.article-sources :sources="$sources" />
+    @endif
 </div>
