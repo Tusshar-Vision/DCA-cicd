@@ -1,7 +1,7 @@
 @php
     use App\Services\ArticleService;
 @endphp
-<div x-data="{ isCalendarOpen: false }" class="calendar-wrapper border-1 border-color-C3CAD9 bg-white border rounded relative dark:bg-dark373839">
+<div x-data="{ isCalendarOpen: false }" class="calendar-wrapper border-1 border-color-C3CAD9 bg-white border rounded relative dark:bg-dark373839 z-10">
     <div x-show="isCalendarOpen" @click.away="isCalendarOpen = false" class="calender-wrap absolute left-0 top-0 mt-[23px] w-full bar" x-cloak>
         <div class="vi-daily-news-card bg-white dark:bg-dark373839">
             <div class="flex justify-between items-center">

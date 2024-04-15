@@ -9,6 +9,7 @@ use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Bookmark;
 use App\Models\Note;
+use App\Models\ReadHistory;
 use App\Services\DownloadService;
 use App\Services\InitiativeService;
 use App\Services\PublishedInitiativeService;
@@ -71,12 +72,15 @@ class NewsTodayController extends Controller
         $noteAvailable = null;
         $note = null;
         $isArticleBookmarked = false;
+        $isArticleRead = false;
 
         if (Auth::guard('cognito')->check()) {
             $noteAvailable = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->count() > 0;
             $note = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
             $bookmark =  Bookmark::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
+            $readHistory =  ReadHistory::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
             if ($bookmark) $isArticleBookmarked = true;
+            if ($readHistory) $isArticleRead = true;
         }
 
         return View('pages.news-today', [
@@ -86,7 +90,8 @@ class NewsTodayController extends Controller
             "note" => $note,
             "isArticleBookmarked" => $isArticleBookmarked,
             "newsTodayCalendar" => $this->newsTodayCalendar,
-            "isAlsoInNews" => $article
+            "isAlsoInNews" => $article,
+            "isArticleRead" => $isArticleRead,
         ]);
     }
 
@@ -103,12 +108,15 @@ class NewsTodayController extends Controller
         $noteAvailable = null;
         $note = null;
         $isArticleBookmarked = false;
+        $isArticleRead = false;
 
         if (Auth::guard('cognito')->check()) {
             $noteAvailable = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->count() > 0;
             $note = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
             $bookmark =  Bookmark::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
+            $readHistory =  ReadHistory::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
             if ($bookmark) $isArticleBookmarked = true;
+            if ($readHistory) $isArticleRead = true;
         }
 
         return View('pages.news-today', [
@@ -117,6 +125,7 @@ class NewsTodayController extends Controller
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
             "isArticleBookmarked" => $isArticleBookmarked,
+            "isArticleRead" => $isArticleRead,
             "newsTodayCalendar" => $this->newsTodayCalendar,
             "isAlsoInNews" => $isAlsoInNews
         ]);
@@ -125,7 +134,8 @@ class NewsTodayController extends Controller
     /**
      * @throws \Throwable
      */
-    private function hydrateData($date) {
+    private function hydrateData($date)
+    {
         // Define cache key based on newsToday published date
         $newsCacheKey = 'news-today/' . $date;
 

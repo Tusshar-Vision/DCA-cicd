@@ -24,11 +24,11 @@
                 <!-- Single card -->
                 @foreach ($readHistories as $history)
                     <div class="vi-article-card vi-inline flex items-start gap-[12px]">
-                        <a href="#" class="vi-article">
+                        {{-- <a href="#" class="vi-article">
                             <img src="{{$history['img'] ?? URL::asset('images/card-image-small.png') }}" alt="">
-                        </a>
+                        </a> --}}
                         <a href="{{$history['url']}}" class="vi-article">
-                            <p class="vi-article-date-name">{{ $history['published_at'] }}</p>
+                            <p class="vi-article-date-name">{{ $history['read_at'] }}</p>
                             <p>{{ $history['title'] }}</p>
                         </a>
                     </div>
@@ -39,11 +39,11 @@
         <div class="activity-tab-right-itmes w-full lg:w-4/6">
             <div class="graph-box-title-wrap">
                 <p class="vi-tab-title">Content Consumption</p>
-                <div class="graph-represent-list">
-                    <li data-level="1"></li>
-                    <li data-level="2"></li>
-                    <li data-level="3"></li>
-                    <li data-level="4"></li>
+                <div class="graph-represent-list con-squares">
+                    <li data-level="1" data-complete="Completed"></li>
+                    <li data-level="2" data-complete="In Progress"></li>
+                    <li data-level="3" data-complete="Not Started"></li>
+                    <li data-level="4" data-complete="NO ARTICLE FOUND"></li>
                 </div>
             </div>
             <div class="vi-right-child-item-list">

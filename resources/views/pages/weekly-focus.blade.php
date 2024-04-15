@@ -27,7 +27,7 @@
 
             <div class="flex flex-col w-full mt-6 lg:mt-0">
                 <div class="space-y-4">
-                    <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />
+                    <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" :isArticleRead="$isArticleRead" :article="$article"/>
                     <x-common.article-heading :title="$package->name" />
                     <div class="flex flex-col md:flex-row justify-between items-center w-full py-2 my-[30px] text-gray-500 border-t-2 border-b-2">
                         <x-widgets.articles-nav :createdAt="$package->publishedAt" :updatedAt="$article->updatedAt" />
@@ -40,7 +40,7 @@
                     </div>
                 </div>
 
-                <x-reading.section :articles="$package->articles" :tags="$package->tags" class="mt-6" />
+                <x-reading.section :articles="$package->articles" :tags="$package->tags" :sources="$package->sources" class="mt-6" />
 
                 <div class="mt-12">
                     <x-widgets.article-pagination :current-initiative="$package" :current-article-slug="$article->slug" />

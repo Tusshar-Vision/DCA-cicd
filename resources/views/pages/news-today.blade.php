@@ -17,7 +17,7 @@
 
                 <livewire:widgets.news-today-calendar :calendar-data="$newsTodayCalendar" />
 
-                <x-widgets.article-side-bar :table-of-content="$package->articles" :isAlsoInNews="$isAlsoInNews" />
+                <x-widgets.article-side-bar :table-of-content="$package->articles" :isAlsoInNews="$isAlsoInNews" :short-articles="$package->shortArticles" />
 
                 <div class="hidden lg:block">
                     <x-widgets.side-bar-download-menu initiative="news-today" :media="$package?->media"/>
@@ -29,7 +29,7 @@
             <div class="flex flex-col w-full mt-6 lg:mt-0">
                 <!-- replaced header section -->
                 <div class="space-y-4">
-                    <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" />
+                    <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" :isArticleRead="$isArticleRead" :article="$article" />
                     @if($inShort)
                         <x-common.article-heading title="Also in News" />
                     @else

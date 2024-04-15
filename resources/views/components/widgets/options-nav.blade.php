@@ -18,15 +18,15 @@
                 </button>
             </div>
             <div class="flex mr-6">
-                <button class="flex items-center">
+                <button class="flex items-center" onclick="readArticle()">
                     <svg width="19" height="21" viewBox="0 0 19 21" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M9 20V18H2V2H12V6H16V13H17.9998V5L13 0H0.9985C0.44749 0 0 0.44405 0 0.9918V19.0082C0 19.5447 0.44476 20 0.9934 20H9Z"
-                            fill="#8F93A3" />
+                            fill="{{ $isArticleRead ? 'green' : '#8F93A3' }}" id="read-icon1"/>
                         <path
                             d="M10.4645 17.2929L14 20.8284L18.9497 15.8787L17.5355 14.4644L14 18L11.8787 15.8787L10.4645 17.2929Z"
-                            fill="#8F93A3" />
+                            fill="{{ $isArticleRead ? 'green' : '#8F93A3' }}" id="read-icon2" />
                         <path d="M8 4H5V6H8V4Z" fill="#8F93A3" />
                         <path d="M13 8V10H5V8H13Z" fill="#8F93A3" />
                         <path d="M13 12V14H5V12H13Z" fill="#8F93A3" />
@@ -70,6 +70,29 @@
                     document.getElementById("bookmark-icon").style.fill = "green"
                 }
             })
+        }
+
+        function readArticle() {
+             @if (Auth::guard('cognito')->check())
+            const article_id = "{{ $article->getID() }}";
+            const article_published_at = "{{$article->publishedAt}}"
+            const student_id = "{{ Auth::guard('cognito')->user()->id }}"
+            saveData("{{ route('user.read-history') }}", {
+                article_id,
+                student_id,
+                article_published_at,
+                read_percent: 0,
+                _token: "{{ csrf_token() }}"
+            }).then(data => {
+                 if (data && data.status == 200) {
+                    document.getElementById("read-icon").style.fill = "#8F93A3"
+                }
+                if (data && data.status == 201) {
+                    document.getElementById("read-icon1").style.fill = "green"
+                    document.getElementById("read-icon2").style.fill = "green"
+                }
+            })
+            @endif
         }
     </script>
 </div>

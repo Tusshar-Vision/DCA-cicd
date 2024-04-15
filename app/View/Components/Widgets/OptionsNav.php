@@ -11,7 +11,7 @@ class OptionsNav extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public $articleId, public $isArticleBookmarked)
+    public function __construct(public $articleId, public $article, public $isArticleBookmarked, public $isArticleRead)
     {
         //
     }
