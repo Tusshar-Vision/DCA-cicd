@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <div x-show="isOpen" class="h-[220px] customScroll overflow-y-auto" x-transition>
+        <div id="table-of-content" x-show="isOpen" class="h-[220px] customScroll overflow-y-auto" x-transition>
             <ul class="list-none ml-0">
                 <?php $i = 0; ?>
                 @foreach($tableOfContent as $key => $header)
@@ -62,3 +62,15 @@
 
     </div>
 </div>
+<script>
+    document.addEventListener('livewire:navigated', function() {
+        let sideBar = document.querySelector('#table-of-content');
+        let element = document.querySelector('.brand-color');
+        if (element) {
+            sideBar.scrollTo({
+                top: element.offsetTop,
+                behavior: "smooth"
+            });
+        }
+    });
+</script>
