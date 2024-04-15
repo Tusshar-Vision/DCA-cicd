@@ -13,8 +13,6 @@ use App\Models\ReadHistory;
 use App\Services\DownloadService;
 use App\Services\PublishedInitiativeService;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
-
 
 class MonthlyMagazineController extends Controller
 {

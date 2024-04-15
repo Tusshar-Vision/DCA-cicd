@@ -17,7 +17,7 @@
 
                 <livewire:widgets.news-today-calendar :calendar-data="$newsTodayCalendar" />
 
-                <x-widgets.article-side-bar :table-of-content="$package->articles" :isAlsoInNews="$isAlsoInNews" />
+                <x-widgets.article-side-bar :table-of-content="$package->articles" :isAlsoInNews="$isAlsoInNews" :short-articles="$package->shortArticles" />
 
                 <div class="hidden lg:block">
                     <x-widgets.side-bar-download-menu initiative="news-today" :media="$package?->media"/>

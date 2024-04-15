@@ -16,7 +16,12 @@
 
             <img src="{{ asset('images/monthly-magazine-logo.svg') }}" alt="Monthly Magazine Logo" />
 
-            <livewire:widgets.articles-side-bar :topics="$package->topics" :articles="$package->sortedArticlesWithTopic" :table-of-content="$tableOfContent" />
+            <x-navigation.monthly-magazine-sidebar
+                :topics="$package->topics"
+                :articles="$package->sortedArticlesWithTopic"
+                :table-of-content="$tableOfContent"
+                :short-articles="$package->shortArticles->where('topic', $currentTopic)"
+            />
 
             <div class="hidden lg:block">
                 <x-widgets.side-bar-download-menu initiative="monthly-magazine" :media="$package?->media"/>

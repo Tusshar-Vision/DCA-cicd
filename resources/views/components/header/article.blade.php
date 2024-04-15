@@ -6,14 +6,14 @@
     </svg>
 
     <div class="flex items-center space-x-2">
-        <button @click="document.querySelectorAll('.printable-area').forEach((item) => item.style.fontSize = `${(isNaN(parseFloat(item.style.fontSize)) ? 1.1 : parseFloat(item.style.fontSize) - 0.1)}rem`)">
+        <button @click="document.querySelectorAll('.ck-content').forEach((item) => item.style.fontSize = `${(isNaN(parseFloat(item.style.fontSize)) ? 1.1 : parseFloat(item.style.fontSize) - 0.1)}rem`)">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="1" y="1" width="22" height="22" stroke="#8F93A3" stroke-width="2"/>
                 <path d="M6.97869 17H5.34801L9.01207 6.81818H10.7869L14.451 17H12.8203L9.94176 8.66761H9.86222L6.97869 17ZM7.25213 13.0128H12.5419V14.3054H7.25213V13.0128ZM18.1822 8.83665V9.85582H13.6879V8.83665H18.1822Z" fill="#8F93A3"/>
             </svg>
         </button>
 
-        <button @click="document.querySelectorAll('.printable-area').forEach((item) => item.style.fontSize = `${(isNaN(parseFloat(item.style.fontSize)) ? 1.1 : parseFloat(item.style.fontSize) + 0.1)}rem`)">
+        <button @click="document.querySelectorAll('.ck-content').forEach((item) => item.style.fontSize = `${(isNaN(parseFloat(item.style.fontSize)) ? 1.1 : parseFloat(item.style.fontSize) + 0.1)}rem`)">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="1" y="1" width="22" height="22" stroke="#8F93A3" stroke-width="2"/>
                 <path d="M6.97869 17H5.34801L9.01207 6.81818H10.7869L14.451 17H12.8203L9.94176 8.66761H9.86222L6.97869 17ZM7.25213 13.0128H12.5419V14.3054H7.25213V13.0128ZM15.428 11.4964V7.19602H16.467V11.4964H15.428ZM13.6879 9.85582V8.83665H18.1822V9.85582H13.6879Z" fill="#8F93A3"/>
