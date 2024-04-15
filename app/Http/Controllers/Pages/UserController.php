@@ -31,13 +31,14 @@ class UserController extends Controller
     }
     public function dashboard()
     {
-        $read_histories = $this->student->readHistories()->orderBy('created_at', 'desc')->with('article')->get()->map(function ($history) {
+        $read_histories = $this->student->readHistories()->orderBy('updated_at', 'desc')->with('article')->get()->map(function ($history) {
             $history->title = $history->article->short_title ?? $history->article->title;
             $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
             $history->url = ArticleService::getArticleUrl($history->article);
             $history->img = $history->article->getFirstMediaUrl("article-featured-image");
+            $history->read_at = Carbon::parse($history->updated_at)->format('Y-m-d');
 
-            return $history->only(['title', 'published_at', 'url', 'img']);
+            return $history->only(['title', 'published_at', 'url', 'img', 'read_at']);
         });
 
         // content consumption
@@ -163,8 +164,12 @@ class UserController extends Controller
         $inputs = $request->all();
 
         $history = ReadHistory::where('article_id', $inputs['article_id'])->where('student_id', $inputs['student_id'])->first();
-
+        // ReadHistory::updateOrCreate(['article_id' => $inputs['article_id'], 'student_id' => $inputs['student_id']], ['updated_at' => now()]);
         if (!$history) ReadHistory::create($inputs);
+        else {
+            $history->updated_at = now();
+            $history->save();
+        }
         return response()->json(['status' => 201]);
     }
 

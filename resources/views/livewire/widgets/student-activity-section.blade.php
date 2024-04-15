@@ -24,11 +24,11 @@
                 <!-- Single card -->
                 @foreach ($readHistories as $history)
                     <div class="vi-article-card vi-inline flex items-start gap-[12px]">
-                        <a href="#" class="vi-article">
+                        {{-- <a href="#" class="vi-article">
                             <img src="{{$history['img'] ?? URL::asset('images/card-image-small.png') }}" alt="">
-                        </a>
+                        </a> --}}
                         <a href="{{$history['url']}}" class="vi-article">
-                            <p class="vi-article-date-name">{{ $history['published_at'] }}</p>
+                            <p class="vi-article-date-name">{{ $history['read_at'] }}</p>
                             <p>{{ $history['title'] }}</p>
                         </a>
                     </div>
