@@ -112,12 +112,15 @@ class MonthlyMagazineController extends Controller
         $noteAvailable = null;
         $note = null;
         $isArticleBookmarked = false;
+        $isArticleRead = false;
 
         if (Auth::guard('cognito')->check()) {
             $noteAvailable = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->count() > 0 ? true : false;
             $note = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
             $bookmark =  Bookmark::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
             if ($bookmark) $isArticleBookmarked = true;
+            $readHistory =  ReadHistory::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
+            if ($readHistory) $isArticleRead = true;
         }
 
         $toc['toc'] = [];
@@ -129,6 +132,7 @@ class MonthlyMagazineController extends Controller
             "note" => $note,
             "tableOfContent" => $toc['toc'],
             "isArticleBookmarked" => $isArticleBookmarked,
+            "isArticleRead" =>  $isArticleRead,
         ]);
     }
 
