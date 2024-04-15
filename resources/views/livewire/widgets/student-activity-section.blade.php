@@ -39,11 +39,11 @@
         <div class="activity-tab-right-itmes w-full lg:w-4/6">
             <div class="graph-box-title-wrap">
                 <p class="vi-tab-title">Content Consumption</p>
-                <div class="graph-represent-list">
-                    <li data-level="1"></li>
-                    <li data-level="2"></li>
-                    <li data-level="3"></li>
-                    <li data-level="4"></li>
+                <div class="graph-represent-list con-squares">
+                    <li data-level="1" data-complete="Completed"></li>
+                    <li data-level="2" data-complete="In Progress"></li>
+                    <li data-level="3" data-complete="Not Started"></li>
+                    <li data-level="4" data-complete="NO ARTICLE FOUND FOR THIS MONTH"></li>
                 </div>
             </div>
             <div class="vi-right-child-item-list">
