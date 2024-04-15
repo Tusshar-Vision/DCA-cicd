@@ -43,7 +43,7 @@
                     <li data-level="1" data-complete="Completed"></li>
                     <li data-level="2" data-complete="In Progress"></li>
                     <li data-level="3" data-complete="Not Started"></li>
-                    <li data-level="4" data-complete="NO ARTICLE FOUND FOR THIS MONTH"></li>
+                    <li data-level="4" data-complete="NO ARTICLE FOUND"></li>
                 </div>
             </div>
             <div class="vi-right-child-item-list">
