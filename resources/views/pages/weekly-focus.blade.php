@@ -1,9 +1,6 @@
 @extends('layouts.reading-ecosystem')
 @section('title', 'Weekly Focus | Current Affairs')
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.js" integrity="sha512-EC3CQ+2OkM+ZKsM1dbFAB6OGEPKRxi6EDRnZW9ys8LghQRAq6cXPUgXCCujmDrXdodGXX9bqaaCRtwj4h4wgSQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.css" integrity="sha512-za6IYQz7tR0pzniM/EAkgjV1gf1kWMlVJHBHavKIvsNoUMKWU99ZHzvL6lIobjiE2yKDAKMDSSmcMAxoiWgoWA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 @section('article-content')
     <div
         x-data="{ openItem: 0, expanded: false, isVideoOpen: false, isTopicAtGlanceOpen: false }"
@@ -13,14 +10,14 @@
         <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8 w-full">
 
             <div class="flex w-full lg:md:w-2/6 flex-col space-y-4 leftsticky stickyMl-0">
-                {!! \App\Helpers\SvgIconsHelper::getSvgIcon('weekly-focus-logo') !!}
+
+                <img src="{{ asset('images/weekly-focus-logo.svg') }}" alt="Weekly Focus Logo" />
+
                 <x-widgets.article-side-bar :table-of-content="$package->articles"/>
 
                 <div class="hidden lg:block">
                     <x-widgets.topic-at-a-glance :infographic="$package->topicAtGlance"/>
                 </div>
-
-                
 
                 <div class="hidden lg:block">
                     <x-widgets.side-bar-download-menu initiative="weekly-focus" :media="$package?->media" />
@@ -43,7 +40,7 @@
                     </div>
                 </div>
 
-                <x-inshort-article :articles="$package->articles" class="mt-6" />
+                <x-reading.section :articles="$package->articles" :tags="$package->tags" class="mt-6" />
 
                 <div class="mt-12">
                     <x-widgets.article-pagination :current-initiative="$package" :current-article-slug="$article->slug" />
@@ -68,6 +65,8 @@
         <x-modals.wide-modal :file="$package->topicAtGlance" heading="Topic at a Glance" x-show="isTopicAtGlanceOpen">
             <x-widgets.image-viewer :image="$package->topicAtGlance" />
         </x-modals.wide-modal>
-    
+
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.js" integrity="sha512-EC3CQ+2OkM+ZKsM1dbFAB6OGEPKRxi6EDRnZW9ys8LghQRAq6cXPUgXCCujmDrXdodGXX9bqaaCRtwj4h4wgSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.css" integrity="sha512-za6IYQz7tR0pzniM/EAkgjV1gf1kWMlVJHBHavKIvsNoUMKWU99ZHzvL6lIobjiE2yKDAKMDSSmcMAxoiWgoWA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endsection

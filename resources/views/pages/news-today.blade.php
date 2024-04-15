@@ -13,7 +13,7 @@
 
             <div class="flex w-full lg:w-2/6 flex-col space-y-4 leftsticky stickyMl-0">
 
-                {!! \App\Helpers\SvgIconsHelper::getSvgIcon('news-today-logo') !!}
+                <img src="{{ asset('images/news-today-logo.svg') }}" alt="News Today Logo" />
 
                 <livewire:widgets.news-today-calendar :calendar-data="$newsTodayCalendar" />
 
@@ -52,9 +52,9 @@
                 </div>
 
                 @if($inShort)
-                    <x-inshort-article :articles="$package->shortArticles" class="m-0" />
+                    <x-reading.short-article :articles="$package->shortArticles" class="m-0" />
                 @else
-                    <x-article-content :article="$article" class="m-0" />
+                    <x-reading.article-content :article="$article" class="m-0" />
                 @endif
 
                 <div class="mt-12">

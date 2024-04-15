@@ -1,17 +1,17 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Reading;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class InshortArticle extends Component
+class ArticleContent extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(public $articles)
+    public function __construct(public $article)
     {
         //
     }
@@ -21,6 +21,6 @@ class InshortArticle extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.inshort-article');
+        return view('components.reading.article-content');
     }
 }

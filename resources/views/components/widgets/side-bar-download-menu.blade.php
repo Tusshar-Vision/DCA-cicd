@@ -49,10 +49,10 @@
 
 <script>
     function printDiv() {
-        var printContents = document.getElementsByClassName('printable-area')[0]?.innerHTML;
+        var printContents = document.querySelector('.ck-content');
         var originalContents = document.body.innerHTML;
 
-        document.body.innerHTML = printContents;
+        document.body.innerHTML = printContents.outerHTML;
         window.print();
         document.body.innerHTML = originalContents;
     }
