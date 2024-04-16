@@ -15,6 +15,7 @@
     <body x-data="{
         isAuthFormOpen: false,
         isDarkModeEnabled: false,
+        fontSize: 1,
         init() {
             const storedPreference = localStorage.getItem('isDarkModeEnabled');
             if (storedPreference !== null) {

@@ -111,3 +111,25 @@ window.saveData = async function (url, data) {
         console.error("Error:", error);
     }
 }
+
+// In your Alpine.js initialization
+Alpine.data('fontSizeManager', () => ({
+    fontSize: parseFloat(localStorage.getItem('fontSize')) || 1,
+
+    init() {
+        this.$watch('fontSize', (newSize) => {
+            localStorage.setItem('fontSize', newSize);
+            this.updateFontSize(newSize);
+        });
+
+        window.addEventListener('font-size-changed', (event) => {
+            this.fontSize = event.detail;
+        });
+    },
+
+    updateFontSize(size) {
+        document.querySelectorAll('.ck-content').forEach(el => {
+            el.style.fontSize = `${size}rem`;
+        });
+    }
+}));
