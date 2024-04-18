@@ -5,7 +5,7 @@
             <div class="flex justify-between relative">
                 <p class="vi-tab-title">Reading History</p>
                 <div class="student-search-field-container">
-                    <input type="search" placeholder="Search" class="student-search-field dark:bg-dark545557 border-[#686E70] dark:text-white">
+                    <input id="history-searchbox" type="search" placeholder="Search" class="student-search-field dark:bg-dark545557 border-[#686E70] dark:text-white">
                 </div>
                 {{-- <div class="my-content-search w-[150px]">
                     <div class="search-bar-wrapper">
@@ -20,7 +20,7 @@
                     </div>
                 </div> --}}
             </div>
-            <div class="vi-left-child-item-list">
+            <div id="histories-container" class="vi-left-child-item-list">
                 <!-- Single card -->
                 @foreach ($readHistories as $history)
                     <div class="vi-article-card vi-inline flex items-start gap-[12px]">
@@ -121,6 +121,7 @@
 <script>
     const onfocus = document.querySelector('.student-search-field');
     const showlist = document.querySelector('.student-search-field-container');
+    const searchBox = document.getElementById("history-searchbox");
 
     onfocus.addEventListener("focus", () => {
         showlist.classList.add("absoluteSearch");
@@ -228,5 +229,29 @@
  showDailyNews()
  showWeeklyFocus()
  showMonthlyMagazine()
+
+ searchBox.addEventListener("change", function() {
+    const query = searchBox.value;
+    if(query == "") return;
+    let url = "{{url("user/read-history/search")}}";
+    url += `/${query}`;
+
+    fetch(url)
+    .then(response => response.json())
+    .then(data => {
+        const histories = data.data;
+        let html = "";
+        histories.map(history => {
+                  html += `<div class="vi-article-card vi-inline flex items-start gap-[12px]">
+                        <a href="${history['url']}" class="vi-article">
+                            <p class="vi-article-date-name">${history['read_at']}</p>
+                            <p>${history['title']}</p>
+                        </a>
+                      </div>`
+        })
+        
+        document.getElementById("histories-container").innerHTML = html;
+    })
+ })
 
 </script>
