@@ -10,8 +10,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="bookmark-list-wrap">
+                    <div class="bookmark-list-wrap">
             <ul>
                 @foreach ($bookmarks as $bookmark)
                     <li>
@@ -24,6 +23,8 @@
                 @endforeach
             </ul>
         </div>
+        </div>
+
     </div>
 </div>
 <!-- bookmark content -->
