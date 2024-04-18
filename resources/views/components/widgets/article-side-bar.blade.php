@@ -65,10 +65,13 @@
                         <ul class="ml-6">
                             @foreach($shortArticles as $index => $article)
                                 <li @click="openItem = (openItem == {{$index}} ? '-1' : {{$index}})" class="py-[5px] cursor-pointer hover:brand-color text-clip text-sm">
-                                    <a class="flex text-base[16px] font-normal hover:brand-color"
+                                    <a href="#{{ $article->slug }}" class="flex text-base[16px] font-normal hover:brand-color"
                                        :class="{'brand-color': openItem == {{$index}}}"
                                     >
-                                        <span class="mr-1">{{ $loop->iteration }}<em>.</em></span> {{ $article->shortTitle ?? $article->title }}
+                                        <span class="mr-1">
+                                            {{ $i . '.' . $loop->iteration }}
+                                        </span>
+                                        {{ $article->shortTitle ?? $article->title }}
                                     </a>
                                 </li>
                             @endforeach
