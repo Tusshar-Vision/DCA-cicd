@@ -21,7 +21,7 @@
         @foreach ($topics as $topic)
             @php
                 $topicSlug = Str::slug(str_replace('&', 'and', $topic));
-                $topicHeading = $this->formatString($topic);
+                $topicHeading = $formatString($topic);
                 $newsInShort = false;
             @endphp
             <div x-show="isOpen" class="mt-4" x-transition>
@@ -95,6 +95,19 @@
                                         </a>
                                     </li>
                                     @php $newsInShort = true; @endphp
+                                    @if(request()->is('monthly-magazine/*/' . $topic  . '/news-in-shorts'))
+                                        <ul class="ml-6">
+                                            @foreach($shortArticles as $index => $article)
+                                                <li @click="openItem = (openItem == {{$index}} ? '-1' : {{$index}})"
+                                                    class="py-[5px] cursor-pointer hover:brand-color text-clip text-sm"
+                                                    :class="{'brand-color': openItem == {{$index}}}">
+                                                    <a class="flex text-base[16px] font-normal hover:brand-color }}">
+                                                        <span class="mr-1">{{ $loop->iteration }}<em>.</em></span> {{ $article->shortTitle ?? $article->title }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
                                 @endif
                             @endif
                         @endforeach

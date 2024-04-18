@@ -1824,11 +1824,11 @@ $gray-686E70: #686E70;
       // overflow-x: auto;
 
       .graph-box-title-wrap {
-        flex-wrap: wrap;
+        flex-direction: column;
         display: flex;
         @media screen and (min-width: 768px) {
           display: flex;
-          flex-wrap: nowrap;
+          flex-direction: row;
           justify-content: space-between;
           align-items: center;
           gap: 16px;
@@ -1837,7 +1837,6 @@ $gray-686E70: #686E70;
           margin-top: 15px;
           display: flex;
           gap: 2px;
-          padding-right: 30px;
           @media screen and (min-width: 768px) {
             margin-top: 0;
           }
@@ -2900,13 +2899,12 @@ li[data-level="4"] {
   left: 0 !important;
 }
 
-.topMenu li a svg {
-  width: 20px;
-
-  @media screen and (min-width: 768px) {
-    width: 26px;
-  }
-}
+// .topMenu li a svg {
+//   width: 26px;
+//   @media screen and (min-width: 768px) {
+//     width: 20px;
+//   }
+// }
 
 .modeSvg svg {
   width: 20px;

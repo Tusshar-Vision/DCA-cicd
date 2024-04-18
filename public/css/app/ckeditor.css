@@ -16,6 +16,10 @@
         line-height: 160% !important;
         text-align: left !important;
     }
+    figure {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
 }
 
 .ck-custom-dark-mode {
