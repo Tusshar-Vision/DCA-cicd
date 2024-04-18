@@ -3,6 +3,7 @@
 namespace App\Traits\Filament\Components;
 
 use App\Filament\Components\SourceInput;
+use App\Filament\Resources\WeeklyFocusResource;
 use App\Forms\Components\CKEditor;
 use App\Models\Article;
 use Filament\Forms\Components\Group;
@@ -67,7 +68,6 @@ trait ViewAction
                 CKEditor::make('content')
                     ->disabled()
                     ->columnSpanFull(),
-
                 RichEditor::make('body')
                     ->label('Review Comments')
                     ->disableToolbarButtons([

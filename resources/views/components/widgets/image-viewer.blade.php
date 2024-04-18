@@ -18,7 +18,18 @@
                 fullscreen: false,
             },
             viewed() {
-                viewer.moveTo(viewer.innerWidth / 2)
+                viewer.zoomTo(1);
+                viewer.moveTo(
+                    (document.getElementById('topic-at-glance').offsetWidth - document.getElementById('image').naturalWidth) / 2,
+                    0
+                );
+                viewer.reset = () => {
+                    viewer.zoomTo(1);
+                    viewer.moveTo(
+                        (document.getElementById('topic-at-glance').offsetWidth - document.getElementById('image').naturalWidth) / 2,
+                        0
+                    );
+                }
             },
         });
     }
