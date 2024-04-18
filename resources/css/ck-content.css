@@ -584,4 +584,8 @@
         line-height: 160%;
         text-align: left;
     }
+    figure {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
 }

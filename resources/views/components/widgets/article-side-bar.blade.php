@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <div x-show="isOpen" class="h-[220px] customScroll overflow-y-auto" x-transition>
+        <div id="table-of-content" x-show="isOpen" class="h-[220px] customScroll overflow-y-auto" x-transition>
             <ul class="list-none ml-0">
                 <?php $i = 0; ?>
                 @foreach($tableOfContent as $key => $header)
@@ -56,9 +56,34 @@
                             <span class="mr-1">{{ $i }}<em>.</em></span>Also in News
                         </a>
                     </li>
+                    @if(request()->is('news-today/*/also-in-news'))
+                        <ul class="ml-6">
+                            @foreach($shortArticles as $index => $article)
+                                <li @click="openItem = (openItem == {{$index}} ? '-1' : {{$index}})" class="py-[5px] cursor-pointer hover:brand-color text-clip text-sm">
+                                    <a class="flex text-base[16px] font-normal hover:brand-color"
+                                       :class="{'brand-color': openItem == {{$index}}}"
+                                    >
+                                        <span class="mr-1">{{ $loop->iteration }}<em>.</em></span> {{ $article->shortTitle ?? $article->title }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
                 @endif
             </ul>
         </div>
 
     </div>
 </div>
+<script>
+    document.addEventListener('livewire:navigated', function() {
+        let sideBar = document.querySelector('#table-of-content');
+        let element = document.querySelector('.brand-color');
+        if (element) {
+            sideBar.scrollTo({
+                top: element.offsetTop,
+                behavior: "smooth"
+            });
+        }
+    });
+</script>
