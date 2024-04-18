@@ -5,7 +5,12 @@
     $initiative = request()->segment(1);
 @endphp
 
-<div x-data="{ isOpen: true }" x-init="isOpen = window.innerWidth > 768" class="flex flex-col rounded bg-visionGray pb-4 lg:mt-10 mt-0 dark:bg-[#373839] dark:text-white" x-cloak>
+<div
+    x-data="{ isOpen: true }"
+    x-init="isOpen = window.innerWidth > 768"
+    class="flex flex-col rounded bg-visionGray pb-4 lg:mt-10 mt-0 dark:bg-[#373839] dark:text-white"
+    x-cloak
+>
 
     <div class="my-4 mx-6">
 
@@ -38,7 +43,7 @@
                                 <li class="py-[15px] cursor-pointer border-bottom last:border-0 hover:brand-color">
                                     <a href="{{ $articleURL }}"
                                        wire:navigate
-                                       class="flex text-base[16px] font-normal hover:brand-color {{ ($header->slug === $currentArticle) ? 'brand-color' : '' }}"
+                                       class="flex text-base[16px] font-normal hover:brand-color {{ ($header->slug === $currentArticle) ? 'brand-color current-article' : '' }}"
                                     >
                                         <span class="mr-1">{{ $loop->iteration }}<em>.</em></span> {{ $header->shortTitle ?? $header->title }}
                                     </a>
@@ -51,7 +56,7 @@
                     <li class="py-[15px] border-bottom last:border-0 hover:brand-color">
                         <a href="{{ route('news-today.alsoInNews', ['date' => $date]) }}"
                            wire:navigate
-                           class="flex text-base[16px] font-normal hover:brand-color {{ request()->is('news-today/*/also-in-news') ? 'brand-color' : '' }}"
+                           class="flex text-base[16px] font-normal hover:brand-color {{ request()->is('news-today/*/also-in-news') ? 'brand-color current-article' : '' }}"
                         >
                             <span class="mr-1">{{ $i }}<em>.</em></span>Also in News
                         </a>
@@ -72,18 +77,19 @@
                 @endif
             </ul>
         </div>
-
     </div>
+    <script>
+        document.addEventListener('livewire:navigated', () => {
+            let sideBar = document.querySelector('#table-of-content');
+            let element = document.querySelector('.current-article');
+            if (element) {
+                setTimeout(() => {
+                    sideBar.scrollTo({
+                        top: element.offsetTop - sideBar.clientHeight,
+                        behavior: 'smooth'
+                    });
+                }, 200);
+            }
+        }, {once: true});
+    </script>
 </div>
-<script>
-    document.addEventListener('livewire:navigated', function() {
-        let sideBar = document.querySelector('#table-of-content');
-        let element = document.querySelector('.brand-color');
-        if (element) {
-            sideBar.scrollTo({
-                top: element.offsetTop,
-                behavior: "smooth"
-            });
-        }
-    });
-</script>

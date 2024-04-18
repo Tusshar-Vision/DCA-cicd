@@ -86,6 +86,9 @@
         // Show/hide scroll to top button based on scroll position
         window.onscroll = function() {
             let scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+            if (scrollToTopBtn === null) return;
+
             if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
                 scrollToTopBtn.style.display = 'block';
             } else {
