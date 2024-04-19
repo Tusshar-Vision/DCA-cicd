@@ -34,10 +34,15 @@ class DownloadsController extends Controller
         ]);
     }
 
-    public function renderPT365()
+    public function renderPT365($intiative_id = null)
     {
         $year = request()->input('year');
         $month = request()->input('month');
+        $pdfUrl = null;
+
+        if ($intiative_id) {
+            $pdfUrl = $this->downloadService->getDownloadableResourceUrl($intiative_id);
+        }
 
         $medias = $this
             ->downloadService
@@ -45,7 +50,8 @@ class DownloadsController extends Controller
 
         return View('pages.archives.pt-365', [
             "title" => "PT 365 Archive",
-            "data" => $medias
+            "data" => $medias,
+            "pdfUrl" => $pdfUrl
         ]);
     }
 
