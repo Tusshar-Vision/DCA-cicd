@@ -75,12 +75,12 @@ Route::controller(Pages\MonthlyMagazineController::class)
 // Routes for downloadable initiatives
 Route::controller(Pages\DownloadsController::class)->group(function () {
     Route::get('/downloads', 'index')->name('downloads');
-    Route::get('/mains-365', 'renderMains365')->name('mains-365');
-    Route::get('/pt-365', 'renderPT365')->name('pt-365');
-    Route::get('/economic-survey', 'renderEconomicSurvey')->name('economic-survey');
-    Route::get('/budget', 'renderBudget')->name('budget');
-    Route::get('/value-added-material', 'renderValueAddedMaterial')->name('value-added-material');
-    Route::get('/value-added-material-optional', 'renderValueAddedMaterialOptional')->name('value-added-material-optional');
+    Route::get('/mains-365/{intiative_id?}', 'renderMains365')->name('mains-365');
+    Route::get('/pt-365/{intiative_id?}', 'renderPT365')->name('pt-365');
+    Route::get('/economic-survey/{intiative_id?}', 'renderEconomicSurvey')->name('economic-survey');
+    Route::get('/budget/{intiative_id?}', 'renderBudget')->name('budget');
+    Route::get('/value-added-material/{intiative_id?}', 'renderValueAddedMaterial')->name('value-added-material');
+    Route::get('/value-added-material-optional/{intiative_id?}', 'renderValueAddedMaterialOptional')->name('value-added-material-optional');
     Route::get('/quarterly-revision-documents', 'renderQuarterlyRevisionDocument')->name('quarterly-revision-document');
     Route::get('/year-end-reviews', 'renderYearEndReviews')->name('year-end-review');
     Route::get('/the-planet-vision', 'renderPlanetVision')->name('planet-vision');
