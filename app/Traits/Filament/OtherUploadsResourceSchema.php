@@ -16,12 +16,12 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 trait OtherUploadsResourceSchema
 {
     use HelperMethods;
-
 
     public static function table(Table $table): Table
     {
@@ -29,15 +29,20 @@ trait OtherUploadsResourceSchema
             ->columns([
                 TextColumn::make('id')
                     ->label('ID')
+                    ->searchable()
                     ->sortable(),
 
-                TextColumn::make('name'),
+                TextColumn::make('name')
+                    ->limit(30)
+                    ->tooltip(fn (Model $record): string => $record->name)
+                    ->searchable(),
 
                 TextColumn::make('topic.name')->label('Subject'),
 
                 IconColumn::make('is_published')
                     ->alignCenter()
-                    ->label('Is Published'),
+                    ->label('Is Published')
+                    ->sortable(),
 
                 TextColumn::make('published_at')
                     ->dateTime('d M Y')
@@ -55,7 +60,7 @@ trait OtherUploadsResourceSchema
                     ->button()
                     ->visible(fn () => auth()->user()->can(static::getActionPermission()))
                     ->hidden(function(PublishedInitiative $record) {
-                        return $record->is_published === true;
+                        return $record->is_published === true || $record->trashed();
                     })
                     ->action(function (PublishedInitiative $record) {
                         if ($record->is_published === false) {

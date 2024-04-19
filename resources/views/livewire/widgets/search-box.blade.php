@@ -6,11 +6,11 @@
             id="navSearchInput"
             wire:model="query"
             wire:keydown.enter="search"
-            class="w-full rounded-md"
-            @focusout="$wire.query = ''"
+            @keydown.escape="document.getElementById('searchCont').classList.remove('inModal')"
+            class="w-full rounded-md dark:text-white dark:bg-dark545557"
         >
     </label>
-    <div id="nav-search-item-container" class="search-list overflow-scroll" style="display: none;background-color:white">
+    <div id="nav-search-item-container" class="search-list overflow-scroll bg-white dark:text-white dark:bg-dark545557 p-2" style="display: none;">
     </div>
 </div>
 

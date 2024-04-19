@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Enums\Initiatives;
 use App\Enums\InitiativeTopics;
+use App\Filament\Components\SourceInput;
 use App\Filament\Resources\WeeklyFocusResource\RelationManagers\ArticlesRelationManager;
 use App\Filament\Resources\WeeklyFocusResource\Pages;
 use App\Helpers\InitiativesHelper;
@@ -16,6 +17,7 @@ use App\Models\Video;
 use App\Services\MediaService;
 use App\Services\PublishedInitiativeService;
 use App\Traits\Filament\InitiativeResourceSchema;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
@@ -45,16 +47,13 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component as Livewire;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class WeeklyFocusResource extends Resource
+class WeeklyFocusResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = PublishedInitiative::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
-
     protected static ?string $navigationGroup = 'Create Articles';
     protected static ?string $modelLabel = 'Weekly Focus';
     protected static ?string $pluralLabel = 'Weekly Focus';
-
     protected static ?int $navigationSort = 2;
 
     use InitiativeResourceSchema;
@@ -63,7 +62,7 @@ class WeeklyFocusResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('General')->schema([
+                Section::make('General')->schema([
 
                     Forms\Components\Hidden::make('initiative_id')
                         ->default(InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)),
@@ -110,15 +109,9 @@ class WeeklyFocusResource extends Resource
                                     };
                                 }
                             ])
-                            ->live()
-                            ->afterStateUpdated(function (Forms\Set $set, ?string $state) {
-                                if ($state !== null)
-                                    $set('name', static::generateName($state));
-                                }),
+                            ->live(),
 
-                        Forms\Components\TextInput::make('name')->default(function (callable $get) {
-                            return static::generateName($get('published_at'));
-                        })
+                        Forms\Components\TextInput::make('name')
                             ->rules([
                                 function (PublishedInitiativeService $publishedInitiativeService, ?Model $record) {
 
@@ -153,16 +146,27 @@ class WeeklyFocusResource extends Resource
                                     };
                                 }
                             ])
+                            ->suffixAction(Forms\Components\Actions\Action::make('Generate')
+                                ->icon('heroicon-s-cog-8-tooth')
+                                ->iconButton()
+                                ->action(function (callable $get, callable $set) {
+                                    $set('name', static::generateName($get('published_at')));
+                                })
+                            )
                             ->required(),
 
                     ])->columns(2)->columnSpanFull(),
 
                     Select::make('initiative_topic_id')
-                        ->relationship('topic', 'name')
+                        ->relationship('topic', 'name', function ($query) {
+                            $query->where('name', '!=', 'All');
+                        })
                         ->searchable()
+                        ->preload()
                         ->required()
                         ->label('Subject')
                         ->reactive()
+                        ->columnSpanFull()
                         ->afterStateUpdated(function (Set $set, ?string $state) {
                             $set('topic_section_id', null);
                             $set('topic_sub_section_id', null);
@@ -170,6 +174,7 @@ class WeeklyFocusResource extends Resource
 
                     Select::make('topic_section_id')
                         ->searchable()
+                        ->preload()
                         ->relationship('topicSection', 'name', function ($query, callable $get) {
                             $topic = $get('initiative_topic_id');
 
@@ -183,6 +188,7 @@ class WeeklyFocusResource extends Resource
 
                     Select::make('topic_sub_section_id')
                         ->searchable()
+                        ->preload()
                         ->relationship('topicSubSection', 'name', function ($query, callable $get) {
                             $topicSectionId = $get('topic_section_id');
 
@@ -191,18 +197,27 @@ class WeeklyFocusResource extends Resource
                         ->reactive()
                         ->label('Sub Section'),
 
-                    Select::make('language_id')
-                        ->relationship('language', 'name', function ($query) {
-                            return $query->orderBy('order_column');
-                        })
-                        ->label('Language')
-                        ->required()
-                        ->selectablePlaceholder(false)
-                        ->default(1),
+//                    Select::make('language_id')
+//                        ->relationship('language', 'name', function ($query) {
+//                            return $query->orderBy('order_column');
+//                        })
+//                        ->label('Language')
+//                        ->required()
+//                        ->selectablePlaceholder(false)
+//                        ->default(1),
+
+                    Hidden::make('language_id')->default(1),
 
                     SpatieTagsInput::make('tags')
                         ->columnSpanFull()
                         ->required(),
+
+                    SourceInput::make('sources')
+                        ->columnSpanFull()
+                        ->placeholder('Add sources'),
+                    SourceInput::make('references')
+                        ->columnSpanFull()
+                        ->placeholder('Add references'),
 
                     Forms\Components\SpatieMediaLibraryFileUpload::make('pdf')
                         ->label('Upload pdf file')
@@ -210,7 +225,7 @@ class WeeklyFocusResource extends Resource
                         ->collection('weekly-focus')
                         ->visibility('private')
                         ->visible(function (?PublishedInitiative $record) {
-                            if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'weekly_focus_reviewer'])) return true;
+                            if (Auth::user()->can('upload_weekly::focus')) return true;
                             else if ($record !== null && $record->hasMedia('weekly-focus')) return true;
                             else return false;
                         })
@@ -219,7 +234,7 @@ class WeeklyFocusResource extends Resource
                             if ($record !== null && $record->is_published === true) {
                                 return Auth::user()->hasAnyRole(['admin', 'super_admin']);
                             } else {
-                                return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer', 'weekly_focus_reviewer']);
+                                return Auth::user()->can('upload_weekly::focus');
                             }
                         })
                         ->columnSpanFull(),
@@ -233,7 +248,7 @@ class WeeklyFocusResource extends Resource
                 ->columns(),
 
                 Group::make()->schema([
-                    Forms\Components\Section::make('Featured Image')->schema([
+                    Section::make('Featured Image')->schema([
                         SpatieMediaLibraryFileUpload::make('featured_image')
                             ->hiddenLabel()
                             ->imageEditor()
@@ -249,11 +264,9 @@ class WeeklyFocusResource extends Resource
                                 'image/webp'
                             ])
                             ->disk('s3_public')
-                            ->collection('article-featured-image')
-                            ->responsiveImages()
-                            ->conversion('thumb'),
+                            ->collection('article-featured-image'),
                     ]),
-                    Forms\Components\Section::make('Topic at a glance')
+                    Section::make('Topic at a glance')
                         ->schema([
                             Select::make('infographic_id')
                                 ->hiddenLabel()
@@ -295,20 +308,19 @@ class WeeklyFocusResource extends Resource
                                         ->collection('infographic')
                                         ->required()
                                         ->acceptedFileTypes([
-                                            'application/pdf',
                                             'image/jpeg',
                                             'image/png',
                                             'image/svg'
                                         ]),
                                 ])
                                 ->disabled(function () {
-                                    if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'weekly_focus_reviewer'])) return false;
+                                    if (Auth::user()->can('upload_weekly::focus')) return false;
                                     else return true;
                                 })
                                 ->disabledOn('create'),
                         ])->columnSpan(1),
 
-                    Forms\Components\Section::make("In Conversation")
+                    Section::make("In Conversation")
                         ->schema([
                             Select::make('video_id')
                                 ->hiddenLabel()
@@ -394,11 +406,11 @@ class WeeklyFocusResource extends Resource
                                     ])->columnSpan(1)
                                 ])
                                 ->disabled(function () {
-                                    if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'weekly_focus_reviewer'])) return false;
+                                    if (Auth::user()->can('upload_weekly::focus')) return false;
                                     else return true;
                                 })
                                 ->disabledOn('create'),
-                        ])->columnSpan(1)
+                        ])->columnSpan(1),
                 ])
             ]);
 
@@ -436,6 +448,17 @@ class WeeklyFocusResource extends Resource
         }
 
         return $query;
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'create',
+            'edit',
+            'upload',
+            'delete',
+        ];
     }
 
 }

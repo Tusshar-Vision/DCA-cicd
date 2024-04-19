@@ -24,7 +24,7 @@ trait ExpertReviewColumn
         return SelectColumn::make('author_id')
                 ->options(function (Livewire $livewire, Article $article) {
                     $initiative_id = $livewire->ownerRecord?->initiative_id ?? $article->initiative_id;
-                    $roles = collect(['expert']);
+                    $roles = collect(['expert', 'admin', 'super_admin']);
 
                     if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)) {
                         $roles->add('news_today_expert');
@@ -61,7 +61,7 @@ trait ExpertReviewColumn
         return SelectColumn::make('reviewer_id')
             ->options(function (Livewire $livewire, Article $article) {
                 $initiative_id = $livewire->ownerRecord?->initiative_id ?? $article->initiative_id;
-                $roles = collect(['reviewer']);
+                $roles = collect(['reviewer', 'admin', 'super_admin']);
 
                 if ($initiative_id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY)) {
                     $roles->add('news_today_reviewer');

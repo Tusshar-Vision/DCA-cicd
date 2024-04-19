@@ -9,10 +9,22 @@
             @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&family=Tiro+Devanagari+Hindi&display=swap');
         </style>
         @vite('resources/sass/app.scss')
-        @vite('resources/js/app.js')
+        @yield('styles')
     </head>
 
-    <body x-data="{ isAuthFormOpen: false }">
+    <body x-data="{
+        isAuthFormOpen: false,
+        isDarkModeEnabled: false,
+        fontSize: 1,
+        init() {
+            const storedPreference = localStorage.getItem('isDarkModeEnabled');
+            if (storedPreference !== null) {
+                this.isDarkModeEnabled = storedPreference === 'true';
+            } else {
+                this.isDarkModeEnabled = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            }
+        }
+    }" :class="{ 'dark' : isDarkModeEnabled }">
         <div class="mx-auto w-full px-[20px] lg:px-0 lg:max-w-[90%]">
             <header>
                 <x-header />
@@ -28,7 +40,6 @@
         <footer>
             @yield('footer')
                 <x-footer />
-            @stack('scripts')
         </footer>
 
         <x-modals.login-modal x-show="isAuthFormOpen">
@@ -37,4 +48,6 @@
             </template>
         </x-modals.login-modal>
     </body>
+    @vite('resources/js/app.js')
+    @stack('scripts')
 </html>

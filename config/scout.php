@@ -134,20 +134,40 @@ return [
         'key' => env('MEILISEARCH_KEY'),
         'index-settings' => [
              'articles' => [
-                 'filterableAttributes'=> ['id', 'published_at'],
+                 'filterableAttributes' => [
+                     'id',
+                     'views',
+                     'initiative_topic_id',
+                     'topic_section_id',
+                     'topic_sub_section_id',
+                     'updated_at',
+                     'published_at',
+                     'initiative_id',
+                     'is_short',
+                     'language_id'
+                 ],
+                 'sortableAttributes' => ['published_at'],
              ],
             'infographics' => [
-
+                'filterableAttributes' => [
+                    'id',
+                    'initiative_topic_id',
+                    'topic_section_id',
+                    'topic_sub_section_id',
+                    'updated_at',
+                    'language_id'
+                ],
             ],
             'videos' => [
-
+                'filterableAttributes' => [
+                    'id',
+                    'initiative_topic_id',
+                    'topic_section_id',
+                    'topic_sub_section_id',
+                    'updated_at',
+                    'language_id'
+                ],
             ],
-            'related_terms' => [
-
-            ],
-            'notes' => [
-
-            ]
         ],
     ],
 

@@ -5,8 +5,8 @@ namespace App\Filament\Resources;
 use App\Enums\Initiatives;
 use App\Filament\Resources\MonthlyMagazineResource\Pages;
 use App\Filament\Resources\MonthlyMagazineResource\RelationManagers\ArticlesRelationManager;
+use App\Filament\Resources\MonthlyMagazineResource\RelationManagers\ShortArticlesRelationManager;
 use App\Helpers\InitiativesHelper;
-use App\Models\Article;
 use App\Models\PublishedInitiative;
 use App\Services\PublishedInitiativeService;
 use App\Traits\Filament\InitiativeResourceSchema;
@@ -15,20 +15,15 @@ use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
-use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
-class MonthlyMagazineResource extends Resource
+class MonthlyMagazineResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = PublishedInitiative::class;
 
@@ -92,15 +87,9 @@ class MonthlyMagazineResource extends Resource
                                     };
                                 }
                             ])
-                            ->live()
-                            ->afterStateUpdated(function (Forms\Set $set, ?string $state) {
-                                if ($state !== null)
-                                    $set('name', static::generateName($state));
-                                }),
+                            ->live(),
 
-                        Forms\Components\TextInput::make('name')->default(function (callable $get) {
-                            return static::generateName($get('published_at'));
-                        })->rules([
+                        Forms\Components\TextInput::make('name')->rules([
                             function (PublishedInitiativeService $publishedInitiativeService, ?Model $record) {
 
                                 if ($record !== null) {
@@ -133,26 +122,36 @@ class MonthlyMagazineResource extends Resource
                                     }
                                 };
                             }
-                        ])->required(),
+                        ])
+                        ->required()
+                        ->suffixAction(Forms\Components\Actions\Action::make('Generate')
+                            ->icon('heroicon-s-cog-8-tooth')
+                            ->iconButton()
+                            ->action(function (callable $get, callable $set) {
+                                $set('name', static::generateName($get('published_at')));
+                            })
+                        ),
                     ])
                     ->columns()
                     ->columnSpanFull(),
 
-                    Select::make('language_id')
-                        ->relationship('language', 'name', function ($query) {
-                            return $query->orderBy('order_column');
-                        })
-                        ->label('Language')
-                        ->required()
-                        ->selectablePlaceholder(false)
-                        ->default(1),
+//                    Select::make('language_id')
+//                        ->relationship('language', 'name', function ($query) {
+//                            return $query->orderBy('order_column');
+//                        })
+//                        ->label('Language')
+//                        ->required()
+//                        ->selectablePlaceholder(false)
+//                        ->default(1),
+
+                    Hidden::make('language_id')->default(1),
 
                     Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
                         ->collection('monthly-magazine')
                         ->acceptedFileTypes(['application/pdf'])
                         ->visibility('private')
                         ->visible(function (?PublishedInitiative $record) {
-                            if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'monthly_magazine_reviewer'])) return true;
+                            if (Auth::user()->can('upload_monthly::magazine')) return true;
                             else if ($record !== null && $record->hasMedia('monthly-magazine')) return true;
                             else return false;
                         })
@@ -161,12 +160,10 @@ class MonthlyMagazineResource extends Resource
                             if ($record !== null && $record->is_published === true) {
                                 return Auth::user()->hasAnyRole(['admin', 'super_admin']);
                             } else {
-                                return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer', 'monthly_magazine_reviewer']);
+                                return Auth::user()->can('upload_monthly::magazine');
                             }
                         })
                         ->columnSpanFull(),
-
-
 
                 ])
                 ->columns()
@@ -180,7 +177,8 @@ class MonthlyMagazineResource extends Resource
     public static function getRelations(): array
     {
         return [
-            ArticlesRelationManager::class
+            ArticlesRelationManager::class,
+            ShortArticlesRelationManager::class
         ];
     }
 
@@ -211,6 +209,17 @@ class MonthlyMagazineResource extends Resource
         return $query;
     }
 
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'create',
+            'edit',
+            'upload',
+            'delete',
+        ];
+    }
+
     public static function canViewAny(): bool
     {
         return Auth::user()->can('view_monthly::magazine');
@@ -223,7 +232,7 @@ class MonthlyMagazineResource extends Resource
             return false;
         }
         return Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'monthly_magazine_reviewer']) || (Auth::user()->can('edit_monthly::magazine') && $record->articles->contains(function ($article) use ($userId) {
-            return $article?->reviewer_id == $userId || $article->expert_id == $userId;
+            return $article?->reviewer_id == $userId || $article->author_id == $userId;
         }));
     }
 

@@ -10,9 +10,16 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class SearchService
 {
 
-    public function search(string $query): Collection|array|LengthAwarePaginator
+    public function search(string $query, int $limit = 10, int $initiative_id = null, $date = null): Collection|array|LengthAwarePaginator
     {
-        return Article::search($query)->get();
+        $query = Article::search($query)->take($limit)
+            ->where('is_short', false);
+
+        if ($initiative_id) {
+            $query = $query->where('initiative_id', $initiative_id);
+        }
+
+        return $query->get();
     }
 
     public function searchArticles() {

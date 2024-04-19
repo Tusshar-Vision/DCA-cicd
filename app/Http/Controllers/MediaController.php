@@ -28,26 +28,16 @@ class MediaController extends Controller
 
     public function download(Media $media)
     {
-        // Get the URL of the media item from the S3 bucket
-        $url = $media->getFullUrl();
         $name = $media->name . '.' . $media->extension;
 
         // Generate a pre-signed URL with a temporary access token
-        $temporaryUrl = \Storage::disk('s3')->temporaryUrl(
-            $media->getPath(),
-            now()->addMinutes(5) // Adjust the expiration time as needed
-        );
+        $temporaryUrl = $media->getTemporaryUrl(now()->add('minutes', 5));
+        $response = \Http::get($temporaryUrl);
 
-        // Create a StreamedResponse to stream the file content to the user
-        return response()->streamDownload(function () use ($temporaryUrl) {
-            $fileStream = fopen($temporaryUrl, 'r');
-
-            // Stream the file content to the client
-            fpassthru($fileStream);
-
-            // Close the file stream
-            fclose($fileStream);
-        }, $name);
+        return \response($response->body(), 200, [
+           'Content-Type' => 'application/pdf',
+           'Content-Disposition' => 'attachment;filename="' . $name . '"',
+        ]);
     }
 
     public function viewFile(Media $media)

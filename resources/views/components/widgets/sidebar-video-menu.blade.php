@@ -1,4 +1,4 @@
-<div class="flex flex-col rounded bg-visionGray mt-4 {{ $video === null ? 'opacity-50 pointer-events-none' : 'cursor-pointer' }}" @click="isVideoOpen = true">
+<div class="flex flex-col rounded bg-visionGray mt-4 {{ $video === null ? 'opacity-50 pointer-events-none' : 'cursor-pointer' }} dark:bg-dark373839 dark:text-white" @click="isVideoOpen = true">
     <div class="my-8 mx-6">
         <div class="flex items-center justify-between">
             <div class="flex space-x-2">
@@ -14,7 +14,7 @@
                 @endif
                 <span>
                     {{
-                        ($initiative === 'weekly-focus') ? 'Watch In Conversation' : "Watch Today's News"
+                        ($initiative === 'weekly-focus') ? 'Watch In Conversation' : "Watch News Today"
                     }}
                 </span>
             </div>

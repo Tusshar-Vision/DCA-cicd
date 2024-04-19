@@ -5,52 +5,85 @@
     $initiative = request()->segment(1);
 @endphp
 
-<div class="flex flex-col rounded bg-visionGray pb-4 lg:mt-10 mt-0">
+<div x-data="{ isOpen: true }" x-init="isOpen = window.innerWidth > 768" class="flex flex-col rounded bg-visionGray pb-4 lg:mt-10 mt-0 dark:bg-[#373839] dark:text-white" x-cloak>
+
     <div class="my-4 mx-6">
-        <h4 class="font-bold text-base[16px] py-[16px] border-bottom">Table of Content</h4>
-        <div class="h-[220px] customScroll overflow-y-auto">
+
+        <div @click="isOpen = !isOpen" class="flex border-bottom justify-between items-start cursor-pointer" >
+            <div>
+                <h4 class="font-bold text-base[16px] pb-[16px]">Table of Content</h4>
+            </div>
+            <div class="mt-0.5" :class="{ 'rotate-180' : isOpen }">
+                {!! \App\Helpers\SvgIconsHelper::getSvgIcon('arrow-down') !!}
+            </div>
+        </div>
+
+        <div id="table-of-content" x-show="isOpen" class="h-[220px] customScroll overflow-y-auto" x-transition>
             <ul class="list-none ml-0">
                 <?php $i = 0; ?>
-                    @foreach($tableOfContent as $key => $header)
-                            @if(is_array($header))
-                                @if (isset($header['id']))
-                                    <li class="py-[15px] border-bottom last:border-0 hover:brand-color">
-                                        <a href="#header-{{ $header['id'] }}"
-                                           class="flex text-base[16px] font-normal black-040404 hover:brand-color">
-                                            <span class="mr-1">{{ $loop->iteration }}<em>.</em></span>{{ strip_tags($header['header']) }}
-                                        </a>
-                                    </li>
-                                @endif
-                            @else
-                                <li @click="openItem = (openItem == {{$key}} ? '-1' : {{$key}})" class="py-[15px] cursor-pointer border-bottom last:border-0 hover:brand-color">
-                                   @if($initiative == 'weekly-focus')
-                                    <a class="flex text-base[16px] font-normal hover:brand-color }}"
-                                    :class="{'brand-color': openItem == {{$key}}}"
-                                    >
-                                    @else
-                                    <a href="{{ ArticleService::getArticleUrlFromSlug($header->slug) }}"
+                @foreach($tableOfContent as $key => $header)
+                       @if($initiative == 'weekly-focus')
+                            <li @click="openItem = (openItem == {{$key}} ? '-1' : {{$key}})" class="py-[15px] cursor-pointer border-bottom last:border-0 hover:brand-color">
+                                <a class="flex text-base[16px] font-normal hover:brand-color }}"
+                                   :class="{'brand-color': openItem == {{$key}}}"
+                                >
+                                    <span class="mr-1">{{ $loop->iteration }}<em>.</em></span> {{ $header->shortTitle ?? $header->title }}
+                                </a>
+                            </li>
+                        @else
+                            @php
+                                $articleURL = ArticleService::getArticleUrlFromSlug($header->slug);
+                            @endphp
+                            @if ($articleURL !== null)
+                                <li class="py-[15px] cursor-pointer border-bottom last:border-0 hover:brand-color">
+                                    <a href="{{ $articleURL }}"
                                        wire:navigate
                                        class="flex text-base[16px] font-normal hover:brand-color {{ ($header->slug === $currentArticle) ? 'brand-color' : '' }}"
                                     >
-                                   @endif
                                         <span class="mr-1">{{ $loop->iteration }}<em>.</em></span> {{ $header->shortTitle ?? $header->title }}
                                     </a>
                                 </li>
                             @endif
-                            <?php $i = $loop->iteration; ?>
-                    @endforeach
-
-                    @if($isAlsoInNews)
-                        <li class="py-[15px] border-bottom last:border-0 hover:brand-color">
-                            <a href="{{ route('news-today.alsoInNews', ['date' => $date]) }}"
-                               wire:navigate
-                               class="flex text-base[16px] font-normal hover:brand-color {{ request()->is('news-today/*/also-in-news') ? 'brand-color' : '' }}"
-                            >
-                                <span class="mr-1">{{ $i + 1 }}<em>.</em></span>Also in News
-                            </a>
-                        </li>
+                       @endif
+                    <?php $i = $loop->iteration; ?>
+                @endforeach
+                @if($isAlsoInNews)
+                    <li class="py-[15px] border-bottom last:border-0 hover:brand-color">
+                        <a href="{{ route('news-today.alsoInNews', ['date' => $date]) }}"
+                           wire:navigate
+                           class="flex text-base[16px] font-normal hover:brand-color {{ request()->is('news-today/*/also-in-news') ? 'brand-color' : '' }}"
+                        >
+                            <span class="mr-1">{{ $i }}<em>.</em></span>Also in News
+                        </a>
+                    </li>
+                    @if(request()->is('news-today/*/also-in-news'))
+                        <ul class="ml-6">
+                            @foreach($shortArticles as $index => $article)
+                                <li @click="openItem = (openItem == {{$index}} ? '-1' : {{$index}})" class="py-[5px] cursor-pointer hover:brand-color text-clip text-sm">
+                                    <a class="flex text-base[16px] font-normal hover:brand-color"
+                                       :class="{'brand-color': openItem == {{$index}}}"
+                                    >
+                                        <span class="mr-1">{{ $loop->iteration }}<em>.</em></span> {{ $article->shortTitle ?? $article->title }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
                     @endif
+                @endif
             </ul>
         </div>
+
     </div>
 </div>
+<script>
+    document.addEventListener('livewire:navigated', function() {
+        let sideBar = document.querySelector('#table-of-content');
+        let element = document.querySelector('.brand-color');
+        if (element) {
+            sideBar.scrollTo({
+                top: element.offsetTop,
+                behavior: "smooth"
+            });
+        }
+    });
+</script>

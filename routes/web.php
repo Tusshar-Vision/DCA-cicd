@@ -25,7 +25,7 @@ Route::get('/videos', [Pages\VideosController::class, 'index'])->name('videos');
 Route::get('/search', [Pages\SearchController::class, 'index'])->name('search');
 Route::get('/search/{query}', [Pages\SearchController::class, 'searchQuery'])->name('search.query');
 
-Route::post('/upload', [\App\Http\Controllers\UploadController::class, 'store'])->name('ckeditor.upload');
+Route::post('/upload', [\App\Http\Controllers\CkEditorController::class, 'store'])->name('ck-editor.upload');
 
 Route::controller(Pages\NewsTodayController::class)
     ->group(
@@ -64,6 +64,7 @@ Route::controller(Pages\MonthlyMagazineController::class)
                 ->group(
                     function () {
                         Route::get('/', 'index')->name('monthly-magazine');
+                        Route::get('/{date}/{topic}/news-in-shorts', 'newsInShorts')->name('monthly-magazine.newsInShorts');
                         Route::get('/{date}/{topic}/{article_slug}', 'renderArticle')->name('monthly-magazine.article');
                         Route::get('/archive', 'archive')->name('monthly-magazine.archive');
                     }
@@ -81,7 +82,8 @@ Route::controller(Pages\DownloadsController::class)->group(function () {
     Route::get('/value-added-material', 'renderValueAddedMaterial')->name('value-added-material');
     Route::get('/value-added-material-optional', 'renderValueAddedMaterialOptional')->name('value-added-material-optional');
     Route::get('/quarterly-revision-documents', 'renderQuarterlyRevisionDocument')->name('quarterly-revision-document');
-    Route::get('/year-end-reviews', 'renderYearEndReviews')->name('year-end-reviews');
+    Route::get('/year-end-reviews', 'renderYearEndReviews')->name('year-end-review');
+    Route::get('/the-planet-vision', 'renderPlanetVision')->name('planet-vision');
 
     //    Route::get('/weekly-round-table', 'getWeeklyRoundTable')->name('weekly-round-table');
     //    Route::get('/animated-shorts', 'getAnimatedShorts')->name('animated-shorts');
@@ -92,8 +94,10 @@ Route::middleware('auth:cognito')->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('/activity', [Pages\UserController::class, 'dashboard'])->name('user.dashboard');
         Route::post('/update/read-history', [Pages\UserController::class, 'updateReadHistory'])->name('user.read-history');
+        Route::get('/read-history/search/{query}', [Pages\UserController::class, 'searchReadHistory']);
         Route::get('/bookmarks', [Pages\UserController::class, 'bookmarks'])->name('bookmarks');
         Route::post('/bookmarks/add', [Pages\UserController::class, 'addBookmark'])->name('bookmarks.add');
+        Route::get('/bookmarks/search/{query}', [Pages\UserController::class, 'searchBookmark']);
         Route::get('/content/{type?}', [Pages\UserController::class, 'myContent'])->name('user.content');
         Route::get('/search-notes', [Pages\UserController::class, 'searchNotes'])->name('user.search-notes');
         Route::get('/filter-notes/{topic_id}/{section_id}', [NoteController::class, 'getFilteredNotes'])->name('user.filter-notes');

@@ -1,7 +1,7 @@
 @use('App\Helpers\SvgIconsHelper')
 
-<div class="flex md:min-h-[680px] min-h-[100vh] justify-center text-center items-stretch bg-white">
-    <div class="w-6/12 flex items-center bg-[#F5F7F8]">
+<div class="flex md:min-h-[680px] min-h-[100vh] justify-center text-center items-stretch bg-white dark:bg-dark373839">
+    <div class="w-6/12 flex items-center bg-[#F5F7F8] dark:bg-dark545557">
         <dotlottie-player
             src="https://lottie.host/9fdd8a19-696b-458b-b325-a74104e6b362/ZBlOCe4MDw.json"
             background="transparent"
@@ -10,45 +10,45 @@
         >
         </dotlottie-player>
     </div>
-    <div x-data="{ focusedResetPassword: false, focusedResetConfirmPassword: false, resetPasswordVisible: false }" class="w-6/12 flex flex-col justify-center px-[56px] loginwrap">
+    <div x-data="{ focusedResetPassword: false, focusedResetConfirmPassword: false, resetPasswordVisible: false }" class="w-6/12 flex flex-col justify-center px-[56px] loginwrap dark:bg-dark373839">
         <h2 class="font-medium text-base mb-[15px]">Enter OTP</h2>
-        <p class="text-xs text-[#3D3D3D] mb-[15px]">Kindly, enter the six digit verification code sent to your e-mail ID, {{ $email }}</p>
+        <p class="text-xs text-[#3D3D3D] mb-[15px] dark:text-white">Kindly, enter the six digit verification code sent to your e-mail ID, {{ $email }}</p>
         <form wire:submit="verify" class="w-full">
             <div class="flex gap-2 otp-wrap mb-[15px]">
                 <input id="otp_first" type="number" maxlength="1" value=""
                        x-on:input="window.handleInput(0, $event)"
                        x-on:keydown="window.handleBackspace(0, $event)"
-                       class="otp-input w-2/12 border h-[56px] rounded appearance-none text-center"
+                       class="otp-input w-2/12 border h-[56px] rounded appearance-none text-center dark:text-black"
                        wire:model.blur="otp_first"
                 >
                 <input id="otp_sec" type="number" maxlength="1" value=""
                        x-on:input="window.handleInput(1, $event)"
                        x-on:keydown="window.handleBackspace(1, $event)"
-                       class="otp-input w-2/12 border h-[56px] rounded appearance-none text-center"
+                       class="otp-input w-2/12 border h-[56px] rounded appearance-none text-center dark:text-black"
                        wire:model.blur="otp_sec"
                 >
                 <input id="otp_third" type="number" maxlength="1" value=""
                        x-on:input="window.handleInput(2, $event)"
                        x-on:keydown="window.handleBackspace(2, $event)"
-                       class="otp-input w-2/12 border h-[56px] rounded appearance-none text-center"
+                       class="otp-input w-2/12 border h-[56px] rounded appearance-none text-center dark:text-black"
                        wire:model.blur="otp_third"
                 >
                 <input id="otp_fourth" type="number" maxlength="1" value=""
                        x-on:input="window.handleInput(3, $event)"
                        x-on:keydown="window.handleBackspace(3, $event)"
-                       class="otp-input w-2/12 border h-[56px] rounded appearance-none text-center"
+                       class="otp-input w-2/12 border h-[56px] rounded appearance-none text-center dark:text-black"
                        wire:model.blur="otp_fourth"
                 >
                 <input id="otp_fifth" type="number" maxlength="1" value=""
                        x-on:input="window.handleInput(4, $event)"
                        x-on:keydown="window.handleBackspace(4, $event)"
-                       class="otp-input w-2/12 border h-[56px] rounded appearance-none text-center"
+                       class="otp-input w-2/12 border h-[56px] rounded appearance-none text-center dark:text-black"
                        wire:model.blur="otp_fifth"
                 >
                 <input id="otp_sixth" type="number" maxlength="1" value=""
                        x-on:input="window.handleInput(5, $event)"
                        x-on:keydown="window.handleBackspace(5, $event)"
-                       class="otp-input w-2/12 border h-[56px] rounded appearance-none text-center"
+                       class="otp-input w-2/12 border h-[56px] rounded appearance-none text-center dark:text-black"
                        wire:model.blur="otp_sixth"
                 >
             </div>

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Pages;
 
-use App\DTO\Menu\MainMenuDTO;
 use App\DTO\MonthlyMagazineDTO;
 use App\Enums\Initiatives;
 use App\Helpers\ContentsFromHeadersGenerator;
@@ -10,10 +9,10 @@ use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Bookmark;
 use App\Models\Note;
-use App\Models\PublishedInitiative;
+use App\Models\ReadHistory;
+use App\Services\DownloadService;
 use App\Services\PublishedInitiativeService;
 use Illuminate\Support\Facades\Auth;
-
 
 class MonthlyMagazineController extends Controller
 {
@@ -22,7 +21,7 @@ class MonthlyMagazineController extends Controller
 
     public function __construct(
         private readonly PublishedInitiativeService $publishedInitiativeService,
-        private readonly PublishedInitiative        $publishedInitiatives,
+        private readonly DownloadService $downloadService
     ) {
         $this->initiativeId = InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE);
     }
@@ -36,6 +35,15 @@ class MonthlyMagazineController extends Controller
             $this->publishedInitiativeService
                 ->getLatest($this->initiativeId)
         );
+
+        //        // Define cache key based on weeklyFocus published date
+        //        $cacheKey = 'monthly-magazine/' . $this->monthlyMagazine->publishedAt;
+        //
+        //        // Check if the monthlyMagazine DTO exists in the cache
+        //        if (!Cache::has($cacheKey)) {
+        //            // Store the monthlyMagazine DTO in the cache for 60 minutes
+        //            Cache::put($cacheKey, $this->monthlyMagazine, 60);
+        //        }
 
         return redirect()->route(
             'monthly-magazine.article',
@@ -52,27 +60,26 @@ class MonthlyMagazineController extends Controller
      */
     public function renderArticle($date, ?string $topic = null, ?string $slug = null)
     {
-        $this->monthlyMagazine = MonthlyMagazineDTO::fromModel(
-            $this->publishedInitiativeService
-                ->getLatest($this->initiativeId, $date)
-        );
+        $this->hydrateData($date);
 
         $article = $this->monthlyMagazine->getArticleFromSlug($slug);
 
         $noteAvailable = null;
         $note = null;
         $isArticleBookmarked = false;
-
+        $isArticleRead = false;
 
         if (Auth::guard('cognito')->check()) {
             $noteAvailable = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->count() > 0 ? true : false;
             $note = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
             $bookmark =  Bookmark::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
             if ($bookmark) $isArticleBookmarked = true;
+            $readHistory =  ReadHistory::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
+            if ($readHistory) $isArticleRead = true;
         }
 
         $toc['toc'] = [];
-        if (!($article->content === '' || $article->content === null))  {
+        if (!($article->content === '' || $article->content === null)) {
             $contents = new ContentsFromHeadersGenerator();
             $toc = $contents->generateTOC($article->content);
 
@@ -82,16 +89,73 @@ class MonthlyMagazineController extends Controller
         }
 
         return View('pages.monthly-magazine', [
-            "publishedDate" => $this->monthlyMagazine->publishedAt,
-            "articles" => $this->monthlyMagazine,
+            "package" => $this->monthlyMagazine,
             "article" => $article,
-            "topics" => $this->monthlyMagazine->topics,
             "noteAvailable"  => $noteAvailable,
             "note" => $note,
-            "sortedArticlesWithTopics" => $this->monthlyMagazine->sortedArticlesWithTopic,
             "tableOfContent" => $toc['toc'],
             "isArticleBookmarked" => $isArticleBookmarked,
+            "isArticleRead" =>  $isArticleRead,
         ]);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function newsInShorts($date, string $topic)
+    {
+        $this->hydrateData($date);
+        $article = $this->monthlyMagazine->getShortNewsArticles($topic);
+
+        $noteAvailable = null;
+        $note = null;
+        $isArticleBookmarked = false;
+        $isArticleRead = false;
+
+        if (Auth::guard('cognito')->check()) {
+            $noteAvailable = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->count() > 0 ? true : false;
+            $note = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
+            $bookmark =  Bookmark::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
+            if ($bookmark) $isArticleBookmarked = true;
+            $readHistory =  ReadHistory::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
+            if ($readHistory) $isArticleRead = true;
+        }
+
+        $toc['toc'] = [];
+
+        return View('pages.monthly-magazine', [
+            "package" => $this->monthlyMagazine,
+            "article" => $article,
+            "noteAvailable"  => $noteAvailable,
+            "note" => $note,
+            "tableOfContent" => $toc['toc'],
+            "isArticleBookmarked" => $isArticleBookmarked,
+            "isArticleRead" =>  $isArticleRead,
+        ]);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    private function hydrateData($date)
+    {
+        // Define cache key based on newsToday published date
+        //        $monthlyCacheKey = 'monthly-magazine/' . $date;
+        //
+        //        // Check if the newsToday DTO exists in the cache
+        //        if (Cache::has($monthlyCacheKey)) {
+        //            // Retrieve newsToday DTO from cache
+        //            $this->monthlyMagazine = Cache::get($monthlyCacheKey);
+        //        } else {
+        // Create a NewsTodayDTO object from the latest published initiative for the given date
+        $this->monthlyMagazine = MonthlyMagazineDTO::fromModel(
+            $this->publishedInitiativeService
+                ->getLatest($this->initiativeId, $date)
+        );
+        //
+        //            // Store the newsToday DTO in the cache for 60 minutes
+        //            Cache::put($monthlyCacheKey, $this->monthlyMagazine, 60);
+        //        }
     }
 
     public function archive()
@@ -99,38 +163,11 @@ class MonthlyMagazineController extends Controller
         $year = request()->input('year');
         $month = request()->input('month');
 
-        $query = $this->publishedInitiatives
-            ->whereInitiative($this->initiativeId)
-            ->language()
-            ->isPublished();
-
-
-        $years = $query->orderByDesc('published_at')->groupByYear()->keys();
-
-        if ($year) $query->whereYear('published_at', $year);
-        if ($month) $query->whereMonth('published_at', $month);
-
-        $articles = $query->with('articles.topic')
-            ->orderByDesc('published_at')
-            ->groupByYear();
-
-        $data = [];
-
-        foreach ($articles as $year => $groupedInitiatives) {
-            $publishedInitiatives = [];
-
-            foreach ($groupedInitiatives as $initiative) {
-                $publishedInitiatives[] = MainMenuDTO::fromArray($initiative);
-            }
-            $data[$year] = $publishedInitiatives;
-        }
-
-        // $data = collect($data);
-        $data = json_encode($data);
+        $data = $this->downloadService->getMonthlyMagazineArchive($year, $month);
 
         return View('pages.archives.monthly-magazine', [
             "title" => "Monthly Magazine Archives",
-            'data' => [$years, $data]
+            'data' => [$data[0], $data[1]]
         ]);
     }
 }

@@ -18,4 +18,5 @@ enum Initiatives : string {
     case QUARTERLY_REVISION_DOCUMENTS = 'Quarterly Revision Documents';
     case BUDGET = "Budget";
     case YEAR_END_REVIEW = "Year End Review";
+    case PLANET_VISION = "Planet Vision";
 }

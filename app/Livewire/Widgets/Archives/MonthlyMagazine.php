@@ -11,7 +11,7 @@ class MonthlyMagazine extends Component
 
     public function mount($articles, $years): void
     {
-        $this->articles = json_decode($articles, true);
+        $this->articles = $articles;
         $this->years = $years;
     }
     public function render(): View

@@ -46,6 +46,6 @@ const defaultOptions = {
 
 compile({
     ...defaultOptions,
-    entryPoints: ['./resources/js/components/ck-editor-component.js'],
-    outfile: './resources/js/dist/components/ck-editor-component.js',
+    entryPoints: ['./resources/js/filament/components/ck-editor-component.js'],
+    outfile: './resources/dist/components/ck-editor-component.js',
 })

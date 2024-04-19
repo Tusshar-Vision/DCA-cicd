@@ -48,32 +48,45 @@ readonly class InitiativeService
                 // Eager load published articles
                 $query->isPublished()->ordered();
             }])
-            ->limit(10)
             ->orderByDesc('published_at')
-            ->groupByMonth();
+            ->groupByYearAndMonth();
 
         $menuData = [];
 
-        foreach ($data as $month => $groupedInitiatives) {
-            $daysArray = [];
+        foreach ($data as $year => $months) {
+            for ($monthIndex = 1; $monthIndex <= 12; $monthIndex++) {
+                // Format the month correctly (e.g., "January", "February", ...)
+                $monthName = Carbon::createFromFormat('m', $monthIndex)->format('F');
 
-            $totalDays = Carbon::parse($month)->daysInMonth;
-            // Loop through each day of the month
-            for ($day = 1; $day <= $totalDays; $day++) {
-                // Create a Carbon instance for the current date
-                $date = Carbon::createFromFormat('d F Y', $day . ' ' . $month);
-
-                // Add the date as a key and the weekday as the value to the array
-                $daysArray[$date->format('j')]['day_name'] = $date->format('l');
-
-                $initiatives = $groupedInitiatives->where('published_at', '=', $date->format('Y-m-d') . ' ' . '00:00:00');
-                $daysArray[$date->format('j')]['menu'] = collect();
-                if ($initiatives->count() !== 0) {
-                    $daysArray[$date->format('j')]['menu']->push(MainMenuDTO::fromArray($initiatives->first()));
+                // Initialize an empty array for months that don't have any data
+                if (!isset($months[$monthName])) {
+                    $months[$monthName] = collect();
                 }
+
+                $groupedInitiatives = $months[$monthName];
+                $daysArray = [];
+
+                $totalDays = Carbon::create($year, $monthIndex)->daysInMonth;
+                // Loop through each day of the month
+                for ($day = 1; $day <= $totalDays; $day++) {
+                    // Create a Carbon instance for the current date
+                    $date = Carbon::createFromDate($year, $monthIndex, $day);
+
+                    // Add the date as a key and the weekday as the value to the array
+                    $daysArray[$date->format('j')]['day_name'] = $date->format('l');
+                    $daysArray[$date->format('j')]['menu'] = collect();
+
+                    // Since we've initialized all months, some might not have initiatives
+                    if ($groupedInitiatives->isNotEmpty()) {
+                        $initiatives = $groupedInitiatives->where('published_at', $date->format('Y-m-d') . ' 00:00:00');
+                        if ($initiatives->count() !== 0) {
+                            $daysArray[$date->format('j')]['menu']->push(MainMenuDTO::fromArray($initiatives->first()));
+                        }
+                    }
+                }
+                $menuData[$year][$monthName]['diffInDays'] = Carbon::createFromDate($year, $monthIndex)->firstOfMonth()->previous(Carbon::SUNDAY)->diffInDays(Carbon::createFromDate($year, $monthIndex)->firstOfMonth());
+                $menuData[$year][$monthName]['days'] = $daysArray;
             }
-            $menuData[$month]['diffInDays'] = Carbon::parse($month)->firstOfMonth()->previous(Carbon::SUNDAY)->diffInDays(Carbon::parse($month)->firstOfMonth());
-            $menuData[$month]['days'] = $daysArray;
         }
 
         return $menuData;
@@ -90,7 +103,6 @@ readonly class InitiativeService
                 // Eager load published articles
                 $query->isPublished()->ordered();
             }])
-            ->limit(10)
             ->orderByDesc('published_at')
             ->groupByMonth();
 
@@ -122,7 +134,6 @@ readonly class InitiativeService
                 // Eager load published articles
                 $query->isPublished()->ordered();
             }])
-            ->limit(10)
             ->orderByDesc('published_at')
             ->groupByYear();
 

@@ -7,9 +7,8 @@ use App\Helpers\InitiativesHelper;
 use App\Models\Article;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 readonly class ArticleService
 {
@@ -22,6 +21,7 @@ readonly class ArticleService
     {
         return $this->articles
             ->isPublished()
+            ->isNotShort()
             ->isFeatured()
             ->latest()
             ->limit($limit)
@@ -56,7 +56,7 @@ readonly class ArticleService
     }
 
 
-    public static function getArticleUrlFromSlug($slug): string
+    public static function getArticleUrlFromSlug($slug): string|null
     {
         // Use caching to avoid duplicated queries
         return Cache::remember("article_url_{$slug}", 60, function () use ($slug) {
@@ -68,67 +68,8 @@ readonly class ArticleService
 
                 return self::getArticleURL($article);
             } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-                Log::error("Article with slug '{$slug}' not found.");
-                // Handle not found article by returning a default URL
-                return '/article-not-found'; // Example default URL or could throw an exception
+                return null; // Example default URL or could throw an exception
             }
         });
-    }
-
-    public function archive($initiative_id, $year, $month): array
-    {
-        $query = $this->articles
-            ->whereInitiative($initiative_id)
-            ->isPublished();
-
-        $years = $query->select(DB::raw('YEAR(published_at) as year'))
-            ->groupBy(DB::raw('YEAR(published_at)'))
-            ->orderBy('year', 'desc')
-            ->pluck('year');
-
-        if ($year) $query->whereYear('published_at', $year);
-        if ($month) $query->whereMonth('published_at', $month);
-
-        $archive = $query->select(DB::raw('YEAR(published_at) as year, MONTH(published_at) as month'))
-            ->groupBy(DB::raw('YEAR(published_at), MONTH(published_at)'))
-            ->orderBy('year', 'desc')
-            ->orderBy('month', 'desc')
-            ->get();
-
-        $groupedArchive = [];
-        foreach ($archive as $item) {
-            $groupedArchive[$item->year][] = $item->month;
-        }
-
-        return [$years, $groupedArchive];
-    }
-
-    public function getByYearAndMonth($initiative_id, $year, $month)
-    {
-        return $this->articles
-            ->whereInitiative($initiative_id)
-            ->isNotShort()
-            ->isPublished()
-            ->whereYear('published_at', $year)
-            ->whereMonth('published_at', $month)
-            ->with('topic') // Eager load the 'topic' relationship
-            ->get()
-            ->map(function ($article) {
-                // Perform date formatting here
-                $article->formatted_published_at = Carbon::parse($article->published_at)->format('Y-m-d');
-
-                // Check if the topic relationship exists
-                if ($article->topic) {
-                    $article->topic_name = strtolower($article->topic->name);
-                    // Add other properties if needed
-                } else {
-                    $article->topic_name = null;
-                }
-
-                $article->url = $this->getArticleURL($article);
-
-                // Select only the desired columns
-                return $article->only(['formatted_published_at', 'title', 'slug', 'topic_name', 'url']);
-            });
     }
 }

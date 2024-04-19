@@ -2,23 +2,20 @@
 
 namespace App\Traits\Filament;
 
-use App\Forms\Components\CKEditor;
+use App\Enums\Initiatives;
+use App\Helpers\InitiativesHelper;
 use App\Jobs\GenerateArticlePDF;
 use App\Models\Article;
 use App\Models\User;
 use App\Traits\Filament\Components\ArticleForm;
 use App\Traits\Filament\Components\ExpertReviewColumn;
+use App\Traits\Filament\Components\ReviewAction;
 use App\Traits\Filament\Components\StatusColumn;
+use App\Traits\Filament\Components\ViewAction;
 use App\Traits\HasNotifications;
 use AymanAlhattami\FilamentDateScopesFilter\DateScopeFilter;
 use Carbon\Carbon;
-use Filament\Forms\Components\Group;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\SpatieTagsInput;
-use Filament\Forms\Components\TagsInput;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Support\Colors\Color;
@@ -30,7 +27,6 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ForceDeleteBulkAction;
 use Filament\Tables\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\ActionsPosition;
@@ -47,7 +43,7 @@ use Spatie\Tags\Tag;
 
 trait ArticleResourceSchema
 {
-    use ArticleForm, HasNotifications, ExpertReviewColumn, StatusColumn;
+    use ArticleForm, HasNotifications, ExpertReviewColumn, StatusColumn, ViewAction, ReviewAction;
 
     public static function form(Form $form): Form
     {
@@ -79,6 +75,26 @@ trait ArticleResourceSchema
                 TextColumn::make('initiative.name')
                     ->searchable()
                     ->toggleable(),
+                TextColumn::make('type')
+                    ->label('Type')
+                    ->badge()
+                    ->alignCenter()
+                    ->default(function (Model $record) {
+                        if ($record->is_short) {
+                            return 'Short';
+                        } else {
+                            if ($record->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)) {
+                                return 'Section';
+                            }
+                            return 'Full';
+                        }
+                    })
+                    ->color(function (Model $record) {
+                        switch ($record->is_short) {
+                            case true: return Color::Gray;
+                            case false: return Color::Blue;
+                        }
+                    })->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('title')
                     ->limit(40)
                     ->tooltip(fn (Model $record): string => $record->title)
@@ -222,154 +238,12 @@ trait ArticleResourceSchema
             ->filtersFormColumns(4)
             ->filtersFormMaxHeight('400px')
             ->actions([
-               EditAction::make('Edit')
+                EditAction::make('Edit')
                     ->iconButton()
-                    ->tooltip('Edit')
-                    ->visible(function (Model $record) {
-                        $user = Auth::user();
-                        return
-                            (
-                                $user->can('edit_article') && ($record->status !== 'Published')
-                            ) && (
-                                $record->reviewer_id === $user->id || ($record->author_id === $user->id && $record->status !== 'Final') || $user->hasRole(['admin', 'super_admin'])
-                            );
-                    }),
+                    ->tooltip('Edit'),
 
-                Action::make('View')
-                    ->visible(function (Article $record) {
-                        if ($record->status === 'Published') return true;
-
-                        $user = Auth::user();
-
-                        if ($record->reviewer_id === $user->id) return false;
-
-                        if ($user->hasRole(['super_admin', 'admin'])) return false;
-
-                        if ($user->cant('update_article')) {
-                            if ($user->cant('review_article')) {
-                                return true;
-                            }
-                        }
-
-                        if ($record->author_id !== $user->id) {
-                            return true;
-                        }
-                    })
-                    ->icon('heroicon-s-eye')
-                    ->iconButton()
-                    ->tooltip('View')
-                    ->fillForm(fn (Article $record): array => [
-                        'title' => $record->title,
-                        'subject' => $record->topic->name,
-                        'section' => $record->topicSection->name ?? '',
-                        'subSection' => $record->topicSubSection->name ?? '',
-                        'author' => $record->author->name,
-                        'reviewer' => $record->reviewer->name ?? '',
-                        'tags' => $record->tags,
-                        'body' => $record->latestReview()->review ?? 'No reviewer comments available on this article.',
-                        'content' => $record->content->content,
-                        'sources' => $record->sources
-                    ])
-                    ->form([
-                        TextInput::make('title')->disabled(),
-                        Group::make()->schema([
-                            TextInput::make('subject')->disabled(),
-                            TextInput::make('section')->disabled(),
-                            TextInput::make('subSection')->disabled(),
-                        ])->columns(3),
-                        SpatieTagsInput::make('tags')->placeholder('')->disabled(),
-                        Group::make()->schema([
-                            TextInput::make('author')->disabled(),
-                            TextInput::make('reviewer')->disabled(),
-                        ])->columns(),
-                        CKEditor::make('content')
-                            ->columnSpanFull(),
-
-                        RichEditor::make('body')
-                            ->label('Review Comments')
-                            ->disableToolbarButtons([
-                                'attachFiles',
-                                'codeBlock',
-                            ])->disabled(),
-
-                        TagsInput::make('sources')->placeholder('')->disabled()
-                    ])->slideOver(),
-
-                Action::make('Review')
-                    ->tooltip('Review')
-                    ->icon('heroicon-s-chat-bubble-left-right')
-                    ->visible(function (Article $record) {
-                        $user = Auth::user();
-                        return
-                            (
-                                $user->can('review_article') &&
-                                $record->reviewer_id === $user->id &&
-                                $record->status !== 'Published'
-                            ) || (
-                                $user->can('review_article') &&
-                                $user->hasRole(['super_admin', 'admin']) &&
-                                $record->status !== 'Published'
-                            );
-                    })
-                    ->fillForm(fn (Article $record): array => [
-                        'title' => $record->title,
-                        'subject' => $record->topic->name,
-                        'section' => $record->topicSection->name ?? '',
-                        'subSection' => $record->topicSubSection->name ?? '',
-                        'tags' => $record->tags,
-                        'status' => $record->status,
-                        'body' => $record->latestReview()->review ?? '',
-                    ])
-                    ->form([
-                        TextInput::make('title')->disabled(),
-                        Group::make()->schema([
-                            TextInput::make('subject')->disabled(),
-                            TextInput::make('section')->disabled(),
-                            TextInput::make('subSection')->disabled(),
-                        ])->columns(3),
-                        SpatieTagsInput::make('tags')->placeholder('')->disabled(),
-                        Section::make('Article Content')
-                            ->relationship('content')
-                            ->schema([
-                                CKEditor::make('content'),
-                        ])->collapsible(),
-
-                        Section::make('Review Comment')->schema([
-                            Select::make('status')->options([
-                                "Draft" => "Draft",
-
-                                'In Process' => [
-                                    "Improve" => "Improve",
-                                    "Changes Incorporated" => "Changes Incorporated",
-                                ],
-                                'Reviewed' => [
-                                    "Reject" => "Reject",
-                                    "Final" => "Final",
-                                ]
-                            ])->default(function(?Model $record) {
-                                return $record->status;
-                            })->required()
-                                ->disableOptionWhen(fn (string $value): bool => $value === 'Changes Incorporated' || $value === 'Draft'),
-
-                            RichEditor::make('body')
-                                ->placeholder('Add your comments...')
-                                ->label('')
-                                ->disableToolbarButtons([
-                                    'attachFiles',
-                                    'codeBlock',
-                                ]),
-                        ])
-                    ])->slideOver()
-                    ->action(function (array $data, Model $record) {
-                        $author = Auth::user();
-
-                        if($record->hasReview())
-                            $record->latestReview()->update(['review' => $data['body']]);
-                        else
-                            ($data['body'] !== null) ? $record->review($data['body'], $author, 0) : null;
-
-                        $record->setStatus($data['status']);
-                    })->iconButton(),
+                $articleResource->viewAction(),
+                $articleResource->reviewAction(),
 
                 DeleteAction::make()
                     ->iconButton()

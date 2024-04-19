@@ -11,15 +11,11 @@ class ArticleSideBar extends Component
     /**
      * Create a new component instance.
      */
-    public $tableOfContent;
-    public $isAlsoInNews;
     public function __construct(
-        $tableOfContent,
-        $isAlsoInNews = null
-    ) {
-        $this->tableOfContent = $tableOfContent;
-        $this->isAlsoInNews = $isAlsoInNews;
-    }
+        public $tableOfContent,
+        public $isAlsoInNews = null,
+        public $shortArticles = null,
+    ) {}
 
     /**
      * Get the view / contents that represent the component.

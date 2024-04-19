@@ -9,12 +9,13 @@ enum CognitoErrorCodes : string
     case RESET_REQUIRED         = 'PasswordResetRequiredException';
     case USER_NOT_FOUND         = 'UserNotFoundException';
     case USER_NOT_CONFIRMED     = 'UserNotConfirmedException';
-    case NOT_AUTHORIZED = 'NotAuthorizedException';
+    case NOT_AUTHORIZED         = 'NotAuthorizedException';
     case USERNAME_EXISTS        = 'UsernameExistsException';
     case INVALID_PASSWORD       = 'InvalidPasswordException';
     case CODE_MISMATCH          = 'CodeMismatchException';
     case EXPIRED_CODE           = 'ExpiredCodeException';
-    case TOO_MANY_REQUESTS = 'TooManyRequestsException';
-    case LIMIT_EXCEEDED = 'LimitExceededException';
-    case CODE_DELIVERY_FAILED = 'CodeDeliveryFailureException';
+    case TOO_MANY_REQUESTS      = 'TooManyRequestsException';
+    case LIMIT_EXCEEDED         = 'LimitExceededException';
+    case CODE_DELIVERY_FAILED   = 'CodeDeliveryFailureException';
+    case USER_LAMBDA_VALIDATION = 'UserLambdaValidationException';
 }

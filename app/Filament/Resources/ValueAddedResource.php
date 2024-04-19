@@ -6,10 +6,11 @@ use App\Enums\Initiatives;
 use App\Filament\Resources\ValueAddedResource\Pages;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
-use App\Traits\Filament\MoreResourceSchema;
+use App\Traits\Filament\OtherUploadsResourceSchema;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
@@ -27,7 +28,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ValueAddedResource extends Resource implements HasShieldPermissions
 {
-    use MoreResourceSchema;
+    use OtherUploadsResourceSchema;
 
     protected static ?string $model = PublishedInitiative::class;
 
@@ -56,19 +57,20 @@ class ValueAddedResource extends Resource implements HasShieldPermissions
                             ->label('Publish At')
                             ->required()
                             ->default(Carbon::now()->format('Y-m-d'))
-                            ->live()
-                            ->afterStateUpdated(
-                                function (Set $set, ?string $state) {
-                                    if ($state !== null)
-                                        $set('name', static::generateName($state));
-                                }),
+                            ->live(),
 
-                        TextInput::make('name')->default(function (callable $get) {
-                            return static::generateName($get('published_at'));
-                        })->required(),
+                        TextInput::make('name')
+                            ->suffixAction(Action::make('Generate')
+                                ->icon('heroicon-s-cog-8-tooth')
+                                ->iconButton()
+                                ->action(function (callable $get, callable $set) {
+                                    $set('name', static::generateName($get('published_at')));
+                                })
+                            )->required(),
 
                         Select::make('initiative_topic_id')
                             ->searchable()
+                            ->preload()
                             ->relationship('topic', 'name', function ($query) {
                                 return $query->orderBy('order_column');
                             })
@@ -76,14 +78,16 @@ class ValueAddedResource extends Resource implements HasShieldPermissions
                             ->label('Subject')
                             ->required(),
 
-                        Select::make('language_id')
-                            ->selectablePlaceholder(false)
-                            ->relationship('language', 'name', function ($query) {
-                                return $query->orderBy('order_column');
-                            })
-                            ->label('Language')
-                            ->required()
-                            ->default(1),
+//                        Select::make('language_id')
+//                            ->selectablePlaceholder(false)
+//                            ->relationship('language', 'name', function ($query) {
+//                                return $query->orderBy('order_column');
+//                            })
+//                            ->label('Language')
+//                            ->required()
+//                            ->default(1),
+
+                    Hidden::make('language_id')->default(1),
 
                     ])->columns(2)->columnSpanFull(),
 
@@ -163,6 +167,9 @@ class ValueAddedResource extends Resource implements HasShieldPermissions
 
     public static function canEdit(Model $record): bool
     {
+        if ($record->trashed()) {
+            return false;
+        }
         return Auth::user()->hasAnyRole(['super_admin', 'admin']) || (Auth::user()->can('edit_value::added') && $record->is_published !== true);
     }
 

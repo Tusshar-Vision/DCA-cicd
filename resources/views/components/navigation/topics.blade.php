@@ -1,5 +1,6 @@
 @php
     use Carbon\Carbon;
+    $currentTopic = request()->segment(3);
 @endphp
 
 <ul class="flex h-10 text-white items-center bg-visionBlue space-x-8 whitespace-nowrap overflow-x-auto pr-4 scroll-style">
@@ -13,7 +14,17 @@
     </li>
     <li>
         @foreach ($topics as $topic)
-            <a class="mr-4 inline-block">{{ $formatString($topic) }}</a>
+            @php
+                $articleSlug = $topic->first()->slug;
+                $topicName = $topic->first()->topic;
+            @endphp
+            <a
+                class="mr-4 inline-block {{ ($topicName === $currentTopic) ? 'font-bold' : '' }}"
+                href="{{ \App\Services\ArticleService::getArticleUrlFromSlug($articleSlug) }}"
+                wire:navigate
+            >
+                {{ $formatString($topicName) }}
+            </a>
         @endforeach
     </li>
 </ul>

@@ -24,7 +24,10 @@ readonly class PublishedInitiativeService
             ->isPublished()
             ->language()
             ->hasPublishedArticle()
-            ->with(['video', 'media'])
+            ->with('video')
+            ->with('media', function ($query) {
+                $query->where('mime_type', '=', 'application/pdf');
+            })
             ->latest('published_at');
 
         if ($date !== null)
@@ -67,9 +70,9 @@ readonly class PublishedInitiativeService
     {
         return (new PublishedInitiative)
             ->whereInitiative($initiativeId)
+            ->language()
             ->isPublished()
             ->whereDate('published_at', '<', $today) // Adjust for initiatives published before today
-            ->language()
             ->hasPublishedArticle()
             ->latest('published_at')
             ->with('articles', function ($query) {
@@ -86,11 +89,11 @@ readonly class PublishedInitiativeService
     {
         return (new PublishedInitiative)
             ->whereInitiative($initiativeId)
+            ->language()
             ->isPublished()
             ->whereDate('published_at', '>', $today) // Adjust for initiatives published before today
-            ->language()
             ->hasPublishedArticle()
-            ->latest('published_at')
+            ->orderBy('published_at')
             ->with('articles', function ($query) {
                 $query
                     ->isPublished()

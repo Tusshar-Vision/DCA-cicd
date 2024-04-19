@@ -5,6 +5,10 @@
     $notesHeading = 'My Notes';
 @endphp
 
+@section('styles')
+    @vite('resources/css/ck-content.css')
+@endsection
+
 @section('content')
     <div class="space-y-12">
     {{--Highlights and notes side menu buttons and modal box, this is common on all pages of the reading ecosystem--}}
@@ -29,18 +33,20 @@
         <div class="flex flex-col justify-center items-center w-full">
             <div class="flex flex-col space-y-12 w-full">
                 <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-3">
-                    <x-widgets.related-terms :related-terms="$article->relatedTerms" />
-                    <x-widgets.related-articles :related-articles="$article->relatedArticles" />
-                    <x-widgets.related-videos :related-videos="$article->relatedVideos" />
+                    @if(empty($article->relatedTerms))
+                        <x-widgets.related-terms :related-terms="$article->relatedTerms" />
+                    @endif
+                    @if(empty($article->relatedArticles))
+                        <x-widgets.related-articles :related-articles="$article->relatedArticles" />
+                    @endif
+                    @if(empty($article->relatedVideos))
+                        <x-widgets.related-videos :related-videos="$article->relatedVideos" />
+                    @endif
                 </div>
 
                 {{--                <div>--}}
                 {{--                    <livewire:widgets.comments />--}}
                 {{--                </div>--}}
-
-                <div>
-                    <x-widgets.article-sources :sources="$article->sources" />
-                </div>
             </div>
         </div>
         <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top" class="fixed bottom-[100px] right-0 bg-[#005faf] px-[18px] py-4 text-white">
@@ -50,43 +56,41 @@
         </button>
     </div>
 
-    @pushonce('scripts')
 {{--        Scripts required for notes and highlights feature--}}
 {{--        <script type="text/javascript" src="{{ URL::asset('js/rangy/rangy-core.js') }}"></script>--}}
 {{--        <script type="text/javascript" src="{{ URL::asset('js/rangy/rangy-classapplier.js') }}"></script>--}}
 {{--        <script type="text/javascript" src="{{ URL::asset('js/rangy/rangy-highlighter.js') }}"></script>--}}
 {{--        <script type="text/javascript" src="{{ URL::asset('js/rangy/highlighter.js') }}"></script>--}}
 {{--        <script src="{{ asset('vendor/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>--}}
-        <script>
-            function pauseVideo(isVideoOpenValue) {
-                if (!isVideoOpenValue) {
-                    let videoPlayer = document.querySelector('.video');
+    <script>
+        function pauseVideo(isVideoOpenValue) {
+            if (!isVideoOpenValue) {
+                let videoPlayer = document.querySelector('.video');
 
-                    if (videoPlayer !== null) {
-                        videoPlayer.pause();
-                    } else {
-                        videoPlayer = document.querySelector('.videoEmbed');
-                        if (videoPlayer !== null) videoPlayer.src = videoPlayer.src;
-                    }
-                }
-            }
-
-            function scrollToTop() {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            }
-
-            // Show/hide scroll to top button based on scroll position
-            window.onscroll = function() {
-                let scrollToTopBtn = document.getElementById('scrollToTopBtn');
-                if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-                    scrollToTopBtn.style.display = 'block';
+                if (videoPlayer !== null) {
+                    videoPlayer.pause();
                 } else {
-                    scrollToTopBtn.style.display = 'none';
+                    videoPlayer = document.querySelector('.videoEmbed');
+                    if (videoPlayer !== null) videoPlayer.src = videoPlayer.src;
                 }
-            };
-        </script>
-    @endpushonce
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Show/hide scroll to top button based on scroll position
+        window.onscroll = function() {
+            let scrollToTopBtn = document.getElementById('scrollToTopBtn');
+            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+                scrollToTopBtn.style.display = 'block';
+            } else {
+                scrollToTopBtn.style.display = 'none';
+            }
+        };
+    </script>
 @endsection

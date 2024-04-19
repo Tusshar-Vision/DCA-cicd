@@ -2,18 +2,16 @@
 
 namespace App\Services;
 
+use App\DTO\ArchiveDTO;
 use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 readonly class DownloadService
 {
     public function __construct(
-        private Media $media,
         private PublishedInitiative $publishedInitiative
     ) {
     }
@@ -27,262 +25,166 @@ readonly class DownloadService
             ->whereHas('media', function ($query) {
                 $query->where('collection_name', '!=', 'article-featured-image');
             })
-            ->with(['media' => function ($query) {
+            ->with('media', function ($query) {
                 $query->where('collection_name', '!=', 'article-featured-image');
-            }])
+            })
             ->limit($limit)
             ->get();
     }
 
-    public function getWeeklyFocusArchive($year, $month): Collection|array
+    public function getNewsTodayArchive($year, $month): Collection|array
     {
-
         $query = $this->publishedInitiative
+            ->whereInitiative(InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
+            ->language()
             ->isPublished()
             ->hasPublishedArticle()
-            ->language()
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS));
-        // ->has('media');
+            ->orderBy('published_at', 'desc');
 
-        $years = $query->get()
-            ->groupBy(function ($item) {
-                return $item->published_at->format('Y');
-            })->keys();
+        $years = $query->groupByYear()->keys();
 
         if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
 
-        $query->with('media');
+        $archive = $query->with('articles', function ($query) {
+            $query->isPublished()->ordered();
+        })->with('media', function ($query) {
+            $query->where('collection_name', '=', 'news-today');
+        })->groupByYearAndMonth();
 
-        $data = $query->select(
-            DB::raw('YEAR(published_at) as year'),
-            DB::raw('MONTH(published_at) as month'),
-            DB::raw('COUNT(*) as article_count'),
-            'published_initiatives.name as published_initiative_name',
-            'published_initiatives.id as id'
-        )
-            ->groupBy('year', 'month', 'published_initiative_name', 'id')
-            ->orderBy('year', 'desc')
-            ->orderBy('month', 'desc')
-            ->get();
+        $archiveDTO = $archive->map(function ($yearGroup) {
+            return $yearGroup->map(function ($monthGroup) {
+                return $monthGroup->map(function ($item) {
+                    return ArchiveDTO::fromArray([
+                        'id' => $item->id,
+                        'name' => $item->name,
+                        'published_at' => $item->published_at,
+                        'media' => $item->media,
+                        'articles' => $item->articles // Assuming articles relation is loaded
+                    ]);
+                });
+            });
+        });
 
-        $organizedData = [];
-
-        foreach ($data as $item) {
-            $year = $item->year;
-            $month = $item->month;
-
-            $organizedData[$year][$month][] = [
-                'name' => $item->published_initiative_name,
-                'id' => $item->id,
-            ];
-        }
-
-        return [$years, $organizedData];
+        return [$years, $archiveDTO];
     }
 
-    public function getMains365($year, $month): Collection|array
+    public function getNewsTodayByYearAndMonth($year, $month)
     {
-
-        $query = $this->publishedInitiative
-            ->isPublished()
+        return $this->publishedInitiative
+            ->whereInitiative(InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
             ->language()
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::MAINS_365))
+            ->isPublished()
+            ->hasPublishedArticle()
+            ->whereYear('published_at', $year)
+            ->whereMonth('published_at', $month)
+            ->with('articles', function ($query) {
+                $query->isPublished()->ordered();
+            })
+            ->with('media', function ($query) {
+                $query->where('collection_name', '=', 'news-today');
+            })
+            ->get()
+            ->map(function ($package) {
+                $currentArticle = $package->articles->first();
+                $media = $package->media?->first();
+                // Select only the desired columns
+                return collect([
+                    'title' => $currentArticle->title,
+                    'url' => ArticleService::getArticleUrlFromSlug($currentArticle->slug),
+                    'formatted_published_at' => Carbon::parse($package->published_at)->format('Y-m-d'),
+                    'media' => ($media !== null ? $media->id : false)
+                ]);
+            });
+    }
+
+    public function getWeeklyFocusArchive($year, $month): Collection|array
+    {
+        $query = $this->publishedInitiative
+            ->whereInitiative(InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
+            ->language()
+            ->isPublished()
+            ->hasPublishedArticle()
+            ->orderBy('published_at', 'desc');
+
+        $years = $query->groupByYear()->keys();
+
+        if ($year) $query->whereYear('published_at', $year);
+        if ($month) $query->whereMonth('published_at', $month);
+
+        $data = $query->with('articles', function ($query) {
+            $query->isPublished()->ordered();
+        })->with('media', function ($query) {
+            $query->where('collection_name', '=', 'weekly-focus');
+        })->groupByYearAndMonth();
+
+        $archiveDTO = $data->map(function ($yearGroup) {
+            return $yearGroup->map(function ($monthGroup) {
+                return $monthGroup->map(function ($item) {
+                    return ArchiveDTO::fromArray([
+                        'id' => $item->id,
+                        'name' => $item->name,
+                        'published_at' => $item->published_at,
+                        'media' => $item->media,
+                        'articles' => $item->articles // Assuming articles relation is loaded
+                    ]);
+                });
+            });
+        });
+
+        return [$years, $archiveDTO];
+    }
+
+    public function getMonthlyMagazineArchive($year, $month): Collection|array
+    {
+        $query = $this->publishedInitiative
+            ->whereInitiative(InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE))
+            ->language()
+            ->isPublished()
+            ->hasPublishedArticle()
+            ->orderByDesc('published_at');
+
+        $years = $query->groupByYear()->keys();
+
+        if ($year) $query->whereYear('published_at', $year);
+        if ($month) $query->whereMonth('published_at', $month);
+
+        $articles = $query->with('articles', function ($query) {
+            $query->isPublished()->ordered();
+        })->with('media', function ($query) {
+            $query->where('collection_name', '=', 'monthly-magazine');
+        })
+        ->groupByYear();
+
+        $data = [];
+
+        foreach ($articles as $year => $groupedInitiatives) {
+            $publishedInitiatives = [];
+
+            foreach ($groupedInitiatives as $initiative) {
+                $publishedInitiatives[] = ArchiveDTO::fromArray($initiative);
+            }
+            $data[$year] = $publishedInitiatives;
+        }
+
+        return [$years, $data];
+    }
+
+    public function getDownloadableResources($initiative_id, $year = null, $month = null): Collection|array
+    {
+        $query = $this->publishedInitiative
+            ->whereInitiative($initiative_id)
+            ->language()
+            ->isPublished()
             ->has('media')
             ->orderBy('published_at', 'desc');
 
-        $years = $query->get()
-            ->groupBy(function ($item) {
-                return $item->published_at->format('Y');
-            })->keys();
-
-        $query->with('media');
+        $years = $query->groupByYear()->keys();
 
         if ($year) $query->whereYear('published_at', $year);
         if ($month) $query->whereMonth('published_at', $month);
 
-        $result = $query->get()
-            ->groupBy(function ($item) {
-                return $item->published_at->format('Y');
-            });
-
-        return [$years, $result];
-    }
-
-    public function getPT365($year, $month): Collection|array
-    {
-        $query = $this->publishedInitiative
-            ->isPublished()
-            ->language()
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::PT_365))
-            ->has('media');
-
-        $years = $query->get()
-            ->groupBy(function ($item) {
-                return $item->published_at->format('Y');
-            })->keys();
-
-        $query->with('media');
-
-        if ($year) $query->whereYear('published_at', $year);
-        if ($month) $query->whereMonth('published_at', $month);
-
-        $result = $query->get()
-            ->groupBy(function ($item) {
-                return $item->published_at->format('Y');
-            });
-
-        return [$years, $result];
-    }
-
-    public function getEconomicSurvey($year, $month): Collection|array
-    {
-        $query = $this->publishedInitiative
-            ->isPublished()
-            ->language()
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::ECONOMIC_SURVEY))
-            ->has('media');
-
-        $years = $query->get()
-            ->groupBy(function ($item) {
-                return $item->published_at->format('Y');
-            })->keys();
-
-        $query->with('media');
-
-        if ($year) $query->whereYear('published_at', $year);
-        if ($month) $query->whereMonth('published_at', $month);
-
-        $result = $query->get()
-            ->groupBy(function ($item) {
-                return $item->published_at->format('Y');
-            });
-
-        return [$years, $result];
-    }
-
-    public function getBudget($year, $month): Collection|array
-    {
-        $query = $this->publishedInitiative
-            ->isPublished()
-            ->language()
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::BUDGET))
-            ->has('media');
-
-        $years = $query->get()
-            ->groupBy(function ($item) {
-                return $item->published_at->format('Y');
-            })->keys();
-
-        $query->with('media');
-
-        $result = $query->get()
-            ->groupBy(function ($item) {
-                return $item->published_at->format('Y');
-            });
-
-        return [$years, $result];
-    }
-
-    public function getValueAddedMaterial($year, $month): Collection|array
-    {
-        $query = $this->publishedInitiative
-            ->isPublished()
-            ->language()
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::VALUE_ADDED_MATERIAL))
-            ->has('media');
-
-        $years = $query->get()
-            ->groupBy(function ($item) {
-                return $item->published_at->format('Y');
-            })->keys();
-
-        $query->with('media');
-
-        if ($year) $query->whereYear('published_at', $year);
-        if ($month) $query->whereMonth('published_at', $month);
-
-        $result = $query->get()
-            ->groupBy(function ($item) {
-                return $item->published_at->format('Y');
-            });
-
-        return [$years, $result];
-    }
-
-    public function getValueAddedMaterialOptional($year, $month): Collection|array
-    {
-        $query = $this->publishedInitiative
-            ->isPublished()
-            ->language()
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::VALUE_ADDED_MATERIAL_OPTIONAL))
-            ->has('media');
-
-        $years = $query->get()
-            ->groupBy(function ($item) {
-                return $item->published_at->format('Y');
-            })->keys();
-
-        $query->with('media');
-
-        if ($year) $query->whereYear('published_at', $year);
-        if ($month) $query->whereMonth('published_at', $month);
-
-        $result = $query->get()
-            ->groupBy(function ($item) {
-                return $item->published_at->format('Y');
-            });
-
-        return [$years, $result];
-    }
-
-    public function getQuarterlyRevisionDocument($year, $month): Collection|array
-    {
-        $query = $this->publishedInitiative
-            ->isPublished()
-            ->language()
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::QUARTERLY_REVISION_DOCUMENTS))
-            ->has('media');
-
-        $years = $query->get()
-            ->groupBy(function ($item) {
-                return $item->published_at->format('Y');
-            })->keys();
-
-        $query->with('media');
-
-        if ($year) $query->whereYear('published_at', $year);
-        if ($month) $query->whereMonth('published_at', $month);
-
-        $result = $query->get()
-            ->groupBy(function ($item) {
-                return $item->published_at->format('Y');
-            });
-
-        return [$years, $result];
-    }
-
-    public function getYearEndReviews($year)
-    {
-        $query = $this->publishedInitiative
-            ->isPublished()
-            ->language()
-            ->where('initiative_id', '=', InitiativesHelper::getInitiativeID(Initiatives::YEAR_END_REVIEW))
-            ->has('media');
-
-        $years = $query->get()
-            ->groupBy(function ($item) {
-                return $item->published_at->format('Y');
-            })->keys();
-
-        $query->with('media');
-
-        if ($year) $query->whereYear('published_at', $year);
-
-        $result = $query->get()
-            ->groupBy(function ($item) {
-                return $item->published_at->format('Y');
-            });
+        $result = $query->with('media')->groupByYear();
 
         return [$years, $result];
     }

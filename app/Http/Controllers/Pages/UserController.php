@@ -9,6 +9,7 @@ use App\Models\InitiativeTopic;
 use App\Models\Note;
 use App\Models\Paper;
 use App\Models\ReadHistory;
+use App\Models\Student;
 use App\Models\TopicSection;
 use App\Services\ArticleService;
 use Carbon\Carbon;
@@ -18,14 +19,26 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+    private Student $student;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->student = Auth::guard('cognito')->user();
+
+            return $next($request);
+        });
+    }
     public function dashboard()
     {
-        $read_histories = Auth::guard('cognito')->user()->readHistories()->with('article')->get()->map(function ($history) {
-            $history->title = $history->article->title;
+        $read_histories = $this->student->readHistories()->orderBy('updated_at', 'desc')->with('article')->get()->map(function ($history) {
+            $history->title = $history->article->short_title ?? $history->article->title;
             $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
             $history->url = ArticleService::getArticleUrl($history->article);
+            $history->img = $history->article->getFirstMediaUrl("article-featured-image");
+            $history->read_at = Carbon::parse($history->updated_at)->format('Y-m-d');
 
-            return $history->only(['title', 'published_at', 'url']);
+            return $history->only(['title', 'published_at', 'url', 'img', 'read_at']);
         });
 
         // content consumption
@@ -33,7 +46,7 @@ class UserController extends Controller
         $year = now()->year;
 
         // news today
-        $newsTodayConsumption = Auth::guard('cognito')->user()->readHistories()
+        $newsTodayConsumption = $this->student->readHistories()
             ->whereYear('article_published_at', $year)
             ->whereHas('article', function ($articleQuery) {
                 $articleQuery->where('initiative_id', config('settings.initiatives.NEWS_TODAY'));
@@ -69,7 +82,7 @@ class UserController extends Controller
         foreach ($dayNumbersWithoutRecords as $record) $newsTodayAverages[$record] = null;
 
         // weekly focus
-        $weeklyFocusConsumption = Auth::guard('cognito')->user()->readHistories()
+        $weeklyFocusConsumption = $this->student->readHistories()
             ->whereYear('article_published_at', $year)
             ->whereHas('article', function ($articleQuery) {
                 $articleQuery->where('initiative_id', config('settings.initiatives.WEEKLY_FOCUS'));
@@ -111,7 +124,7 @@ class UserController extends Controller
         foreach ($weeksWithoutRecords as $record) $weeklyAverages[$record] = null;
 
         // monthly magazine
-        $montlyMagazineConsumption = Auth::guard('cognito')->user()->readHistories()
+        $montlyMagazineConsumption = $this->student->readHistories()
             ->whereYear('article_published_at', $year)
             ->whereHas('article', function ($articleQuery) {
                 $articleQuery->where('initiative_id', config('settings.initiatives.MONTHLY_MAGAZINE'));
@@ -151,20 +164,41 @@ class UserController extends Controller
         $inputs = $request->all();
 
         $history = ReadHistory::where('article_id', $inputs['article_id'])->where('student_id', $inputs['student_id'])->first();
-
+        // ReadHistory::updateOrCreate(['article_id' => $inputs['article_id'], 'student_id' => $inputs['student_id']], ['updated_at' => now()]);
         if (!$history) ReadHistory::create($inputs);
+        else {
+            $history->updated_at = now();
+            $history->save();
+        }
         return response()->json(['status' => 201]);
+    }
+
+    public function searchReadHistory($param)
+    {
+        $read_histories = $this->student->readHistories()->whereHas('article', function ($articleQuery) use ($param) {
+            $articleQuery->where('short_title', 'like', "%$param%")->orWhere('title', 'like', "%$param%");
+        })->with('article')->get()->map(function ($history) {
+            $history->title = $history->article->short_title ?? $history->article->title;
+            $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
+            $history->url = ArticleService::getArticleUrl($history->article);
+            $history->img = $history->article->getFirstMediaUrl("article-featured-image");
+            $history->read_at = Carbon::parse($history->updated_at)->format('Y-m-d');
+
+            return $history->only(['title', 'published_at', 'url', 'img', 'read_at']);
+        });
+
+        return response()->json(['data' => $read_histories]);
     }
 
     public function bookmarks()
     {
-        // $bookmarks = Auth::guard('cognito')->user()->bookmarks()->join('articles', 'bookmarks.article_id', '=', 'articles.id')->select('articles.title', DB::raw('DATE_FORMAT(articles.published_at, "%Y-%m-%d") as published_at'))->get();
-        $bookmarks = Auth::guard('cognito')->user()->bookmarks()->with('article')->get()->map(function ($history) {
-            $history->title = $history->article->title;
+        $bookmarks = $this->student->bookmarks()->orderBy('created_at', 'desc')->with('article')->get()->map(function ($history) {
+            $history->title =  $history->article->short_title ?? $history->article->title;
             $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
             $history->url = ArticleService::getArticleUrl($history->article);
+            $history->img = $history->article->getFirstMediaUrl("article-featured-image");
 
-            return $history->only(['title', 'published_at', 'url']);
+            return $history->only(['title', 'published_at', 'url', 'img']);
         });
 
         return view('pages.user.bookmarks', ['bookmarks' => $bookmarks]);
@@ -173,13 +207,29 @@ class UserController extends Controller
     public function addBookmark()
     {
         $inputs =  request()->all();
-        $bookmark = Bookmark::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $inputs['article_id'])->first();
+        $bookmark = Bookmark::where('student_id', $this->student->id)->where('article_id', $inputs['article_id'])->first();
         if ($bookmark) {
             $bookmark->delete();
             return response()->json(['status' => 201]);
         }
         $bookmark = Bookmark::create($inputs);
         return response()->json(['status' => 201]);
+    }
+
+    public function searchBookmark($param)
+    {
+        $bookmarks = $this->student->bookmarks()->whereHas('article', function ($articleQuery) use ($param) {
+            $articleQuery->where('short_title', 'like', "%$param%")->orWhere('title', 'like', "%$param%");
+        })->orderBy('created_at', 'desc')->with('article')->get()->map(function ($history) {
+            $history->title = $history->article->short_title ?? $history->article->title;
+            $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
+            $history->url = ArticleService::getArticleUrl($history->article);
+            $history->img = $history->article->getFirstMediaUrl("article-featured-image");
+
+            return $history->only(['title', 'published_at', 'url', 'img']);
+        });
+
+        return response()->json(['data' => $bookmarks]);
     }
 
     public function myContent($type = null)
@@ -214,7 +264,7 @@ class UserController extends Controller
                     $topicObject = $sectionObject->subject;
                     $topic = $topicObject->name;
                     $paper = $topicObject->paper->name;
-                    $articles = Note::where('user_id', Auth::guard('cognito')->user()->id)->where('topic_section_id', $sid)->get();
+                    $articles = Note::where('user_id', $this->student->id)->where('topic_section_id', $sid)->get();
                     break;
                 default:
                     break;
@@ -231,9 +281,9 @@ class UserController extends Controller
     {
         $query = $request->get('query');
 
-        $notes = Note::search($query)->where('user_id', Auth::guard('cognito')->user()->id)->get();
+        $notes = Note::search($query)->where('user_id', $this->student->id)->get();
 
-        // $notes = Note::where('user_id', Auth::guard('cognito')->user()->id)->where('title', 'like', "$query%")
+        // $notes = Note::where('user_id', $this->student->id)->where('title', 'like', "$query%")
         //     ->join('initiative_topics', 'articles.initiative_topic_id', '=', 'initiative_topics.id')
         //     ->join('initiatives', 'articles.initiative_id', '=', 'initiatives.id')
         //     ->select('articles.title', 'articles.slug', 'articles.published_at', 'initiative_topics.name', 'initiatives.path', DB::raw('DATE_FORMAT(articles.published_at, "%Y-%m-%d") as published_at'))

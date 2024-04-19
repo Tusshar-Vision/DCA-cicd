@@ -8,11 +8,11 @@
 <!-- responsive menu start -->
 
 <div id="myNav" class="menuOverlay">
-  <div class="menuOverlayContent">
+  <div class="menuOverlayContent bg-white dark:bg-dark373839">
 
     <div class="flex justify-between align-middle mb-[20px] px-[20px]">
         <span class="font-[#242424] text-sm font-bold">MENU</span>
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="javascript:void(0)" class="closebtn text-[#242424] dark:text-white border-[#242424] dark:border-white" onclick="closeNav()">&times;</a>
     </div>
 
     <div class="accordion h-[60vh] md:h-auto overflow-scroll">
@@ -40,8 +40,8 @@
                     >
                         {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                         <div class="arrow">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
-                                <path d="M8.76615 7.42899L1.57103 0.236258C1.25531 -0.0786629 0.743796 -0.0786629 0.427282 0.236258C0.111565 0.551178 0.111565 1.06269 0.427282 1.37761L7.0517 7.99964L0.42808 14.6217C0.112363 14.9366 0.112363 15.4481 0.42808 15.7638C0.743797 16.0787 1.25611 16.0787 1.57182 15.7638L8.76695 8.57114C9.07782 8.25948 9.07782 7.73993 8.76615 7.42899Z" fill="#242424"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="#242424" class="dark:fill-white">
+                                <path d="M8.76615 7.42899L1.57103 0.236258C1.25531 -0.0786629 0.743796 -0.0786629 0.427282 0.236258C0.111565 0.551178 0.111565 1.06269 0.427282 1.37761L7.0517 7.99964L0.42808 14.6217C0.112363 14.9366 0.112363 15.4481 0.42808 15.7638C0.743797 16.0787 1.25611 16.0787 1.57182 15.7638L8.76695 8.57114C9.07782 8.25948 9.07782 7.73993 8.76615 7.42899Z" />
                             </svg>
                         </div>
                     </div>
@@ -96,8 +96,8 @@
                             {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                         </a>
                         <div class="arrow">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
-                                <path d="M8.76615 7.42899L1.57103 0.236258C1.25531 -0.0786629 0.743796 -0.0786629 0.427282 0.236258C0.111565 0.551178 0.111565 1.06269 0.427282 1.37761L7.0517 7.99964L0.42808 14.6217C0.112363 14.9366 0.112363 15.4481 0.42808 15.7638C0.743797 16.0787 1.25611 16.0787 1.57182 15.7638L8.76695 8.57114C9.07782 8.25948 9.07782 7.73993 8.76615 7.42899Z" fill="#242424"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="#242424" class="dark:fill-white">
+                                <path d="M8.76615 7.42899L1.57103 0.236258C1.25531 -0.0786629 0.743796 -0.0786629 0.427282 0.236258C0.111565 0.551178 0.111565 1.06269 0.427282 1.37761L7.0517 7.99964L0.42808 14.6217C0.112363 14.9366 0.112363 15.4481 0.42808 15.7638C0.743797 16.0787 1.25611 16.0787 1.57182 15.7638L8.76695 8.57114C9.07782 8.25948 9.07782 7.73993 8.76615 7.42899Z" />
                             </svg>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                                                    class="text-sm block px-[15px] mb-[10px]"
                                                    wire:navigate
                                                 >
-                                                    {{ $menu->article->first()->title }}
+                                                    {{ $menu->name }}
                                                 </a>
                                             </li>
                                         </ul>
@@ -154,8 +154,8 @@
                             {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                         </a>
                         <div class="arrow">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
-                                <path d="M8.76615 7.42899L1.57103 0.236258C1.25531 -0.0786629 0.743796 -0.0786629 0.427282 0.236258C0.111565 0.551178 0.111565 1.06269 0.427282 1.37761L7.0517 7.99964L0.42808 14.6217C0.112363 14.9366 0.112363 15.4481 0.42808 15.7638C0.743797 16.0787 1.25611 16.0787 1.57182 15.7638L8.76695 8.57114C9.07782 8.25948 9.07782 7.73993 8.76615 7.42899Z" fill="#242424"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="#242424" class="dark:fill-white">
+                                <path d="M8.76615 7.42899L1.57103 0.236258C1.25531 -0.0786629 0.743796 -0.0786629 0.427282 0.236258C0.111565 0.551178 0.111565 1.06269 0.427282 1.37761L7.0517 7.99964L0.42808 14.6217C0.112363 14.9366 0.112363 15.4481 0.42808 15.7638C0.743797 16.0787 1.25611 16.0787 1.57182 15.7638L8.76695 8.57114C9.07782 8.25948 9.07782 7.73993 8.76615 7.42899Z" />
                             </svg>
                         </div>
                     </div>
@@ -192,12 +192,22 @@
 
 <!-- responsive menu end -->
 
-<div class="flex py-[20px] bg-[#fff] items-center justify-between relative">
+<div class="flex py-[20px] bg-[#fff] items-center justify-between relative dark:bg-darkMode dark:text-white">
     <div class="w-3/4">
-        <div class="xl:hidden block">
-            <a href="{{ route('home') }}" wire:navigate>
-                <img width="112px" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
+        <div class="flex justify-start items-center">
+            <a href="javascript:void(0)" onclick="openNav()" class="mr-[15px] xl:hidden block">
+                <div class="hamMenu rotate-180">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </a>
+            <div class="xl:hidden block">
+                <a href="{{ route('home') }}" wire:navigate>
+                    <img width="112px" class="dark:hidden" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
+                    <img width="112px" class="hidden dark:block" src="{{ asset('images/DarkLogo.svg') }}" alt="Dark VisionIAS Logo" />
+                </a>
+            </div>
         </div>
         <ul class="items-center hidden xl:block">
             <li class="font-semibold pr-4 xl:pr-6 float-left">
@@ -205,7 +215,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path
                             d="M19 21.0002H5C4.44772 21.0002 4 20.5525 4 20.0002V11.0002H1L11.3273 1.61174C11.7087 1.265 12.2913 1.265 12.6727 1.61174L23 11.0002H20V20.0002C20 20.5525 19.5523 21.0002 19 21.0002ZM13 19.0002H18V9.15769L12 3.70314L6 9.15769V19.0002H11V13.0002H13V19.0002Z"
-                            fill="#005FAF" />
+                            fill="#005FAF" class="dark:fill-white" />
                     </svg>
                 </a>
             </li>
@@ -296,7 +306,7 @@
 
     <div class="login-wrapper">
         <ul class="flex items-center">
-            <li class="pr-4">
+            <li class="pr-1 lg:pr-4 mr-2 lg:mr-0">
                 <a href="javascript:void(0)" onclick="openSearch()">
                     {!! \App\Helpers\SvgIconsHelper::getSvgIcon('search-open') !!}
                 </a>
@@ -304,9 +314,9 @@
             @auth('cognito')
                 <div class="flex items-center font-bold cursor-pointer user-style" x-data="{ isUserMenuOpen: false }"
                     @click="isUserMenuOpen = true">
-                    <div class="user-greet min-w-[80px] md:w-auto">
+                    <div class="user-greet min-w-[80px] md:w-auto hidden lg:block">
                         <p>Welcome,</p>
-                        <div>{{ auth('cognito')->user()->first_name ?? 'No Name' }}</div>
+                        <div class="dark:text-white">{{ auth('cognito')->user()->first_name ?? 'No Name' }}</div>
                     </div>
                     <span>{{ mb_substr(auth('cognito')->user()->first_name, 0, 1) ?? 'X' }}</span>
                     <x-auth.user-dropdown-menu x-show="isUserMenuOpen" />
@@ -315,11 +325,11 @@
                 <li class="pr-[20px] hidden xl:block">
                     <a href="{{ UrlHelper::linkToVision('/register') }}" class="register">Register</a>
                 </li>
-                <li class="pl-[20px]" style="border-left: 1px solid #E5EAF4;">
+                <li class="pl-[10px]" style="border-left: 1px solid #E5EAF4;">
                     <button @click="isAuthFormOpen = !isAuthFormOpen" class="flex items-center text-xs xl:text-sm">
                         <svg class="mr-3 hidden lg:block" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
-                            <path
+                            <path class="dark:fill-white"
                                 d="M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z"
                                 fill="#040404" />
                         </svg>
@@ -327,15 +337,7 @@
                     </button>
                 </li>
             @endauth
-                <li class="ml-[15px] xl:hidden block">
-                    <a href="javascript:void(0)" onclick="openNav()">
-                        <div class="hamMenu">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </a>
-                </li>
+
         </ul>
     </div>
 
@@ -359,7 +361,10 @@
 
     // search mpdal show hide script
     function openSearch() {
-        document.getElementById("searchCont").classList.add('inModal')
+        document.getElementById("searchCont").classList.add('inModal');
+        setTimeout(function() {
+            document.getElementById('navSearchInput').focus();
+        }, 100);
     }
 
     function closeSearch() {

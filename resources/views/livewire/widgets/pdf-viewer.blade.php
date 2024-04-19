@@ -10,6 +10,8 @@
                 </span>
 </span>
 
+{{-- <div class="mt-3">
+    <img src="{{ $infographic?->media?->first()?->getTemporaryUrl(now()->add('minutes', 120)) }}"  alt="infographic"/> --}}
 </div>
 <div id="pdfViewer" style="overflow: auto; width: 100%; height: 100%;">
 </div>

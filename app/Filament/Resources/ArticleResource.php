@@ -20,13 +20,14 @@ class ArticleResource extends Resource implements HasShieldPermissions
     protected static ?string $navigationGroup = 'Create Articles';
     protected static ?string $modelLabel = 'All Article';
     protected static ?int $navigationSort = 4;
+    protected static ?string $recordRouteKeyName = 'id';
 
     use ArticleResourceSchema;
 
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->with(['statuses'])
+            ->with(['statuses', 'author', 'reviewer'])
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
@@ -63,7 +64,13 @@ class ArticleResource extends Resource implements HasShieldPermissions
 
     public static function canEdit(Model $record): bool
     {
-        return Auth::user()->can('edit_article');
+        $user = Auth::user();
+        return
+            (
+                $user->can('edit_article') && ($record->status !== 'Published')
+            ) && (
+                $record->reviewer_id === $user->id || ($record->author_id === $user->id && $record->status !== 'Final') || $user->hasRole(['admin', 'super_admin'])
+            );
     }
 
     public static function canCreate(): bool

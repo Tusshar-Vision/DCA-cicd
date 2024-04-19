@@ -2,8 +2,10 @@
 
 namespace App\Forms\Components;
 
+use Closure;
 use Filament\Forms\Components\Field;
 use Filament\Support\Concerns\HasExtraAlpineAttributes;
+use JetBrains\PhpStorm\NoReturn;
 use Livewire\Component;
 
 class CKEditor extends Field
@@ -15,7 +17,6 @@ class CKEditor extends Field
     protected function setUp(): void
     {
         parent::setUp();
-//        $this->default('');
         $this->hiddenLabel();
 
         $this->afterStateHydrated(function (CKEditor $component, string | array | null $state): void {
@@ -39,6 +40,5 @@ class CKEditor extends Field
 
             return $state;
         });
-
     }
 }

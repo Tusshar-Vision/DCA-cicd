@@ -103,7 +103,7 @@
             @foreach($newsUpdates as $news)
                 <li class="p-2 mb-1 rounded-md border-l-2 border-transparent hover:border-[#5A7184] hover:underline hover:bg-[#B3BAC5] hover:bg-opacity-10">
                     <a href="{{ ArticleService::getArticleUrlFromSlug($news->slug) }}" wire:navigate>
-                        <p class="text-sm hover:text-blue-800">{{ $news->title }}</p>
+                        <p class="text-sm hover:text-blue-800 dark:hover:text-white">{{ $news->title }}</p>
                     </a>
                 </li>
             @endforeach

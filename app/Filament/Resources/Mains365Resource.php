@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
@@ -49,7 +50,6 @@ class Mains365Resource extends Resource implements HasShieldPermissions
                     Forms\Components\Hidden::make('initiative_id')
                         ->default(InitiativesHelper::getInitiativeID(Initiatives::MAINS_365)),
 
-
                     Forms\Components\Group::make()->schema([
 
                         DatePicker::make('published_at')
@@ -58,32 +58,35 @@ class Mains365Resource extends Resource implements HasShieldPermissions
                             ->label('Publish At')
                             ->required()
                             ->default(Carbon::now()->format('Y-m-d'))
-                            ->live()
-                            ->afterStateUpdated(
-                                function (Forms\Set $set, ?string $state) {
-                                    if ($state !== null)
-                                        $set('name', static::generateName($state));
-                                }),
+                            ->live(),
 
-                        Forms\Components\TextInput::make('name')->default(function (callable $get) {
-                            return static::generateName($get('published_at'));
-                        })->required(),
+                        Forms\Components\TextInput::make('name')
+                            ->suffixAction(Forms\Components\Actions\Action::make('Generate')
+                                ->icon('heroicon-s-cog-8-tooth')
+                                ->iconButton()
+                                ->action(function (callable $get, callable $set) {
+                                    $set('name', static::generateName($get('published_at')));
+                                })
+                            )->required(),
 
                         Select::make('initiative_topic_id')
                             ->searchable()
+                            ->preload()
                             ->relationship('topic', 'name')
                             ->required()
                             ->label('Subject')
                             ->required(),
 
-                        Select::make('language_id')
-                            ->relationship('language', 'name', function ($query) {
-                                return $query->orderBy('order_column');
-                            })
-                            ->label('Language')
-                            ->required()
-                            ->selectablePlaceholder(false)
-                            ->default(1),
+//                        Select::make('language_id')
+//                            ->relationship('language', 'name', function ($query) {
+//                                return $query->orderBy('order_column');
+//                            })
+//                            ->label('Language')
+//                            ->required()
+//                            ->selectablePlaceholder(false)
+//                            ->default(1),
+
+                        Hidden::make('language_id')->default(1),
 
                         Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
                             ->name('file')
@@ -159,6 +162,9 @@ class Mains365Resource extends Resource implements HasShieldPermissions
 
     public static function canEdit(Model $record): bool
     {
+        if ($record->trashed()) {
+            return false;
+        }
         return Auth::user()->hasAnyRole(['super_admin', 'admin']) || (Auth::user()->can('edit_mains365') && $record->is_published !== true);
     }
 

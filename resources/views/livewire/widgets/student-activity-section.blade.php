@@ -5,7 +5,7 @@
             <div class="flex justify-between relative">
                 <p class="vi-tab-title">Reading History</p>
                 <div class="student-search-field-container">
-                    <input type="search" placeholder="Search" class="student-search-field">
+                    <input id="history-searchbox" type="search" placeholder="Search" class="student-search-field dark:bg-dark545557 border-[#686E70] dark:text-white">
                 </div>
                 {{-- <div class="my-content-search w-[150px]">
                     <div class="search-bar-wrapper">
@@ -20,15 +20,15 @@
                     </div>
                 </div> --}}
             </div>
-            <div class="vi-left-child-item-list">
+            <div id="histories-container" class="vi-left-child-item-list">
                 <!-- Single card -->
                 @foreach ($readHistories as $history)
                     <div class="vi-article-card vi-inline flex items-start gap-[12px]">
-                        <a href="#" class="vi-article">
-                            <img src="{{ URL::asset('images/card-image-small.png') }}" alt="">
-                        </a>
+                        {{-- <a href="#" class="vi-article">
+                            <img src="{{$history['img'] ?? URL::asset('images/card-image-small.png') }}" alt="">
+                        </a> --}}
                         <a href="{{$history['url']}}" class="vi-article">
-                            <p class="vi-article-date-name">{{ $history['published_at'] }}</p>
+                            <p class="vi-article-date-name">{{ $history['read_at'] }}</p>
                             <p>{{ $history['title'] }}</p>
                         </a>
                     </div>
@@ -39,11 +39,11 @@
         <div class="activity-tab-right-itmes w-full lg:w-4/6">
             <div class="graph-box-title-wrap">
                 <p class="vi-tab-title">Content Consumption</p>
-                <div class="graph-represent-list">
-                    <li data-level="1"></li>
-                    <li data-level="2"></li>
-                    <li data-level="3"></li>
-                    <li data-level="4"></li>
+                <div class="graph-represent-list con-squares">
+                    <li data-level="1" data-complete="Completed"></li>
+                    <li data-level="2" data-complete="In Progress"></li>
+                    <li data-level="3" data-complete="Not Started"></li>
+                    <li data-level="4" data-complete="NO ARTICLE FOUND"></li>
                 </div>
             </div>
             <div class="vi-right-child-item-list">
@@ -121,6 +121,7 @@
 <script>
     const onfocus = document.querySelector('.student-search-field');
     const showlist = document.querySelector('.student-search-field-container');
+    const searchBox = document.getElementById("history-searchbox");
 
     onfocus.addEventListener("focus", () => {
         showlist.classList.add("absoluteSearch");
@@ -135,17 +136,29 @@
                                  @foreach ($newsTodayConsumption as $day => $value)
     
                                 <?php 
-                                $level = null; 
+                                $level = null; $text = null;
                                 if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
-                                   if($value['total_read'] == $value['total_article']) $level = 1;
-                                   else if($value['total_read'] < $value['total_article']) $level = 2;
+                                   if($value['total_read'] == $value['total_article']) {
+                                    $level = 1;
+                                    $text = "Completed";
+                                   }
+                                   else if($value['total_read'] < $value['total_article']) {
+                                    $level = 2;
+                                     $text = "In Progress";
+                                   }
                                 } else {
-                                    if($value == null) $level =4;
-                                    else $level = 3;
+                                    if($value == null) {
+                                        $level =4;
+                                         $text = "NO ARTICLE FOUND FOR THIS MONTH";
+                                    }
+                                    else {
+                                        $level = 3;
+                                         $text = "Not Started";
+                                    }
                                 }
                                 ?>
                                
-                                square.innerHTML += `<li data-level="{{$level}}" data-complete="{{$level == 4 ? "NO ARTICLE FOUND FOR THIS MONTH" : ""}}"></li>`
+                                square.innerHTML += `<li data-level="{{$level}}" data-complete="{{$text}}"></li>`
                                         
                                 @endforeach
  }
@@ -156,17 +169,29 @@
                                 
                                 @foreach ($weeklyFocusConsumption as $week => $value)
                                 <?php 
-                                $level = null; 
+                                $level = null; $text = null;
                                 if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
-                                   if($value['total_read'] == $value['total_article']) $level = 1;
-                                   else if($value['total_read'] < $value['total_article']) $level = 2;
+                                   if($value['total_read'] == $value['total_article']) {
+                                    $level = 1;
+                                    $text = "Completed";
+                                   }
+                                   else if($value['total_read'] < $value['total_article']) {
+                                    $level = 2;
+                                     $text = "In Progress";
+                                   }
                                 } else {
-                                    if($value == null) $level =4;
-                                    else $level = 3;
+                                    if($value == null) {
+                                        $level =4;
+                                         $text = "NO ARTICLE FOUND FOR THIS MONTH";
+                                    }
+                                    else {
+                                        $level = 3;
+                                         $text = "Not Started";
+                                    }
                                 }
                                 ?>
 
-                                square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO WEEKLY FOCUS FOUND FOR THIS WEEK" : ""}}"></li>`
+                                square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$text}}"></li>`
                                 @endforeach
  }
 
@@ -175,22 +200,58 @@
 
                                 @foreach ($montlyMagazineConsumption as $month => $value)
                                 <?php 
-                                $level = null; 
+                                                                $level = null; $text = null;
                                 if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
-                                   if($value['total_read'] == $value['total_article']) $level = 1;
-                                   else if($value['total_read'] < $value['total_article']) $level = 2;
+                                   if($value['total_read'] == $value['total_article']) {
+                                    $level = 1;
+                                    $text = "Completed";
+                                   }
+                                   else if($value['total_read'] < $value['total_article']) {
+                                    $level = 2;
+                                     $text = "In Progress";
+                                   }
                                 } else {
-                                    if($value == null) $level =4;
-                                    else $level = 3;
+                                    if($value == null) {
+                                        $level =4;
+                                         $text = "NO ARTICLE FOUND FOR THIS MONTH";
+                                    }
+                                    else {
+                                        $level = 3;
+                                         $text = "Not Started";
+                                    }
                                 }
                                 ?>
 
-                                square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$level == 4 ? "NO MAGAZINE FOUND FOR THIS MONTH" : ""}}"></li>`
+                                square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$text}}"></li>`
                                 @endforeach
 }
 
  showDailyNews()
  showWeeklyFocus()
  showMonthlyMagazine()
+
+ searchBox.addEventListener("change", function() {
+    const query = searchBox.value;
+    if(query == "") return;
+    let url = "{{url("user/read-history/search")}}";
+    url += `/${query}`;
+
+    fetch(url)
+    .then(response => response.json())
+    .then(data => {
+        const histories = data.data;
+        let html = "";
+        histories.map(history => {
+                  html += `<div class="vi-article-card vi-inline flex items-start gap-[12px]">
+                        <a href="${history['url']}" class="vi-article">
+                            <p class="vi-article-date-name">${history['read_at']}</p>
+                            <p>${history['title']}</p>
+                        </a>
+                      </div>`
+        })
+        
+        document.getElementById("histories-container").innerHTML = html;
+    })
+ })
 
 </script>

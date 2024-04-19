@@ -9,6 +9,7 @@ use App\Filament\Resources\BudgetResource;
 use App\Filament\Resources\CommentResource;
 use App\Filament\Resources\EconomicSurveyResource;
 use App\Filament\Resources\QuarterlyRevisionResource;
+use App\Filament\Resources\ThePlanetVisionResource;
 use App\Filament\Resources\ValueAddedOptionalResource;
 use App\Filament\Resources\InfographicsResource;
 use App\Filament\Resources\Mains365Resource;
@@ -21,6 +22,8 @@ use App\Filament\Resources\SubSectionResource;
 use App\Filament\Resources\ValueAddedResource;
 use App\Filament\Resources\VideoResource;
 use App\Filament\Resources\WeeklyFocusResource;
+use App\Filament\Resources\YearEndReviewResource;
+use App\Livewire\Widgets\Archives\PlanetVision;
 use Awcodes\Overlook\OverlookPlugin;
 use Awcodes\Overlook\Widgets\OverlookWidget;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
@@ -40,9 +43,13 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Pboivin\FilamentPeek\FilamentPeekPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
+    /**
+     * @throws \Exception
+     */
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -61,6 +68,8 @@ class AdminPanelProvider extends PanelProvider
                         ValueAddedResource::class,
                         ValueAddedOptionalResource::class,
                         QuarterlyRevisionResource::class,
+                        YearEndReviewResource::class,
+                        ThePlanetVisionResource::class,
                         InfographicsResource::class,
                         VideoResource::class,
                         CommentResource::class,
@@ -100,6 +109,7 @@ class AdminPanelProvider extends PanelProvider
                         'default' => 1,
                         'sm' => 2,
                     ]),
+                FilamentPeekPlugin::make(),
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->default()
@@ -144,6 +154,7 @@ class AdminPanelProvider extends PanelProvider
                 'Other Uploads',
                 'Media'
             ])
+            ->globalSearch(false)
             ->sidebarCollapsibleOnDesktop()
             ->spa();
     }

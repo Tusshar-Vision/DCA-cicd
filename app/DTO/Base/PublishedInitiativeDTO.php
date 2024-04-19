@@ -27,7 +27,7 @@ abstract class PublishedInitiativeDTO extends Data
         public string                     $createdAt,
         public string                     $updatedAt,
         public ?Video                     $video,
-        public null|Media|MediaCollection $media
+        public null|Media                 $media
     ) {
     }
 
@@ -39,9 +39,15 @@ abstract class PublishedInitiativeDTO extends Data
         return $this->articles->where('slug', '=', $slug)->first() ?? throw new ArticleNotFoundException('There are no articles');
     }
 
-    public function getArticleInNews()
+    public function getShortNewsArticles($topic = null)
     {
-        return $this->shortArticles->first();
+        $query = $this->shortArticles;
+
+        if ($topic !== null) {
+            return $query->where('topic', $topic)->first();
+        }
+
+        return $query->first();
     }
 
     public function getArticleIndexFromSlug($slug): int|null
@@ -70,7 +76,7 @@ abstract class PublishedInitiativeDTO extends Data
             $publishedInitiative->created_at,
             $publishedInitiative->updated_at,
             $publishedInitiative->video,
-            $publishedInitiative->media
+            $publishedInitiative->media->first()
         );
     }
 }
