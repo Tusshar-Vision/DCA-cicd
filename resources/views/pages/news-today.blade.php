@@ -6,7 +6,7 @@
 @endphp
 
 @section('article-content')
-    <div x-data="{ openItem: 0, expanded: false, isVideoOpen: false }"
+    <div x-data="{ openItem: 0, currentShortArticle: null, expanded: false, isVideoOpen: false }"
          x-init="$watch('isVideoOpen', value => pauseVideo(value))" class="mt-6"
     >
         <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8">

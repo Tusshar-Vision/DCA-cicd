@@ -64,7 +64,7 @@
                     @if(request()->is('news-today/*/also-in-news'))
                         <ul class="ml-6">
                             @foreach($shortArticles as $index => $article)
-                                <li @click="openItem = (openItem == {{$index}} ? '-1' : {{$index}})" class="py-[5px] cursor-pointer hover:brand-color text-clip text-sm">
+                                <li class="py-[5px] cursor-pointer hover:brand-color text-clip text-sm">
                                     <a href="#{{ $article->slug }}" class="flex text-base[16px] font-normal hover:brand-color"
                                        :class="{'brand-color': openItem == {{$index}}}"
                                     >
