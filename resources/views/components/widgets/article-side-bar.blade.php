@@ -29,7 +29,7 @@
                 @foreach($tableOfContent as $key => $header)
                        @if($initiative == 'weekly-focus')
                             <li @click="openItem = (openItem == {{$key}} ? '-1' : {{$key}})" class="py-[15px] cursor-pointer border-bottom last:border-0 hover:brand-color">
-                                <a class="flex text-base[16px] font-normal hover:brand-color }}"
+                                <a href="#{{ $header->slug }}" class="flex text-base[16px] font-normal hover:brand-color }}"
                                    :class="{'brand-color': openItem == {{$key}}}"
                                 >
                                     <span class="mr-1">{{ $loop->iteration }}<em>.</em></span> {{ $header->shortTitle ?? $header->title }}

@@ -154,6 +154,7 @@ class AdminPanelProvider extends PanelProvider
                 'Other Uploads',
                 'Media'
             ])
+            ->unsavedChangesAlerts()
             ->globalSearch(false)
             ->sidebarCollapsibleOnDesktop()
             ->spa();
