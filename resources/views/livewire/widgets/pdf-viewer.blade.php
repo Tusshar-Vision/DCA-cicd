@@ -17,10 +17,10 @@
 
 <script src="{{URL::asset('js/pdf/pdf.mjs')}}" type="module"></script>
 <script type="module">
-  var url = "{{URL::asset('images/test.pdf')}}"
+  //var url = "{{URL::asset('images/test.pdf')}}"
   //var url = "{{$pdf}}"
   // url = url.replace(/&amp;/g, "&");
-  //var url = "https://cae-resources.s3.us-west-2.amazonaws.com/132/01HSNFRE41850JENN33ANJ5BAQ.pdf?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAXHGT7ALSQREJALHN%2F20240419%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240419T100503Z&X-Amz-SignedHeaders=host&X-Amz-Expires=7200&X-Amz-Signature=2bc6148d1c6ba79bc08a454360a32b48c86caaee16766d9789a6c99b54ee5634";
+  var url = "https://cae-resources.s3.us-west-2.amazonaws.com/132/01HSNFRE41850JENN33ANJ5BAQ.pdf?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAXHGT7ALSQREJALHN%2F20240419%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240419T100503Z&X-Amz-SignedHeaders=host&X-Amz-Expires=7200&X-Amz-Signature=2bc6148d1c6ba79bc08a454360a32b48c86caaee16766d9789a6c99b54ee5634";
 
   var { pdfjsLib } = globalThis;
   pdfjsLib.GlobalWorkerOptions.workerSrc = "{{URL::asset('js/pdf/pdf.worker.mjs')}}"

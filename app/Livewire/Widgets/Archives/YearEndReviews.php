@@ -7,11 +7,12 @@ use Livewire\Component;
 
 class YearEndReviews extends Component
 {
-    public $data, $years;
-    public function mount($data, $years): void
+    public $data, $years, $pdfUrl;
+    public function mount($data, $years, $pdfUrl): void
     {
         $this->data = collect($data);
         $this->years = $years;
+        $this->pdfUrl = $pdfUrl;
     }
 
     public function render(): View
