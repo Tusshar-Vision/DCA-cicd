@@ -1,13 +1,12 @@
 <div>
-<div><button id="full-screen-btn">Fullscreen</button>
-<span id="resize-controls">
-                <span id="decrease-width" style="cursor:pointer;">
-                -
-                </span>
-                <input id="width-percentage" style="color: black; font-weight:600; width:60px; text-align:center;margin-left:5px;margin-right:5px;border-radius:6px;"></input>
-                <span id="increase-width" style="cursor:pointer;">
-                +
-                </span>
+<div class="flex justify-end w-full mb-2">
+  <button id="full-screen-btn" class="mr-4">Fullscreen</button>
+  <button id="full-screen-btn" class="mr-4">Download</button>
+  <button id="full-screen-btn" class="mr-4">Share</button>
+<span id="resize-controls" class="mr-4">
+  <span id="decrease-width" class="cursor-pointer text-[20px]">-</span>
+  <input id="width-percentage" style="color: black; font-weight:600; width:80px; text-align:center; margin:0 5px; padding: 5px; border-radius:6px;"></input>
+  <span id="increase-width" class="cursor-pointer text-[20px]">+</span>
 </span>
 
 </div>
@@ -161,7 +160,7 @@ function increaseWidth() {
         container.style.width = currentWidth + '%';
         widthInput.value = currentWidth + '%';
         if(currentWidth == 100 && !IsMobile()){
-          container.style.padding = '0px 40px';
+          container.style.padding = '0px 0px';
         } else {
           container.style.padding = '0px';
         }
