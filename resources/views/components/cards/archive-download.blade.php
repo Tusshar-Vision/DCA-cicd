@@ -5,7 +5,7 @@
                 <p class="break-all">{{ ucfirst($file->name ?? $file->media->first()->name) }}</p>
                 <ul class="flex justify-start mt-[15px]">
                     <li class="text-[#3362CC] mr-4 text-sm font-normal">
-                        <a href="{{ $file->id }}" class="hover:underline" >Read</a>
+                        <a href="{{ request()->url()."/".$file->id }}" class="hover:underline" >Read</a>
                     </li>
                     <li class="text-[#3362CC] mr-4 text-sm font-normal">
                         <a href="{{ route('download', ['media' => $file->media->first()]) }}" class="hover:underline">Download</a>

@@ -7,10 +7,11 @@ use Livewire\Component;
 
 class ValueAddedMaterial extends Component
 {
-    public $data;
-    public function mount($data): void
+    public $data, $pdfUrl;
+    public function mount($data, $pdfUrl): void
     {
         $this->data = collect($data);
+        $this->pdfUrl = $pdfUrl;
     }
 
     public function render(): View

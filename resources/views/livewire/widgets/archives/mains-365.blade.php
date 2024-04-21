@@ -25,6 +25,7 @@
     </div>
 </div>
 
+@if(!$pdfUrl)
 <!-- Mains 365 -->
 <?php $i = 0; ?>
 @foreach ($data as $year => $files)
@@ -54,5 +55,7 @@
 <?php $i++; ?>
 
 @endforeach
-
+    @else
+ <livewire:widgets.pdf-viewer :pdf="$pdfUrl" />
+    @endif
 </div>
