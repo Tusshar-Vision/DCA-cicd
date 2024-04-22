@@ -23,6 +23,7 @@
             <div id="histories-container" class="vi-left-child-item-list">
                 <!-- Single card -->
                 @foreach ($readHistories as $history)
+                    @if($history!=null)
                     <div class="vi-article-card vi-inline flex items-start gap-[12px]">
                         {{-- <a href="#" class="vi-article">
                             <img src="{{$history['img'] ?? URL::asset('images/card-image-small.png') }}" alt="">
@@ -32,6 +33,7 @@
                             <p>{{ $history['title'] }}</p>
                         </a>
                     </div>
+                    @endif
                 @endforeach
             </div>
         </div>
@@ -242,12 +244,14 @@
         const histories = data.data;
         let html = "";
         histories.map(history => {
-                  html += `<div class="vi-article-card vi-inline flex items-start gap-[12px]">
+                  if(history!=null) {
+                    html += `<div class="vi-article-card vi-inline flex items-start gap-[12px]">
                         <a href="${history['url']}" class="vi-article">
                             <p class="vi-article-date-name">${history['read_at']}</p>
                             <p>${history['title']}</p>
                         </a>
                       </div>`
+                  }
         })
         
         document.getElementById("histories-container").innerHTML = html;

@@ -32,6 +32,7 @@ class UserController extends Controller
     public function dashboard()
     {
         $read_histories = $this->student->readHistories()->orderBy('updated_at', 'desc')->with('article')->get()->map(function ($history) {
+            if (!$history->article) return null;
             $history->title = $history->article->short_title ?? $history->article->title;
             $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
             $history->url = ArticleService::getArticleUrl($history->article);
@@ -178,6 +179,7 @@ class UserController extends Controller
         $read_histories = $this->student->readHistories()->whereHas('article', function ($articleQuery) use ($param) {
             $articleQuery->where('short_title', 'like', "%$param%")->orWhere('title', 'like', "%$param%");
         })->with('article')->get()->map(function ($history) {
+            if (!$history->article) return null;
             $history->title = $history->article->short_title ?? $history->article->title;
             $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
             $history->url = ArticleService::getArticleUrl($history->article);
@@ -193,6 +195,7 @@ class UserController extends Controller
     public function bookmarks()
     {
         $bookmarks = $this->student->bookmarks()->orderBy('created_at', 'desc')->with('article')->get()->map(function ($history) {
+            if (!$history->article) return null;
             $history->title =  $history->article->short_title ?? $history->article->title;
             $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
             $history->url = ArticleService::getArticleUrl($history->article);
@@ -221,6 +224,7 @@ class UserController extends Controller
         $bookmarks = $this->student->bookmarks()->whereHas('article', function ($articleQuery) use ($param) {
             $articleQuery->where('short_title', 'like', "%$param%")->orWhere('title', 'like', "%$param%");
         })->orderBy('created_at', 'desc')->with('article')->get()->map(function ($history) {
+            if (!$history->article) return null;
             $history->title = $history->article->short_title ?? $history->article->title;
             $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
             $history->url = ArticleService::getArticleUrl($history->article);
