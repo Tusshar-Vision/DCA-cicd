@@ -2,10 +2,13 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Initiatives;
 use App\Filament\Resources\SchemeInFocusResource\Pages;
 use App\Filament\Resources\SchemeInFocusResource\RelationManagers;
+use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
 use App\Models\SchemeInFocus;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -57,6 +60,23 @@ class SchemeInFocusResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = static::getModel()::query()
+            ->where(
+                'initiative_id',
+                InitiativesHelper::getInitiativeID(Initiatives::SCHEME_IN_FOCUS)
+            )->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
+
+        if ($tenant = Filament::getTenant()) {
+            static::scopeEloquentQueryToTenant($query, $tenant);
+        }
+
+        return $query;
     }
 
     public static function getPages(): array

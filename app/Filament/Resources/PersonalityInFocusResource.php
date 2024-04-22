@@ -2,10 +2,13 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Initiatives;
 use App\Filament\Resources\PersonalityInFocusResource\Pages;
 use App\Filament\Resources\PersonalityInFocusResource\RelationManagers;
+use App\Helpers\InitiativesHelper;
 use App\Models\PersonalityInFocus;
 use App\Models\PublishedInitiative;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -57,6 +60,23 @@ class PersonalityInFocusResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = static::getModel()::query()
+            ->where(
+                'initiative_id',
+                InitiativesHelper::getInitiativeID(Initiatives::PERSONALITY_IN_FOCUS)
+            )->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
+
+        if ($tenant = Filament::getTenant()) {
+            static::scopeEloquentQueryToTenant($query, $tenant);
+        }
+
+        return $query;
     }
 
     public static function getPages(): array

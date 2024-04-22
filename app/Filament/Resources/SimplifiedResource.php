@@ -2,10 +2,13 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Initiatives;
 use App\Filament\Resources\SimplifiedResource\Pages;
 use App\Filament\Resources\SimplifiedResource\RelationManagers;
+use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
 use App\Models\Simplified;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -57,6 +60,23 @@ class SimplifiedResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = static::getModel()::query()
+            ->where(
+                'initiative_id',
+                InitiativesHelper::getInitiativeID(Initiatives::SIMPLIFIED_BY_VISIONIAS)
+            )->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
+
+        if ($tenant = Filament::getTenant()) {
+            static::scopeEloquentQueryToTenant($query, $tenant);
+        }
+
+        return $query;
     }
 
     public static function getPages(): array

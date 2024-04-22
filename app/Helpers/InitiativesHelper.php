@@ -29,7 +29,12 @@ class InitiativesHelper {
         "QUARTERLY_REVISION_DOCUMENTS" => 15,
         "BUDGET" => 17,
         "YEAR_END_REVIEW" => 22,
-        "PLANET_VISION" => 23
+        "PLANET_VISION" => 23,
+        "DAILY_NEWS" => 25,
+        "IN_CONVERSATION" => 26,
+        "SIMPLIFIED_BY_VISIONIAS" => 27,
+        "PERSONALITY_IN_FOCUS" => 28,
+        "SCHEME_IN_FOCUS" => 29,
     ];
     private const InitiativeTopics = [
         "POLITY" => 1,
