@@ -1,5 +1,5 @@
 <div class="w-full">
-    <div class="pt-[25px] border-t-2">
+    <div class="pt-[25px] border-t-2 overflow-hidden">
         <div class="flex w-full items-center justify-between xl:justify-end space-x-4 mb-[25px]">
         <div class="block xl:hidden flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="8" height="16" viewBox="0 0 8 16" fill="none" onclick="myFunction()" class="cursor-pointer">

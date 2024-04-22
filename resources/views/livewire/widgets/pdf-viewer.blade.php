@@ -1,25 +1,25 @@
-<div>
-<div class="flex justify-end w-full mb-2">
-  <button id="full-screen-btn" class="mr-4">Fullscreen</button>
-  <button id="full-screen-btn" class="mr-4">Download</button>
-  <button id="full-screen-btn" class="mr-4">Share</button>
-<span id="resize-controls" class="mr-4">
-  <span id="decrease-width" class="cursor-pointer text-[20px]">-</span>
-  <input id="width-percentage" style="color: black; font-weight:600; width:80px; text-align:center; margin:0 5px; padding: 5px; border-radius:6px;"></input>
-  <span id="increase-width" class="cursor-pointer text-[20px]">+</span>
-</span>
+<div class="sticky top-0">
+  <div class="flex justify-end w-full mb-2">
+    <button id="full-screen-btn" class="mr-4">Fullscreen</button>
+    <button id="full-screen-btn" class="mr-4">Download</button>
+    <button id="full-screen-btn" class="mr-4">Share</button>
+  <span id="resize-controls" class="mr-4">
+    <span id="decrease-width" class="cursor-pointer text-[20px]">-</span>
+    <input id="width-percentage" class="text-black w-[80px] font-semibold text-center mx-2 p-[5px] rounded-md"></input>
+    <span id="increase-width" class="cursor-pointer text-[20px]">+</span>
+  </span>
+</div>
 
-</div>
-<div id="pdfViewer" style="overflow: auto; width: 100%; height: 100%;">
-</div>
+<div class="overflow-auto">
+  <div id="pdfViewer" class="overflow-auto w-full h-full"></div>
 </div>
 
 <script src="{{URL::asset('js/pdf/pdf.mjs')}}" type="module"></script>
 <script type="module">
-  //var url = "{{URL::asset('images/test.pdf')}}"
+  var url = "{{URL::asset('images/test.pdf')}}"
   //var url = "{{$pdf}}"
   // url = url.replace(/&amp;/g, "&");
-  var url = "https://cae-resources.s3.us-west-2.amazonaws.com/132/01HSNFRE41850JENN33ANJ5BAQ.pdf?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAXHGT7ALSQREJALHN%2F20240419%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240419T100503Z&X-Amz-SignedHeaders=host&X-Amz-Expires=7200&X-Amz-Signature=2bc6148d1c6ba79bc08a454360a32b48c86caaee16766d9789a6c99b54ee5634";
+  //var url = "https://cae-resources.s3.us-west-2.amazonaws.com/132/01HSNFRE41850JENN33ANJ5BAQ.pdf?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAXHGT7ALSQREJALHN%2F20240419%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240419T100503Z&X-Amz-SignedHeaders=host&X-Amz-Expires=7200&X-Amz-Signature=2bc6148d1c6ba79bc08a454360a32b48c86caaee16766d9789a6c99b54ee5634";
 
   var { pdfjsLib } = globalThis;
   pdfjsLib.GlobalWorkerOptions.workerSrc = "{{URL::asset('js/pdf/pdf.worker.mjs')}}"
