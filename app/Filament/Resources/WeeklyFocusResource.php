@@ -486,6 +486,7 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
             'create',
             'edit',
             'upload',
+            'assign',
             'delete',
         ];
     }

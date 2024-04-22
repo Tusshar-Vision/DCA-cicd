@@ -3,8 +3,10 @@
 namespace App\Traits\Filament;
 
 use App\Filament\Resources\ArticleResource;
+use App\Filament\Resources\NewsTodayResource\RelationManagers\ArticlesRelationManager as NewsTodayRelationManager;
+use App\Filament\Resources\WeeklyFocusResource\RelationManagers\ArticlesRelationManager as WeeklyFocusRelationManager;
+use App\Filament\Resources\MonthlyMagazineResource\RelationManagers\ArticlesRelationManager as MonthlyMagazineRelationManager;
 use App\Filament\Resources\WeeklyFocusResource;
-use App\Forms\Components\CKEditor;
 use App\Jobs\GenerateArticlePDF;
 use App\Models\Article;
 use App\Models\User;
@@ -15,13 +17,7 @@ use App\Traits\Filament\Components\StatusColumn;
 use App\Traits\Filament\Components\ViewAction;
 use App\Traits\HasNotifications;
 use Carbon\Carbon;
-use Filament\Forms\Components\Group;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\SpatieTagsInput;
-use Filament\Forms\Components\TagsInput;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Support\Colors\Color;
@@ -51,11 +47,23 @@ use Spatie\Tags\Tag;
 trait ArticleRelationSchema
 {
     use ArticleForm, HasNotifications, ExpertReviewColumn, StatusColumn, ViewAction, ReviewAction;
+
+    public static function getActionPermission(): string {
+        return match(static::class) {
+            NewsTodayRelationManager::class => 'assign_news::today',
+            WeeklyFocusRelationManager::class => 'assign_weekly::focus',
+            MonthlyMagazineRelationManager::class => 'assign_monthly::magazine',
+            default => throw new \Exception("Permission not defined for resource."),
+        };
+    }
     public function form(Form $form): Form
     {
         return $this->articleForm($form);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function table(Table $table): Table
     {
         return $table
@@ -113,8 +121,8 @@ trait ArticleRelationSchema
                 SpatieTagsColumn::make('tags')
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                $this->getExpertColumn(Auth::user()->can('assign_article')),
-                $this->getReviewColumn(Auth::user()->can('assign_article')),
+                $this->getExpertColumn(Auth::user()->can($this->getActionPermission())),
+                $this->getReviewColumn(Auth::user()->can($this->getActionPermission())),
 
                 TextColumn::make('updated_at')
                     ->label('Last Modified')
