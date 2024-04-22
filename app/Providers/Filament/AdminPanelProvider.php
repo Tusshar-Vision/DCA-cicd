@@ -96,8 +96,7 @@ class AdminPanelProvider extends PanelProvider
                 FilamentShieldPlugin::make()
                     ->gridColumns([
                         'default' => 1,
-                        'sm' => 2,
-                        'lg' => 3
+                        'lg' => 2
                     ])
                     ->sectionColumnSpan(1)
                     ->checkboxListColumns([
@@ -152,6 +151,7 @@ class AdminPanelProvider extends PanelProvider
                 'User Management',
                 'Create Articles',
                 'Other Uploads',
+                'Videos',
                 'Media'
             ])
             ->unsavedChangesAlerts()

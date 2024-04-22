@@ -108,6 +108,10 @@ class NewsTodayResource extends Resource implements HasShieldPermissions
                                     };
                                 }
                             ])
+                            ->disabled(function (?PublishedInitiative $record) {
+                                if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                                else if ($record?->is_published) return true;
+                            })
                             ->live(),
 
                     Forms\Components\TextInput::make('name')
@@ -153,7 +157,10 @@ class NewsTodayResource extends Resource implements HasShieldPermissions
                             })
                         ),
 
-                    ])->columns(2)->columnSpanFull(),
+                    ])->disabled(function (?PublishedInitiative $record) {
+                        if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                        else if ($record?->is_published) return true;
+                    })->columns(2)->columnSpanFull(),
 
 //                    Select::make('language_id')
 //                        ->relationship('language', 'name', function ($query) {
@@ -170,12 +177,12 @@ class NewsTodayResource extends Resource implements HasShieldPermissions
                         ->acceptedFileTypes(['application/pdf'])
                         ->collection('news-today')
                         ->visibility('private')
-                        ->visible(function (?PublishedInitiative $record) {
-                            if (Auth::user()->can('upload_news::today')) return true;
-                            else if ($record !== null && $record->hasMedia('news-today')) return true;
-                            else return false;
-                        })
                         ->openable()
+                        ->disabled(function (?PublishedInitiative $record) {
+                            if (Auth::user()->can('upload_news::today')) return false;
+                            else if ($record !== null && $record->hasMedia('news-today')) return false;
+                            else return true;
+                        })
                         ->deletable(function (?PublishedInitiative $record) {
                             if ($record !== null && $record->is_published === true) {
                                 return Auth::user()->hasAnyRole(['admin', 'super_admin']);
@@ -185,10 +192,7 @@ class NewsTodayResource extends Resource implements HasShieldPermissions
                         })
                         ->columnSpanFull(),
 
-                ])->disabled(function (?PublishedInitiative $record) {
-                    if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
-                    else if ($record?->is_published) return true;
-                })->columnSpan(1),
+                ])->columnSpan(1),
 
                 Forms\Components\Section::make("News Today's Video")
                     ->schema([
@@ -266,11 +270,11 @@ class NewsTodayResource extends Resource implements HasShieldPermissions
 
                                 ])->columnSpan(1)
                             ])
+                            ->disabledOn('create')
                             ->disabled(function () {
                                 if (Auth::user()->can('upload_news::today')) return false;
                                 else return true;
-                            })
-                            ->disabledOn('create'),
+                            }),
                     ])->columnSpan(1)
             ]);
     }

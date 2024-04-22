@@ -215,6 +215,7 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
                     SourceInput::make('sources')
                         ->columnSpanFull()
                         ->placeholder('Add sources'),
+
                     SourceInput::make('references')
                         ->columnSpanFull()
                         ->placeholder('Add references'),
@@ -313,11 +314,11 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
                                             'image/svg'
                                         ]),
                                 ])
+                                ->disabledOn('create')
                                 ->disabled(function () {
                                     if (Auth::user()->can('upload_weekly::focus')) return false;
                                     else return true;
-                                })
-                                ->disabledOn('create'),
+                                }),
                         ])->columnSpan(1),
 
                     Section::make("In Conversation")
@@ -405,11 +406,11 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
 
                                     ])->columnSpan(1)
                                 ])
+                                ->disabledOn('create')
                                 ->disabled(function () {
                                     if (Auth::user()->can('upload_weekly::focus')) return false;
                                     else return true;
-                                })
-                                ->disabledOn('create'),
+                                }),
                         ])->columnSpan(1),
                 ])
             ]);
