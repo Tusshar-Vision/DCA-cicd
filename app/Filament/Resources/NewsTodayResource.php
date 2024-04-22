@@ -51,6 +51,7 @@ class NewsTodayResource extends Resource implements HasShieldPermissions
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
 
     protected static ?string $navigationGroup = 'Create Articles';
+
     protected static ?string $modelLabel = 'News Today';
     protected static ?string $pluralLabel = 'News Today';
 
@@ -270,8 +271,8 @@ class NewsTodayResource extends Resource implements HasShieldPermissions
 
                                 ])->columnSpan(1)
                             ])
-                            ->disabledOn('create')
-                            ->disabled(function () {
+                            ->disabled(function ($operation) {
+                                if ($operation === 'create') return true;
                                 if (Auth::user()->can('upload_news::today')) return false;
                                 else return true;
                             }),
