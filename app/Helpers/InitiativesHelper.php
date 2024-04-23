@@ -30,6 +30,7 @@ class InitiativesHelper {
         "BUDGET" => 17,
         "YEAR_END_REVIEW" => 22,
         "PLANET_VISION" => 23,
+        "VIDEOS" => 24,
         "DAILY_NEWS" => 25,
         "IN_CONVERSATION" => 26,
         "SIMPLIFIED_BY_VISIONIAS" => 27,
