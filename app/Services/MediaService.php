@@ -36,6 +36,17 @@ readonly class MediaService
         return $groupedInitiatives;
     }
 
+    public function getVideos($initiativeId): Collection|array
+    {
+        return $this->publishedInitiative
+                    ->whereInitiative($initiativeId)
+                    ->isPublished()
+                    ->has('video')
+                    ->with('video.media')
+                    ->orderByDesc('published_at')
+                    ->get();
+    }
+
     public function getAllInfographics($limit): Collection|array
     {
         return $this->infographic->latest()->limit($limit)->get();

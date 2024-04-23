@@ -7,6 +7,8 @@ use App\Models\PublishedInitiative;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Webklex\PDFMerger\Facades\PDFMergerFacade as PDFMerger;
 
@@ -15,7 +17,11 @@ class FileManagerService
     public function __construct(Media $media)
     {}
 
-    public function generateArticlePdf(Article $article)
+    /**
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
+     */
+    public function generateArticlePdf(Article $article): void
     {
         $fileName = $article->slug . '.pdf';
         Pdf::loadHTML($article->content)->save($fileName);
@@ -23,7 +29,11 @@ class FileManagerService
         $article->addMedia($fileName)->toMediaCollection('pdf');
     }
 
-    public function generatePublishedInitiativePdf(PublishedInitiative $publishedInitiative)
+    /**
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
+     */
+    public function generatePublishedInitiativePdf(PublishedInitiative $publishedInitiative): void
     {
         $publishedInitiative->articles->each(function($article) {
             $this->generateArticlePdf($article);

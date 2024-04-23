@@ -163,6 +163,7 @@ class AdminPanelProvider extends PanelProvider
             ->unsavedChangesAlerts()
             ->globalSearch(false)
             ->sidebarCollapsibleOnDesktop()
+            ->passwordReset()
             ->spa();
     }
 }
