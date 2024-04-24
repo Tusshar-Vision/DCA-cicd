@@ -121,15 +121,15 @@
 
 
 <script>
-    const onfocus = document.querySelector('.student-search-field');
-    const showlist = document.querySelector('.student-search-field-container');
-    const searchBox = document.getElementById("history-searchbox");
+    var searchField = document.querySelector('.student-search-field');
+    var showlist = document.querySelector('.student-search-field-container');
+    var searchBox = document.getElementById("history-searchbox");
 
-    onfocus.addEventListener("focus", () => {
+    searchField.addEventListener("focus", () => {
         showlist.classList.add("absoluteSearch");
     });
 
-    onfocus.addEventListener("blur", () => {
+    searchField.addEventListener("blur", () => {
         showlist.classList.remove("absoluteSearch");
     });
 
@@ -228,9 +228,11 @@
                                 @endforeach
 }
 
- showDailyNews()
+setTimeout(() => {
+     showDailyNews()
  showWeeklyFocus()
  showMonthlyMagazine()
+}, 200)
 
  searchBox.addEventListener("change", function() {
     const query = searchBox.value;
