@@ -219,7 +219,14 @@
                     </svg>
                 </a>
             </li>
-            <div class="flex pt-[5px]" x-data="{ isMagazineDropdownOpen: false, isWeeklyDropdownOpen: false, isMoreDropdownOpen: false }">
+            <div class="flex pt-[5px]"
+                 x-data="{
+                    isMagazineDropdownOpen: false,
+                    isWeeklyDropdownOpen: false,
+                    isMoreDropdownOpen: false,
+                    isVideoDropdownOpen: false
+                }"
+            >
                 @foreach ($initiatives as $initiative)
                     @if ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
                         <li class="font-semibold text-xs xl:text-sm pr-6">
@@ -237,6 +244,7 @@
                                         isMagazineDropdownOpen = !isMagazineDropdownOpen;
                                         isMoreDropdownOpen = false;
                                         isWeeklyDropdownOpen = false;
+                                        isVideoDropdownOpen = false;
                                        ">
                                 <a class="hover:text-[#005FAF] {{ request()->is('monthly-magazine*') ? 'text-[#005FAF]' : '' }}"
                                     href="javascript:void(0)">
@@ -259,6 +267,7 @@
                                         isWeeklyDropdownOpen = !isWeeklyDropdownOpen;
                                         isMagazineDropdownOpen = false;
                                         isMoreDropdownOpen = false;
+                                        isVideoDropdownOpen = false;
                                        ">
                                 <a class="hover:text-[#005FAF] {{ request()->is('weekly-focus*') ? 'text-[#005FAF]' : '' }}"
                                     href="javascript:void(0)">
@@ -281,6 +290,7 @@
                                         isMoreDropdownOpen = !isMoreDropdownOpen;
                                         isWeeklyDropdownOpen = false;
                                         isMagazineDropdownOpen = false;
+                                        isVideoDropdownOpen = false;
                                        ">
                                 <a class="hover:text-[#005FAF] {{ request()->is('more*') ? 'text-[#005FAF]' : '' }}"
                                     href="javascript:void(0)">
@@ -290,6 +300,27 @@
 
                             <x-navigation.more-drop-down x-show="isMoreDropdownOpen"
                                 @click.away="isMoreDropdownOpen = false" :menuData="$menuData['more']" />
+                        </div>
+                    @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::VIDEOS))
+                        <div class="relative">
+                            <li class="font-semibold text-xs xl:text-sm pr-6"
+                                @click="
+                                        isVideoDropdownOpen = !isVideoDropdownOpen;
+                                        isWeeklyDropdownOpen = false;
+                                        isMagazineDropdownOpen = false;
+                                        isMoreDropdownOpen = false;
+                                       ">
+                                <a class="hover:text-[#005FAF] {{ request()->is('videos*') ? 'text-[#005FAF]' : '' }}"
+                                   href="javascript:void(0)">
+                                    {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
+                                </a>
+                            </li>
+
+                            <x-navigation.more-drop-down
+                                x-show="isVideoDropdownOpen"
+                                :menuData="$menuData['videos']"
+                                @click.away="isVideoDropdownOpen = false"
+                            />
                         </div>
                     @else
                         <li class="font-semibold text-xs xl:text-sm pr-6">

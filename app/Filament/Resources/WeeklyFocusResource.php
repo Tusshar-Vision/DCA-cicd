@@ -109,6 +109,10 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
                                     };
                                 }
                             ])
+                            ->disabled(function (?PublishedInitiative $record) {
+                                if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                                else if ($record?->is_published) return true;
+                            })
                             ->live(),
 
                         Forms\Components\TextInput::make('name')
@@ -155,7 +159,10 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
                             )
                             ->required(),
 
-                    ])->columns(2)->columnSpanFull(),
+                    ])->disabled(function (?PublishedInitiative $record) {
+                        if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                        else if ($record?->is_published) return true;
+                    })->columns(2)->columnSpanFull(),
 
                     Select::make('initiative_topic_id')
                         ->relationship('topic', 'name', function ($query) {
@@ -170,6 +177,9 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
                         ->afterStateUpdated(function (Set $set, ?string $state) {
                             $set('topic_section_id', null);
                             $set('topic_sub_section_id', null);
+                        })->disabled(function (?PublishedInitiative $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                            else if ($record?->is_published) return true;
                         }),
 
                     Select::make('topic_section_id')
@@ -184,6 +194,9 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
                         ->label('Section')
                         ->afterStateUpdated(function (Set $set, ?string $state) {
                             $set('topic_sub_section_id', null);
+                        })->disabled(function (?PublishedInitiative $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                            else if ($record?->is_published) return true;
                         }),
 
                     Select::make('topic_sub_section_id')
@@ -195,7 +208,11 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
                             return $query->where('section_id', '=', $topicSectionId);
                         })
                         ->reactive()
-                        ->label('Sub Section'),
+                        ->label('Sub Section')
+                        ->disabled(function (?PublishedInitiative $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                            else if ($record?->is_published) return true;
+                        }),
 
 //                    Select::make('language_id')
 //                        ->relationship('language', 'name', function ($query) {
@@ -210,24 +227,37 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
 
                     SpatieTagsInput::make('tags')
                         ->columnSpanFull()
-                        ->required(),
+                        ->required()
+                        ->disabled(function (?PublishedInitiative $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                            else if ($record?->is_published) return true;
+                        }),
 
                     SourceInput::make('sources')
                         ->columnSpanFull()
-                        ->placeholder('Add sources'),
+                        ->placeholder('Add sources')
+                        ->disabled(function (?PublishedInitiative $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                            else if ($record?->is_published) return true;
+                        }),
+
                     SourceInput::make('references')
                         ->columnSpanFull()
-                        ->placeholder('Add references'),
+                        ->placeholder('Add references')
+                        ->disabled(function (?PublishedInitiative $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                            else if ($record?->is_published) return true;
+                        }),
 
                     Forms\Components\SpatieMediaLibraryFileUpload::make('pdf')
                         ->label('Upload pdf file')
                         ->acceptedFileTypes(['application/pdf'])
                         ->collection('weekly-focus')
                         ->visibility('private')
-                        ->visible(function (?PublishedInitiative $record) {
-                            if (Auth::user()->can('upload_weekly::focus')) return true;
-                            else if ($record !== null && $record->hasMedia('weekly-focus')) return true;
-                            else return false;
+                        ->disabled(function (?PublishedInitiative $record) {
+                            if (Auth::user()->can('upload_weekly::focus')) return false;
+                            else if ($record !== null && $record->hasMedia('weekly-focus')) return false;
+                            else return true;
                         })
                         ->openable()
                         ->deletable(function (?PublishedInitiative $record) {
@@ -241,10 +271,6 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
 
                 ])
                 ->columnSpan(1)
-                ->disabled(function (?PublishedInitiative $record) {
-                    if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
-                    else if ($record?->is_published) return true;
-                })
                 ->columns(),
 
                 Group::make()->schema([
@@ -265,7 +291,10 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
                             ])
                             ->disk('s3_public')
                             ->collection('article-featured-image'),
-                    ]),
+                    ])->disabled(function ($operation) {
+                            if (Auth::user()->can('upload_weekly::focus')) return false;
+                            else return true;
+                        }),
                     Section::make('Topic at a glance')
                         ->schema([
                             Select::make('infographic_id')
@@ -313,11 +342,11 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
                                             'image/svg'
                                         ]),
                                 ])
-                                ->disabled(function () {
+                                ->disabled(function ($operation) {
+                                    if ($operation === 'create') return true;
                                     if (Auth::user()->can('upload_weekly::focus')) return false;
                                     else return true;
-                                })
-                                ->disabledOn('create'),
+                                }),
                         ])->columnSpan(1),
 
                     Section::make("In Conversation")
@@ -405,11 +434,11 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
 
                                     ])->columnSpan(1)
                                 ])
-                                ->disabled(function () {
+                                ->disabled(function ($operation) {
+                                    if ($operation === 'create') return true;
                                     if (Auth::user()->can('upload_weekly::focus')) return false;
                                     else return true;
-                                })
-                                ->disabledOn('create'),
+                                }),
                         ])->columnSpan(1),
                 ])
             ]);
@@ -457,6 +486,7 @@ class WeeklyFocusResource extends Resource implements HasShieldPermissions
             'create',
             'edit',
             'upload',
+            'assign',
             'delete',
         ];
     }

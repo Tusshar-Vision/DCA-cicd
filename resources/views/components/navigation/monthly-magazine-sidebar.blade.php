@@ -102,7 +102,10 @@
                                                     class="py-[5px] cursor-pointer hover:brand-color text-clip text-sm"
                                                     :class="{'brand-color': openItem == {{$index}}}">
                                                     <a class="flex text-base[16px] font-normal hover:brand-color }}">
-                                                        <span class="mr-1">{{ $loop->iteration }}<em>.</em></span> {{ $article->shortTitle ?? $article->title }}
+                                                        <span class="mr-1">
+                                                            {{ $loop->parent->parent->iteration }}.{{ $loop->parent->iteration }}.{{ $loop->iteration }}
+                                                        </span>
+                                                        {{ $article->shortTitle ?? $article->title }}
                                                     </a>
                                                 </li>
                                             @endforeach

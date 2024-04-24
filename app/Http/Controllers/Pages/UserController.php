@@ -32,6 +32,7 @@ class UserController extends Controller
     public function dashboard()
     {
         $read_histories = $this->student->readHistories()->orderBy('updated_at', 'desc')->with('article')->get()->map(function ($history) {
+            if (!$history->article) return null;
             $history->title = $history->article->short_title ?? $history->article->title;
             $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
             $history->url = ArticleService::getArticleUrl($history->article);
@@ -173,10 +174,29 @@ class UserController extends Controller
         return response()->json(['status' => 201]);
     }
 
+    public function searchReadHistory($param)
+    {
+        $read_histories = $this->student->readHistories()->whereHas('article', function ($articleQuery) use ($param) {
+            $articleQuery->where('short_title', 'like', "%$param%")->orWhere('title', 'like', "%$param%");
+        })->with('article')->get()->map(function ($history) {
+            if (!$history->article) return null;
+            $history->title = $history->article->short_title ?? $history->article->title;
+            $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
+            $history->url = ArticleService::getArticleUrl($history->article);
+            $history->img = $history->article->getFirstMediaUrl("article-featured-image");
+            $history->read_at = Carbon::parse($history->updated_at)->format('Y-m-d');
+
+            return $history->only(['title', 'published_at', 'url', 'img', 'read_at']);
+        });
+
+        return response()->json(['data' => $read_histories]);
+    }
+
     public function bookmarks()
     {
         $bookmarks = $this->student->bookmarks()->orderBy('created_at', 'desc')->with('article')->get()->map(function ($history) {
-            $history->title = $history->article->title;
+            if (!$history->article) return null;
+            $history->title =  $history->article->short_title ?? $history->article->title;
             $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
             $history->url = ArticleService::getArticleUrl($history->article);
             $history->img = $history->article->getFirstMediaUrl("article-featured-image");
@@ -197,6 +217,23 @@ class UserController extends Controller
         }
         $bookmark = Bookmark::create($inputs);
         return response()->json(['status' => 201]);
+    }
+
+    public function searchBookmark($param)
+    {
+        $bookmarks = $this->student->bookmarks()->whereHas('article', function ($articleQuery) use ($param) {
+            $articleQuery->where('short_title', 'like', "%$param%")->orWhere('title', 'like', "%$param%");
+        })->orderBy('created_at', 'desc')->with('article')->get()->map(function ($history) {
+            if (!$history->article) return null;
+            $history->title = $history->article->short_title ?? $history->article->title;
+            $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
+            $history->url = ArticleService::getArticleUrl($history->article);
+            $history->img = $history->article->getFirstMediaUrl("article-featured-image");
+
+            return $history->only(['title', 'published_at', 'url', 'img']);
+        });
+
+        return response()->json(['data' => $bookmarks]);
     }
 
     public function myContent($type = null)

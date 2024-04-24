@@ -17,6 +17,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 use Webklex\PDFMerger\Facades\PDFMergerFacade as PDFMerger;
 
 class GenerateArticlePDF implements ShouldQueue
@@ -38,7 +40,11 @@ class GenerateArticlePDF implements ShouldQueue
     public function handle(FileManagerService $fileManagerService, PublishedInitiative $publishedInitiative): void
     {
         $this->articles->each(function ($article) use($fileManagerService) {
-            $fileManagerService->generateArticlePdf($article);
+            try {
+                $fileManagerService->generateArticlePdf($article);
+            } catch (FileDoesNotExist|FileIsTooBig $e) {
+                logger($e);
+            }
         });
 
         Notification::make()
