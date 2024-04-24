@@ -227,12 +227,9 @@
                                 square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$text}}"></li>`
                                 @endforeach
 }
-
-setTimeout(() => {
      showDailyNews()
  showWeeklyFocus()
  showMonthlyMagazine()
-}, 200)
 
  searchBox.addEventListener("change", function() {
     const query = searchBox.value;
