@@ -12,7 +12,7 @@ use Illuminate\View\Component;
 class Initiatives extends Component
 {
     private $initiatives;
-    private $weeklyFocusData, $monthlyMagazineData, $moreData;
+    private $weeklyFocusData, $monthlyMagazineData, $moreData, $videoData;
 
     /**
      * Create a new component instance.
@@ -28,6 +28,7 @@ class Initiatives extends Component
             $this->weeklyFocusData = $initiativeService->getMenuData(\App\Enums\Initiatives::WEEKLY_FOCUS);
             $this->monthlyMagazineData = $initiativeService->getMenuData(\App\Enums\Initiatives::MONTHLY_MAGAZINE);
             $this->moreData = $initiativeService->getMenuData(\App\Enums\Initiatives::MORE);
+            $this->videoData = $initiativeService->getMenuData(\App\Enums\Initiatives::VIDEOS);
         }
     }
 
@@ -42,6 +43,7 @@ class Initiatives extends Component
                 'monthlyMagazine' => $this->monthlyMagazineData,
                 'weeklyFocus' => $this->weeklyFocusData,
                 'more' => $this->moreData,
+                'videos' => $this->videoData,
             ]
         ]);
     }

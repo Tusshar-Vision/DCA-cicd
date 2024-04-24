@@ -87,6 +87,10 @@ class MonthlyMagazineResource extends Resource implements HasShieldPermissions
                                     };
                                 }
                             ])
+                            ->disabled(function (?PublishedInitiative $record) {
+                                if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                                else if ($record?->is_published) return true;
+                            })
                             ->live(),
 
                         Forms\Components\TextInput::make('name')->rules([
@@ -133,6 +137,10 @@ class MonthlyMagazineResource extends Resource implements HasShieldPermissions
                         ),
                     ])
                     ->columns()
+                    ->disabled(function (?PublishedInitiative $record) {
+                        if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                        else if ($record?->is_published) return true;
+                    })
                     ->columnSpanFull(),
 
 //                    Select::make('language_id')
@@ -150,10 +158,10 @@ class MonthlyMagazineResource extends Resource implements HasShieldPermissions
                         ->collection('monthly-magazine')
                         ->acceptedFileTypes(['application/pdf'])
                         ->visibility('private')
-                        ->visible(function (?PublishedInitiative $record) {
-                            if (Auth::user()->can('upload_monthly::magazine')) return true;
-                            else if ($record !== null && $record->hasMedia('monthly-magazine')) return true;
-                            else return false;
+                        ->disabled(function (?PublishedInitiative $record) {
+                            if (Auth::user()->can('upload_monthly::magazine')) return false;
+                            else if ($record !== null && $record->hasMedia('monthly-magazine')) return false;
+                            else return true;
                         })
                         ->openable()
                         ->deletable(function (?PublishedInitiative $record) {
@@ -166,11 +174,7 @@ class MonthlyMagazineResource extends Resource implements HasShieldPermissions
                         ->columnSpanFull(),
 
                 ])
-                ->columns()
-                ->disabled(function (?PublishedInitiative $record) {
-                    if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
-                    else if ($record?->is_published) return true;
-                }),
+                ->columns(),
             ]);
     }
 
@@ -216,6 +220,7 @@ class MonthlyMagazineResource extends Resource implements HasShieldPermissions
             'create',
             'edit',
             'upload',
+            'assign',
             'delete',
         ];
     }

@@ -33,13 +33,13 @@
         <div class="flex flex-col justify-center items-center w-full">
             <div class="flex flex-col space-y-12 w-full">
                 <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-3">
-                    @if(empty($article->relatedTerms))
+                    @if($article->relatedTerms->isNotEmpty())
                         <x-widgets.related-terms :related-terms="$article->relatedTerms" />
                     @endif
-                    @if(empty($article->relatedArticles))
+                    @if($article->relatedArticles->isNotEmpty())
                         <x-widgets.related-articles :related-articles="$article->relatedArticles" />
                     @endif
-                    @if(empty($article->relatedVideos))
+                    @if($article->relatedVideos->isNotEmpty())
                         <x-widgets.related-videos :related-videos="$article->relatedVideos" />
                     @endif
                 </div>
@@ -86,6 +86,9 @@
         // Show/hide scroll to top button based on scroll position
         window.onscroll = function() {
             let scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+            if (scrollToTopBtn === null) return;
+
             if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
                 scrollToTopBtn.style.display = 'block';
             } else {

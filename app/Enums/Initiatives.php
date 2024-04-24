@@ -19,4 +19,10 @@ enum Initiatives : string {
     case BUDGET = "Budget";
     case YEAR_END_REVIEW = "Year End Review";
     case PLANET_VISION = "Planet Vision";
+    case VIDEOS = "Videos";
+    case DAILY_NEWS = "Daily News";
+    case IN_CONVERSATION = "In Conversation";
+    case SIMPLIFIED_BY_VISIONIAS = "Simplified by Visionias";
+    case PERSONALITY_IN_FOCUS = "Personality In Focus";
+    case SCHEME_IN_FOCUS = "Schema In Focus";
 }

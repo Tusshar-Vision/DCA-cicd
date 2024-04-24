@@ -8,7 +8,10 @@ use App\Filament\Resources\ArticleResource;
 use App\Filament\Resources\BudgetResource;
 use App\Filament\Resources\CommentResource;
 use App\Filament\Resources\EconomicSurveyResource;
+use App\Filament\Resources\PersonalityInFocusResource;
 use App\Filament\Resources\QuarterlyRevisionResource;
+use App\Filament\Resources\SchemeInFocusResource;
+use App\Filament\Resources\SimplifiedResource;
 use App\Filament\Resources\ThePlanetVisionResource;
 use App\Filament\Resources\ValueAddedOptionalResource;
 use App\Filament\Resources\InfographicsResource;
@@ -70,6 +73,9 @@ class AdminPanelProvider extends PanelProvider
                         QuarterlyRevisionResource::class,
                         YearEndReviewResource::class,
                         ThePlanetVisionResource::class,
+                        PersonalityInFocusResource::class,
+                        SchemeInFocusResource::class,
+                        SimplifiedResource::class,
                         InfographicsResource::class,
                         VideoResource::class,
                         CommentResource::class,
@@ -96,8 +102,7 @@ class AdminPanelProvider extends PanelProvider
                 FilamentShieldPlugin::make()
                     ->gridColumns([
                         'default' => 1,
-                        'sm' => 2,
-                        'lg' => 3
+                        'lg' => 2
                     ])
                     ->sectionColumnSpan(1)
                     ->checkboxListColumns([
@@ -152,10 +157,13 @@ class AdminPanelProvider extends PanelProvider
                 'User Management',
                 'Create Articles',
                 'Other Uploads',
+                'Videos',
                 'Media'
             ])
+            ->unsavedChangesAlerts()
             ->globalSearch(false)
             ->sidebarCollapsibleOnDesktop()
+            ->passwordReset()
             ->spa();
     }
 }
