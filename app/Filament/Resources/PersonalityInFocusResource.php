@@ -3,17 +3,26 @@
 namespace App\Filament\Resources;
 
 use App\Enums\Initiatives;
+use App\Enums\InitiativeTopics;
 use App\Filament\Resources\PersonalityInFocusResource\Pages;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
+use App\Models\Video;
 use App\Traits\Filament\VideoResourceSchema;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\SpatieTagsInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -22,6 +31,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Component as Livewire;
 
 class PersonalityInFocusResource extends Resource implements HasShieldPermissions
 {
@@ -83,28 +93,90 @@ class PersonalityInFocusResource extends Resource implements HasShieldPermission
 
                         Hidden::make('language_id')->default(1),
 
-                        Forms\Components\SpatieMediaLibraryFileUpload::make('Upload pdf File')
-                            ->name('file')
-                            ->acceptedFileTypes(['application/pdf'])
-                            ->collection('mains-365')
-                            ->visibility('private')
-                            ->visible(function (?PublishedInitiative $record) {
-                                if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer'])) return true;
-                                else if ($record !== null && $record->hasMedia('mains-365')) return true;
-                                else return false;
-                            })
-                            ->openable()
-                            ->deletable(function (?PublishedInitiative $record) {
-                                if ($record !== null && $record->is_published === true) {
-                                    return Auth::user()->hasAnyRole(['admin', 'super_admin']);
-                                } else {
-                                    return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer']);
-                                }
-                            })
-                            ->required()
-                            ->columnSpanFull(),
+                    ])->columns(1)->columnSpan(1),
 
-                    ])->columns(2)->columnSpanFull(),
+                    Forms\Components\Section::make("Video")
+                        ->schema([
+                            Select::make('video_id')
+                                ->hiddenLabel()
+                                ->searchable()
+                                ->relationship('video', 'title')
+                                ->createOptionForm([
+                                    Section::make()->schema([
+                                        TextInput::make('title')->required(),
+                                        Textarea::make('description')->label('Description'),
+                                        SpatieTagsInput::make('tags')
+                                            ->required(),
+
+                                        Hidden::make('initiative_topic_id')
+                                            ->default(InitiativesHelper::getInitiativeTopicID(InitiativeTopics::ALL))
+                                            ->required()
+                                    ])->columnSpan(1),
+
+                                    Section::make()->schema([
+
+                                        Toggle::make('is_url')
+                                            ->label('Provide URL')
+                                            ->reactive(),
+
+                                        SpatieMediaLibraryFileUpload::make('Video')
+                                            ->hidden(function (callable $get) {
+                                                return $get('is_url');
+                                            })
+                                            ->id('video')
+                                            ->collection('video')
+                                            ->visibility('private')
+                                            ->visible(function (?Video $record) {
+                                                if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer'])) return true;
+                                                else if ($record !== null && $record->hasMedia('infographic')) return true;
+                                                else return false;
+                                            })
+                                            ->openable()
+                                            ->deletable(function (?Video $record) {
+                                                if ($record !== null && $record?->is_published === true) {
+                                                    return Auth::user()->hasAnyRole(['admin', 'super_admin']);
+                                                } else {
+                                                    return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer']);
+                                                }
+                                            })
+                                            ->required()
+                                            ->acceptedFileTypes([
+                                                'video/mp4',         // MP4 videos
+                                                'video/webm',        // WebM videos
+                                                'video/ogg',
+                                            ])
+                                            ->previewable(),
+
+                                        TextInput::make('url')
+                                            ->visible(function (callable $get) {
+                                                return $get('is_url');
+                                            })
+                                            ->label('Video URL')
+                                            ->required()
+                                            ->activeUrl(true),
+
+                                        Group::make()->schema([
+
+                                            Hidden::make('language_id')
+                                                ->required()
+                                                ->default(function (Livewire $livewire) {
+                                                    return $livewire->record->language_id;
+                                                }),
+
+                                        ])->columns(1),
+
+                                        Hidden::make('author_id')->default(function () {
+                                            return Auth::user()->id;
+                                        })
+
+                                    ])->columnSpan(1)
+                                ])
+                                ->disabled(function ($operation) {
+                                    if ($operation === 'create') return true;
+                                    if (Auth::user()->can('upload_news::today')) return false;
+                                    else return true;
+                                }),
+                        ])->columnSpan(1)
                 ]),
             ]);
     }
