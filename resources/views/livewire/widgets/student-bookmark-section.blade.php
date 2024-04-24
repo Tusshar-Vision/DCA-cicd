@@ -13,6 +13,7 @@
                     <div class="bookmark-list-wrap">
             <ul id="bookmarks-container">
                 @foreach ($bookmarks as $bookmark)
+                @if($bookmark!=null)
                     <li>
                         {{-- <img src="{{  $bookmark['img'] ?? URL::asset('images/card-image-small.png') }}" alt="" width='129' height='120'> --}}
                         <a href="{{$bookmark['url']}}" class="bookmark-cont">
@@ -20,6 +21,7 @@
                             <p>{{ $bookmark['title'] }}</p>
                         </a>
                     </li>
+                    @endif
                 @endforeach
             </ul>
         </div>
@@ -42,12 +44,14 @@ const searchBox  = document.getElementById("history-searchbox");
         const histories = data.data;
         let html = "";
         histories.map(bookmark => {
-                  html += `<li>
+                  if(bookmark!=null) {
+                    html += `<li>
                         <a href="${bookmark['url']}" class="bookmark-cont">
                             <span>${bookmark['published_at']}</span>
                             <p>${bookmark['title']}</p>
                         </a>
                     </li>`
+                  }
         })
         
         document.getElementById("bookmarks-container").innerHTML = html;
