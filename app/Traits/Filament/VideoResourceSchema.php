@@ -70,7 +70,13 @@ trait VideoResourceSchema
                     ->icon('heroicon-s-eye')
                     ->tooltip('View')
                     ->iconButton()
-                    ->url(fn (PublishedInitiative $record): string|null => $record->getFirstMedia(static::getCollectionName())?->getTemporaryUrl(now()->add('minutes', 120)))
+                    ->url(function (PublishedInitiative $record): string|null {
+                        if ($record->video->is_url) {
+                            return $record->video->url;
+                        } else {
+                            return $record->getFirstMedia(static::getCollectionName())?->getTemporaryUrl(now()->add('minutes', 120));
+                        }
+                    })
                     ->openUrlInNewTab(),
                 EditAction::make()
                     ->tooltip('Edit')

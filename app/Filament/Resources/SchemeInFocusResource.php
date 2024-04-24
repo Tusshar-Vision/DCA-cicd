@@ -3,13 +3,26 @@
 namespace App\Filament\Resources;
 
 use App\Enums\Initiatives;
+use App\Enums\InitiativeTopics;
 use App\Filament\Resources\SchemeInFocusResource\Pages;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
+use App\Models\Video;
 use App\Traits\Filament\VideoResourceSchema;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
+use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\SpatieTagsInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -18,6 +31,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Component as Livewire;
 
 class SchemeInFocusResource extends Resource implements HasShieldPermissions
 {
@@ -36,26 +50,132 @@ class SchemeInFocusResource extends Resource implements HasShieldPermissions
     {
         return $form
             ->schema([
-                //
-            ]);
-    }
+                Forms\Components\Section::make()->schema([
 
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                //
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                    Forms\Components\Hidden::make('initiative_id')
+                        ->default(InitiativesHelper::getInitiativeID(Initiatives::SCHEME_IN_FOCUS)),
+
+                    Forms\Components\Group::make()->schema([
+
+                        DatePicker::make('published_at')
+                            ->native(false)
+                            ->closeOnDateSelection()
+                            ->label('Publish At')
+                            ->required()
+                            ->default(Carbon::now()->format('Y-m-d'))
+                            ->live(),
+
+                        Forms\Components\TextInput::make('name')
+                            ->suffixAction(Forms\Components\Actions\Action::make('Generate')
+                                ->icon('heroicon-s-cog-8-tooth')
+                                ->iconButton()
+                                ->action(function (callable $get, callable $set) {
+                                    $set('name', static::generateName($get('published_at')));
+                                })
+                            )->required(),
+
+                        Select::make('initiative_topic_id')
+                            ->searchable()
+                            ->preload()
+                            ->relationship('topic', 'name')
+                            ->label('Subject'),
+
+//                        Select::make('language_id')
+//                            ->relationship('language', 'name', function ($query) {
+//                                return $query->orderBy('order_column');
+//                            })
+//                            ->label('Language')
+//                            ->required()
+//                            ->selectablePlaceholder(false)
+//                            ->default(1),
+
+                        Hidden::make('language_id')->default(1),
+
+                    ]),
+                ])->columnSpan(1),
+
+                Forms\Components\Section::make("Video")
+                    ->schema([
+                        Select::make('video_id')
+                            ->hiddenLabel()
+                            ->searchable()
+                            ->relationship('video', 'title')
+                            ->createOptionForm([
+                                Section::make()->schema([
+                                    TextInput::make('title')->required(),
+                                    Textarea::make('description')->label('Description'),
+                                    SpatieTagsInput::make('tags')
+                                        ->required(),
+
+                                    Hidden::make('initiative_topic_id')
+                                        ->default(InitiativesHelper::getInitiativeTopicID(InitiativeTopics::ALL))
+                                        ->required()
+                                ])->columnSpan(1),
+
+                                Section::make()->schema([
+
+                                    Toggle::make('is_url')
+                                        ->label('Provide URL')
+                                        ->reactive(),
+
+                                    SpatieMediaLibraryFileUpload::make('Video')
+                                        ->hidden(function (callable $get) {
+                                            return $get('is_url');
+                                        })
+                                        ->id('video')
+                                        ->collection('video')
+                                        ->visibility('private')
+                                        ->visible(function (?Video $record) {
+                                            if (Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer'])) return true;
+                                            else if ($record !== null && $record->hasMedia('infographic')) return true;
+                                            else return false;
+                                        })
+                                        ->openable()
+                                        ->deletable(function (?Video $record) {
+                                            if ($record !== null && $record?->is_published === true) {
+                                                return Auth::user()->hasAnyRole(['admin', 'super_admin']);
+                                            } else {
+                                                return Auth::user()->hasAnyRole(['admin', 'super_admin', 'reviewer']);
+                                            }
+                                        })
+                                        ->required()
+                                        ->acceptedFileTypes([
+                                            'video/mp4',         // MP4 videos
+                                            'video/webm',        // WebM videos
+                                            'video/ogg',
+                                        ])
+                                        ->previewable(),
+
+                                    TextInput::make('url')
+                                        ->visible(function (callable $get) {
+                                            return $get('is_url');
+                                        })
+                                        ->label('Video URL')
+                                        ->required()
+                                        ->activeUrl(true),
+
+                                    Group::make()->schema([
+
+                                        Hidden::make('language_id')
+                                            ->required()
+                                            ->default(function (Livewire $livewire) {
+                                                return $livewire->record->language_id;
+                                            }),
+
+                                    ])->columns(1),
+
+                                    Hidden::make('author_id')->default(function () {
+                                        return Auth::user()->id;
+                                    })
+
+                                ])->columnSpan(1)
+                            ])
+                            ->disabled(function ($operation) {
+                                if ($operation === 'create') return true;
+                                if (Auth::user()->can('edit_scheme::in::focus')) return false;
+                                else return true;
+                            }),
+                    ])->columnSpan(1)
             ]);
     }
 
