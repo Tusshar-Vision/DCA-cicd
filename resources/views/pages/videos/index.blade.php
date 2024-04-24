@@ -1,5 +1,4 @@
 @extends('layouts.video-ecosystem')
-@section('title', 'Latest Videos | Current Affairs')
 
 @section('videos')
     @foreach($allVideos as $videos)

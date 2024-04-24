@@ -16,55 +16,61 @@ class VideosController extends Controller
     }
     public function index()
     {
-        $allVideos = $this->mediaService->getAllVideos();
+        $videos = $this->mediaService->getAllVideos();
 
         return View('pages.videos.index', [
-            'allVideos' => $allVideos
+            'allVideos' => $videos,
+            'title' => 'Latest Videos'
         ]);
     }
 
     public function renderDailyNews()
     {
-        $allVideos = $this->mediaService->getVideos(InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY));
+        $videos = $this->mediaService->getVideos(InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY));
 
-        return View('pages.videos.index', [
-            'allVideos' => $allVideos
+        return View('pages.videos.daily-news', [
+            'videos' => $videos,
+            'title' => 'Daily News',
         ]);
     }
 
     public function renderInConversation()
     {
-        $allVideos = $this->mediaService->getAllVideos();
+        $videos = $this->mediaService->getVideos(InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS));
 
-        return View('pages.videos.index', [
-            'allVideos' => $allVideos
+        return View('pages.videos.in-conversation', [
+            'videos' => $videos,
+            'title' => 'In-Conversation',
         ]);
     }
 
     public function renderSimplifiedByVisionIAS()
     {
-        $allVideos = $this->mediaService->getAllVideos();
+        $videos = $this->mediaService->getVideos(InitiativesHelper::getInitiativeID(Initiatives::SIMPLIFIED_BY_VISIONIAS));
 
-        return View('pages.videos.index', [
-            'allVideos' => $allVideos
+        return View('pages.videos.simplified', [
+            'videos' => $videos,
+            'title' => 'Simplified by Vision IAS',
         ]);
     }
 
     public function renderPersonalityInFocus()
     {
-        $allVideos = $this->mediaService->getAllVideos();
+        $videos = $this->mediaService->getVideos(InitiativesHelper::getInitiativeID(Initiatives::PERSONALITY_IN_FOCUS));
 
-        return View('pages.videos.index', [
-            'allVideos' => $allVideos
+        return View('pages.videos.personality-in-focus', [
+            'videos' => $videos,
+            'title' => 'Personality In Focus',
         ]);
     }
 
     public function renderSchemeInFocus()
     {
-        $allVideos = $this->mediaService->getAllVideos();
+        $videos = $this->mediaService->getVideos(InitiativesHelper::getInitiativeID(Initiatives::SCHEME_IN_FOCUS));
 
-        return View('pages.videos.index', [
-            'allVideos' => $allVideos
+        return View('pages.videos.scheme-in-focus', [
+            'videos' => $videos,
+            'title' => 'Scheme In Focus',
         ]);
     }
 }
