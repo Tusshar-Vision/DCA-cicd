@@ -8,7 +8,7 @@
 <div
     x-data="{ isOpen: true }"
     x-init="isOpen = window.innerWidth > 768"
-    class="flex flex-col rounded bg-visionGray pb-4 lg:mt-10 mt-0 dark:bg-[#373839] dark:text-white"
+    class="flex flex-col rounded pb-4 lg:mt-10 mt-0 dark:bg-[#373839] dark:text-white"
     x-cloak
 >
 
@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <div id="table-of-content" x-show="isOpen" class="h-[220px] customScroll overflow-y-auto" x-transition>
+        <div id="table-of-content" x-show="isOpen" class="h-auto lg:h-[220px] customScroll overflow-y-auto" x-transition>
             <ul class="list-none ml-0">
                 <?php $i = 0; ?>
                 @foreach($tableOfContent as $key => $header)

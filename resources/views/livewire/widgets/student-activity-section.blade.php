@@ -20,7 +20,7 @@
                     </div>
                 </div> --}}
             </div>
-            <div id="histories-container" class="vi-left-child-item-list">
+            <div id="histories-container" class="vi-left-child-item-list max-h-[250px] lg:max-h-[450px] overflow-y-auto">
                 <!-- Single card -->
                 @foreach ($readHistories as $history)
                     @if($history!=null)

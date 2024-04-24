@@ -19,7 +19,7 @@
     </div>
 @endif
 
-<div class="flex flex-col rounded bg-visionGray dark:bg-[#373839] dark:text-white lg:mt-0 mt-8 {{ $mediaFile === null ? 'opacity-50 pointer-events-none' : '' }}">
+<div class="flex flex-col rounded border-top dark:bg-[#373839] dark:text-white lg:mt-0 mt-8 {{ $mediaFile === null ? 'opacity-50 pointer-events-none' : '' }}">
     <a href="{{ $mediaFile ? route('download', ['media' => $mediaFile]): "#"}}" target="_blank">
         <div class="my-8 mx-6">
             <div class="flex items-center justify-between">
