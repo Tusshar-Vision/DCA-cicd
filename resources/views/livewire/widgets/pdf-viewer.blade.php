@@ -30,7 +30,7 @@
 </div>
 
 <div class="overflow-auto h-lvh">
-  <div id="pdfViewer"></div>
+  <div id="pdfViewer" class="overflow-auto"></div>
 </div>
 
 <script src="{{URL::asset('js/pdf/pdf.mjs')}}" type="module"></script>
