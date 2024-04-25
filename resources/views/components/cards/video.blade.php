@@ -17,10 +17,12 @@
             }
         @endphp
     @else
-        <video class="video" width="100%" controls>
-            <source src="{{ $source?->media?->first()?->getTemporaryUrl(now()->add('minutes', 120)) }}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+        <div class='max-w-[100%] min-h-52 mt-4 overflow-hidden'>
+            <video class="video" width="100%" controls>
+                <source src="{{ $source?->media?->first()?->getTemporaryUrl(now()->add('minutes', 120)) }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
     @endif
 
     <p class="font-semibold text-base text-justify">{{ $source?->title }}</p>
