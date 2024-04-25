@@ -13,7 +13,6 @@ readonly class MediaService
     public function __construct(
         private Media $media,
         private Infographic $infographic,
-        private Video $video,
         private PublishedInitiative $publishedInitiative
     ) {
     }
@@ -25,15 +24,13 @@ readonly class MediaService
 
     public function getLatestVideos(int $limit = 2): Collection|array
     {
-        return $this->video->has('publishedInitiatives')->latest()->with('media')->limit($limit)->get();
-    }
-
-    public function getAllVideos(): Collection|array
-    {
-        $publishedInitiatives = $this->publishedInitiative->has('video')->with('video.media')->get();
-        $groupedInitiatives = $publishedInitiatives->groupBy('initiative_id');
-
-        return $groupedInitiatives;
+        return $this->publishedInitiative
+            ->isPublished()
+            ->has('video')
+            ->with('video.media')
+            ->orderByDesc('published_at')
+            ->limit($limit)
+            ->get();
     }
 
     public function getVideos($initiativeId): Collection|array
