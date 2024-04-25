@@ -1,16 +1,19 @@
 <div>
     <div class="flex justify-between items-center w-full mb-4">
-        <div class="flex  justify-between items-center md:mb-[0.7rem] gap-1 sm:mt-4 sm:ml-4 sm:mb-4  false">
-            <div class="flex md:w-4/5 sm:w-full justify-start">
-                <div class="!inline-flex w-4/5 h-[32px] gap-2 items-center overflow-y-clip overflow-x-auto ">
-                    <span class="truncate cursor-pointer text-[18px] min-w-fit  font-medium leading-[32px] hover:text-primaryLight dark:text-white dark:hover:text-primaryDark ">
-                        <div class="sm:text-[14px] flex items-center">
-                            <span style="box-sizing: border-box; display: inline-block; overflow: hidden; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;">
-                                <span style="box-sizing: border-box; display: block; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;">
-                                    <img alt="" aria-hidden="true" src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2718%27%20height=%2718%27/%3e" style="display: block; max-width: 100%; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"></span><img alt="Back Arrow" src="/icons/back_arrow.svg" decoding="async" data-nimg="intrinsic" class="cursor-pointer dark:!invert" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"></span><span class="sm:text-[14px] ml-1">Current Affairs</span></div></span><span class="truncate cursor-pointer text-[18px] min-w-fit  font-medium leading-[32px] hover:text-primaryLight dark:text-white dark:hover:text-primaryDark "><span class="sm:text-[14px]"><span> / </span>News Today English</span></span><span class="truncate cursor-pointer text-[18px] min-w-fit  font-medium leading-[32px] hover:text-primaryLight dark:text-white dark:hover:text-primaryDark "><span class="sm:text-[14px]"><span> / </span>April</span></span><span class="truncate cursor-pointer text-[18px] min-w-fit  font-medium leading-[32px] hover:text-primaryLight dark:text-white dark:hover:text-primaryDark  text-primaryLight dark:text-primaryDark pointer-events-none"><span class="sm:text-[14px]"><span> / </span>24 April 2024</span></span></div></div></div>
-        <div>
+        <ul class="flex justify-start items-center">
+            <li class="pr-4">
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="16" viewBox="0 0 8 16" fill="none" class="cursor-pointer">
+                        <path d="M6.86719 15.0156L0.99998 8.49977" stroke="#242424" stroke-linecap="round"/>
+                        <line x1="0.5" y1="-0.5" x2="9.61301" y2="-0.5" transform="matrix(-0.654931 0.755689 0.654931 0.755689 7.65625 1.30469)" stroke="#242424" stroke-linecap="round"/>
+                    </svg>    
+                </a>
+            </li>
+            <li class="pr-2"><a href="#">Back</a></li>
+        </ul>
+        <div class="flex">
             <button id="full-screen-btn" class="mr-4">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M8 3V5H4V9H2V3H8ZM2 21V15H4V19H8V21H2ZM22 21H16V19H20V15H22V21ZM22 9H20V5H16V3H22V9Z" fill="#000"/>
                 </svg>
             </button>
@@ -19,7 +22,7 @@
                 </svg>
             </button>
             <button id="full-screen-btn" class="mr-4">
-                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="16" height="16" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_4443_39274)">
                     <path d="M11.8945 9.72656C11.0261 9.72656 10.2609 10.1537 9.78026 10.8034L5.62471 8.67551C5.6937 8.44034 5.74219 8.19662 5.74219 7.93945C5.74219 7.59064 5.67067 7.25903 5.54713 6.95402L9.8961 4.33699C10.3801 4.905 11.0915 5.27344 11.8945 5.27344C13.3485 5.27344 14.5312 4.09069 14.5312 2.63672C14.5312 1.18274 13.3485 0 11.8945 0C10.4406 0 9.25781 1.18274 9.25781 2.63672C9.25781 2.97179 9.32681 3.28963 9.44127 3.58471L5.07935 6.20941C4.59577 5.65828 3.89464 5.30273 3.10547 5.30273C1.65149 5.30273 0.46875 6.48548 0.46875 7.93945C0.46875 9.39343 1.65149 10.5762 3.10547 10.5762C3.98818 10.5762 4.76634 10.1365 5.24517 9.46857L9.38704 11.5895C9.31075 11.8358 9.25781 12.0923 9.25781 12.3633C9.25781 13.8173 10.4406 15 11.8945 15C13.3485 15 14.5312 13.8173 14.5312 12.3633C14.5312 10.9093 13.3485 9.72656 11.8945 9.72656Z" fill="#000"/>
                     </g>
@@ -32,7 +35,7 @@
             </button>
             <span id="resize-controls" class="mr-4">
                 <span id="decrease-width" class="cursor-pointer text-[20px]">-</span>
-                    <input id="width-percentage" class="text-black w-[80px] font-semibold text-center mx-2 p-[5px] rounded-md" readonly></input>
+                    <input id="width-percentage" class="text-black w-[70px] font-semibold text-center mx-2 p-[3px] rounded-md" readonly></input>
                 <span id="increase-width" class="cursor-pointer text-[20px]">+</span>
             </span>
         </div>
