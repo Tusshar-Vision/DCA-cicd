@@ -3,7 +3,7 @@
 @endphp
 
 @if ($initiative === 'monthly-magazine')
-    <div class="flex flex-col rounded bg-visionGray dark:bg-[#373839] dark:text-white mb-4" @click="printDiv">
+    <div class="flex flex-col rounded border-top dark:bg-[#373839] dark:text-white mb-4" @click="printDiv">
         <div class="my-8 mx-6">
             <div class="flex items-center justify-between cursor-pointer">
                 <div class="flex space-x-2">
