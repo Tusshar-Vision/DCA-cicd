@@ -560,7 +560,11 @@
 }
 
 /* ck custom chcanges */
-.ck-content ul, .ck-content ol{ margin-left: 25px;}
+.ck-content ul, .ck-content ol{ 
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 
 .ck-content h1, 
 .ck-content h2, 
