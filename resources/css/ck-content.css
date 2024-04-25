@@ -575,17 +575,17 @@
 
 .ck-content h1 {
     font-size: 36px !important;
-    font-weight: 500;
+    font-weight: 500 !important;
     line-height: 150%;
 }
 .ck-content h2 {
     font-size: 24px !important;
-    font-weight: 600;
+    font-weight: 600 !important;
     line-height: 150%;
 }
 .ck-content h3 {
     font-size: 20px !important;
-    font-weight: 600;
+    font-weight: 600 !important;
     line-height: 150%;
 }
 .ck-content p {
@@ -595,9 +595,11 @@
     font-weight: 400;
     margin-bottom: 15px;
 }
-.ck-content p b{
-    font-weight: 600;
+.ck-content p b,.ck-content p strong,.ck-content strong{
+    font-weight: 600 !important;
+    /* background-color: hsl(60, 97%, 73%); */
 }
+
 .ck-content figure {
     padding-left: 5px !important;
     padding-right: 5px !important;
