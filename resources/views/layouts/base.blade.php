@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
         <title>@yield('title')</title>
         <style>
-            @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&family=Tiro+Devanagari+Hindi&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Tiro+Devanagari+Hindi&display=swap');
         </style>
         @vite('resources/sass/app.scss')
         @livewireStyles
@@ -15,7 +15,7 @@
 
     <body x-data="{
         isAuthFormOpen: false,
-        isDarkModeEnabled: false,
+        isDarkModeEnabled: $persist(false),
         fontSize: 1,
         init() {
             const storedPreference = localStorage.getItem('isDarkModeEnabled');

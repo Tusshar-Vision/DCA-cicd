@@ -135,7 +135,7 @@
 
 <!-- latest video UI section --> 
 <div>
-    <h2 class="text-[40px] text-[#040404] mb-4">Latest Video</h2>
+    <h2 class="text-[40px] text-[#040404] mb-4 dark:text-white">Latest Video</h2>
     <ul class="grid grid-cols-4 gap-6 text-center">
         <li class="bg-slate-400 min-h-[190px] flex items-center justify-center">1</li>
         <li class="bg-slate-600 min-h-[190px] flex items-center justify-center">2</li>

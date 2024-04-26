@@ -16,10 +16,10 @@ class VideosController extends Controller
     }
     public function index()
     {
-        $videos = $this->mediaService->getAllVideos();
+        $videos = $this->mediaService->getLatestVideos(10);
 
         return View('pages.videos.index', [
-            'allVideos' => $videos,
+            'videos' => $videos,
             'title' => 'Latest Videos'
         ]);
     }

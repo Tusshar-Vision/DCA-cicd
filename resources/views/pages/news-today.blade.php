@@ -11,7 +11,7 @@
     >
         <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-8">
 
-            <div class="flex w-full lg:w-2/6 flex-col space-y-4 leftsticky stickyMl-0">
+            <div x-show="isSidePanelOpen" class="flex w-full lg:w-2/6 flex-col space-y-4 leftsticky stickyMl-0" x-transition>
 
                 <img src="{{ asset('images/news-today-logo.svg') }}" alt="News Today Logo" />
 
