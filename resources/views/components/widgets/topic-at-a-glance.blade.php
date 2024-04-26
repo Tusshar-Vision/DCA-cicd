@@ -1,4 +1,4 @@
-<div {{ $attributes }} class="flex flex-col rounded dark:bg-dark373839 bg-visionGray {{ $infographic === null ? 'opacity-50 pointer-events-none' : '' }}" @click="isTopicAtGlanceOpen = !isTopicAtGlanceOpen">
+<div {{ $attributes }} class="flex flex-col rounded dark:bg- border-top {{ $infographic === null ? 'opacity-50 pointer-events-none' : '' }}" @click="isTopicAtGlanceOpen = !isTopicAtGlanceOpen">
     <div class="my-6 mx-6">
         <a href="javascript:void(0)">
             <div class="flex items-center justify-between">

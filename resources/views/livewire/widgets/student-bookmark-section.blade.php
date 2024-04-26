@@ -5,7 +5,7 @@
             <div class="my-contnet-tab-filter">
                 <div class="my-content-search">
                     <div class="search-bar-wrapper">
-                        <input id="history-searchbox" type="search" class="vi-search-bar" placeholder="Search by article name" required="">
+                        <input id="history-searchbox" type="search" class="vi-search-bar dark:bg-dark545557 border-[#686E70] dark:text-white" placeholder="Search by article name" required="">
                         <span class="vi-icons search"></span>
                     </div>
                 </div>
@@ -14,7 +14,7 @@
             <ul id="bookmarks-container">
                 @foreach ($bookmarks as $bookmark)
                 @if($bookmark!=null)
-                    <li>
+                    <li class="bg-[#F7F8F9] dark:bg-dark373839 text-black dark:text-white">
                         {{-- <img src="{{  $bookmark['img'] ?? URL::asset('images/card-image-small.png') }}" alt="" width='129' height='120'> --}}
                         <a href="{{$bookmark['url']}}" class="bookmark-cont">
                             <span>{{ $bookmark['published_at'] }}</span>

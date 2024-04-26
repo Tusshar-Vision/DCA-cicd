@@ -20,7 +20,7 @@
                     </div>
                 </div> --}}
             </div>
-            <div id="histories-container" class="vi-left-child-item-list">
+            <div id="histories-container" class="vi-left-child-item-list max-h-[250px] lg:max-h-[450px] overflow-y-auto">
                 <!-- Single card -->
                 @foreach ($readHistories as $history)
                     @if($history!=null)
@@ -121,15 +121,15 @@
 
 
 <script>
-    const onfocus = document.querySelector('.student-search-field');
-    const showlist = document.querySelector('.student-search-field-container');
-    const searchBox = document.getElementById("history-searchbox");
+    var searchField = document.querySelector('.student-search-field');
+    var showlist = document.querySelector('.student-search-field-container');
+    var searchBox = document.getElementById("history-searchbox");
 
-    onfocus.addEventListener("focus", () => {
+    searchField.addEventListener("focus", () => {
         showlist.classList.add("absoluteSearch");
     });
 
-    onfocus.addEventListener("blur", () => {
+    searchField.addEventListener("blur", () => {
         showlist.classList.remove("absoluteSearch");
     });
 
@@ -227,8 +227,7 @@
                                 square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$text}}"></li>`
                                 @endforeach
 }
-
- showDailyNews()
+     showDailyNews()
  showWeeklyFocus()
  showMonthlyMagazine()
 
