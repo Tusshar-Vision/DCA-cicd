@@ -154,7 +154,7 @@ readonly class DownloadService
         })->with('media', function ($query) {
             $query->where('collection_name', '=', 'monthly-magazine');
         })
-        ->groupByYear();
+            ->groupByYear();
 
         $data = [];
 
@@ -187,5 +187,11 @@ readonly class DownloadService
         $result = $query->with('media')->groupByYear();
 
         return [$years, $result];
+    }
+
+    public function getDownloadableResourceUrl($initiative_id)
+    {
+        $url = $this->publishedInitiative->where('id', $initiative_id)->first()->media->first()->getTemporaryUrl(now()->add('minutes', 120));
+        return $url;
     }
 }

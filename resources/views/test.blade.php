@@ -2,6 +2,8 @@
 
 @section('content')
 
+ <livewire:widgets.pdf-viewer infographic="kjhj" />
+
 <div class="dropdown relative inline-block" id="dropdown1">
     <button class="dropdown-button cursor-pointer p-1 text-[#374957] rotate-90 font-bold text-xs tracking-[5px]" onclick="toggleDropdown('dropdown1')">...</button>
     <div class="dropdown-content absolute right-0 hidden z-10 shadow-lg py-2">

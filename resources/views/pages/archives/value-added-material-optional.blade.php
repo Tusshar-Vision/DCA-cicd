@@ -2,5 +2,5 @@
 @section('title', $title . " | Current Affairs")
 
 @section('archive-content')
-    <livewire:widgets.archives.value-added-material-optional :data="$data" />
+    <livewire:widgets.archives.value-added-material-optional :data="$data" :pdfUrl="$pdfUrl" />
 @endsection
