@@ -56,7 +56,9 @@ trait VideoResourceSchema
                     ->icon('heroicon-s-paper-airplane')
                     ->requiresConfirmation()
                     ->button()
-                    ->visible(fn () => auth()->user()->can(static::getActionPermission()))
+                    ->visible(function (PublishedInitiative $record) {
+                        return auth()->user()->can(static::getActionPermission()) && $record->video !== null;
+                    })
                     ->hidden(function(PublishedInitiative $record) {
                         return $record->is_published === true || $record->trashed();
                     })
@@ -71,7 +73,7 @@ trait VideoResourceSchema
                     ->tooltip('View')
                     ->iconButton()
                     ->url(function (PublishedInitiative $record): string|null {
-                        if ($record->video->is_url) {
+                        if ($record->video?->is_url) {
                             return $record->video->url;
                         } else {
                             return $record->getFirstMedia(static::getCollectionName())?->getTemporaryUrl(now()->add('minutes', 120));

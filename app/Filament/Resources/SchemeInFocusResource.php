@@ -32,6 +32,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component as Livewire;
+use function Clue\StreamFilter\fun;
 
 class SchemeInFocusResource extends Resource implements HasShieldPermissions
 {
@@ -97,6 +98,12 @@ class SchemeInFocusResource extends Resource implements HasShieldPermissions
                 Forms\Components\Section::make("Video")
                     ->schema([
                         Select::make('video_id')
+                            ->required(function ($operation) {
+                                if ($operation === 'edit') {
+                                    return true;
+                                }
+                                return false;
+                            })
                             ->hiddenLabel()
                             ->searchable()
                             ->relationship('video', 'title')

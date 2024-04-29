@@ -97,6 +97,12 @@ class SimplifiedResource extends Resource implements HasShieldPermissions
                 Forms\Components\Section::make("Video")
                     ->schema([
                         Select::make('video_id')
+                            ->required(function ($operation) {
+                                if ($operation === 'edit') {
+                                    return true;
+                                }
+                                return false;
+                            })
                             ->hiddenLabel()
                             ->searchable()
                             ->relationship('video', 'title')
