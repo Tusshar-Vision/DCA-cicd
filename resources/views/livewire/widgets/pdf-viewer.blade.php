@@ -6,7 +6,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="8" height="16" viewBox="0 0 8 16" fill="none" class="cursor-pointer">
                         <path d="M6.86719 15.0156L0.99998 8.49977" stroke="#242424" stroke-linecap="round"/>
                         <line x1="0.5" y1="-0.5" x2="9.61301" y2="-0.5" transform="matrix(-0.654931 0.755689 0.654931 0.755689 7.65625 1.30469)" stroke="#242424" stroke-linecap="round"/>
-                    </svg>    
+                    </svg>
                 </a>
             </li>
             <li class="pr-2"><a href="#">Back</a></li>
@@ -48,9 +48,8 @@
 
     <script src="{{URL::asset('js/pdf/pdf.mjs')}}" type="module"></script>
     <script type="module">
-        var url = "{{URL::asset('images/test.pdf')}}"
-        //var url = "{{$pdf}}"
-        // url = url.replace(/&amp;/g, "&");
+        var url = "{{$pdf}}"
+        url = url.replace(/&amp;/g, "&");
 
         var { pdfjsLib } = globalThis;
         pdfjsLib.GlobalWorkerOptions.workerSrc = "{{URL::asset('js/pdf/pdf.worker.mjs')}}"
