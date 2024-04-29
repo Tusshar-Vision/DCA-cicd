@@ -18,7 +18,7 @@
                         {{-- <img src="{{  $bookmark['img'] ?? URL::asset('images/card-image-small.png') }}" alt="" width='129' height='120'> --}}
                         <a href="{{$bookmark['url']}}" class="bookmark-cont">
                             <span>{{ $bookmark['published_at'] }}</span>
-                            <p>{{ $bookmark['title'] }}</p>
+                            <p class="dark:text-white">{{ $bookmark['title'] }}</p>
                         </a>
                     </li>
                     @endif
