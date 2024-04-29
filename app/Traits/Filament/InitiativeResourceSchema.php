@@ -229,12 +229,14 @@ trait InitiativeResourceSchema
                                 $record->articles->each(function($article) {
                                     if ($article->status === 'Published') {
                                         $article->setStatus('Improve');
+                                        $article->featured = false;
                                         $article->update(['published_at' => null]);
                                     }
                                 });
                                 $record->shortArticles->each(function($article) {
                                     if ($article->status === 'Published') {
                                         $article->setStatus('Improve');
+                                        $article->featured = false;
                                         $article->update(['published_at' => null]);
                                     }
                                 });
