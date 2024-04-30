@@ -2,9 +2,11 @@
 
 namespace App\Traits\Filament\Components;
 
+use App\Enums\Initiatives;
 use App\Filament\Components\SourceInput;
 use App\Filament\Resources\WeeklyFocusResource;
 use App\Forms\Components\CKEditor;
+use App\Helpers\InitiativesHelper;
 use App\Models\Article;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\RichEditor;
@@ -60,7 +62,15 @@ trait ViewAction
                     TextInput::make('section')->disabled(),
                     TextInput::make('subSection')->disabled(),
                 ])->columns(3),
-                SpatieTagsInput::make('tags')->placeholder('')->disabled(),
+                SpatieTagsInput::make('tags')
+                    ->hidden(function (Article $record) {
+                        if ($record->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)) {
+                            return true;
+                        }
+                        return false;
+                    })
+                    ->placeholder('')
+                    ->disabled(),
                 Group::make()->schema([
                     TextInput::make('author')->disabled(),
                     TextInput::make('reviewer')->disabled(),

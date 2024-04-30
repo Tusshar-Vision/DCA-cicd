@@ -19,10 +19,16 @@ class DownloadsController extends Controller
         return response()->redirectToRoute('monthly-magazine.archive');
     }
 
-    public function renderMains365()
+    public function renderMains365($intiative_id = null)
     {
         $year = request()->input('year');
         $month = request()->input('month');
+        $pdfUrl = null;
+
+
+        if ($intiative_id) {
+            $pdfUrl = $this->downloadService->getDownloadableResourceUrl($intiative_id);
+        }
 
         $medias = $this
             ->downloadService
@@ -30,14 +36,20 @@ class DownloadsController extends Controller
 
         return View('pages.archives.mains-365', [
             "title" => "Mains 365 Archive",
-            "data" => $medias
+            "data" => $medias,
+            "pdfUrl" => $pdfUrl
         ]);
     }
 
-    public function renderPT365()
+    public function renderPT365($intiative_id = null)
     {
         $year = request()->input('year');
         $month = request()->input('month');
+        $pdfUrl = null;
+
+        if ($intiative_id) {
+            $pdfUrl = $this->downloadService->getDownloadableResourceUrl($intiative_id);
+        }
 
         $medias = $this
             ->downloadService
@@ -45,14 +57,20 @@ class DownloadsController extends Controller
 
         return View('pages.archives.pt-365', [
             "title" => "PT 365 Archive",
-            "data" => $medias
+            "data" => $medias,
+            "pdfUrl" => $pdfUrl
         ]);
     }
 
-    public function renderEconomicSurvey()
+    public function renderEconomicSurvey($intiative_id = null)
     {
         $year = request()->input('year');
         $month = request()->input('month');
+        $pdfUrl = null;
+
+        if ($intiative_id) {
+            $pdfUrl = $this->downloadService->getDownloadableResourceUrl($intiative_id);
+        }
 
         $medias = $this
             ->downloadService
@@ -60,14 +78,21 @@ class DownloadsController extends Controller
 
         return View('pages.archives.economic-survey', [
             "title" => "Economic Survey Archive",
-            "data" => $medias
+            "data" => $medias,
+            "pdfUrl" => $pdfUrl
         ]);
     }
 
-    public function renderBudget()
+    public function renderBudget($intiative_id = null)
     {
         $year = request()->input('year');
         $month = request()->input('month');
+        $pdfUrl = null;
+
+        if ($intiative_id) {
+            $pdfUrl = $this->downloadService->getDownloadableResourceUrl($intiative_id);
+        }
+
 
         $medias = $this
             ->downloadService
@@ -75,14 +100,21 @@ class DownloadsController extends Controller
 
         return View('pages.archives.budget', [
             "title" => "Budget Archive",
-            "data" => $medias
+            "data" => $medias,
+            "pdfUrl" => $pdfUrl
         ]);
     }
 
-    public function renderValueAddedMaterial()
+    public function renderValueAddedMaterial($intiative_id = null)
     {
         $year = request()->input('year');
         $month = request()->input('month');
+        $pdfUrl = null;
+
+        if ($intiative_id) {
+            $pdfUrl = $this->downloadService->getDownloadableResourceUrl($intiative_id);
+        }
+
 
         $medias = $this
             ->downloadService
@@ -90,14 +122,21 @@ class DownloadsController extends Controller
 
         return View('pages.archives.value-added-material', [
             "title" => "Value Added Material Archive",
-            "data" => $medias
+            "data" => $medias,
+            "pdfUrl" => $pdfUrl
         ]);
     }
 
-    public function renderValueAddedMaterialOptional()
+    public function renderValueAddedMaterialOptional($intiative_id = null)
     {
         $year = request()->input('year');
         $month = request()->input('month');
+        $pdfUrl = null;
+
+        if ($intiative_id) {
+            $pdfUrl = $this->downloadService->getDownloadableResourceUrl($intiative_id);
+        }
+
 
         $medias = $this
             ->downloadService
@@ -105,14 +144,20 @@ class DownloadsController extends Controller
 
         return View('pages.archives.value-added-material-optional', [
             "title" => "Value Added Material Optional Archive",
-            "data" => $medias
+            "data" => $medias,
+            "pdfUrl" => $pdfUrl
         ]);
     }
 
-    public function renderQuarterlyRevisionDocument()
+    public function renderQuarterlyRevisionDocument($intiative_id = null)
     {
         $year = request()->input('year');
         $month = request()->input('month');
+        $pdfUrl = null;
+
+        if ($intiative_id) {
+            $pdfUrl = $this->downloadService->getDownloadableResourceUrl($intiative_id);
+        }
 
         $medias = $this
             ->downloadService
@@ -120,13 +165,19 @@ class DownloadsController extends Controller
 
         return View('pages.archives.quarterly-revision-document', [
             "title" => "Quarterly Revision Document Archive",
-            "data" => $medias
+            "data" => $medias,
+            "pdfUrl" => $pdfUrl
         ]);
     }
 
-    public function renderYearEndReviews()
+    public function renderYearEndReviews($intiative_id = null)
     {
         $year = request()->input('year');
+        $pdfUrl = null;
+
+        if ($intiative_id) {
+            $pdfUrl = $this->downloadService->getDownloadableResourceUrl($intiative_id);
+        }
 
         $medias = $this
             ->downloadService
@@ -134,14 +185,20 @@ class DownloadsController extends Controller
 
         return View('pages.archives.year-end-reviews', [
             "title" => "Year End Reviews Archive",
-            "data" => $medias
+            "data" => $medias,
+            "pdfUrl" => $pdfUrl
         ]);
     }
 
-    public function renderPlanetVision()
+    public function renderPlanetVision($intiative_id = null)
     {
         $year = request()->input('year');
         $month = request()->input('month');
+        $pdfUrl = null;
+
+        if ($intiative_id) {
+            $pdfUrl = $this->downloadService->getDownloadableResourceUrl($intiative_id);
+        }
 
         $medias = $this
             ->downloadService
@@ -149,7 +206,8 @@ class DownloadsController extends Controller
 
         return View('pages.archives.quarterly-revision-document', [
             "title" => "The Planet Vision",
-            "data" => $medias
+            "data" => $medias,
+            "pdfUrl" => $pdfUrl
         ]);
     }
 }

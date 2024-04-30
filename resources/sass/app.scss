@@ -3384,9 +3384,21 @@ iframe {
     }
   }
 
+  .hybrid-text-wrapper .hybrid-left-panel .hybrid-text-row p{
+    color: #CCC;
+  }
+
 }
 
 .large-text {
   font-size: 1.2rem;
 }
 
+/* pdf reader UI */
+#pdfViewer{
+  margin: 0 auto;
+}
+
+#pdfViewer canvas{
+  width: 100% !important;
+}

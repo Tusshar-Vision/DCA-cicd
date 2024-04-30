@@ -6,6 +6,8 @@ use App\Filament\Resources\ArticleResource;
 use App\Filament\Resources\NewsTodayResource\RelationManagers\ArticlesRelationManager as NewsTodayRelationManager;
 use App\Filament\Resources\WeeklyFocusResource\RelationManagers\ArticlesRelationManager as WeeklyFocusRelationManager;
 use App\Filament\Resources\MonthlyMagazineResource\RelationManagers\ArticlesRelationManager as MonthlyMagazineRelationManager;
+use App\Filament\Resources\NewsTodayResource\RelationManagers\ShortArticlesRelationManager as NewsTodayShortArticleRelationManager;
+use App\Filament\Resources\MonthlyMagazineResource\RelationManagers\ShortArticlesRelationManager as MonthlyMagazineShortArticleRelationManager;;
 use App\Filament\Resources\WeeklyFocusResource;
 use App\Jobs\GenerateArticlePDF;
 use App\Models\Article;
@@ -50,9 +52,9 @@ trait ArticleRelationSchema
 
     public static function getActionPermission(): string {
         return match(static::class) {
-            NewsTodayRelationManager::class => 'assign_news::today',
+            NewsTodayRelationManager::class, NewsTodayShortArticleRelationManager::class => 'assign_news::today',
             WeeklyFocusRelationManager::class => 'assign_weekly::focus',
-            MonthlyMagazineRelationManager::class => 'assign_monthly::magazine',
+            MonthlyMagazineRelationManager::class, MonthlyMagazineShortArticleRelationManager::class => 'assign_monthly::magazine',
             default => throw new \Exception("Permission not defined for resource."),
         };
     }
