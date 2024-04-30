@@ -213,12 +213,12 @@
             </div>
         </div>
         <ul class="items-center hidden xl:block">
-            <li class="font-semibold pr-4 xl:pr-6 float-left pt-[2px]">
+            <li class="font-semibold pr-4 xl:pr-6 float-left pt-1">
                 <a class="text-sm hover:text-[#005FAF] font-semibold leading-1 {{ request()->is('/') ? 'text-[#005FAF]' : '' }}" href="{{ route('home') }}" wire:navigate>
                     Home
                 </a>
             </li>
-            <div class="flex pt-[5px]"
+            <div class="flex pt-[5px] items-center"
                  x-data="{
                     isMagazineDropdownOpen: false,
                     isWeeklyDropdownOpen: false,
@@ -248,9 +248,8 @@
                                 <a class="hover:text-[#005FAF] {{ request()->is('monthly-magazine*') ? 'text-[#005FAF]' : '' }}"
                                     href="javascript:void(0)">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
-                                    <span class="inline-block rotate-[270deg] text-[18px] ml-1"><</span>
+                                    <span class="inline-block transition duration-300 rotate-[270deg] text-[18px] ml-1" :class="isMagazineDropdownOpen ? 'rotate-[450deg]' : 'rotate-[270deg]'"><</span>
                                 </a>
-                                
                             </li>
 
                             <x-navigation.dropdown x-show="isMagazineDropdownOpen"
@@ -273,7 +272,7 @@
                                 <a class="hover:text-[#005FAF] {{ request()->is('weekly-focus*') ? 'text-[#005FAF]' : '' }}"
                                     href="javascript:void(0)">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
-                                    <span class="inline-block rotate-[270deg] text-[18px] ml-1"><</span>
+                                    <span class="inline-block transition duration-300 rotate-[270deg] text-[18px] ml-1" :class="isWeeklyDropdownOpen ? 'rotate-[450deg]' : 'rotate-[270deg]'"><</span>
                                 </a>
                             </li>
 
@@ -297,7 +296,7 @@
                                 <a class="hover:text-[#005FAF] {{ request()->is('more*') ? 'text-[#005FAF]' : '' }}"
                                     href="javascript:void(0)">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
-                                    <span class="inline-block rotate-[270deg] text-[18px] ml-1"><</span>
+                                    <span class="inline-block transition duration-300 rotate-[270deg] text-[18px] ml-1" :class="isMoreDropdownOpen ? 'rotate-[450deg]' : 'rotate-[270deg]'"><</span>
                                 </a>
                             </li>
 
@@ -316,6 +315,7 @@
                                 <a class="hover:text-[#005FAF] {{ request()->is('videos*') ? 'text-[#005FAF]' : '' }}"
                                    href="javascript:void(0)">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
+                                    <span class="inline-block transition duration-300 rotate-[270deg] text-[18px] ml-1" :class="isVideoDropdownOpen ? 'rotate-[450deg]' : 'rotate-[270deg]'"><</span>
                                 </a>
                             </li>
 
@@ -326,7 +326,7 @@
                             />
                         </div>
                     @else
-                        <li class="font-semibold text-xs xl:text-sm pr-6">
+                        <li class="font-semibold text-xs xl:text-sm pr-6 pt-1">
                             <a class="hover:text-[#005FAF] {{ request()->is(trim($initiative->path, '/')) ? 'text-[#005FAF]' : '' }}"
                                 href="{{ $initiative->path }}" wire:navigate>
                                 {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
