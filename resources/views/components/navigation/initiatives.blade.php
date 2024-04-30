@@ -248,7 +248,9 @@
                                 <a class="hover:text-[#005FAF] {{ request()->is('monthly-magazine*') ? 'text-[#005FAF]' : '' }}"
                                     href="javascript:void(0)">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
+                                    <span class="inline-block rotate-[270deg] text-[18px] ml-1"><</span>
                                 </a>
+                                
                             </li>
 
                             <x-navigation.dropdown x-show="isMagazineDropdownOpen"
@@ -271,6 +273,7 @@
                                 <a class="hover:text-[#005FAF] {{ request()->is('weekly-focus*') ? 'text-[#005FAF]' : '' }}"
                                     href="javascript:void(0)">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
+                                    <span class="inline-block rotate-[270deg] text-[18px] ml-1"><</span>
                                 </a>
                             </li>
 
@@ -294,6 +297,7 @@
                                 <a class="hover:text-[#005FAF] {{ request()->is('more*') ? 'text-[#005FAF]' : '' }}"
                                     href="javascript:void(0)">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
+                                    <span class="inline-block rotate-[270deg] text-[18px] ml-1"><</span>
                                 </a>
                             </li>
 
