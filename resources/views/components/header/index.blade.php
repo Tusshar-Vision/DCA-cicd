@@ -11,7 +11,7 @@
                 <img class="w-60 hidden dark:block" src="{{ asset('images/DarkLogo.svg') }}" alt="Dark VisionIAS Logo" />
             </a>
         </div>
-        <a href="#" class="text-nowrap ml-0 xl:ml-6 mr-2 xl:mr-0 text-[#242424] font-medium text-[14px] dark:text-[#8F93A3]"><<span class="hidden md:inline-block">Back to Main Website</span></a>
+        <a href="#" class="flex items-center text-nowrap ml-0 xl:ml-6 mr-2 xl:mr-0 text-[#242424] font-medium text-[14px] dark:text-[#8F93A3]"><span class="text-[18px] mr-1"><</span><span class="hidden md:inline-block">Back to Main Website</span></a>
         <div class="w-full flex xl:space-x-5 items-center xl:justify-end justify-between space-x-0">
             <div class="flex order-last xl:order-first topMenu">
                 <ul class="flex items-center">
@@ -63,7 +63,7 @@
                         </a>
                     </li>
                 </ul>
-                <a href="javascript:void(0)" class="block xl:hidden text-[50px] leading-5 h-[23px] ml-4" id="toggleSocialbtn" onclick="toggleSocial()">
+                <a href="javascript:void(0)" class="block xl:hidden text-[50px] leading-5 h-[23px] ml-2" id="toggleSocialbtn" onclick="toggleSocial()">
                     {!! SvgIconsHelper::getSvgIcon('right-arrow') !!}
                 </a>
             </div>
