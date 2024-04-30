@@ -46,13 +46,13 @@
         <div>{!! \App\Helpers\SvgIconsHelper::getSvgIcon('loading-2') !!}</div>
     </div>
 
-    <script src="{{URL::asset('js/pdf/pdf.mjs')}}" type="module"></script>
+    <script src="{{ URL::asset('js/pdf/pdf.mjs') }}" type="module"></script>
     <script type="module">
         var url = "{{$pdf}}"
         url = url.replace(/&amp;/g, "&");
 
         var { pdfjsLib } = globalThis;
-        pdfjsLib.GlobalWorkerOptions.workerSrc = "{{URL::asset('js/pdf/pdf.worker.mjs')}}"
+        pdfjsLib.GlobalWorkerOptions.workerSrc = "{{ URL::asset('js/pdf/pdf.worker.mjs') }}"
         var loadingTask = pdfjsLib.getDocument(url);
 
         loadingTask.promise.then(function(pdf) {

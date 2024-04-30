@@ -596,8 +596,7 @@
     margin-bottom: 15px;
 }
 .ck-content p b,.ck-content p strong,.ck-content strong{
-    font-weight: 500 !important;
-     /*background-color: hsl(60, 97%, 73%);*/
+    font-weight: 600 !important;
 }
 .ck-content figure {
     padding-left: 5px !important;
