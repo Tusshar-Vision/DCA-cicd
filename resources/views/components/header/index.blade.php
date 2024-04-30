@@ -6,12 +6,15 @@
 <header class="h-auto lg:h-20 py-[20px] lg:py-0 border-b border-visionLineGray md:flex md:w-full md:align-middle">
     <div class="flex items-center justify-between md:w-full">
         <div class="hidden xl:block">
-            <a href="{{ UrlHelper::linkToVision('/') }}">
+            <a href="{{ route('home') }}">
                 <img class="w-60 dark:hidden" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
                 <img class="w-60 hidden dark:block" src="{{ asset('images/DarkLogo.svg') }}" alt="Dark VisionIAS Logo" />
             </a>
         </div>
-        <a href="#" class="flex items-center text-nowrap ml-0 xl:ml-6 mr-2 xl:mr-0 text-[#242424] font-medium text-[14px] dark:text-[#8F93A3]"><span class="text-[18px] mr-1"><</span><span class="hidden md:inline-block">Back to Main Website</span></a>
+        <a href="{{ UrlHelper::linkToVision('/') }}" class="flex items-center text-nowrap ml-0 xl:ml-6 mr-2 xl:mr-0 text-[#242424] font-medium text-[14px] dark:text-[#8F93A3]">
+            <span class="text-[18px] mr-1"><</span>
+            <span class="hidden md:inline-block">Back to Main Website</span>
+        </a>
         <div class="w-full flex xl:space-x-5 items-center xl:justify-end justify-between space-x-0">
             <div class="flex order-last xl:order-first topMenu">
                 <ul class="flex items-center">
