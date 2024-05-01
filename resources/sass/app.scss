@@ -2443,8 +2443,14 @@ li[data-level="4"] {
   margin: 30px 0 0 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   gap: 24px;
+  @media screen and (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media screen and (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .bookmark-list-wrap ul li {
@@ -3386,6 +3392,21 @@ iframe {
 
   .hybrid-text-wrapper .hybrid-left-panel .hybrid-text-row p{
     color: #CCC;
+  }
+  
+  .bookmark-list-wrap {
+    ul{
+      li{ 
+        .bookmark-cont{ 
+          p{
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+  .bookmark-list-wrap ul li{
+    background-color: #373839;
   }
 
 }
