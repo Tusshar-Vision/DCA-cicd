@@ -2,8 +2,10 @@
 
 namespace App\Traits\Filament\Components;
 
+use App\Enums\Initiatives;
 use App\Filament\Components\SourceInput;
 use App\Forms\Components\CKEditor;
+use App\Helpers\InitiativesHelper;
 use App\Models\Article;
 use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Group;
@@ -57,7 +59,15 @@ trait ReviewAction
                     TextInput::make('subSection')->disabled(),
                 ])->columns(3),
                 SourceInput::make('sources')->placeholder('')->disabled(),
-                SpatieTagsInput::make('tags')->placeholder('')->disabled(),
+                SpatieTagsInput::make('tags')
+                    ->hidden(function (Article $record) {
+                        if ($record->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)) {
+                            return true;
+                        }
+                        return false;
+                    })
+                    ->placeholder('')
+                    ->disabled(),
                 Section::make('Article Content')
                     ->relationship('content')
                     ->schema([

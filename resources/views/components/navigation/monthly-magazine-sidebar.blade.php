@@ -6,7 +6,7 @@
     $date = request()->segment(2);
 @endphp
 
-<div class="flex flex-col rounded bg-visionGray pb-4 dark:bg-dark373839" x-cloak>
+<div class="flex flex-col rounded pb-4 dark:bg-dark373839" x-cloak>
     <div class="my-4 mx-6" x-data="{ expanded: null, isOpen: true }" x-init="expanded = 'topic-{{ Str::slug($currentTopic) }}'; isOpen = window.innerWidth > 768">
 
         <div @click="isOpen = !isOpen" class="flex border-bottom justify-between items-start cursor-pointer" >
@@ -102,7 +102,10 @@
                                                     class="py-[5px] cursor-pointer hover:brand-color text-clip text-sm"
                                                     :class="{'brand-color': openItem == {{$index}}}">
                                                     <a class="flex text-base[16px] font-normal hover:brand-color }}">
-                                                        <span class="mr-1">{{ $loop->iteration }}<em>.</em></span> {{ $article->shortTitle ?? $article->title }}
+                                                        <span class="mr-1">
+                                                            {{ $loop->parent->parent->iteration }}.{{ $loop->parent->iteration }}.{{ $loop->iteration }}
+                                                        </span>
+                                                        {{ $article->shortTitle ?? $article->title }}
                                                     </a>
                                                 </li>
                                             @endforeach

@@ -6,7 +6,7 @@
 
     <div class="flex flex-col sm:flex-row sm:space-x-6 lg:flex-col lg:space-x-0 featureVideo">
         @foreach($latestVideos as $key => $video)
-            <x-cards.video :source="$video" />
+            <x-cards.video :source="$video->video" />
         @endforeach
     </div>
 </div>

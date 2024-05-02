@@ -8,17 +8,10 @@ use App\Filament\Resources\NewsTodayResource\Pages;
 use App\Filament\Resources\NewsTodayResource\RelationManagers\ArticlesRelationManager;
 use App\Filament\Resources\NewsTodayResource\RelationManagers\ShortArticlesRelationManager;
 use App\Helpers\InitiativesHelper;
-use App\Models\Announcement;
-use App\Models\Article;
-use App\Models\InitiativeTopic;
 use App\Models\PublishedInitiative;
-use App\Models\TopicSection;
-use App\Models\TopicSubSection;
-use App\Models\User;
 use App\Models\Video;
 use App\Services\PublishedInitiativeService;
 use App\Traits\Filament\InitiativeResourceSchema;
-use App\View\Components\Buttons\Primary;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
@@ -34,10 +27,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
-use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -51,6 +41,7 @@ class NewsTodayResource extends Resource implements HasShieldPermissions
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
 
     protected static ?string $navigationGroup = 'Create Articles';
+
     protected static ?string $modelLabel = 'News Today';
     protected static ?string $pluralLabel = 'News Today';
 
@@ -108,6 +99,10 @@ class NewsTodayResource extends Resource implements HasShieldPermissions
                                     };
                                 }
                             ])
+                            ->disabled(function (?PublishedInitiative $record) {
+                                if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                                else if ($record?->is_published) return true;
+                            })
                             ->live(),
 
                     Forms\Components\TextInput::make('name')
@@ -153,7 +148,10 @@ class NewsTodayResource extends Resource implements HasShieldPermissions
                             })
                         ),
 
-                    ])->columns(2)->columnSpanFull(),
+                    ])->disabled(function (?PublishedInitiative $record) {
+                        if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                        else if ($record?->is_published) return true;
+                    })->columns(2)->columnSpanFull(),
 
 //                    Select::make('language_id')
 //                        ->relationship('language', 'name', function ($query) {
@@ -170,12 +168,12 @@ class NewsTodayResource extends Resource implements HasShieldPermissions
                         ->acceptedFileTypes(['application/pdf'])
                         ->collection('news-today')
                         ->visibility('private')
-                        ->visible(function (?PublishedInitiative $record) {
-                            if (Auth::user()->can('upload_news::today')) return true;
-                            else if ($record !== null && $record->hasMedia('news-today')) return true;
-                            else return false;
-                        })
                         ->openable()
+                        ->disabled(function (?PublishedInitiative $record) {
+                            if (Auth::user()->can('upload_news::today')) return false;
+                            else if ($record !== null && $record->hasMedia('news-today')) return false;
+                            else return true;
+                        })
                         ->deletable(function (?PublishedInitiative $record) {
                             if ($record !== null && $record->is_published === true) {
                                 return Auth::user()->hasAnyRole(['admin', 'super_admin']);
@@ -185,10 +183,7 @@ class NewsTodayResource extends Resource implements HasShieldPermissions
                         })
                         ->columnSpanFull(),
 
-                ])->disabled(function (?PublishedInitiative $record) {
-                    if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
-                    else if ($record?->is_published) return true;
-                })->columnSpan(1),
+                ])->columnSpan(1),
 
                 Forms\Components\Section::make("News Today's Video")
                     ->schema([
@@ -266,11 +261,11 @@ class NewsTodayResource extends Resource implements HasShieldPermissions
 
                                 ])->columnSpan(1)
                             ])
-                            ->disabled(function () {
+                            ->disabled(function ($operation) {
+                                if ($operation === 'create') return true;
                                 if (Auth::user()->can('upload_news::today')) return false;
                                 else return true;
-                            })
-                            ->disabledOn('create'),
+                            }),
                     ])->columnSpan(1)
             ]);
     }
@@ -317,6 +312,7 @@ class NewsTodayResource extends Resource implements HasShieldPermissions
             'create',
             'edit',
             'upload',
+            'assign',
             'delete',
         ];
     }

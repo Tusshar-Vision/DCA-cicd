@@ -33,6 +33,7 @@ readonly class InitiativeService
             Initiatives::MONTHLY_MAGAZINE->name => $this->getMenuDataForMonthlyMagazine($initiativeId),
             Initiatives::WEEKLY_FOCUS->name => $this->getMenuDataForWeeklyFocus($initiativeId),
             Initiatives::MORE->name => $this->getMenuDataForMore($initiativeId),
+            Initiatives::VIDEOS->name => $this->getMenuDataForVideos($initiativeId),
             default => throw (new InitiativeNotFoundException('Initiative get data function does not exist')),
         };
     }
@@ -164,6 +165,23 @@ readonly class InitiativeService
                     ->orderBy('order_column')
                     ->get()
                     ->pluck('name', 'path');
+
+        return [
+            'initiative_id' => $initiativeId,
+            'data' => $menuData
+        ];
+    }
+
+    protected function getMenuDataForVideos($initiativeId): array
+    {
+        $menuData = $this->initiative
+            ->where(
+                'parent_id',
+                '=',
+                InitiativesHelper::getInitiativeID(Initiatives::VIDEOS))
+            ->orderBy('order_column')
+            ->get()
+            ->pluck('name', 'path');
 
         return [
             'initiative_id' => $initiativeId,

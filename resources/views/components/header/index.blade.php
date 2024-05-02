@@ -6,11 +6,15 @@
 <header class="h-auto lg:h-20 py-[20px] lg:py-0 border-b border-visionLineGray md:flex md:w-full md:align-middle">
     <div class="flex items-center justify-between md:w-full">
         <div class="hidden xl:block">
-            <a href="{{ UrlHelper::linkToVision('/') }}">
+            <a href="{{ route('home') }}">
                 <img class="w-60 dark:hidden" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
                 <img class="w-60 hidden dark:block" src="{{ asset('images/DarkLogo.svg') }}" alt="Dark VisionIAS Logo" />
             </a>
         </div>
+        <a href="{{ UrlHelper::linkToVision('/') }}" class="flex items-center text-nowrap ml-0 xl:ml-6 mr-2 xl:mr-0 text-[#242424] font-medium text-[14px] dark:text-[#8F93A3]">
+            <span class="text-[18px] mr-1"><</span>
+            <span class="hidden md:inline-block">Back to Main Website</span>
+        </a>
         <div class="w-full flex xl:space-x-5 items-center xl:justify-end justify-between space-x-0">
             <div class="flex order-last xl:order-first topMenu">
                 <ul class="flex items-center">
@@ -29,40 +33,40 @@
                             {!! SvgIconsHelper::getSvgIcon('youtube-header') !!}
                         </a>
                     </li>
-                    <li class="ml-[10px] md:ml-[15px] hidden xl:flex">
+                    <li class="ml-[8px] md:ml-[15px] hidden xl:flex">
                         <a href="{{ UrlHelper::linkToSocial('twitter') }}" target="_blank">
                             {!! SvgIconsHelper::getSvgIcon('twitter-header') !!}
                         </a>
                     </li>
-                    <li class="ml-[10px] md:ml-[15px] hidden xl:flex">
+                    <li class="ml-[8px] md:ml-[15px] hidden xl:flex">
                         <a href="{{ UrlHelper::linkToSocial('instagram') }}" target="_blank">
                             {!! SvgIconsHelper::getSvgIcon('instagram-header') !!}
                         </a>
                     </li>
-                    <li class="ml-[10px] md:ml-[15px] hidden xl:flex">
+                    <li class="ml-[8px] md:ml-[15px] hidden xl:flex">
                         <a href="{{ UrlHelper::linkToSocial('telegram') }}" target="_blank">
                             {!! SvgIconsHelper::getSvgIcon('telegram-header') !!}
                         </a>
                     </li>
                 </ul>
                 <ul class="items-center" style="display: none" id="socialList">
-                    <li class="ml-[10px] md:ml-[15px]">
+                    <li class="ml-[8px] md:ml-[15px]">
                         <a href="{{ UrlHelper::linkToSocial('twitter') }}" target="_blank">
                             {!! SvgIconsHelper::getSvgIcon('twitter-header') !!}
                         </a>
                     </li>
-                    <li class="ml-[10px] md:ml-[15px]">
+                    <li class="ml-[8px] md:ml-[15px]">
                         <a href="{{ UrlHelper::linkToSocial('instagram') }}" target="_blank">
                             {!! SvgIconsHelper::getSvgIcon('instagram-header-mobile') !!}
                         </a>
                     </li>
-                    <li class="ml-[10px] md:ml-[15px]">
+                    <li class="ml-[8px] md:ml-[15px]">
                         <a href="{{ UrlHelper::linkToSocial('telegram') }}" target="_blank">
                             {!! SvgIconsHelper::getSvgIcon('telegram-header') !!}
                         </a>
                     </li>
                 </ul>
-                <a href="javascript:void(0)" class="block xl:hidden text-[50px] leading-5 h-[23px] ml-4" id="toggleSocialbtn" onclick="toggleSocial()">
+                <a href="javascript:void(0)" class="block xl:hidden text-[50px] leading-5 h-[23px] ml-2" id="toggleSocialbtn" onclick="toggleSocial()">
                     {!! SvgIconsHelper::getSvgIcon('right-arrow') !!}
                 </a>
             </div>

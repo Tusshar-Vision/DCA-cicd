@@ -10,6 +10,29 @@
   --ck-inline-image-style-spacing: calc(var(--ck-image-style-spacing) / 2);
 }
 
+/* scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(255, 255, 255, 0.3);
+}
+
 
 [type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
@@ -2420,8 +2443,14 @@ li[data-level="4"] {
   margin: 30px 0 0 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   gap: 24px;
+  @media screen and (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media screen and (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .bookmark-list-wrap ul li {
@@ -2784,7 +2813,7 @@ li[data-level="4"] {
   height: 0;
   width: 100%;
   position: fixed;
-  z-index: 9;
+  z-index: 999;
   bottom: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.9);
@@ -3357,11 +3386,40 @@ iframe {
     table {
       color: #fff !important;
       background-color: transparent !important;
+      letter-spacing: 1px;
     }
+  }
+
+  .hybrid-text-wrapper .hybrid-left-panel .hybrid-text-row p{
+    color: #CCC;
+  }
+  
+  .bookmark-list-wrap {
+    ul{
+      li{ 
+        .bookmark-cont{ 
+          p{
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+  .bookmark-list-wrap ul li{
+    background-color: #373839;
   }
 
 }
 
 .large-text {
   font-size: 1.2rem;
+}
+
+/* pdf reader UI */
+#pdfViewer{
+  margin: 0 auto;
+}
+
+#pdfViewer canvas{
+  width: 100% !important;
 }

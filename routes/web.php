@@ -21,7 +21,7 @@ use App\Http\Controllers\Pages;
 
 // Routes for all the pages
 Route::get('/', [Pages\HomeController::class, 'index'])->name('home');
-Route::get('/videos', [Pages\VideosController::class, 'index'])->name('videos');
+
 Route::get('/search', [Pages\SearchController::class, 'index'])->name('search');
 Route::get('/search/{query}', [Pages\SearchController::class, 'searchQuery'])->name('search.query');
 
@@ -75,27 +75,39 @@ Route::controller(Pages\MonthlyMagazineController::class)
 // Routes for downloadable initiatives
 Route::controller(Pages\DownloadsController::class)->group(function () {
     Route::get('/downloads', 'index')->name('downloads');
-    Route::get('/mains-365', 'renderMains365')->name('mains-365');
-    Route::get('/pt-365', 'renderPT365')->name('pt-365');
-    Route::get('/economic-survey', 'renderEconomicSurvey')->name('economic-survey');
-    Route::get('/budget', 'renderBudget')->name('budget');
-    Route::get('/value-added-material', 'renderValueAddedMaterial')->name('value-added-material');
-    Route::get('/value-added-material-optional', 'renderValueAddedMaterialOptional')->name('value-added-material-optional');
-    Route::get('/quarterly-revision-documents', 'renderQuarterlyRevisionDocument')->name('quarterly-revision-document');
-    Route::get('/year-end-reviews', 'renderYearEndReviews')->name('year-end-review');
-    Route::get('/the-planet-vision', 'renderPlanetVision')->name('planet-vision');
+    Route::get('/mains-365/{intiative_id?}', 'renderMains365')->name('mains-365');
+    Route::get('/pt-365/{intiative_id?}', 'renderPT365')->name('pt-365');
+    Route::get('/economic-survey/{intiative_id?}', 'renderEconomicSurvey')->name('economic-survey');
+    Route::get('/budget/{intiative_id?}', 'renderBudget')->name('budget');
+    Route::get('/value-added-material/{intiative_id?}', 'renderValueAddedMaterial')->name('value-added-material');
+    Route::get('/value-added-material-optional/{intiative_id?}', 'renderValueAddedMaterialOptional')->name('value-added-material-optional');
+    Route::get('/quarterly-revision-documents/{intiative_id?}', 'renderQuarterlyRevisionDocument')->name('quarterly-revision-document');
+    Route::get('/year-end-reviews/{intiative_id?}', 'renderYearEndReviews')->name('year-end-review');
+    Route::get('/the-planet-vision/{intiative_id?}', 'renderPlanetVision')->name('planet-vision');
 
     //    Route::get('/weekly-round-table', 'getWeeklyRoundTable')->name('weekly-round-table');
     //    Route::get('/animated-shorts', 'getAnimatedShorts')->name('animated-shorts');
     //    Route::get('/pyq', 'getPYQ')->name('pyq');
 });
 
+Route::controller(Pages\VideosController::class)->group(function () {
+    Route::get('/videos', 'index')->name('videos');
+    Route::get('/daily-news', 'renderDailyNews')->name('daily-news');
+    Route::get('/in-conversation', 'renderInConversation')->name('in-conversation');
+    Route::get('/simplified-by-visionias', 'renderSimplifiedByVisionIAS')->name('simplified-by-visionias');
+    Route::get('/personality-in-focus', 'renderPersonalityInFocus')->name('personality-in-focus');
+    Route::get('/scheme-in-focus', 'renderSchemeInFocus')->name('scheme-in-focus');
+});
+
 Route::middleware('auth:cognito')->group(function () {
     Route::prefix('user')->group(function () {
-        Route::get('/activity', [Pages\UserController::class, 'dashboard'])->name('user.dashboard');
         Route::post('/update/read-history', [Pages\UserController::class, 'updateReadHistory'])->name('user.read-history');
-        Route::get('/bookmarks', [Pages\UserController::class, 'bookmarks'])->name('bookmarks');
         Route::post('/bookmarks/add', [Pages\UserController::class, 'addBookmark'])->name('bookmarks.add');
+
+        Route::get('/activity', [Pages\UserController::class, 'dashboard'])->name('user.dashboard');
+        Route::get('/read-history/search/{query}', [Pages\UserController::class, 'searchReadHistory']);
+        Route::get('/bookmarks', [Pages\UserController::class, 'bookmarks'])->name('bookmarks');
+        Route::get('/bookmarks/search/{query}', [Pages\UserController::class, 'searchBookmark']);
         Route::get('/content/{type?}', [Pages\UserController::class, 'myContent'])->name('user.content');
         Route::get('/search-notes', [Pages\UserController::class, 'searchNotes'])->name('user.search-notes');
         Route::get('/filter-notes/{topic_id}/{section_id}', [NoteController::class, 'getFilteredNotes'])->name('user.filter-notes');
@@ -128,7 +140,3 @@ Route::get('/tags/{search}', [NoteController::class, 'searchTagsLike'])->name('t
 Route::get('/papers', [AppController::class, 'getPapers'])->name('papers');
 Route::get('/subjects/{paper_id}', [AppController::class, 'getSubjectsOfPaper'])->name('subjects');
 Route::get('/sections/{subject_id}', [AppController::class, 'getSectionsOfSubject'])->name('sections');
-
-Route::get('/test', function () {
-    return view('test');
-});

@@ -37,10 +37,14 @@ bun run build
 # Run database migrations and clear caches
 php artisan migrate --force
 php artisan optimize:clear
+php artisan filament:clear-cached-components
+
 php artisan config:cache
 php artisan event:cache
 php artisan route:cache
 php artisan view:cache
+php artisan icons:cache
+php artisan filament:cache-components
 
 sudo supervisorctl reread
 sudo supervisorctl update

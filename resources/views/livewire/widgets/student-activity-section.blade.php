@@ -5,7 +5,7 @@
             <div class="flex justify-between relative">
                 <p class="vi-tab-title">Reading History</p>
                 <div class="student-search-field-container">
-                    <input type="search" placeholder="Search" class="student-search-field dark:bg-dark545557 border-[#686E70] dark:text-white">
+                    <input id="history-searchbox" type="search" placeholder="Search" class="student-search-field dark:bg-dark545557 border-[#686E70] dark:text-white">
                 </div>
                 {{-- <div class="my-content-search w-[150px]">
                     <div class="search-bar-wrapper">
@@ -20,9 +20,10 @@
                     </div>
                 </div> --}}
             </div>
-            <div class="vi-left-child-item-list">
+            <div id="histories-container" class="vi-left-child-item-list max-h-[250px] lg:max-h-[450px] overflow-y-auto">
                 <!-- Single card -->
                 @foreach ($readHistories as $history)
+                    @if($history!=null)
                     <div class="vi-article-card vi-inline flex items-start gap-[12px]">
                         {{-- <a href="#" class="vi-article">
                             <img src="{{$history['img'] ?? URL::asset('images/card-image-small.png') }}" alt="">
@@ -32,6 +33,7 @@
                             <p>{{ $history['title'] }}</p>
                         </a>
                     </div>
+                    @endif
                 @endforeach
             </div>
         </div>
@@ -119,14 +121,15 @@
 
 
 <script>
-    const onfocus = document.querySelector('.student-search-field');
-    const showlist = document.querySelector('.student-search-field-container');
+    var searchField = document.querySelector('.student-search-field');
+    var showlist = document.querySelector('.student-search-field-container');
+    var searchBox = document.getElementById("history-searchbox");
 
-    onfocus.addEventListener("focus", () => {
+    searchField.addEventListener("focus", () => {
         showlist.classList.add("absoluteSearch");
     });
 
-    onfocus.addEventListener("blur", () => {
+    searchField.addEventListener("blur", () => {
         showlist.classList.remove("absoluteSearch");
     });
 
@@ -224,9 +227,34 @@
                                 square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$text}}"></li>`
                                 @endforeach
 }
-
- showDailyNews()
+     showDailyNews()
  showWeeklyFocus()
  showMonthlyMagazine()
+
+ searchBox.addEventListener("change", function() {
+    const query = searchBox.value;
+    if(query == "") return;
+    let url = "{{url("user/read-history/search")}}";
+    url += `/${query}`;
+
+    fetch(url)
+    .then(response => response.json())
+    .then(data => {
+        const histories = data.data;
+        let html = "";
+        histories.map(history => {
+                  if(history!=null) {
+                    html += `<div class="vi-article-card vi-inline flex items-start gap-[12px]">
+                        <a href="${history['url']}" class="vi-article">
+                            <p class="vi-article-date-name">${history['read_at']}</p>
+                            <p>${history['title']}</p>
+                        </a>
+                      </div>`
+                  }
+        })
+        
+        document.getElementById("histories-container").innerHTML = html;
+    })
+ })
 
 </script>

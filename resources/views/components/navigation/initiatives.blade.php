@@ -17,7 +17,10 @@
 
     <div class="accordion h-[60vh] md:h-auto overflow-scroll">
 
-        <a href="{{ route('home') }}" wire:navigate class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px] {{ request()->is('/') ? 'text-[#005FAF]' : '' }}">
+        <a class="text-sm font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[10px] px-[20px] {{ request()->is('/') ? 'text-[#005FAF]' : '' }}"
+           href="{{ route('home') }}"
+           wire:navigate
+        >
             Home
         </a>
 
@@ -210,16 +213,19 @@
             </div>
         </div>
         <ul class="items-center hidden xl:block">
-            <li class="font-semibold pr-4 xl:pr-6 float-left">
-                <a href="{{ route('home') }}" wire:navigate>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path
-                            d="M19 21.0002H5C4.44772 21.0002 4 20.5525 4 20.0002V11.0002H1L11.3273 1.61174C11.7087 1.265 12.2913 1.265 12.6727 1.61174L23 11.0002H20V20.0002C20 20.5525 19.5523 21.0002 19 21.0002ZM13 19.0002H18V9.15769L12 3.70314L6 9.15769V19.0002H11V13.0002H13V19.0002Z"
-                            fill="#005FAF" class="dark:fill-white" />
-                    </svg>
+            <li class="font-semibold pr-4 xl:pr-6 float-left pt-1">
+                <a class="text-sm hover:text-[#005FAF] font-semibold leading-1 {{ request()->is('/') ? 'text-[#005FAF]' : '' }}" href="{{ route('home') }}" wire:navigate>
+                    Home
                 </a>
             </li>
-            <div class="flex pt-[5px]" x-data="{ isMagazineDropdownOpen: false, isWeeklyDropdownOpen: false, isMoreDropdownOpen: false }">
+            <div class="flex pt-[5px] items-center"
+                 x-data="{
+                    isMagazineDropdownOpen: false,
+                    isWeeklyDropdownOpen: false,
+                    isMoreDropdownOpen: false,
+                    isVideoDropdownOpen: false
+                }"
+            >
                 @foreach ($initiatives as $initiative)
                     @if ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
                         <li class="font-semibold text-xs xl:text-sm pr-6">
@@ -237,10 +243,12 @@
                                         isMagazineDropdownOpen = !isMagazineDropdownOpen;
                                         isMoreDropdownOpen = false;
                                         isWeeklyDropdownOpen = false;
+                                        isVideoDropdownOpen = false;
                                        ">
                                 <a class="hover:text-[#005FAF] {{ request()->is('monthly-magazine*') ? 'text-[#005FAF]' : '' }}"
                                     href="javascript:void(0)">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
+                                    <span class="inline-block transition duration-300 rotate-[270deg] text-[18px] ml-1" :class="isMagazineDropdownOpen ? 'rotate-[450deg]' : 'rotate-[270deg]'"><</span>
                                 </a>
                             </li>
 
@@ -259,10 +267,12 @@
                                         isWeeklyDropdownOpen = !isWeeklyDropdownOpen;
                                         isMagazineDropdownOpen = false;
                                         isMoreDropdownOpen = false;
+                                        isVideoDropdownOpen = false;
                                        ">
                                 <a class="hover:text-[#005FAF] {{ request()->is('weekly-focus*') ? 'text-[#005FAF]' : '' }}"
                                     href="javascript:void(0)">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
+                                    <span class="inline-block transition duration-300 rotate-[270deg] text-[18px] ml-1" :class="isWeeklyDropdownOpen ? 'rotate-[450deg]' : 'rotate-[270deg]'"><</span>
                                 </a>
                             </li>
 
@@ -281,18 +291,42 @@
                                         isMoreDropdownOpen = !isMoreDropdownOpen;
                                         isWeeklyDropdownOpen = false;
                                         isMagazineDropdownOpen = false;
+                                        isVideoDropdownOpen = false;
                                        ">
                                 <a class="hover:text-[#005FAF] {{ request()->is('more*') ? 'text-[#005FAF]' : '' }}"
                                     href="javascript:void(0)">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
+                                    <span class="inline-block transition duration-300 rotate-[270deg] text-[18px] ml-1" :class="isMoreDropdownOpen ? 'rotate-[450deg]' : 'rotate-[270deg]'"><</span>
                                 </a>
                             </li>
 
                             <x-navigation.more-drop-down x-show="isMoreDropdownOpen"
                                 @click.away="isMoreDropdownOpen = false" :menuData="$menuData['more']" />
                         </div>
+                    @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::VIDEOS))
+                        <div class="relative">
+                            <li class="font-semibold text-xs xl:text-sm pr-6"
+                                @click="
+                                        isVideoDropdownOpen = !isVideoDropdownOpen;
+                                        isWeeklyDropdownOpen = false;
+                                        isMagazineDropdownOpen = false;
+                                        isMoreDropdownOpen = false;
+                                       ">
+                                <a class="hover:text-[#005FAF] {{ request()->is('videos*') ? 'text-[#005FAF]' : '' }}"
+                                   href="javascript:void(0)">
+                                    {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
+                                    <span class="inline-block transition duration-300 rotate-[270deg] text-[18px] ml-1" :class="isVideoDropdownOpen ? 'rotate-[450deg]' : 'rotate-[270deg]'"><</span>
+                                </a>
+                            </li>
+
+                            <x-navigation.more-drop-down
+                                x-show="isVideoDropdownOpen"
+                                :menuData="$menuData['videos']"
+                                @click.away="isVideoDropdownOpen = false"
+                            />
+                        </div>
                     @else
-                        <li class="font-semibold text-xs xl:text-sm pr-6">
+                        <li class="font-semibold text-xs xl:text-sm pr-6 pt-1">
                             <a class="hover:text-[#005FAF] {{ request()->is(trim($initiative->path, '/')) ? 'text-[#005FAF]' : '' }}"
                                 href="{{ $initiative->path }}" wire:navigate>
                                 {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}

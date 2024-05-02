@@ -4,9 +4,17 @@
           <div class="vi-user-profile-tab-wrapper flex-none justify-start lg:flex lg:justify-between">
               <div class="vi-profile-tab-list">
                   <a href="{{ route('user.dashboard') }}"
-                      class="tab-item tab-activity {{ $segment == 'activity' ? 'active' : '' }}">Activity</a>
+                     class="tab-item tab-activity {{ $segment == 'activity' ? 'active' : '' }}"
+                     wire:navigate
+                  >
+                      Activity
+                  </a>
                   <a href="{{ route('bookmarks') }}"
-                      class="tab-item tab-activity {{ $segment == 'bookmarks' ? 'active' : '' }}"">Bookmarks </a>
+                     class="tab-item tab-activity {{ $segment == 'bookmarks' ? 'active' : '' }}"
+                     wire:navigate
+                  >
+                      Bookmarks
+                  </a>
                   {{-- <a href="{{ route('user.content') }}"
                       class="tab-item tab-my-content {{ $segment == 'content' ? 'active' : '' }}"">My Content</a>
                   <div class="tab-item tab-leaderboard">Leaderboard</div> --}}
@@ -19,6 +27,6 @@
               </ul> --}}
               <!-- right side tab link newly added -->
           </div>
-          
+
       </div>
   </section>
