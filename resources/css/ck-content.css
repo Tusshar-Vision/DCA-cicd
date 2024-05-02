@@ -366,7 +366,7 @@
 /* @ckeditor/ckeditor5-list/theme/list.css */
 .ck-content ul {
     list-style-type: disc;
-    margin-bottom: 0 !important;
+    margin-bottom: 6px !important;
     margin-top: 6px !important;
 }
 /* @ckeditor/ckeditor5-list/theme/list.css */
@@ -574,7 +574,7 @@
 .ck-content h2,
 .ck-content h3{
     line-height: 150%;
-    margin: 20px 0 10px;
+    margin: 10px 0 10px;
 }
 
 .ck-content h1 {
@@ -604,10 +604,16 @@
 .ck-content figure {
     margin-left: 15px !important;
 }
+.ck-content table td {
+    background: transparent !important;
+}
 table,table th, table td{
     border: 1px solid #868EAF !important;
     border-collapse: collapse !important;
 }
 table th, table td{
     padding: 10px 20px !important;
+}
+li {
+    margin-top: 5px;
 }
