@@ -1070,6 +1070,7 @@ $gray-686E70: #686E70;
     ul {
       margin: 0;
       padding: 0;
+      width: 100%;
 
       li {
         display: inline-block;
@@ -1080,8 +1081,10 @@ $gray-686E70: #686E70;
           line-height: 20px;
           font-weight: 400;
           color: #969BA1;
-          padding-bottom: 20px;
-          border-bottom: 2px solid transparent;
+          padding: 8px 15px;
+          border-radius: 20px;
+          margin-bottom: 20px;
+          border: 2px solid #E9E9E9;
           display: block;
 
           @media screen and (max-width: 1024px) {
@@ -1098,24 +1101,19 @@ $gray-686E70: #686E70;
       }
     }
   }
+}
 
-  .hybrid-filter {
-    font-size: 18px;
-    line-height: 20px;
-    font-weight: 400;
-    color: #969BA1;
-    border-left: 1px solid #969BA1;
-    padding: 0 25px 0 10px;
-    background: url("/images/filter.svg") right 2px no-repeat;
-    margin-bottom: 20px;
-    padding-left: 25px;
+.hybrid-filter {
+  font-size: 18px;
+  line-height: 20px;
+  font-weight: 400;
+  color: #969BA1;
+  padding: 0 0 0 25px;
+  background: url("/images/filter.svg") left 2px no-repeat;
+  margin-bottom: 20px;
 
-    @media screen and (max-width: 1024px) {
-      font-size: 14px;
-      padding-left: 10px;
-      margin-left: 10px;
-      margin-bottom: 10px;
-    }
+  @media screen and (max-width: 1024px) {
+    font-size: 14px;
   }
 }
 
@@ -2424,7 +2422,8 @@ li[data-level="4"] {
 
 .search-bar-wrapper {
   .vi-search-bar {
-    padding: 8px 40px 8px 8px;
+    padding: 8px 40px 8px 20px;
+    border-radius: 20px;
   }
 
   .vi-icons::before {
