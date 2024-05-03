@@ -80,7 +80,7 @@
         </div>
     </div>
     
-    <a href="javascript:void(0)" class="hybrid-filter mb-[20px] mt-[10px] md:mt-0" onclick="toggleFilter()">Filter</a>
+    {{-- <a href="javascript:void(0)" class="hybrid-filter mb-[20px] mt-[10px] md:mt-0" onclick="toggleFilter()">Filter</a> --}}
 </div>
     <div class="divider mt-[-2px]"></div>
     <div class="filter-row  mt-[17px]" id="filter-row-show">

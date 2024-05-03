@@ -10,6 +10,9 @@
                     <li class="text-[#3362CC] mr-4 text-sm font-normal">
                         <a href="{{ route('download', ['media' => $file->media->first()]) }}" class="hover:underline">Download</a>
                     </li>
+                    <li class="text-[#3362CC] mr-4 text-sm font-normal">
+                        <a href="#" class="hover:underline">Share</a>
+                    </li>
                 </ul>
             </div>
         </a>
