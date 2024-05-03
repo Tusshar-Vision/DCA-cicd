@@ -2,8 +2,8 @@
     $currentYear = request()->input('year');
     $currentMonth = request()->input('month');
 @endphp
-    <div id="myFilter" class="menuOverlay">
-        <div class="menuOverlayContent bg-white dark:bg-dark373839">
+    <div id="myFilter" class="filterOverlay">
+        <div class="filterOverlayContent bg-white dark:bg-dark373839">
             <div class="flex justify-between align-middle mb-[20px]">
                 <span class="text-[#3362CC] text-sm font-bold">Select Filters</span>
                 <a href="javascript:void(0)" class="closebtn" onclick="closeFilter()">&times;</a>

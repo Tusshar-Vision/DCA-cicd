@@ -1,6 +1,6 @@
 <div class="w-full">
     <div class="pt-[25px] border-t-2">
-        <div class="flex w-full items-center justify-between xl:justify-end space-x-4 mb-[25px]">
+        <div class="flex w-full items-center justify-between xl:justify-end space-x-0 xl:space-x-4 mb-[25px]">
             <div class="block xl:hidden flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="8" height="16" viewBox="0 0 8 16" fill="none" onclick="myFunction()" class="cursor-pointer">
                     <path d="M6.86719 15.0156L0.99998 8.49977" stroke="#242424" class="dark:stroke-white" stroke-linecap="round"/>
@@ -9,7 +9,7 @@
                 <h4 class="text-sm md:text-lg font-normal font-[#242424] ml-2 md:ml-4">Economic Survey Archives</h4>
             </div>
             @if(!$pdfUrl)
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-end w-full">
                     <p class="text-sm md:text-base">Filter</p>
                     <div class="block xl:hidden ml-4 cursor-pointer" onclick="openFilter()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16" fill="none">
