@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
         <title>@yield('title')</title>
         <style>
-            @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
         </style>
         @vite('resources/sass/app.scss')
         @livewireStyles
