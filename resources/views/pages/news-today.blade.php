@@ -30,7 +30,7 @@
 
             </div>
 
-            <div class="flex flex-col w-full mt-6 lg:mt-0">
+            <div class="flex flex-col w-full mt-6 lg:mt-0" :style="!isSidePanelOpen && 'margin-left: 0px !important'">
                 <!-- replaced header section -->
                 <div class="space-y-4">
                     <x-widgets.options-nav

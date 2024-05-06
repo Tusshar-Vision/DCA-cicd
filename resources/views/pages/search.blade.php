@@ -8,11 +8,12 @@
     use Carbon\Carbon;
 @endphp
 @section('content')
+<div class="flex flex-col md:flex-row justify-between items-end">
     <div x-data="{ query: '{{ $query }}' }" class="ecosystem-wrap w-full lg:w-auto">
         <div class="search-bar-wrapper">
             <span class="vi-icons search"></span>
             <label>
-                <input @keydown.enter="navigateToSearchPage" x-model="query" type="text" class="vi-search-bar focus dark:bg-dark545557 border-[#686E70]" placeholder="Search" value="{{ $query }}" required>
+                <input @keydown.enter="navigateToSearchPage" x-model="query" type="search " class="vi-search-bar focus dark:bg-dark545557 border-[#686E70]" placeholder="Search" value="{{ $query }}" required>
             </label>
 {{--            <ul class="w-full absolute left-0 top-[40px] py-2 border-[#ddd] border-2 rounded bg-white hidden updatedText">--}}
 {{--                <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 1</li>--}}
@@ -21,12 +22,12 @@
 {{--                <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 4</li>--}}
 {{--            </ul>--}}
         </div>
-        <div class="eco-menu flex justify-start items-end lg:items-center mt-3 lg:mt-6">
-            <a href="javascript:void(0)" class="mr-[15px] relative top-[-6px] xl:top-[-12px]">
+        <div class="eco-menu flex justify-start items-end lg:items-center mt-4 lg:mt-6">
+            {{-- <a href="javascript:void(0)" class="mr-[15px] relative top-[-6px] xl:top-[-12px]">
                 <svg xmlns="http://www.w3.org/2000/svg" width="8" height="13" viewBox="0 0 8 13" fill="none" class="inline-block">
                 <path d="M3.05 6.364L8 11.314L6.586 12.728L0.222 6.364L6.586 -6.18079e-08L8 1.414L3.05 6.364Z" fill="#8F93A3"/>
                 </svg>
-            </a>
+            </a> --}}
             <ul class="whitespace-nowrap lg:whitespace-normal overflow-auto lg:overflow-x-hidden w-[80%] lg:w-auto">
                 <li>
                     <a
@@ -76,9 +77,11 @@
 {{--                    </li>--}}
 {{--                @endauth--}}
             </ul>
-{{--            <a href="javascript:void(0)" class="hybrid-filter" onclick="toggleFilter()">Filter</a>--}}
         </div>
     </div>
+    
+    {{-- <a href="javascript:void(0)" class="hybrid-filter mb-[20px] mt-[10px] md:mt-0" onclick="toggleFilter()">Filter</a> --}}
+</div>
     <div class="divider mt-[-2px]"></div>
     <div class="filter-row  mt-[17px]" id="filter-row-show">
         <div class="filter-select-wrap">

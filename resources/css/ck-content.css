@@ -576,7 +576,6 @@
     line-height: 150%;
     margin: 10px 0 10px;
 }
-
 .ck-content h1 {
     font-size: 36px !important;
     font-weight: 500 !important;
@@ -593,16 +592,13 @@
     line-height: 150%;
 }
 .ck-content p, .ck-content li {
-    line-height: 133.33%;
+    line-height: 150%;
     text-align: left;
     font-size: 18px;
     font-weight: 400;
 }
 .ck-content p b,.ck-content p strong,.ck-content strong{
     font-weight: 600 !important;
-}
-.ck-content figure {
-    margin-left: 15px !important;
 }
 .ck-content table td {
     background: transparent !important;
