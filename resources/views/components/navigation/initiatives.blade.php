@@ -218,7 +218,8 @@
                     isMagazineDropdownOpen: false,
                     isWeeklyDropdownOpen: false,
                     isMoreDropdownOpen: false,
-                    isVideoDropdownOpen: false
+                    isVideoDropdownOpen: false,
+                    dropdownTimeout: null
                 }"
             >
                 <li class="font-semibold pr-4 xl:pr-6 float-left">
@@ -237,16 +238,25 @@
                             </a>
                         </li>
                     @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE))
-                        <div class="group relative">
+                        <div class="group relative"
+                             @mouseleave="
+                                dropdownTimeout = setTimeout(() => {
+                                    isMagazineDropdownOpen = false;
+                                }, 200); // Adjust the delay time as needed
+                            "
+                            @mouseenter="clearTimeout(dropdownTimeout)"
+                        >
                             <li class="font-semibold text-xs xl:text-sm pr-6"
-                                @click="
-                                        isMagazineDropdownOpen = !isMagazineDropdownOpen;
+                                @mouseenter="
+                                        clearTimeout(dropdownTimeout);
+                                        isMagazineDropdownOpen = true;
                                         isMoreDropdownOpen = false;
                                         isWeeklyDropdownOpen = false;
                                         isVideoDropdownOpen = false;
-                                       ">
+                                       "
+                                >
                                 <a class="group-hover:text-[#005FAF] {{ request()->is('monthly-magazine*') ? 'text-[#005FAF]' : '' }}"
-                                    href="javascript:void(0)">
+                                    href="{{ route('monthly-magazine') }}">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                                     <span class="inline-block transition duration-300 rotate-[270deg] text-[18px] ml-1" :class="isMagazineDropdownOpen ? 'rotate-[450deg]' : 'rotate-[270deg]'">
                                         <svg width="7" height="9" viewBox="0 0 7 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -257,7 +267,6 @@
                             </li>
 
                             <x-navigation.dropdown x-show="isMagazineDropdownOpen"
-                                @click.away="isMagazineDropdownOpen = false"
                                 button-text="Latest Edition"
                                 button-link="{{ $initiative->path }}"
                                 archive-link="{{ route('monthly-magazine.archive') }}"
@@ -265,16 +274,24 @@
                             />
                         </div>
                     @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
-                        <div class="group relative">
+                        <div class="group relative"
+                             @mouseleave="
+                                dropdownTimeout = setTimeout(() => {
+                                    isWeeklyDropdownOpen = false;
+                                }, 200); // Adjust the delay time as needed
+                             "
+                             @mouseenter="clearTimeout(dropdownTimeout)"
+                            >
                             <li class="font-semibold text-xs xl:text-sm pr-6"
-                                @click="
-                                        isWeeklyDropdownOpen = !isWeeklyDropdownOpen;
+                                @mouseenter="
+                                        clearTimeout(dropdownTimeout);
+                                        isWeeklyDropdownOpen = true;
                                         isMagazineDropdownOpen = false;
                                         isMoreDropdownOpen = false;
                                         isVideoDropdownOpen = false;
                                        ">
                                 <a class="group-hover:text-[#005FAF] {{ request()->is('weekly-focus*') ? 'text-[#005FAF]' : '' }}"
-                                    href="javascript:void(0)">
+                                    href="{{ route('weekly-focus') }}">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                                     <span class="inline-block transition duration-300 rotate-[270deg] text-[18px] ml-1" :class="isWeeklyDropdownOpen ? 'rotate-[450deg]' : 'rotate-[270deg]'">
                                         <svg width="7" height="9" viewBox="0 0 7 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -285,7 +302,6 @@
                             </li>
 
                             <x-navigation.dropdown x-show="isWeeklyDropdownOpen"
-                                @click.away="isWeeklyDropdownOpen = false"
                                 button-text="Latest Edition"
                                 button-link="{{ $initiative->path }}"
                                 archive-link="{{ route('weekly-focus.archive') }}"
@@ -293,16 +309,35 @@
                             />
                         </div>
                     @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::MORE))
-                        <div class="group relative">
+                        <div class="group relative"
+                             @mouseleave="
+                                dropdownTimeout = setTimeout(() => {
+                                    isMoreDropdownOpen = false;
+                                }, 200); // Adjust the delay time as needed
+                             "
+                             @mouseenter="clearTimeout(dropdownTimeout)"
+                        >
                             <li class="font-semibold text-xs xl:text-sm pr-6"
-                                @click="
-                                        isMoreDropdownOpen = !isMoreDropdownOpen;
+                                @mouseenter="
+                                        clearTimeout(dropdownTimeout);
+                                        isMoreDropdownOpen = true;
                                         isWeeklyDropdownOpen = false;
                                         isMagazineDropdownOpen = false;
                                         isVideoDropdownOpen = false;
                                        ">
-                                <a class="group-hover:text-[#005FAF] {{ request()->is('more*') ? 'text-[#005FAF]' : '' }}"
-                                    href="javascript:void(0)">
+                                <a class="group-hover:text-[#005FAF]
+                                        {{
+                                            (
+                                                request()->is('more*') ||
+                                                request()->is('economic-survey*') ||
+                                                request()->is('budget*') ||
+                                                request()->is('quarterly-revision-documents*') ||
+                                                request()->is('year-end-reviews*') ||
+                                                request()->is('the-planet-vision*')
+                                            ) ? 'text-[#005FAF]' : ''
+                                        }}
+                                    "
+                                    href="{{ route('monthly-magazine.archive') }}">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                                     <span class="inline-block transition duration-300 rotate-[270deg] text-[18px] ml-1" :class="isMoreDropdownOpen ? 'rotate-[450deg]' : 'rotate-[270deg]'">
                                         <svg width="7" height="9" viewBox="0 0 7 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -313,19 +348,38 @@
                             </li>
 
                             <x-navigation.more-drop-down x-show="isMoreDropdownOpen"
-                                @click.away="isMoreDropdownOpen = false" :menuData="$menuData['more']" />
+                                :menuData="$menuData['more']"
+                            />
                         </div>
                     @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::VIDEOS))
-                        <div class="group relative">
+                        <div class="group relative"
+                             @mouseleave="
+                                dropdownTimeout = setTimeout(() => {
+                                    isVideoDropdownOpen = false;
+                                }, 200); // Adjust the delay time as needed
+                             "
+                             @mouseenter="clearTimeout(dropdownTimeout)"
+                        >
                             <li class="font-semibold text-xs xl:text-sm pr-6"
-                                @click="
-                                        isVideoDropdownOpen = !isVideoDropdownOpen;
+                                @mouseenter="
+                                        clearTimeout(dropdownTimeout);
+                                        isVideoDropdownOpen = true;
                                         isWeeklyDropdownOpen = false;
                                         isMagazineDropdownOpen = false;
                                         isMoreDropdownOpen = false;
                                        ">
-                                <a class="group-hover:text-[#005FAF] {{ request()->is('videos*') ? 'text-[#005FAF]' : '' }}"
-                                   href="javascript:void(0)">
+                                <a class="group-hover:text-[#005FAF]
+                                        {{
+                                            ( request()->is('videos*') ||
+                                              request()->is('daily-news*') ||
+                                              request()->is('in-conversation*') ||
+                                              request()->is('simplified-by-visionias*') ||
+                                              request()->is('personality-in-focus*') ||
+                                              request()->is('scheme-in-focus*')
+                                             )  ? 'text-[#005FAF]' : ''
+                                        }}
+                                    "
+                                   href="{{ route('videos') }}">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                                     <span class="inline-block transition duration-300 rotate-[270deg] text-[18px] ml-1" :class="isVideoDropdownOpen ? 'rotate-[450deg]' : 'rotate-[270deg]'">
                                         <svg width="7" height="9" viewBox="0 0 7 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -338,7 +392,6 @@
                             <x-navigation.more-drop-down
                                 x-show="isVideoDropdownOpen"
                                 :menuData="$menuData['videos']"
-                                @click.away="isVideoDropdownOpen = false"
                             />
                         </div>
                     @else

@@ -7,7 +7,7 @@
                     @click="isSectionOpen{{ $key }} = !isSectionOpen{{ $key }}"
                     class="cursor-pointer text-[#183B56] hover:text-[#3362CC] flex justify-between border-b-[1px] border-b-[#183B56] hover:border-b-[#3362CC] w-full pb-2 svgHover accorActive"
                 >
-                    <h2 class="text-2xl text-black font-semibold">{{$article->title}}</h2>
+                    <h2 class="text-2xl text-black dark:text-white font-semibold">{{$article->title}}</h2>
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" :class="isSectionOpen{{ $key }} === true || 'rotate-180'" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <g clip-path="url(#clip0_3420_22861)">

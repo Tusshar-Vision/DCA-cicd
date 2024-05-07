@@ -1,4 +1,11 @@
-<div class="w-2/6 py-[40px] px-[14px] relative leftArchiveMenu rounded-md bg-[#F7F8F9] dark:bg-dark373839" id="myDIV">
+<div
+    x-data="{ isSticky: true }"
+    x-init="isSticky = window.innerWidth > 1279"
+    x-cloak
+    class="w-2/6 py-[40px] px-[14px] relative rounded-md bg-[#F7F8F9] dark:bg-dark373839"
+    :class="isSticky ? 'leftsticky stickyMl-0' : 'leftArchiveMenu'"
+    id="myDIV"
+>
     <div class="flex justify-between align-middle relative">
         <h3 class="text-[#242424] dark:text-white text-xl mb-[25px] font-semibold ml-2">Current Affairs Archives</h3>
         <a href="javascript:void(0)"

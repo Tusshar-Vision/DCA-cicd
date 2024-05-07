@@ -600,6 +600,9 @@
 .ck-content p b,.ck-content p strong,.ck-content strong{
     font-weight: 600 !important;
 }
+.ck-content table {
+    background: transparent !important;
+}
 .ck-content table td {
     background: transparent !important;
 }
