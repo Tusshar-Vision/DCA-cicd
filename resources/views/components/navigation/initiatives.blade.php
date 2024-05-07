@@ -426,7 +426,7 @@
                 </div>
             @else
                 <li class="pr-[20px] hidden xl:block">
-                    <a href="{{ UrlHelper::linkToVision('/register') }}" class="register">Register</a>
+                    <a href="https://www.visionias.in/old/paystart.php" class="register">Register</a>
                 </li>
                 <li class="pl-[10px]" style="border-left: 1px solid #E5EAF4;">
                     <button @click="isAuthFormOpen = !isAuthFormOpen" class="flex items-center text-xs xl:text-sm">

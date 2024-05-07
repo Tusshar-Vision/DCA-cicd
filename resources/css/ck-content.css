@@ -616,3 +616,6 @@ table th, table td{
 li {
     margin-top: 5px;
 }
+p.only-nbsp {
+    line-height: 50%;
+}
