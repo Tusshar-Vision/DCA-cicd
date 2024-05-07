@@ -25,8 +25,8 @@
                 />
 
                 <div class="hidden lg:block">
-                    <x-widgets.side-bar-download-menu initiative="news-today" :media="$package?->media"/>
                     <x-widgets.sidebar-video-menu initiative="news-today" :video="$package?->video" />
+                    <x-widgets.side-bar-download-menu initiative="news-today" :media="$package?->media"/>
                 </div>
 
             </div>
@@ -71,8 +71,8 @@
                     <x-widgets.article-pagination :current-initiative="$package" :current-article-slug="$article->slug" />
                 </div>
                 <div class="block lg:hidden mt-4">
-                    <x-widgets.side-bar-download-menu initiative="news-today" :media="$package?->media"/>
                     <x-widgets.sidebar-video-menu initiative="news-today" :video="$package?->video" />
+                    <x-widgets.side-bar-download-menu initiative="news-today" :media="$package?->media"/>
                 </div>
             </div>
         </div>

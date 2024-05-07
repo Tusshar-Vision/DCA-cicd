@@ -7,8 +7,8 @@
     <div class="flex items-center justify-between md:w-full">
         <div class="hidden xl:block">
             <a href="{{ route('home') }}">
-                <img class="w-60 dark:hidden" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
-                <img class="w-60 hidden dark:block" src="{{ asset('images/DarkLogo.svg') }}" alt="Dark VisionIAS Logo" />
+                <img class="w-60 dark:hidden" src="{{ asset('images/current-affairs-logo.svg') }}" alt="VisionIAS Logo" />
+                <img class="w-60 hidden dark:block" src="{{ asset('images/current-affairs-logo-dark.svg') }}" alt="Dark VisionIAS Logo" />
             </a>
         </div>
         <a href="https://visionias.in/" class="group flex items-center text-nowrap ml-0 xl:ml-6 mr-2 xl:mr-0 text-[#242424] font-medium text-[14px] dark:text-[#8F93A3]">
