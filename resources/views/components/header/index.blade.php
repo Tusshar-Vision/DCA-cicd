@@ -14,10 +14,10 @@
         <a href="{{ UrlHelper::linkToVision('/') }}" class="group flex items-center text-nowrap ml-0 xl:ml-6 mr-2 xl:mr-0 text-[#242424] font-medium text-[14px] dark:text-[#8F93A3]">
             <span class="text-[18px] mr-1">
                 <svg width="7" height="9" viewBox="0 0 7 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path class="group-hover:stroke-[#005FAF] dark:stroke-white" d="M0.597656 4.03516L4.31641 0.316406C4.58984 0.0429688 5 0.0429688 5.24609 0.316406L5.875 0.917969C6.12109 1.19141 6.12109 1.60156 5.875 1.84766L3.22266 4.47266L5.875 7.125C6.12109 7.37109 6.12109 7.78125 5.875 8.05469L5.24609 8.65625C5 8.92969 4.58984 8.92969 4.31641 8.65625L0.597656 4.9375C0.351562 4.69141 0.351562 4.28125 0.597656 4.03516Z" fill="#242424"/>
+                    <path class="group-hover:stroke-[#005FAF] dark:stroke-white" d="M0.597656 4.03516L4.31641 0.316406C4.58984 0.0429688 5 0.0429688 5.24609 0.316406L5.875 0.917969C6.12109 1.19141 6.12109 1.60156 5.875 1.84766L3.22266 4.47266L5.875 7.125C6.12109 7.37109 6.12109 7.78125 5.875 8.05469L5.24609 8.65625C5 8.92969 4.58984 8.92969 4.31641 8.65625L0.597656 4.9375C0.351562 4.69141 0.351562 4.28125 0.597656 4.03516Z" fill="#242424"/>
                 </svg>
             </span>
-            <span class="hidden md:inline-block group-hover:text-[#005FAF]">Back to Main Website</span>
+            <span class="hidden md:inline-block group-hover:text-[#005FAF]">Back to VisionIAS</span>
         </a>
         <div class="w-full flex xl:space-x-5 items-center xl:justify-end justify-between space-x-0">
             <div class="flex order-last xl:order-first topMenu">
