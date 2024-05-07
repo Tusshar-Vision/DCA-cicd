@@ -31,18 +31,18 @@
 </div>
 <!-- bookmark content -->
 <script>
-const searchBox  = document.getElementById("history-searchbox");
+var searchBox  = document.getElementById("history-searchbox");
  searchBox.addEventListener("change", function() {
-    const query = searchBox.value;
+    var query = searchBox.value;
     if(query == "") return;
-    let url = "{{url("user/bookmarks/search")}}";
+    var url = "{{url("user/bookmarks/search")}}";
     url += `/${query}`;
 
     fetch(url)
     .then(response => response.json())
     .then(data => {
-        const histories = data.data;
-        let html = "";
+        var histories = data.data;
+        var html = "";
         histories.map(bookmark => {
                   if(bookmark!=null) {
                     html += `<li>
@@ -53,7 +53,7 @@ const searchBox  = document.getElementById("history-searchbox");
                     </li>`
                   }
         })
-        
+
         document.getElementById("bookmarks-container").innerHTML = html;
     })
  })
