@@ -3,7 +3,7 @@
     $currentTopic = request()->segment(3);
 @endphp
 
-<ul class="flex h-10 text-white items-center bg-visionBlue space-x-8 whitespace-nowrap overflow-x-auto pr-4 scroll-style">
+<ul class="flex h-10 text-white items-center bg-visionBlue space-x-8 whitespace-nowrap overflow-x-auto pr-4">
     <li>
         <p class="text-sm font-bold pl-2">{{ Carbon::parse($publishedDate)->format('F Y') }}</p>
     </li>

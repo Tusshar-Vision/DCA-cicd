@@ -13,7 +13,8 @@
 
             <div x-show="isSidePanelOpen" class="flex w-full lg:w-2/6 flex-col space-y-4 leftsticky stickyMl-0" x-transition>
 
-                <img src="{{ asset('images/news-today-logo.svg') }}" alt="News Today Logo" />
+                <img class="dark:hidden" src="{{ asset('images/news-today-logo.svg') }}" alt="News Today Logo" />
+                <img class="hidden dark:block !mt-0" src="{{ asset('images/news-today-logo-dark.svg') }}" alt="News Today Logo" />
 
                 <livewire:widgets.news-today-calendar :calendar-data="$newsTodayCalendar" />
 
@@ -30,7 +31,7 @@
 
             </div>
 
-            <div class="flex flex-col w-full mt-6 lg:mt-0">
+            <div class="flex flex-col w-full mt-6 lg:mt-0" :style="!isSidePanelOpen && 'margin-left: 0px !important'">
                 <!-- replaced header section -->
                 <div class="space-y-4">
                     <x-widgets.options-nav

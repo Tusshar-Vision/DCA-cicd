@@ -11,7 +11,8 @@
 
             <div x-show="isSidePanelOpen" class="flex w-full lg:md:w-2/6 flex-col space-y-4 leftsticky stickyMl-0" x-transition>
 
-                <img src="{{ asset('images/weekly-focus-logo.svg') }}" alt="Weekly Focus Logo" />
+                <img class="dark:hidden" src="{{ asset('images/weekly-focus-logo.svg') }}" alt="Weekly Focus Logo" />
+                <img class="hidden dark:block !mt-0" src="{{ asset('images/weekly-focus-logo-dark.svg') }}" alt="Weekly Focus Logo" />
 
                 <x-widgets.article-side-bar :table-of-content="$package->articles"/>
 
@@ -25,7 +26,7 @@
                 </div>
             </div>
 
-            <div class="flex flex-col w-full mt-6 lg:mt-0">
+            <div class="flex flex-col w-full mt-6 lg:mt-0" :style="!isSidePanelOpen && 'margin-left: 0px !important'">
                 <div class="space-y-4">
                     <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" :isArticleRead="$isArticleRead" :article="$article"/>
                     <x-common.article-heading :title="$package->name" />

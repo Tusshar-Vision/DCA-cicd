@@ -14,7 +14,8 @@
     <div x-data="{ openItem: 0, expanded: false }" class="flex flex-col lg:flex-row space-x-0 lg:space-x-8 mt-[20px] md:mt-0">
         <div x-show="isSidePanelOpen" class="flex min-w-full max-w-full lg:min-w-[340px] flex-col space-y-6 leftsticky stickyMl-0 w-2/6" x-transition>
 
-            <img src="{{ asset('images/monthly-magazine-logo.svg') }}" alt="Monthly Magazine Logo" />
+            <img class="dark:hidden" src="{{ asset('images/monthly-magazine-logo.svg') }}" alt="Monthly Magazine Logo" />
+            <img class="hidden dark:block !mt-0" src="{{ asset('images/monthly-magazine-logo-dark.svg') }}" alt="Monthly Magazine Logo" />
 
             <x-navigation.monthly-magazine-sidebar
                 :topics="$package->topics"
@@ -28,7 +29,7 @@
             </div>
         </div>
 
-        <div class="flex flex-col w-full mt-10 lg:mt-0">
+        <div class="flex flex-col w-full mt-10 lg:mt-0" :style="!isSidePanelOpen && 'margin-left: 0px !important'">
             <div class="space-y-4">
                 <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" :isArticleRead="$isArticleRead" :article="$article"/>
                 @if($inShort)
