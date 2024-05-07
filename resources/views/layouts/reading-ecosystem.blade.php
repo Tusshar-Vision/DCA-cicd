@@ -95,5 +95,13 @@
                 scrollToTopBtn.style.display = 'none';
             }
         };
+
+        document.addEventListener("livewire:navigated", function() {
+            document.querySelectorAll('p').forEach(function(paragraph) {
+                if (paragraph.innerHTML.trim() === '&nbsp;') {
+                    paragraph.classList.add('only-nbsp');
+                }
+            });
+        });
     </script>
 @endsection

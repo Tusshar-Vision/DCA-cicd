@@ -88,20 +88,20 @@ class FixArticleFormatting extends Command
         foreach ($elements as $element) {
             $currentNode = $element;
             dump($dom->saveHTML($element), $article->title);
-//            while ($currentNode->parentNode) {
-//                // If the parent node is a <p> tag and the previous sibling is the same element
-//                if ($currentNode->parentNode->nodeName == 'p' && $currentNode->previousSibling && $currentNode->previousSibling->isSameNode($currentNode)) {
-//                    $consecutiveCount++;
-//                    // If it's not the first occurrence and consecutive, remove it
-//                    if ($consecutiveCount > 1) {
-//                        $currentNode->parentNode->removeChild($currentNode);
-//                        break; // Break the loop after removing the element
-//                    }
-//                } else {
-//                    $consecutiveCount = 0; // Reset consecutive count if not consecutive
-//                }
-//                $currentNode = $currentNode->parentNode;
-//            }
+            while ($currentNode->parentNode) {
+                // If the parent node is a <p> tag and the previous sibling is the same element
+                if ($currentNode->parentNode->nodeName == 'p' && $currentNode->previousSibling && $currentNode->previousSibling->isSameNode($currentNode)) {
+                    $consecutiveCount++;
+                    // If it's not the first occurrence and consecutive, remove it
+                    if ($consecutiveCount > 1) {
+                        $currentNode->parentNode->removeChild($currentNode);
+                        break; // Break the loop after removing the element
+                    }
+                } else {
+                    $consecutiveCount = 0; // Reset consecutive count if not consecutive
+                }
+                $currentNode = $currentNode->parentNode;
+            }
         }
     }
 
@@ -124,74 +124,73 @@ class FixArticleFormatting extends Command
                 $xpath = new \DOMXPath($dom);
 
                 // Define the XPath expression to select <p> elements with <span> and <strong> children
-//                $queryForPTagOutsideTable = '//p[not(ancestor::table)]/span[@style="color:hsl(226,92%,37%);" and strong]';
-//                $queryForPTagOutsideTableFormatting1 = '//p[not(ancestor::table)]/span[@style="color:hsl(222,93%,37%);" and strong]';
-//                $queryForPTagOutsideTableFormatting2 = '//p[not(ancestor::table)]/span[@style="color:hsl(226,93%,37%);" and strong]';
-//                $queryForPTagOutsideTableFormatting3 = '//p[not(ancestor::table)]/span[@style="color:hsl( 226, 92%, 37% );" and strong]';
-//                $queryForPTagOutsideTableFormatting4 = '//p[not(ancestor::table)]/span[@style="color:hsl( 226, 92%, 37% );"]';
-//
-//                // Find elements matching the XPath expression
-//                $elements = $xpath->query($queryForPTagOutsideTable);
-//                $this->replacePTagWithH2($elements, $dom);
-//                $elements = $xpath->query($queryForPTagOutsideTableFormatting1);
-//                $this->replacePTagWithH2($elements, $dom);
-//                $elements = $xpath->query($queryForPTagOutsideTableFormatting2);
-//                $this->replacePTagWithH2($elements, $dom);
-//                $elements = $xpath->query($queryForPTagOutsideTableFormatting3);
-//                $this->replacePTagWithH2($elements, $dom);
-//                $elements = $xpath->query($queryForPTagOutsideTableFormatting4);
-//                $this->replacePTagWithH2($elements, $dom);
-//
-//                // Define the XPath expression to select <p> elements inside <table> elements
-//                $queryForPTagInsideTable = '//table//p/span[@style="color:hsl(226,92%,37%);" and strong]';
-//                $queryForPTagInsideTableFormatting1 = '//table//p/span[@style="color:hsl( 226, 92%, 37% );" and strong]';
-//                $queryForPTagInsideTableFormatting2 = '//table//span[@style="color:hsl(226,92%,37%);" and strong]';
-//                $queryForPTagInsideTableFormatting3 = '//table//span[@style="color:hsl( 226, 92%, 37% );" and strong]';
-//
-//                // Find elements matching the XPath expression
-//                $elements = $xpath->query($queryForPTagInsideTable);
-//                $this->replacePTagWithH3InTable($elements, $dom);
-//                $elements = $xpath->query($queryForPTagInsideTableFormatting1);
-//                $this->replacePTagWithH3InTable($elements, $dom);
-//                $elements = $xpath->query($queryForPTagInsideTableFormatting2);
-//                $this->replacePTagWithH3InTable($elements, $dom);
-//                $elements = $xpath->query($queryForPTagInsideTableFormatting3);
-//                $this->replacePTagWithH3InTable($elements, $dom);
-//
-//
-//                $queryForLiTagWithColor = '//li[span[@style="color:hsl(226,92%,37%);"]]';
-//                $queryForLiTagWithColorFormatting1 = '//li[span[@style="color:hsl( 226, 92%, 37% );"]]';
-//                $queryForLiTagWithColorFormatting2 = '//li[span[@style="background-color:white;color:hsl(226,92%,37%);"]]';
-//                $queryForLiTagWithColorFormatting3 = '//li[span[@style="color:rgb(8,48,181);"]]';
-//                $queryForH3TagWithColorFormatting1 = '//h3[span[@style="color:hsl(226,92%,37%);"]]';
-//                $queryForPTagWithColorFormatting1 = '//p[span[@style="color:hsl(226,92%,37%);"]]';
-//
-//                // Find elements matching the XPath expression
-//                $elements = $xpath->query($queryForLiTagWithColor);
-//                $this->fixColorInTag($elements);
-//                $elements = $xpath->query($queryForLiTagWithColorFormatting1);
-//                $this->fixColorInTag($elements);
-//                $elements = $xpath->query($queryForLiTagWithColorFormatting2);
-//                $this->fixColorInTag($elements);
-//                $elements = $xpath->query($queryForLiTagWithColorFormatting3);
-//                $this->fixColorInTag($elements);
-//                $elements = $xpath->query($queryForH3TagWithColorFormatting1);
-//                $this->fixColorInTag($elements);
-//                $elements = $xpath->query($queryForPTagWithColorFormatting1);
-//                $this->fixColorInTag($elements);
+                $queryForPTagOutsideTable = '//p[not(ancestor::table)]/span[@style="color:hsl(226,92%,37%);" and strong]';
+                $queryForPTagOutsideTableFormatting1 = '//p[not(ancestor::table)]/span[@style="color:hsl(222,93%,37%);" and strong]';
+                $queryForPTagOutsideTableFormatting2 = '//p[not(ancestor::table)]/span[@style="color:hsl(226,93%,37%);" and strong]';
+                $queryForPTagOutsideTableFormatting3 = '//p[not(ancestor::table)]/span[@style="color:hsl( 226, 92%, 37% );" and strong]';
+                $queryForPTagOutsideTableFormatting4 = '//p[not(ancestor::table)]/span[@style="color:hsl( 226, 92%, 37% );"]';
+
+                // Find elements matching the XPath expression
+                $elements = $xpath->query($queryForPTagOutsideTable);
+                $this->replacePTagWithH2($elements, $dom);
+                $elements = $xpath->query($queryForPTagOutsideTableFormatting1);
+                $this->replacePTagWithH2($elements, $dom);
+                $elements = $xpath->query($queryForPTagOutsideTableFormatting2);
+                $this->replacePTagWithH2($elements, $dom);
+                $elements = $xpath->query($queryForPTagOutsideTableFormatting3);
+                $this->replacePTagWithH2($elements, $dom);
+                $elements = $xpath->query($queryForPTagOutsideTableFormatting4);
+                $this->replacePTagWithH2($elements, $dom);
+
+                // Define the XPath expression to select <p> elements inside <table> elements
+                $queryForPTagInsideTable = '//table//p/span[@style="color:hsl(226,92%,37%);" and strong]';
+                $queryForPTagInsideTableFormatting1 = '//table//p/span[@style="color:hsl( 226, 92%, 37% );" and strong]';
+                $queryForPTagInsideTableFormatting2 = '//table//span[@style="color:hsl(226,92%,37%);" and strong]';
+                $queryForPTagInsideTableFormatting3 = '//table//span[@style="color:hsl( 226, 92%, 37% );" and strong]';
+
+                // Find elements matching the XPath expression
+                $elements = $xpath->query($queryForPTagInsideTable);
+                $this->replacePTagWithH3InTable($elements, $dom);
+                $elements = $xpath->query($queryForPTagInsideTableFormatting1);
+                $this->replacePTagWithH3InTable($elements, $dom);
+                $elements = $xpath->query($queryForPTagInsideTableFormatting2);
+                $this->replacePTagWithH3InTable($elements, $dom);
+                $elements = $xpath->query($queryForPTagInsideTableFormatting3);
+                $this->replacePTagWithH3InTable($elements, $dom);
+
+
+                $queryForLiTagWithColor = '//li[span[@style="color:hsl(226,92%,37%);"]]';
+                $queryForLiTagWithColorFormatting1 = '//li[span[@style="color:hsl( 226, 92%, 37% );"]]';
+                $queryForLiTagWithColorFormatting2 = '//li[span[@style="background-color:white;color:hsl(226,92%,37%);"]]';
+                $queryForLiTagWithColorFormatting3 = '//li[span[@style="color:rgb(8,48,181);"]]';
+                $queryForH3TagWithColorFormatting1 = '//h3[span[@style="color:hsl(226,92%,37%);"]]';
+                $queryForPTagWithColorFormatting1 = '//p[span[@style="color:hsl(226,92%,37%);"]]';
+
+                // Find elements matching the XPath expression
+                $elements = $xpath->query($queryForLiTagWithColor);
+                $this->fixColorInTag($elements);
+                $elements = $xpath->query($queryForLiTagWithColorFormatting1);
+                $this->fixColorInTag($elements);
+                $elements = $xpath->query($queryForLiTagWithColorFormatting2);
+                $this->fixColorInTag($elements);
+                $elements = $xpath->query($queryForLiTagWithColorFormatting3);
+                $this->fixColorInTag($elements);
+                $elements = $xpath->query($queryForH3TagWithColorFormatting1);
+                $this->fixColorInTag($elements);
+                $elements = $xpath->query($queryForPTagWithColorFormatting1);
+                $this->fixColorInTag($elements);
 
                 // Define the XPath expression to select <p> elements with the specific style attribute and content
-                $query = '//p[string-length() = 1]';
-                // Find elements matching the XPath expression
-                $elements = $xpath->query($query);
-//                 If there are multiple consecutive occurrences of the element, keep only the first one
-                $this->removeExtraOccurrences($elements, $dom, $article);
-//
-//
-//                // Save the updated content back
-//                $updatedContent = $dom->saveHTML();
-//                $article->content->content = $updatedContent;
-//                $article->content->save();
+//                $query = '//p[string-length() = 1]';
+//                // Find elements matching the XPath expression
+//                $elements = $xpath->query($query);
+////               If there are multiple consecutive occurrences of the element, keep only the first one
+//                $this->removeExtraOccurrences($elements, $dom, $article);
+
+                // Save the updated content back
+                $updatedContent = $dom->saveHTML();
+                $article->content->content = $updatedContent;
+                $article->content->save();
             }
         });
         $this->info('Operation was completed successfully!');
