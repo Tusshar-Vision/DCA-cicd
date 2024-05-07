@@ -218,7 +218,8 @@
                     isMagazineDropdownOpen: false,
                     isWeeklyDropdownOpen: false,
                     isMoreDropdownOpen: false,
-                    isVideoDropdownOpen: false
+                    isVideoDropdownOpen: false,
+                    dropdownTimeout: null
                 }"
             >
                 <li class="font-semibold pr-4 xl:pr-6 float-left">
@@ -237,14 +238,23 @@
                             </a>
                         </li>
                     @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE))
-                        <div class="group relative">
+                        <div class="group relative"
+                             @mouseleave="
+                                dropdownTimeout = setTimeout(() => {
+                                    isMagazineDropdownOpen = false;
+                                }, 200); // Adjust the delay time as needed
+                            "
+                            @mouseenter="clearTimeout(dropdownTimeout)"
+                        >
                             <li class="font-semibold text-xs xl:text-sm pr-6"
-                                @click="
-                                        isMagazineDropdownOpen = !isMagazineDropdownOpen;
+                                @mouseenter="
+                                        clearTimeout(dropdownTimeout);
+                                        isMagazineDropdownOpen = true;
                                         isMoreDropdownOpen = false;
                                         isWeeklyDropdownOpen = false;
                                         isVideoDropdownOpen = false;
-                                       ">
+                                       "
+                                >
                                 <a class="group-hover:text-[#005FAF] {{ request()->is('monthly-magazine*') ? 'text-[#005FAF]' : '' }}"
                                     href="javascript:void(0)">
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
@@ -257,7 +267,6 @@
                             </li>
 
                             <x-navigation.dropdown x-show="isMagazineDropdownOpen"
-                                @click.away="isMagazineDropdownOpen = false"
                                 button-text="Latest Edition"
                                 button-link="{{ $initiative->path }}"
                                 archive-link="{{ route('monthly-magazine.archive') }}"
@@ -265,10 +274,18 @@
                             />
                         </div>
                     @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
-                        <div class="group relative">
+                        <div class="group relative"
+                             @mouseleave="
+                                dropdownTimeout = setTimeout(() => {
+                                    isWeeklyDropdownOpen = false;
+                                }, 200); // Adjust the delay time as needed
+                             "
+                             @mouseenter="clearTimeout(dropdownTimeout)"
+                            >
                             <li class="font-semibold text-xs xl:text-sm pr-6"
-                                @click="
-                                        isWeeklyDropdownOpen = !isWeeklyDropdownOpen;
+                                @mouseenter="
+                                        clearTimeout(dropdownTimeout);
+                                        isWeeklyDropdownOpen = true;
                                         isMagazineDropdownOpen = false;
                                         isMoreDropdownOpen = false;
                                         isVideoDropdownOpen = false;
@@ -285,7 +302,6 @@
                             </li>
 
                             <x-navigation.dropdown x-show="isWeeklyDropdownOpen"
-                                @click.away="isWeeklyDropdownOpen = false"
                                 button-text="Latest Edition"
                                 button-link="{{ $initiative->path }}"
                                 archive-link="{{ route('weekly-focus.archive') }}"
@@ -295,8 +311,8 @@
                     @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::MORE))
                         <div class="group relative">
                             <li class="font-semibold text-xs xl:text-sm pr-6"
-                                @click="
-                                        isMoreDropdownOpen = !isMoreDropdownOpen;
+                                @mouseenter="
+                                        isMoreDropdownOpen = true;
                                         isWeeklyDropdownOpen = false;
                                         isMagazineDropdownOpen = false;
                                         isVideoDropdownOpen = false;
@@ -313,13 +329,15 @@
                             </li>
 
                             <x-navigation.more-drop-down x-show="isMoreDropdownOpen"
-                                @click.away="isMoreDropdownOpen = false" :menuData="$menuData['more']" />
+                                @mouseleave="isMoreDropdownOpen = false"
+                                :menuData="$menuData['more']"
+                            />
                         </div>
                     @elseif ($initiative->id === InitiativesHelper::getInitiativeID(Initiatives::VIDEOS))
                         <div class="group relative">
                             <li class="font-semibold text-xs xl:text-sm pr-6"
-                                @click="
-                                        isVideoDropdownOpen = !isVideoDropdownOpen;
+                                @mouseenter="
+                                        isVideoDropdownOpen = true;
                                         isWeeklyDropdownOpen = false;
                                         isMagazineDropdownOpen = false;
                                         isMoreDropdownOpen = false;
@@ -336,9 +354,9 @@
                             </li>
 
                             <x-navigation.more-drop-down
+                                @mouseleave="isVideoDropdownOpen = false"
                                 x-show="isVideoDropdownOpen"
                                 :menuData="$menuData['videos']"
-                                @click.away="isVideoDropdownOpen = false"
                             />
                         </div>
                     @else

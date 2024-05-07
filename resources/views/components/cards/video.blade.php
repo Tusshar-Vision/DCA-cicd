@@ -25,5 +25,5 @@
         </div>
     @endif
 
-    <p class="font-semibold text-base text-justify">{{ $source?->title }}</p>
+    <p class="font-semibold text-base text-justify mt-4">{{ $source?->title }}</p>
 </div>
