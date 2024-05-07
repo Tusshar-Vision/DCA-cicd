@@ -47,7 +47,7 @@
                     @endif
                 </div>
                 <!-- replaced header section -->
-                <div class="flex flex-col md:flex-row justify-between items-center w-full py-2 my-[30px] text-gray-500 border-t-2 border-b-2">
+                <div class="flex flex-col md:flex-row justify-between items-center w-full py-2 mt-[30px] text-gray-500 border-t-2 border-b-2">
                     <x-widgets.articles-nav :createdAt="$package->publishedAt" :updatedAt="$article->updatedAt" />
                     @if($inShort)
                         @php
@@ -62,7 +62,7 @@
                 </div>
 
                 @if($inShort)
-                    <x-reading.short-article :articles="$package->shortArticles" class="m-0" />
+                    <x-reading.short-article :articles="$package->shortArticles" class="mt-[30px]" />
                 @else
                     <x-reading.article-content :article="$article" class="m-0" />
                 @endif
