@@ -30,7 +30,7 @@ class VideosController extends Controller
 
         return View('pages.videos.daily-news', [
             'videos' => $videos,
-            'title' => 'Daily News',
+            'title' => 'News Today',
         ]);
     }
 

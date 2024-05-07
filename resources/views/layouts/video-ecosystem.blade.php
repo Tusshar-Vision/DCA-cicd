@@ -13,7 +13,7 @@
                 </li>
                 <li>
                     <a href="{{ route('daily-news') }}" wire:navigate class="text-[14px] text-nowrap rounded-md px-3 py-2 text-[#040404] bg-[#F4F4F6] active:text-[#3362CC] hover:text-[#3362CC] {{ request()->is('daily-news*') ? 'text-[#3362CC]' : '' }}">
-                        Daily News
+                        News Today
                     </a>
                 </li>
                 <li>

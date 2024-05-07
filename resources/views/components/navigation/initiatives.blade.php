@@ -256,7 +256,9 @@
                                        "
                                 >
                                 <a class="group-hover:text-[#005FAF] {{ request()->is('monthly-magazine*') ? 'text-[#005FAF]' : '' }}"
-                                    href="{{ route('monthly-magazine') }}">
+                                    href="{{ route('monthly-magazine') }}"
+                                    wire:navigate
+                                >
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                                     <span class="inline-block transition duration-300 rotate-[270deg] text-[18px] ml-1" :class="isMagazineDropdownOpen ? 'rotate-[450deg]' : 'rotate-[270deg]'">
                                         <svg width="7" height="9" viewBox="0 0 7 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -291,7 +293,9 @@
                                         isVideoDropdownOpen = false;
                                        ">
                                 <a class="group-hover:text-[#005FAF] {{ request()->is('weekly-focus*') ? 'text-[#005FAF]' : '' }}"
-                                    href="{{ route('weekly-focus') }}">
+                                   href="{{ route('weekly-focus') }}"
+                                   wire:navigate
+                                >
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                                     <span class="inline-block transition duration-300 rotate-[270deg] text-[18px] ml-1" :class="isWeeklyDropdownOpen ? 'rotate-[450deg]' : 'rotate-[270deg]'">
                                         <svg width="7" height="9" viewBox="0 0 7 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -337,7 +341,9 @@
                                             ) ? 'text-[#005FAF]' : ''
                                         }}
                                     "
-                                    href="{{ route('monthly-magazine.archive') }}">
+                                    href="{{ route('monthly-magazine.archive') }}"
+                                    wire:navigate
+                                >
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                                     <span class="inline-block transition duration-300 rotate-[270deg] text-[18px] ml-1" :class="isMoreDropdownOpen ? 'rotate-[450deg]' : 'rotate-[270deg]'">
                                         <svg width="7" height="9" viewBox="0 0 7 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -379,7 +385,9 @@
                                              )  ? 'text-[#005FAF]' : ''
                                         }}
                                     "
-                                   href="{{ route('videos') }}">
+                                   href="{{ route('videos') }}"
+                                   wire:navigate
+                                >
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                                     <span class="inline-block transition duration-300 rotate-[270deg] text-[18px] ml-1" :class="isVideoDropdownOpen ? 'rotate-[450deg]' : 'rotate-[270deg]'">
                                         <svg width="7" height="9" viewBox="0 0 7 9" fill="none" xmlns="http://www.w3.org/2000/svg">
