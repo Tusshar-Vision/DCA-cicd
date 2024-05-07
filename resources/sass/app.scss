@@ -1070,6 +1070,7 @@ $gray-686E70: #686E70;
     ul {
       margin: 0;
       padding: 0;
+      width: 100%;
 
       li {
         display: inline-block;
@@ -1080,8 +1081,10 @@ $gray-686E70: #686E70;
           line-height: 20px;
           font-weight: 400;
           color: #969BA1;
-          padding-bottom: 20px;
-          border-bottom: 2px solid transparent;
+          padding: 8px 15px;
+          border-radius: 20px;
+          margin-bottom: 20px;
+          border: 2px solid #E9E9E9;
           display: block;
 
           @media screen and (max-width: 1024px) {
@@ -1098,24 +1101,19 @@ $gray-686E70: #686E70;
       }
     }
   }
+}
 
-  .hybrid-filter {
-    font-size: 18px;
-    line-height: 20px;
-    font-weight: 400;
-    color: #969BA1;
-    border-left: 1px solid #969BA1;
-    padding: 0 25px 0 10px;
-    background: url("/images/filter.svg") right 2px no-repeat;
-    margin-bottom: 20px;
-    padding-left: 25px;
+.hybrid-filter {
+  font-size: 18px;
+  line-height: 20px;
+  font-weight: 400;
+  color: #969BA1;
+  padding: 0 0 0 25px;
+  background: url("/images/filter.svg") left 2px no-repeat;
+  margin-bottom: 20px;
 
-    @media screen and (max-width: 1024px) {
-      font-size: 14px;
-      padding-left: 10px;
-      margin-left: 10px;
-      margin-bottom: 10px;
-    }
+  @media screen and (max-width: 1024px) {
+    font-size: 14px;
   }
 }
 
@@ -2424,7 +2422,8 @@ li[data-level="4"] {
 
 .search-bar-wrapper {
   .vi-search-bar {
-    padding: 8px 40px 8px 8px;
+    padding: 8px 40px 8px 20px;
+    border-radius: 20px;
   }
 
   .vi-icons::before {
@@ -2848,6 +2847,47 @@ li[data-level="4"] {
 
 /* menu accordion style */
 
+/* filter overlay */
+
+.filterOverlay {
+  height: 0;
+  width: 100%;
+  position: fixed;
+  z-index: 999;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  overflow-x: hidden;
+  transition: all ease-in-out 0.3s;
+  -webkit-transition: all ease-in-out 0.3s;
+
+  .filterOverlayContent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px 20px;
+    border-radius: 25px 25px 0 0;
+  }
+
+  .closebtn {
+    position: relative;
+    top: 0px;
+    right: 0px;
+    border-radius: 50%;
+    border-width: 1px;
+    border-style: solid;
+    font-size: 25px;
+    width: 25px;
+    height: 25px;
+    line-height: 100%;
+    padding: 0;
+    text-align: center;
+  }
+}
+
+/* filter overlay */
+
 .accordion {
   display: flex;
   flex-direction: column;
@@ -3163,8 +3203,6 @@ iframe {
 }
 
 
-
-
 /* student search CSS */
 .student-search-field-container {
   position: relative;
@@ -3243,11 +3281,6 @@ iframe {
 // #scrollToTopBtn.show {
 //   display: block;
 // }
-
-.scroll-style {
-  scrollbar-color: #CCC;
-  scrollbar-width: thin;
-}
 
 .fitscreen {
   transition: width 0.5s ease-in-out;
@@ -3393,11 +3426,11 @@ iframe {
   .hybrid-text-wrapper .hybrid-left-panel .hybrid-text-row p{
     color: #CCC;
   }
-  
+
   .bookmark-list-wrap {
     ul{
-      li{ 
-        .bookmark-cont{ 
+      li{
+        .bookmark-cont{
           p{
             color: #fff;
           }

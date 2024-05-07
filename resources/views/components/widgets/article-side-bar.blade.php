@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <div id="table-of-content" x-show="isOpen" class="h-auto lg:h-[220px] customScroll overflow-y-auto" x-transition>
+        <div id="table-of-content" x-show="isOpen" class="h-auto lg:h-[300px] customScroll overflow-y-auto" x-transition>
             <ul class="list-none ml-0">
                 <?php $i = 0; ?>
                 @foreach($tableOfContent as $key => $header)

@@ -13,7 +13,8 @@
 
             <div x-show="isSidePanelOpen" class="flex w-full lg:w-2/6 flex-col space-y-4 leftsticky stickyMl-0" x-transition>
 
-                <img src="{{ asset('images/news-today-logo.svg') }}" alt="News Today Logo" />
+                <img class="dark:hidden" src="{{ asset('images/news-today-logo.svg') }}" alt="News Today Logo" />
+                <img class="hidden dark:block !mt-0" src="{{ asset('images/news-today-logo-dark.svg') }}" alt="News Today Logo" />
 
                 <livewire:widgets.news-today-calendar :calendar-data="$newsTodayCalendar" />
 
@@ -24,13 +25,13 @@
                 />
 
                 <div class="hidden lg:block">
-                    <x-widgets.side-bar-download-menu initiative="news-today" :media="$package?->media"/>
                     <x-widgets.sidebar-video-menu initiative="news-today" :video="$package?->video" />
+                    <x-widgets.side-bar-download-menu initiative="news-today" :media="$package?->media"/>
                 </div>
 
             </div>
 
-            <div class="flex flex-col w-full mt-6 lg:mt-0">
+            <div class="flex flex-col w-full mt-6 lg:mt-0" :style="!isSidePanelOpen && 'margin-left: 0px !important'">
                 <!-- replaced header section -->
                 <div class="space-y-4">
                     <x-widgets.options-nav
@@ -46,7 +47,7 @@
                     @endif
                 </div>
                 <!-- replaced header section -->
-                <div class="flex flex-col md:flex-row justify-between items-center w-full py-2 my-[30px] text-gray-500 border-t-2 border-b-2">
+                <div class="flex flex-col md:flex-row justify-between items-center w-full py-2 mt-[30px] text-gray-500 border-t-2 border-b-2">
                     <x-widgets.articles-nav :createdAt="$package->publishedAt" :updatedAt="$article->updatedAt" />
                     @if($inShort)
                         @php
@@ -61,7 +62,7 @@
                 </div>
 
                 @if($inShort)
-                    <x-reading.short-article :articles="$package->shortArticles" class="m-0" />
+                    <x-reading.short-article :articles="$package->shortArticles" class="mt-[30px]" />
                 @else
                     <x-reading.article-content :article="$article" class="m-0" />
                 @endif
@@ -70,8 +71,8 @@
                     <x-widgets.article-pagination :current-initiative="$package" :current-article-slug="$article->slug" />
                 </div>
                 <div class="block lg:hidden mt-4">
-                    <x-widgets.side-bar-download-menu initiative="news-today" :media="$package?->media"/>
                     <x-widgets.sidebar-video-menu initiative="news-today" :video="$package?->video" />
+                    <x-widgets.side-bar-download-menu initiative="news-today" :media="$package?->media"/>
                 </div>
             </div>
         </div>

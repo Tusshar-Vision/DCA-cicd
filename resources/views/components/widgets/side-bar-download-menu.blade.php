@@ -3,8 +3,8 @@
 @endphp
 
 @if ($initiative === 'monthly-magazine')
-    <div class="flex flex-col rounded border-top dark:bg-[#373839] dark:text-white mb-4" @click="printDiv">
-        <div class="my-8 mx-6">
+    <div class="flex flex-col rounded border-top dark:bg-[#373839] dark:text-white" @click="printDiv">
+        <div class="my-4 mx-6">
             <div class="flex items-center justify-between cursor-pointer">
                 <div class="flex space-x-2">
                     <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -21,7 +21,7 @@
 
 <div class="flex flex-col rounded border-top dark:bg-[#373839] dark:text-white lg:mt-0 mt-8 {{ $mediaFile === null ? 'opacity-50 pointer-events-none' : '' }}">
     <a href="{{ $mediaFile ? route('download', ['media' => $mediaFile]): "#"}}" target="_blank">
-        <div class="my-8 mx-6">
+        <div class="my-4 mx-6">
             <div class="flex items-center justify-between">
                 <div class="flex space-x-2">
                     <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">

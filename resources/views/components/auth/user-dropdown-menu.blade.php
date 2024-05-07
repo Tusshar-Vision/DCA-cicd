@@ -7,12 +7,12 @@
             >
                 My Dashboard
             </a>
-            <a href="#" @click.outside="isUserMenuOpen = false"
-               class="flex items-center justify-between px-3 py-2 hover:text-[#3362CC]"
-               wire:navigate
-            >
-                Profile Settings
-            </a>
+{{--            <a href="#" @click.outside="isUserMenuOpen = false"--}}
+{{--               class="flex items-center justify-between px-3 py-2 hover:text-[#3362CC]"--}}
+{{--               wire:navigate--}}
+{{--            >--}}
+{{--                Profile Settings--}}
+{{--            </a>--}}
             <a href="{{ route('logout') }}" @click.outside="isUserMenuOpen = false"
                class="flex items-center justify-between px-3 py-2 hover:text-[#3362CC]"
                wire:navigate

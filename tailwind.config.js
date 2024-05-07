@@ -24,7 +24,7 @@ export default {
                 visionToolTip: "#04040499"
             },
             fontFamily: {
-                sans: ['Poppins'],
+                sans: ['Noto Sans'],
             },
             backgroundColor: {
                 darkMode: "#292929",
