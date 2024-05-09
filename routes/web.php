@@ -101,13 +101,15 @@ Route::controller(Pages\VideosController::class)->group(function () {
 
 Route::middleware('auth:cognito')->group(function () {
     Route::prefix('user')->group(function () {
-        Route::post('/update/read-history', [Pages\UserController::class, 'updateReadHistory'])->name('user.read-history');
-        Route::post('/bookmarks/add', [Pages\UserController::class, 'addBookmark'])->name('bookmarks.add');
-
         Route::get('/activity', [Pages\UserController::class, 'dashboard'])->name('user.dashboard');
+
+        Route::post('/update/read-history', [Pages\UserController::class, 'updateReadHistory'])->name('user.read-history');
         Route::get('/read-history/search/{query}', [Pages\UserController::class, 'searchReadHistory']);
+
         Route::get('/bookmarks', [Pages\UserController::class, 'bookmarks'])->name('bookmarks');
+        Route::post('/bookmarks/add', [Pages\UserController::class, 'addBookmark'])->name('bookmarks.add');
         Route::get('/bookmarks/search/{query}', [Pages\UserController::class, 'searchBookmark']);
+
         Route::get('/content/{type?}', [Pages\UserController::class, 'myContent'])->name('user.content');
         Route::get('/search-notes', [Pages\UserController::class, 'searchNotes'])->name('user.search-notes');
         Route::get('/filter-notes/{topic_id}/{section_id}', [NoteController::class, 'getFilteredNotes'])->name('user.filter-notes');
@@ -129,12 +131,15 @@ Route::get('change/lang', [LocalizationController::class, 'changeLang'])->name('
 Route::get('/highlights', [HighlightController::class, 'index'])->name('highlights');
 Route::get('/highlight-serialized/{article_id}', [HighlightController::class, 'serializedData'])->name('highlights.serialized');
 Route::post('/add-highlight', [HighlightController::class, 'addHighlight'])->name("highlights.add");
+
 Route::get('/download/{media}', [MediaController::class, 'download'])->name('download');
 Route::get('/view-file/{media}', [MediaController::class, 'viewFile'])->name('view-file');
+
 Route::post('/add-notes', [NoteController::class, 'addNote'])->name("notes.add");
 Route::get('/all-notes', [NoteController::class, 'index'])->name("notes.all");
 Route::get('/notes/{article_id}', [NoteController::class, 'getNotesByArticleId'])->name('notes.of-article');
 Route::post('notes/add-tag/{note_id}', [NoteController::class, 'addTag'])->name('notes.add-tag');
+
 Route::get('/tags/{search}', [NoteController::class, 'searchTagsLike'])->name('tags.search');
 
 Route::get('/papers', [AppController::class, 'getPapers'])->name('papers');

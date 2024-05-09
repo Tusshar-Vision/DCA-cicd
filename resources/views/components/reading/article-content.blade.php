@@ -83,11 +83,12 @@
 <div class="w-full">
     <div class="text-tooltip-comp" id="tooltip-box">
         <button>Copy</button>
-        <button onclick="highlightText()" id="btn"
-            @click="{{ !Auth::guard('cognito')->check() ? 'isLoginFormOpen = true' : '' }}">Highlight</button>
-        <button @click="{{ Auth::guard('cognito')->check() ? 'isNoteOpen = true' : 'isLoginFormOpen=true' }}"
-            onclick="hidePopup()">Add
-            Note</button>
+        <button onclick="highlightText()" id="btn" @click="{{ !Auth::guard('cognito')->check() ? 'isLoginFormOpen = true' : '' }}">
+            Highlight
+        </button>
+        <button @click="{{ Auth::guard('cognito')->check() ? 'isNoteOpen = true' : 'isLoginFormOpen=true' }}" onclick="hidePopup()">
+            Add Note
+        </button>
     </div>
 
     <div id="article-content" :style="`font-size: ${fontSize}rem`" class="mt-4 w-full ck-content">
@@ -125,10 +126,9 @@
                 read_percent: 0,
                 _token: "{{ csrf_token() }}"
             })
-                   clearTimeout(timeoutId);
+            clearTimeout(timeoutId);
         }
         timeoutId = setTimeout(() => addReadArticle(), 1000);
-
     @endif
 {{--    const doc = document.getElementById("article-content");--}}
 {{--    // doc.addEventListener('mouseup', handleSelection);--}}

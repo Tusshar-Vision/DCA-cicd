@@ -163,7 +163,6 @@ class UserController extends Controller
     public function updateReadHistory(Request $request)
     {
         $inputs = $request->all();
-
         $history = ReadHistory::where('article_id', $inputs['article_id'])->where('student_id', $inputs['student_id'])->first();
         // ReadHistory::updateOrCreate(['article_id' => $inputs['article_id'], 'student_id' => $inputs['student_id']], ['updated_at' => now()]);
         if (!$history) ReadHistory::create($inputs);
@@ -171,7 +170,22 @@ class UserController extends Controller
             $history->updated_at = now();
             $history->save();
         }
-        return response()->json(['status' => 201]);
+        return response()->json(['status' => 200]);
+    }
+
+    public function markAsRead(Request $request)
+    {
+        $inputs = $request->all();
+        $history = ReadHistory::where('article_id', $inputs['article_id'])->where('student_id', $inputs['student_id'])->first();
+
+        if (!$history) {
+            ReadHistory::create($inputs);
+            return response()->json(['status' => 200]);
+        }
+        else {
+            $history->delete();
+            return response()->json(['status' => 201]);
+        }
     }
 
     public function searchReadHistory($param)
@@ -216,7 +230,7 @@ class UserController extends Controller
             return response()->json(['status' => 201]);
         }
         $bookmark = Bookmark::create($inputs);
-        return response()->json(['status' => 201]);
+        return response()->json(['status' => 200]);
     }
 
     public function searchBookmark($param)
