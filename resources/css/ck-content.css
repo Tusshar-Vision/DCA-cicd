@@ -591,6 +591,11 @@
     font-weight: 600 !important;
     line-height: 150%;
 }
+.ck-content h4 {
+    font-size: 19px !important;
+    font-weight: 600 !important;
+    line-height: 150%;
+}
 .ck-content p, .ck-content li {
     line-height: 150%;
     text-align: left;

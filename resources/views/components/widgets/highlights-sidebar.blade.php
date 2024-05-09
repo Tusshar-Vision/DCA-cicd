@@ -38,11 +38,13 @@
 
 <div x-data="{ isAnnouncementsModalOpen: false, isAnnouncementsSelected: true, isLatestNewsSelected: false }" class="vi-highlights-sidebar w-full lg:w-auto">
     <div class="vi-announcement-wrap w-full lg:w-auto">
-        <h5 class="vi-sidebar-title">What’s New</h5>
+        <div class="flex justify-between items-center">
+            <h5 class="vi-sidebar-title">What’s New</h5>
+            <a @click="isAnnouncementsModalOpen = !isAnnouncementsModalOpen" class="vi-announcement-title cursor-pointer hover:underline text-xs">View All</a>
+        </div>
         <div class="vi-announcement-card">
-            <div class="flex justify-between items-center">
+            <div class="items-center">
                 <p class="vi-announcement-title">Announcements</p>
-                <a @click="isAnnouncementsModalOpen = !isAnnouncementsModalOpen" class="vi-announcement-title cursor-pointer hover:underline text-xs">View All</a>
             </div>
             <div x-data="{ isHovered: false }" class="announcement-container">
                 <ul

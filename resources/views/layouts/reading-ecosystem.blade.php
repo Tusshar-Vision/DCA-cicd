@@ -13,7 +13,8 @@
     <div x-data="{ isHighlightsOpen: false, isNotesOpen: false, isSidePanelOpen: $persist(true) }" class="space-y-12">
     {{--Highlights and notes side menu buttons and modal box, this is common on all pages of the reading ecosystem--}}
         <div>
-            <x-widgets.side-notes-and-highlights-menu :noteAvailable="$noteAvailable" />
+                <x-widgets.share />
+{{--            <x-widgets.side-notes-and-highlights-menu :noteAvailable="$noteAvailable" />--}}
 
 {{--            <x-modals.modal-box x-show="isHighlightsOpen" :heading="$highlightsHeading">--}}
 {{--                <x-widgets.article-highlights />--}}

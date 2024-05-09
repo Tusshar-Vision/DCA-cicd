@@ -207,8 +207,8 @@
             </a>
             <div class="xl:hidden block">
                 <a href="{{ route('home') }}" wire:navigate>
-                    <img width="112px" class="dark:hidden" src="{{ asset('images/LightLogo.svg') }}" alt="VisionIAS Logo" />
-                    <img width="112px" class="hidden dark:block" src="{{ asset('images/DarkLogo.svg') }}" alt="Dark VisionIAS Logo" />
+                    <img width="112px" class="dark:hidden" src="{{ asset('images/current-affairs-logo.svg') }}" alt="VisionIAS Logo" />
+                    <img width="112px" class="hidden dark:block" src="{{ asset('images/current-affairs-logo-dark.svg') }}" alt="Dark VisionIAS Logo" />
                 </a>
             </div>
         </div>
@@ -434,7 +434,7 @@
                 </div>
             @else
                 <li class="pr-[20px] hidden xl:block">
-                    <a href="https://www.visionias.in/old/paystart.php" class="register">Register</a>
+                    <a href="{{ UrlHelper::linkToVision('/old/paystart.php') }}" class="register">Register</a>
                 </li>
                 <li class="pl-[10px]" style="border-left: 1px solid #E5EAF4;">
                     <button @click="isAuthFormOpen = !isAuthFormOpen" class="flex items-center text-xs xl:text-sm">

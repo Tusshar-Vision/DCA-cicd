@@ -32,7 +32,7 @@ class MediaController extends Controller
 
         // Generate a pre-signed URL with a temporary access token
         $temporaryUrl = $media->getTemporaryUrl(now()->add('minutes', 5));
-        $response = \Http::get($temporaryUrl);
+        $response = \Http::timeout(60)->get($temporaryUrl);
 
         return \response($response->body(), 200, [
            'Content-Type' => 'application/pdf',
