@@ -23,7 +23,7 @@
                 <source src="{{ $source?->media?->first()?->getTemporaryUrl(now()->add('minutes', 120)) }}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-            <p class="font-semibold text-base text-justify">{{ $source?->title }}</p>
+            <p class="font-semibold text-base text-justify mt-6">{{ $source?->title }}</p>
         </div>
     @endif
 </div>

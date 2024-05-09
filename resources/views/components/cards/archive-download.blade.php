@@ -1,20 +1,26 @@
-<div class="weekly-focus-single-card" @click.stop>
+@php
+    $media = $file->media->first();
+    $fileViewLink = request()->url()."/".$media->id;
+@endphp
+<div @click='Livewire.navigate("{{ $fileViewLink }}");' class="weekly-focus-single-card">
     <div class="weekly-focus-progress-list mt-0 h-full">
-        <a href="{{ route('view-file', ['media' => $file->media->first()]) }}">
-            <div class="weekly-focus-progress-single-bar border-b-2 flex flex-col justify-between">
-                <p class="break-all">{{ ucfirst($file->name ?? $file->media->first()->name) }}</p>
+        <div class="weekly-focus-progress-single-bar border-b-2 flex flex-col justify-between">
+            <div>
+                <p class="break-all">{{ ucfirst($file->name ?? $media->name) }}</p>
+            </div>
+            <div>
                 <ul class="flex justify-start mt-[15px]">
                     <li class="text-[#3362CC] mr-4 text-sm font-normal">
-                        <a wire:navigate href="{{ request()->url()."/".$file->id }}" class="hover:underline">Read</a>
+                        <a wire:navigate href="{{ $fileViewLink }}" class="hover:underline">Read</a>
                     </li>
                     <li class="text-[#3362CC] mr-4 text-sm font-normal">
-                        <a href="{{ route('download', ['media' => $file->media->first()]) }}" class="hover:underline">Download</a>
+                        <a href="{{ route('download', ['media' => $media]) }}" class="hover:underline">Download</a>
                     </li>
                     <li class="text-[#3362CC] mr-4 text-sm font-normal">
-                        <a href="#" class="hover:underline">Share</a>
+                        <a @click.stop onclick="openSocial('{{ $fileViewLink }}')" class="hover:underline">Share</a>
                     </li>
                 </ul>
             </div>
-        </a>
+        </div>
     </div>
 </div>

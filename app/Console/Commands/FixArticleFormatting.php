@@ -129,6 +129,7 @@ class FixArticleFormatting extends Command
                 $queryForPTagOutsideTableFormatting2 = '//p[not(ancestor::table)]/span[@style="color:hsl(226,93%,37%);" and strong]';
                 $queryForPTagOutsideTableFormatting3 = '//p[not(ancestor::table)]/span[@style="color:hsl( 226, 92%, 37% );" and strong]';
                 $queryForPTagOutsideTableFormatting4 = '//p[not(ancestor::table)]/span[@style="color:hsl( 226, 92%, 37% );"]';
+                $queryForPTagOutsideTableFormatting5 = '//p[not(ancestor::table)]/span[@style="background-color:white;color:hsl(226,92%,37%);" and strong]';
 
                 // Find elements matching the XPath expression
                 $elements = $xpath->query($queryForPTagOutsideTable);
@@ -141,12 +142,15 @@ class FixArticleFormatting extends Command
                 $this->replacePTagWithH2($elements, $dom);
                 $elements = $xpath->query($queryForPTagOutsideTableFormatting4);
                 $this->replacePTagWithH2($elements, $dom);
+                $elements = $xpath->query($queryForPTagOutsideTableFormatting5);
+                $this->replacePTagWithH2($elements, $dom);
 
                 // Define the XPath expression to select <p> elements inside <table> elements
                 $queryForPTagInsideTable = '//table//p/span[@style="color:hsl(226,92%,37%);" and strong]';
                 $queryForPTagInsideTableFormatting1 = '//table//p/span[@style="color:hsl( 226, 92%, 37% );" and strong]';
                 $queryForPTagInsideTableFormatting2 = '//table//span[@style="color:hsl(226,92%,37%);" and strong]';
                 $queryForPTagInsideTableFormatting3 = '//table//span[@style="color:hsl( 226, 92%, 37% );" and strong]';
+                $queryForPTagInsideTableFormatting4 = '//table//span[@style="background-color:white;color:hsl(226,92%,37%);" and strong]';
 
                 // Find elements matching the XPath expression
                 $elements = $xpath->query($queryForPTagInsideTable);
@@ -156,6 +160,8 @@ class FixArticleFormatting extends Command
                 $elements = $xpath->query($queryForPTagInsideTableFormatting2);
                 $this->replacePTagWithH3InTable($elements, $dom);
                 $elements = $xpath->query($queryForPTagInsideTableFormatting3);
+                $this->replacePTagWithH3InTable($elements, $dom);
+                $elements = $xpath->query($queryForPTagInsideTableFormatting4);
                 $this->replacePTagWithH3InTable($elements, $dom);
 
 
@@ -179,13 +185,6 @@ class FixArticleFormatting extends Command
                 $this->fixColorInTag($elements);
                 $elements = $xpath->query($queryForPTagWithColorFormatting1);
                 $this->fixColorInTag($elements);
-
-                // Define the XPath expression to select <p> elements with the specific style attribute and content
-//                $query = '//p[string-length() = 1]';
-//                // Find elements matching the XPath expression
-//                $elements = $xpath->query($query);
-////               If there are multiple consecutive occurrences of the element, keep only the first one
-//                $this->removeExtraOccurrences($elements, $dom, $article);
 
                 // Save the updated content back
                 $updatedContent = $dom->saveHTML();

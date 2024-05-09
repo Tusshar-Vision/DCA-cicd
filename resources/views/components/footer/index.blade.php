@@ -36,10 +36,10 @@
                 <h5 class="font-bold flex justify-between md:hidden uppercase" onclick="toggleList(this)">COURSES<span class="plus block md:hidden">+</span></h5>
 
                 <ul class="space-y-2 hidden md:block">
-                    <li><a href="{{ UrlHelper::linkToVision('/home') }}" class="text-sm hover:text-[#005FAF]">Home</a></li>
-                    <li><a href="{{ UrlHelper::linkToVision('/classroom') }}" class="text-sm hover:text-[#005FAF]">Classroom</a></li>
-                    <li><a href="{{ UrlHelper::linkToVision('/mains') }}" class="text-sm hover:text-[#005FAF]">Mains Test Series</a></li>
-                    <li><a href="{{ UrlHelper::linkToVision('/prelims') }}" class="text-sm hover:text-[#005FAF]">Prelims Test Series</a></li>
+                    <li><a href="{{ UrlHelper::linkToVision('/') }}" class="text-sm hover:text-[#005FAF]">Home</a></li>
+                    <li><a href="{{ UrlHelper::linkToVision('/#classroom') }}" class="text-sm hover:text-[#005FAF]">Classroom</a></li>
+                    <li><a href="{{ UrlHelper::linkToVision('/testseries') }}" class="text-sm hover:text-[#005FAF]">Mains Test Series</a></li>
+                    <li><a href="{{ UrlHelper::linkToVision('/testseries') }}" class="text-sm hover:text-[#005FAF]">Prelims Test Series</a></li>
                     <li><a href="{{ UrlHelper::linkToVision('/interview') }}" class="text-sm hover:text-[#005FAF]">Interview</a></li>
                     <li><a href="{{ UrlHelper::linkToVision('/lakshya') }}" class="text-sm hover:text-[#005FAF]">Lakshya</a></li>
                     <li><a href="{{ UrlHelper::linkToVision('/daksha') }}" class="text-sm hover:text-[#005FAF]">Daksha</a></li>
@@ -48,7 +48,7 @@
                     <li class="block md:hidden"><a href="{{ UrlHelper::linkToVision('/csat') }}" class="text-sm hover:text-[#005FAF]">CSAT</a></li>
                     <li class="block md:hidden"><a href="{{ UrlHelper::linkToVision('/mainsadvance') }}" class="text-sm hover:text-[#005FAF]">GS Mains Advance</a></li>
                     <li class="block md:hidden"><a href="{{ UrlHelper::linkToVision('/fasttrack') }}" class="text-sm hover:text-[#005FAF]">Fast Track - Prelims</a></li>
-                    <li class="block md:hidden"><a href="{{ UrlHelper::linkToVision('/hindi-foundation-course') }}" class="text-sm hover:text-[#005FAF]">Hindi FC</a></li>
+                    <li class="block md:hidden"><a href="{{ UrlHelper::linkToVision('/register/classroom/4692') }}" class="text-sm hover:text-[#005FAF]">Hindi FC</a></li>
                     <li class="block md:hidden"><a href="{{ UrlHelper::linkToVision('/pt365') }}" class="text-sm hover:text-[#005FAF]">PT 365</a></li>
                     <li class="block md:hidden"><a href="{{ UrlHelper::linkToVision('/mains365') }}" class="text-sm hover:text-[#005FAF]">Mains 365</a></li>
                     <li class="block md:hidden"><a href="{{ UrlHelper::linkToVision('/mcar') }}" class="text-sm hover:text-[#005FAF]">Monthly CA</a></li>
@@ -61,7 +61,7 @@
                     <li><a href="{{ UrlHelper::linkToVision('/csat') }}" class="text-sm hover:text-[#005FAF]">CSAT</a></li>
                     <li><a href="{{ UrlHelper::linkToVision('/mainsadvance') }}" class="text-sm hover:text-[#005FAF]">GS Mains Advance</a></li>
                     <li><a href="{{ UrlHelper::linkToVision('/fasttrack') }}" class="text-sm hover:text-[#005FAF]">Fast Track - Prelims</a></li>
-                    <li><a href="{{ UrlHelper::linkToVision('/hindi-foundation-course') }}" class="text-sm hover:text-[#005FAF]">Hindi FC</a></li>
+                    <li><a href="{{ UrlHelper::linkToVision('/register/classroom/4692') }}" class="text-sm hover:text-[#005FAF]">Hindi FC</a></li>
                     <li><a href="{{ UrlHelper::linkToVision('/pt365') }}" class="text-sm hover:text-[#005FAF]">PT 365</a></li>
                     <li><a href="{{ UrlHelper::linkToVision('/mains365') }}" class="text-sm hover:text-[#005FAF]">Mains 365</a></li>
                     <li><a href="{{ UrlHelper::linkToVision('/mcar') }}" class="text-sm hover:text-[#005FAF]">Monthly CA</a></li>
@@ -77,8 +77,9 @@
                     <li><a href="{{ UrlHelper::linkToVision('/abhyaas') }}" class="text-sm hover:text-[#005FAF]">Abhyaas</a></li>
                     <li><a href="{{ UrlHelper::linkToVision('/opentest') }}" class="text-sm hover:text-[#005FAF]">Open Test</a></li>
                     <li><a href="{{ UrlHelper::linkToVision('/blog') }}" class="text-sm hover:text-[#005FAF]">Blog</a></li>
-                    <li><a href="{{ UrlHelper::linkToVision('/classroom-demo') }}" class="text-sm hover:text-[#005FAF]">Classroom Demo</a></li>
+                    <li><a href="{{ UrlHelper::linkToVision('/onlinedemo_test') }}" class="text-sm hover:text-[#005FAF]">Classroom Demo</a></li>
                     <li><a href="{{ UrlHelper::linkToVision('/campus-ambassador') }}" class="text-sm hover:text-[#005FAF]">Campus Ambassador</a></li>
+                    <li><a href="{{ UrlHelper::linkToVision('/pratispardha') }}" class="text-sm hover:text-[#005FAF]">Pratispardha</a></li>
                 </ul>
             </div>
             <div class="space-y-2 border-t-[1px] border-b-[1px] md:border-t-0 md:border-b-0 py-[15px] md:py-0">
@@ -86,11 +87,11 @@
                 <h5 class="font-bold flex justify-between md:hidden uppercase" onclick="toggleList(this)">Company <span class="plus block md:hidden">+</span></h5>
 
                 <ul class="space-y-2 hidden md:block">
-                    <li><a href="{{ UrlHelper::linkToVision('/about-us') }}" class="text-sm hover:text-[#005FAF]">{{__('footer.about_us')}}</a></li>
-                    <li><a href="{{ UrlHelper::linkToVision('/centers') }}" class="text-sm hover:text-[#005FAF]">Our Centers</a></li>
-                    <li><a href="{{ UrlHelper::linkToVision('/contact-us') }}" class="text-sm hover:text-[#005FAF]">Contact Us</a></li>
-                    <li><a href="{{ UrlHelper::linkToVision('/faq') }}" class="text-sm hover:text-[#005FAF]">FAQ</a></li>
-                    <li><a href="{{ UrlHelper::linkToVision('/syllabus') }}" class="text-sm hover:text-[#005FAF]">Syllabus</a></li>
+{{--                    <li><a href="{{ UrlHelper::linkToVision('/about-us') }}" class="text-sm hover:text-[#005FAF]">{{__('footer.about_us')}}</a></li>--}}
+                    <li><a href="{{ UrlHelper::linkToVision('/#centers') }}" class="text-sm hover:text-[#005FAF]">Our Centers</a></li>
+{{--                    <li><a href="{{ UrlHelper::linkToVision('/contact-us') }}" class="text-sm hover:text-[#005FAF]">Contact Us</a></li>--}}
+{{--                    <li><a href="{{ UrlHelper::linkToVision('/faq') }}" class="text-sm hover:text-[#005FAF]">FAQ</a></li>--}}
+{{--                    <li><a href="{{ UrlHelper::linkToVision('/syllabus') }}" class="text-sm hover:text-[#005FAF]">Syllabus</a></li>--}}
                 </ul>
             </div>
             <div class="space-y-2 border-t-[1px] md:border-t-0 py-[15px] md:py-0">
@@ -100,7 +101,7 @@
                 <ul class="space-y-2 hidden md:block">
                     <li><a href="{{ UrlHelper::linkToVision('/terms-of-use') }}" class="text-sm hover:text-[#005FAF]">{{__('footer.terms_of_use')}}</a></li>
                     <li><a href="{{ UrlHelper::linkToVision('/privacy') }}" class="text-sm hover:text-[#005FAF]">{{__('footer.privacy_policy')}}</a></li>
-                    <li><a href="{{ UrlHelper::linkToVision('/refund-policy') }}" class="text-sm hover:text-[#005FAF]">{{__('footer.refund_policy')}}</a></li>
+                    <li><a href="{{ UrlHelper::linkToVision('/refund') }}" class="text-sm hover:text-[#005FAF]">{{__('footer.refund_policy')}}</a></li>
                     <li><a href="{{ UrlHelper::linkToVision('/data-policy') }}" class="text-sm hover:text-[#005FAF]">Data Policy</a></li>
                 </ul>
             </div>

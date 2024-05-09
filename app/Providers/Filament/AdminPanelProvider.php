@@ -124,8 +124,8 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::hex('#005faf'),
             ])
-            ->brandLogo(asset('images/LightLogo.svg'))
-            ->darkModeBrandLogo(asset('images/LightLogo.svg'))
+            ->brandLogo(asset('images/current-affairs-logo.svg'))
+            ->darkModeBrandLogo(asset('images/current-affairs-logo-dark.svg'))
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
