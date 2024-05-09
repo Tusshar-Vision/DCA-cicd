@@ -112,7 +112,8 @@
 {{--        toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table',--}}
 {{--    });--}}
     @if (Auth::guard('cognito')->check())
-    var timeoutId = undefined;
+        var timeoutId = undefined;
+
         function addReadArticle() {
             const article_id = "{{ $article->getID() }}";
             const article_published_at = "{{$article->publishedAt}}"
@@ -127,6 +128,7 @@
                    clearTimeout(timeoutId);
         }
         timeoutId = setTimeout(() => addReadArticle(), 1000);
+
     @endif
 {{--    const doc = document.getElementById("article-content");--}}
 {{--    // doc.addEventListener('mouseup', handleSelection);--}}
