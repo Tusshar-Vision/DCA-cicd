@@ -5,7 +5,7 @@
         overflow: hidden;
         max-width: 270px;
         min-width: 270px;
-        max-height: 200px; /* Set a fixed height for the container */
+        max-height: 125px; /* Set a fixed height for the container */
         position: relative;
         transition: height 0.3s;
     }
@@ -24,7 +24,7 @@
 
     @keyframes scrollList {
         0% {
-            transform: translateY(70%);
+            transform: translateY(30%);
         }
         100% {
             transform: translateY(-100%);
