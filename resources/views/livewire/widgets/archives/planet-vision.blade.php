@@ -23,35 +23,38 @@
                         <livewire:widgets.mobile-filter :data="$years"/>
                     </div>
                 </div>
+            @endif
         </div>
     </div>
-    <?php $i = 0; ?>
-    @foreach ($data as $year => $files)
-        <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: {{$i==0 ? 'true': 'false'}} }" x-cloak>
-            <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]" @click="expanded = ! expanded">
-                <h4 class="text-[#040404] dark:text-white text-[32px] font-normal">{{$year}}</h4>
-                <div>
-                    <div x-show="expanded === true">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 11V13H19V11H5Z" fill="#8F93A3" class="dark:fill-white"/>
-                        </svg>
-                    </div>
-                    <div x-show="expanded === false">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z" fill="#8F93A3" class="dark:fill-white"/>
-                        </svg>
+
+@if(!$pdfUrl)
+        <?php $i = 0; ?>
+        @foreach ($data as $year => $files)
+            <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: {{$i==0 ? 'true': 'false'}} }" x-cloak>
+                <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]" @click="expanded = ! expanded">
+                    <h4 class="text-[#040404] dark:text-white text-[32px] font-normal">{{$year}}</h4>
+                    <div>
+                        <div x-show="expanded === true">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 11V13H19V11H5Z" fill="#8F93A3" class="dark:fill-white"/>
+                            </svg>
+                        </div>
+                        <div x-show="expanded === false">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z" fill="#8F93A3" class="dark:fill-white"/>
+                            </svg>
+                        </div>
                     </div>
                 </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true" x-collapse>
+                    @foreach ($files as $file)
+                        <x-cards.archive-download :file="$file" />
+                    @endforeach
+                </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true" x-collapse>
-                @foreach ($files as $file)
-                    <x-cards.archive-download :file="$file" />
-                @endforeach
-            </div>
-        </div>
-    <?php $i++; ?>
-    @endforeach
-        @else
- <livewire:widgets.pdf-viewer :pdf="$pdfUrl" />
-    @endif
+        <?php $i++; ?>
+        @endforeach
+@else
+    <livewire:widgets.pdf-viewer :pdf="$pdfUrl" initiative="planet-vision" />
+@endif
 </div>

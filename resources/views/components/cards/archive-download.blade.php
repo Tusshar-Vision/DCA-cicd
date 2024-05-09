@@ -17,7 +17,7 @@
                         <a href="{{ route('download', ['media' => $media]) }}" class="hover:underline">Download</a>
                     </li>
                     <li class="text-[#3362CC] mr-4 text-sm font-normal">
-                        <a href="#" class="hover:underline">Share</a>
+                        <a @click.stop onclick="openSocial('{{ $fileViewLink }}')" class="hover:underline">Share</a>
                     </li>
                 </ul>
             </div>

@@ -55,6 +55,6 @@
     <?php $i++; ?>
         @endforeach
 @else
-    <livewire:widgets.pdf-viewer :pdf="$pdfUrl" />
+    <livewire:widgets.pdf-viewer :pdf="$pdfUrl" initiative="pt-365" />
 @endif
 </div>
