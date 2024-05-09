@@ -6,6 +6,7 @@ use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
 use App\Services\DownloadService;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class DownloadsController extends Controller
 {
@@ -19,16 +20,13 @@ class DownloadsController extends Controller
         return response()->redirectToRoute('monthly-magazine.archive');
     }
 
-    public function renderMains365($intiative_id = null)
+    public function renderMains365(Media $media = null)
     {
         $year = request()->input('year');
         $month = request()->input('month');
         $pdfUrl = null;
 
-
-        if ($intiative_id) {
-            $pdfUrl = $this->downloadService->getDownloadableResourceUrl($intiative_id);
-        }
+        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
 
         $medias = $this
             ->downloadService
@@ -41,15 +39,13 @@ class DownloadsController extends Controller
         ]);
     }
 
-    public function renderPT365($intiative_id = null)
+    public function renderPT365(Media $media = null)
     {
         $year = request()->input('year');
         $month = request()->input('month');
         $pdfUrl = null;
 
-        if ($intiative_id) {
-            $pdfUrl = $this->downloadService->getDownloadableResourceUrl($intiative_id);
-        }
+        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
 
         $medias = $this
             ->downloadService
@@ -62,15 +58,13 @@ class DownloadsController extends Controller
         ]);
     }
 
-    public function renderEconomicSurvey($intiative_id = null)
+    public function renderEconomicSurvey(Media $media = null)
     {
         $year = request()->input('year');
         $month = request()->input('month');
         $pdfUrl = null;
 
-        if ($intiative_id) {
-            $pdfUrl = $this->downloadService->getDownloadableResourceUrl($intiative_id);
-        }
+        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
 
         $medias = $this
             ->downloadService
@@ -83,16 +77,13 @@ class DownloadsController extends Controller
         ]);
     }
 
-    public function renderBudget($intiative_id = null)
+    public function renderBudget(Media $media = null)
     {
         $year = request()->input('year');
         $month = request()->input('month');
         $pdfUrl = null;
 
-        if ($intiative_id) {
-            $pdfUrl = $this->downloadService->getDownloadableResourceUrl($intiative_id);
-        }
-
+        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
 
         $medias = $this
             ->downloadService
@@ -105,16 +96,13 @@ class DownloadsController extends Controller
         ]);
     }
 
-    public function renderValueAddedMaterial($intiative_id = null)
+    public function renderValueAddedMaterial(Media $media = null)
     {
         $year = request()->input('year');
         $month = request()->input('month');
         $pdfUrl = null;
 
-        if ($intiative_id) {
-            $pdfUrl = $this->downloadService->getDownloadableResourceUrl($intiative_id);
-        }
-
+        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
 
         $medias = $this
             ->downloadService
@@ -127,16 +115,13 @@ class DownloadsController extends Controller
         ]);
     }
 
-    public function renderValueAddedMaterialOptional($intiative_id = null)
+    public function renderValueAddedMaterialOptional(Media $media = null)
     {
         $year = request()->input('year');
         $month = request()->input('month');
         $pdfUrl = null;
 
-        if ($intiative_id) {
-            $pdfUrl = $this->downloadService->getDownloadableResourceUrl($intiative_id);
-        }
-
+        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
 
         $medias = $this
             ->downloadService
@@ -149,15 +134,13 @@ class DownloadsController extends Controller
         ]);
     }
 
-    public function renderQuarterlyRevisionDocument($intiative_id = null)
+    public function renderQuarterlyRevisionDocument(Media $media = null)
     {
         $year = request()->input('year');
         $month = request()->input('month');
         $pdfUrl = null;
 
-        if ($intiative_id) {
-            $pdfUrl = $this->downloadService->getDownloadableResourceUrl($intiative_id);
-        }
+        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
 
         $medias = $this
             ->downloadService
@@ -170,14 +153,12 @@ class DownloadsController extends Controller
         ]);
     }
 
-    public function renderYearEndReviews($intiative_id = null)
+    public function renderYearEndReviews(Media $media = null)
     {
         $year = request()->input('year');
         $pdfUrl = null;
 
-        if ($intiative_id) {
-            $pdfUrl = $this->downloadService->getDownloadableResourceUrl($intiative_id);
-        }
+        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
 
         $medias = $this
             ->downloadService
@@ -190,15 +171,13 @@ class DownloadsController extends Controller
         ]);
     }
 
-    public function renderPlanetVision($intiative_id = null)
+    public function renderPlanetVision(Media $media = null)
     {
         $year = request()->input('year');
         $month = request()->input('month');
         $pdfUrl = null;
 
-        if ($intiative_id) {
-            $pdfUrl = $this->downloadService->getDownloadableResourceUrl($intiative_id);
-        }
+        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
 
         $medias = $this
             ->downloadService

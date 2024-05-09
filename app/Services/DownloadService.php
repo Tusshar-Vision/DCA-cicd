@@ -188,10 +188,4 @@ readonly class DownloadService
 
         return [$years, $result];
     }
-
-    public function getDownloadableResourceUrl($initiative_id)
-    {
-        $url = $this->publishedInitiative->where('id', $initiative_id)->first()->media->first()->getTemporaryUrl(now()->add('minutes', 120));
-        return $url;
-    }
 }

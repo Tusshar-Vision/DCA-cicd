@@ -27,7 +27,7 @@
                 <span>Read</span>
             </a>
         @else
-            <a wire:navigate href="{{ route($pdf->collection_name) . '/' . $file->id }}" class="flex items-center vi-downloads-links source-file">
+            <a wire:navigate href="{{ route($pdf->collection_name) . '/' . $pdf->id }}" class="flex items-center vi-downloads-links source-file">
                 <span>Read</span>
             </a>
         @endif

@@ -1,14 +1,16 @@
 <div>
-    <div class="flex justify-between items-center w-full mb-4">
+    <div class="flex justify-between items-center w-full mb-4 border p-2">
         <ul class="flex justify-start items-center">
             <a href="#">
-            <li class="pr-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="16" viewBox="0 0 8 16" fill="none" class="cursor-pointer">
-                        <path d="M6.86719 15.0156L0.99998 8.49977" stroke="#242424" class="dark:stroke-white" stroke-linecap="round"/>
-                        <line x1="0.5" y1="-0.5" x2="9.61301" y2="-0.5" transform="matrix(-0.654931 0.755689 0.654931 0.755689 7.65625 1.30469)" stroke="#242424" class="dark:stroke-white" stroke-linecap="round"/>
-                    </svg>
-            </li>
-            <li class="pr-2"><a href="#">Back</a></li>
+                <li class="pr-4">
+                    <span class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="16" viewBox="0 0 8 16" fill="none" class="cursor-pointer">
+                            <path d="M6.86719 15.0156L0.99998 8.49977" stroke="#242424" class="dark:stroke-white" stroke-linecap="round"/>
+                            <line x1="0.5" y1="-0.5" x2="9.61301" y2="-0.5" transform="matrix(-0.654931 0.755689 0.654931 0.755689 7.65625 1.30469)" stroke="#242424" class="dark:stroke-white" stroke-linecap="round"/>
+                        </svg>
+                        <p class="pl-2">Back</p>
+                    </span>
+                </li>
             </a>
         </ul>
         <div class="flex">
@@ -33,7 +35,7 @@
                     </defs>
                 </svg>
             </button>
-            <span id="resize-controls" class="mr-4">
+            <span id="resize-controls" class="">
                 <span id="decrease-width" class="cursor-pointer text-[20px]">-</span>
                     <input id="width-percentage" class="text-black w-[70px] font-semibold text-center mx-2 p-[3px] rounded-md" readonly></input>
                 <span id="increase-width" class="cursor-pointer text-[20px]">+</span>
@@ -193,11 +195,11 @@
                 increaseButton.style.background = '#7b7a7a'
             } else {
                 increaseButton.classList.remove('disabled');
-              increaseButton.style.background = 'none'
+                increaseButton.style.background = 'none'
             }
             if (currentWidth === 500 && !IsMobile()) {
-              increaseButton.style.background = '#7b7a7a'
-              increaseButton.classList.add('disabled');
+                increaseButton.style.background = '#7b7a7a'
+                increaseButton.classList.add('disabled');
             }
         }
         updateContainerWidth();
