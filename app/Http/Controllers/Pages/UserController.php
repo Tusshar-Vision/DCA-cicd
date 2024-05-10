@@ -71,6 +71,7 @@ class UserController extends Controller
         $allDayNumbers = range(1, $numberOfDaysInYear);
 
         $dailyArticles = PublishedInitiative::where('published_initiatives.initiative_id', config('settings.initiatives.NEWS_TODAY'))
+            ->where('is_published', '=', true)
             ->select(DB::raw('DAYOFYEAR(published_initiatives.published_at) as day'), DB::raw('COUNT(*) as total_article'))
             ->whereYear('published_initiatives.published_at', $year)
             ->join('articles', 'published_initiatives.id', '=', 'articles.published_initiative_id')
@@ -113,6 +114,7 @@ class UserController extends Controller
         }
 
         $weeklyArticleRecords = PublishedInitiative::where('published_initiatives.initiative_id', config('settings.initiatives.WEEKLY_FOCUS'))
+            ->where('is_published', '=', true)
             ->whereYear('published_initiatives.published_at', $year)
             ->select(DB::raw('WEEK(published_initiatives.published_at, 1) as week'), DB::raw('COUNT(*) as total_article'))
             ->join('articles', 'published_initiatives.id', '=', 'articles.published_initiative_id')
@@ -147,6 +149,7 @@ class UserController extends Controller
 
         $allMonths = range(1, 12);
         $articleRecords = PublishedInitiative::where('published_initiatives.initiative_id', config('settings.initiatives.MONTHLY_MAGAZINE'))
+            ->where('is_published', '=', true)
             ->whereYear('published_initiatives.published_at', $year)
             ->select(DB::raw('MONTH(published_initiatives.published_at) as month'), DB::raw('COUNT(*) as total_article'))
             ->join('articles', 'published_initiatives.id', '=', 'articles.published_initiative_id')
