@@ -153,7 +153,6 @@ class UserController extends Controller
             ->groupBy(DB::raw('MONTH(published_initiatives.published_at)'))
             ->get(['month', 'total_article']);
 
-
         // $collection = collect($articleRecords);
         $monthsWithRecords = $articleRecords->pluck('month')->toArray();
 
@@ -196,12 +195,20 @@ class UserController extends Controller
             return response()->json(['status' => 200]);
         }
         else {
-            $history->delete();
-            return response()->json(['status' => 201]);
+            if ($history->read_percent === 100) {
+                $history->read_percent = 0;
+                $history->save();
+                return response()->json(['status' => 201]);
+            }
+            else {
+                $history->read_percent = 100;
+                $history->save();
+                return response()->json(['status' => 200]);
+            }
         }
     }
 
-    public function searchReadHistory($param)
+    public function searchReadHistory($param = '')
     {
         $read_histories = $this->student->readHistories()->whereHas('article', function ($articleQuery) use ($param) {
             $articleQuery->where('short_title', 'like', "%$param%")->orWhere('title', 'like', "%$param%");
@@ -210,10 +217,9 @@ class UserController extends Controller
             $history->title = $history->article->short_title ?? $history->article->title;
             $history->published_at = Carbon::parse($history->article->published_at)->format('d M Y');
             $history->url = ArticleService::getArticleUrl($history->article);
-            $history->img = $history->article->getFirstMediaUrl("article-featured-image");
             $history->read_at = Carbon::parse($history->updated_at)->format('d M Y');
 
-            return $history->only(['title', 'published_at', 'url', 'img', 'read_at']);
+            return $history->only(['title', 'published_at', 'url', 'read_at']);
         });
 
         return response()->json(['data' => $read_histories]);
@@ -250,7 +256,7 @@ class UserController extends Controller
         return response()->json(['status' => 200]);
     }
 
-    public function searchBookmark($param)
+    public function searchBookmark($param = '')
     {
         $bookmarks = $this->student->bookmarks()->whereHas('article', function ($articleQuery) use ($param) {
             $articleQuery->where('short_title', 'like', "%$param%")->orWhere('title', 'like', "%$param%");

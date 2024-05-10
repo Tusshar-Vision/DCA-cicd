@@ -34,7 +34,6 @@
 var searchBox  = document.getElementById("history-searchbox");
  searchBox.addEventListener("change", function() {
     var query = searchBox.value;
-    if(query == "") return;
     var url = "{{url("user/bookmarks/search")}}";
     url += `/${query}`;
 

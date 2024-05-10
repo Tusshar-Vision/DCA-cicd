@@ -13,7 +13,11 @@
                 ]);
                 echo "<div class='max-w-[100%] min-h-52 overflow-hidden'>";
                     echo $mediaObject->getEmbedCode();
-                    echo "<p class='font-semibold text-base text-justify mt-6'>$source?->title</p>";
+                    if ($name === null) {
+                        echo "<p class='font-semibold text-base text-justify mt-6'>$source?->title</p>";
+                    } else {
+                        echo "<p class='font-semibold text-base text-justify mt-6'>$name</p>";
+                    }
                 echo "</div>";
             }
         @endphp
@@ -23,7 +27,7 @@
                 <source src="{{ $source?->media?->first()?->getTemporaryUrl(now()->add('minutes', 120)) }}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-            <p class="font-semibold text-base text-justify mt-6">{{ $source?->title }}</p>
+            <p class="font-semibold text-base text-justify mt-6">{{ $name ?? $source?->title }}</p>
         </div>
     @endif
 </div>

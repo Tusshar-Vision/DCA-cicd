@@ -57,7 +57,7 @@ readonly class ArticleService
             } else if ($initiative === 'Weekly Focus') {
                 $url .= $topic . '/' . $slug . '#' . $slug;
             } else if ($initiative === 'Monthly Magazine') {
-                $url .= 'news-in-shorts' . '#' . $slug;
+                $url .= $topic . '/news-in-shorts' . '#' . $slug;
             }
         } else {
             $url .= $topic . '/' . $slug;

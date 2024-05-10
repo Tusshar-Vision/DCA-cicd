@@ -105,11 +105,11 @@ Route::middleware('auth:cognito')->group(function () {
 
         Route::post('/update/read-history', [Pages\UserController::class, 'updateReadHistory'])->name('user.read-history');
         Route::post('/mark-as-read', [Pages\UserController::class, 'markAsRead'])->name('user.mark-as-read');
-        Route::get('/read-history/search/{query}', [Pages\UserController::class, 'searchReadHistory'])->name('user.search-read-history');
+        Route::get('/read-history/search/{query?}', [Pages\UserController::class, 'searchReadHistory'])->name('user.search-read-history');
 
         Route::get('/bookmarks', [Pages\UserController::class, 'bookmarks'])->name('bookmarks');
         Route::post('/bookmarks/add', [Pages\UserController::class, 'addBookmark'])->name('bookmarks.add');
-        Route::get('/bookmarks/search/{query}', [Pages\UserController::class, 'searchBookmark']);
+        Route::get('/bookmarks/search/{query?}', [Pages\UserController::class, 'searchBookmark']);
 
         Route::get('/content/{type?}', [Pages\UserController::class, 'myContent'])->name('user.content');
         Route::get('/search-notes', [Pages\UserController::class, 'searchNotes'])->name('user.search-notes');
