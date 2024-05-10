@@ -104,5 +104,24 @@
                 }
             });
         });
+
+        @if (Auth::guard('cognito')->check())
+            var timeoutId = undefined;
+
+            function addReadArticle() {
+                const article_id = "{{ $article->getID() }}";
+                const article_published_at = "{{$package->publishedAt}}"
+                const student_id = "{{ Auth::guard('cognito')->user()->id }}"
+                saveData("{{ route('user.read-history') }}", {
+                    article_id,
+                    student_id,
+                    article_published_at,
+                    read_percent: 0,
+                    _token: "{{ csrf_token() }}"
+                })
+                clearTimeout(timeoutId);
+            }
+            timeoutId = setTimeout(() => addReadArticle(), 1000);
+        @endif
     </script>
 @endsection

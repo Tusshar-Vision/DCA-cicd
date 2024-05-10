@@ -74,7 +74,12 @@ class WeeklyFocusController extends Controller
             $noteAvailable = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->count() > 0;
             $note = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
             $bookmark =  Bookmark::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
-            $readHistory =  ReadHistory::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
+            $readHistory = ReadHistory::where(
+                'student_id', Auth::guard('cognito')->user()->id
+            )
+                ->where('article_id', $article->getID())
+                ->where('read_percent', '=', '100')
+                ->first();
             if ($bookmark) $isArticleBookmarked = true;
             if ($readHistory) $isArticleRead = true;
         }

@@ -101,10 +101,9 @@
                                     @if(request()->is('monthly-magazine/*/' . $topic  . '/news-in-shorts'))
                                         <ul class="ml-6">
                                             @foreach($shortArticles as $index => $article)
-                                                <li @click="openItem = (openItem == {{$index}} ? '-1' : {{$index}})"
-                                                    class="py-[5px] cursor-pointer hover:brand-color text-clip text-sm"
-                                                    :class="{'brand-color': openItem == {{$index}}}">
-                                                    <a class="flex text-base[16px] font-normal hover:brand-color }}">
+                                                <li class="py-[5px] cursor-pointer hover:brand-color text-clip text-sm"
+                                                    :class="{'': openItem == {{$index}}}">
+                                                    <a href="#{{ $article->slug }}" class="flex text-base[16px] font-normal hover:brand-color }}">
                                                         <span class="mr-1">
                                                             {{ $loop->parent->parent->iteration }}.{{ $loop->parent->iteration }}.{{ $loop->iteration }}
                                                         </span>

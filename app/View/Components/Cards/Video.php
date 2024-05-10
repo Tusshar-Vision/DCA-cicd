@@ -13,6 +13,7 @@ class Video extends Component
      */
     public function __construct(
         public $source,
+        public $name = null
     )
     {}
 

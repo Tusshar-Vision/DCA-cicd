@@ -66,7 +66,7 @@
                             @foreach($shortArticles as $index => $article)
                                 <li class="py-[5px] cursor-pointer hover:brand-color text-clip text-sm">
                                     <a href="#{{ $article->slug }}" class="flex text-base[16px] font-normal hover:brand-color"
-                                       :class="{'brand-color': openItem == {{$index}}}"
+                                       :class="{'': openItem == {{$index}}}"
                                     >
                                         <span class="mr-1">
                                             {{ $i . '.' . $loop->iteration }}

@@ -92,7 +92,7 @@ readonly class DownloadService
                 return collect([
                     'title' => $currentArticle->title,
                     'url' => ArticleService::getArticleUrlFromSlug($currentArticle->slug),
-                    'formatted_published_at' => Carbon::parse($package->published_at)->format('Y-m-d'),
+                    'formatted_published_at' => Carbon::parse($package->published_at)->format('d M Y'),
                     'media' => ($media !== null ? $media->id : false)
                 ]);
             });

@@ -32,6 +32,8 @@ class ResetPassword extends Component
             $this->addError('email', "Limit exceeded, try again later.");
         } else if ($response === CognitoErrorCodes::USER_NOT_FOUND) {
             $this->addError('email', "Sorry we don't recognize this email address.");
+        } else if ($response === CognitoErrorCodes::INVALID_PARAMETER_EXCEPTION) {
+            $this->addError('email', "Complete your signup.");
         } else {
             session(['verify_email' => $this->email]);
             $this->dispatch('renderComponent', 'forms.reset-password-confirm');
