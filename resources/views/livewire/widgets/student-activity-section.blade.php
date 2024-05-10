@@ -1,4 +1,4 @@
-<div class="vigrid-wide"> 
+<div class="vigrid-wide">
 <div class="vi-profile-tab-container tabc-activity">
     <div class="activity-tab-wrapper flex flex-col lg:flex-row gap-[32px]">
         <div class="activity-tab-left-itmes w-full lg:w-2/6">
@@ -28,7 +28,7 @@
                         {{-- <a href="#" class="vi-article">
                             <img src="{{$history['img'] ?? URL::asset('images/card-image-small.png') }}" alt="">
                         </a> --}}
-                        <a href="{{$history['url']}}" class="vi-article">
+                        <a wire:navigate href="{{$history['url']}}" class="vi-article">
                             <p class="vi-article-date-name">{{ $history['read_at'] }}</p>
                             <p>{{ $history['title'] }}</p>
                         </a>
@@ -136,8 +136,8 @@
  function showDailyNews() {
                                   const square = document.getElementById('daily-news');
                                  @foreach ($newsTodayConsumption as $day => $value)
-    
-                                <?php 
+
+                                <?php
                                 $level = null; $text = null;
                                 if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
                                    if($value['total_read'] == $value['total_article']) {
@@ -159,18 +159,18 @@
                                     }
                                 }
                                 ?>
-                               
+
                                 square.innerHTML += `<li data-level="{{$level}}" data-complete="{{$text}}"></li>`
-                                        
+
                                 @endforeach
  }
 
  function showWeeklyFocus() {
     const square = document.getElementById('weekly-focus');
 
-                                
+
                                 @foreach ($weeklyFocusConsumption as $week => $value)
-                                <?php 
+                                <?php
                                 $level = null; $text = null;
                                 if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
                                    if($value['total_read'] == $value['total_article']) {
@@ -201,7 +201,7 @@
                                     const square = document.getElementById('monthly-magazine');
 
                                 @foreach ($montlyMagazineConsumption as $month => $value)
-                                <?php 
+                                <?php
                                                                 $level = null; $text = null;
                                 if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
                                    if($value['total_read'] == $value['total_article']) {
@@ -252,7 +252,7 @@
                       </div>`
                   }
         })
-        
+
         document.getElementById("histories-container").innerHTML = html;
     })
  })
