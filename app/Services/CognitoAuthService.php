@@ -100,7 +100,6 @@ class CognitoAuthService
             $response = $this->client->signUp([
                 'ClientId' => $this->client_id,
                 'Password' => $password,
-                // 'SecretHash' => $this->cognitoSecretHash($email),
                 'UserAttributes' => $this->formatAttributes($attributes),
                 'Username' => $email,
                 'ClientMetadata' => [
@@ -183,6 +182,7 @@ class CognitoAuthService
                 CognitoErrorCodes::USER_NOT_FOUND->value => CognitoErrorCodes::USER_NOT_FOUND,
                 CognitoErrorCodes::TOO_MANY_REQUESTS->value => CognitoErrorCodes::TOO_MANY_REQUESTS,
                 CognitoErrorCodes::LIMIT_EXCEEDED->value => CognitoErrorCodes::LIMIT_EXCEEDED,
+                CognitoErrorCodes::INVALID_PARAMETER_EXCEPTION->value => CognitoErrorCodes::INVALID_PARAMETER_EXCEPTION,
                 default => throw new \Exception("Unhandled AWS Cognito error code: $errorCode"),
             };
         }

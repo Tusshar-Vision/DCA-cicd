@@ -13,14 +13,14 @@
                     <div class="bookmark-list-wrap">
             <ul id="bookmarks-container">
                 @foreach ($bookmarks as $bookmark)
-                @if($bookmark!=null)
-                    <li class="bg-[#F7F8F9] dark:bg-dark373839 text-black dark:text-white">
-                        {{-- <img src="{{  $bookmark['img'] ?? URL::asset('images/card-image-small.png') }}" alt="" width='129' height='120'> --}}
-                        <a href="{{$bookmark['url']}}" class="bookmark-cont">
-                            <span>{{ $bookmark['published_at'] }}</span>
-                            <p class="dark:text-white">{{ $bookmark['title'] }}</p>
-                        </a>
-                    </li>
+                    @if($bookmark!=null)
+                        <li class="bg-[#F7F8F9] dark:bg-dark373839 text-black dark:text-white">
+                            {{-- <img src="{{  $bookmark['img'] ?? URL::asset('images/card-image-small.png') }}" alt="" width='129' height='120'> --}}
+                            <a wire:navigate href="{{$bookmark['url']}}" class="bookmark-cont">
+                                <span>{{ $bookmark['published_at'] }}</span>
+                                <p class="dark:text-white">{{ $bookmark['title'] }}</p>
+                            </a>
+                        </li>
                     @endif
                 @endforeach
             </ul>
@@ -34,7 +34,6 @@
 var searchBox  = document.getElementById("history-searchbox");
  searchBox.addEventListener("change", function() {
     var query = searchBox.value;
-    if(query == "") return;
     var url = "{{url("user/bookmarks/search")}}";
     url += `/${query}`;
 

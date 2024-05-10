@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Pages;
 
+use App\Enums\Initiatives;
+use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
-use App\Models\Article;
 use App\Models\Bookmark;
 use App\Models\InitiativeTopic;
 use App\Models\Note;
 use App\Models\Paper;
+use App\Models\PublishedInitiative;
 use App\Models\ReadHistory;
 use App\Models\Student;
 use App\Models\TopicSection;
@@ -31,16 +33,23 @@ class UserController extends Controller
     }
     public function dashboard()
     {
-        $read_histories = $this->student->readHistories()->orderBy('updated_at', 'desc')->with('article')->get()->map(function ($history) {
-            if (!$history->article) return null;
-            $history->title = $history->article->short_title ?? $history->article->title;
-            $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
-            $history->url = ArticleService::getArticleUrl($history->article);
-            $history->img = $history->article->getFirstMediaUrl("article-featured-image");
-            $history->read_at = Carbon::parse($history->updated_at)->format('Y-m-d');
+        $read_histories = $this->student->readHistories()
+            ->orderBy('updated_at', 'desc')
+            ->with('article')
+            ->get()
+            ->map(function ($history) {
+                if (!$history->article) return null;
+                if ($history->article->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)) {
+                    $history->title = $history->article->publishedInitiative->name;
+                } else {
+                    $history->title =  $history->article->short_title ?? $history->article->title;
+                }
+                $history->published_at = Carbon::parse($history->article->publishedInitiative->published_at)->format('d M Y');
+                $history->url = ArticleService::getArticleUrl($history->article);
+                $history->read_at = Carbon::parse($history->updated_at)->format('d M Y');
 
-            return $history->only(['title', 'published_at', 'url', 'img', 'read_at']);
-        });
+                return $history->only(['title', 'published_at', 'url', 'read_at']);
+            });
 
         // content consumption
 
@@ -61,11 +70,12 @@ class UserController extends Controller
 
         $allDayNumbers = range(1, $numberOfDaysInYear);
 
-        $dailyArticles = Article::where('initiative_id', config('settings.initiatives.NEWS_TODAY'))
-            ->select(DB::raw('DAYOFYEAR(published_at) as day'), DB::raw('COUNT(*) as total_article'))
-            ->whereYear('published_at', $year)
-            ->groupBy(DB::raw('DAYOFYEAR(published_at)'))
-            ->get(['day', 'total_read']);
+        $dailyArticles = PublishedInitiative::where('published_initiatives.initiative_id', config('settings.initiatives.NEWS_TODAY'))
+            ->select(DB::raw('DAYOFYEAR(published_initiatives.published_at) as day'), DB::raw('COUNT(*) as total_article'))
+            ->whereYear('published_initiatives.published_at', $year)
+            ->join('articles', 'published_initiatives.id', '=', 'articles.published_initiative_id')
+            ->groupBy(DB::raw('DAYOFYEAR(published_initiatives.published_at)'))
+            ->get(['day', 'total_article']);
 
         $dayNumbersWithRecords = $dailyArticles->pluck('day')->toArray();
 
@@ -102,11 +112,12 @@ class UserController extends Controller
             $currentDate->addWeek();
         }
 
-        $weeklyArticleRecords = Article::where('initiative_id', config('settings.initiatives.WEEKLY_FOCUS'))
-            ->whereYear('published_at', $year)
-            ->select(DB::raw('WEEK(published_at, 1) as week'), DB::raw('COUNT(*) as total_article'))
-            ->groupBy(DB::raw('WEEK(published_at, 1)'))
-            ->whereBetween('published_at', [$startDate, $endDate])
+        $weeklyArticleRecords = PublishedInitiative::where('published_initiatives.initiative_id', config('settings.initiatives.WEEKLY_FOCUS'))
+            ->whereYear('published_initiatives.published_at', $year)
+            ->select(DB::raw('WEEK(published_initiatives.published_at, 1) as week'), DB::raw('COUNT(*) as total_article'))
+            ->join('articles', 'published_initiatives.id', '=', 'articles.published_initiative_id')
+            ->groupBy(DB::raw('WEEK(published_initiatives.published_at, 1)'))
+            ->whereBetween('published_initiatives.published_at', [$startDate, $endDate])
             ->get(['week', 'total_article']);
 
         $weeksWithRecords = $weeklyArticleRecords->pluck('week')->toArray();
@@ -135,10 +146,11 @@ class UserController extends Controller
             ->get();
 
         $allMonths = range(1, 12);
-        $articleRecords = Article::where('initiative_id', config('settings.initiatives.MONTHLY_MAGAZINE'))
-            ->whereYear('published_at', $year)
-            ->select(DB::raw('MONTH(published_at) as month'), DB::raw('COUNT(*) as total_article'))
-            ->groupBy(DB::raw('MONTH(published_at)'))
+        $articleRecords = PublishedInitiative::where('published_initiatives.initiative_id', config('settings.initiatives.MONTHLY_MAGAZINE'))
+            ->whereYear('published_initiatives.published_at', $year)
+            ->select(DB::raw('MONTH(published_initiatives.published_at) as month'), DB::raw('COUNT(*) as total_article'))
+            ->join('articles', 'published_initiatives.id', '=', 'articles.published_initiative_id')
+            ->groupBy(DB::raw('MONTH(published_initiatives.published_at)'))
             ->get(['month', 'total_article']);
 
         // $collection = collect($articleRecords);
@@ -163,7 +175,6 @@ class UserController extends Controller
     public function updateReadHistory(Request $request)
     {
         $inputs = $request->all();
-
         $history = ReadHistory::where('article_id', $inputs['article_id'])->where('student_id', $inputs['student_id'])->first();
         // ReadHistory::updateOrCreate(['article_id' => $inputs['article_id'], 'student_id' => $inputs['student_id']], ['updated_at' => now()]);
         if (!$history) ReadHistory::create($inputs);
@@ -171,22 +182,44 @@ class UserController extends Controller
             $history->updated_at = now();
             $history->save();
         }
-        return response()->json(['status' => 201]);
+        return response()->json(['status' => 200]);
     }
 
-    public function searchReadHistory($param)
+    public function markAsRead(Request $request)
+    {
+        $inputs = $request->all();
+        $history = ReadHistory::where('article_id', $inputs['article_id'])->where('student_id', $inputs['student_id'])->first();
+
+        if (!$history) {
+            ReadHistory::create($inputs);
+            return response()->json(['status' => 200]);
+        }
+        else {
+            if ($history->read_percent === 100) {
+                $history->read_percent = 0;
+                $history->save();
+                return response()->json(['status' => 201]);
+            }
+            else {
+                $history->read_percent = 100;
+                $history->save();
+                return response()->json(['status' => 200]);
+            }
+        }
+    }
+
+    public function searchReadHistory($param = '')
     {
         $read_histories = $this->student->readHistories()->whereHas('article', function ($articleQuery) use ($param) {
             $articleQuery->where('short_title', 'like', "%$param%")->orWhere('title', 'like', "%$param%");
         })->with('article')->get()->map(function ($history) {
             if (!$history->article) return null;
             $history->title = $history->article->short_title ?? $history->article->title;
-            $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
+            $history->published_at = Carbon::parse($history->article->published_at)->format('d M Y');
             $history->url = ArticleService::getArticleUrl($history->article);
-            $history->img = $history->article->getFirstMediaUrl("article-featured-image");
-            $history->read_at = Carbon::parse($history->updated_at)->format('Y-m-d');
+            $history->read_at = Carbon::parse($history->updated_at)->format('d M Y');
 
-            return $history->only(['title', 'published_at', 'url', 'img', 'read_at']);
+            return $history->only(['title', 'published_at', 'url', 'read_at']);
         });
 
         return response()->json(['data' => $read_histories]);
@@ -196,12 +229,16 @@ class UserController extends Controller
     {
         $bookmarks = $this->student->bookmarks()->orderBy('created_at', 'desc')->with('article')->get()->map(function ($history) {
             if (!$history->article) return null;
-            $history->title =  $history->article->short_title ?? $history->article->title;
-            $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
+            if ($history->article->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)) {
+                $history->title = $history->article->publishedInitiative->name;
+            } else {
+                $history->title =  $history->article->short_title ?? $history->article->title;
+            }
+            $history->published_at = Carbon::parse($history->article->published_at)->format('d M Y');
             $history->url = ArticleService::getArticleUrl($history->article);
-            $history->img = $history->article->getFirstMediaUrl("article-featured-image");
+//            $history->img = $history->article->getFirstMediaUrl("article-featured-image");
 
-            return $history->only(['title', 'published_at', 'url', 'img']);
+            return $history->only(['title', 'published_at', 'url']);
         });
 
         return view('pages.user.bookmarks', ['bookmarks' => $bookmarks]);
@@ -216,21 +253,20 @@ class UserController extends Controller
             return response()->json(['status' => 201]);
         }
         $bookmark = Bookmark::create($inputs);
-        return response()->json(['status' => 201]);
+        return response()->json(['status' => 200]);
     }
 
-    public function searchBookmark($param)
+    public function searchBookmark($param = '')
     {
         $bookmarks = $this->student->bookmarks()->whereHas('article', function ($articleQuery) use ($param) {
             $articleQuery->where('short_title', 'like', "%$param%")->orWhere('title', 'like', "%$param%");
         })->orderBy('created_at', 'desc')->with('article')->get()->map(function ($history) {
             if (!$history->article) return null;
             $history->title = $history->article->short_title ?? $history->article->title;
-            $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
+            $history->published_at = Carbon::parse($history->article->published_at)->format('d M Y');
             $history->url = ArticleService::getArticleUrl($history->article);
-            $history->img = $history->article->getFirstMediaUrl("article-featured-image");
 
-            return $history->only(['title', 'published_at', 'url', 'img']);
+            return $history->only(['title', 'published_at', 'url']);
         });
 
         return response()->json(['data' => $bookmarks]);

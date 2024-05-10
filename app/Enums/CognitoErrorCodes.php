@@ -18,4 +18,5 @@ enum CognitoErrorCodes : string
     case LIMIT_EXCEEDED         = 'LimitExceededException';
     case CODE_DELIVERY_FAILED   = 'CodeDeliveryFailureException';
     case USER_LAMBDA_VALIDATION = 'UserLambdaValidationException';
+    case INVALID_PARAMETER_EXCEPTION = 'InvalidParameterException';
 }

@@ -6,7 +6,7 @@
                     <path d="M6.86719 15.0156L0.99998 8.49977" stroke="#242424" class="dark:stroke-white" stroke-linecap="round"/>
                     <line x1="0.5" y1="-0.5" x2="9.61301" y2="-0.5" transform="matrix(-0.654931 0.755689 0.654931 0.755689 7.65625 1.30469)" stroke="#242424" class="dark:stroke-white" stroke-linecap="round"/>
                 </svg>
-                <h4 class="text-sm md:text-lg font-normal text-[#242424] dark:text-white ml-2 md:ml-4">Quarterly Revision Documents</h4>
+                <h4 class="text-sm md:text-lg font-normal text-[#242424] dark:text-white ml-2 md:ml-4">Year End Reviews</h4>
             </div>
             @if(!$pdfUrl)
                 <div class="flex items-center justify-between">
@@ -19,10 +19,8 @@
                     <div class="hidden xl:block ml-4">
                         <livewire:widgets.filter :data="$years"/>
                     </div>
-                    <div>
-                        <livewire:widgets.mobile-filter :data="$years"/>
-                    </div>
                 </div>
+                <livewire:widgets.mobile-filter :data="$years"/>
             @endif
         </div>
     </div>

@@ -29,9 +29,18 @@
 <?php $i = 0; ?>
 
 @foreach ($articles as $year => $months)
-    <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]" x-data="{ expanded: {{$i==0 ? 'true': 'false'}}, newsTodayContainer: false }" x-cloak>
-        <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]" @click="expanded = ! expanded, newsTodayContainer = false" onclick="resetActive()">
-            <h4 class="text-[#040404] dark:text-white text-[32px] font-normal"> {{ $year }} <span id="year-{{ $i }}" x-show="newsTodayContainer === true"></span></h4>
+    <div class="archiveWrapper mb-[15px] border-b-2 mt-[20px]"
+         x-data="{ expanded: {{$i==0 ? 'true': 'false'}}, newsTodayContainer: null }"
+         x-cloak
+    >
+        <div class="flex justify-between items-center archiveHeader cursor-pointer mb-[20px]"
+             @click="expanded = ! expanded, newsTodayContainer = null"
+             onclick="resetActive()"
+        >
+            <h4 class="text-[#040404] dark:text-white text-[32px] font-normal">
+                {{ $year }}
+                <span id="year-{{ $i }}" x-show="newsTodayContainer !== null"></span>
+            </h4>
             <div>
                 <div x-show="expanded === true">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -45,14 +54,39 @@
                 </div>
             </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent border-b-2 mb-[35px] pb-[35px]" id="news-today-container-{{ $i }}" x-show="newsTodayContainer == true">
-    </div>
+        <div id="news-today-container-{{ $i }}"
+             x-show="newsTodayContainer !== null"
+             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent border-b-2 mb-[35px] pb-[35px]"
+        >
+        </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true" x-collapse>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]"
+         x-show="expanded === true"
+         x-collapse
+    >
         @foreach ($months as $currentMonth => $month)
-            <div class="month-card weekly-focus-single-card" @click.stop onclick="showArticleCards(this, {{$year}}, {{ \Carbon\Carbon::parse($currentMonth)->month }}, `{{ $currentMonth }}`, {{ $i }})" @click="newsTodayContainer =! newsTodayContainer">
+            @php
+                $monthName = \Carbon\Carbon::parse($currentMonth)->month;
+            @endphp
+            <div class="month-card weekly-focus-single-card"
+                 @click.stop
+                 onclick="showArticleCards(
+                     this,
+                     {{$year}},
+                     {{ $monthName }},
+                     `{{ $currentMonth }}`,
+                     {{ $i }})
+                 "
+                 @click="
+                    if (newsTodayContainer == {{ $monthName }}) {
+                        newsTodayContainer = null
+                    } else {
+                        newsTodayContainer = {{ $monthName }}
+                    }
+                "
+            >
                 <div class="weekly-focus-progress-list mt-0">
-                    <div class="weekly-focus-progress-single-bar cursor-pointer border-b-2 ">
+                    <div class="weekly-focus-progress-single-bar cursor-pointer border-b-2">
                         <p>{{ $currentMonth }}</p>
 {{--                        <div class="progress-bar">--}}
 {{--                            <div class="bar" style="width:100%; background-color: #89D38C;">--}}
@@ -70,55 +104,50 @@
 </div>
 
 <script>
-
-function showArticleCards(ele, year, month, monthName, id) {
-
-    toggleActive(ele);
-
-    let url = "{{url('news-today')}}";
-    url += `/getbymonth?year=${year}&month=${month}`;
-    document.getElementById(`year-${id}`).innerHTML = "- " + monthName
-    getData(url).then(res => {
-        let html = ""
-        res.map(article => {
-            html += `<div @click.stop class="weekly-focus-single-card">
-            <div class="weekly-focus-progress-list mt-0">
-                <a href=${article.url}>
-                    <div class="weekly-focus-progress-single-bar border-b-2">
-                        <p>News Today - <span>${article.formatted_published_at}</span></p>
-<!--                        <div class="progress-bar">-->
-<!--                            <div class="bar" style="width:100%; background-color: #89D38C;">-->
-<!--                            </div>-->
-<!--                        </div>-->
-                        <ul class="flex justify-start mt-[15px]">
-                            <li class="text-[#3362CC] mr-4 text-sm font-normal"><a href=${article.url} class="hover:underline" wire:navigate>Read</a></li>
-                            <li class="text-[#3362CC] mr-4 text-sm font-normal"><a href="/download/${article.media}" class="hover:underline ${ article.media === false ? 'opacity-50 pointer-events-none' : '' }">Download</a></li>
-                        </ul>
+    function showArticleCards(ele, year, month, monthName, id) {
+        let url = "{{url('news-today')}}";
+        url += `/getbymonth?year=${year}&month=${month}`;
+        document.getElementById(`year-${id}`).innerHTML = "- " + monthName
+        getData(url).then(res => {
+            let html = ""
+            res.map(article => {
+                html += `<div @click.stop class="weekly-focus-single-card">
+                <div class="weekly-focus-progress-list mt-0">
+                    <a href=${article.url}>
+                        <div class="weekly-focus-progress-single-bar border-b-2">
+                            <p>News Today - <span>${article.formatted_published_at}</span></p>
+    <!--                        <div class="progress-bar">-->
+    <!--                            <div class="bar" style="width:100%; background-color: #89D38C;">-->
+    <!--                            </div>-->
+    <!--                        </div>-->
+                            <ul class="flex justify-start mt-[15px]">
+                                <li class="text-[#3362CC] mr-4 text-sm font-normal"><a href=${article.url} class="hover:underline" wire:navigate>Read</a></li>
+                                <li class="text-[#3362CC] mr-4 text-sm font-normal"><a href="/download/${article.media}" class="hover:underline ${ article.media === false ? 'opacity-50 pointer-events-none' : '' }">Download</a></li>
+                            </ul>
+                        </div>
+                    </a>
                     </div>
-                </a>
-                </div>
-            </div>`
-        })
-        document.getElementById(`news-today-container-${id}`).innerHTML = html
-    });
-}
+                </div>`
+            })
+            document.getElementById(`news-today-container-${id}`).innerHTML = html
+        });
 
-function toggleActive(ele) {
-    if(ele.classList.contains("activeCard")) {
-        ele.classList.remove("activeCard")
-    } else {
+        toggleActive(ele);
+    }
+
+    function toggleActive(ele) {
+        if(ele.classList.contains("activeCard")) {
+            ele.classList.remove("activeCard")
+        } else {
+            resetActive();
+            ele.classList.add("activeCard")
+        }
+    }
+
+    function resetActive() {
         let divs = document.querySelectorAll('.month-card');
-        divs.forEach(function(div) {
+            divs.forEach(function(div) {
             div.classList.remove("activeCard")
         })
-        ele.classList.add("activeCard")
     }
-}
-
-function resetActive() {
-    let divs = document.querySelectorAll('.month-card');
-        divs.forEach(function(div) {
-        div.classList.remove("activeCard")
-    })
-}
 </script>

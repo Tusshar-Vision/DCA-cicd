@@ -79,7 +79,7 @@
             </ul>
         </div>
     </div>
-    
+
     {{-- <a href="javascript:void(0)" class="hybrid-filter mb-[20px] mt-[10px] md:mt-0" onclick="toggleFilter()">Filter</a> --}}
 </div>
     <div class="divider mt-[-2px]"></div>
@@ -142,8 +142,8 @@
                     <a href="{{ ArticleService::getArticleUrlFromSlug($result->slug) }}" wire:navigate>
                         <h3>{{ $result->title }}</h3>
                     </a>
-                    <p class="result-content">{{ $result->excerpt ?? 'No Description Available'}}</p>
-                    <span>{{ $result->initiative->name }} | {{ Carbon::parse($result->publishedInitiative->published_at)->format('Y-m-d') }}</span>
+                    <p class="result-content">{{ $result->excerpt ?? ''}}</p>
+                    <span>{{ $result->initiative->name }} | {{ Carbon::parse($result->publishedInitiative->published_at)->format('d M Y') }}</span>
                 </div>
             @endforeach
         </div>

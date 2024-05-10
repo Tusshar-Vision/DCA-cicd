@@ -49,7 +49,19 @@ readonly class ArticleService
         $topic = $article->topic->name;
         $slug = $article->slug;
 
-        $url = '/' . $initiative . '/' . $date . '/' . $topic . '/' . $slug;
+        $url = '/' . $initiative . '/' . $date . '/';
+
+        if ($article->is_short === true) {
+            if ($initiative === 'News Today') {
+                $url .= 'also-in-news' . '#' . $slug;
+            } else if ($initiative === 'Weekly Focus') {
+                $url .= $topic . '/' . $slug . '#' . $slug;
+            } else if ($initiative === 'Monthly Magazine') {
+                $url .= $topic . '/news-in-shorts' . '#' . $slug;
+            }
+        } else {
+            $url .= $topic . '/' . $slug;
+        }
 
         // Convert spaces to dashes and '&' to 'AND' in URL, then return lowercased URL
         return strtolower(str_replace('&', 'AND', str_replace(' ', '-', $url)));
