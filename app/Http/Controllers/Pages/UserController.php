@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Pages;
 use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
-use App\Models\Article;
 use App\Models\Bookmark;
 use App\Models\InitiativeTopic;
 use App\Models\Note;
@@ -40,7 +39,11 @@ class UserController extends Controller
             ->get()
             ->map(function ($history) {
                 if (!$history->article) return null;
-                $history->title = $history->article->short_title ?? $history->article->title;
+                if ($history->article->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)) {
+                    $history->title = $history->article->publishedInitiative->name;
+                } else {
+                    $history->title =  $history->article->short_title ?? $history->article->title;
+                }
                 $history->published_at = Carbon::parse($history->article->publishedInitiative->published_at)->format('d M Y');
                 $history->url = ArticleService::getArticleUrl($history->article);
                 $history->read_at = Carbon::parse($history->updated_at)->format('d M Y');
@@ -205,10 +208,10 @@ class UserController extends Controller
         })->with('article')->get()->map(function ($history) {
             if (!$history->article) return null;
             $history->title = $history->article->short_title ?? $history->article->title;
-            $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
+            $history->published_at = Carbon::parse($history->article->published_at)->format('d M Y');
             $history->url = ArticleService::getArticleUrl($history->article);
             $history->img = $history->article->getFirstMediaUrl("article-featured-image");
-            $history->read_at = Carbon::parse($history->updated_at)->format('Y-m-d');
+            $history->read_at = Carbon::parse($history->updated_at)->format('d M Y');
 
             return $history->only(['title', 'published_at', 'url', 'img', 'read_at']);
         });
@@ -225,7 +228,7 @@ class UserController extends Controller
             } else {
                 $history->title =  $history->article->short_title ?? $history->article->title;
             }
-            $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
+            $history->published_at = Carbon::parse($history->article->published_at)->format('d M Y');
             $history->url = ArticleService::getArticleUrl($history->article);
 //            $history->img = $history->article->getFirstMediaUrl("article-featured-image");
 
@@ -254,11 +257,10 @@ class UserController extends Controller
         })->orderBy('created_at', 'desc')->with('article')->get()->map(function ($history) {
             if (!$history->article) return null;
             $history->title = $history->article->short_title ?? $history->article->title;
-            $history->published_at = Carbon::parse($history->article->published_at)->format('Y-m-d');
+            $history->published_at = Carbon::parse($history->article->published_at)->format('d M Y');
             $history->url = ArticleService::getArticleUrl($history->article);
-            $history->img = $history->article->getFirstMediaUrl("article-featured-image");
 
-            return $history->only(['title', 'published_at', 'url', 'img']);
+            return $history->only(['title', 'published_at', 'url']);
         });
 
         return response()->json(['data' => $bookmarks]);

@@ -78,11 +78,11 @@
                 const article_id = "{{ $article->getID() }}";
                 const article_published_at = "{{$article->publishedAt}}"
                 const student_id = "{{ Auth::guard('cognito')->user()->id }}"
-                saveData("{{ route('user.read-history') }}", {
+                saveData("{{ route('user.mark-as-read') }}", {
                     article_id,
                     student_id,
                     article_published_at,
-                    read_percent: 0,
+                    read_percent: 100,
                     _token: "{{ csrf_token() }}"
                 }).then(data => {
                     if (data && data.status === 200) {

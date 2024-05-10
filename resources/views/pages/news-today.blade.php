@@ -64,7 +64,7 @@
                 @if($inShort)
                     <x-reading.short-article :articles="$package->shortArticles" class="mt-[30px]" />
                 @else
-                    <x-reading.article-content :article="$article" :publishedAt="$package->publishedAt" class="m-0" />
+                    <x-reading.article-content :article="$article" class="m-0" />
                 @endif
 
                 <div class="mt-12">

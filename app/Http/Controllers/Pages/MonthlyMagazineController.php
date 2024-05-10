@@ -74,7 +74,12 @@ class MonthlyMagazineController extends Controller
             $note = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
             $bookmark =  Bookmark::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
             if ($bookmark) $isArticleBookmarked = true;
-            $readHistory =  ReadHistory::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
+            $readHistory = ReadHistory::where(
+                'student_id', Auth::guard('cognito')->user()->id
+                )
+                ->where('article_id', $article->getID())
+                ->where('read_percent', '=', '100')
+                ->first();
             if ($readHistory) $isArticleRead = true;
         }
 
@@ -117,7 +122,12 @@ class MonthlyMagazineController extends Controller
             $note = Note::where("user_id", Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
             $bookmark =  Bookmark::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
             if ($bookmark) $isArticleBookmarked = true;
-            $readHistory =  ReadHistory::where('student_id', Auth::guard('cognito')->user()->id)->where('article_id', $article->getID())->first();
+            $readHistory = ReadHistory::where(
+                'student_id', Auth::guard('cognito')->user()->id
+                )
+                ->where('article_id', $article->getID())
+                ->where('read_percent', '=', '100')
+                ->first();
             if ($readHistory) $isArticleRead = true;
         }
 

@@ -104,7 +104,8 @@ Route::middleware('auth:cognito')->group(function () {
         Route::get('/activity', [Pages\UserController::class, 'dashboard'])->name('user.dashboard');
 
         Route::post('/update/read-history', [Pages\UserController::class, 'updateReadHistory'])->name('user.read-history');
-        Route::get('/read-history/search/{query}', [Pages\UserController::class, 'searchReadHistory']);
+        Route::post('/mark-as-read', [Pages\UserController::class, 'markAsRead'])->name('user.mark-as-read');
+        Route::get('/read-history/search/{query}', [Pages\UserController::class, 'searchReadHistory'])->name('user.search-read-history');
 
         Route::get('/bookmarks', [Pages\UserController::class, 'bookmarks'])->name('bookmarks');
         Route::post('/bookmarks/add', [Pages\UserController::class, 'addBookmark'])->name('bookmarks.add');

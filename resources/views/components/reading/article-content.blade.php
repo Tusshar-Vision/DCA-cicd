@@ -112,24 +112,7 @@
 {{--        menubar: false,--}}
 {{--        toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table',--}}
 {{--    });--}}
-    @if (Auth::guard('cognito')->check())
-        var timeoutId = undefined;
 
-        function addReadArticle() {
-            const article_id = "{{ $article->getID() }}";
-            const article_published_at = "{{$publishedAt}}"
-            const student_id = "{{ Auth::guard('cognito')->user()->id }}"
-            saveData("{{ route('user.read-history') }}", {
-                article_id,
-                student_id,
-                article_published_at,
-                read_percent: 0,
-                _token: "{{ csrf_token() }}"
-            })
-            clearTimeout(timeoutId);
-        }
-        timeoutId = setTimeout(() => addReadArticle(), 1000);
-    @endif
 {{--    const doc = document.getElementById("article-content");--}}
 {{--    // doc.addEventListener('mouseup', handleSelection);--}}
 {{--    var pageX, pageY;--}}

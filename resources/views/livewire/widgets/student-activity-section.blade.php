@@ -133,72 +133,68 @@
         showlist.classList.remove("absoluteSearch");
     });
 
- function showDailyNews() {
-                                  const square = document.getElementById('daily-news');
-                                 @foreach ($newsTodayConsumption as $day => $value)
+    function showDailyNews() {
+        var dailyNewsSquare = document.getElementById('daily-news');
 
-                                <?php
-                                $level = null; $text = null;
-                                if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
-                                   if($value['total_read'] == $value['total_article']) {
-                                    $level = 1;
-                                    $text = "Completed";
-                                   }
-                                   else if($value['total_read'] < $value['total_article']) {
-                                    $level = 2;
-                                     $text = "In Progress";
-                                   }
-                                } else {
-                                    if($value == null) {
-                                        $level =4;
-                                         $text = "NO ARTICLE FOUND FOR THIS MONTH";
-                                    }
-                                    else {
-                                        $level = 3;
-                                         $text = "Not Started";
-                                    }
-                                }
-                                ?>
+        @foreach ($newsTodayConsumption as $day => $value)
+            <?php
+                $level = null; $text = null;
+                if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
+                   if($value['total_read'] == $value['total_article']) {
+                    $level = 1;
+                    $text = "Completed";
+                   }
+                   else if($value['total_read'] < $value['total_article']) {
+                    $level = 2;
+                     $text = "In Progress";
+                   }
+                } else {
+                    if($value == null) {
+                        $level =4;
+                         $text = "NO ARTICLE FOUND FOR THIS MONTH";
+                    }
+                    else {
+                        $level = 3;
+                         $text = "Not Started";
+                    }
+                }
+            ?>
+            dailyNewsSquare.innerHTML += `<li data-level="{{$level}}" data-complete="{{$text}}"></li>`
+        @endforeach
+    }
 
-                                square.innerHTML += `<li data-level="{{$level}}" data-complete="{{$text}}"></li>`
+    function showWeeklyFocus() {
+        var weeklyFocusSquare = document.getElementById('weekly-focus');
 
-                                @endforeach
- }
-
- function showWeeklyFocus() {
-    const square = document.getElementById('weekly-focus');
-
-
-                                @foreach ($weeklyFocusConsumption as $week => $value)
-                                <?php
-                                $level = null; $text = null;
-                                if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
-                                   if($value['total_read'] == $value['total_article']) {
-                                    $level = 1;
-                                    $text = "Completed";
-                                   }
-                                   else if($value['total_read'] < $value['total_article']) {
-                                    $level = 2;
-                                     $text = "In Progress";
-                                   }
-                                } else {
-                                    if($value == null) {
-                                        $level =4;
-                                         $text = "NO ARTICLE FOUND FOR THIS MONTH";
-                                    }
-                                    else {
-                                        $level = 3;
-                                         $text = "Not Started";
-                                    }
-                                }
-                                ?>
-
-                                square.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$text}}"></li>`
-                                @endforeach
+        @foreach ($weeklyFocusConsumption as $week => $value)
+            <?php
+            $level = null; $text = null;
+            if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
+               if($value['total_read'] == $value['total_article']) {
+                $level = 1;
+                $text = "Completed";
+               }
+               else if($value['total_read'] < $value['total_article']) {
+                $level = 2;
+                 $text = "In Progress";
+               }
+            } else {
+                if($value == null) {
+                    $level =4;
+                     $text = "NO ARTICLE FOUND FOR THIS MONTH";
+                }
+                else {
+                    $level = 3;
+                     $text = "Not Started";
+                }
+            }
+            ?>
+            weeklyFocusSquare.innerHTML += `<li data-level="${<?php  echo $level ?>}" data-complete="{{$text}}"></li>`
+        @endforeach
  }
 
  function showMonthlyMagazine() {
-                                    const square = document.getElementById('monthly-magazine');
+                                    var square = document.getElementById('monthly-magazine');
 
                                 @foreach ($montlyMagazineConsumption as $month => $value)
                                 <?php
@@ -234,7 +230,7 @@
  searchBox.addEventListener("change", function() {
     const query = searchBox.value;
     if(query == "") return;
-    let url = "{{url("user/read-history/search")}}";
+    var url = "{{ route('user.search-read-history') }}";
     url += `/${query}`;
 
     fetch(url)
