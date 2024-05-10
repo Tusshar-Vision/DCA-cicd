@@ -28,17 +28,17 @@
         <div class="w-full flex xl:space-x-5 items-center xl:justify-end justify-between space-x-0">
             <div class="flex order-last xl:order-first topMenu">
                 <ul class="flex items-center">
-                    <li class="ml-[10px] md:ml-[15px]">
+                    <li class="ml-[8px] md:ml-[15px]">
                         <a href="{{ UrlHelper::linkToSocial('whatsapp') }}" target="_blank">
                             {!! SvgIconsHelper::getSvgIcon('whatsapp-header') !!}
                         </a>
                     </li>
-                    <li class="ml-[10px] md:ml-[15px]">
+                    <li class="ml-[8px] md:ml-[15px]">
                         <a href="{{ UrlHelper::linkToSocial('facebook') }}" target="_blank">
                             {!! SvgIconsHelper::getSvgIcon('facebook-header') !!}
                         </a>
                     </li>
-                    <li class="ml-[10px] md:ml-[15px]">
+                    <li class="ml-[8px] md:ml-[15px]">
                         <a href="{{ UrlHelper::linkToSocial('youtube') }}" target="_blank">
                             {!! SvgIconsHelper::getSvgIcon('youtube-header') !!}
                         </a>
