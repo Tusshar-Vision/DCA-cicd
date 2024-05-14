@@ -8,7 +8,6 @@ use App\Models\Article;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
 
 readonly class ArticleService
 {
