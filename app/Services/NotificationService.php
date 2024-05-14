@@ -18,7 +18,11 @@ readonly class NotificationService
 
     public function getAnnouncementsForToday($limit = 10): Collection
     {
-        return $this->announcement->isVisible()->latest()->limit($limit)->get();
+        return $this->announcement
+            ->isVisible()
+            ->latest()
+            ->limit($limit)
+            ->get(['content']);
     }
 
     public function getNewsUpdatesForToday(): Collection

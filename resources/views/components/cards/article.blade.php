@@ -20,8 +20,8 @@
             break;
     }
 
-    $articleUrl = ArticleService::getArticleURL($article);
-    $featuredImage = $article->getFirstMediaUrl('article-featured-image');
+    $articleUrl = ArticleService::getArticleUrlFromSlug($article->slug);
+    $featuredImage = $article->media?->first()->getUrl();
 @endphp
 
 <div class="group cursor-pointer flex-col max-w-2xl">
@@ -30,7 +30,8 @@
             <div class="overflow-hidden coverImage autoHeight">
                 <img
                     src="{{ ($featuredImage === '') ? 'https://placehold.co/1596x930' : $featuredImage }}"
-                    width="{{ $width }}" height="{{ $height }}" alt="" class="group-hover:scale-105 transition-all object-cover"/>
+                    width="{{ $width }}" height="{{ $height }}" alt="" class="group-hover:scale-105 transition-all object-cover"
+                />
             </div>
             <div class="text-visionLineGray flex items-center space-x-3 text-sm">
                 <p><strong>Posted</strong> {{ Carbon::parse($article->publishedInitiative->published_at)->format('d M Y')  }}</p>

@@ -39,19 +39,6 @@ class PublishedInitiative extends Model implements HasMedia
         'references' => 'array',
     ];
 
-    protected $with = ['initiative'];
-
-    protected static function booted(): void
-    {
-        static::retrieved(function ($article) {
-            $article->sources = $article->sources ?? [];
-            $article->sources = is_string($article->sources) ? explode(',', $article->sources) : $article->sources;
-
-            $article->references = $article->references ?? [];
-            $article->references = is_string($article->references) ? explode(',', $article->references) : $article->references;
-        });
-    }
-
     public function initiative(): BelongsTo
     {
         return $this->belongsTo(Initiative::class);

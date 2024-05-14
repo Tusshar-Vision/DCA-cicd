@@ -23,13 +23,22 @@ readonly class DownloadService
             ->language()
             ->latest()
             ->whereHas('media', function ($query) {
-                $query->where('collection_name', '!=', 'article-featured-image');
+                $query->select('id')->where('collection_name', '!=', 'article-featured-image');
             })
-            ->with('media', function ($query) {
-                $query->where('collection_name', '!=', 'article-featured-image');
-            })
+            ->with(['media' => function ($query) {
+                $query->select(
+                    'id',
+                    'model_type',
+                    'model_id',
+                    'disk',
+                    'file_name',
+                    'collection_name'
+                )->where('collection_name', '!=', 'article-featured-image');
+            }, 'articles' => function ($subQuery) {
+                $subQuery->select('slug', 'published_initiative_id', 'order_column')->orderBy('order_column');
+            }])
             ->limit($limit)
-            ->get();
+            ->get(['id', 'initiative_id', 'name']);
     }
 
     public function getNewsTodayArchive($year, $month): Collection|array

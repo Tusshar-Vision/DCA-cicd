@@ -24,8 +24,19 @@ readonly class ArticleService
             ->isFeatured()
             ->latest()
             ->limit($limit)
-            ->with('media')
-            ->get();
+            ->with(['media' => function ($query) {
+                $query->select('id', 'model_type', 'model_id', 'disk', 'file_name');
+            }, 'publishedInitiative' => function ($query) {
+                $query->select('id', 'name', 'published_at');
+            }])
+            ->get([
+                'id',
+                'title',
+                'short_title',
+                'excerpt',
+                'slug',
+                'published_initiative_id'
+            ]);
     }
 
     public function getLatestNews(int $limit = 2): Collection|array
@@ -36,8 +47,7 @@ readonly class ArticleService
             ->isNotShort()
             ->latest()
             ->limit($limit)
-            ->with('author')
-            ->get();
+            ->get(['title', 'slug']);
     }
 
     public static function getArticleURL($article): string
@@ -70,7 +80,7 @@ readonly class ArticleService
     public static function getArticleUrlFromSlug($slug): string|null
     {
         // Use caching to avoid duplicated queries
-        return Cache::remember("article_url_{$slug}", 60, function () use ($slug) {
+        return Cache::remember("article_url_{$slug}", 3600, function () use ($slug) {
             try {
                 // Eager load relationships to reduce number of queries
                 $article = Article::with(['initiative', 'publishedInitiative', 'topic'])
