@@ -1,7 +1,7 @@
 @php
     use App\Helpers\InitiativesHelper;
     use App\Enums\Initiatives;
-    $pdf = $file->media->first();
+    $pdf = $file->media?->first();
 @endphp
 <div class="vi-pdf-card">
     <div class="vi-card-header">
@@ -23,7 +23,7 @@
             $file->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS) ||
             $file->initiative_id === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE)
             )
-            <a wire:navigate href="{{ \App\Services\ArticleService::getArticleUrlFromSlug( $file->articles()->first()->slug ) }}" class="flex items-center vi-downloads-links source-file">
+            <a wire:navigate href="{{ \App\Services\ArticleService::getArticleUrlFromSlug( $file->articles->first()->slug ) }}" class="flex items-center vi-downloads-links source-file">
                 <span>Read</span>
             </a>
         @else

@@ -19,18 +19,28 @@ readonly class MediaService
 
     public function getLatestDownloads(int $limit = 6): Collection|array
     {
-        return $this->media->where('mime_type', 'application/pdf')->latest()->limit($limit)->get();
+        return $this->media
+            ->where('mime_type', 'application/pdf')
+            ->latest()
+            ->limit($limit)
+            ->get();
     }
 
     public function getLatestVideos(int $limit = 2): Collection|array
     {
         return $this->publishedInitiative
             ->isPublished()
-            ->has('video')
-            ->with('video.media')
+            ->whereHas('video', function ($query) {
+                $query->select('id');
+            })
             ->orderByDesc('published_at')
             ->limit($limit)
-            ->get();
+            ->with(['video' => function ($query) {
+                $query->select('id', 'title', 'is_url', 'url');
+            }])
+            ->get([
+                'id', 'name', 'published_at', 'video_id'
+            ]);
     }
 
     public function getVideos($initiativeId): Collection|array

@@ -99,6 +99,7 @@ readonly class InitiativeService
             ->whereInitiative($initiativeId)
             ->language()
             ->isPublished()
+            ->select(['id', 'name', 'initiative_id', 'published_at'])
             ->hasPublishedArticle()
             ->with(['articles' => function ($query) {
                 // Eager load published articles
@@ -130,6 +131,7 @@ readonly class InitiativeService
             ->whereInitiative($initiativeId)
             ->language()
             ->isPublished()
+            ->select(['id', 'name', 'initiative_id', 'published_at'])
             ->hasPublishedArticle()
             ->with(['articles' => function ($query) {
                 // Eager load published articles

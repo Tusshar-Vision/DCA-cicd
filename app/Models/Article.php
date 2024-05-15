@@ -70,7 +70,7 @@ class Article extends Model implements HasMedia, Sortable
         'is_short' => 'bool'
     ];
 
-    protected $with = ['topic', 'statuses'];
+    protected $with = ['topic'];
 
     // This method will automatically be called when creating or updating an article.
     public static function boot(): void
@@ -83,17 +83,6 @@ class Article extends Model implements HasMedia, Sortable
 
         static::updating(function ($article) {
             $article->read_time = self::calculateReadingTime($article->content);
-        });
-    }
-
-    protected static function booted(): void
-    {
-        static::retrieved(function ($article) {
-            $article->sources = $article->sources ?? [];
-            $article->sources = is_string($article->sources) ? explode(',', $article->sources) : $article->sources;
-
-            $article->references = $article->references ?? [];
-            $article->references = is_string($article->references) ? explode(',', $article->references) : $article->references;
         });
     }
 

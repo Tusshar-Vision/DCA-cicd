@@ -27,7 +27,7 @@ class WeeklyFocusDTO extends PublishedInitiativeDTO
         );
         $dto->topicAtGlance = $publishedInitiative->infographic;
         $dto->tags = $publishedInitiative->tags;
-        $dto->sources = $publishedInitiative->sources;
+        $dto->sources = $publishedInitiative->sources ?? [];
 
         return $dto;
     }
