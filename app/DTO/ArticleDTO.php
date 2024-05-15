@@ -88,7 +88,7 @@ class ArticleDTO extends Data implements Wireable
             $article->relatedTerms,
             $article->relatedArticles,
             $article->relatedVideos,
-            $article->sources,
+            $article->sources ?? [],
             $article->published_at,
             $article->created_at,
             $article->updated_at,
