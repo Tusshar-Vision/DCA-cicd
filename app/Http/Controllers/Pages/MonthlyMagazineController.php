@@ -89,7 +89,7 @@ class MonthlyMagazineController extends Controller
             $toc = $contents->generateTOC($article->content);
 
             if (!empty($toc)) {
-                $articleContent = $toc['updatedHTMLContent'];
+                $article->content = $toc['updatedHTMLContent'];
             }
         }
 
