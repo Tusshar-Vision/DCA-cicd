@@ -75,9 +75,9 @@
                 })
             }
             function readArticle() {
-                const article_id = "{{ $article->getID() }}";
-                const article_published_at = "{{$article->publishedAt}}"
-                const student_id = "{{ Auth::guard('cognito')->user()->id }}"
+                const article_id = "{{ $articleId }}";
+                const article_published_at = "{{ $publishedAt }}"
+                const student_id = "{{ Auth::guard('cognito')?->user()?->id }}"
                 saveData("{{ route('user.mark-as-read') }}", {
                     article_id,
                     student_id,

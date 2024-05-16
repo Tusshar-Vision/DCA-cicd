@@ -28,7 +28,12 @@
 
             <div class="flex flex-col w-full mt-6 lg:mt-0" :style="!isSidePanelOpen && 'margin-left: 0px !important'">
                 <div class="space-y-4">
-                    <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" :isArticleRead="$isArticleRead" :article="$article"/>
+                    <x-widgets.options-nav
+                        :articleId="$article->getID()"
+                        :isArticleBookmarked="$isArticleBookmarked"
+                        :isArticleRead="$isArticleRead"
+                        :publishedAt="$package->publishedAt"
+                    />
                     <x-common.article-heading :title="$package->name" />
                     <div class="flex flex-col md:flex-row justify-between items-center w-full py-2 my-[30px] text-gray-500 border-t-2 border-b-2">
                         <x-widgets.articles-nav :createdAt="$package->publishedAt" :updatedAt="$article->updatedAt" />
