@@ -75,6 +75,7 @@ class UserController extends Controller
             ->select(DB::raw('DAYOFYEAR(published_initiatives.published_at) as day'), DB::raw('COUNT(*) as total_article'))
             ->whereYear('published_initiatives.published_at', $year)
             ->join('articles', 'published_initiatives.id', '=', 'articles.published_initiative_id')
+            ->where('articles.is_short', '=', false)
             ->groupBy(DB::raw('DAYOFYEAR(published_initiatives.published_at)'))
             ->get(['day', 'total_article']);
 
@@ -118,6 +119,7 @@ class UserController extends Controller
             ->whereYear('published_initiatives.published_at', $year)
             ->select(DB::raw('WEEK(published_initiatives.published_at, 1) as week'), DB::raw('COUNT(*) as total_article'))
             ->join('articles', 'published_initiatives.id', '=', 'articles.published_initiative_id')
+            ->where('articles.is_short', '=', false)
             ->groupBy(DB::raw('WEEK(published_initiatives.published_at, 1)'))
             ->whereBetween('published_initiatives.published_at', [$startDate, $endDate])
             ->get(['week', 'total_article']);
@@ -172,7 +174,12 @@ class UserController extends Controller
 
         foreach ($monthsWithoutRecords as $record) $monthlyAverages[$record] = null;
 
-        return view('pages.user.home', ['readHistories' => $read_histories, 'monthly_magazine_consumption' => $monthlyAverages, 'weekly_focus_consumption' => $weeklyAverages, 'news_today_consumption' => $newsTodayAverages]);
+        return view('pages.user.home', [
+            'readHistories' => $read_histories,
+            'monthly_magazine_consumption' => $monthlyAverages,
+            'weekly_focus_consumption' => $weeklyAverages,
+            'news_today_consumption' => $newsTodayAverages
+        ]);
     }
 
     public function updateReadHistory(Request $request)

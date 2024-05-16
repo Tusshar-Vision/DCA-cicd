@@ -137,7 +137,7 @@
                 } else {
                     if($value == null) {
                         $level =4;
-                        $text = "NO ARTICLE FOUND FOR THIS MONTH";
+                        $text = "No Articles for this day";
                     }
                     else {
                         $level = 3;
@@ -157,7 +157,7 @@
             <?php
             $level = null; $text = null;
             if($value != null && isset($value['total_read']) && isset($value['total_article'])) {
-               if($value['total_read'] == $value['total_article']) {
+               if($value['total_read'] > 0) {
                 $level = 1;
                 $text = "Completed";
                }
@@ -168,7 +168,7 @@
             } else {
                 if($value == null) {
                     $level =4;
-                     $text = "NO ARTICLE FOUND FOR THIS MONTH";
+                     $text = "No Weekly Focus for this Week";
                 }
                 else {
                     $level = 3;
@@ -199,7 +199,7 @@
                 } else {
                     if($value == null) {
                         $level = 4;
-                         $text = "NO ARTICLE FOUND FOR THIS MONTH";
+                         $text = "No Magazine for this month";
                     }
                     else {
                         $level = 3;
