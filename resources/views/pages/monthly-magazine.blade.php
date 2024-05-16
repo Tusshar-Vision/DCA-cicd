@@ -31,7 +31,12 @@
 
         <div class="flex flex-col w-full mt-10 lg:mt-0" :style="!isSidePanelOpen && 'margin-left: 0px !important'">
             <div class="space-y-4">
-                <x-widgets.options-nav :articleId="$article->getID()" :isArticleBookmarked="$isArticleBookmarked" :isArticleRead="$isArticleRead" :article="$article"/>
+                <x-widgets.options-nav
+                    :articleId="$article->getID()"
+                    :isArticleBookmarked="$isArticleBookmarked"
+                    :isArticleRead="$isArticleRead"
+                    :publishedAt="$package->publishedAt"
+                />
                 @if($inShort)
                     <x-common.article-heading title="News in Shorts" />
                 @else

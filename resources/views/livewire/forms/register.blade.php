@@ -137,7 +137,7 @@
                 </a>
             </h5>
             <p class="text-[12px] text-[#3D3D3D] dark:text-white">By signing in, you confirm that you have read and agree to our
-                <a href="{{ \App\Helpers\UrlHelper::linkToVision('/termsandcondition') }}" target="_blank" class="text-[#3362CC] block">Terms and Conditions</a>
+                <a href="{{ \App\Helpers\UrlHelper::linkToVision('/terms-of-use') }}" target="_blank" class="text-[#3362CC] block">Terms and Conditions</a>
             </p>
         </form>
     </div>

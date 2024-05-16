@@ -38,7 +38,7 @@
                         :articleId="$article->getID()"
                         :isArticleBookmarked="$isArticleBookmarked"
                         :isArticleRead="$isArticleRead"
-                        :article="$article"
+                        :publishedAt="$package->publishedAt"
                     />
                     @if($inShort)
                         <x-common.article-heading title="Also in News" />

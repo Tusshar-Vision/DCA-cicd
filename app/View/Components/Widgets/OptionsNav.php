@@ -11,10 +11,13 @@ class OptionsNav extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public $articleId, public $article, public $isArticleBookmarked, public $isArticleRead)
-    {
-        //
-    }
+    public function __construct(
+        public $articleId,
+        public $publishedAt,
+        public $isArticleBookmarked,
+        public $isArticleRead
+    )
+    {}
 
     /**
      * Get the view / contents that represent the component.
