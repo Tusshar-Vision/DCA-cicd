@@ -89,16 +89,6 @@ class AdminPanelProvider extends PanelProvider
                         'xl' => 5,
                         '2xl' => null,
                     ]),
-                FilamentJobsMonitorPlugin::make()
-                    ->label('Job')
-                    ->pluralLabel('Jobs')
-                    ->enableNavigation()
-                    ->navigationIcon('heroicon-o-cpu-chip')
-                    ->navigationGroup('System')
-                    ->navigationSort(5)
-                    ->navigationCountBadge(true)
-                    ->enablePruning(true)
-                    ->pruningRetention(7),
                 FilamentShieldPlugin::make()
                     ->gridColumns([
                         'default' => 1,
