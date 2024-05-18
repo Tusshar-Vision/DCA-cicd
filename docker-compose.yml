@@ -3,8 +3,71 @@ services:
         build:
             context: .
             dockerfile: ./Dockerfile
-        entrypoint: php artisan octane:frankenphp
+        entrypoint: ["/app/infrastructure/scripts/entrypoint.sh"]
+        restart: always
+        container_name: ca-server
         ports:
-            - "80:8000"
+            - "8000:8000"
         volumes:
             - .:/app
+            - ./infrastructure/configuration/php/php-production.ini:/app/php.ini
+        networks:
+            - app-network
+        depends_on:
+            - db
+            - memcached
+            - meilisearch
+            - redis
+
+    db:
+        image: mysql:lts
+        container_name: ca-mysql
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: ca_prod
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: vision@123
+            MYSQL_ROOT_PASSWORD: admin@1301
+        volumes:
+            - ~/mysql:/var/lib/mysql
+            - ./infrastructure/configuration/mysql/mysqld-production.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+        networks:
+            - app-network
+
+    memcached:
+        image: memcached:1.6.27-alpine
+        container_name: ca-memcached
+        networks:
+            - app-network
+        volumes:
+            - ./infrastructure/configuration/memcache/memcached.conf:/etc/memcached.conf
+
+    meilisearch:
+        image: getmeili/meilisearch:v1.8.0
+        container_name: ca-meilisearch
+        restart: unless-stopped
+        environment:
+            - http_proxy
+            - https_proxy
+            - MEILI_MASTER_KEY=${MEILISEARCH_KEY:-masterKey}
+            - MEILI_NO_ANALYTICS=${MEILI_NO_ANALYTICS:-true}
+            - MEILI_ENV=${MEILI_ENV:-development}
+            - MEILI_LOG_LEVEL
+        volumes:
+            - ~/meili_data:/meili_data
+        networks:
+            - app-network
+
+    redis:
+        image: redis:7.2.4-alpine
+        container_name: ca-redis
+        restart: unless-stopped
+        volumes:
+            - ~/redis_data:/data
+            - ./infrastructure/configuration/redis/redis-production.conf:/usr/local/etc/redis/redis.conf
+        networks:
+            - app-network
+
+networks:
+    app-network:
+        driver: bridge

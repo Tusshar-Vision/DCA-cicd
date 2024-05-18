@@ -2,7 +2,6 @@
 @section('title', "Home | Current Affairs")
 
 @section('content')
-
     <x-containers.grid-wide class="mt-6">
         <x-common.section-heading>{{__('home_page.highlights')}}</x-common.section-heading>
         <livewire:widgets.highlights-section :featured-articles="$featuredArticles"/>
