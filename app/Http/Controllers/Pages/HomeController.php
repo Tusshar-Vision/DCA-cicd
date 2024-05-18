@@ -7,10 +7,6 @@ use App\Services\ArticleService;
 use App\Services\DownloadService;
 use App\Services\MediaService;
 use App\Services\UserService;
-use App\Services\VideoService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
 
 class HomeController extends Controller
 {
@@ -18,15 +14,16 @@ class HomeController extends Controller
         private readonly ArticleService $articleService,
         private readonly MediaService $mediaService,
         private readonly DownloadService $downloadService,
-        private readonly UserService $userService
+//        private readonly UserService $userService
     ) {
     }
     public function index()
     {
-        $featuredArticles = $this->articleService->getFeatured(10);
+        $featuredArticles = $this->articleService->getFeatured();
         $latestVideos = $this->mediaService->getLatestVideos();
         $latestDownloads = $this->downloadService->getLatest();
-        $scoreBoard = $this->userService->getScoreBoard();
+//        $scoreBoard = $this->userService->getScoreBoard();
+        $scoreBoard = [];
 
         return View('pages.home', [
             'featuredArticles' => $featuredArticles,

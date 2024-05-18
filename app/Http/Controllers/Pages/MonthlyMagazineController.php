@@ -61,8 +61,8 @@ class MonthlyMagazineController extends Controller
     public function renderArticle($date, ?string $topic = null, ?string $slug = null)
     {
         $this->hydrateData($date);
-
         $article = $this->monthlyMagazine->getArticleFromSlug($slug);
+        $article->loadContent();
 
         $noteAvailable = null;
         $note = null;
@@ -111,6 +111,10 @@ class MonthlyMagazineController extends Controller
     {
         $this->hydrateData($date);
         $article = $this->monthlyMagazine->getShortNewsArticles($topic);
+
+        $this->monthlyMagazine->shortArticles->where('topic', $topic)->map(function ($shortArticle) {
+            $shortArticle->loadContent();
+        });
 
         $noteAvailable = null;
         $note = null;

@@ -30,9 +30,9 @@ cd /var/www/html/vision-ca-api/
 git pull origin ${BRANCH_NAME}
 
 # Install/update dependencies using Composer and Bun
-composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
-bun install
-bun run build
+#composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+#bun install
+#bun run build
 
 # Run database migrations and clear caches
 php artisan migrate --force

@@ -64,6 +64,9 @@ class WeeklyFocusController extends Controller
         $this->hydrateData($date);
 
         $article = $this->weeklyFocus->getArticleFromSlug($slug);
+        $this->weeklyFocus->articles->map(function ($shortArticle) {
+            $shortArticle->loadContent();
+        });
 
         $noteAvailable = null;
         $note = null;

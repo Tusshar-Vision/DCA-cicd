@@ -35,6 +35,7 @@ use EightyNine\Approvals\ApprovalPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -57,6 +58,16 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->id('admin')
+            ->navigationItems([
+                NavigationItem::make('Jobs')
+                    ->url(config('app.url') . '/horizon', shouldOpenInNewTab: true)
+                    ->icon('heroicon-o-wrench-screwdriver')
+                    ->group('System')
+                    ->sort(3)
+                    ->visible(function () {
+                        return \Auth::user()->hasRole('super_admin');
+                    }),
+            ])
             ->plugins([
                 OverlookPlugin::make()
                     ->includes([
@@ -89,16 +100,6 @@ class AdminPanelProvider extends PanelProvider
                         'xl' => 5,
                         '2xl' => null,
                     ]),
-                FilamentJobsMonitorPlugin::make()
-                    ->label('Job')
-                    ->pluralLabel('Jobs')
-                    ->enableNavigation()
-                    ->navigationIcon('heroicon-o-cpu-chip')
-                    ->navigationGroup('System')
-                    ->navigationSort(5)
-                    ->navigationCountBadge(true)
-                    ->enablePruning(true)
-                    ->pruningRetention(7),
                 FilamentShieldPlugin::make()
                     ->gridColumns([
                         'default' => 1,

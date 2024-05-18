@@ -3,13 +3,10 @@
 namespace App\DTO;
 
 use App\Models\Article;
-use App\Services\ArticleService;
 use Illuminate\Support\Collection;
 use Livewire\Wireable;
-use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Concerns\WireableData;
 use Spatie\LaravelData\Data;
-use Spatie\LaravelData\DataCollection;
 
 class ArticleDTO extends Data implements Wireable
 {
@@ -23,17 +20,15 @@ class ArticleDTO extends Data implements Wireable
         public ?string               $content,
         public int                   $readTime,
         public int                   $views,
-        public string                $visibility,
         public bool                  $isFeatured,
         public int                   $is_short,
-        public array|Collection      $tags,
+        public array|Collection|null $tags,
         public array|Collection|null $relatedTerms,
         public array|Collection|null $relatedArticles,
         public array|Collection|null $relatedVideos,
         public array|string|null     $sources,
-        public ?string               $publishedAt,
-        public ?string               $createdAt,
         public ?string               $updatedAt,
+
         public  readonly int         $id,
         private readonly int         $initiativeID,
         private readonly int         $initiativeTopicID,
@@ -41,7 +36,8 @@ class ArticleDTO extends Data implements Wireable
         private readonly ?int        $topicSubSectionID,
         private readonly int         $publishedInitiativeID,
         private readonly int         $author,
-        private readonly ?int        $reviewer
+        private readonly ?int        $reviewer,
+        private readonly ?Article    $articleInstance
     ) {
     }
 
@@ -70,6 +66,44 @@ class ArticleDTO extends Data implements Wireable
         return $this->topicSubSectionID;
     }
 
+    public function loadContent(): string
+    {
+        if (!$this->content) {
+            $this->content = $this->loadContentFromDatabase();
+            $this->tags = $this->loadTags();
+            $this->relatedTerms = $this->loadRelatedTerms();
+            $this->relatedArticles = $this->loadRelatedArticles();
+            $this->relatedVideos = $this->loadRelatedVideos();
+        }
+        return $this->content;
+    }
+
+    // Method to load content from the database
+    private function loadContentFromDatabase(): string
+    {
+        return $this->articleInstance->content->content ?? '';
+    }
+
+    private function loadTags(): Collection
+    {
+        return $this->articleInstance->tags;
+    }
+
+    private function loadRelatedTerms(): Collection
+    {
+        return $this->articleInstance->relatedTerms;
+    }
+
+    private function loadRelatedArticles(): Collection
+    {
+        return $this->articleInstance->relatedArticles;
+    }
+
+    private function loadRelatedVideos(): Collection
+    {
+        return $this->articleInstance->relatedVideos;
+    }
+
     public static function fromModel(Article $article): self
     {
         return new self(
@@ -78,19 +112,16 @@ class ArticleDTO extends Data implements Wireable
             str_replace(' ', '-', strtolower($article->topic->name)),
             $article->slug,
             $article->excerpt,
-            $article->content->content ?? '',
+            '',
             $article->read_time,
             $article->views,
-            $article->visibility,
             $article->featured,
             $article->is_short,
-            $article->tags,
-            $article->relatedTerms,
-            $article->relatedArticles,
-            $article->relatedVideos,
-            $article->sources,
-            $article->published_at,
-            $article->created_at,
+            [],
+            collect(),
+            collect(),
+            collect(),
+            $article->sources ?? [],
             $article->updated_at,
 
             $article->id,
@@ -101,6 +132,7 @@ class ArticleDTO extends Data implements Wireable
             $article->published_initiative_id,
             $article->author_id,
             $article->reviewer_id,
+            $article
         );
     }
 }

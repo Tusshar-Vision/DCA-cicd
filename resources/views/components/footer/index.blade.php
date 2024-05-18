@@ -8,7 +8,7 @@
     <div class="flex flex-col 2xl:flex-row border-b-2 border-gray-300 mt-14 justify-between mx-auto w-full px-[20px] lg:px-0 lg:max-w-[90%] pb-[25px]">
         <div class="flex flex-col md:mb-4 xl:mb-0">
             <div class="m-auto md:m-0 text-center">
-                <a href="#" class="inline-block">
+                <a href="{{ UrlHelper::linkToVision('/') }}" class="inline-block">
                     <img class="w-60 dark:hidden" src="{{ asset('images/LightLogo-bkp.svg') }}" alt="VisionIAS Logo" />
                     <img class="w-60 hidden dark:block" src="{{ asset('images/DarkLogo-bkp.svg') }}" alt="Dark VisionIAS Logo" />
                 </a>
