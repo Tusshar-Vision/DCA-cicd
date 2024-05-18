@@ -1,6 +1,5 @@
 vendor/
 node_modules/
-supervisor/
 npm-debug.log
 Dockerfile*
 docker-compose*

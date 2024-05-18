@@ -28,8 +28,11 @@ FROM dunglas/frankenphp
 
 RUN install-php-extensions pcntl memcached redis pdo_mysql intl zip gd exif @composer-2.7.6
 
+RUN apt update
+RUN apt install supervisor -y
 # Copy the application code from the composer and node stages
 COPY --from=node /app .
+COPY infrastructure/configuration/supervisor/*.conf /etc/supervisor/conf.d/
 
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 

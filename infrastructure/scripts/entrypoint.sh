@@ -16,5 +16,4 @@ php artisan view:cache
 php artisan icons:cache
 php artisan filament:cache-components
 
-# Start Laravel Octane with FrankenPHP
-exec php artisan octane:frankenphp --workers=20 --max-requests=1000
+exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf

@@ -38,6 +38,7 @@
         "livewire/livewire": "^3.0",
         "meilisearch/meilisearch-php": "^1.6",
         "pboivin/filament-peek": "^2.0",
+        "predis/predis": "*",
         "ralphjsmit/laravel-filament-seo": "^1.2",
         "ralphjsmit/laravel-seo": "^1.4",
         "shuvroroy/filament-spatie-laravel-health": "^2.0",
