@@ -29,7 +29,7 @@ services:
             MYSQL_PASSWORD: vision@123
             MYSQL_ROOT_PASSWORD: admin@1301
         volumes:
-            - ~/mysql:/var/lib/mysql
+            - ~/current-affairs/mysql:/var/lib/mysql
             - ./infrastructure/configuration/mysql/mysqld-production.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
         networks:
             - app-network
@@ -54,7 +54,7 @@ services:
             - MEILI_ENV=${MEILI_ENV:-development}
             - MEILI_LOG_LEVEL
         volumes:
-            - ~/meili_data:/meili_data
+            - ~/current-affairs/meili_data:/meili_data
         networks:
             - app-network
 
@@ -63,7 +63,7 @@ services:
         container_name: ca-redis
         restart: unless-stopped
         volumes:
-            - ~/redis_data:/data
+            - ~/current-affairs/redis_data:/data
             - ./infrastructure/configuration/redis/redis-production.conf:/usr/local/etc/redis/redis.conf
         networks:
             - app-network
