@@ -24,10 +24,10 @@ services:
         container_name: ca-mysql
         restart: unless-stopped
         environment:
-            MYSQL_DATABASE: ca_prod
-            MYSQL_USER: admin
-            MYSQL_PASSWORD: vision@123
-            MYSQL_ROOT_PASSWORD: admin@1301
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
         volumes:
             - ~/current-affairs/mysql:/var/lib/mysql
             - ./infrastructure/configuration/mysql/mysqld-production.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
