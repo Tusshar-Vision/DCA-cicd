@@ -15,5 +15,6 @@ php artisan route:cache
 php artisan view:cache
 php artisan icons:cache
 php artisan filament:cache-components
+php artisan scout:sync-index-settings
 
 exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
