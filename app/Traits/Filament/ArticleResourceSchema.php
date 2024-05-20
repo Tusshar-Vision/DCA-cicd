@@ -149,7 +149,6 @@ trait ArticleResourceSchema
                             "Reject" => "Reject",
                             "Final" => "Final",
                             "Published" => "Published",
-                            "Final Database" => "Final Database"
                         ]),
                     ])
                     ->query(function (Builder $query, array $data) {
