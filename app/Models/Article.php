@@ -24,7 +24,6 @@ use Spatie\ModelStatus\Status;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Tags\HasTags;
-use LaracraftTech\LaravelDateScopes\DateScopes;
 
 /**
  * @method isFeatured()
@@ -32,7 +31,7 @@ use LaracraftTech\LaravelDateScopes\DateScopes;
 
 class Article extends Model implements HasMedia, Sortable
 {
-    use Searchable, InteractsWithMedia, DateScopes, SortableTrait, WithData, SoftDeletes;
+    use Searchable, InteractsWithMedia, SortableTrait, WithData, SoftDeletes;
     use HasFactory,  HasSlug, HasTags, HasSEO, HasComments,  HasReviewRating,  HasStatuses;
 
     protected string $dataClass = ArticleDTO::class;
