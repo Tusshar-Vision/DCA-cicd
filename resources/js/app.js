@@ -46,8 +46,49 @@ function initializeSwiper() {
 // init Swiper:
 const swiper = initializeSwiper();
 
+function initializeInitiativeSwiper() {
+    new Swiper('.swiper-initiative', {
+        // configure Swiper to use modules
+        modules: [Navigation],
+        direction: 'horizontal',
+        loop: true,
+        slidesPerView: 5,
+        spaceBetween: 20,
+
+        breakpoints: {
+            // 640: {
+            //     slidesPerView: 1,
+            // },
+            768: {
+                slidesPerView: 5,
+            },
+            1024: {
+                slidesPerView: 5,
+            },
+            1280: {
+                slidesPerView: 5,
+            },
+            1536: {
+                slidesPerView: 5,
+            }
+        },
+
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-initiative-next',
+            prevEl: '.swiper-button-initiative-prev',
+        },
+    });
+
+
+}
+
+// init Swiper:
+const swiperInitiative = initializeInitiativeSwiper();
+
 window.addEventListener('onHomePage', () => {
     initializeSwiper();
+    initializeInitiativeSwiper();
 });
 
 // accordion toggle
