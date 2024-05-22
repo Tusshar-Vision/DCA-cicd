@@ -1,9 +1,33 @@
 @extends('layouts.base')
 
 @section('content')
-
- <livewire:widgets.pdf-viewer infographic="kjhj" />
-
+    <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div class="bg-[#F9F9F9] p-[20px] rounded">
+            <img src="" class="mb-4">
+            <h3 class="text-[18px] text-[#040404] mb-4">Weekly Focus</h3>
+            <p class="text-[#8F93A3] text-[14px]">Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
+        </div>
+        <div class="bg-[#F9F9F9] p-[20px] rounded">
+            <img src="" class="mb-4">
+            <h3 class="text-[18px] text-[#040404] mb-4">Weekly Focus</h3>
+            <p class="text-[#8F93A3] text-[14px]">Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
+        </div>
+        <div class="bg-[#F9F9F9] p-[20px] rounded">
+            <img src="" class="mb-4">
+            <h3 class="text-[18px] text-[#040404] mb-4">Weekly Focus</h3>
+            <p class="text-[#8F93A3] text-[14px]">Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
+        </div>
+        <div class="bg-[#F9F9F9] p-[20px] rounded">
+            <img src="" class="mb-4">
+            <h3 class="text-[18px] text-[#040404] mb-4">Weekly Focus</h3>
+            <p class="text-[#8F93A3] text-[14px]">Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
+        </div>
+        <div class="bg-[#F9F9F9] p-[20px] rounded">
+            <img src="" class="mb-4">
+            <h3 class="text-[18px] text-[#040404] mb-4">Weekly Focus</h3>
+            <p class="text-[#8F93A3] text-[14px]">Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
+        </div>
+    </div>
 <div class="dropdown relative inline-block" id="dropdown1">
     <button class="dropdown-button cursor-pointer p-1 text-[#374957] rotate-90 font-bold text-xs tracking-[5px]" onclick="toggleDropdown('dropdown1')">...</button>
     <div class="dropdown-content absolute right-0 hidden z-10 shadow-lg py-2">
@@ -135,7 +159,7 @@
     </div>
 </div>
 
-<!-- latest video UI section --> 
+<!-- latest video UI section -->
 <div>
     <h2 class="text-[40px] text-[#040404] mb-4 dark:text-white">Latest Video</h2>
     <ul class="grid grid-cols-4 gap-6 text-center">
@@ -166,7 +190,7 @@
                 </clipPath>
                 </defs>
             </svg> --}}
-            
+
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <g clip-path="url(#clip0_3420_22861)">
                 <path d="M11.9544 10.9087L6.86307 16L5.40872 14.5456L11.9544 8L18.5 14.5456L17.0456 16L11.9544 10.9087Z" fill="#183B56"/>
@@ -177,7 +201,7 @@
                 </clipPath>
                 </defs>
             </svg>
-           
+
         </div>
     </div>
     <div class="text-[#3D3D3D] text-sm font-light flex flex-col mt-4 pb-2">
@@ -199,11 +223,11 @@
                       </svg>   --}}
                       <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 14 3" fill="none">
                         <path d="M14 0.5V2.5H0V0.5H14Z" fill="#3D3D3D"/>
-                      </svg>                 
+                      </svg>
                 </div>
             </div>
             <div class="text-[#3D3D3D] text-sm font-light flex flex-col mt-4 pb-2">
-                <p>Magna fermentum iaculis eu non diam phasellus vestibulum lorem. Id faucibus nisl tincidunt eget nullam. Suspendisse potenti nullam ac tortor vitae purus faucibus. Eu consequat ac felis donec et odio pellentesque. Risus nec feugiat in fermentum posuere. In fermentum posuere urna nec. Aliquet eget sit amet tellus cras adipiscing enim eu turpis. Nec ullamcorper sit amet risus nullam. Elementum sagittis vitae et leo duis ut. Integer malesuada nunc vel risus commodo viverra maecenas accumsan lacus. Fames ac turpis egestas sed tempus urna et. Nisl rhoncus mattis rhoncus urna neque viverra justo nec. Mi sit amet mauris commodo quis imperdiet massa. Rhoncus mattis rhoncus urna neque. Cursus metus aliquam eleifend mi. Dolor sed viverra ipsum nunc aliquet bibendum enim facilisis.</p>       
+                <p>Magna fermentum iaculis eu non diam phasellus vestibulum lorem. Id faucibus nisl tincidunt eget nullam. Suspendisse potenti nullam ac tortor vitae purus faucibus. Eu consequat ac felis donec et odio pellentesque. Risus nec feugiat in fermentum posuere. In fermentum posuere urna nec. Aliquet eget sit amet tellus cras adipiscing enim eu turpis. Nec ullamcorper sit amet risus nullam. Elementum sagittis vitae et leo duis ut. Integer malesuada nunc vel risus commodo viverra maecenas accumsan lacus. Fames ac turpis egestas sed tempus urna et. Nisl rhoncus mattis rhoncus urna neque viverra justo nec. Mi sit amet mauris commodo quis imperdiet massa. Rhoncus mattis rhoncus urna neque. Cursus metus aliquam eleifend mi. Dolor sed viverra ipsum nunc aliquet bibendum enim facilisis.</p>
             </div>
         </div>
         <!-- inner accordion start -->
@@ -224,7 +248,7 @@
                 </clipPath>
                 </defs>
             </svg>
-            
+
             {{-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <g clip-path="url(#clip0_3420_22861)">
                 <path d="M11.9544 10.9087L6.86307 16L5.40872 14.5456L11.9544 8L18.5 14.5456L17.0456 16L11.9544 10.9087Z" fill="#183B56"/>
@@ -235,7 +259,7 @@
                 </clipPath>
                 </defs>
             </svg> --}}
-           
+
         </div>
     </div>
     <div class="text-[#3D3D3D] text-sm font-light flex flex-col mt-4 pb-2 hidden">

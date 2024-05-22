@@ -183,7 +183,7 @@ class DownloadsController extends Controller
             ->downloadService
             ->getDownloadableResources(InitiativesHelper::getInitiativeID(Initiatives::PLANET_VISION), $year, $month);
 
-        return View('pages.archives.quarterly-revision-document', [
+        return View('pages.archives.planet-vision', [
             "title" => "The Planet Vision",
             "data" => $medias,
             "pdfUrl" => $pdfUrl

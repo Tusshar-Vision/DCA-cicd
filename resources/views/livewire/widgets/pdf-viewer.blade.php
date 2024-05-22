@@ -29,12 +29,12 @@
             <button onclick="openSocial('{{ request()->fullUrl() }}')" class="mr-4">
                 <svg width="16" height="16" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_4443_39274)">
-                    <path d="M11.8945 9.72656C11.0261 9.72656 10.2609 10.1537 9.78026 10.8034L5.62471 8.67551C5.6937 8.44034 5.74219 8.19662 5.74219 7.93945C5.74219 7.59064 5.67067 7.25903 5.54713 6.95402L9.8961 4.33699C10.3801 4.905 11.0915 5.27344 11.8945 5.27344C13.3485 5.27344 14.5312 4.09069 14.5312 2.63672C14.5312 1.18274 13.3485 0 11.8945 0C10.4406 0 9.25781 1.18274 9.25781 2.63672C9.25781 2.97179 9.32681 3.28963 9.44127 3.58471L5.07935 6.20941C4.59577 5.65828 3.89464 5.30273 3.10547 5.30273C1.65149 5.30273 0.46875 6.48548 0.46875 7.93945C0.46875 9.39343 1.65149 10.5762 3.10547 10.5762C3.98818 10.5762 4.76634 10.1365 5.24517 9.46857L9.38704 11.5895C9.31075 11.8358 9.25781 12.0923 9.25781 12.3633C9.25781 13.8173 10.4406 15 11.8945 15C13.3485 15 14.5312 13.8173 14.5312 12.3633C14.5312 10.9093 13.3485 9.72656 11.8945 9.72656Z" fill="#000" class="dark:fill-white"/>
+                        <path d="M11.8945 9.72656C11.0261 9.72656 10.2609 10.1537 9.78026 10.8034L5.62471 8.67551C5.6937 8.44034 5.74219 8.19662 5.74219 7.93945C5.74219 7.59064 5.67067 7.25903 5.54713 6.95402L9.8961 4.33699C10.3801 4.905 11.0915 5.27344 11.8945 5.27344C13.3485 5.27344 14.5312 4.09069 14.5312 2.63672C14.5312 1.18274 13.3485 0 11.8945 0C10.4406 0 9.25781 1.18274 9.25781 2.63672C9.25781 2.97179 9.32681 3.28963 9.44127 3.58471L5.07935 6.20941C4.59577 5.65828 3.89464 5.30273 3.10547 5.30273C1.65149 5.30273 0.46875 6.48548 0.46875 7.93945C0.46875 9.39343 1.65149 10.5762 3.10547 10.5762C3.98818 10.5762 4.76634 10.1365 5.24517 9.46857L9.38704 11.5895C9.31075 11.8358 9.25781 12.0923 9.25781 12.3633C9.25781 13.8173 10.4406 15 11.8945 15C13.3485 15 14.5312 13.8173 14.5312 12.3633C14.5312 10.9093 13.3485 9.72656 11.8945 9.72656Z" fill="#000" class="dark:fill-white"/>
                     </g>
                     <defs>
-                    <clipPath id="clip0_4443_39274">
-                    <rect width="15" height="15" fill="#000"/>
-                    </clipPath>
+                        <clipPath id="clip0_4443_39274">
+                            <rect width="15" height="15" fill="#000"/>
+                        </clipPath>
                     </defs>
                 </svg>
             </button>
@@ -46,9 +46,26 @@
         </div>
     </div>
 
-    <div class="overflow-auto h-lvh">
-        <div id="pdfViewer" class="overflow-auto"></div>
-        <div>{!! \App\Helpers\SvgIconsHelper::getSvgIcon('loading-2') !!}</div>
+    <div class="overflow-auto h-screen relative">
+        <div id="pdfViewer" class="overflow-auto h-full relative"></div>
+        <div id="loadingIndicator" class="absolute inset-0 flex items-center justify-center bg-white dark:bg-gray-900">
+            <div class="relative w-24 h-24">
+                <svg id="progressCircle" width="96" height="96" viewBox="0 0 36 36">
+                    <path
+                        d="M18 2.0845
+                           a 15.9155 15.9155 0 0 1 0 31.831
+                           a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="#242424"
+                        stroke-width="3"
+                        stroke-dasharray="100, 100"
+                        stroke-dashoffset="100"
+                        class="dark:stroke-white"
+                    />
+                </svg>
+                <div id="loadingPercentage" class="absolute inset-0 flex items-center justify-center text-xl text-black dark:text-white">0%</div>
+            </div>
+        </div>
     </div>
 
     <script src="{{ URL::asset('js/pdf/pdf.mjs') }}" type="module"></script>
@@ -58,18 +75,35 @@
 
         var { pdfjsLib } = globalThis;
         pdfjsLib.GlobalWorkerOptions.workerSrc = "{{ URL::asset('js/pdf/pdf.worker.mjs') }}"
+
         var loadingTask = pdfjsLib.getDocument(url);
+
+        loadingTask.onProgress = function (progressData) {
+            var percentage = Math.round((progressData.loaded / progressData.total) * 100);
+            document.getElementById('loadingPercentage').textContent = percentage + '%';
+
+            var circle = document.querySelector('#progressCircle path');
+            var radius = 15.9155;
+            var circumference = 2 * Math.PI * radius;
+            var offset = circumference - (percentage / 100) * circumference;
+
+            circle.style.strokeDashoffset = offset;
+        }
 
         loadingTask.promise.then(function(pdf) {
             var numPages = pdf.numPages;
             var container = document.getElementById('pdfViewer');
+            var loadingIndicator = document.getElementById('loadingIndicator');
 
             for (var i = 1; i <= numPages; i++) {
-              var canvas = document.createElement('canvas');
-              canvas.className = 'pdf-page';
-              container.appendChild(canvas);
-              renderPage(pdf, i, canvas);
+                var canvas = document.createElement('canvas');
+                canvas.className = 'pdf-page';
+                container.appendChild(canvas);
+                renderPage(pdf, i, canvas);
             }
+
+            // Hide the loading indicator after the PDF is fully loaded
+            loadingIndicator.style.display = 'none';
         }).catch(function (error) {
             console.error('Error loading PDF: ' + error);
         });
@@ -87,7 +121,7 @@
                     viewport: viewport
                 };
                 var renderTask = page.render(renderContext);
-                    renderTask.promise.then(function () {
+                renderTask.promise.then(function () {
                 });
             });
         }
