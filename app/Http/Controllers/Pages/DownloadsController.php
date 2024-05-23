@@ -17,7 +17,7 @@ class DownloadsController extends Controller
 
     public function index()
     {
-        return response()->redirectToRoute('monthly-magazine.archive');
+        return view('pages.downloads');
     }
 
     public function renderMains365(Media $media = null)

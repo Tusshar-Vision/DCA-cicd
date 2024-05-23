@@ -18,29 +18,30 @@
 {{--    </x-containers.grid-wide>--}}
 
     <x-containers.grid-wide class="mt-6">
-            <!-- Slider main container -->
-            <div class="swiper swiper-initiative w-full">
-                <!-- Additional required wrapper -->
-                <div class="swiper-wrapper">
-                    <!-- Slides -->
-                    @foreach($initiativeCardsData as $key => $data)
-                        <div class="swiper-slide">
-                            <x-cards.initiative
-                                icon="{{ $data['icon'] ?? '' }}"
-                                title="{{ $data['title'] }}"
-                                description="{{ $data['description'] }}"
-                            />
-                        </div>
-                    @endforeach
-                </div>
-                <!-- If we need navigation buttons -->
-                <div class="swiper-button-initiative-prev swiper-button-prev swiper-nav-button">
-                    {!! SvgIconsHelper::getSvgIcon('slider-arrow-left') !!}
-                </div>
-                <div class="swiper-button-initiative-next swiper-button-next swiper-nav-button">
-                    {!! SvgIconsHelper::getSvgIcon('slider-arrow-right') !!}
-                </div>
+        <!-- Slider main container -->
+        <div class="swiper swiper-initiative w-full">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+                <!-- Slides -->
+                @foreach($initiativeCardsData as $key => $data)
+                    <div class="swiper-slide">
+                        <x-cards.initiative
+                            icon="{{ $data['icon'] ?? '' }}"
+                            title="{{ $data['title'] }}"
+                            description="{{ $data['description'] }}"
+                            link="{{ $key }}"
+                        />
+                    </div>
+                @endforeach
             </div>
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-initiative-prev swiper-button-prev swiper-nav-button">
+                {!! SvgIconsHelper::getSvgIcon('slider-arrow-left') !!}
+            </div>
+            <div class="swiper-button-initiative-next swiper-button-next swiper-nav-button">
+                {!! SvgIconsHelper::getSvgIcon('slider-arrow-right') !!}
+            </div>
+        </div>
     </x-containers.grid-wide>
 
     <x-containers.grid-wide class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 mt-12 gap-6">

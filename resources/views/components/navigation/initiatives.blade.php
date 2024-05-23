@@ -153,7 +153,7 @@
                 <div class="accordion-item mb-[15px]">
                     <div class="accordion-label text-sm font-[#242424] font-semibold py-[10px] px-[20px]" onclick="toggleAccordion(this)">
                         <a class="hover:text-[#005FAF] {{ request()->is('weekly-focus*') ? 'text-[#005FAF]' : '' }}"
-                           href="#">
+                           href="{{ route('downloads') }}">
                             {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                         </a>
                         <div class="arrow">
@@ -341,7 +341,7 @@
                                             ) ? 'text-[#005FAF]' : ''
                                         }}
                                     "
-                                    href="{{ route('monthly-magazine.archive') }}"
+                                    href="{{ route('downloads') }}"
                                     wire:navigate
                                 >
                                     {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}

@@ -15,6 +15,8 @@ class Initiative extends Component
         public string $title,
         public string $icon,
         public string $description,
+        public string $link,
+        public bool $navigate = false
     )
     {}
 
