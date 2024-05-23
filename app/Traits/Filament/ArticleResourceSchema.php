@@ -138,7 +138,7 @@ trait ArticleResourceSchema
                     ->toggleable(isToggledHiddenByDefault: true)
             ])
             ->filters([
-                DateRangeFilter::make('created_at'),
+                DateRangeFilter::make('created_at')->linkedCalendars(false),
 
                 Filter::make('Status')
                     ->form([
