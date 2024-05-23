@@ -39,6 +39,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 use Spatie\Tags\Tag;
 
 trait ArticleResourceSchema
@@ -51,6 +52,9 @@ trait ArticleResourceSchema
         return $articleResource->articleForm($form);
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function table(Table $table): Table
     {
         $articleResource = new self();
@@ -134,7 +138,7 @@ trait ArticleResourceSchema
                     ->toggleable(isToggledHiddenByDefault: true)
             ])
             ->filters([
-                DateScopeFilter::make('created_at'),
+                DateRangeFilter::make('created_at'),
 
                 Filter::make('Status')
                     ->form([
@@ -145,7 +149,6 @@ trait ArticleResourceSchema
                             "Reject" => "Reject",
                             "Final" => "Final",
                             "Published" => "Published",
-                            "Final Database" => "Final Database"
                         ]),
                     ])
                     ->query(function (Builder $query, array $data) {
