@@ -74,7 +74,7 @@ return [
         "downloadable" => true,
     ],
     "year-end-review" => [
-        "title" => "Year End Review of Ministries",
+        "title" => "Year End Review",
         "description" => "Concise overview of Year-end Reviews across Indian government Ministries/Departments, highlighting achievements.",
         "icon" => "year-end-review.svg",
         "downloadable" => true,

@@ -19,6 +19,7 @@ function initializeSwiper() {
         loop: true,
         slidesPerView: 1,
         spaceBetween: 20,
+        slidesPerGroup: 1,
 
         breakpoints: {
             // 640: {
@@ -26,19 +27,15 @@ function initializeSwiper() {
             // },
             768: {
                 slidesPerView: 1,
-                slidesPerGroup: 1,
             },
             1024: {
                 slidesPerView: 2,
-                slidesPerGroup: 2,
             },
             1280: {
                 slidesPerView: 3,
-                slidesPerGroup: 3,
             },
             1536: {
                 slidesPerView: 3,
-                slidesPerGroup: 3,
             }
         },
 
