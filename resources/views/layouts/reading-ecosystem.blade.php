@@ -103,6 +103,11 @@
                     paragraph.classList.add('only-nbsp');
                 }
             });
+            document.querySelectorAll('figure.table').forEach(element => {
+                if (element.style.color === 'red') {
+                    element.classList.add('highlight');
+                }
+            });
         });
 
         @if (Auth::guard('cognito')->check())

@@ -18,6 +18,7 @@
 {{--    </x-containers.grid-wide>--}}
 
     <x-containers.grid-wide class="mt-6">
+        <x-common.section-heading class="mb-6">Our Initiatives</x-common.section-heading>
         <!-- Slider main container -->
         <div class="swiper swiper-initiative w-full">
             <!-- Additional required wrapper -->
@@ -35,10 +36,10 @@
                 @endforeach
             </div>
             <!-- If we need navigation buttons -->
-            <div class="swiper-button-initiative-prev swiper-button-prev swiper-nav-button">
+            <div class="swiper-button-initiative-prev swiper-button-prev swiper-nav-button swiper-nav-button-initiative">
                 {!! SvgIconsHelper::getSvgIcon('slider-arrow-left') !!}
             </div>
-            <div class="swiper-button-initiative-next swiper-button-next swiper-nav-button">
+            <div class="swiper-button-initiative-next swiper-button-next swiper-nav-button swiper-nav-button-initiative">
                 {!! SvgIconsHelper::getSvgIcon('slider-arrow-right') !!}
             </div>
         </div>

@@ -241,6 +241,13 @@ $gray-686E70: #686E70;
     }
   }
 
+    .swiper-nav-button-initiative {
+        top: 50% !important;
+        height: 37px !important;
+        width: 37px !important;
+        padding: 7px;
+    }
+
   .swiper-button-next::after,
   .swiper-button-prev::after {
     content: "";

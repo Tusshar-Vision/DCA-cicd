@@ -1,16 +1,21 @@
 // core version + navigation, pagination modules:
 import Swiper from 'swiper';
-import {Navigation} from 'swiper/modules';
+import {Autoplay, FreeMode, Navigation} from 'swiper/modules';
 // import Swiper and modules styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import '@dotlottie/player-component';
 
 function initializeSwiper() {
-    new Swiper('.swiper', {
+    new Swiper('.swiper-featured', {
         // configure Swiper to use modules
-        modules: [Navigation],
+        modules: [Navigation, Autoplay],
         direction: 'horizontal',
+        autoplay: {
+            delay: 10000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true
+        },
         loop: true,
         slidesPerView: 1,
         spaceBetween: 20,
@@ -21,15 +26,19 @@ function initializeSwiper() {
             // },
             768: {
                 slidesPerView: 1,
+                slidesPerGroup: 1,
             },
             1024: {
                 slidesPerView: 2,
+                slidesPerGroup: 2,
             },
             1280: {
                 slidesPerView: 3,
+                slidesPerGroup: 3,
             },
             1536: {
                 slidesPerView: 3,
+                slidesPerGroup: 3,
             }
         },
 
@@ -49,27 +58,34 @@ const swiper = initializeSwiper();
 function initializeInitiativeSwiper() {
     new Swiper('.swiper-initiative', {
         // configure Swiper to use modules
-        modules: [Navigation],
+        modules: [Navigation, Autoplay],
         direction: 'horizontal',
+        autoplay: {
+            delay: 6000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true
+        },
         loop: true,
-        slidesPerView: 5,
+        slidesPerView: 1,
         spaceBetween: 20,
+        slidesPerGroup: 1,
 
         breakpoints: {
-            // 640: {
-            //     slidesPerView: 1,
-            // },
             768: {
                 slidesPerView: 5,
+                slidesPerGroup: 3,
             },
             1024: {
                 slidesPerView: 5,
+                slidesPerGroup: 3,
             },
             1280: {
                 slidesPerView: 5,
+                slidesPerGroup: 3,
             },
             1536: {
                 slidesPerView: 5,
+                slidesPerGroup: 3,
             }
         },
 
