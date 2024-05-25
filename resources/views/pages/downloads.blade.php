@@ -9,7 +9,7 @@
     <x-containers.grid-wide class="mt-6">
         <x-common.section-heading>Latest Downloads</x-common.section-heading>
     </x-containers.grid-wide>
-    <div class="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-5 gap-4 mt-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-4 mt-10">
         @foreach($initiativeCardsData as $key => $data)
             @if($data['downloadable'] === true)
                 <x-cards.initiative

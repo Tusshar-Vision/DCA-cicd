@@ -21,7 +21,7 @@ return [
     ],
     "planet-vision" => [
         "title" => "The Planet Vision",
-        "description" => "'The Planet Vision' is a simplified, informative, interactive resource exploring environmental complexities to educate and inspire environmental consciousness.",
+        "description" => "'Planet Vision' is a simplified, informative resource exploring environmental complexities to educate and inspire environmental consciousness.",
         "icon" => "planet-vision.svg",
         "downloadable" => true,
     ],
@@ -39,7 +39,7 @@ return [
     ],
     "quarterly-revision-document" => [
         "title" => "Quarterly Revision",
-        "description" => "The Quarterly Revision document consolidates insights from 3 monthly magazines, providing a comprehensive yet concise Civil Services Exam revision resource.",
+        "description" => "The Quarterly Revision consolidates insights from 3 monthly magazines, providing a comprehensive yet concise Civil Services Exam revision resource.",
         "icon" => "quarterly-revision.svg",
         "downloadable" => true,
     ],

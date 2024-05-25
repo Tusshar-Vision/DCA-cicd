@@ -26,7 +26,7 @@ function initializeSwiper() {
             //     slidesPerView: 1,
             // },
             768: {
-                slidesPerView: 1,
+                slidesPerView: 2,
             },
             1024: {
                 slidesPerView: 2,
@@ -69,7 +69,7 @@ function initializeInitiativeSwiper() {
 
         breakpoints: {
             768: {
-                slidesPerView: 5,
+                slidesPerView: 3,
                 slidesPerGroup: 3,
             },
             1024: {
