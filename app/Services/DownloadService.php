@@ -148,7 +148,6 @@ readonly class DownloadService
             ->whereInitiative(InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE))
             ->language()
             ->isPublished()
-            ->hasPublishedArticle()
             ->orderByDesc('published_at');
 
         $years = $query->groupByYear()->keys();

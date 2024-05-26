@@ -10,7 +10,7 @@ use Illuminate\View\Component;
 
 class Archive extends Component
 {
-    public $date, $title, $slug, $url, $downloadLink;
+    public $date, $title, $url, $downloadLink;
     /**
      * Create a new component instance.
      */
@@ -20,9 +20,11 @@ class Archive extends Component
     {
         $this->date = Carbon::parse($package->publishedAt)->format('Y-m-d');
         $this->title = Carbon::parse($package->publishedAt)->monthName;
-        $this->slug = $package->article->first()->slug;
+        $firstArticle = $package->article?->first();
+        $this->url = $firstArticle !== null ?
+            ArticleService::getArticleUrlFromSlug($firstArticle->slug) :
+            route('monthly-magazine.archive', ['media' => $package->media?->first()->id]);
 
-        $this->url = ArticleService::getArticleUrlFromSlug($this->slug);
         $this->downloadLink = $package->media?->first();
     }
 
