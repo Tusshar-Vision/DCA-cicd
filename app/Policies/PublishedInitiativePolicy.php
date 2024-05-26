@@ -59,7 +59,7 @@ class PublishedInitiativePolicy
      */
     public function delete(User $user, PublishedInitiative $publishedInitiative): bool
     {
-        return $user->can('delete_weekly::focus');
+        return $user->can('delete_weekly::focus') && $publishedInitiative->is_published !== true;
     }
 
     /**
@@ -82,7 +82,7 @@ class PublishedInitiativePolicy
      */
     public function forceDelete(User $user, PublishedInitiative $publishedInitiative): bool
     {
-        return $user->can('delete_weekly::focus');
+        return $user->can('delete_weekly::focus') && $publishedInitiative->is_published !== true;
     }
 
     /**

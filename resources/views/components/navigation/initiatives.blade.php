@@ -152,7 +152,7 @@
 
                 <div class="accordion-item mb-[15px]">
                     <div class="accordion-label text-sm font-[#242424] font-semibold py-[10px] px-[20px]" onclick="toggleAccordion(this)">
-                        <a class="hover:text-[#005FAF] {{ request()->is('weekly-focus*') ? 'text-[#005FAF]' : '' }}"
+                        <a class="hover:text-[#005FAF] {{ request()->is('downloads*') ? 'text-[#005FAF]' : '' }}"
                            href="{{ route('downloads') }}">
                             {{ session()->get('locale') == 'hi' ? $initiative->name_hindi : $initiative->name }}
                         </a>
@@ -332,7 +332,7 @@
                                 <a class="group-hover:text-[#005FAF]
                                         {{
                                             (
-                                                request()->is('more*') ||
+                                                request()->is('download*') ||
                                                 request()->is('economic-survey*') ||
                                                 request()->is('budget*') ||
                                                 request()->is('quarterly-revision-documents*') ||

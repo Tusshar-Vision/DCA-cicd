@@ -5,6 +5,8 @@ namespace App\Traits\Filament;
 use App\Filament\Resources\BudgetResource;
 use App\Filament\Resources\EconomicSurveyResource;
 use App\Filament\Resources\Mains365Resource;
+use App\Filament\Resources\MonthlyMagazineUploadResource;
+use App\Filament\Resources\NewsTodayUploadResource;
 use App\Filament\Resources\PersonalityInFocusResource;
 use App\Filament\Resources\PT365Resource;
 use App\Filament\Resources\QuarterlyRevisionResource;
@@ -13,6 +15,7 @@ use App\Filament\Resources\SimplifiedResource;
 use App\Filament\Resources\ThePlanetVisionResource;
 use App\Filament\Resources\ValueAddedOptionalResource;
 use App\Filament\Resources\ValueAddedResource;
+use App\Filament\Resources\WeeklyFocusUploadResource;
 use App\Filament\Resources\YearEndReviewResource;
 use App\Traits\NameGenerator;
 use Carbon\Carbon;
@@ -51,6 +54,9 @@ trait HelperMethods
             PersonalityInFocusResource::class => 'publish_personality::in::focus',
             SchemeInFocusResource::class => 'publish_scheme::in::focus',
             SimplifiedResource::class => 'publish_simplified',
+            NewsTodayUploadResource::class => 'upload_news::today',
+            WeeklyFocusUploadResource::class => 'upload_weekly::focus',
+            MonthlyMagazineUploadResource::class => 'upload_monthly::magazine',
             default => throw new \Exception("Permission not defined for resource."),
         };
     }

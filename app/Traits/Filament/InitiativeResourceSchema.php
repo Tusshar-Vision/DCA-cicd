@@ -204,7 +204,7 @@ trait InitiativeResourceSchema
                     ->tooltip('Delete')
                     ->iconButton()
                     ->visible(function (Model $record) {
-                        return $record->articles->count() + $record->shortArticles->count() === 0;
+                        return ($record->articles->count() + $record->shortArticles->count() === 0) && ($record->is_published === false);
                     })
             ])
             ->bulkActions([

@@ -15,6 +15,7 @@ use App\Services\InitiativeService;
 use App\Services\PublishedInitiativeService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class NewsTodayController extends Controller
 {
@@ -195,16 +196,20 @@ class NewsTodayController extends Controller
         return response()->json($articles);
     }
 
-    public function archive()
+    public function archive(Media $media = null)
     {
         $year = request()->input('year');
         $month = request()->input('month');
+        $pdfUrl = null;
+
+        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
 
         $archiveData = $this->downloadService->getNewsTodayArchive($year, $month);
 
         return View('pages.archives.daily-news', [
             "title" => "Daily News Archive",
-            "data" => $archiveData
+            "data" => $archiveData,
+            "pdfUrl" => $pdfUrl
         ]);
     }
 }

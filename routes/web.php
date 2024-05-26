@@ -36,7 +36,7 @@ Route::controller(Pages\NewsTodayController::class)
                         Route::get('/', 'index')->name('news-today');
                         Route::get('/{date}/{topic}/{article_slug}', 'renderArticle')->name('news-today.article');
                         Route::get('/getbymonth', 'getByYearAndMonth')->name('news-today.getByYearAndMonth');
-                        Route::get('/archive', 'archive')->name('news-today.archive');
+                        Route::get('/archive/{media?}', 'archive')->name('news-today.archive');
                         Route::get('/{date}/also-in-news', 'alsoInNews')->name('news-today.alsoInNews');
                     }
                 );
@@ -51,7 +51,7 @@ Route::controller(Pages\WeeklyFocusController::class)
                     function () {
                         Route::get('/', 'index')->name('weekly-focus');
                         Route::get('/{date}/{topic}/{article_slug}', 'renderArticle')->name('weekly-focus.article');
-                        Route::get('/archive', 'archive')->name('weekly-focus.archive');
+                        Route::get('/archive/{media?}', 'archive')->name('weekly-focus.archive');
                     }
                 );
         }
@@ -66,7 +66,7 @@ Route::controller(Pages\MonthlyMagazineController::class)
                         Route::get('/', 'index')->name('monthly-magazine');
                         Route::get('/{date}/{topic}/news-in-shorts', 'newsInShorts')->name('monthly-magazine.newsInShorts');
                         Route::get('/{date}/{topic}/{article_slug}', 'renderArticle')->name('monthly-magazine.article');
-                        Route::get('/archive', 'archive')->name('monthly-magazine.archive');
+                        Route::get('/archive/{media?}', 'archive')->name('monthly-magazine.archive');
                     }
                 );
         }

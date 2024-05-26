@@ -13,6 +13,7 @@ use App\Models\ReadHistory;
 use App\Services\DownloadService;
 use App\Services\PublishedInitiativeService;
 use Illuminate\Support\Facades\Auth;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class MonthlyMagazineController extends Controller
 {
@@ -172,16 +173,20 @@ class MonthlyMagazineController extends Controller
         //        }
     }
 
-    public function archive()
+    public function archive(Media $media = null)
     {
         $year = request()->input('year');
         $month = request()->input('month');
+        $pdfUrl = null;
+
+        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
 
         $data = $this->downloadService->getMonthlyMagazineArchive($year, $month);
 
         return View('pages.archives.monthly-magazine', [
             "title" => "Monthly Magazine Archives",
-            'data' => [$data[0], $data[1]]
+            'data' => [$data[0], $data[1]],
+            "pdfUrl" => $pdfUrl
         ]);
     }
 }

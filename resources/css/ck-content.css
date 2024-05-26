@@ -624,3 +624,6 @@ li {
 p.only-nbsp {
     line-height: 50%;
 }
+.side-table {
+    margin-left: var(--ck-image-style-spacing);
+}

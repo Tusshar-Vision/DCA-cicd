@@ -103,6 +103,15 @@
                     paragraph.classList.add('only-nbsp');
                 }
             });
+            document.querySelectorAll('.table').forEach(element => {
+                if (parseInt(element.style?.width) < 70) {
+                    element.querySelectorAll('table').forEach(tableElement => {
+                        if(tableElement.classList.contains('ck-table-resized')) {
+                            tableElement.classList.add('side-table');
+                        }
+                    });
+                }
+            });
         });
 
         @if (Auth::guard('cognito')->check())

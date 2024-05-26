@@ -7,12 +7,13 @@ use Livewire\Component;
 
 class WeeklyFocus extends Component
 {
-    public $data, $years;
+    public $data, $years, $pdfUrl;
 
-    public function mount($data, $years): void
+    public function mount($data, $years, $pdfUrl): void
     {
         $this->data = $data;
         $this->years = $years;
+        $this->pdfUrl = $pdfUrl;
     }
     public function render(): View
     {
