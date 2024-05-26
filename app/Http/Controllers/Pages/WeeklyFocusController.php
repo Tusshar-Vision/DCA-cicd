@@ -13,6 +13,7 @@ use App\Services\DownloadService;
 use App\Services\PublishedInitiativeService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class WeeklyFocusController extends Controller
 {
@@ -121,16 +122,20 @@ class WeeklyFocusController extends Controller
         //        }
     }
 
-    public function archive()
+    public function archive(Media $media = null)
     {
         $year = request()->input('year');
         $month = request()->input('month');
+        $pdfUrl = null;
+
+        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
 
         $data = $this->downloadService->getWeeklyFocusArchive($year, $month);
 
         return View('pages.archives.weekly-focus', [
             "title" => "Weekly Focus Archive",
-            'data' => $data
+            'data' => $data,
+            "pdfUrl" => $pdfUrl
         ]);
     }
 }

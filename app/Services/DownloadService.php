@@ -112,7 +112,6 @@ readonly class DownloadService
             ->whereInitiative(InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
             ->language()
             ->isPublished()
-            ->hasPublishedArticle()
             ->orderBy('published_at', 'desc');
 
         $years = $query->groupByYear()->keys();

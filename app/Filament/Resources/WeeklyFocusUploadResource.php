@@ -3,12 +3,25 @@
 namespace App\Filament\Resources;
 
 use App\Enums\Initiatives;
+use App\Filament\Components\SourceInput;
 use App\Filament\Resources\WeeklyFocusUploadResource\Pages;
 use App\Helpers\InitiativesHelper;
 use App\Models\PublishedInitiative;
+use App\Services\PublishedInitiativeService;
 use App\Traits\Filament\MainUploadsPdfUploadSchema;
+use Carbon\Carbon;
 use Filament\Facades\Filament;
+use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\SpatieTagsInput;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -33,7 +46,214 @@ class WeeklyFocusUploadResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Section::make('General')->schema([
+
+                    Hidden::make('initiative_id')
+                        ->default(InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS)),
+
+                    Group::make()->schema([
+                        DatePicker::make('published_at')
+                            ->native(false)
+                            ->closeOnDateSelection()
+                            ->label('Publish At')
+                            ->required()
+                            ->default(Carbon::now()->format('Y-m-d'))
+                            ->rules([
+                                function (PublishedInitiativeService $publishedInitiativeService, ?Model $record) {
+
+                                    if ($record !== null) {
+                                        return function (string $attribute, $value, \Closure $fail) use($publishedInitiativeService, $record) {
+                                            if (
+                                                Carbon::parse($record->published_at)
+                                                    ->format('Y-m-d') === Carbon::parse($value)->format('Y-m-d')
+                                            ) {}
+
+                                            else if  (
+                                                $publishedInitiativeService
+                                                    ->checkIfExists(
+                                                        InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS),
+                                                        $value
+                                                    )
+                                            ) {
+                                                $fail('This week cannot be used as it already exists for this initiative, you can search it and add your articles in it.');
+                                            }
+                                        };
+                                    }
+
+                                    return function (string $attribute, $value, \Closure $fail) use($publishedInitiativeService) {
+                                        if  (
+                                            $publishedInitiativeService
+                                                ->checkIfExists(
+                                                    InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS),
+                                                    $value
+                                                )
+                                        ) {
+                                            $fail('This date cannot be used as it already exists for this initiative, you can search it and add your articles in it.');
+                                        }
+                                    };
+                                }
+                            ])
+                            ->disabled(function (?PublishedInitiative $record) {
+                                if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                                else if ($record?->is_published) return true;
+                            })
+                            ->live(),
+
+                        TextInput::make('name')
+                            ->rules([
+                                function (PublishedInitiativeService $publishedInitiativeService, ?Model $record) {
+
+                                    if ($record !== null) {
+                                        return function (string $attribute, $value, \Closure $fail) use($publishedInitiativeService, $record) {
+                                            if (
+                                                $record->name === $value
+                                            ) {}
+
+                                            elseif  (
+                                                $publishedInitiativeService
+                                                    ->checkIfNameExists(
+                                                        InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS),
+                                                        $value
+                                                    )
+                                            ) {
+                                                $fail('This name cannot be used as it already exists for this initiative, you can search it and add your articles in it.');
+                                            }
+                                        };
+                                    }
+
+                                    return function (string $attribute, $value, \Closure $fail) use($publishedInitiativeService) {
+                                        if  (
+                                            $publishedInitiativeService
+                                                ->checkIfNameExists(
+                                                    InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS),
+                                                    $value
+                                                )
+                                        ) {
+                                            $fail('This name cannot be used as it already exists for this initiative, you can search it and add your articles in it.');
+                                        }
+                                    };
+                                }
+                            ])
+                            ->suffixAction(Action::make('Generate')
+                                ->icon('heroicon-s-cog-8-tooth')
+                                ->iconButton()
+                                ->action(function (callable $get, callable $set) {
+                                    $set('name', static::generateName($get('published_at')));
+                                })
+                            )
+                            ->required(),
+
+                    ])->disabled(function (?PublishedInitiative $record) {
+                        if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                        else if ($record?->is_published) return true;
+                    })->columns(2)->columnSpanFull(),
+
+                    Select::make('initiative_topic_id')
+                        ->relationship('topic', 'name', function ($query) {
+                            $query->where('name', '!=', 'All');
+                        })
+                        ->searchable()
+                        ->preload()
+                        ->required()
+                        ->label('Subject')
+                        ->reactive()
+                        ->columnSpanFull()
+                        ->afterStateUpdated(function (Set $set, ?string $state) {
+                            $set('topic_section_id', null);
+                            $set('topic_sub_section_id', null);
+                        })->disabled(function (?PublishedInitiative $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                            else if ($record?->is_published) return true;
+                        }),
+
+                    Select::make('topic_section_id')
+                        ->searchable()
+                        ->preload()
+                        ->relationship('topicSection', 'name', function ($query, callable $get) {
+                            $topic = $get('initiative_topic_id');
+
+                            return $query->where('topic_id', '=', $topic);
+                        })
+                        ->reactive()
+                        ->label('Section')
+                        ->afterStateUpdated(function (Set $set, ?string $state) {
+                            $set('topic_sub_section_id', null);
+                        })->disabled(function (?PublishedInitiative $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                            else if ($record?->is_published) return true;
+                        }),
+
+                    Select::make('topic_sub_section_id')
+                        ->searchable()
+                        ->preload()
+                        ->relationship('topicSubSection', 'name', function ($query, callable $get) {
+                            $topicSectionId = $get('topic_section_id');
+
+                            return $query->where('section_id', '=', $topicSectionId);
+                        })
+                        ->reactive()
+                        ->label('Sub Section')
+                        ->disabled(function (?PublishedInitiative $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                            else if ($record?->is_published) return true;
+                        }),
+
+//                    Select::make('language_id')
+//                        ->relationship('language', 'name', function ($query) {
+//                            return $query->orderBy('order_column');
+//                        })
+//                        ->label('Language')
+//                        ->required()
+//                        ->selectablePlaceholder(false)
+//                        ->default(1),
+
+                    Hidden::make('language_id')->default(1),
+
+                    SpatieTagsInput::make('tags')
+                        ->columnSpanFull()
+                        ->required()
+                        ->disabled(function (?PublishedInitiative $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                            else if ($record?->is_published) return true;
+                        }),
+
+                    SourceInput::make('sources')
+                        ->columnSpanFull()
+                        ->placeholder('Add sources')
+                        ->disabled(function (?PublishedInitiative $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                            else if ($record?->is_published) return true;
+                        }),
+
+                    SourceInput::make('references')
+                        ->columnSpanFull()
+                        ->placeholder('Add references')
+                        ->disabled(function (?PublishedInitiative $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                            else if ($record?->is_published) return true;
+                        }),
+
+                    SpatieMediaLibraryFileUpload::make('pdf')
+                        ->label('Upload pdf file')
+                        ->acceptedFileTypes(['application/pdf'])
+                        ->collection('weekly-focus')
+                        ->visibility('private')
+                        ->disabled(function (?PublishedInitiative $record) {
+                            if (Auth::user()->can('upload_weekly::focus')) return false;
+                            else if ($record !== null && $record->hasMedia('weekly-focus')) return false;
+                            else return true;
+                        })
+                        ->openable()
+                        ->deletable(function (?PublishedInitiative $record) {
+                            if ($record !== null && $record->is_published === true) {
+                                return Auth::user()->hasAnyRole(['admin', 'super_admin']);
+                            } else {
+                                return Auth::user()->can('upload_weekly::focus');
+                            }
+                        })
+                        ->columnSpanFull(),
+
+                ])
             ]);
     }
 
