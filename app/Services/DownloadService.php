@@ -83,7 +83,6 @@ readonly class DownloadService
             ->whereInitiative(InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
             ->language()
             ->isPublished()
-            ->hasPublishedArticle()
             ->whereYear('published_at', $year)
             ->whereMonth('published_at', $month)
             ->with('articles', function ($query) {
@@ -94,12 +93,13 @@ readonly class DownloadService
             })
             ->get()
             ->map(function ($package) {
-                $currentArticle = $package->articles->first();
+                $currentArticle = $package->articles?->first();
                 $media = $package->media?->first();
                 // Select only the desired columns
                 return collect([
-                    'title' => $currentArticle->title,
-                    'url' => ArticleService::getArticleUrlFromSlug($currentArticle->slug),
+                    'url' => $currentArticle !== null ?
+                                ArticleService::getArticleUrlFromSlug($currentArticle->slug) :
+                                route('news-today.archive', ['media' => $media->id]),
                     'formatted_published_at' => Carbon::parse($package->published_at)->format('d M Y'),
                     'media' => ($media !== null ? $media->id : false)
                 ]);
