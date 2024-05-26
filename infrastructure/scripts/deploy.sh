@@ -26,26 +26,17 @@ ssh-add ~/.ssh/${SSH_KEY_NAME}
 # Navigate to the project directory
 cd /var/www/html/vision-ca-api/
 
+export $(grep -v '^#' .env | xargs)
+
 # Pull the latest changes from the specified branch
 git pull origin ${BRANCH_NAME}
 
-# Install/update dependencies using Composer and Bun
-#composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
-#bun install
-#bun run build
+echo "Building and updating Docker images..."
+docker-compose -f docker-compose.yml build
 
-# Run database migrations and clear caches
-php artisan migrate --force
-php artisan optimize:clear
-php artisan filament:clear-cached-components
+# Step 3: Restart Docker containers
+echo "Restarting Docker containers..."
+docker-compose -f docker-compose.yml down
+docker-compose -f docker-compose.yml up -d
 
-php artisan config:cache
-php artisan event:cache
-php artisan route:cache
-php artisan view:cache
-php artisan icons:cache
-php artisan filament:cache-components
-
-sudo supervisorctl reread
-sudo supervisorctl update
-sudo supervisorctl restart all
+echo "Deployment completed successfully!"

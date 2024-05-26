@@ -32,7 +32,10 @@ RUN apt update
 RUN apt install supervisor -y
 # Copy the application code from the composer and node stages
 COPY --from=node /app .
+
+# Copy configuration files
 COPY infrastructure/configuration/supervisor/*.conf /etc/supervisor/conf.d/
+COPY infrastructure/configuration/php/php-production.ini "$PHP_INI_DIR/php.ini"
 
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 

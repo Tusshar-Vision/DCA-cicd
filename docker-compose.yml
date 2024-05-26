@@ -10,7 +10,6 @@ services:
             - "8000:8000"
         volumes:
             - .:/app
-            - ./infrastructure/configuration/php/php-production.ini:/app/php.ini
         networks:
             - app-network
         depends_on:
@@ -30,7 +29,8 @@ services:
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
         volumes:
             - ~/current-affairs/mysql:/var/lib/mysql
-            - ./infrastructure/configuration/mysql/mysqld-production.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+            - ~/current-affairs/mysql/logs:/var/log/mysql
+            - ./infrastructure/configuration/mysql/mysqld-production.cnf:/etc/mysql/conf.d/mysqld.cnf
         networks:
             - app-network
 
@@ -41,6 +41,7 @@ services:
             - app-network
         volumes:
             - ./infrastructure/configuration/memcache/memcached.conf:/etc/memcached.conf
+        entrypoint: ["memcached", "-C", "/etc/memcached.conf"]
 
     meilisearch:
         image: getmeili/meilisearch:v1.8.0
@@ -65,6 +66,7 @@ services:
         volumes:
             - ~/current-affairs/redis_data:/data
             - ./infrastructure/configuration/redis/redis-production.conf:/usr/local/etc/redis/redis.conf
+        entrypoint: ["redis-server", "/usr/local/etc/redis/redis.conf"]
         networks:
             - app-network
 
