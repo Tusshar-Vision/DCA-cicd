@@ -16,6 +16,22 @@
     </div>
     <ul class="font-semibold text-base text-[#183B56] dark:text-blue-400">
         <li class="mb-1">
+            <a href="{{ route('news-today.archive') }}"
+               wire:navigate
+               class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('news-today*') ? 'activeSidebar' : '' }}"
+            >
+                News Today
+            </a>
+        </li>
+        <li class="mb-1">
+            <a href="{{ route('weekly-focus.archive') }}"
+               wire:navigate
+               class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('weekly-focus*') ? 'activeSidebar' : '' }}"
+            >
+                Weekly Focus
+            </a>
+        </li>
+        <li class="mb-1">
             <a href="{{ route('monthly-magazine.archive') }}"
                 wire:navigate
                 class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('monthly-magazine*') ? 'activeSidebar' : '' }}"
@@ -24,19 +40,11 @@
             </a>
         </li>
         <li class="mb-1">
-            <a href="{{ route('weekly-focus.archive') }}"
-                wire:navigate
-                class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('weekly-focus*') ? 'activeSidebar' : '' }}"
+            <a href="{{ route('planet-vision') }}"
+               wire:navigate
+               class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('the-planet-vision*') ? 'activeSidebar' : '' }}"
             >
-                Weekly Focus
-            </a>
-        </li>
-        <li class="mb-1">
-            <a href="{{ route('news-today.archive') }}"
-                wire:navigate
-                class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('news-today*') ? 'activeSidebar' : '' }}"
-            >
-                News Today
+                The Planet Vision
             </a>
         </li>
         <li class="mb-1">
@@ -53,6 +61,14 @@
                 class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('mains-365*') ? 'activeSidebar' : '' }}"
             >
                 Mains 365
+            </a>
+        </li>
+        <li class="mb-1">
+            <a href="{{ route('quarterly-revision-document') }}"
+               wire:navigate
+               class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('quarterly-revision-document*') ? 'activeSidebar' : '' }}"
+            >
+                Quarterly Revision Documents
             </a>
         </li>
         <li class="mb-1">
@@ -88,27 +104,11 @@
             </a>
         </li> --}}
         <li class="mb-1">
-            <a href="{{ route('quarterly-revision-document') }}"
-                wire:navigate
-                class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('quarterly-revision-document*') ? 'activeSidebar' : '' }}"
-            >
-                Quarterly Revision Documents
-            </a>
-        </li>
-        <li class="mb-1">
             <a href="{{ route('year-end-review') }}"
                 wire:navigate
                 class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('year-end-reviews*') ? 'activeSidebar' : '' }}"
             >
                 Year End Reviews
-            </a>
-        </li>
-        <li class="mb-1">
-            <a href="{{ route('planet-vision') }}"
-               wire:navigate
-               class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('the-planet-vision*') ? 'activeSidebar' : '' }}"
-            >
-                The Planet Vision
             </a>
         </li>
 

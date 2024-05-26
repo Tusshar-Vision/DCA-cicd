@@ -54,9 +54,9 @@ trait HelperMethods
             PersonalityInFocusResource::class => 'publish_personality::in::focus',
             SchemeInFocusResource::class => 'publish_scheme::in::focus',
             SimplifiedResource::class => 'publish_simplified',
-            NewsTodayUploadResource::class => 'publish_news::today',
-            WeeklyFocusUploadResource::class => 'publish_weekly::focus',
-            MonthlyMagazineUploadResource::class => 'publish_monthly::upload',
+            NewsTodayUploadResource::class => 'upload_news::today',
+            WeeklyFocusUploadResource::class => 'upload_weekly::focus',
+            MonthlyMagazineUploadResource::class => 'upload_monthly::magazine',
             default => throw new \Exception("Permission not defined for resource."),
         };
     }

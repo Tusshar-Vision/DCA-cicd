@@ -47,7 +47,6 @@ readonly class DownloadService
             ->whereInitiative(InitiativesHelper::getInitiativeID(Initiatives::NEWS_TODAY))
             ->language()
             ->isPublished()
-            ->hasPublishedArticle()
             ->orderBy('published_at', 'desc');
 
         $years = $query->groupByYear()->keys();

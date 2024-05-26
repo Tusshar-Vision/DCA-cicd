@@ -21,7 +21,6 @@ use Illuminate\Support\Collection;
 trait MainUploadsPdfUploadSchema
 {
     use HelperMethods;
-
     public static function table(Table $table): Table
     {
         return $table
@@ -55,7 +54,7 @@ trait MainUploadsPdfUploadSchema
                     ->icon('heroicon-s-paper-airplane')
                     ->requiresConfirmation()
                     ->button()
-                    ->visible(fn () => auth()->user()->can(static::getActionPermission()))
+                    ->visible(fn (PublishedInitiative $record) => auth()->user()->can(static::getActionPermission()) && $record->getFirstMedia(static::getCollectionName()) !== null)
                     ->hidden(function(PublishedInitiative $record) {
                         return $record->is_published === true || $record->trashed();
                     })
@@ -69,6 +68,7 @@ trait MainUploadsPdfUploadSchema
                     ->icon('heroicon-s-eye')
                     ->tooltip('View')
                     ->iconButton()
+                    ->visible(fn (PublishedInitiative $record): bool => $record->getFirstMedia(static::getCollectionName()) !== null)
                     ->url(fn (PublishedInitiative $record): string|null => $record->getFirstMedia(static::getCollectionName())?->getTemporaryUrl(now()->add('minutes', 120)))
                     ->openUrlInNewTab(),
                 EditAction::make()
