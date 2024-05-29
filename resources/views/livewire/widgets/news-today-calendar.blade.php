@@ -37,22 +37,22 @@
                 </ul>
             </div>
             <div class="vi-calender-grid-week">
-                <a href="javascript:void(0)" class="cursor-default">SUN</a>
-                <a href="javascript:void(0)" class="cursor-default">MON</a>
-                <a href="javascript:void(0)" class="cursor-default">TUE</a>
-                <a href="javascript:void(0)" class="cursor-default">WED</a>
-                <a href="javascript:void(0)" class="cursor-default">THU</a>
-                <a href="javascript:void(0)" class="cursor-default">FRI</a>
-                <a href="javascript:void(0)" class="cursor-default">SAT</a>
+                <a @click.stop class="cursor-default">SUN</a>
+                <a @click.stop class="cursor-default">MON</a>
+                <a @click.stop class="cursor-default">TUE</a>
+                <a @click.stop class="cursor-default">WED</a>
+                <a @click.stop class="cursor-default">THU</a>
+                <a @click.stop class="cursor-default">FRI</a>
+                <a @click.stop class="cursor-default">SAT</a>
             </div>
             <div class="vi-calender-grid">
                 @for($count = 1; $count <= $calendarData->mainMenu[$selectedYear][$selectedMonth]['diffInDays']; $count++)
-                    <a href="javascript:void(0)" data-status="" class="date-disabled"></a>
+                    <a @click.stop data-status="" class="date-disabled"></a>
                 @endfor
 
                 @foreach($calendarData->mainMenu[$selectedYear][$selectedMonth]['days'] as $day => $menuData)
                     @if($menuData['menu']->isEmpty())
-                        <a href="javascript:void(0)" data-status="" class="date-disabled">
+                        <a @click.stop data-status="" class="date-disabled">
                             {{ $day }}
                             <span class="shadow-xl rounded-md bg-[#fff] border-[1px] border-[#ccc] w-[100px] absolute left-[-75%] bottom-[-15px] z-[1]">No article</span>
                         </a>

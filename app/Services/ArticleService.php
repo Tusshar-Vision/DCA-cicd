@@ -58,7 +58,7 @@ readonly class ArticleService
         $topic = $article->topic->name;
         $slug = $article->slug;
 
-        $url = '/' . $initiative . '/' . $date . '/';
+        $url = config('app.url') . '/' . $initiative . '/' . $date . '/';
 
         if ($article->is_short === true) {
             if ($initiative === 'News Today') {
