@@ -242,10 +242,15 @@ $gray-686E70: #686E70;
   }
 
     .swiper-nav-button-initiative {
-        top: 50% !important;
-        height: 37px !important;
-        width: 37px !important;
-        padding: 7px;
+        height: 25px !important;
+        width: 25px !important;
+        padding: 0;
+        position: static !important;
+        z-index: 10;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
   .swiper-button-next::after,

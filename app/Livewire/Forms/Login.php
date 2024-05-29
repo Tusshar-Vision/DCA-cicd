@@ -30,7 +30,7 @@ class Login extends Component
         $response = $authService->authenticate($validated);
 
         if ($response === true) {
-            $this->redirect(route('home'), navigate: true);
+            $this->redirect(config('app.url'), navigate: true);
         }
 
         if ($response === CognitoErrorCodes::USER_NOT_FOUND) {

@@ -14,7 +14,7 @@ return [
         "downloadable" => true,
     ],
     "monthly-magazine.archive" => [
-        "title" => "Monthly Current Affairs",
+        "title" => "Monthly Magazine",
         "description" => "Monthly current affairs magazine offers comprehensive, subjective coverage of the entire month's important news.",
         "icon" => "monthly-magazine.svg",
         "downloadable" => true,
