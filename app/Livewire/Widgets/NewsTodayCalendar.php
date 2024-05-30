@@ -36,12 +36,18 @@ class NewsTodayCalendar extends Component
 
     public function nextMonth(): void
     {
-        $this->selectedMonth = Carbon::parse($this->selectedMonth)->addMonth()->format('F');
+        $this->selectedMonth = Carbon::createFromFormat(
+            'Y-F-d',
+            $this->selectedYear . '-' . $this->selectedMonth . '-1'
+        )->addMonth()->format('F');
     }
 
     public function previousMonth(): void
     {
-        $this->selectedMonth = Carbon::parse($this->selectedMonth)->subMonth()->format('F');
+        $this->selectedMonth = Carbon::createFromFormat(
+            'Y-F-d',
+            $this->selectedYear . '-' . $this->selectedMonth . '-1'
+        )->subMonth()->format('F');
     }
 
     public function render(): View
