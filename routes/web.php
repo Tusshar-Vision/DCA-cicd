@@ -121,7 +121,11 @@ Route::middleware('auth:cognito')->group(function () {
             } catch (Exception $e) {
                 logger($e);
             }
-            return redirect()->route('home');
+            $url = route('home');
+            if (config('app.env') === 'production') {
+                $url .= config('app.prefix_url');
+            }
+            return redirect()->to($url);
         })->name('logout');
     });
 });

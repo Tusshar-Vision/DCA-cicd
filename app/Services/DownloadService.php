@@ -95,11 +95,16 @@ readonly class DownloadService
             ->map(function ($package) {
                 $currentArticle = $package->articles?->first();
                 $media = $package->media?->first();
+                $url = '';
+                if (config('app.env') === 'production') {
+                    $url .= config('app.prefix_url');
+                }
+                $url .= $currentArticle !== null ?
+                    ArticleService::getArticleUrlFromSlug($currentArticle->slug) :
+                    route('news-today.archive', ['media' => $media->id]);
                 // Select only the desired columns
                 return collect([
-                    'url' => $currentArticle !== null ?
-                                ArticleService::getArticleUrlFromSlug($currentArticle->slug) :
-                                route('news-today.archive', ['media' => $media->id]),
+                    'url' => $url,
                     'formatted_published_at' => Carbon::parse($package->published_at)->format('d M Y'),
                     'media' => ($media !== null ? $media->id : false)
                 ]);

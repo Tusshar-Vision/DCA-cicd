@@ -32,7 +32,7 @@
                                 <a href="#{{ $header->slug }}" class="flex text-base[16px] font-normal hover:brand-color }}"
                                    :class="{'brand-color': openItem == {{$key}}}"
                                 >
-                                    <span class="mr-1">{{ $loop->iteration }}<em>.</em></span> {{ $header->shortTitle ?? $header->title }}
+                                    {{ $header->shortTitle ?? $header->title }}
                                 </a>
                             </li>
                         @else
