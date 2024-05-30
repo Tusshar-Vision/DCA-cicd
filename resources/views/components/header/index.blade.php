@@ -21,7 +21,7 @@
                 </svg>
             </span>
             <span class="group-hover:text-[#005FAF] dark:text-white">
-                Back to VisionIAS
+                VisionIAS Home
             </span>
         </a>
 
@@ -138,7 +138,7 @@
                             </span>
                             <span class="text-[10px] group-hover:text-[#005FAF] dark:text-white"
                                   :class="isSocialOpen ? 'hidden' : 'md:inline-block'">
-                                Back to VisionIAS
+                                VisionIAS Home
                             </span>
                         </a>
                     </li>
