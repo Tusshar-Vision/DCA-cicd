@@ -21,7 +21,7 @@
     }
 
     $articleUrl = ArticleService::getArticleUrlFromSlug($article->slug);
-    $featuredImage = $article->media?->first()->getUrl();
+    $featuredImage = $article->media?->first()?->getUrl();
 @endphp
 
 <div class="group cursor-pointer flex-col max-w-2xl">
@@ -29,7 +29,7 @@
         <div class="space-y-2">
             <div class="overflow-hidden coverImage autoHeight">
                 <img
-                    src="{{ ($featuredImage === '') ? 'https://placehold.co/1596x930' : $featuredImage }}"
+                    src="{{ ($featuredImage === '' || $featuredImage === null) ? 'https://placehold.co/1596x930' : $featuredImage }}"
                     width="{{ $width }}" height="{{ $height }}" alt="" class="group-hover:scale-105 transition-all object-cover"
                 />
             </div>
