@@ -57,8 +57,7 @@ readonly class InitiativeService
         foreach ($data as $year => $months) {
             for ($monthIndex = 1; $monthIndex <= 12; $monthIndex++) {
                 // Format the month correctly (e.g., "January", "February", ...)
-                $monthName = Carbon::createFromFormat('m', $monthIndex)->format('F');
-
+                $monthName = Carbon::createFromFormat('Y-m-d', $year . '-' . $monthIndex . '-01')->format('F');
                 // Initialize an empty array for months that don't have any data
                 if (!isset($months[$monthName])) {
                     $months[$monthName] = collect();

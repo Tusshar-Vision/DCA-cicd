@@ -236,9 +236,11 @@ class MonthlyMagazineResource extends Resource implements HasShieldPermissions
         if ($record->trashed()) {
             return false;
         }
-        return Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'monthly_magazine_reviewer']) || (Auth::user()->can('edit_monthly::magazine') && $record->articles->contains(function ($article) use ($userId) {
+        return Auth::user()->hasAnyRole(['super_admin', 'admin', 'reviewer', 'monthly_magazine_reviewer']) || (Auth::user()->can('edit_monthly::magazine') && ($record->articles->contains(function ($article) use ($userId) {
             return $article?->reviewer_id == $userId || $article->author_id == $userId;
-        }));
+        }))) || $record->shortArticles->contains(function ($article) use ($userId) {
+                return $article?->reviewer_id == $userId || $article->author_id == $userId;
+        });
     }
 
     public static function canCreate(): bool

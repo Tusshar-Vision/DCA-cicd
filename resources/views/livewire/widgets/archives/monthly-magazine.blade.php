@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 archiveContent pb-[30px]" x-show="expanded === true" @click.stop x-collapse>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 archiveContent pb-[30px]" x-show="expanded === true" @click.stop x-collapse>
                 @foreach ($article as $a)
                     <x-cards.archive :package="$a" />
                 @endforeach

@@ -30,11 +30,11 @@ class Login extends Component
         $response = $authService->authenticate($validated);
 
         if ($response === true) {
-            $url = route('home');
+            $url = route('home', [], true);
             if (config('app.env') === 'production') {
                 $url .= config('app.prefix_url');
             }
-            $this->redirect($url, navigate: true);
+            $this->redirect($url, navigate: false);
         }
 
         if ($response === CognitoErrorCodes::USER_NOT_FOUND) {

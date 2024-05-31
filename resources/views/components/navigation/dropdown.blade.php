@@ -5,18 +5,23 @@
 @endphp
 <div {{ $attributes }} x-cloak>
     <ul x-data="{ isMenuOpen: null }" class="absolute font-normal bgcolor-FFF shadow w-72 border rounded-md mt-2 py-1 z-50 dark:bg-dark373839">
+
         <div class="border-bottom mx-4">
        {{-- <x-buttons.primary button-text="{!! $buttonText !!}" button-link="{{ $buttonLink }}"  />  --}}
-       <p class="text-sm flex py-[15px] font-medium">Latest Edition</p>
-       @if($menuData['initiative_id'] === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE) && count($menuData['data']) > 0 )
+           <p class="text-sm flex py-[15px] font-medium">Latest Edition</p>
 
-       <a class="text-sm flex pb-[15px] font-medium brand-color" href="{{ $buttonLink }}" wire:navigate><p>{{Carbon::parse($menuData['data'][array_key_first($menuData['data'])][0]->publishedAt)->monthName}}</p></a>
-       @endif
-       @if($menuData['initiative_id'] === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
-       <a class="text-sm flex pb-[15px] font-medium brand-color" href="{{ $buttonLink }}" wire:navigate><p>{{$menuData['data'] ? $menuData['data'][array_key_first($menuData['data'])][0]->name : ""}}</p></a>
-
-       @endif
+           @if(
+                $menuData['initiative_id'] === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS) ||
+                $menuData['initiative_id'] === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE)
+           )
+                <a class="text-sm flex pb-[15px] font-medium brand-color" href="{{ $buttonLink }}" wire:navigate>
+                    <p>
+                        {{  $menuData['data'][array_key_first($menuData['data'])][0]->name ?? "" }}
+                    </p>
+                </a>
+           @endif
         </div>
+
             @foreach ($menuData['data'] as $mainMenu => $subMenu)
                 @if(!empty($subMenu))
                     <li class="relative">
