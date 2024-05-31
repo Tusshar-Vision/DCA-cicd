@@ -14,7 +14,7 @@
                         <a wire:navigate href="{{ $fileViewLink }}" class="hover:underline">Read</a>
                     </li>
                     <li class="text-[#3362CC] mr-4 text-sm font-normal">
-                        <a href="{{ route('download', ['media' => $media]) }}" class="hover:underline">Download</a>
+                        <a @click.stop href="{{ route('download', ['media' => $media]) }}" class="hover:underline">Download</a>
                     </li>
                     <li class="text-[#3362CC] mr-4 text-sm font-normal">
                         <a @click.stop onclick="openSocial('{{ $fileViewLink }}')" class="hover:underline">Share</a>

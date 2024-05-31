@@ -19,7 +19,7 @@ class Archive extends Component
     )
     {
         $this->date = Carbon::parse($package->publishedAt)->format('Y-m-d');
-        $this->title = Carbon::parse($package->publishedAt)->monthName;
+        $this->title = $package->name;
         $firstArticle = $package->article?->first();
         $this->url = $firstArticle !== null ?
             ArticleService::getArticleUrlFromSlug($firstArticle->slug) :
