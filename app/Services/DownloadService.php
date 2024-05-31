@@ -91,6 +91,7 @@ readonly class DownloadService
             ->with('media', function ($query) {
                 $query->where('collection_name', '=', 'news-today');
             })
+            ->orderBy('published_at', 'desc')
             ->get()
             ->map(function ($package) {
                 $currentArticle = $package->articles?->first();

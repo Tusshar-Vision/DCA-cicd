@@ -25,9 +25,6 @@ ssh-add ~/.ssh/${SSH_KEY_NAME}
 
 # Navigate to the project directory
 cd /var/www/html/vision-ca-api/
-
-export $(grep -v '^#' .env | xargs)
-
 # Pull the latest changes from the specified branch
 git pull origin ${BRANCH_NAME}
 

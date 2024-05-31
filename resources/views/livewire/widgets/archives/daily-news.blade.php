@@ -66,7 +66,7 @@
         >
             @foreach ($months as $currentMonth => $month)
                 @php
-                    $monthName = \Carbon\Carbon::parse($currentMonth)->month;
+                    $monthName = \Carbon\Carbon::createFromFormat('Y-F-d', $year . '-' . $currentMonth . '-1')->month;
                 @endphp
                 <div class="month-card weekly-focus-single-card"
                      @click.stop
@@ -123,8 +123,12 @@
     <!--                            </div>-->
     <!--                        </div>-->
                             <ul class="flex justify-start mt-[15px]">
-                                <li class="text-[#3362CC] mr-4 text-sm font-normal"><a href=${article.url} class="hover:underline" wire:navigate>Read</a></li>
-                                <li class="text-[#3362CC] mr-4 text-sm font-normal"><a href="/download/${article.media}" class="hover:underline ${ article.media === false ? 'opacity-50 pointer-events-none' : '' }">Download</a></li>
+                                <li class="text-[#3362CC] mr-4 text-sm font-normal">
+                                    <a href=${article.url} class="hover:underline" wire:navigate>Read</a>
+                                </li>
+                                <li class="text-[#3362CC] mr-4 text-sm font-normal">
+                                    <a href="/download/${article.media}" class="hover:underline ${ article.media === false ? 'opacity-50 pointer-events-none' : '' }">Download</a>
+                                </li>
                             </ul>
                         </div>
                     </a>
