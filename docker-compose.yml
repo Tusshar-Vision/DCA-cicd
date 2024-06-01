@@ -9,7 +9,9 @@ services:
         ports:
             - "8000:8000"
         volumes:
-            - .:/app
+            - ./bootstrap:/app/bootstrap
+            - ./public:/app/public
+            - ./storage:/app/storage
         networks:
             - app-network
         depends_on:
