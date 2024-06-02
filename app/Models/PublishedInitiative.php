@@ -21,6 +21,7 @@ class PublishedInitiative extends Model implements HasMedia
         'initiative_id',
         'name',
         'published_at',
+        'publication_date',
         'language_id',
         'is_published',
         'initiative_topic_id',
@@ -34,6 +35,7 @@ class PublishedInitiative extends Model implements HasMedia
 
     protected $casts = [
         'published_at' => 'datetime',
+        'publication_date' => 'date',
         'is_published' => 'bool',
         'sources' => 'array',
         'references' => 'array',

@@ -126,6 +126,12 @@ trait InitiativeResourceSchema
                     ->sortable()
                     ->toggleable(),
 
+                TextColumn::make('publication_date')
+                    ->dateTime('M Y')
+                    ->label('Issue Month')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('created_at')
                     ->dateTime('d M Y H:i')
                     ->label('Created At')
