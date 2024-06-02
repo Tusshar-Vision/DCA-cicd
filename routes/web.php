@@ -121,11 +121,12 @@ Route::middleware('auth:cognito')->group(function () {
             } catch (Exception $e) {
                 logger($e);
             }
-            $url = route('home');
             if (config('app.env') === 'production') {
-                $url .= config('app.prefix_url');
+                if(config('app.prefix_url') === '/current-affairs') {
+                    return redirect()->to('https://visionias.in/');
+                }
             }
-            return redirect()->to($url);
+            return redirect()->route('home');
         })->name('logout');
     });
 });

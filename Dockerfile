@@ -17,7 +17,7 @@ COPY package.json ./
 RUN npm install
 
 # Copy the required preset files
-COPY --from=composer /app/vendor/filament ./vendor/filament
+COPY --from=composer /app/vendor ./vendor
 
 COPY . .
 
