@@ -29,11 +29,11 @@ cd /var/www/html/vision-ca-api/
 git pull origin ${BRANCH_NAME}
 
 echo "Building and updating Docker images..."
-docker-compose -f docker-compose.yml build
+docker-compose -f docker-compose.production.yml build
 
 # Step 3: Restart Docker containers
 echo "Restarting Docker containers..."
-docker-compose -f docker-compose.yml down
-docker-compose -f docker-compose.yml up -d
+docker-compose -f docker-compose.production.yml down
+docker-compose -f docker-compose.production.yml up -d
 
 echo "Deployment completed successfully!"
