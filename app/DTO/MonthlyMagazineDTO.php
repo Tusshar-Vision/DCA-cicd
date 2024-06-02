@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 class MonthlyMagazineDTO extends PublishedInitiativeDTO
 {
     public array $topics;
+    public $publicationDate;
     public Collection $sortedArticlesWithTopic;
     private function sortArticlesWithTopic(): void
     {
@@ -58,6 +59,7 @@ class MonthlyMagazineDTO extends PublishedInitiativeDTO
 
         $dto->topics = $dto->sortedArticlesWithTopic->keys()->toArray();
         $dto->sortArticlesWithTopic();
+        $dto->publicationDate = $publishedInitiative->publication_date;
 
         return $dto;
     }

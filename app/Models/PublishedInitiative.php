@@ -57,15 +57,16 @@ class PublishedInitiative extends Model implements HasMedia
     }
 
     /**
-     * Builder method to fetch and group records by the year they were published.
+     * Scope a query to group records by the year they were published.
      *
-     * @param  Builder  $query
+     * @param Builder $query
+     * @param string $column
      * @return Collection
      */
-    public static function scopeGroupByYear(Builder $query): Collection
+    public function scopeGroupByYear(Builder $query, string $column = 'published_at'): Collection
     {
-        return $query->get()->groupBy(function ($item) {
-            return $item->published_at->format('Y');
+        return $query->get()->groupBy(function ($item) use ($column) {
+            return $item->{$column}?->format('Y');
         });
     }
 
