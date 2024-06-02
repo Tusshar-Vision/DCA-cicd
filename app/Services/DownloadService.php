@@ -91,6 +91,7 @@ readonly class DownloadService
             ->with('media', function ($query) {
                 $query->where('collection_name', '=', 'news-today');
             })
+            ->orderBy('published_at', 'desc')
             ->get()
             ->map(function ($package) {
                 $currentArticle = $package->articles?->first();
@@ -153,19 +154,18 @@ readonly class DownloadService
             ->whereInitiative(InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE))
             ->language()
             ->isPublished()
-            ->orderByDesc('published_at');
+            ->orderByDesc('publication_date');
 
-        $years = $query->groupByYear()->keys();
+        $years = $query->groupByYear('publication_date')->keys();
 
-        if ($year) $query->whereYear('published_at', $year);
-        if ($month) $query->whereMonth('published_at', $month);
+        if ($year) $query->whereYear('publication_date', $year);
+        if ($month) $query->whereMonth('publication_date', $month);
 
         $articles = $query->with('articles', function ($query) {
             $query->isPublished()->ordered();
         })->with('media', function ($query) {
             $query->where('collection_name', '=', 'monthly-magazine');
-        })
-            ->groupByYear();
+        })->groupByYear('publication_date');
 
         $data = [];
 

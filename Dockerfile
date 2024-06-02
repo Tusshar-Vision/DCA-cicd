@@ -30,8 +30,11 @@ RUN install-php-extensions pcntl memcached redis pdo_mysql intl zip gd exif @com
 
 RUN apt update
 RUN apt install supervisor -y
+
 # Copy the application code from the composer and node stages
-COPY --from=node /app .
+COPY . .
+COPY --from=node /app/public ./public
+COPY --from=node /app/node_modules ./node_modules
 
 # Copy configuration files
 COPY infrastructure/configuration/supervisor/*.conf /etc/supervisor/conf.d/

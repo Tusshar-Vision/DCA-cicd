@@ -8,3 +8,4 @@ docker-compose*
 .gitignore
 README.md
 LICENSE
+ca_dev_dump.sql

@@ -91,7 +91,13 @@ class MonthlyMagazineResource extends Resource implements HasShieldPermissions
                                 if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
                                 else if ($record?->is_published) return true;
                             })
-                            ->live(),
+                            ->live()
+                            ->afterStateUpdated(function (callable $get, callable $set) {
+                                $publishAt = $get('published_at');
+                                if ($publishAt) {
+                                    $set('publication_date', Carbon::createFromFormat('Y-m-d h:i:s', ($publishAt))->subMonth());
+                                }
+                            }),
 
                         Forms\Components\TextInput::make('name')->rules([
                             function (PublishedInitiativeService $publishedInitiativeService, ?Model $record) {
@@ -170,8 +176,21 @@ class MonthlyMagazineResource extends Resource implements HasShieldPermissions
                             } else {
                                 return Auth::user()->can('upload_monthly::magazine');
                             }
+                        }),
+
+                    Forms\Components\DatePicker::make('publication_date')
+                        ->label('Issue Month')
+                        ->native(false)
+                        ->displayFormat('M, Y')
+                        ->closeOnDateSelection()
+                        ->default(function (callable $get) {
+                            return Carbon::createFromFormat('Y-m-d h:i:s', ($get('published_at')))->subMonth();
                         })
-                        ->columnSpanFull(),
+                        ->required()
+                        ->disabled(function (?PublishedInitiative $record) {
+                            if (Auth::user()->hasAnyRole(['super_admin', 'admin'])) return false;
+                            else if ($record?->is_published) return true;
+                        }),
 
                 ])
                 ->columns(),

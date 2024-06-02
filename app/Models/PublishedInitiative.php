@@ -21,6 +21,7 @@ class PublishedInitiative extends Model implements HasMedia
         'initiative_id',
         'name',
         'published_at',
+        'publication_date',
         'language_id',
         'is_published',
         'initiative_topic_id',
@@ -34,6 +35,7 @@ class PublishedInitiative extends Model implements HasMedia
 
     protected $casts = [
         'published_at' => 'datetime',
+        'publication_date' => 'date',
         'is_published' => 'bool',
         'sources' => 'array',
         'references' => 'array',
@@ -55,15 +57,16 @@ class PublishedInitiative extends Model implements HasMedia
     }
 
     /**
-     * Builder method to fetch and group records by the year they were published.
+     * Scope a query to group records by the year they were published.
      *
-     * @param  Builder  $query
+     * @param Builder $query
+     * @param string $column
      * @return Collection
      */
-    public static function scopeGroupByYear(Builder $query): Collection
+    public function scopeGroupByYear(Builder $query, string $column = 'published_at'): Collection
     {
-        return $query->get()->groupBy(function ($item) {
-            return $item->published_at->format('Y');
+        return $query->get()->groupBy(function ($item) use ($column) {
+            return $item->{$column}?->format('Y');
         });
     }
 

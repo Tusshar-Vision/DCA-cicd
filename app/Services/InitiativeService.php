@@ -130,14 +130,14 @@ readonly class InitiativeService
             ->whereInitiative($initiativeId)
             ->language()
             ->isPublished()
-            ->select(['id', 'name', 'initiative_id', 'published_at'])
+            ->select(['id', 'name', 'initiative_id', 'published_at', 'publication_date'])
             ->hasPublishedArticle()
             ->with(['articles' => function ($query) {
                 // Eager load published articles
                 $query->isPublished()->ordered();
             }])
-            ->orderByDesc('published_at')
-            ->groupByYear();
+            ->orderByDesc('publication_date')
+            ->groupByYear('publication_date');
 
         $menuData = [];
 

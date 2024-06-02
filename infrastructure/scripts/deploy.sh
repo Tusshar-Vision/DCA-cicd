@@ -25,18 +25,15 @@ ssh-add ~/.ssh/${SSH_KEY_NAME}
 
 # Navigate to the project directory
 cd /var/www/html/vision-ca-api/
-
-export $(grep -v '^#' .env | xargs)
-
 # Pull the latest changes from the specified branch
 git pull origin ${BRANCH_NAME}
 
 echo "Building and updating Docker images..."
-docker-compose -f docker-compose.yml build
+docker-compose -f docker-compose.production.yml build
 
 # Step 3: Restart Docker containers
 echo "Restarting Docker containers..."
-docker-compose -f docker-compose.yml down
-docker-compose -f docker-compose.yml up -d
+docker-compose -f docker-compose.production.yml down
+docker-compose -f docker-compose.production.yml up -d
 
 echo "Deployment completed successfully!"

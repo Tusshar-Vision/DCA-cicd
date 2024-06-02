@@ -4,7 +4,7 @@ import laravel, { refreshPaths } from 'laravel-vite-plugin';
 // Import the http-proxy-middleware
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
-const laravelDevServer = 'http://localhost:8000';
+const laravelDevServer = 'http://localhost:80';
 
 export default defineConfig({
     plugins: [
@@ -22,10 +22,14 @@ export default defineConfig({
         }),
     ],
     server: {
+        https: false,
+        hmr: {
+            host: 'localhost',
+        },
         proxy: {
-            // Proxy requests with "/images" to your Laravel development server
+            // Proxy requests to the Laravel server
             '/images': {
-                target: laravelDevServer,
+                target: `${laravelDevServer}:80`,
                 changeOrigin: true,
             },
         },
