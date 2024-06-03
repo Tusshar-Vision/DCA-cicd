@@ -31,7 +31,7 @@
                 if (data.length > 0) {
                     data.map(suggestion => {
                         html += `
-                            <div class="border-b-2 p-2 hover:bg-visionGray">
+                            <div class="border-b-2 p-2 hover:bg-visionGray dark:hover:bg-visionLineGray">
                                 <a href="${suggestion.url}">
                                     <p>${suggestion.title}</p>
                                 <a>
