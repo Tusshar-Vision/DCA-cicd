@@ -1,5 +1,5 @@
 @php
-    $fileID = request()->segment(2);
+    $fileID = request()->segment(count(request()->segments()));
 @endphp
 <div>
     <div class="flex justify-between items-center w-full mb-4 border p-2">
