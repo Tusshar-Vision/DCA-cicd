@@ -19,6 +19,7 @@ class NewsTodayCalendar extends Component
     public $selectedDate;
     public $selectedMonth;
     public $selectedYear;
+    public $counter;
 
     public function mount(NewsTodayMenuDTO $calendarData): void
     {
@@ -32,10 +33,12 @@ class NewsTodayCalendar extends Component
         $this->selectedDate = $datePart;
         $this->selectedMonth = $calendarData->currentMonth;
         $this->selectedYear = $calendarData->currentYear;
+        $this->counter = 0;
     }
 
     public function nextMonth(): void
     {
+        $this->counter ++;
         $this->selectedMonth = Carbon::createFromFormat(
             'Y-F-d',
             $this->selectedYear . '-' . $this->selectedMonth . '-1'
@@ -44,6 +47,7 @@ class NewsTodayCalendar extends Component
 
     public function previousMonth(): void
     {
+        $this->counter ++;
         $this->selectedMonth = Carbon::createFromFormat(
             'Y-F-d',
             $this->selectedYear . '-' . $this->selectedMonth . '-1'
