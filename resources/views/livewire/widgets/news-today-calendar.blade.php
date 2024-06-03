@@ -37,27 +37,34 @@
                 </ul>
             </div>
             <div class="vi-calender-grid-week">
-                <a @click.stop class="cursor-default">SUN</a>
-                <a @click.stop class="cursor-default">MON</a>
-                <a @click.stop class="cursor-default">TUE</a>
-                <a @click.stop class="cursor-default">WED</a>
-                <a @click.stop class="cursor-default">THU</a>
-                <a @click.stop class="cursor-default">FRI</a>
-                <a @click.stop class="cursor-default">SAT</a>
+                <a @click.stop href="#" class="cursor-default">SUN</a>
+                <a @click.stop href="#" class="cursor-default">MON</a>
+                <a @click.stop href="#" class="cursor-default">TUE</a>
+                <a @click.stop href="#" class="cursor-default">WED</a>
+                <a @click.stop href="#" class="cursor-default">THU</a>
+                <a @click.stop href="#" class="cursor-default">FRI</a>
+                <a @click.stop href="#" class="cursor-default">SAT</a>
             </div>
             <div class="vi-calender-grid">
                 @for($count = 1; $count <= $calendarData->mainMenu[$selectedYear][$selectedMonth]['diffInDays']; $count++)
-                    <a @click.stop data-status="" class="date-disabled"></a>
+                    <a @click.stop href="#" data-status="" class="date-disabled"></a>
                 @endfor
 
                 @foreach($calendarData->mainMenu[$selectedYear][$selectedMonth]['days'] as $day => $menuData)
                     @if($menuData['menu']->isEmpty())
-                        <a @click.stop data-status="" class="date-disabled">
+                        <a @click.stop href="#" data-status="" class="date-disabled">
                             {{ $day }}
                             <span class="shadow-xl rounded-md bg-[#fff] border-[1px] border-[#ccc] w-[100px] absolute left-[-75%] bottom-[-15px] z-[1]">No article</span>
                         </a>
                     @else
-                        <a href="{{ ArticleService::getArticleUrlFromSlug($menuData['menu']->first()->article->first()->slug) }}"
+                        @php
+                            $url = '';
+                            if (config('app.env') === 'production') {
+                                $url .= config('app.prefix_url');
+                            }
+                            $url .= ArticleService::getArticleUrlFromSlug($menuData['menu']->first()->article->first()->slug);
+                        @endphp
+                        <a href="{{ $url }}"
                            wire:navigate
                            data-status=""
                            class="{{ ($calendarData->currentMonth === $selectedMonth && $calendarData->date == $day) ? 'font-bold' : '' }}"
