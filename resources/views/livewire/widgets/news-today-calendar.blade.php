@@ -59,8 +59,10 @@
                     @else
                         @php
                             $url = '';
-                            if (config('app.env') === 'production') {
-                                $url .= config('app.prefix_url');
+                            if ($counter > 0) {
+                                if (config('app.env') === 'production') {
+                                    $url .= config('app.prefix_url');
+                                }
                             }
                             $url .= ArticleService::getArticleUrlFromSlug($menuData['menu']->first()->article->first()->slug);
                         @endphp

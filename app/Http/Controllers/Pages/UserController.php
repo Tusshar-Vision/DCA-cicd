@@ -249,11 +249,7 @@ class UserController extends Controller
                 $history->title =  $history->article->short_title ?? $history->article->title;
             }
             $history->published_at = Carbon::parse($history->article->published_at)->format('d M Y');
-            $history->url = '';
-            if (config('app.env') === 'production') {
-                $history->url .= config('app.prefix_url');
-            }
-            $history->url .= ArticleService::getArticleURL($history->article);
+            $history->url = ArticleService::getArticleUrl($history->article);
             return $history->only(['title', 'published_at', 'url']);
         });
 
@@ -280,8 +276,11 @@ class UserController extends Controller
             if (!$history->article) return null;
             $history->title = $history->article->short_title ?? $history->article->title;
             $history->published_at = Carbon::parse($history->article->published_at)->format('d M Y');
-            $history->url = ArticleService::getArticleUrl($history->article);
-
+            $history->url = '';
+            if (config('app.env') === 'production') {
+                $history->url .= config('app.prefix_url');
+            }
+            $history->url .= ArticleService::getArticleURL($history->article);
             return $history->only(['title', 'published_at', 'url']);
         });
 
