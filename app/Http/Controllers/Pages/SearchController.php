@@ -30,10 +30,14 @@ class SearchController extends Controller
         ]);
     }
 
-    public function searchQuery($query)
+    public function searchQuery($query, $limit = 5)
     {
-        $suggestions = $this->searchService->search($query)->map(function ($article) {
-            $article->url = ArticleService::getArticleURL($article);
+        $suggestions = $this->searchService->search($query, $limit)->map(function ($article) {
+            $article->url = '';
+            if (config('app.env') === 'production') {
+                $article->url .= config('app.prefix_url');
+            }
+            $article->url .= ArticleService::getArticleURL($article);
             return $article->only(['title', 'url']);
         });
 

@@ -30,8 +30,14 @@
                 let html = ""
                 if (data.length > 0) {
                     data.map(suggestion => {
-                        html += `<a href="${suggestion.url}"><p>${suggestion.title}</p><a>`
-                    })
+                        html += `
+                            <div class="border-b-2 p-2 hover:bg-visionGray">
+                                <a href="${suggestion.url}">
+                                    <p>${suggestion.title}</p>
+                                <a>
+                            </div>
+                        `
+                    });
                     document.getElementById("nav-search-item-container").innerHTML = html;
                     document.getElementById("nav-search-item-container").style.display = "block"
                 }
