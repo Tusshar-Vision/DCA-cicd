@@ -11,6 +11,7 @@ use App\Services\PublishedInitiativeService;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Request;
+use JetBrains\PhpStorm\NoReturn;
 use Livewire\Component;
 
 class NewsTodayCalendar extends Component
@@ -38,7 +39,7 @@ class NewsTodayCalendar extends Component
 
     public function nextMonth(): void
     {
-        $this->counter ++;
+        $this->counter++;
         $this->selectedMonth = Carbon::createFromFormat(
             'Y-F-d',
             $this->selectedYear . '-' . $this->selectedMonth . '-1'
@@ -47,11 +48,17 @@ class NewsTodayCalendar extends Component
 
     public function previousMonth(): void
     {
-        $this->counter ++;
+        $this->counter++;
         $this->selectedMonth = Carbon::createFromFormat(
             'Y-F-d',
             $this->selectedYear . '-' . $this->selectedMonth . '-1'
         )->subMonth()->format('F');
+    }
+
+    #[NoReturn]
+    public function updatedSelectedMonth($property): void
+    {
+        $this->counter++;
     }
 
     public function render(): View
