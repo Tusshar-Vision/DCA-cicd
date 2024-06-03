@@ -9,13 +9,19 @@ class SearchBox extends Component
 {
     public $query = '';
 
-    public function search(): null
+    public function search(): void
     {
         $this->validate([
             'query' => 'required|min:2', // Add validation rules as needed
         ]);
 
-        return $this->redirectRoute('search', ['query' => $this->query]);
+        $url = route('search', ['query' => $this->query], true);
+
+        if (config('app.env') === 'production') {
+            $url = str_replace('/search', config('app.prefix_url') . '/search', $url);
+        }
+
+        $this->redirect($url, navigate: false);
     }
 
     public function render(): View
