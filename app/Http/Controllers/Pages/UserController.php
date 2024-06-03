@@ -152,10 +152,10 @@ class UserController extends Controller
         $allMonths = range(1, 12);
         $articleRecords = PublishedInitiative::where('published_initiatives.initiative_id', config('settings.initiatives.MONTHLY_MAGAZINE'))
             ->where('is_published', '=', true)
-            ->whereYear('published_initiatives.published_at', $year)
-            ->select(DB::raw('MONTH(published_initiatives.published_at) as month'), DB::raw('COUNT(*) as total_article'))
+            ->whereYear('published_initiatives.publication_date', $year)
+            ->select(DB::raw('MONTH(published_initiatives.publication_date) as month'), DB::raw('COUNT(*) as total_article'))
             ->join('articles', 'published_initiatives.id', '=', 'articles.published_initiative_id')
-            ->groupBy(DB::raw('MONTH(published_initiatives.published_at)'))
+            ->groupBy(DB::raw('MONTH(published_initiatives.publication_date)'))
             ->get(['month', 'total_article']);
 
         // $collection = collect($articleRecords);
@@ -226,7 +226,11 @@ class UserController extends Controller
             if (!$history->article) return null;
             $history->title = $history->article->short_title ?? $history->article->title;
             $history->published_at = Carbon::parse($history->article->published_at)->format('d M Y');
-            $history->url = ArticleService::getArticleUrl($history->article);
+            $history->url = '';
+            if (config('app.env') === 'production') {
+                $history->url .= config('app.prefix_url');
+            }
+            $history->url .= ArticleService::getArticleURL($history->article);
             $history->read_at = Carbon::parse($history->updated_at)->format('d M Y');
 
             return $history->only(['title', 'published_at', 'url', 'read_at']);
@@ -245,9 +249,11 @@ class UserController extends Controller
                 $history->title =  $history->article->short_title ?? $history->article->title;
             }
             $history->published_at = Carbon::parse($history->article->published_at)->format('d M Y');
-            $history->url = ArticleService::getArticleUrl($history->article);
-//            $history->img = $history->article->getFirstMediaUrl("article-featured-image");
-
+            $history->url = '';
+            if (config('app.env') === 'production') {
+                $history->url .= config('app.prefix_url');
+            }
+            $history->url .= ArticleService::getArticleURL($history->article);
             return $history->only(['title', 'published_at', 'url']);
         });
 

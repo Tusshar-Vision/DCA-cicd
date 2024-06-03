@@ -1,4 +1,4 @@
-<div @click='Livewire.navigate("{{ $url }}");' class="weekly-focus-single-card">
+<div class="weekly-focus-single-card">
     <div class="weekly-focus-progress-list mt-0 h-full">
         <div class="weekly-focus-progress-single-bar border-b-2 flex flex-col justify-between">
             <div>
@@ -15,7 +15,7 @@
                     </li>
                     @if (!empty($downloadLink))
                         <li class="text-[#3362CC] text-sm font-normal mr-4">
-                            <a @click.stop href="{{ route('download', ['media' => $downloadLink]) }}" class="hover:underline">Download</a>
+                            <a href="{{ route('download', ['media' => $downloadLink]) }}" class="hover:underline">Download</a>
                         </li>
                     @else
                         <li class="text-[#3362CC] text-sm font-normal mr-4">

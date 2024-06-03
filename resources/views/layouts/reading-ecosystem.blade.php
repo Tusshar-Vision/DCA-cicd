@@ -119,7 +119,7 @@
 
             function addReadArticle() {
                 const article_id = "{{ $article->getID() }}";
-                const article_published_at = "{{$package->publishedAt}}"
+                const article_published_at = "{{$package->publicationDate ?? $package->publishedAt}}"
                 const student_id = "{{ Auth::guard('cognito')->user()->id }}"
                 saveData("{{ route('user.read-history') }}", {
                     article_id,
