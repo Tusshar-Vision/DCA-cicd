@@ -9,6 +9,7 @@ use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Aws\Credentials\Credentials;
 use Aws\Result;
+use Illuminate\Support\Facades\Cookie;
 use JOSE_JWT;
 
 class CognitoAuthService
@@ -53,6 +54,51 @@ class CognitoAuthService
             $accessToken = $result['AuthenticationResult']['AccessToken'];
             $idToken = $result['AuthenticationResult']['IdToken'];
             $refreshToken = $result['AuthenticationResult']['RefreshToken'];
+
+            Cookie::queue(
+                Cookie::make(
+                    config('app.cookie_name.version'),
+                    config('app.encryption_version'),
+                    time()+(3600*24*365),
+                    "/",
+                    config('app.cookie_domain'),
+                    false,
+                    false
+                )
+            );
+            Cookie::queue(
+                Cookie::make(
+                    config('app.cookie_name.access_token'),
+                    $accessToken,
+                    time()+300,
+                    "/",
+                    config('app.cookie_domain'),
+                    false,
+                    false
+                )
+            );
+            Cookie::queue(
+                Cookie::make(
+                    config('app.cookie_name.refresh_token'),
+                    $refreshToken,
+                    time()+(3600*24*365),
+                    "/",
+                    config('app.cookie_domain'),
+                    false,
+                    false
+                )
+            );
+            Cookie::queue(
+                Cookie::make(
+                    config('app.cookie_name.id_token'),
+                    $idToken,
+                    time()+300,
+                    "/",
+                    config('app.cookie_domain'),
+                    false,
+                    false
+                )
+            );
 
             $studentData = $this->getUser($idToken);
 

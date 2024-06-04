@@ -115,19 +115,7 @@ Route::middleware('auth:cognito')->group(function () {
         Route::get('/search-notes', [Pages\UserController::class, 'searchNotes'])->name('user.search-notes');
         Route::get('/filter-notes/{topic_id}/{section_id}', [NoteController::class, 'getFilteredNotes'])->name('user.filter-notes');
 
-        Route::get('/logout', function () {
-            try {
-                auth('cognito')->logout();
-            } catch (Exception $e) {
-                logger($e);
-            }
-            if (config('app.env') === 'production') {
-                if(config('app.prefix_url') === '/current-affairs') {
-                    return redirect()->to('https://visionias.in/');
-                }
-            }
-            return redirect()->route('home');
-        })->name('logout');
+        Route::get('/logout', [Pages\UserController::class, 'logout'])->name('logout');
     });
 });
 
