@@ -2,10 +2,9 @@
 
 namespace App\Helpers;
 
-use Illuminate\Contracts\Encryption\Encrypter;
 use Random\RandomException;
 
-class CustomEncrypter implements Encrypter
+class CustomEncrypter
 {
     /**
      * The encryption key.
@@ -21,80 +20,41 @@ class CustomEncrypter implements Encrypter
      */
     protected string $cipher;
 
-    /**
-     * Create a new encrypter instance.
-     *
-     * @param string $key
-     * @param string $cipher
-     * @return void
-     * @throws \RuntimeException
-     */
-    public function __construct(string $key, string $cipher = 'aes-256-cbc')
+    protected string $iv;
+
+    public function __construct(string $key = 'VisionIas', string $cipher = 'AES-256-CBC', string  $iv = '61c3a8b52f8574b3')
     {
-        $key = (string) $key;
-
-        if (!in_array($cipher, openssl_get_cipher_methods())) {
-            throw new \RuntimeException("Unsupported cipher: {$cipher}");
-        }
-
-        $this->key = $key;
+        $this->key = $this->generateAESKey($key);
         $this->cipher = $cipher;
+        $this->iv = $iv;
     }
 
     /**
      * Encrypt the given value.
      *
      * @param mixed $value
-     * @param bool $serialize
      * @return string
-     * @throws RandomException
      */
-    public function encrypt($value, $serialize = true): string
+    public function encrypt(mixed $value): string
     {
-        if ($serialize) {
-            $value = serialize($value);
-        }
-
-        $iv = random_bytes(openssl_cipher_iv_length($this->cipher)); // Generate random IV
-
-        $encrypted = openssl_encrypt($value, $this->cipher, hex2bin($this->key), OPENSSL_RAW_DATA, $iv);
-
-        $payload = [
-            'iv' => base64_encode($iv),
-            'value' => base64_encode($encrypted),
-        ];
-
-        return base64_encode(serialize($payload));
+        $encrypted = openssl_encrypt($value, $this->cipher, $this->key, OPENSSL_RAW_DATA, $this->iv);
+        return base64_encode($encrypted);
     }
 
     /**
      * Decrypt the given payload.
      *
      * @param string $payload
-     * @param bool $unserialize
-     * @return mixed
-     * @throws \Exception
      */
-    public function decrypt($payload, $unserialize = true): mixed
+    public function decrypt(string $payload): mixed
     {
-        $payload = unserialize(base64_decode($payload));
-
-        if (!isset($payload['iv']) || !isset($payload['value'])) {
-            throw new \Exception('Invalid payload format');
-        }
-
-        $iv = base64_decode($payload['iv']);
         $decrypted = openssl_decrypt(
-            base64_decode($payload['value']),
+            base64_decode($payload),
             $this->cipher,
-            hex2bin($this->key),
+            $this->key,
             OPENSSL_RAW_DATA,
-            $iv
+            $this->iv
         );
-
-        if ($unserialize) {
-            $decrypted = unserialize($decrypted);
-        }
 
         return $decrypted;
     }
@@ -107,6 +67,12 @@ class CustomEncrypter implements Encrypter
     public function getKey(): string
     {
         return $this->key;
+    }
+
+    private function generateAESKey($key): string
+    {
+        $keyLength = 128; // AES-256 requires a 32-byte key
+        return substr(hash('sha256', $key, true), 0, $keyLength);
     }
 }
 

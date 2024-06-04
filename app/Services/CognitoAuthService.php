@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\DTO\StudentDTO;
 use App\Enums\CognitoErrorCodes;
+use App\Helpers\CustomEncrypter;
 use App\Models\Student;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
@@ -51,14 +52,32 @@ class CognitoAuthService
             ]);
 
             // Authentication successful
-            $accessToken = $result['AuthenticationResult']['AccessToken'];
             $idToken = $result['AuthenticationResult']['IdToken'];
+            $accessToken = $result['AuthenticationResult']['AccessToken'];
             $refreshToken = $result['AuthenticationResult']['RefreshToken'];
+
+            $decodedIdToken = $this->decodeToken($idToken);
+            $decodedAccessToken = $this->decodeToken($accessToken);
+            $decodedRefreshToken = $this->decodeToken($refreshToken);
+
+            $idTokenCookie = ['idToken' => ['jwtToken' => $idToken, 'expiryTime' => $decodedIdToken->claims['exp']]];
+            $accessTokenCookie = ['accessToken' => ['jwtToken' => $accessToken, 'expiryTime' => $decodedAccessToken->claims['exp']]];
+            $refreshTokenCookie = ['refreshToken' => ['token' => $refreshToken]];
+
+            $encrypterVersion = config('app.encryption_version');
+            $encryptionKey = ($encrypterVersion === 'V1') ? config('app.encryption_key_v1') : config('app.encryption_key_v2');
+
+            $encrypter = new CustomEncrypter($encryptionKey);
+
+            $encryptedVersionCookie = $encrypter->encrypt($encrypterVersion);
+            $encryptedIdTokenCookie = $encrypter->encrypt(json_encode($idTokenCookie));
+            $encryptedAccessTokenCookie = $encrypter->encrypt(json_encode($accessTokenCookie));
+            $encryptedRefreshTokenCookie = $encrypter->encrypt(json_encode($refreshTokenCookie));
 
             Cookie::queue(
                 Cookie::make(
                     config('app.cookie_name.version'),
-                    config('app.encryption_version'),
+                    $encryptedVersionCookie,
                     time()+(3600*24*365),
                     "/",
                     config('app.cookie_domain'),
@@ -69,7 +88,7 @@ class CognitoAuthService
             Cookie::queue(
                 Cookie::make(
                     config('app.cookie_name.access_token'),
-                    $accessToken,
+                    $encryptedAccessTokenCookie,
                     time()+300,
                     "/",
                     config('app.cookie_domain'),
@@ -80,7 +99,7 @@ class CognitoAuthService
             Cookie::queue(
                 Cookie::make(
                     config('app.cookie_name.refresh_token'),
-                    $refreshToken,
+                    $encryptedRefreshTokenCookie,
                     time()+(3600*24*365),
                     "/",
                     config('app.cookie_domain'),
@@ -91,7 +110,7 @@ class CognitoAuthService
             Cookie::queue(
                 Cookie::make(
                     config('app.cookie_name.id_token'),
-                    $idToken,
+                    $encryptedIdTokenCookie,
                     time()+300,
                     "/",
                     config('app.cookie_domain'),
@@ -401,7 +420,7 @@ class CognitoAuthService
         return $userAttributes;
     }
 
-    public function decode_token($token): JOSE_JWT|\JOSE_JWE
+    public function decodeToken($token): JOSE_JWT|\JOSE_JWE
     {
         try {
             $jwt = JOSE_JWT::decode($token);
