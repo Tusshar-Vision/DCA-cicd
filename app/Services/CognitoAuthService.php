@@ -83,6 +83,28 @@ class CognitoAuthService
         }
     }
 
+    function refreshTokenAuthentication($refreshToken) {
+        try {
+            $result = $this->client->initiateAuth([
+                'UserPoolId' => $this->user_pool_id,
+                'ClientId' => $this->client_id,
+                'AuthFlow' => 'REFRESH_TOKEN_AUTH',
+                'AuthParameters' => [
+                    'REFRESH_TOKEN' => $refreshToken,
+                ],
+            ]);
+
+            // Extract the new tokens from the result
+            $tokens = $result->get('AuthenticationResult');
+
+        } catch (\Exception $e) {
+            // Handle the error
+            $tokens['error'] = "Exception Occured";
+            // echo $e->getMessage();exit;
+        }
+        return $tokens;
+    }
+
     /**
      * Registers a user in the given user pool
      *
@@ -274,6 +296,22 @@ class CognitoAuthService
         return $user;
     }
 
+    public function getUserFromToken($access_token): array
+    {
+        try {
+            $user = $this->client->getUser([
+                'AccessToken' => $access_token,
+            ]);
+            // echo 'User is still logged in';
+            return ['status' => TRUE, 'data' => $user];
+
+        } catch (\Exception $e) {
+            // echo 'User has been logged out';
+            return ['status' => FALSE, 'message' => "User has been logged out"];
+
+        }
+    }
+
     /**
      * @throws \Exception
      */
@@ -315,5 +353,16 @@ class CognitoAuthService
         }
 
         return $userAttributes;
+    }
+
+    public function decode_token($token) {
+        try{
+            $jwt = JOSE_JWT::decode($token);
+        }
+        catch(\Exception $e){
+            $jwt = (object)[];
+            $jwt->error = "Exception Occured";
+        }
+        return $jwt;
     }
 }
