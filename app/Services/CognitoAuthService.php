@@ -9,7 +9,7 @@ use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Aws\Credentials\Credentials;
 use Aws\Result;
-use Illuminate\Log\Logger;
+use JOSE_JWT;
 
 class CognitoAuthService
 {
@@ -355,8 +355,9 @@ class CognitoAuthService
         return $userAttributes;
     }
 
-    public function decode_token($token) {
-        try{
+    public function decode_token($token): JOSE_JWT|\JOSE_JWE
+    {
+        try {
             $jwt = JOSE_JWT::decode($token);
         }
         catch(\Exception $e){
