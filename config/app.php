@@ -65,6 +65,21 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
+    'encryption_version' => env('ACTIVE_ENCRYPTION_VERSION', 'V2'),
+
+    'encryption_key_v1' => env('COGNITO_ENCRYPTION_KEY_V1', 'VisionIas'),
+
+    'encryption_key_v2' => env('COGNITO_ENCRYPTION_KEY_V2', 'VisionIas'),
+
+    'cookie_domain' => env('COOKIE_DOMAIN', '.visionias.in'),
+
+    'cookie_name' => [
+        'version' => env('COOKIE_VERSION', 'VI_T1PAPSID'),
+        'access_token' => env('COOKIE_ACCESS_TOKEN', 'VI_T2PAPSID'),
+        'refresh_token' => env('COOKIE_REFRESH_TOKEN', 'VI_T3PAPSID'),
+        'id_token' => env('COOKIE_ID_TOKEN', 'VI_T4PAPSID'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

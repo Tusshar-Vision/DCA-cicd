@@ -17,6 +17,7 @@ use App\Services\ArticleService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -345,5 +346,26 @@ class UserController extends Controller
         //     ->get();;
 
         return response()->json($notes);
+    }
+
+    public function logout()
+    {
+        try {
+            auth('cognito')->logout();
+        } catch (\Exception $e) {
+            logger($e);
+        }
+
+        Cookie::queue(Cookie::forget(config('app.cookie_name.version')));
+        Cookie::queue(Cookie::forget(config('app.cookie_name.access_token')));
+        Cookie::queue(Cookie::forget(config('app.cookie_name.refresh_token')));
+        Cookie::queue(Cookie::forget(config('app.cookie_name.id_token')));
+
+        if (config('app.env') === 'production') {
+            if(config('app.prefix_url') === '/current-affairs') {
+                return redirect()->to('https://visionias.in/');
+            }
+        }
+        return redirect()->route('home');
     }
 }
