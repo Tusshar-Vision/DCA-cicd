@@ -67,9 +67,9 @@ return [
 
     'encryption_version' => env('ACTIVE_ENCRYPTION_VERSION', 'V2'),
 
-    'encryption_key_v1' => env('COGNITO_ENCRYPTION_KEY_V1'),
+    'encryption_key_v1' => env('COGNITO_ENCRYPTION_KEY_V1', 'VisionIas'),
 
-    'encryption_key_v2' => env('COGNITO_ENCRYPTION_KEY_V2'),
+    'encryption_key_v2' => env('COGNITO_ENCRYPTION_KEY_V2', 'VisionIas'),
 
     'cookie_domain' => env('COOKIE_DOMAIN', '.visionias.in'),
 
