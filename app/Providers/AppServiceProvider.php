@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->app->bind(CustomEncrypter::class, function() {
-            return new CustomEncrypter(config('app.encryption_key_v2'));
+            return new CustomEncrypter();
         });
     }
 

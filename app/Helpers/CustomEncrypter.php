@@ -10,9 +10,9 @@ class CustomEncrypter
     /**
      * The encryption key.
      *
-     * @var string
+     * @var string|null
      */
-    protected string $key;
+    protected string|null $key;
 
     /**
      * The algorithm used for encryption.
@@ -23,22 +23,27 @@ class CustomEncrypter
 
     protected string $iv;
 
-    public function __construct(string $key = 'VisionIas', string $cipher = 'AES-256-CBC', string  $iv = '61c3a8b52f8574b3')
+    public function __construct(string $cipher = 'AES-256-CBC', string  $iv = '61c3a8b52f8574b3')
     {
         $this->cipher = $cipher;
         $this->iv = $iv;
-        $this->setEncryptionKey($key);
+        $this->key = null;
     }
 
     /**
      * Encrypt the given value.
      *
      * @param mixed $value
+     * @param string $key
      * @return string
      */
-    public function encryptData(mixed $value): string
+    public function encryptData(mixed $value, string $key): string
     {
-        $encrypted = openssl_encrypt($value, $this->cipher, $this->key, OPENSSL_RAW_DATA, $this->iv);
+        $encrypted = openssl_encrypt(
+            $value,
+            $this->cipher,
+            $this->key ?? $this->generateAESKey($key),
+            OPENSSL_RAW_DATA, $this->iv);
         return base64_encode($encrypted);
     }
 
@@ -46,19 +51,18 @@ class CustomEncrypter
      * Decrypt the given payload.
      *
      * @param string $payload
+     * @param string $key
      * @return string|false
      */
-    public function decryptData(string $payload): string|false
+    public function decryptData(string $payload, string $key): string|false
     {
-        $decrypted = openssl_decrypt(
+        return openssl_decrypt(
             base64_decode($payload),
             $this->cipher,
-            $this->key,
+            $this->key ?? $this->generateAESKey($key),
             OPENSSL_RAW_DATA,
             $this->iv
         );
-
-        return $decrypted;
     }
 
     /**
@@ -75,9 +79,9 @@ class CustomEncrypter
     /**
      * Get the encryption key.
      *
-     * @return string
+     * @return string|null
      */
-    public function getKey(): string
+    public function getEncryptionKey(): string|null
     {
         return $this->key;
     }
@@ -100,34 +104,42 @@ class CustomEncrypter
         $instance->setEncryptionKey($key);
     }
 
+    public static function getKey(): string|null
+    {
+        $instance = App::make(CustomEncrypter::class);
+        return $instance->getEncryptionKey();
+    }
+
     public static function resetKey(): void
     {
         $instance = App::make(CustomEncrypter::class);
-        $instance->setEncryptionKey(config('app.encryption_key_v2'));
+        $instance->key = null;
     }
 
     /**
      * Static method to encrypt a value.
      *
      * @param mixed $value
+     * @param string $key
      * @return string
      */
-    public static function encrypt(mixed $value): string
+    public static function encrypt(mixed $value, string $key = 'VisionIas'): string
     {
         $instance = App::make(CustomEncrypter::class);
-        return $instance->encryptData($value);
+        return $instance->encryptData($value, $key);
     }
 
     /**
      * Static method to decrypt a payload.
      *
      * @param string $payload
+     * @param string $key
      * @return string|false
      */
-    public static function decrypt(string $payload): string|false
+    public static function decrypt(string $payload, string $key = 'VisionIas'): string|false
     {
         $instance = App::make(CustomEncrypter::class);
-        return $instance->decryptData($payload);
+        return $instance->decryptData($payload, $key);
     }
 }
 
