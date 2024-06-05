@@ -11,6 +11,7 @@ use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Aws\Credentials\Credentials;
 use Aws\Result;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Http;
 use JOSE_JWT;
 
 class CognitoAuthService
@@ -58,7 +59,6 @@ class CognitoAuthService
 
             $decodedIdToken = $this->decodeToken($idToken);
             $decodedAccessToken = $this->decodeToken($accessToken);
-            $decodedRefreshToken = $this->decodeToken($refreshToken);
 
             $idTokenCookie = ['idToken' => ['jwtToken' => $idToken, 'expiryTime' => $decodedIdToken->claims['exp']]];
             $accessTokenCookie = ['accessToken' => ['jwtToken' => $accessToken, 'expiryTime' => $decodedAccessToken->claims['exp']]];
@@ -78,7 +78,7 @@ class CognitoAuthService
                 Cookie::make(
                     config('app.cookie_name.version'),
                     $encryptedVersionCookie,
-                    time()+(3600*24*365),
+                    525600,
                     "/",
                     config('app.cookie_domain'),
                     false,
@@ -89,7 +89,7 @@ class CognitoAuthService
                 Cookie::make(
                     config('app.cookie_name.access_token'),
                     $encryptedAccessTokenCookie,
-                    time()+300,
+                    5,
                     "/",
                     config('app.cookie_domain'),
                     false,
@@ -100,7 +100,7 @@ class CognitoAuthService
                 Cookie::make(
                     config('app.cookie_name.refresh_token'),
                     $encryptedRefreshTokenCookie,
-                    time()+(3600*24*365),
+                    525600,
                     "/",
                     config('app.cookie_domain'),
                     false,
@@ -111,13 +111,15 @@ class CognitoAuthService
                 Cookie::make(
                     config('app.cookie_name.id_token'),
                     $encryptedIdTokenCookie,
-                    time()+300,
+                    5,
                     "/",
                     config('app.cookie_domain'),
                     false,
                     false
                 )
             );
+
+            $this->syncToken($refreshToken, $idToken);
 
             $studentData = $this->getUser($idToken);
 
@@ -347,7 +349,7 @@ class CognitoAuthService
     public function getUser(string $token): false|array
     {
         try {
-            $response = \Http::withHeaders([
+            $response = Http::withHeaders([
                 'Bearer' => $token,
                 'Content-Type' => 'application/json',
             ])->get(config('app.vision_api') . '/user/details');
@@ -359,6 +361,39 @@ class CognitoAuthService
         }
 
         return $user;
+    }
+
+    private function syncToken(string $refreshToken, string $idToken): void
+    {
+        try {
+            $response = Http::withHeaders([
+                'Bearer' => $idToken,
+                'Content-Type' => 'application/json',
+            ])->post(config('app.vision_api') . '/auth/token/sync', [
+                'refresh_token' => $refreshToken,
+            ]);
+
+            if ($response->successful()) {
+                $data = $response->json();
+            } else {
+                $statusCode = $response->status();
+                $errorBody = $response->body();
+            }
+        } catch (\Exception $exception) {
+            logger($exception);
+        }
+    }
+
+    public function decodeToken($token): JOSE_JWT|\JOSE_JWE
+    {
+        try {
+            $jwt = JOSE_JWT::decode($token);
+        }
+        catch(\Exception $e){
+            $jwt = (object)[];
+            $jwt->error = "Exception Occured";
+        }
+        return $jwt;
     }
 
     public function getUserFromToken($access_token): array
@@ -418,17 +453,5 @@ class CognitoAuthService
         }
 
         return $userAttributes;
-    }
-
-    public function decodeToken($token): JOSE_JWT|\JOSE_JWE
-    {
-        try {
-            $jwt = JOSE_JWT::decode($token);
-        }
-        catch(\Exception $e){
-            $jwt = (object)[];
-            $jwt->error = "Exception Occured";
-        }
-        return $jwt;
     }
 }
