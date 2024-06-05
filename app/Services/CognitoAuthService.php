@@ -155,8 +155,9 @@ class CognitoAuthService
             $tokens = $result->get('AuthenticationResult');
 
         } catch (\Exception $e) {
-            return redirect()->route('logout');
+            $tokens['error'] = "Exception Occured";
         }
+
         return $tokens;
     }
 
