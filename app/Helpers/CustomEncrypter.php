@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use Illuminate\Support\Facades\App;
 use Random\RandomException;
 
 class CustomEncrypter
@@ -24,9 +25,9 @@ class CustomEncrypter
 
     public function __construct(string $key = 'VisionIas', string $cipher = 'AES-256-CBC', string  $iv = '61c3a8b52f8574b3')
     {
-        $this->key = $this->generateAESKey($key);
         $this->cipher = $cipher;
         $this->iv = $iv;
+        $this->setEncryptionKey($key);
     }
 
     /**
@@ -35,7 +36,7 @@ class CustomEncrypter
      * @param mixed $value
      * @return string
      */
-    public function encrypt(mixed $value): string
+    public function encryptData(mixed $value): string
     {
         $encrypted = openssl_encrypt($value, $this->cipher, $this->key, OPENSSL_RAW_DATA, $this->iv);
         return base64_encode($encrypted);
@@ -45,8 +46,9 @@ class CustomEncrypter
      * Decrypt the given payload.
      *
      * @param string $payload
+     * @return string|false
      */
-    public function decrypt(string $payload): mixed
+    public function decryptData(string $payload): string|false
     {
         $decrypted = openssl_decrypt(
             base64_decode($payload),
@@ -57,6 +59,17 @@ class CustomEncrypter
         );
 
         return $decrypted;
+    }
+
+    /**
+     * Set the encryption key.
+     *
+     * @param string $key
+     * @return void
+     */
+    public function setEncryptionKey(string $key): void
+    {
+        $this->key = $this->generateAESKey($key);
     }
 
     /**
@@ -71,8 +84,50 @@ class CustomEncrypter
 
     private function generateAESKey($key): string
     {
-        $keyLength = 128; // AES-256 requires a 32-byte key
+        $keyLength = 128;
         return substr(hash('sha256', $key, true), 0, $keyLength);
+    }
+
+    /**
+     * Static method to set the encryption key.
+     *
+     * @param string $key
+     * @return void
+     */
+    public static function setKey(string $key): void
+    {
+        $instance = App::make(CustomEncrypter::class);
+        $instance->setEncryptionKey($key);
+    }
+
+    public static function resetKey(): void
+    {
+        $instance = App::make(CustomEncrypter::class);
+        $instance->setEncryptionKey(config('app.encryption_key_v2'));
+    }
+
+    /**
+     * Static method to encrypt a value.
+     *
+     * @param mixed $value
+     * @return string
+     */
+    public static function encrypt(mixed $value): string
+    {
+        $instance = App::make(CustomEncrypter::class);
+        return $instance->encryptData($value);
+    }
+
+    /**
+     * Static method to decrypt a payload.
+     *
+     * @param string $payload
+     * @return string|false
+     */
+    public static function decrypt(string $payload): string|false
+    {
+        $instance = App::make(CustomEncrypter::class);
+        return $instance->decryptData($payload);
     }
 }
 

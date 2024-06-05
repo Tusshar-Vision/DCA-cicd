@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -356,10 +357,18 @@ class UserController extends Controller
             logger($e);
         }
 
-        Cookie::queue(Cookie::forget(config('app.cookie_name.version')));
-        Cookie::queue(Cookie::forget(config('app.cookie_name.access_token')));
-        Cookie::queue(Cookie::forget(config('app.cookie_name.refresh_token')));
-        Cookie::queue(Cookie::forget(config('app.cookie_name.id_token')));
+        $cookiesToForget = [
+            config('app.cookie_name.version'),
+            config('app.cookie_name.access_token'),
+            config('app.cookie_name.refresh_token'),
+            config('app.cookie_name.id_token')
+        ];
+
+        foreach ($cookiesToForget as $cookieName) {
+            Cookie::queue(Cookie::forget($cookieName, '/', config('app.cookie_domain')));
+        }
+
+        Session::flush();
 
         if (config('app.env') === 'production') {
             if(config('app.prefix_url') === '/current-affairs') {

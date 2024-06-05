@@ -65,14 +65,17 @@ class CognitoAuthService
             $refreshTokenCookie = ['refreshToken' => ['token' => $refreshToken]];
 
             $encrypterVersion = config('app.encryption_version');
-            $encryptionKey = ($encrypterVersion === 'V1') ? config('app.encryption_key_v1') : config('app.encryption_key_v2');
 
-            $encrypter = new CustomEncrypter($encryptionKey);
+            CustomEncrypter::setKey('VisionIas');
+            $encryptedVersionCookie = CustomEncrypter::encrypt($encrypterVersion);
 
-            $encryptedVersionCookie = $encrypter->encrypt($encrypterVersion);
-            $encryptedIdTokenCookie = $encrypter->encrypt(json_encode($idTokenCookie));
-            $encryptedAccessTokenCookie = $encrypter->encrypt(json_encode($accessTokenCookie));
-            $encryptedRefreshTokenCookie = $encrypter->encrypt(json_encode($refreshTokenCookie));
+            ($encrypterVersion === 'V1') ? CustomEncrypter::setKey(config('app.encryption_key_v1')) : CustomEncrypter::resetKey();
+
+            $encryptedIdTokenCookie = CustomEncrypter::encrypt(json_encode($idTokenCookie));
+            $encryptedAccessTokenCookie = CustomEncrypter::encrypt(json_encode($accessTokenCookie));
+            $encryptedRefreshTokenCookie = CustomEncrypter::encrypt(json_encode($refreshTokenCookie));
+
+            CustomEncrypter::resetKey();
 
             Cookie::queue(
                 Cookie::make(
@@ -120,20 +123,7 @@ class CognitoAuthService
             );
 
             $this->syncToken($refreshToken, $idToken);
-
-            $studentData = $this->getUser($idToken);
-
-            $studentDTO = StudentDTO::fromAwsResult($studentData['result']);
-
-            $user = Student::createOrFirst([
-                'email' => $studentDTO->email,
-            ],[
-                'first_name' => $studentDTO->first_name,
-                'last_name' => $studentDTO->last_name,
-                'mobile_number' => $studentDTO->mobile_number,
-            ]);
-
-            auth('cognito')->login($user);
+            $this->loginStudent($idToken);
 
             return true;
         } catch (CognitoIdentityProviderException $exception)
@@ -150,7 +140,7 @@ class CognitoAuthService
         }
     }
 
-    function refreshTokenAuthentication($refreshToken) {
+    public function refreshTokenAuthentication($refreshToken) {
         try {
             $result = $this->client->initiateAuth([
                 'UserPoolId' => $this->user_pool_id,
@@ -165,11 +155,26 @@ class CognitoAuthService
             $tokens = $result->get('AuthenticationResult');
 
         } catch (\Exception $e) {
-            // Handle the error
-            $tokens['error'] = "Exception Occured";
-            // echo $e->getMessage();exit;
+            return redirect()->route('logout');
         }
         return $tokens;
+    }
+
+    public function loginStudent(string $idToken): void
+    {
+        $studentData = $this->getUser($idToken);
+
+        $studentDTO = StudentDTO::fromAwsResult($studentData['result']);
+
+        $user = Student::createOrFirst([
+            'email' => $studentDTO->email,
+        ],[
+            'first_name' => $studentDTO->first_name,
+            'last_name' => $studentDTO->last_name,
+            'mobile_number' => $studentDTO->mobile_number,
+        ]);
+
+        auth('cognito')->login($user);
     }
 
     /**

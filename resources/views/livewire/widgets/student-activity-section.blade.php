@@ -4,8 +4,11 @@
         <div class="activity-tab-left-itmes w-full lg:w-2/6">
             <div class="flex justify-between relative">
                 <p class="vi-tab-title">Reading History</p>
-                <div class="student-search-field-container">
+                <div class="student-search-field-container relative">
                     <input id="history-searchbox" type="search" placeholder="Search" class="student-search-field dark:bg-dark545557 border-[#686E70] dark:text-white">
+                    <span class="absolute left-[-38px] top-0 z-10 w-[38px]">
+                        <img src="{{asset('images/search.svg')}}"/>
+                    </span>
                 </div>
             </div>
             <div id="histories-container" class="vi-left-child-item-list max-h-[250px] lg:max-h-[450px] overflow-y-auto">

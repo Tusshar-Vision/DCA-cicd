@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Helpers\CustomEncrypter;
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
@@ -24,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);
         }
+
+        $this->app->bind(CustomEncrypter::class, function() {
+            return new CustomEncrypter(config('app.encryption_key_v2'));
+        });
     }
 
     /**

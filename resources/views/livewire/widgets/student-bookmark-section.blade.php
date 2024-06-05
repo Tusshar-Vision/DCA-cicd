@@ -6,7 +6,10 @@
                 <div class="my-content-search">
                     <div class="search-bar-wrapper">
                         <input id="history-searchbox" type="search" class="vi-search-bar dark:bg-dark545557 border-[#686E70] dark:text-white" placeholder="Search by article name" required="">
-                        <span class="vi-icons search"></span>
+{{--                        <span class="vi-icons search"></span>--}}
+                        <span class="absolute right-[0px] top-0 z-10 w-[38px]">
+                            <img src="{{asset('images/search-bookmark.svg')}}" alt=""/>
+                        </span>
                     </div>
                 </div>
             </div>
