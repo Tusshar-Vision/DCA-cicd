@@ -42,6 +42,10 @@ class CheckVisionCookieAndAuthenticate
 
                 $response = $this->authService->refreshTokenAuthentication($token);
 
+                if(!empty($tokens['error'])) {
+                    return redirect()->route('logout');
+                }
+
                 $accessToken = $response['AccessToken'];
                 $idToken = $response['IdToken'];
 
