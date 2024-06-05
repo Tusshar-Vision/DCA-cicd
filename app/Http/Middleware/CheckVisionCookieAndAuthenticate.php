@@ -25,16 +25,15 @@ class CheckVisionCookieAndAuthenticate
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Session::has('user_authenticated')) {
-            if ($request->hasCookie(config('app.cookie_name.version')) && $request->hasCookie(config('app.cookie_name.refresh_token'))) {
-                $encryptionVersion = 'V1';
+        if ($request->hasCookie(config('app.cookie_name.version')) && $request->hasCookie(config('app.cookie_name.refresh_token'))) {
 
-                CustomEncrypter::setKey('VisionIas');
+            if (!Session::has('user_authenticated')) {
+
+                CustomEncrypter::resetKey();
                 $encryptionVersion = CustomEncrypter::decrypt($request->cookie(config('app.cookie_name.version')));
+                $encryptionVersion = ($encryptionVersion === false) ? 'V1' : $encryptionVersion;
 
-                $encryptionVersion === 'V1'
-                    ? CustomEncrypter::setKey(config('app.encryption_key_v1'))
-                    : CustomEncrypter::resetKey();
+                CustomEncrypter::setKey(config('app.encryption_key_' . $encryptionVersion));
 
                 $refreshToken = $request->cookie(config('app.cookie_name.refresh_token'));
                 $decryptedRefreshToken = json_decode(urldecode(CustomEncrypter::decrypt($refreshToken)));
@@ -42,7 +41,7 @@ class CheckVisionCookieAndAuthenticate
 
                 $response = $this->authService->refreshTokenAuthentication($token);
 
-                if(!empty($tokens['error'])) {
+                if (!empty($response['error'])) {
                     return redirect()->route('logout');
                 }
 

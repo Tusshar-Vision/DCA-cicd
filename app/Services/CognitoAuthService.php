@@ -64,18 +64,16 @@ class CognitoAuthService
             $accessTokenCookie = ['accessToken' => ['jwtToken' => $accessToken, 'expiryTime' => $decodedAccessToken->claims['exp']]];
             $refreshTokenCookie = ['refreshToken' => ['token' => $refreshToken]];
 
-            $encrypterVersion = config('app.encryption_version');
+            $encryptionVersion = config('app.encryption_version');
 
-            CustomEncrypter::setKey('VisionIas');
-            $encryptedVersionCookie = CustomEncrypter::encrypt($encrypterVersion);
+            CustomEncrypter::resetKey();
+            $encryptedVersionCookie = CustomEncrypter::encrypt($encryptionVersion);
 
-            ($encrypterVersion === 'V1') ? CustomEncrypter::setKey(config('app.encryption_key_v1')) : CustomEncrypter::resetKey();
+            CustomEncrypter::setKey(config('app.encryption_key_' . $encryptionVersion));
 
             $encryptedIdTokenCookie = CustomEncrypter::encrypt(json_encode($idTokenCookie));
             $encryptedAccessTokenCookie = CustomEncrypter::encrypt(json_encode($accessTokenCookie));
             $encryptedRefreshTokenCookie = CustomEncrypter::encrypt(json_encode($refreshTokenCookie));
-
-            CustomEncrypter::resetKey();
 
             Cookie::queue(
                 Cookie::make(
