@@ -165,13 +165,16 @@ class CognitoAuthService
 
         $studentDTO = StudentDTO::fromAwsResult($studentData['result']);
 
-        $user = Student::createOrFirst([
-            'email' => $studentDTO->email,
-        ],[
-            'first_name' => $studentDTO->first_name,
-            'last_name' => $studentDTO->last_name,
-            'mobile_number' => $studentDTO->mobile_number,
-        ]);
+        $user = Student::updateOrCreate(
+            [
+                'email' => $studentDTO->email,
+            ],
+            [
+                'first_name' => $studentDTO->first_name,
+                'last_name' => $studentDTO->last_name,
+                'mobile_number' => $studentDTO->mobile_number,
+            ]
+        );
 
         auth('cognito')->login($user);
     }

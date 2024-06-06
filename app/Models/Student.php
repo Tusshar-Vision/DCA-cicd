@@ -6,8 +6,9 @@ use App\DTO\StudentDTO;
 use Illuminate\Foundation\Auth\User;
 use Spatie\LaravelData\WithData;
 
+
 /**
- * @method static createOrFirst(array $array, array $array1)
+ * @method static updateOrCreate(array $array, array $array1)
  */
 class Student extends User
 {
