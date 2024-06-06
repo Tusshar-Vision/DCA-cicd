@@ -5,6 +5,7 @@ namespace App\Livewire\Forms;
 use App\Enums\CognitoErrorCodes;
 use App\Services\CognitoAuthService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -30,6 +31,7 @@ class Login extends Component
         $response = $authService->authenticate($validated);
 
         if ($response === true) {
+            Session::put('user_authenticated', true);
             $url = route('home', [], true);
             if (config('app.env') === 'production') {
                 $url .= config('app.prefix_url');

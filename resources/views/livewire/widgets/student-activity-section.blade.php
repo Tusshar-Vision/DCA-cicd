@@ -5,9 +5,9 @@
             <div class="flex justify-between relative">
                 <p class="vi-tab-title">Reading History</p>
                 <div class="student-search-field-container relative">
-                    <input id="history-searchbox" type="search" placeholder="Search" class="student-search-field dark:bg-dark545557 border-[#686E70] dark:text-white">
+                    <input id="history-searchbox" type="search" placeholder="Search" class="student-search-field border-[#686E70] dark:text-white">
                     <span class="absolute left-[-38px] top-0 z-10 w-[38px]">
-                        <img src="{{asset('images/search.svg')}}"/>
+                        <img src="{{asset('images/search.svg')}}" alt=""/>
                     </span>
                 </div>
             </div>
