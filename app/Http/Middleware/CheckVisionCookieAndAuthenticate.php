@@ -16,6 +16,7 @@ class CheckVisionCookieAndAuthenticate
 
     protected array $skipRoutes = [
         'logout',
+        'livewire.update'
     ];
     public function __construct(CognitoAuthService $authService)
     {
@@ -84,7 +85,7 @@ class CheckVisionCookieAndAuthenticate
     protected function validateTokenPeriodically(Request $request, Closure $next): Response
     {
         $lastCheck = Session::get('last_token_check', 0);
-        if (time() - $lastCheck > 300) { // 300 seconds = 5 minutes
+        if (time() - $lastCheck > 30) {
             $refreshToken = $request->cookie(config('app.cookie_name.refresh_token'));
             $decryptedRefreshToken = CustomEncrypter::decrypt($refreshToken);
 

@@ -107,7 +107,6 @@ class CustomEncrypter
     public static function getKey(): string|null
     {
         $instance = App::make(CustomEncrypter::class);
-        dd($instance->getEncryptionKey());
         return $instance->getEncryptionKey();
     }
 
