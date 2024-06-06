@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(TelescopeServiceProvider::class);
         }
 
-        $this->app->bind(CustomEncrypter::class, function() {
+        $this->app->singleton(CustomEncrypter::class, function() {
             return new CustomEncrypter();
         });
     }
