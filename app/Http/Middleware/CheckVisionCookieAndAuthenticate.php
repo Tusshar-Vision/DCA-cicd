@@ -16,7 +16,6 @@ class CheckVisionCookieAndAuthenticate
 
     protected array $skipRoutes = [
         'logout',
-        'livewire.update'
     ];
     public function __construct(CognitoAuthService $authService)
     {
@@ -24,13 +23,26 @@ class CheckVisionCookieAndAuthenticate
     }
 
     /**
+     * Determine if the route is a Livewire route.
+     *
+     * @param string|null $routeName
+     * @return bool
+     */
+    protected function isLivewireOrAdminRoute(?string $routeName): bool
+    {
+        return $routeName && (str_starts_with($routeName, 'livewire.') || str_starts_with($routeName, 'horizon.'));
+    }
+    /**
      * Handle an incoming request.
      *
      * @param \Closure(Request): (Response) $next
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->route() && in_array($request->route()->getName(), $this->skipRoutes)) {
+        $routeName = $request->route() ? $request->route()->getName() : null;
+
+        // Check if the route name is in the skipRoutes array or is a Livewire route
+        if ($routeName && (in_array($routeName, $this->skipRoutes) || $this->isLivewireOrAdminRoute($routeName))) {
             return $next($request);
         }
 
