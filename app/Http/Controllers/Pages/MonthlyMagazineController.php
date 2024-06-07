@@ -12,7 +12,10 @@ use App\Models\Note;
 use App\Models\ReadHistory;
 use App\Services\DownloadService;
 use App\Services\PublishedInitiativeService;
+use Aws\CloudFront\CloudFrontClient;
+use Aws\CloudFront\UrlSigner;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class MonthlyMagazineController extends Controller
@@ -179,7 +182,7 @@ class MonthlyMagazineController extends Controller
         $month = request()->input('month');
         $pdfUrl = null;
 
-        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
+        $pdfUrl = $media?->getUrl();
 
         $data = $this->downloadService->getMonthlyMagazineArchive($year, $month);
 

@@ -39,6 +39,9 @@
         </div>
         @yield('videos')
     </x-containers.grid-wide>
+    <div class="mt-8">
+        {{ $videos->links() }}
+    </div>
 
     <script>
         document.addEventListener('livewire:navigated', () => {

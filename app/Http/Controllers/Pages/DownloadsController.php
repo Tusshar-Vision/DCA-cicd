@@ -26,7 +26,7 @@ class DownloadsController extends Controller
         $month = request()->input('month');
         $pdfUrl = null;
 
-        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
+        $pdfUrl = $media?->getUrl();
 
         $medias = $this
             ->downloadService
@@ -45,7 +45,7 @@ class DownloadsController extends Controller
         $month = request()->input('month');
         $pdfUrl = null;
 
-        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
+        $pdfUrl = $media?->getUrl();
 
         $medias = $this
             ->downloadService
@@ -64,7 +64,7 @@ class DownloadsController extends Controller
         $month = request()->input('month');
         $pdfUrl = null;
 
-        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
+        $pdfUrl = $media?->getUrl();
 
         $medias = $this
             ->downloadService
@@ -83,7 +83,7 @@ class DownloadsController extends Controller
         $month = request()->input('month');
         $pdfUrl = null;
 
-        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
+        $pdfUrl = $media?->getUrl();
 
         $medias = $this
             ->downloadService
@@ -102,7 +102,7 @@ class DownloadsController extends Controller
         $month = request()->input('month');
         $pdfUrl = null;
 
-        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
+        $pdfUrl = $media?->getUrl();
 
         $medias = $this
             ->downloadService
@@ -121,7 +121,7 @@ class DownloadsController extends Controller
         $month = request()->input('month');
         $pdfUrl = null;
 
-        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
+        $pdfUrl = $media?->getUrl();
 
         $medias = $this
             ->downloadService
@@ -140,7 +140,7 @@ class DownloadsController extends Controller
         $month = request()->input('month');
         $pdfUrl = null;
 
-        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
+        $pdfUrl = $media?->getUrl();
 
         $medias = $this
             ->downloadService
@@ -158,7 +158,7 @@ class DownloadsController extends Controller
         $year = request()->input('year');
         $pdfUrl = null;
 
-        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
+        $pdfUrl = $media?->getUrl();
 
         $medias = $this
             ->downloadService
@@ -177,7 +177,7 @@ class DownloadsController extends Controller
         $month = request()->input('month');
         $pdfUrl = null;
 
-        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
+        $pdfUrl = $media?->getUrl();
 
         $medias = $this
             ->downloadService

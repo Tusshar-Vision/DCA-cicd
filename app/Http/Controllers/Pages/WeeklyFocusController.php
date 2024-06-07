@@ -128,7 +128,7 @@ class WeeklyFocusController extends Controller
         $month = request()->input('month');
         $pdfUrl = null;
 
-        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
+        $pdfUrl = $media?->getUrl();
 
         $data = $this->downloadService->getWeeklyFocusArchive($year, $month);
 

@@ -202,7 +202,7 @@ class NewsTodayController extends Controller
         $month = request()->input('month');
         $pdfUrl = null;
 
-        $pdfUrl = $media?->getTemporaryUrl(now()->add('minutes', 120));
+        $pdfUrl = $media?->getUrl();
 
         $archiveData = $this->downloadService->getNewsTodayArchive($year, $month);
 
