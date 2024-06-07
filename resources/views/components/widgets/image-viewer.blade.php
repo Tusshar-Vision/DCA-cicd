@@ -1,5 +1,5 @@
 <div id="topic-at-glance" x-data x-init="$watch('isTopicAtGlanceOpen', value => createViewer())" class="mt-3 min-h-[500px] min-w-full">
-    <img style="display: none" id="image" src="{{ $image?->media?->first()?->getTemporaryUrl(now()->add('minutes', 120)) }}"  alt="{{ $image?->title }}"/>
+    <img style="display: none" id="image" src="{{ $image?->media?->first()?->getUrl() }}"  alt="{{ $image?->title }}"/>
 </div>
 
 <script>

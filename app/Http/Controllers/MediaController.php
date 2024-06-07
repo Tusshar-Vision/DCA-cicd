@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Response;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -30,9 +31,8 @@ class MediaController extends Controller
     {
         $name = $media->name . '.' . $media->extension;
 
-        // Generate a pre-signed URL with a temporary access token
-        $temporaryUrl = $media->getTemporaryUrl(now()->add('minutes', 5));
-        $response = \Http::timeout(60)->get($temporaryUrl);
+        $temporaryUrl = $media->getUrl();
+        $response = Http::timeout(60)->get($temporaryUrl);
 
         return \response($response->body(), 200, [
            'Content-Type' => 'application/pdf',
