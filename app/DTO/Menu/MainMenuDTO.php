@@ -15,7 +15,7 @@ class MainMenuDTO extends Data implements Wireable
     public function __construct(
         public string $name,
         public string $publishedAt,
-
+        public string|null $publicationDate,
         #[DataCollectionOf(SideMenuDTO::class)]
         public DataCollection $article
     ) {
@@ -24,8 +24,9 @@ class MainMenuDTO extends Data implements Wireable
     public static function fromArray($payloads): static
     {
         return new self(
-            $payloads['name'] ?? $payloads['name'],
+            $payloads['name'],
             $payloads['published_at'] ?? $payloads['publishedAt'],
+            $payloads['publication_date'] ?? $payloads['publicationDate'],
             SideMenuDTO::collection($payloads['articles'] ?? $payloads['article'])
         );
     }

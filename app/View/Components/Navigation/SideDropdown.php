@@ -40,7 +40,7 @@ class SideDropdown extends Component
             foreach ($this->menuData[1] as $key => $initiative) {
                 $dataToRender[] = [
                     'date' => Carbon::parse($initiative->publishedAt)->format('Y-m-d'),
-                    'title' => $initiative->name,
+                    'title' => Carbon::parse($initiative->publicationDate)->format('F'),
                     'topic' => $initiative->article->first()->topic,
                     'slug' => $initiative->article->first()->slug
                 ];
