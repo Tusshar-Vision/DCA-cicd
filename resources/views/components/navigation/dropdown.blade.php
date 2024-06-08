@@ -10,13 +10,16 @@
        {{-- <x-buttons.primary button-text="{!! $buttonText !!}" button-link="{{ $buttonLink }}"  />  --}}
            <p class="text-sm flex py-[15px] font-medium">Latest Edition</p>
 
-           @if(
-                $menuData['initiative_id'] === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS) ||
-                $menuData['initiative_id'] === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE)
-           )
+           @if($menuData['initiative_id'] === InitiativesHelper::getInitiativeID(Initiatives::WEEKLY_FOCUS))
                 <a class="text-sm flex pb-[15px] font-medium brand-color" href="{{ $buttonLink }}" wire:navigate>
                     <p>
                         {{  $menuData['data'][array_key_first($menuData['data'])][0]->name ?? "" }}
+                    </p>
+                </a>
+           @elseif($menuData['initiative_id'] === InitiativesHelper::getInitiativeID(Initiatives::MONTHLY_MAGAZINE))
+                <a class="text-sm flex pb-[15px] font-medium brand-color" href="{{ $buttonLink }}" wire:navigate>
+                    <p>
+                        {{ Carbon::parse($menuData['data'][array_key_first($menuData['data'])][0]->publicationDate)->monthName }}
                     </p>
                 </a>
            @endif

@@ -87,7 +87,23 @@ class CheckVisionCookieAndAuthenticate
         $response = $this->processToken($decryptedRefreshToken);
 
         if (!empty($response['error'])) {
-            return redirect()->route('logout');
+            $cookiesToForget = [
+                config('app.cookie_name.version'),
+                config('app.cookie_name.access_token'),
+                config('app.cookie_name.refresh_token'),
+                config('app.cookie_name.id_token')
+            ];
+
+            foreach ($cookiesToForget as $cookieName) {
+                Cookie::queue(Cookie::forget($cookieName, '/', config('app.cookie_domain')));
+            }
+
+            if (config('app.env') === 'production') {
+                if(config('app.prefix_url') === '/current-affairs') {
+                    return redirect()->to('https://visionias.in/');
+                }
+            }
+            return redirect()->route('home');
         }
 
         $this->setAuthCookiesAndSession($response);

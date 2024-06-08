@@ -3,6 +3,7 @@
     use App\Enums\Initiatives;
     use App\Helpers\UrlHelper;
     use Carbon\Carbon;
+    use App\Services\ArticleService;
 @endphp
 
 <!-- responsive menu start -->
@@ -63,19 +64,11 @@
                                     <ul>
                                         @foreach($menuDTO as $key => $menu)
                                             <li>
-                                                <a href="{{ route(
-                                                                'monthly-magazine.article',
-                                                                [
-                                                                    'date' => Carbon::parse($menu->publishedAt)->format('Y-m-d'),
-                                                                    'topic' => strtolower($menu->article->first()->topic),
-                                                                    'article_slug' => $menu->article->first()->slug
-                                                                ]
-                                                            )
-                                                        }}"
+                                                <a href="{{ ArticleService::getArticleUrlFromSlug($menu->article?->first()?->slug) }}"
                                                    class="text-sm block px-[15px] mb-[10px]"
                                                    wire:navigate
                                                 >
-                                                    {{ Carbon::parse($menu->publishedAt)->monthName }}
+                                                    {{ Carbon::parse($menu->publicationDate)->monthName }}
                                                 </a>
                                             </li>
                                         @endforeach
@@ -119,16 +112,7 @@
                                     @foreach($menuDTO as $key => $menu)
                                         <ul>
                                             <li>
-                                                <a href="{{
-                                                        route(
-                                                            'weekly-focus.article',
-                                                            [
-                                                                'date' => Carbon::parse($menu->publishedAt)->format('Y-m-d'),
-                                                                'topic' => strtolower($menu->article->first()->topic),
-                                                                'article_slug' => $menu->article->first()->slug
-                                                            ]
-                                                        )
-                                                    }}"
+                                                <a href="{{ ArticleService::getArticleUrlFromSlug($menu->article?->first()?->slug) }}"
                                                    class="text-sm block px-[15px] mb-[10px]"
                                                    wire:navigate
                                                 >
