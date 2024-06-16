@@ -61,9 +61,7 @@
         <meta name="keywords" content="vision ias, upsc coaching, current affairs, daily news, ias preparation, best upsc website, ias study material, ias preparation, best ias coaching, best upsc coaching, top ias institute, upsc online live classes, upsc exam, online ias preparation, upsc prelims preparation, upsc question bank, top UPSC Institute, online ias coaching classes, prelims / mains online offline classes, best prelims test series, online test classes for ias, upsc syllabus, prelims test series, mains test series, current affairs for upsc, upsc toppers answer copy">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Stay Updated with Current Affairs at Vision IAS - India's Best UPSC Coaching Institute">
-        <meta property="og:url" content="https://www.visionias.in/">
-        <meta property="og:image" content="https://www.visionias.in/og-image.jpg">
-        <meta property="og:site_name" content="Vision IAS">
+        <meta property="og:site_name" content="Vision IAS | Current Affairs">
         <meta property="og:description" content="Stay ahead with Vision IAS, India's premier UPSC coaching institute, offering comprehensive coverage of Current Affairs. Join our Offline & Online General Studies Foundation Course, with One-to-One Mentoring & All India Test Series.">
 
         <meta name="twitter:card" content="Best IAS coaching institute in India">
@@ -71,8 +69,7 @@
         <meta name="twitter:creator" content="@Vision_IAS">
         <meta name="facebook-domain-verification" content="bwv5x7e78fxfcbzaxf5c2vpgs1wfql">
 
-        <!-- CSS only -->
-        <link rel="canonical" href="https://visionias.in/">
+        <link rel="canonical" href="{{ config('app.url') . '/' . request()->path() }}">
 
         <title>@yield('title')</title>
         <style>
