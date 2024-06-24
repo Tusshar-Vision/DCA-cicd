@@ -19,10 +19,6 @@ php artisan scout:sync-index-settings
 
 
 # Copy precompiled assets to the public directory if they do not exist
-for file in /app/public_compiled/*; do
-  if [ ! -f "/app/public/$(basename "$file")" ]; then
-    cp "$file" /app/public/
-  fi
-done
+cp /app/public_compiled/* /app/public/
 
 exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
