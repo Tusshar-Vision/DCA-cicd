@@ -13,7 +13,7 @@
         <div class="search-bar-wrapper">
             <span class="vi-icons search"></span>
             <label>
-                <input @keydown.enter="navigateToSearchPage" x-model="query" type="search " class="vi-search-bar focus dark:bg-dark545557 border-[#686E70]" placeholder="Search" value="{{ $query }}" required>
+                <input @keydown.enter="navigateToSearchPage" x-model="query" type="search" class="vi-search-bar focus dark:bg-dark545557 border-[#686E70]" placeholder="Search" value="{{ $query }}" required>
             </label>
 {{--            <ul class="w-full absolute left-0 top-[40px] py-2 border-[#ddd] border-2 rounded bg-white hidden updatedText">--}}
 {{--                <li class="py-1 cursor-pointer px-2 hover:bg-[#F4F6FC]">Search 1</li>--}}
