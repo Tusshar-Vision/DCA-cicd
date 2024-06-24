@@ -10,6 +10,7 @@ services:
             - "8000:8000"
         volumes:
             - ./storage:/app/storage
+            - ./public:/app/public
         networks:
             - app-network
         depends_on:

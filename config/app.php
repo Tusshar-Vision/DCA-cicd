@@ -57,6 +57,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'base_url' => env('BASE_URL', 'https://visionias.in'),
+
     'vision_url' => env('VISION_URL', 'https://visionias.in'),
 
     'prefix_url' => env('PREFIX_URL', ''),

@@ -32,7 +32,7 @@ class GenerateSitemap extends Command
 
         $sitemap = Sitemap::create();
 
-        $baseUrl = config('app.url');
+        $baseUrl = config('app.base_url');
         $prefix = config('app.prefix_url');
         $baseUrl .= $prefix;
 

@@ -36,6 +36,9 @@ COPY . .
 COPY --from=node /app/public ./public
 COPY --from=node /app/node_modules ./node_modules
 
+# Copy the compiled assets to a temporary location
+RUN cp -r public /app/public_compiled
+
 # Copy configuration files
 COPY infrastructure/configuration/supervisor/*.conf /etc/supervisor/conf.d/
 COPY infrastructure/configuration/php/php-production.ini "$PHP_INI_DIR/php.ini"
