@@ -1,7 +1,7 @@
 @use('App\Helpers\SvgIconsHelper')
 
 <!-- Slider main container -->
-<div class="swiper swiper-featured w-full">
+<div class="swiper swiper-featured w-[100%] lg:w-[60%] xl:w-[75%]">
     <!-- Additional required wrapper -->
     <div class="swiper-wrapper">
         <!-- Slides -->

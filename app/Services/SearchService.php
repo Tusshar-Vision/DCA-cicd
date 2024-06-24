@@ -12,13 +12,13 @@ class SearchService
 
     public function search(string $query, int $limit = 10, int $initiative_id = null, $date = null): Collection|array|LengthAwarePaginator
     {
-        $query = Article::search($query)->take($limit);
+        $dbQuery = Article::search($query)->take($limit);
 
         if ($initiative_id) {
-            $query = $query->where('initiative_id', $initiative_id);
+            $dbQuery = $dbQuery->where('initiative_id', $initiative_id);
         }
 
-        return $query->get();
+        return $dbQuery->get();
     }
 
     public function searchArticles() {

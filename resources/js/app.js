@@ -35,7 +35,7 @@ function initializeSwiper() {
                 slidesPerView: 3,
             },
             1536: {
-                slidesPerView: 3,
+                slidesPerView: 5,
             }
         },
 
@@ -73,7 +73,7 @@ function initializeInitiativeSwiper() {
                 slidesPerGroup: 3,
             },
             1024: {
-                slidesPerView: 5,
+                slidesPerView: 3,
                 slidesPerGroup: 3,
             },
             1280: {
@@ -81,7 +81,7 @@ function initializeInitiativeSwiper() {
                 slidesPerGroup: 3,
             },
             1536: {
-                slidesPerView: 5,
+                slidesPerView: 6,
                 slidesPerGroup: 3,
             }
         },

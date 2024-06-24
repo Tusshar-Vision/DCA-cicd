@@ -36,7 +36,7 @@
     }
 </style>
 
-<div x-data="{ isAnnouncementsModalOpen: false, isAnnouncementsSelected: true, isLatestNewsSelected: false }" class="vi-highlights-sidebar w-full lg:w-auto">
+<div x-data="{ isAnnouncementsModalOpen: false, isAnnouncementsSelected: true, isLatestNewsSelected: false }" class="vi-highlights-sidebar lg:w-auto w-[100%]">
     <div class="vi-announcement-wrap w-full lg:w-auto">
         <div class="flex justify-between items-center">
             <h5 class="vi-sidebar-title">What’s New</h5>

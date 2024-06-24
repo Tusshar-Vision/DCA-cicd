@@ -354,7 +354,7 @@ class UserController extends Controller
         try {
             auth('cognito')->logout();
         } catch (\Exception $e) {
-            logger($e);
+           // logger($e);
         }
 
         $cookiesToForget = [
