@@ -15,7 +15,7 @@ class ArticleNotFoundException extends Exception
      */
     public function report(): void
     {
-        Log::error('No Published Initiative got returned, received null instead.');
+        // Log::error($this->getMessage());
     }
 
     /**

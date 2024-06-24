@@ -54,12 +54,7 @@ readonly class PublishedInitiativeService
 
         throw_if(
             $publishedInitiative === null,
-            new PublishedInitiativeNotFoundException('There is no latest PublishedInitiative for ' . $initiativeId)
-        );
-
-        throw_if(
-            $publishedInitiative->articles->isEmpty(),
-            new ArticleNotFoundException('There are no articles for ' . $initiativeId)
+            new PublishedInitiativeNotFoundException('There is no latest PublishedInitiative for initiative ID: ' . $initiativeId)
         );
 
         return $publishedInitiative;

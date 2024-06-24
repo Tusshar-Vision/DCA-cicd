@@ -16,7 +16,7 @@ class SearchController extends Controller
 
     public function index(Request $request)
     {
-        $query = $request->get('query');
+        $query = $request->get('query') ?? '';
         $limit = 20;
 
         $initiative_id = $request->get('initiative');
