@@ -16,9 +16,6 @@ php artisan view:cache
 php artisan icons:cache
 php artisan filament:cache-components
 php artisan scout:sync-index-settings
-
-
-# Copy precompiled assets to the public directory if they do not exist
-cp /app/public_compiled/* /app/public/
+php artisan sitemap:generate
 
 exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
