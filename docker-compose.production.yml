@@ -1,0 +1,59 @@
+services:
+    web:
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        entrypoint: ["/app/infrastructure/scripts/entrypoint.sh"]
+        restart: always
+        container_name: ca-server
+        ports:
+            - "8000:8000"
+        volumes:
+            - ./storage:/app/storage
+        networks:
+            - app-network
+        depends_on:
+            # - db
+            - memcached
+            - meilisearch
+            - redis
+
+    memcached:
+        image: memcached:1.6.27-alpine
+        container_name: ca-memcached
+        networks:
+            - app-network
+        volumes:
+            - ./infrastructure/configuration/memcache/memcached.conf:/etc/memcached.conf
+        entrypoint: ["memcached", "-C", "/etc/memcached.conf"]
+
+    meilisearch:
+        image: getmeili/meilisearch:v1.8.0
+        container_name: ca-meilisearch
+        restart: unless-stopped
+        environment:
+            - http_proxy
+            - https_proxy
+            - MEILI_MASTER_KEY=${MEILISEARCH_KEY:-masterKey}
+            - MEILI_NO_ANALYTICS=${MEILI_NO_ANALYTICS:-true}
+            - MEILI_ENV=${MEILI_ENV:-development}
+            - MEILI_LOG_LEVEL
+        volumes:
+            - ~/current-affairs/meili_data:/meili_data
+        networks:
+            - app-network
+
+    redis:
+        image: redis:7.2.4-alpine
+        container_name: ca-redis
+        restart: unless-stopped
+        volumes:
+            - ~/current-affairs/redis_data:/data
+            - ./infrastructure/configuration/redis/redis-production.conf:/usr/local/etc/redis/redis.conf
+        entrypoint: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+        networks:
+            - app-network
+
+networks:
+    app-network:
+        driver: bridge

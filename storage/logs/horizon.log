@@ -1,0 +1,1264 @@
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+

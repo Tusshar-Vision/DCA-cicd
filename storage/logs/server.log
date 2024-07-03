@@ -1,0 +1,2064 @@
+
+   INFO  Server running…
+
+  Local: http://127.0.0.1:8000 
+
+  Press Ctrl+C to stop the server
+
+
+   INFO  Server running…
+
+  Local: http://127.0.0.1:8000 
+
+  Press Ctrl+C to stop the server
+
+
+   INFO  Server running…
+
+  Local: http://127.0.0.1:8000 
+
+  Press Ctrl+C to stop the server
+
+
+   INFO  Server running…
+
+  Local: http://127.0.0.1:8000 
+
+  Press Ctrl+C to stop the server
+
+
+   INFO  Server running…
+
+  Local: http://127.0.0.1:8000 
+
+  Press Ctrl+C to stop the server
+
+
+   INFO  Server running…
+
+  Local: http://127.0.0.1:8000 
+
+  Press Ctrl+C to stop the server
+
+
+   INFO  Server running…
+
+  Local: http://127.0.0.1:8000 
+
+  Press Ctrl+C to stop the server
+
+
+   INFO  Server running…
+
+  Local: http://127.0.0.1:8000 
+
+  Press Ctrl+C to stop the server
+
+
+   INFO  Server running…
+
+  Local: http://127.0.0.1:8000 
+
+  Press Ctrl+C to stop the server
+
+  200    GET / ...................................................... 962.77 ms
+  200    GET /images/current-affairs-logo-dark.svg ................... 15.08 ms
+  200    GET /images/current-affairs-logo.svg ........................ 15.33 ms
+  200    GET /build/assets/app-6ab2b92f.css .......................... 35.21 ms
+  200    GET /build/assets/app-b2736fdd.js ........................... 34.66 ms
+  200    GET /images/icons/news-today.svg ............................. 4.48 ms
+  200    GET /build/assets/app-ced4acd5.css ........................... 5.94 ms
+  200    GET /images/icons/weekly-focus.svg ........................... 1.11 ms
+  200    GET /images/icons/monthly-magazine.svg ....................... 1.72 ms
+  200    GET /images/icons/planet-vision.svg .......................... 1.74 ms
+  200    GET /images/icons/mains-365.svg .............................. 1.27 ms
+  200    GET /images/icons/quarterly-revision.svg ..................... 0.95 ms
+  200    GET /images/icons/simplified.svg ............................. 0.35 ms
+  200    GET /images/icons/pt-365.svg ................................. 9.43 ms
+  200    GET /images/icons/schemes-in-focus.svg ....................... 0.91 ms
+  200    GET /images/icons/personality-in-focus.svg ................... 0.93 ms
+  200    GET /images/icons/economic-survey.svg ........................ 0.91 ms
+  200    GET /images/icons/year-end-review.svg ........................ 1.30 ms
+  200    GET /images/icons/budget.svg ................................. 1.24 ms
+  200    GET /images/quiz-banner-background.png ....................... 1.19 ms
+  200    GET /images/LightLogo-bkp.svg ................................ 4.35 ms
+  200    GET /images/icons/in-conversation.svg ........................ 6.01 ms
+  200    GET /images/DarkLogo-bkp.svg ................................ 10.72 ms
+  200    GET / ...................................................... 882.10 ms
+  304    GET /build/assets/app-6ab2b92f.css ........................... 0.29 ms
+  304    GET /build/assets/app-ced4acd5.css ........................... 0.13 ms
+  304    GET /build/assets/app-b2736fdd.js ............................ 0.15 ms
+  200    GET /favicon.ico ............................................. 1.76 ms
+
+   INFO  Server running…
+
+  Local: http://127.0.0.1:8000 
+
+  Press Ctrl+C to stop the server
+
+  200    GET / ..................................................... 2274.22 ms
+  304    GET /build/assets/app-6ab2b92f.css .......................... 13.85 ms
+  304    GET /build/assets/app-b2736fdd.js ............................ 0.94 ms
+  304    GET /build/assets/app-ced4acd5.css ........................... 4.22 ms
+
+   INFO  Server running…
+
+  Local: http://127.0.0.1:8000 
+
+  Press Ctrl+C to stop the server
+
+  200    GET / ..................................................... 1738.13 ms
+  304    GET /images/current-affairs-logo.svg ........................ 30.82 ms
+  304    GET /build/assets/app-b2736fdd.js ........................... 25.01 ms
+  304    GET /images/current-affairs-logo-dark.svg ................... 18.40 ms
+  304    GET /build/assets/app-6ab2b92f.css .......................... 30.94 ms
+  304    GET /images/icons/news-today.svg ............................. 1.06 ms
+  304    GET /build/assets/app-ced4acd5.css ........................... 0.28 ms
+  304    GET /images/icons/weekly-focus.svg ........................... 0.24 ms
+  304    GET /images/icons/monthly-magazine.svg ....................... 0.19 ms
+  304    GET /images/icons/planet-vision.svg .......................... 0.92 ms
+  304    GET /images/icons/pt-365.svg ................................. 0.49 ms
+  304    GET /images/icons/simplified.svg ............................. 0.31 ms
+  304    GET /images/icons/mains-365.svg .............................. 0.44 ms
+  304    GET /images/icons/schemes-in-focus.svg ....................... 0.34 ms
+  304    GET /images/icons/personality-in-focus.svg ................... 0.30 ms
+  304    GET /images/icons/economic-survey.svg ........................ 0.25 ms
+  304    GET /images/icons/quarterly-revision.svg ..................... 0.20 ms
+  304    GET /images/icons/budget.svg ................................. 0.16 ms
+  304    GET /images/icons/year-end-review.svg ........................ 0.20 ms
+  304    GET /images/LightLogo-bkp.svg ................................ 0.23 ms
+  304    GET /images/quiz-banner-background.png ....................... 1.18 ms
+  304    GET /images/DarkLogo-bkp.svg ................................. 0.21 ms
+  304    GET /images/icons/in-conversation.svg ........................ 0.33 ms
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+In Application.php line 855:
+                                                       
+  Class "Barryvdh\Debugbar\ServiceProvider" not found  
+                                                       
+
+
+
+   INFO  Server running…
+
+  Local: http://127.0.0.1:8000 
+
+  Press Ctrl+C to stop the server
+
+  200    GET / ..................................................... 1153.40 ms
+  304    GET /favicon.ico ............................................. 6.13 ms
+  200    GET /pt-365 ................................................ 816.82 ms
+  200    GET /news-today/archive .................................... 817.30 ms
+
+   INFO  Server running…
+
+  Local: http://127.0.0.1:8000 
+
+  Press Ctrl+C to stop the server
+
+  200    GET / ..................................................... 2486.55 ms
+  200    GET /build/assets/app-6ab2b92f.css .......................... 46.45 ms
+  200    GET /build/assets/app-b2736fdd.js ........................... 44.19 ms
+  304    GET /images/current-affairs-logo.svg ......................... 0.67 ms
+  304    GET /images/current-affairs-logo-dark.svg .................... 0.76 ms
+  304    GET /images/icons/news-today.svg ............................. 1.24 ms
+  304    GET /images/icons/planet-vision.svg .......................... 0.10 ms
+  200    GET /build/assets/app-ced4acd5.css ........................... 5.63 ms
+  304    GET /images/icons/weekly-focus.svg ........................... 0.22 ms
+  304    GET /images/icons/mains-365.svg .............................. 0.10 ms
+  304    GET /images/icons/quarterly-revision.svg ..................... 0.61 ms
+  304    GET /images/icons/simplified.svg ............................. 0.32 ms
+  304    GET /images/icons/monthly-magazine.svg ....................... 0.36 ms
+  304    GET /images/icons/schemes-in-focus.svg ....................... 0.14 ms
+  304    GET /images/icons/budget.svg ................................. 0.27 ms
+  304    GET /images/icons/economic-survey.svg ........................ 0.59 ms
+  304    GET /images/icons/pt-365.svg ................................. 0.44 ms
+  304    GET /images/icons/personality-in-focus.svg ................... 0.88 ms
+  304    GET /images/icons/in-conversation.svg ........................ 0.42 ms
+  304    GET /images/DarkLogo-bkp.svg ................................. 3.10 ms
+  304    GET /images/quiz-banner-background.png ....................... 3.81 ms
+  304    GET /images/icons/year-end-review.svg ........................ 3.29 ms
+  304    GET /images/LightLogo-bkp.svg ................................ 4.04 ms
+  304    GET /favicon.ico ............................................. 0.80 ms
+  200    GET / ..................................................... 1179.46 ms
+  200    GET / ..................................................... 2568.77 ms
+  304    GET /build/assets/app-6ab2b92f.css .......................... 13.42 ms
+  304    GET /build/assets/app-b2736fdd.js ........................... 12.82 ms
+  304    GET /build/assets/app-ced4acd5.css ........................... 0.36 ms
