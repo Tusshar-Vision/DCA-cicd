@@ -32,7 +32,7 @@ use Spatie\Tags\HasTags;
 class Article extends Model implements HasMedia, Sortable
 {
     use Searchable, InteractsWithMedia, SortableTrait, WithData, SoftDeletes;
-    use HasFactory,  HasSlug, HasTags, HasSEO, HasComments,  HasReviewRating,  HasStatuses;
+    use HasFactory, HasSlug, HasTags, HasSEO, HasComments, HasReviewRating, HasStatuses;
 
     protected string $dataClass = ArticleDTO::class;
 

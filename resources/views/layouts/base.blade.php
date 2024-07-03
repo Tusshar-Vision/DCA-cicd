@@ -14,8 +14,8 @@
 
             ga('create', 'UA-87772028-1', 'auto');
             ga('send', 'pageview',location.pathname);
-
-        </script><!-- Global site tag (gtag.js) - Google Analytics -->
+        </script>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-87772028-1"></script>
         <script async="" src="https://www.googletagmanager.com/gtag/js?id=AW-731623325"></script>
         <script>
@@ -59,22 +59,15 @@
         <meta name="description" content="Get the latest updates and comprehensive analysis of Current Affairs at Vision IAS, India's premier UPSC coaching institute. Join our Offline & Online General Studies Foundation Course, with One-to-One Mentoring & All India Test Series.">
         <meta name="googlebot" content="Stay ahead with Vision IAS, the best UPSC coaching institute offering comprehensive coverage of Current Affairs through Offline and Online/Live Classes. Access Prelims and Mains Test Series in English and Hindi medium.">
         <meta name="keywords" content="vision ias, upsc coaching, current affairs, daily news, ias preparation, best upsc website, ias study material, ias preparation, best ias coaching, best upsc coaching, top ias institute, upsc online live classes, upsc exam, online ias preparation, upsc prelims preparation, upsc question bank, top UPSC Institute, online ias coaching classes, prelims / mains online offline classes, best prelims test series, online test classes for ias, upsc syllabus, prelims test series, mains test series, current affairs for upsc, upsc toppers answer copy">
-        <meta property="og:type" content="article">
-        <meta property="og:title" content="Stay Updated with Current Affairs at Vision IAS - India's Best UPSC Coaching Institute">
-        <meta property="og:site_name" content="Vision IAS | Current Affairs">
-        <meta property="og:description" content="Stay ahead with Vision IAS, India's premier UPSC coaching institute, offering comprehensive coverage of Current Affairs. Join our Offline & Online General Studies Foundation Course, with One-to-One Mentoring & All India Test Series.">
 
-        <meta name="twitter:card" content="Best IAS coaching institute in India">
-        <meta name="twitter:site" content="VisionIAS">
-        <meta name="twitter:creator" content="@Vision_IAS">
+        {!! seo() !!}
+
         <meta name="facebook-domain-verification" content="bwv5x7e78fxfcbzaxf5c2vpgs1wfql">
 
-        <link rel="canonical" href="{{ config('app.url') . '/' . request()->path() }}">
-
-        <title>@yield('title')</title>
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
         </style>
+
         @vite('resources/sass/app.scss')
         @livewireStyles
         @yield('styles')
@@ -107,7 +100,7 @@
 
         <footer>
             @yield('footer')
-                <x-footer />
+            <x-footer />
         </footer>
 
         <x-modals.login-modal x-show="isAuthFormOpen">
@@ -116,6 +109,7 @@
             </template>
         </x-modals.login-modal>
     </body>
+
     @vite('resources/js/app.js')
     @livewireScripts
     @stack('scripts')

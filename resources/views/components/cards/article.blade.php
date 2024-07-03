@@ -41,7 +41,7 @@
             </div>
             <div class="max-w-prose">
                 <p class="text-visionLineGray line-clamp-3 text-sm">{{ $article->excerpt }}</p>
-                <a href="{{ $articleUrl }}" class="group-hover:underline text-visionBlue text-sm">Read More</a>
+{{--                <a href="{{ $articleUrl }}" class="group-hover:underline text-visionBlue text-sm">Read</a>--}}
             </div>
         </div>
     </a>
