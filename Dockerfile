@@ -26,10 +26,10 @@ RUN npm run build
 # Stage 3: Final stage with combined application
 FROM dunglas/frankenphp
 
-RUN install-php-extensions pcntl memcached redis pdo_mysql intl zip gd exif @composer-2.7.6
-
 RUN apt update
-RUN apt install supervisor -y
+RUN apt install libgcrypt20-dev supervisor -y
+
+RUN install-php-extensions pcntl memcached redis pdo_mysql intl zip gd exif http @composer-2.7.6
 
 # Copy the application code from the composer and node stages
 COPY . .
