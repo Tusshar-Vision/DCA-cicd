@@ -35,7 +35,7 @@ function initializeSwiper() {
                 slidesPerView: 3,
             },
             1536: {
-                slidesPerView: 4,
+                slidesPerView: 3,
             }
         },
 
