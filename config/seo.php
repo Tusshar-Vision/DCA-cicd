@@ -91,7 +91,7 @@ return [
          * where we don't have a description set via an associated ->seo model or via
          * the ->getDynamicSEOData() method.
          */
-        'fallback' => null,
+        'fallback' => "Get the latest updates and comprehensive analysis of Current Affairs at Vision IAS, India's premier UPSC coaching institute. Join our Offline & Online General Studies Foundation Course, with One-to-One Mentoring & All India Test Series.",
     ],
 
     'image' => [

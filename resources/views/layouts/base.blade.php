@@ -56,11 +56,10 @@
         <meta name="google-signin-scope" content="enquiry@visionias.in">
         <meta name="language" content="en-us">
 
-        <meta name="description" content="Get the latest updates and comprehensive analysis of Current Affairs at Vision IAS, India's premier UPSC coaching institute. Join our Offline & Online General Studies Foundation Course, with One-to-One Mentoring & All India Test Series.">
         <meta name="googlebot" content="Stay ahead with Vision IAS, the best UPSC coaching institute offering comprehensive coverage of Current Affairs through Offline and Online/Live Classes. Access Prelims and Mains Test Series in English and Hindi medium.">
         <meta name="keywords" content="vision ias, upsc coaching, current affairs, daily news, ias preparation, best upsc website, ias study material, ias preparation, best ias coaching, best upsc coaching, top ias institute, upsc online live classes, upsc exam, online ias preparation, upsc prelims preparation, upsc question bank, top UPSC Institute, online ias coaching classes, prelims / mains online offline classes, best prelims test series, online test classes for ias, upsc syllabus, prelims test series, mains test series, current affairs for upsc, upsc toppers answer copy">
 
-        {!! seo() !!}
+        {!! seo($SEOData ?? null) !!}
 
         <meta name="facebook-domain-verification" content="bwv5x7e78fxfcbzaxf5c2vpgs1wfql">
 

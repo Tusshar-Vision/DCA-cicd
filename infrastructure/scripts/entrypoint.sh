@@ -15,6 +15,7 @@ php artisan route:cache
 php artisan view:cache
 php artisan icons:cache
 php artisan filament:cache-components
+php artisan data:cache-structures
 php artisan scout:sync-index-settings
 php artisan sitemap:generate
 
