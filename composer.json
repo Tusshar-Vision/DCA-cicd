@@ -10,6 +10,7 @@
     "require": {
         "php": "^8.2",
         "ext-dom": "*",
+        "ext-http": "*",
         "ext-libxml": "*",
         "ext-openssl": "*",
         "assada/laravel-achievements": "^2.6",
@@ -23,7 +24,6 @@
         "filament/filament": "^3.0-stable",
         "filament/spatie-laravel-media-library-plugin": "^3.1",
         "filament/spatie-laravel-tags-plugin": "^3.0-stable",
-        "filipfonal/filament-log-manager": "^2.0",
         "gree/jose": "^2.2",
         "guava/filament-nested-resources": "1.0.0-alpha.8",
         "guzzlehttp/guzzle": "^7.2",
@@ -39,6 +39,7 @@
         "livewire/livewire": "^3.0",
         "malzariey/filament-daterangepicker-filter": "^2.6",
         "meilisearch/meilisearch-php": "^1.6",
+        "opcodesio/log-viewer": "^3.10",
         "pboivin/filament-peek": "^2.0",
         "predis/predis": "*",
         "publiux/laravelcdn": "~4.0",
@@ -52,8 +53,7 @@
         "spatie/laravel-sluggable": "^3.5",
         "staudenmeir/eloquent-eager-limit": "^1.0",
         "webklex/laravel-pdfmerger": "^1.3",
-        "z3d0x/filament-logger": "^0.6.1",
-        "ext-http": "*"
+        "z3d0x/filament-logger": "^0.6.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",

@@ -1,5 +1,4 @@
 @extends('layouts.base')
-@section('title', "Home | Current Affairs")
 
 @php
     $initiativeCardsData = config('initiatives');

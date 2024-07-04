@@ -40,8 +40,8 @@
                 <h2 class="text-xl line-clamp-2 font-bold">{{ $article->short_title ?? $article->title }}</h2>
             </div>
             <div class="max-w-prose">
-                <p class="text-visionLineGray line-clamp-3 text-sm">{{ $article->excerpt }}</p>
-                <a href="{{ $articleUrl }}" class="group-hover:underline text-visionBlue text-sm">Read More</a>
+                <p class="text-visionLineGray line-clamp-3 text-sm group-hover:underline">{{ $article->excerpt }}</p>
+{{--                <a href="{{ $articleUrl }}" class="group-hover:underline text-visionBlue text-sm">Read</a>--}}
             </div>
         </div>
     </a>

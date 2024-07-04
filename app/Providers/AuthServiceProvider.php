@@ -2,17 +2,12 @@
 
 namespace App\Providers;
 
-use App\Models\Paper;
+use App\Models\User;
 use App\Policies\ActivityPolicy;
-use App\Policies\MediaPolicy;
-use App\Policies\PaperPolicy;
-use App\Policies\QueueMonitorPolicy;
 use App\Policies\RolePolicy;
 use App\Policies\TagPolicy;
-use Croustibat\FilamentJobsMonitor\Models\QueueMonitor;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Spatie\Activitylog\Models\Activity;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Models\Role;
 use Spatie\Tags\Tag;
 
@@ -27,7 +22,6 @@ class AuthServiceProvider extends ServiceProvider
         Role::class => RolePolicy::class,
         Activity::class => ActivityPolicy::class,
         Tag::class => TagPolicy::class,
-        QueueMonitor::class => QueueMonitorPolicy::class
     ];
 
     /**
@@ -36,5 +30,12 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
+
+        \Gate::define('viewLogViewer', function (?User $user) {
+            if ($user === null) {
+                return false;
+            }
+            return $user->hasRole('super_admin');
+        });
     }
 }

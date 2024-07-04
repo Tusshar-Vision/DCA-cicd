@@ -2,7 +2,6 @@
 
 namespace App\Providers\Filament;
 
-use Althinect\FilamentSpatieRolesPermissions\Middleware\SyncSpatiePermissionsWithFilamentTenants;
 use App\Filament\Pages\Auth\EditProfile;
 use App\Filament\Resources\ArticleResource;
 use App\Filament\Resources\BudgetResource;
@@ -19,19 +18,13 @@ use App\Filament\Resources\Mains365Resource;
 use App\Filament\Resources\MonthlyMagazineResource;
 use App\Filament\Resources\NewsTodayResource;
 use App\Filament\Resources\PT365Resource;
-use App\Filament\Resources\SectionResource;
-use App\Filament\Resources\SubjectResource;
-use App\Filament\Resources\SubSectionResource;
 use App\Filament\Resources\ValueAddedResource;
 use App\Filament\Resources\VideoResource;
 use App\Filament\Resources\WeeklyFocusResource;
 use App\Filament\Resources\YearEndReviewResource;
-use App\Livewire\Widgets\Archives\PlanetVision;
 use Awcodes\Overlook\OverlookPlugin;
 use Awcodes\Overlook\Widgets\OverlookWidget;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
-use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
-use EightyNine\Approvals\ApprovalPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -63,7 +56,15 @@ class AdminPanelProvider extends PanelProvider
                     ->url(config('app.url') . '/horizon', shouldOpenInNewTab: true)
                     ->icon('heroicon-o-wrench-screwdriver')
                     ->group('System')
-                    ->sort(3)
+                    ->sort(-1)
+                    ->visible(function () {
+                        return \Auth::user()->hasRole('super_admin');
+                    }),
+                NavigationItem::make('Logs')
+                    ->url(config('app.url') . '/log-viewer')
+                    ->icon('heroicon-o-server-stack')
+                    ->group('System')
+                    ->sort(2)
                     ->visible(function () {
                         return \Auth::user()->hasRole('super_admin');
                     }),

@@ -13,8 +13,10 @@ use App\Models\ReadHistory;
 use App\Services\DownloadService;
 use App\Services\InitiativeService;
 use App\Services\PublishedInitiativeService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class NewsTodayController extends Controller
@@ -101,6 +103,15 @@ class NewsTodayController extends Controller
             "newsTodayCalendar" => $this->newsTodayCalendar,
             "isAlsoInNews" => $article,
             "isArticleRead" => $isArticleRead,
+            "SEOData" => new SEOData(
+                title: $article->title,
+                description: $article->excerpt,
+                published_time: Carbon::parse($this->newsToday->publishedAt),
+                modified_time: Carbon::parse($article->updatedAt),
+                section: $article->topic,
+                tags: $article->tags->pluck('name')->toArray(),
+                type: 'article'
+            ),
         ]);
     }
 
@@ -142,7 +153,16 @@ class NewsTodayController extends Controller
             "isArticleBookmarked" => $isArticleBookmarked,
             "isArticleRead" => $isArticleRead,
             "newsTodayCalendar" => $this->newsTodayCalendar,
-            "isAlsoInNews" => $isAlsoInNews
+            "isAlsoInNews" => $isAlsoInNews,
+            "SEOData" => new SEOData(
+                title: $article->title,
+                description: $article->excerpt,
+                published_time: Carbon::parse($this->newsToday->publishedAt),
+                modified_time: Carbon::parse($article->updatedAt),
+                section: $article->topic,
+                tags: $article->tags->pluck('name')->toArray(),
+                type: 'article'
+            ),
         ]);
     }
 

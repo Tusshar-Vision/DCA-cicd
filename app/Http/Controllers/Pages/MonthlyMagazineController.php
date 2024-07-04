@@ -14,8 +14,10 @@ use App\Services\DownloadService;
 use App\Services\PublishedInitiativeService;
 use Aws\CloudFront\CloudFrontClient;
 use Aws\CloudFront\UrlSigner;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class MonthlyMagazineController extends Controller
@@ -105,6 +107,15 @@ class MonthlyMagazineController extends Controller
             "tableOfContent" => $toc['toc'],
             "isArticleBookmarked" => $isArticleBookmarked,
             "isArticleRead" =>  $isArticleRead,
+            "SEOData" => new SEOData(
+                title: $article->title,
+                description: $article->excerpt,
+                published_time: Carbon::parse($this->monthlyMagazine->publishedAt),
+                modified_time: Carbon::parse($article->updatedAt),
+                section: $article->topic,
+                tags: $article->tags->pluck('name')->toArray(),
+                type: 'article'
+            ),
         ]);
     }
 
@@ -149,6 +160,15 @@ class MonthlyMagazineController extends Controller
             "tableOfContent" => $toc['toc'],
             "isArticleBookmarked" => $isArticleBookmarked,
             "isArticleRead" =>  $isArticleRead,
+            "SEOData" => new SEOData(
+                title: $article->title,
+                description: $article->excerpt,
+                published_time: Carbon::parse($this->monthlyMagazine->publishedAt),
+                modified_time: Carbon::parse($article->updatedAt),
+                section: $article->topic,
+                tags: $article->tags->pluck('name')->toArray(),
+                type: 'article'
+            ),
         ]);
     }
 

@@ -11,8 +11,10 @@ use App\Models\Note;
 use App\Models\ReadHistory;
 use App\Services\DownloadService;
 use App\Services\PublishedInitiativeService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class WeeklyFocusController extends Controller
@@ -95,6 +97,15 @@ class WeeklyFocusController extends Controller
             "note" => $note,
             "isArticleBookmarked" => $isArticleBookmarked,
             "isArticleRead" => $isArticleRead,
+            "SEOData" => new SEOData(
+                title: $this->weeklyFocus->name,
+                description: $article->excerpt,
+                published_time: Carbon::parse($this->weeklyFocus->publishedAt),
+                modified_time: Carbon::parse($article->updatedAt),
+                section: $this->weeklyFocus->topic,
+                tags: $this->weeklyFocus->tags->pluck('name')->toArray(),
+                type: 'article'
+            ),
         ]);
     }
 

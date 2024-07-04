@@ -55,7 +55,7 @@
                 >
                     @if($announcements->isNotEmpty())
                         @foreach($announcements as $announcement)
-                            <li>
+                            <li class="scroll">
                                 <span class="text-xs">{!! $announcement->content !!}</span>
                             </li>
                         @endforeach
@@ -115,7 +115,7 @@
 <script>
     function truncateText(selector, maxLength = 35) {
         let elements = document.querySelectorAll(selector);
-        for(let i= 0; i < elements.length; i++) {
+        for(let i = 0; i < elements.length; i++) {
             elements[i].innerText = elements[i].innerText.substr(0, maxLength) + '...';
         }
     }
