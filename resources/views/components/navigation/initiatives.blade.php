@@ -436,7 +436,7 @@
         </ul>
     </div>
 
-    <div id="searchCont" class="hidden modalCont fixed h-full w-full left-0 top-0 z-10 py-10 px-6 md:py-10 md:px-14">
+    <div id="searchCont" class="hidden modalCont fixed h-full w-full left-0 top-0 z-20 py-10 px-6 md:py-10 md:px-14">
         <div class="w-full md:w-[500px] m-auto">
             <div class="flex justify-end mt-6">
                 <button onclick="closeSearch()">
