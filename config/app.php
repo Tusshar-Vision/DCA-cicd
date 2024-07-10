@@ -194,11 +194,6 @@ return [
         App\Providers\Filament\AdminPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
         Webklex\PDFMerger\Providers\PDFMergerServiceProvider::class,
-
-        /*
-         * Custom Service Providers
-         */
-        App\Providers\CdnAwsS3Provider::class
     ])->toArray(),
 
     /*

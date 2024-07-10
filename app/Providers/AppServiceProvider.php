@@ -2,18 +2,21 @@
 
 namespace App\Providers;
 
+use App\Cdn\CdnAwsS3Provider;
+use App\Cdn\CdnProviderFactory;
 use App\Helpers\CustomEncrypter;
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Support\ServiceProvider;
+use Publiux\laravelcdn\Contracts\ProviderFactoryInterface;
 use Publiux\laravelcdn\Providers\Contracts\ProviderInterface;
-use Spatie\Health\Checks\Checks\UsedDiskSpaceCheck;
-use Spatie\Health\Facades\Health;
-use Spatie\Health\Checks\Checks\OptimizedAppCheck;
 use Spatie\Health\Checks\Checks\DebugModeCheck;
 use Spatie\Health\Checks\Checks\EnvironmentCheck;
+use Spatie\Health\Checks\Checks\OptimizedAppCheck;
+use Spatie\Health\Checks\Checks\UsedDiskSpaceCheck;
+use Spatie\Health\Facades\Health;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(ProviderInterface::class, CdnAwsS3Provider::class);
+        $this->app->bind(ProviderFactoryInterface::class, CdnProviderFactory::class);
     }
 
     /**
