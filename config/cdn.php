@@ -94,7 +94,7 @@ return [
                 | https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
                 |
                 */
-                'region' => 'us-west-2',
+                'region' => 'ap-south-1',
 
                 /*
                 |--------------------------------------------------------------------------
@@ -128,7 +128,7 @@ return [
                 */
                 'buckets'       => [
 
-                    'cae-public-assets-vision' => '*',
+                    env('AWS_PUBLIC_BUCKET', 'cae-assets-public') => '*',
                     // examples:
                     //   'your-js-bucket-name-here'   =>  ['public/js'],
                     //   'your-css-bucket-name-here'  =>  ['public/css'],
@@ -165,7 +165,7 @@ return [
                 | bucket-owner-read, bucket-owner-full-control, log-delivery-write
                 |
                 */
-                'acl' => 'public-read',
+                'acl' => '',
 
                 /*
                 |--------------------------------------------------------------------------

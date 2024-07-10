@@ -8,6 +8,7 @@ use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Support\ServiceProvider;
+use Publiux\laravelcdn\Providers\Contracts\ProviderInterface;
 use Spatie\Health\Checks\Checks\UsedDiskSpaceCheck;
 use Spatie\Health\Facades\Health;
 use Spatie\Health\Checks\Checks\OptimizedAppCheck;
@@ -29,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(CustomEncrypter::class, function() {
             return new CustomEncrypter();
         });
+
+        $this->app->bind(ProviderInterface::class, CdnAwsS3Provider::class);
     }
 
     /**
