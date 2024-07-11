@@ -193,7 +193,6 @@ class DownloadsController extends Controller
 
     public function renderPreviousYearQuestions(Media $media = null)
     {
-        Storage::disk('s3')->allDirectories();
         $year = request()->input('year');
         $pdfUrl = null;
 
