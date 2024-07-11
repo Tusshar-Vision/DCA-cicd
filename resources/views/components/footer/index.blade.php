@@ -9,8 +9,8 @@
         <div class="flex flex-col md:mb-4 xl:mb-0">
             <div class="m-auto md:m-0 text-center">
                 <a href="{{ UrlHelper::linkToVision('/') }}" class="inline-block">
-                    <img class="w-60 dark:hidden" src="{{ asset('images/LightLogo-bkp.svg') }}" alt="VisionIAS Logo" />
-                    <img class="w-60 hidden dark:block" src="{{ asset('images/DarkLogo-bkp.svg') }}" alt="Dark VisionIAS Logo" />
+                    <img class="w-60 dark:hidden" src="{{ CDN::asset('images/LightLogo-bkp.svg') }}" alt="VisionIAS Logo" />
+                    <img class="w-60 hidden dark:block" src="{{ CDN::asset('images/DarkLogo-bkp.svg') }}" alt="Dark VisionIAS Logo" />
                 </a>
             </div>
 

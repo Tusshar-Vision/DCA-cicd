@@ -191,8 +191,8 @@
             </a>
             <div class="xl:hidden block">
                 <a href="{{ route('home') }}" wire:navigate>
-                    <img width="112px" class="dark:hidden" src="{{ asset('images/current-affairs-logo.svg') }}" alt="VisionIAS Logo" />
-                    <img width="112px" class="hidden dark:block" src="{{ asset('images/current-affairs-logo-dark.svg') }}" alt="Dark VisionIAS Logo" />
+                    <img width="112px" class="dark:hidden" src="{{ CDN::asset('images/current-affairs-logo.svg') }}" alt="VisionIAS Logo" />
+                    <img width="112px" class="hidden dark:block" src="{{ CDN::asset('images/current-affairs-logo-dark.svg') }}" alt="Dark VisionIAS Logo" />
                 </a>
             </div>
         </div>
