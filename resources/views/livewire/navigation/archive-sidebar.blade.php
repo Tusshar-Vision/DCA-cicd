@@ -112,6 +112,15 @@
             </a>
         </li>
 
+        <li class="mb-1">
+            <a href="{{ route('pyq') }}"
+               wire:navigate
+               class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('previous-year-questions*') ? 'activeSidebar' : '' }}"
+            >
+                Previous Year Questions
+            </a>
+        </li>
+
     {{-- These initiatives will be enabled in future, don't remove --}}
 
     {{--        <li class="font-semibold text-base text-[#183B56] mb-1">--}}
@@ -119,9 +128,6 @@
     {{--        </li>--}}
     {{--        <li class="font-semibold text-base text-[#183B56] mb-1">--}}
     {{--            <a href="javascript:void(0)" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white">Animated Shorts</a>--}}
-    {{--        </li>--}}
-    {{--        <li class="font-semibold text-base text-[#183B56] mb-1">--}}
-    {{--            <a href="javascript:void(0)" class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white">PYQs</a>--}}
     {{--        </li>--}}
     </ul>
 </div>

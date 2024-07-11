@@ -148,7 +148,7 @@
                     </div>
                     <div class="accordion-content">
                         @foreach($menuData['more']['data'] as $route => $heading)
-                            @if($route != '/weekly-round-table' && $route != '/animated-shorts' && $route != '/pyq' && $route != '/value-added-material' && $route != '/value-added-material-optional')
+                            @if($route != '/weekly-round-table' && $route != '/animated-shorts' && $route != '/value-added-material' && $route != '/value-added-material-optional')
                                 <a href="{{ $route }}" wire:navigate class="text-sm block font-[#242424] font-semibold mb-[15px] hover:font-[#3362CC] hover:br-[#F4F6FC] py-[5px] px-[10px]">
                                     {{ $heading }}
                                 </a>

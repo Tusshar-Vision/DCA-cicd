@@ -189,4 +189,22 @@ class DownloadsController extends Controller
             "pdfUrl" => $pdfUrl
         ]);
     }
+
+    public function renderPreviousYearQuestions(Media $media = null)
+    {
+        $year = request()->input('year');
+        $pdfUrl = null;
+
+        $pdfUrl = $media?->getUrl();
+
+        $medias = $this
+            ->downloadService
+            ->getDownloadableResources(InitiativesHelper::getInitiativeID(Initiatives::PYQ), $year);
+
+        return View('pages.archives.year-end-reviews', [
+            "title" => "Previous Year Questions",
+            "data" => $medias,
+            "pdfUrl" => $pdfUrl
+        ]);
+    }
 }
