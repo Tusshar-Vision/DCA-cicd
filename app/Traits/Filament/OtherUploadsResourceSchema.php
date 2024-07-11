@@ -22,7 +22,6 @@ use Illuminate\Support\Collection;
 trait OtherUploadsResourceSchema
 {
     use HelperMethods;
-
     public static function table(Table $table): Table
     {
         return $table
@@ -72,7 +71,7 @@ trait OtherUploadsResourceSchema
                     ->icon('heroicon-s-eye')
                     ->tooltip('View')
                     ->iconButton()
-                    ->url(fn (PublishedInitiative $record): string|null => $record->getFirstMedia(static::getCollectionName())?->getTemporaryUrl(now()->add('minutes', 120)))
+                    ->url(fn (PublishedInitiative $record): string|null => $record->getFirstMedia(static::getCollectionName())?->getFullUrl())
                     ->openUrlInNewTab(),
                 EditAction::make()
                     ->tooltip('Edit')

@@ -84,10 +84,10 @@ Route::controller(Pages\DownloadsController::class)->group(function () {
     Route::get('/quarterly-revision-documents/{media?}', 'renderQuarterlyRevisionDocument')->name('quarterly-revision-document');
     Route::get('/year-end-reviews/{media?}', 'renderYearEndReviews')->name('year-end-review');
     Route::get('/the-planet-vision/{media?}', 'renderPlanetVision')->name('planet-vision');
+    Route::get('/previous-year-questions/{media?}', 'renderPreviousYearQuestions')->name('previous-year-question');
 
     //    Route::get('/weekly-round-table', 'getWeeklyRoundTable')->name('weekly-round-table');
     //    Route::get('/animated-shorts', 'getAnimatedShorts')->name('animated-shorts');
-    //    Route::get('/pyq', 'getPYQ')->name('pyq');
 });
 
 Route::controller(Pages\VideosController::class)->group(function () {
