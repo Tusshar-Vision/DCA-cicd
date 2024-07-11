@@ -113,7 +113,7 @@
         </li>
 
         <li class="mb-1">
-            <a href="{{ route('pyq') }}"
+            <a href="{{ route('previous-year-question') }}"
                wire:navigate
                class="p-[12px] hover:bg-[#3362CC] block rounded hover:text-white {{ request()->is('previous-year-questions*') ? 'activeSidebar' : '' }}"
             >

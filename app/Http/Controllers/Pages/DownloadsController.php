@@ -6,6 +6,7 @@ use App\Enums\Initiatives;
 use App\Helpers\InitiativesHelper;
 use App\Http\Controllers\Controller;
 use App\Services\DownloadService;
+use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class DownloadsController extends Controller
@@ -192,6 +193,7 @@ class DownloadsController extends Controller
 
     public function renderPreviousYearQuestions(Media $media = null)
     {
+        Storage::disk('s3')->allDirectories();
         $year = request()->input('year');
         $pdfUrl = null;
 
@@ -201,7 +203,7 @@ class DownloadsController extends Controller
             ->downloadService
             ->getDownloadableResources(InitiativesHelper::getInitiativeID(Initiatives::PYQ), $year);
 
-        return View('pages.archives.year-end-reviews', [
+        return View('pages.archives.previous-year-questions', [
             "title" => "Previous Year Questions",
             "data" => $medias,
             "pdfUrl" => $pdfUrl

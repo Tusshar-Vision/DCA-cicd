@@ -8,6 +8,7 @@ use App\Filament\Resources\Mains365Resource;
 use App\Filament\Resources\MonthlyMagazineUploadResource;
 use App\Filament\Resources\NewsTodayUploadResource;
 use App\Filament\Resources\PersonalityInFocusResource;
+use App\Filament\Resources\PreviousYearQuestionResource;
 use App\Filament\Resources\PT365Resource;
 use App\Filament\Resources\QuarterlyRevisionResource;
 use App\Filament\Resources\SchemeInFocusResource;
@@ -57,6 +58,7 @@ trait HelperMethods
             NewsTodayUploadResource::class => 'upload_news::today',
             WeeklyFocusUploadResource::class => 'upload_weekly::focus',
             MonthlyMagazineUploadResource::class => 'upload_monthly::magazine',
+            PreviousYearQuestionResource::class => 'publish_previous::year::question',
             default => throw new \Exception("Permission not defined for resource."),
         };
     }
