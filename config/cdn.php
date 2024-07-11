@@ -229,7 +229,7 @@ return [
     |
     */
     'include'   => [
-        'directories' => ['public/build', 'public/css', 'public/images', 'public/js'],
+        'directories' => ['public/build', 'public/images'],
         'extensions'  => [],
         'patterns'    => [],
     ],

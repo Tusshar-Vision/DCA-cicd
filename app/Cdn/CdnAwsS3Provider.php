@@ -20,7 +20,7 @@ class CdnAwsS3Provider extends Provider implements ProviderInterface
      *
      * @var array
      */
-    protected $default = [
+    protected array $default = [
         'url' => null,
         'threshold' => 10,
         'providers' => [
@@ -47,19 +47,19 @@ class CdnAwsS3Provider extends Provider implements ProviderInterface
      *
      * @var array
      */
-    protected $rules = ['version', 'region', 'key', 'secret', 'buckets', 'url'];
+    protected array $rules = ['version', 'region', 'key', 'secret', 'buckets', 'url'];
 
     /**
      * this array holds the parsed configuration to be used across the class.
      *
-     * @var Array
+     * @var array
      */
-    protected $supplier;
+    protected array $supplier;
 
     /**
      * @var Instance of Aws\S3\S3Client
      */
-    protected $s3_client;
+    protected S3Client $s3_client;
 
     /**
      * @var Instance of Guzzle\Batch\BatchBuilder
@@ -300,7 +300,6 @@ class CdnAwsS3Provider extends Provider implements ProviderInterface
      */
     public function emptyBucket()
     {
-
         // connect before uploading
         $connected = $this->connect();
 
@@ -317,6 +316,7 @@ class CdnAwsS3Provider extends Provider implements ProviderInterface
             $contents = $this->s3_client->listObjects([
                 'Bucket' => $this->getBucket(),
                 'Key' => '',
+                'Prefix' => $this->default['providers']['aws']['s3']['upload_folder']
             ]);
 
             // Check if the bucket is already empty
@@ -329,7 +329,7 @@ class CdnAwsS3Provider extends Provider implements ProviderInterface
             // Empty out the bucket
             $empty = BatchDelete::fromListObjects($this->s3_client, [
                 'Bucket' => $this->getBucket(),
-                'Prefix' => null,
+                'Prefix' => $this->default['providers']['aws']['s3']['upload_folder'],
             ]);
 
             $empty->delete();

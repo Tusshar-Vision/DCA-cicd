@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Cdn\CdnAwsS3Provider;
+use App\Cdn\CdnFacade;
 use App\Cdn\CdnProviderFactory;
 use App\Helpers\CustomEncrypter;
 use Filament\Support\Assets\AlpineComponent;
@@ -10,6 +11,7 @@ use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Support\ServiceProvider;
+use Publiux\laravelcdn\Contracts\CdnFacadeInterface;
 use Publiux\laravelcdn\Contracts\ProviderFactoryInterface;
 use Publiux\laravelcdn\Providers\Contracts\ProviderInterface;
 use Spatie\Health\Checks\Checks\DebugModeCheck;
@@ -36,6 +38,11 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(ProviderInterface::class, CdnAwsS3Provider::class);
         $this->app->bind(ProviderFactoryInterface::class, CdnProviderFactory::class);
+        $this->app->bind(CdnFacadeInterface::class, CdnFacade::class);
+
+        $this->app->singleton('CDN', function ($app) {
+            return $app->make('App\Cdn\CdnFacade');
+        });
     }
 
     /**

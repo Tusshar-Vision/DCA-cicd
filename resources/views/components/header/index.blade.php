@@ -8,11 +8,10 @@
 
         <div class="hidden xl:block">
             <a href="{{ route('home') }}">
-                <img class="w-60 dark:hidden" src="{{ asset('images/current-affairs-logo.svg') }}" alt="VisionIAS Logo" />
-                <img class="w-60 hidden dark:block" src="{{ asset('images/current-affairs-logo-dark.svg') }}" alt="Dark VisionIAS Logo" />
+                <img class="w-60 dark:hidden" src="{{ CDN::asset('images/current-affairs-logo.svg') }}" alt="VisionIAS Logo" />
+                <img class="w-60 hidden dark:block" src="{{ CDN::asset('images/current-affairs-logo-dark.svg') }}" alt="VisionIAS Logo" />
             </a>
         </div>
-
 
         <a href="{{ UrlHelper::linkToVision('/') }}" class="group hidden xl:flex items-center text-nowrap ml-0 xl:ml-6 mr-2 xl:mr-0 text-[#242424] font-medium text-[14px] dark:text-[#8F93A3]">
             <span class="text-[18px] mr-1">
