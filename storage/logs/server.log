@@ -2062,3 +2062,28 @@ In Application.php line 855:
   304    GET /build/assets/app-6ab2b92f.css .......................... 13.42 ms
   304    GET /build/assets/app-b2736fdd.js ........................... 12.82 ms
   304    GET /build/assets/app-ced4acd5.css ........................... 0.36 ms
+
+   INFO  Server running…
+
+  Local: http://127.0.0.1:8000 
+
+  Press Ctrl+C to stop the server
+
+
+   INFO  Server running…
+
+  Local: http://127.0.0.1:8000 
+
+  Press Ctrl+C to stop the server
+
+  200    GET / ..................................................... 1843.86 ms
+  200    GET /build/assets/app-6ab2b92f.css .......................... 32.82 ms
+  200    GET /build/assets/app-ced4acd5.css .......................... 25.02 ms
+  200    GET /build/assets/app-b2736fdd.js ........................... 45.22 ms
+
+   INFO  Server running…
+
+  Local: http://127.0.0.1:8000 
+
+  Press Ctrl+C to stop the server
+

@@ -56,3 +56,4 @@ RUN chmod +x /app/infrastructure/scripts/wait-for-it.sh
 EXPOSE 8000
 
 ENTRYPOINT ["/app/infrastructure/scripts/entrypoint.sh"]
+
