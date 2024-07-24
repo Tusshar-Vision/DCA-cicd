@@ -175,6 +175,32 @@ class CdnFacade implements CdnFacadeInterface
 
     /**
      * this function will be called from the 'views' using the
+     * 'Cdn' facade {{Cdn::vite('')}} to convert the vite generated file path into
+     * it's CDN url.
+     *
+     * @param $path
+     *
+     * @throws Exceptions\EmptyPathException, \InvalidArgumentException
+     *
+     * @return mixed
+     */
+    public function vite($path)
+    {
+        static $manifest = null;
+        if (is_null($manifest)) {
+            $manifest = json_decode(file_get_contents(public_path('build/manifest.json')), true);
+        }
+        if (isset($manifest[$path])) {
+            return $this->generateUrl(
+                'build/' .
+                $manifest[$path]['file'],
+                $this->configurations['providers']['aws']['s3']['upload_folder'] . 'public/');
+        }
+        throw new \InvalidArgumentException("File {$path} not defined in asset manifest.");
+    }
+
+    /**
+     * this function will be called from the 'views' using the
      * 'Cdn' facade {{Cdn::path('')}} to convert the path into
      * it's CDN url.
      *

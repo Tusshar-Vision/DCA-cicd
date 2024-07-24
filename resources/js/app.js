@@ -166,7 +166,6 @@ window.saveData = async function (url, data) {
     }
 }
 
-// In your Alpine.js initialization
 Alpine.data('fontSizeManager', () => ({
     fontSize: parseFloat(localStorage.getItem('fontSize')) || 1,
 
