@@ -191,8 +191,8 @@
             </a>
             <div class="xl:hidden block">
                 <a href="{{ route('home') }}" wire:navigate>
-                    <img width="112px" class="dark:hidden" src="{{ asset('images/current-affairs-logo.svg') }}" alt="VisionIAS Logo" />
-                    <img width="112px" class="hidden dark:block" src="{{ asset('images/current-affairs-logo-dark.svg') }}" alt="Dark VisionIAS Logo" />
+                    <img width="112px" class="dark:hidden" src="{{ CDN::asset('images/current-affairs-logo.svg') }}" alt="VisionIAS Logo" />
+                    <img width="112px" class="hidden dark:block" src="{{ CDN::asset('images/current-affairs-logo-dark.svg') }}" alt="Dark VisionIAS Logo" />
                 </a>
             </div>
         </div>
@@ -436,7 +436,7 @@
         </ul>
     </div>
 
-    <div id="searchCont" class="hidden modalCont fixed h-full w-full left-0 top-0 z-10 py-10 px-6 md:py-10 md:px-14">
+    <div id="searchCont" class="hidden modalCont fixed h-full w-full left-0 top-0 z-20 py-10 px-6 md:py-10 md:px-14">
         <div class="w-full md:w-[500px] m-auto">
             <div class="flex justify-end mt-6">
                 <button onclick="closeSearch()">

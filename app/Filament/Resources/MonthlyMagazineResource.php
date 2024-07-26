@@ -184,7 +184,7 @@ class MonthlyMagazineResource extends Resource implements HasShieldPermissions
                         ->displayFormat('M, Y')
                         ->closeOnDateSelection()
                         ->default(function (callable $get) {
-                            return Carbon::createFromFormat('Y-m-d h:i:s', ($get('published_at')))->subMonth();
+                            return Carbon::createFromFormat('Y-m-d H:i:s', ($get('published_at')))->subMonth();
                         })
                         ->required()
                         ->disabled(function (?PublishedInitiative $record) {

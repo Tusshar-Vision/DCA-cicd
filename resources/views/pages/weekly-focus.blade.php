@@ -11,8 +11,8 @@
 
             <div x-show="isSidePanelOpen" class="flex w-full lg:md:w-2/6 flex-col leftsticky stickyMl-0" x-transition>
 
-                <img class="dark:hidden" src="{{ asset('images/weekly-focus-logo.svg') }}" alt="Weekly Focus Logo" />
-                <img class="hidden dark:block !mt-0" src="{{ asset('images/weekly-focus-logo-dark.svg') }}" alt="Weekly Focus Logo" />
+                <img class="dark:hidden" src="{{ CDN::asset('images/weekly-focus-logo.svg') }}" alt="Weekly Focus Logo" />
+                <img class="hidden dark:block !mt-0" src="{{ CDN::asset('images/weekly-focus-logo-dark.svg') }}" alt="Weekly Focus Logo" />
 
                 <x-widgets.article-side-bar :table-of-content="$package->articles"/>
 

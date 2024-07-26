@@ -4,7 +4,6 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-        <link rel="shortcut icon" href="/favicon.ico" />
         <!-- Google Analytics Code - dkjain86@gmail.com ID is used -->
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -40,7 +39,7 @@
             fbq('track', 'PageView');
         </script>
         <noscript>
-            <img height="1" width="1" src="https://www.facebook.com/tr?id=296246770854744&ev=PageView&noscript=1"/>
+            <img height="1" width="1" src="https://www.facebook.com/tr?id=296246770854744&ev=PageView&noscript=1" alt=""/>
         </noscript>
         <!-- End Facebook Pixel Code -->
         <!-- Google Tag Manager -->
@@ -68,7 +67,6 @@
         </style>
 
         @vite('resources/sass/app.scss')
-        @livewireStyles
         @yield('styles')
     </head>
 
@@ -109,7 +107,7 @@
         </x-modals.login-modal>
     </body>
 
+
     @vite('resources/js/app.js')
-    @livewireScripts
     @stack('scripts')
 </html>
