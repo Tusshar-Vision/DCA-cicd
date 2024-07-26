@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use Illuminate\Log\Logger;
 use Illuminate\Support\Facades\Http;
 
 readonly class LiveQueryService
@@ -16,7 +15,10 @@ readonly class LiveQueryService
 
     public function createEmbeddings(array $articles) {
         try {
-            $response = Http::post($this->api . $this->endpoints['generate_embeddings'], $articles);
+            $response = Http::post(
+                $this->api . $this->endpoints['generate_embeddings'],
+                $articles
+            );
             return $response->json();
         } catch (\Exception $exception) {
             logger($exception);
