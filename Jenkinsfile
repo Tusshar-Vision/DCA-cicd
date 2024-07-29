@@ -2,13 +2,29 @@ pipeline {
     agent any
     environment {
         REPO_NAME = "your-repo-name"
-        ECR_REGISTRY = "YOUR_ACCOUNT_ID.dkr.ecr.YOUR_REGION.amazonaws.com"
-        ECR_REPO_NAME = "your-ecr-repo"
-        AWS_REGION = "YOUR_REGION"
-        DOCKER_CREDENTIALS_ID = 'your-docker-credentials-id'
-        AWS_CREDENTIALS_ID = 'your-aws-credentials-id'
-        PHP_IMAGE_TAG = "php:latest"
-        NGINX_IMAGE_TAG = "nginx:latest"
+    ECR_REGISTRY = "YOUR_ACCOUNT_ID.dkr.ecr.YOUR_REGION.amazonaws.com"
+    ECR_REPO_NAME = "your-ecr-repo"
+    AWS_REGION = "YOUR_REGION"
+    DOCKER_CREDENTIALS_ID = 'your-docker-credentials-id'
+    AWS_CREDENTIALS_ID = 'your-aws-credentials-id'
+    PHP_IMAGE_TAG = "php:latest"
+    NGINX_IMAGE_TAG = "nginx:latest"
+    // ECS Specific
+    ECS_CLUSTER_NAME = "your-ecs-cluster-name"
+    ECS_SERVICE_NAME = "your-ecs-service-name"
+    ECS_TASK_DEFINITION = "your-ecs-task-definition"
+    ECS_CONTAINER_NAME = "your-php-container-name"
+    ECS_TASK_ROLE_ARN = "arn:aws:iam::YOUR_ACCOUNT_ID:role/your-ecs-task-role"
+    ECS_EXECUTION_ROLE_ARN = "arn:aws:iam::YOUR_ACCOUNT_ID:role/your-ecs-execution-role"
+    // PHP Specific
+    APP_ENV = "production"
+    APP_DEBUG = "false"
+    APP_KEY = "your-app-key"
+    DB_HOST = "your-database-host"
+    DB_PORT = "3306"
+    DB_DATABASE = "your-database-name"
+    DB_USERNAME = "your-database-username"
+    DB_PASSWORD = "your-database-password"
     }
     stages {
         stage('Checkout') {
