@@ -1,17 +1,8 @@
-# Use the official NGINX image from the Docker Hub
+# Use an official Nginx image
 FROM nginx:latest
 
-# Remove the default NGINX website
-RUN rm -rf /usr/share/nginx/html/*
-
-# Copy the static website files from the local machine to the container
-COPY . /usr/share/nginx/html
-
-# Copy your custom NGINX configuration file
+# Copy Nginx configuration file
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
 # Expose port 80
 EXPOSE 80
-
-# Start NGINX
-CMD ["nginx", "-g", "daemon off;"] 
