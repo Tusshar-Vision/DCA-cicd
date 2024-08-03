@@ -1,113 +1,123 @@
 pipeline {
     agent any
+
     environment {
-        REPO_NAME = "digital-current-affairs"
-        ECR_REGISTRY = "496513254117.dkr.ecr.us-west-2.amazonaws.com"
-        ECR_REPO_NAME = "dca-visionias"
-        AWS_REGION = "us-west-2"
-        DOCKER_CREDENTIALS_ID = 'your-docker-credentials-id'
-        AWS_CREDENTIALS_ID = 'your-aws-credentials-id'
-        PHP_IMAGE_TAG = "dca-contioner:latest"
-        NGINX_IMAGE_TAG = "dca-proxy:latest"
-        ECS_CLUSTER_NAME = "digital-current-affairs"
-        ECS_SERVICE_NAME_1 = "dca-contaioner"
-        ECS_SERVICE_NAME_2 = "dca-service"
-        ECS_TASK_DEFINITION = "your-ecs-task-definition"
-        ECS_CONTAINER_NAME = "your-php-container-name"
-        ECS_TASK_ROLE_ARN = "arn:aws:iam::496513254117:role/your-ecs-task-role"
-        ECS_EXECUTION_ROLE_ARN = "arn:aws:iam::496513254117:role/your-ecs-execution-role"
-        APP_ENV = "production"
-        APP_DEBUG = "false"
-        APP_KEY = "your-app-key"
-        DB_HOST = "dca-rds-db.ck8cfyvbkpuw.us-west-2.rds.amazonaws.com "
-        DB_PORT = "3306"
-        DB_DATABASE = "dcurrentaffair"
-        DB_USERNAME = "admin"
-        DB_PASSWORD = "VisionIAS278766"
-        IMAGE_TAG = "latest"
-        REPO_URL = "496513254117.dkr.ecr.us-west-2.amazonaws.com/dca-visionias"
-        PROXY_URL = "496513254117.dkr.ecr.us-west-2.amazonaws.com/dca-proxy"
-        REDIS_REPO_URL = "496513254117.dkr.ecr.us-west-2.amazonaws.com/dca-redis"
+        dokerImage = 'vision-nbe'
+        proxyImage = 'vision-nbe-proxy'
+        ecrRegistry = '496513254117.dkr.ecr.us-west-2.amazonaws.com'???
+        ecsCluster = 'Newbackend-qa-api-cluster'???
+        TaskDefName = 'Newbackend-qa-api'?
+        serviceName = 'Newbackend-qa-api'?
+        djangoDockerfile = 'devops/Dockerfile'
+        
     }
-    stages {
-        stage('Clone Repository') {
-            steps {
-                git url: "${env.REPO_URL}"
+
+   stages {
+    stage('Build Django image') {
+        steps {
+            script {
+                // Retrieve the environment file content from Jenkins credentials
+                withCredentials([string(credentialsId: 'Digital-CA-env', variable: 'ENV_FILE_CONTENT')]) {
+                    // Write the environment file content to a file
+                    writeFile file: '.env', text: "${ENV_FILE_CONTENT}"
+                }
+                
+                // Build the Django Docker image
+                sh """
+                    docker build -t ${ecrRegistry}/${djangoImage}:latest -f ${djangoDockerfile} .
+                """
             }
         }
-        stage('Build Docker Image') {
+    }
+}
+
+        
+
+        stage('Push Django image') {
             steps {
                 script {
-                    docker.build("${env.ECR_REPO_NAME}:${env.IMAGE_TAG}")
+                    def command = "aws ecr list-images --repository-name $djangoImage --region us-west-2 --output text | grep IMAGEIDS | sed 's/IMAGEIDS\\t.*\\t//g' | grep -v latest | sort -nr | head -n1"
+                    def currentVersion = sh(script: command, returnStdout: true).trim()
+                    def newVersion = (currentVersion.isNumber() ? currentVersion.toInteger() + 1 : 1)
+
+                    sh "docker tag ${ecrRegistry}/${djangoImage}:latest ${ecrRegistry}/${djangoImage}:${newVersion}"
+                    sh("aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin $ecrRegistry")
+                    sh "docker push ${ecrRegistry}/${djangoImage}:${newVersion}"
+                    sh "docker push ${ecrRegistry}/${djangoImage}:latest"
                 }
             }
         }
-        stage('Login to ECR') {
-            steps {
-                script {
-                    sh """
-                    aws ecr get-login-password --region ${env.AWS_REGION} | docker login --username AWS --password-stdin ${env.ECR_REGISTRY}
-                    """
-                }
-            }
-        }
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    sh """
-                    docker tag ${env.ECR_REPO_NAME}:${env.IMAGE_TAG} ${env.ECR_REGISTRY}/${env.ECR_REPO_NAME}:${env.IMAGE_TAG}
-                    docker push ${env.ECR_REGISTRY}/${env.ECR_REPO_NAME}:${env.IMAGE_TAG}
-                    """
-                }
-            }
-        }
+
+        
+
         stage('Deploy to ECS') {
             steps {
                 script {
-                    def taskDefinition = """
-                    {
-                      "family": "${env.ECS_SERVICE_NAME_1}",
-                      "containerDefinitions": [
+                                           def command = "aws ecr list-images --repository-name $djangoImage --region us-west-2 --output text | grep IMAGEIDS | sed 's/IMAGEIDS\\t.*\\t//g' | grep -v latest | sort -nr | head -n1"
+                        def djangoImageVersion = sh(script: command, returnStdout: true).trim()
+                        
+
+                        // Docker images with tags
+                        def djangoImageWithTag = "${ecrRegistry}/${djangoImage}:${djangoImageVersion}"
+                        // def command_proxy = "aws ecr list-images --repository-name $proxyImage --region us-west-2 --output text | grep IMAGEIDS | sed 's/IMAGEIDS\\t.*\\t//g' | grep -v latest | sort -nr | head -n1"
+                        // def proxyImageVersion = sh(script: command_proxy, returnStdout: true).trim()
+                        // def proxyImageWithTag = "${ecrRegistry}/${proxyImage}:${proxyImageVersion}"
+
+                        // Register a new task definition with a new image and environment variables
+                    sh '''
+                        cat > task-def.json <<- EOM
                         {
-                          "name": "${env.ECS_CONTAINER_NAME}",
-                          "image": "${env.ECR_REGISTRY}/${env.ECR_REPO_NAME}:${env.IMAGE_TAG}",
-                          "essential": true,
-                          "memory": 512,
-                          "cpu": 256,
-                          "environment": [
-                            ${env.LARAVEL_ENV_VARS.split(' ').collect {
-                                def (key, value) = it.split('=', 2);
-                                "{ \\"name\\": \\"${key}\\", \\"value\\": \\"${value}\\" }"
-                            }.join(',\n')}
-                          ],
-                          "portMappings": [
+                          "family": "$TASK_DEFINITION",
+                          "containerDefinitions": [
                             {
-                              "containerPort": 80,
-                              "hostPort": 80
+                              "name": "dca-container",
+                              "image": "496513254117.dkr.ecr.us-west-2.amazonaws.com/dca-visionias",
+                              "cpu": 512,
+                              "memory": 1024,
+                               "portMappings": [
+                {
+                                "name": "dca-8000-tcp",
+                                "containerPort": 8000,
+                                "hostPort": 8000,
+                                "protocol": "tcp",
+                                "appProtocol": "http"
+                              "essential": true,
+                              "environment": $(cat .env | sed 's/^/{"name": "/; s/=/"}, /' | sed '$ s/, $//')
+                              // Add other necessary container definitions
                             }
                           ]
+                          // Add other necessary task definition parameters
                         }
-                      ]
+                        EOM
+                        
+                        aws ecs register-task-definition --cli-input-json file://task-def.json
+                    '''
+
+
+                        // Register a new revision of the task definition with the updated Docker image
+                        // sh "aws ecs register-task-definition --cli-input-json file://${taskDefFile} --region us-west-2"
+                           def taskDefName = 'task-def.json'
+                        // Update the service to use the latest revision of the task definition
+                        sh "aws ecs update-service --cluster ${ecsCluster} --service ${serviceName} --task-definition ${taskDefName} --force-new-deployment --region us-west-2"
                     }
-                    """
-                    def taskDefArn = sh(
-                        script: "aws ecs register-task-definition --cli-input-json '${taskDefinition}' --region ${env.AWS_REGION} | jq -r .taskDefinition.taskDefinitionArn",
-                        returnStdout: true
-                    ).trim()
-                    sh """
-                    aws ecs update-service \
-                        --cluster ${env.ECS_CLUSTER_NAME} \
-                        --service ${env.ECS_SERVICE_NAME_1} \
-                        --task-definition ${taskDefArn} \
-                        --region ${env.AWS_REGION}
-                    """
                 }
             }
         }
+
     }
-    post {
+
+   post {
         always {
-            cleanWs()
+            sh "docker system prune -f -a"
+            script {
+                GIT_COMMIT_SHORT = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
+                GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
+                GIT_USER = sh(returnStdout: true, script: 'git log -1 --pretty=format:"%an"').trim() // Last author
+                TOTAL_COMMITS = sh(returnStdout: true, script: 'git rev-list --count HEAD').trim()
+                JENKINS_USER = env.BUILD_USER_ID // Jenkins user who triggered the build
+            }
         }
-    }
+
+        
+   }
 }
