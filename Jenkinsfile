@@ -13,7 +13,7 @@ pipeline {
     }
 
    stages {
-    stage('Build php image') {
+    stage('Build PHP Docker Image') {
         steps {
             script {
                 // Retrieve the environment file content from Jenkins credentials
