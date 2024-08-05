@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        dockerImage = '496513254117.dkr.ecr.us-west-2.amazonaws.com/dca-visionias'
-        proxyImage = '496513254117.dkr.ecr.us-west-2.amazonaws.com/dca-proxy'
-        // ecrRegistry = '496513254117.dkr.ecr.us-west-2.amazonaws.com'
+        ecrRegistry = '496513254117.dkr.ecr.us-west-2.amazonaws.com'
+        dockerImage = "${ecrRegistry}/dca-visionias"
+        proxyImage = "${ecrRegistry}/dca-proxy"
         ecsCluster = 'dca-container'
         TaskDefName = 'dca-task'
-        serviceName = 'dca-contaioner'
-        phpDockerfile = /Dockerfile'
-        phpImage = 'visionias' 
+        serviceName = 'dca-container'
+        phpDockerfile = 'Dockerfile'
+        phpImage = 'visionias'
     }
 
     stages {
@@ -17,10 +17,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'Digital-CA-env', variable: 'ENV_FILE_CONTENT')]) {
-
                         writeFile file: '.env', text: "${ENV_FILE_CONTENT}"
                     }
-
                    
                     sh """
                         docker build -t ${ecrRegistry}/${phpImage}:latest -f ${phpDockerfile} .
@@ -32,12 +30,12 @@ pipeline {
         stage('Push PHP Docker Image') {
             steps {
                 script {
-                    def command = "aws ecr list-images --repository-name $phpImage --region us-west-2 --output text | grep IMAGEIDS | sed 's/IMAGEIDS\\t.*\\t//g' | grep -v latest | sort -nr | head -n1"
+                    def command = "aws ecr list-images --repository-name ${phpImage} --region us-west-2 --query 'imageIds[*].imageTag' --output text"
                     def currentVersion = sh(script: command, returnStdout: true).trim()
-                    def newVersion = (currentVersion.isInteger() ? currentVersion.toInteger() + 1 : 1)
+                    def newVersion = (currentVersion.tokenize().findAll { it.isInteger() }.collect { it.toInteger() }.max() ?: 0) + 1
 
                     sh "docker tag ${ecrRegistry}/${phpImage}:latest ${ecrRegistry}/${phpImage}:${newVersion}"
-                    sh("aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin $ecrRegistry")
+                    sh "aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin ${ecrRegistry}"
                     sh "docker push ${ecrRegistry}/${phpImage}:${newVersion}"
                     sh "docker push ${ecrRegistry}/${phpImage}:latest"
                 }
@@ -47,43 +45,36 @@ pipeline {
         stage('Deploy to ECS') {
             steps {
                 script {
-                    def command = "aws ecr list-images --repository-name $phpImage --region us-west-2 --output text | grep IMAGEIDS | sed 's/IMAGEIDS\\t.*\\t//g' | grep -v latest | sort -nr | head -n1"
-                    def phpImageVersion = sh(script: command, returnStdout: true).trim()
-
-                
+                    def command = "aws ecr list-images --repository-name ${phpImage} --region us-west-2 --query 'imageIds[*].imageTag' --output text"
+                    def phpImageVersion = sh(script: command, returnStdout: true).trim().tokenize().findAll { it.isInteger() }.collect { it.toInteger() }.max() ?: 0
                     def phpImageWithTag = "${ecrRegistry}/${phpImage}:${phpImageVersion}"
 
-                    sh '''
-                        cat > task-def.json <<- EOM
+                    def taskDefJson = """
+                    {
+                      "family": "${TaskDefName}",
+                      "containerDefinitions": [
                         {
-                          "family": "$TaskDefName",
-                          "containerDefinitions": [
+                          "name": "dca-container",
+                          "image": "${phpImageWithTag}",
+                          "cpu": 512,
+                          "memory": 1024,
+                          "portMappings": [
                             {
-                              "name": "dca-container",
-                              "image": "$phpImageWithTag",
-                              "cpu": 512,
-                              "memory": 1024,
-                              "portMappings": [
-                                {
-                                  "containerPort": 8000,
-                                  "hostPort": 8000,
-                                  "protocol": "tcp"
-                                }
-                              ],
-                              "essential": true,
-                              "environment": [
-                                $(cat .env | sed 's/^/{"name": "/; s/=/"}, /' | sed '$ s/, $//')
-                              ]
+                              "containerPort": 8000,
+                              "hostPort": 8000,
+                              "protocol": "tcp"
                             }
-                          ]
+                          ],
+                          "essential": true,
+                          "environment": ${sh(script: 'cat .env | sed "s/^/[\\"name\\": \\"/; s/=\\":/\\", \\"value\\":/; s/$/\\"]/"', returnStdout: true).trim()}
                         }
-                        EOM
-                    '''
-
-                    def taskDefName = 'task-def.json'
-                    sh "aws ecs register-task-definition --cli-input-json file://${taskDefName} --region us-west-2"
-
-                    sh "aws ecs update-service --cluster ${ecsCluster} --service ${serviceName} --task-definition ${taskDefName} --force-new-deployment --region us-west-2"
+                      ]
+                    }
+                    """
+                    
+                    writeFile file: 'task-def.json', text: taskDefJson
+                    sh "aws ecs register-task-definition --cli-input-json file://task-def.json --region us-west-2"
+                    sh "aws ecs update-service --cluster ${ecsCluster} --service ${serviceName} --task-definition ${TaskDefName} --force-new-deployment --region us-west-2"
                 }
             }
         }
