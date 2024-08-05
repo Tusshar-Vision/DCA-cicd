@@ -16,7 +16,7 @@ pipeline {
         stage('Build PHP Docker Image') {
             steps {
                 script {
-                    // Retrieve the environment file content from Jenkins credentials
+                    // Retrieve environment file content from Jenkins credentials
                     withCredentials([string(credentialsId: 'Digital-CA-env', variable: 'ENV_FILE_CONTENT')]) {
                         // Write the environment file content to a file
                         writeFile file: '.env', text: "${ENV_FILE_CONTENT}"
