@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        dokerImage = 'vision-nbe'
+        dockerImage = 'vision-nbe'
         proxyImage = 'vision-nbe-proxy'
         ecrRegistry = '496513254117.dkr.ecr.us-west-2.amazonaws.com'
         ecsCluster = 'dca-contaioner'
