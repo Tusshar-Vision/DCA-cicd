@@ -8,12 +8,12 @@ pipeline {
         ecsCluster = 'dca-contaioner'
         TaskDefName = 'Newbackend-qa-api'
         serviceName = 'Newbackend-qa-api'
-        djangoDockerfile = 'devops/Dockerfile'
+        phpDockerfile = 'devops/Dockerfile'
         
     }
 
    stages {
-    stage('Build Django image') {
+    stage('Build php image') {
         steps {
             script {
                 // Retrieve the environment file content from Jenkins credentials
@@ -22,9 +22,9 @@ pipeline {
                     writeFile file: '.env', text: "${ENV_FILE_CONTENT}"
                 }
                 
-                // Build the Django Docker image
+                // Build the php Docker image
                 sh """
-                    docker build -t ${ecrRegistry}/${djangoImage}:latest -f ${djangoDockerfile} .
+                    docker build -t ${ecrRegistry}/${phpImage}:latest -f ${phpDockerfile} .
                 """
             }
         }
@@ -33,17 +33,17 @@ pipeline {
 
         
 
-        stage('Push Django image') {
+        stage('Push Php image') {
             steps {
                 script {
-                    def command = "aws ecr list-images --repository-name $djangoImage --region us-west-2 --output text | grep IMAGEIDS | sed 's/IMAGEIDS\\t.*\\t//g' | grep -v latest | sort -nr | head -n1"
+                    def command = "aws ecr list-images --repository-name $phpImage --region us-west-2 --output text | grep IMAGEIDS | sed 's/IMAGEIDS\\t.*\\t//g' | grep -v latest | sort -nr | head -n1"
                     def currentVersion = sh(script: command, returnStdout: true).trim()
                     def newVersion = (currentVersion.isNumber() ? currentVersion.toInteger() + 1 : 1)
 
-                    sh "docker tag ${ecrRegistry}/${djangoImage}:latest ${ecrRegistry}/${djangoImage}:${newVersion}"
+                    sh "docker tag ${ecrRegistry}/${phpImage}:latest ${ecrRegistry}/${phpImage}:${newVersion}"
                     sh("aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin $ecrRegistry")
-                    sh "docker push ${ecrRegistry}/${djangoImage}:${newVersion}"
-                    sh "docker push ${ecrRegistry}/${djangoImage}:latest"
+                    sh "docker push ${ecrRegistry}/${phpImage}:${newVersion}"
+                    sh "docker push ${ecrRegistry}/${phpImage}:latest"
                 }
             }
         }
@@ -53,12 +53,12 @@ pipeline {
         stage('Deploy to ECS') {
             steps {
                 script {
-                                           def command = "aws ecr list-images --repository-name $djangoImage --region us-west-2 --output text | grep IMAGEIDS | sed 's/IMAGEIDS\\t.*\\t//g' | grep -v latest | sort -nr | head -n1"
-                        def djangoImageVersion = sh(script: command, returnStdout: true).trim()
+                                           def command = "aws ecr list-images --repository-name $phpImage --region us-west-2 --output text | grep IMAGEIDS | sed 's/IMAGEIDS\\t.*\\t//g' | grep -v latest | sort -nr | head -n1"
+                        def phpImageVersion = sh(script: command, returnStdout: true).trim()
                         
 
                         // Docker images with tags
-                        def djangoImageWithTag = "${ecrRegistry}/${djangoImage}:${djangoImageVersion}"
+                        def phpImageWithTag = "${ecrRegistry}/${phpImage}:${phpImageVersion}"
                         // def command_proxy = "aws ecr list-images --repository-name $proxyImage --region us-west-2 --output text | grep IMAGEIDS | sed 's/IMAGEIDS\\t.*\\t//g' | grep -v latest | sort -nr | head -n1"
                         // def proxyImageVersion = sh(script: command_proxy, returnStdout: true).trim()
                         // def proxyImageWithTag = "${ecrRegistry}/${proxyImage}:${proxyImageVersion}"
