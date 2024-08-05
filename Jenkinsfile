@@ -9,7 +9,7 @@ pipeline {
         TaskDefName = 'dca-task'
         serviceName = 'dca-contaioner'
         phpDockerfile = /Dockerfile'
-        phpImage = 'visionias'  // Define the phpImage variable here
+        phpImage = 'visionias' 
     }
 
     stages {
