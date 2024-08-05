@@ -33,7 +33,7 @@ pipeline {
 
         
 
-        stage('Push Php image') {
+        stage('Push Php docker image') {
             steps {
                 script {
                     def command = "aws ecr list-images --repository-name $phpImage --region us-west-2 --output text | grep IMAGEIDS | sed 's/IMAGEIDS\\t.*\\t//g' | grep -v latest | sort -nr | head -n1"
