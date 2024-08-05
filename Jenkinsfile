@@ -17,11 +17,11 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'Digital-CA-env', variable: 'ENV_FILE_CONTENT')]) {
-                        // Write the environment file content to a file
+
                         writeFile file: '.env', text: "${ENV_FILE_CONTENT}"
                     }
 
-                    // Build the PHP Docker image
+                   
                     sh """
                         docker build -t ${ecrRegistry}/${phpImage}:latest -f ${phpDockerfile} .
                     """
@@ -50,10 +50,9 @@ pipeline {
                     def command = "aws ecr list-images --repository-name $phpImage --region us-west-2 --output text | grep IMAGEIDS | sed 's/IMAGEIDS\\t.*\\t//g' | grep -v latest | sort -nr | head -n1"
                     def phpImageVersion = sh(script: command, returnStdout: true).trim()
 
-                    // Docker image with tag
+                
                     def phpImageWithTag = "${ecrRegistry}/${phpImage}:${phpImageVersion}"
 
-                    // Register a new task definition with a new image and environment variables
                     sh '''
                         cat > task-def.json <<- EOM
                         {
@@ -81,11 +80,9 @@ pipeline {
                         EOM
                     '''
 
-                    // Register a new revision of the task definition with the updated Docker image
                     def taskDefName = 'task-def.json'
                     sh "aws ecs register-task-definition --cli-input-json file://${taskDefName} --region us-west-2"
 
-                    // Update the service to use the latest revision of the task definition
                     sh "aws ecs update-service --cluster ${ecsCluster} --service ${serviceName} --task-definition ${taskDefName} --force-new-deployment --region us-west-2"
                 }
             }
@@ -100,7 +97,7 @@ pipeline {
                 GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
                 GIT_USER = sh(returnStdout: true, script: 'git log -1 --pretty=format:"%an"').trim() // Last author
                 TOTAL_COMMITS = sh(returnStdout: true, script: 'git rev-list --count HEAD').trim()
-                JENKINS_USER = env.BUILD_USER_ID // Jenkins user who triggered the build
+                JENKINS_USER = env.BUILD_USER_ID 
             }
         }
     }
