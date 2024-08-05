@@ -4,10 +4,10 @@ pipeline {
     environment {
         dokerImage = 'vision-nbe'
         proxyImage = 'vision-nbe-proxy'
-        ecrRegistry = '496513254117.dkr.ecr.us-west-2.amazonaws.com'???
-        ecsCluster = 'Newbackend-qa-api-cluster'???
-        TaskDefName = 'Newbackend-qa-api'?
-        serviceName = 'Newbackend-qa-api'?
+        ecrRegistry = '496513254117.dkr.ecr.us-west-2.amazonaws.com'
+        ecsCluster = 'dca-contaioner'
+        TaskDefName = 'Newbackend-qa-api'
+        serviceName = 'Newbackend-qa-api'
         djangoDockerfile = 'devops/Dockerfile'
         
     }
