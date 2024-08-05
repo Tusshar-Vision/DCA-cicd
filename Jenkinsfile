@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        dockerImage = 'vision-nbe'
-        proxyImage = 'vision-nbe-proxy'
-        ecrRegistry = '496513254117.dkr.ecr.us-west-2.amazonaws.com'
+        dockerImage = '496513254117.dkr.ecr.us-west-2.amazonaws.com/dca-visionias'
+        proxyImage = '496513254117.dkr.ecr.us-west-2.amazonaws.com/dca-proxy'
+        // ecrRegistry = '496513254117.dkr.ecr.us-west-2.amazonaws.com'
         ecsCluster = 'dca-container'
-        TaskDefName = 'Newbackend-qa-api'
-        serviceName = 'Newbackend-qa-api'
-        phpDockerfile = 'devops/Dockerfile'
-        phpImage = 'your-php-image-name'  // Define the phpImage variable here
+        TaskDefName = 'dca-task'
+        serviceName = 'dca-contaioner'
+        phpDockerfile = /Dockerfile'
+        phpImage = 'DCA-visionias'  // Define the phpImage variable here
     }
 
     stages {
