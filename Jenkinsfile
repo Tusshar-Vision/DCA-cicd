@@ -16,8 +16,8 @@ pipeline {
         stage('Build PHP Docker Image') {
             steps {
                 script {
-                    // withCredentials([string(credentialsId: 'Digital-CA-env', variable: 'ENV_FILE_CONTENT')]) {
-                        // writeFile file: '.env', text: "${ENV_FILE_CONTENT}"
+                         withCredentials([string(credentialsId: 'Digital-CA-env', variable: 'ENV_FILE_CONTENT')]) {
+                         writeFile file: '.env', text: "${ENV_FILE_CONTENT}"
                     }
                    
                     sh """
