@@ -10,29 +10,26 @@ pipeline {
         serviceName = 'dca-container'
         phpDockerfile = 'Dockerfile'
         phpImage = 'visionias'
-        APP_NAME='Current Affairs | Vision IAS'
-        APP_ENV='local'
-        BASE_URL='https://visionias.in'
-        APP_URL='http://localhost'
-        VISION_API='https://qa-apis.visionias.in'
-        DB_HOST='mysql'
-        DB_PORT='3306'        
-        BROADCAST_DRIVER='log'
-        CACHE_DRIVER='memcached'
-        QUEUE_CONNECTION='redis'
-        QUEUE_DRIVER='redis'
-        SESSION_DRIVER='file'
-        SESSION_LIFETIME='1440'
-        MEMCACHED_HOST='memcached'
-        MEMCACHED_PORT='11211'
-        VITE_APP_NAME="${APP_NAME}"
-
-        
+        APP_NAME = 'Current Affairs | Vision IAS'
+        APP_ENV = 'local'
+        BASE_URL = 'https://visionias.in'
+        APP_URL = 'http://localhost'
+        VISION_API = 'https://qa-apis.visionias.in'
+        DB_HOST = 'mysql'
+        DB_PORT = '3306'        
+        BROADCAST_DRIVER = 'log'
+        CACHE_DRIVER = 'memcached'
+        QUEUE_CONNECTION = 'redis'
+        QUEUE_DRIVER = 'redis'
+        SESSION_DRIVER = 'file'
+        SESSION_LIFETIME = '1440'
+        MEMCACHED_HOST = 'memcached'
+        MEMCACHED_PORT = '11211'
+        VITE_APP_NAME = "${APP_NAME}"
     }
 
-   stages {
-        
-        stage('Build php docker  image') {
+    stages {
+        stage('Build PHP Docker Image') {
             steps {
                 script {
                     withCredentials([
@@ -58,14 +55,14 @@ pipeline {
                         usernamePassword(credentialsId: 'cd8be3ea-68ed-494b-ae51-058db36e7411', passwordVariable: 'EMAIL_HOST', usernameVariable: 'EMAIL_HOST_USERNAME'),
                         usernamePassword(credentialsId: 'ebd8d5fa-e09a-499c-9960-7394c2a4616d', passwordVariable: 'NOTIFICATION_SERVER_EMAIL_LINK', usernameVariable: 'NOTIFICATION_SERVER_EMAIL_LINK_USERNAME'),
                         usernamePassword(credentialsId: '5a7fd92c-a84b-4b1d-b084-9e07a30c9b31', passwordVariable: 'NOTIFICATION_SERVER_EMAIL_AUTH', usernameVariable: 'NOTIFICATION_SERVER_EMAIL_AUTH_USERNAME'),
-                        usernamePassword(credentialsId: 'c86f1a22-240c-48dc-9227-6ac64de28a1d', passwordVariable: 'ADMIN_API_SECRET_KEY', usernameVariable: 'ADMIN_API_SECRET_KEY_USERNAME')                    ]) {
+                        usernamePassword(credentialsId: 'c86f1a22-240c-48dc-9227-6ac64de28a1d', passwordVariable: 'ADMIN_API_SECRET_KEY', usernameVariable: 'ADMIN_API_SECRET_KEY_USERNAME')
+                    ]) {
+                        def envFilePath = "${WORKSPACE}/vision_be/configuration"
 
-                    def envFilePath = "${WORKSPACE}/vision_be/configuration"
+                        sh """
+                            docker build -t ${ecrRegistry}/${phpImage}:latest -f ${phpDockerfile} .
+                        """
                     }
-                   
-                    sh """
-                        docker build -t ${ecrRegistry}/${phpImage}:latest -f ${phpDockerfile} .
-                    """
                 }
             }
         }
