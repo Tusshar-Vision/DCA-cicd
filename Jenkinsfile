@@ -86,6 +86,9 @@ pipeline {
                     ]) {
                         def envFilePath = "${WORKSPACE}/vision_be/configuration"
 
+                          sh 'chmod -R 775 storage/framework/views'
+                          sh 'chown -R www-data:www-data storage/framework/views'
+
                         sh """
                             docker build -t ${ecrRegistry}/${phpImage}:latest -f ${phpDockerfile} .
                         """
