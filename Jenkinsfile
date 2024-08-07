@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        ecrRegistry = 'dca-visionias'
+        ecrRegistry = '496513254117.dkr.ecr.us-west-2.amazonaws.com/dca-visionias'
         dockerImage = "${ecrRegistry}/dca-visionias"
         proxyImage = "${ecrRegistry}/dca-proxy"
         ecsCluster = 'dca-container'
