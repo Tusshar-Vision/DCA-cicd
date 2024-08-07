@@ -85,7 +85,7 @@ pipeline {
                         usernamePassword(credentialsId: 'a112c082-9616-4262-b3e5-07e0e3f0a56d', passwordVariable: 'COGNITO_ENCRYPTION_KEY_V2', usernameVariable: 'COGNITO_ENCRYPTION_KEY_V2_USERNAME')
                     ]) {
                         def envFilePath = "${WORKSPACE}/vision_be/configuration"
-                          sh 'mkdir /storage/framework/views'
+                          sh 'mkdir -p /storage/framework/views'
 
                           sh 'chmod -R 775 /storage/framework/views'
                           sh 'chown -R www-data:www-data /storage/framework/views'
