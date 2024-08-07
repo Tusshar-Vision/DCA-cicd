@@ -26,37 +26,35 @@ pipeline {
         MEMCACHED_HOST = 'memcached'
         MEMCACHED_PORT = '11211'
         VITE_APP_NAME = "${APP_NAME}"
-        AWS_DEFAULT_REGION='us-west-2'
-        AWS_COGNITO_REGION='ap-south-1'
-        AWS_COGNITO_VERSION='2016-04-18'
-        AWS_COGNITO_ADD_LOCAL_USER='true'
-        AWS_COGNITO_ALLOW_FORGOT_PASSWORD_RESEND='true'
-        AWS_COGNITO_CLIENT_SECRET_ALLOW='true'
-        AWS_COGNITO_FORCE_PASSWORD_CHANGE_WEB='false'
-        AWS_BUCKET_REGION=ap-south-'1'
-        AWS_USE_PATH_STYLE_ENDPOINT='false'
-        AWS_BUCKET='ca-test-bucket-2'
-        AWS_PUBLIC_BUCKET='ca-test-bucket-2'
-        CDN_BYPASS='false'
-        AWS_CDN_ASSET_UPLOAD_FOLDER="assets/"
-        COOKIE_DOMAIN=localhost
-        COOKIE_VERSION="VI_T1PAPSID"
-        COOKIE_ACCESS_TOKEN="VI_T2PAPSID"
-        COOKIE_REFRESH_TOKEN="VI_T3PAPSID"
-        COOKIE_ID_TOKEN="VI_T4PAPSID"
-        ACTIVE_ENCRYPTION_VERSION="V2"
-        SCOUT_DRIVER='meilisearch'
-        MEILISEARCH_HOST='http://meilisearch:7700'
-        SCOUT_QUEUE='true'
-        MEILISEARCH_NO_ANALYTICS'false'
-        WWWGROUP='1000'
-        WWWUSER='1000'
-
+        AWS_DEFAULT_REGION = 'us-west-2'
+        AWS_COGNITO_REGION = 'ap-south-1'
+        AWS_COGNITO_VERSION = '2016-04-18'
+        AWS_COGNITO_ADD_LOCAL_USER = 'true'
+        AWS_COGNITO_ALLOW_FORGOT_PASSWORD_RESEND = 'true'
+        AWS_COGNITO_CLIENT_SECRET_ALLOW = 'true'
+        AWS_COGNITO_FORCE_PASSWORD_CHANGE_WEB = 'false'
+        AWS_BUCKET_REGION = 'ap-south-1'
+        AWS_USE_PATH_STYLE_ENDPOINT = 'false'
+        AWS_BUCKET = 'ca-test-bucket-2'
+        AWS_PUBLIC_BUCKET = 'ca-test-bucket-2'
+        CDN_BYPASS = 'false'
+        AWS_CDN_ASSET_UPLOAD_FOLDER = "assets/"
+        COOKIE_DOMAIN = 'localhost'
+        COOKIE_VERSION = "VI_T1PAPSID"
+        COOKIE_ACCESS_TOKEN = "VI_T2PAPSID"
+        COOKIE_REFRESH_TOKEN = "VI_T3PAPSID"
+        COOKIE_ID_TOKEN = "VI_T4PAPSID"
+        ACTIVE_ENCRYPTION_VERSION = "V2"
+        SCOUT_DRIVER = 'meilisearch'
+        MEILISEARCH_HOST = 'http://meilisearch:7700'
+        SCOUT_QUEUE = 'true'
+        MEILISEARCH_NO_ANALYTICS = 'false'
+        WWWGROUP = '1000'
+        WWWUSER = '1000'
     }
 
-   stages {
-        
-        stage('Build Django image') {
+    stages {
+        stage('Build php docker image') {
             steps {
                 script {
                     withCredentials([
@@ -84,7 +82,7 @@ pipeline {
                         usernamePassword(credentialsId: '5070d10d-b73f-4f3b-a0cc-235e897b4651', passwordVariable: 'AWS_BUCKET_ACCESS_KEY_ID', usernameVariable: 'AWS_BUCKET_ACCESS_KEY_ID_USERNAME'),
                         usernamePassword(credentialsId: '89c6c9e6-fd6b-4b3f-8dad-a15b0fd875d3', passwordVariable: 'AWS_BUCKET_SECRET_ACCESS_KEY', usernameVariable: 'AWS_BUCKET_SECRET_ACCESS_KEY_USERNAME'),
                         usernamePassword(credentialsId: 'f356416f-5294-407e-85f3-430ea69d03fa', passwordVariable: 'COGNITO_ENCRYPTION_KEY_V1', usernameVariable: 'COGNITO_ENCRYPTION_KEY_V1_USERNAME'),
-                        usernamePassword(credentialsId: 'a112c082-9616-4262-b3e5-07e0e3f0a56d', passwordVariable: 'COGNITO_ENCRYPTION_KEY_V2', usernameVariable: 'COGNITO_ENCRYPTION_KEY_V2_USERNAME')                    ]) {
+                        usernamePassword(credentialsId: 'a112c082-9616-4262-b3e5-07e0e3f0a56d', passwordVariable: 'COGNITO_ENCRYPTION_KEY_V2', usernameVariable: 'COGNITO_ENCRYPTION_KEY_V2_USERNAME')
                     ]) {
                         def envFilePath = "${WORKSPACE}/vision_be/configuration"
 
