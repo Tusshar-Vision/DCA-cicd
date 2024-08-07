@@ -10,6 +10,24 @@ pipeline {
         serviceName = 'dca-container'
         phpDockerfile = 'Dockerfile'
         phpImage = 'visionias'
+        APP_NAME='Current Affairs | Vision IAS'
+        APP_ENV='local'
+        BASE_URL='https://visionias.in'
+        APP_URL='http://localhost'
+        VISION_API='https://qa-apis.visionias.in'
+        DB_HOST='mysql'
+        DB_PORT='3306'        
+        BROADCAST_DRIVER='log'
+        CACHE_DRIVER='memcached'
+        QUEUE_CONNECTION='redis'
+        QUEUE_DRIVER='redis'
+        SESSION_DRIVER='file'
+        SESSION_LIFETIME='1440'
+        MEMCACHED_HOST='memcached'
+        MEMCACHED_PORT='11211'
+        VITE_APP_NAME="${APP_NAME}"
+
+        
     }
 
     stages {
