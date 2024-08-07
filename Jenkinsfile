@@ -26,6 +26,32 @@ pipeline {
         MEMCACHED_HOST = 'memcached'
         MEMCACHED_PORT = '11211'
         VITE_APP_NAME = "${APP_NAME}"
+        AWS_DEFAULT_REGION='us-west-2'
+        AWS_COGNITO_REGION='ap-south-1'
+        AWS_COGNITO_VERSION='2016-04-18'
+        AWS_COGNITO_ADD_LOCAL_USER='true'
+        AWS_COGNITO_ALLOW_FORGOT_PASSWORD_RESEND='true'
+        AWS_COGNITO_CLIENT_SECRET_ALLOW='true'
+        AWS_COGNITO_FORCE_PASSWORD_CHANGE_WEB='false'
+        AWS_BUCKET_REGION=ap-south-'1'
+        AWS_USE_PATH_STYLE_ENDPOINT='false'
+        AWS_BUCKET='ca-test-bucket-2'
+        AWS_PUBLIC_BUCKET='ca-test-bucket-2'
+        CDN_BYPASS='false'
+        AWS_CDN_ASSET_UPLOAD_FOLDER="assets/"
+        COOKIE_DOMAIN=localhost
+        COOKIE_VERSION="VI_T1PAPSID"
+        COOKIE_ACCESS_TOKEN="VI_T2PAPSID"
+        COOKIE_REFRESH_TOKEN="VI_T3PAPSID"
+        COOKIE_ID_TOKEN="VI_T4PAPSID"
+        ACTIVE_ENCRYPTION_VERSION="V2"
+        SCOUT_DRIVER='meilisearch'
+        MEILISEARCH_HOST='http://meilisearch:7700'
+        SCOUT_QUEUE='true'
+        MEILISEARCH_NO_ANALYTICS'false'
+        WWWGROUP='1000'
+        WWWUSER='1000'
+
     }
 
     stages {
