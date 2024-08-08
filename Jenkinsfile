@@ -90,21 +90,16 @@ pipeline {
                     // def phpImageVersion = sh(script: command, returnStdout: true).trim().tokenize().findAll { it.isInteger() }.collect { it.toInteger() }.max() ?: 0
                     def phpImageWithTag = "${ecrRegistry}/${phpImage}:${}"
 
-                    def taskDefJson = """
-                    {
-                      "family": "${TaskDefName}",
-                      "containerDefinitions": [
-                        {
-                          "name": "dca-container",
-                          "image": "${phpImageWithTag}",
-                          "cpu": 512,
-                          "memory": 1024,
-                          "portMappings": [
-                            {
-                              "containerPort": 8000,
-                              "hostPort": 8000,
-                              "protocol": "tcp"
-                            }
+                   
+                        // Task definition and service details
+                        def taskDefFile = '/taskdefinition.json'
+                        // def command = "aws ecr list-images --repository-name $djangoImage --region us-west-2 --output text | grep IMAGEIDS | sed 's/IMAGEIDS\\t.*\\t//g' | grep -v latest | sort -nr | head -n1"
+                        def djangoImageVersion = sh(script: command, returnStdout: true).trim()
+                     // Register a new revision of the task definition with the updated Docker image
+                        sh "aws ecs register-task-definition --cli-input-json file://${taskDefFile} --region us-west-2"
+
+                        // Update the service to use the latest revision of the task definition
+                        sh "aws ecs update-service --cluster ${ecsCluster} --service ${serviceName} --task-definition ${taskDefName} --force-new-deployment --region us-west-2"
                           ],
                           "essential": true,
                           "environment": [
