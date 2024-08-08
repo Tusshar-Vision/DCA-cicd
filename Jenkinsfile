@@ -74,7 +74,7 @@ pipeline {
             steps {
                 script {
                     // Correct the usage of 'command' by defining it here
-                    def command = "aws ecr list-images --repository-name ${phpImage} --region us-west-2 --query 'imageIds[*].imageTag' --output text"
+                   // def command = "aws ecr list-images --repository-name ${phpImage} --region us-west-2 --query 'imageIds[*].imageTag' --output text"
                     def currentVersion = sh(script: command, returnStdout: true).trim()
                     def newVersion = (currentVersion.tokenize().findAll { it.isInteger() }.collect { it.toInteger() }.max() ?: 0) + 1
 
