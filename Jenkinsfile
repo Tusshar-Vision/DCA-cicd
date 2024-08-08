@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        ecrRegistry = '496513254117.dkr.ecr.us-west-2.amazonaws.com/dca-visionias'
-        dockerImage = "${ecrRegistry}"
+        ecrRegistry = '496513254117.dkr.ecr.us-west-2.amazonaws.com'
+        dockerImage = "${ecrRegistry}/dca-visionias"
         ecsCluster = 'dca-container'
         TaskDefName = 'dca-task'
         serviceName = 'dca-container'
