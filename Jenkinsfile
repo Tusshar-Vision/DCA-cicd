@@ -72,7 +72,6 @@ pipeline {
         stage('Push PHP Docker Image') {
             steps {
                 script {
-                    // def command = "aws ecr list-images --repository-name ${phpImage} --region us-west-2 --query 'imageIds[*].imageTag' --output text"
                     def currentVersion = sh(script: command, returnStdout: true).trim()
                     def newVersion = (currentVersion.tokenize().findAll { it.isInteger() }.collect { it.toInteger() }.max() ?: 0) + 1
 
