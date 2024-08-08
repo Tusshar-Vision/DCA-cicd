@@ -72,23 +72,12 @@ pipeline {
         stage('Push PHP Docker Image') {
             steps {
                 script {
-                    // The 'command' variable was undefined; you should define it or use a valid command to get the current version.
-                    def command = "aws ecr list-images --repository-name ${phpImage} --region us-west-2 --query 'imageIds[*].imageTag' --output text"
-                    def currentVersion = sh(script: command, returnStdout: true).trim()
+                    // def currentVersion = sh(script: command, returnStdout: true).trim()
+                    // def newVersion = (currentVersion.tokenize().findAll { it.isInteger() }.collect { it.toInteger() }.max() ?: 0) + 1
 
-                    def versions = currentVersion.tokenize().findAll { it.isInteger() }
-                    def maxVersion = 0
-                    for (v in versions) {
-                        def num = v.toInteger()
-                        if (num > maxVersion) {
-                            maxVersion = num
-                        }
-                    }
-                    def newVersion = maxVersion + 1
-
-                    sh "docker tag ${ecrRegistry}/${phpImage}:latest ${ecrRegistry}/${phpImage}:${newVersion}"
+                    sh "docker tag ${ecrRegistry}/${phpImage}:latest ${ecrRegistry}/${phpImage}"
                     sh "aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin ${ecrRegistry}"
-                    sh "docker push ${ecrRegistry}/${phpImage}:${newVersion}"
+                    sh "docker push ${ecrRegistry}/${phpImage}"
                     sh "docker push ${ecrRegistry}/${phpImage}:latest"
                 }
             }
@@ -97,18 +86,26 @@ pipeline {
         stage('Deploy to ECS') {
             steps {
                 script {
-                    // The 'command' variable was undefined earlier. Define it properly here.
-                    def command = "aws ecr list-images --repository-name ${phpImage} --region us-west-2 --output text | grep IMAGEIDS | sed 's/IMAGEIDS\\t.*\\t//g' | grep -v latest | sort -nr | head -n1"
-                    def phpImageVersion = sh(script: command, returnStdout: true).trim()
+                    def command = "aws ecr list-images --repository-name ${phpImage} --region us-west-2 --query 'imageIds[*].imageTag' --output text"
+                    def phpImageVersion = sh(script: command, returnStdout: true).trim().tokenize().findAll { it.isInteger() }.collect { it.toInteger() }.max() ?: 0
                     def phpImageWithTag = "${ecrRegistry}/${phpImage}:${phpImageVersion}"
 
-                    def taskDefJson = "taskDefinition.json"
+                    def taskDefJson = """
                     {
                       "family": "${TaskDefName}",
                       "containerDefinitions": [
                         {
-                          "name": "${phpImage}",
+                          "name": "dca-container",
                           "image": "${phpImageWithTag}",
+                          "cpu": 512,
+                          "memory": 1024,
+                          "portMappings": [
+                            {
+                              "containerPort": 8000,
+                              "hostPort": 8000,
+                              "protocol": "tcp"
+                            }
+                          ],
                           "essential": true,
                           "environment": [
                             {"name": "APP_ENV", "value": "${APP_ENV}"},
