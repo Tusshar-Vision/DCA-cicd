@@ -16,39 +16,16 @@ pipeline {
         APP_URL = 'http://localhost'
         VISION_API = 'https://qa-apis.visionias.in'
         DB_HOST = 'mysql'
-        DB_PORT = '3306'        
-        BROADCAST_DRIVER = 'log'
-        CACHE_DRIVER = 'memcached'
-        QUEUE_CONNECTION = 'redis'
-        QUEUE_DRIVER = 'redis'
-        SESSION_DRIVER = 'file'
-        SESSION_LIFETIME = '1440'
-        MEMCACHED_HOST = 'memcached'
-        MEMCACHED_PORT = '11211'
-        VITE_APP_NAME = "${APP_NAME}"
+        DB_PORT = '3306'
         AWS_DEFAULT_REGION = 'us-west-2'
         AWS_COGNITO_REGION = 'ap-south-1'
-        AWS_COGNITO_VERSION = '2016-04-18'
-        AWS_COGNITO_ADD_LOCAL_USER = 'true'
-        AWS_COGNITO_ALLOW_FORGOT_PASSWORD_RESEND = 'true'
-        AWS_COGNITO_CLIENT_SECRET_ALLOW = 'true'
-        AWS_COGNITO_FORCE_PASSWORD_CHANGE_WEB = 'false'
         AWS_BUCKET_REGION = 'ap-south-1'
-        AWS_USE_PATH_STYLE_ENDPOINT = 'false'
         AWS_BUCKET = 'ca-test-bucket-2'
         AWS_PUBLIC_BUCKET = 'ca-test-bucket-2'
-        CDN_BYPASS = 'false'
-        AWS_CDN_ASSET_UPLOAD_FOLDER = "assets/"
         COOKIE_DOMAIN = 'localhost'
         COOKIE_VERSION = "VI_T1PAPSID"
-        COOKIE_ACCESS_TOKEN = "VI_T2PAPSID"
-        COOKIE_REFRESH_TOKEN = "VI_T3PAPSID"
-        COOKIE_ID_TOKEN = "VI_T4PAPSID"
-        ACTIVE_ENCRYPTION_VERSION = "V2"
         SCOUT_DRIVER = 'meilisearch'
         MEILISEARCH_HOST = 'http://meilisearch:7700'
-        SCOUT_QUEUE = 'true'
-        MEILISEARCH_NO_ANALYTICS = 'false'
         WWWGROUP = '1000'
         WWWUSER = '1000'
     }
@@ -58,7 +35,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([
-                        usernamePassword(credentialsId: 'b1ad4882-cdf4-4dd4-b18e-587141426d69', passwordVariable: 'APP_KEY', usernameVariable: 'APP_KEY_USERNAME'),
+                       usernamePassword(credentialsId: 'b1ad4882-cdf4-4dd4-b18e-587141426d69', passwordVariable: 'APP_KEY', usernameVariable: 'APP_KEY_USERNAME'),
                         usernamePassword(credentialsId: '4bf341bd-c67c-4eb1-ad5e-bfcf8e4a6773', passwordVariable: 'APP_NAME', usernameVariable: 'APP_NAME_USERNAME'),
                         usernamePassword(credentialsId: 'f72ce646-7aac-4182-b5ff-75f135a79526', passwordVariable: 'APP_DEBUG', usernameVariable: 'APP_DEBUG_USERNAME'),
                         usernamePassword(credentialsId: '3d940133-1cc3-4582-8bb5-506e9e6c9bb5', passwordVariable: 'VISION_URL', usernameVariable: 'VISION_URL_USERNAME'),
@@ -84,10 +61,7 @@ pipeline {
                         usernamePassword(credentialsId: 'f356416f-5294-407e-85f3-430ea69d03fa', passwordVariable: 'COGNITO_ENCRYPTION_KEY_V1', usernameVariable: 'COGNITO_ENCRYPTION_KEY_V1_USERNAME'),
                         usernamePassword(credentialsId: 'a112c082-9616-4262-b3e5-07e0e3f0a56d', passwordVariable: 'COGNITO_ENCRYPTION_KEY_V2', usernameVariable: 'COGNITO_ENCRYPTION_KEY_V2_USERNAME')
                     ]) {
-                        def envFilePath = "${WORKSPACE}/vision_be/configuration"
-
-                          sh 'mkdir  -p ./storage/framework/views'
-
+                        sh 'mkdir  -p ./storage/framework/views'
                         sh """
                             docker build -t ${ecrRegistry}/${phpImage}:latest -f ${phpDockerfile} .
                         """
@@ -96,7 +70,7 @@ pipeline {
             }
         }
 
-     stage('Push PHP Docker Image') {
+        stage('Push PHP Docker Image') {
             steps {
                 script {
                     def command = "aws ecr list-images --repository-name ${phpImage} --region us-west-2 --query 'imageIds[*].imageTag' --output text"
@@ -110,7 +84,6 @@ pipeline {
                 }
             }
         }
-
 
         stage('Deploy to ECS') {
             steps {
@@ -136,7 +109,13 @@ pipeline {
                             }
                           ],
                           "essential": true,
-                          "environment": ${sh(script: 'cat .env | sed "s/^/[\\"name\\": \\"/; s/=\\":/\\", \\"value\\":/; s/$/\\"]/"', returnStdout: true).trim()}
+                          "environment": [
+                            {"name": "APP_ENV", "value": "${APP_ENV}"},
+                            {"name": "DB_HOST", "value": "${DB_HOST}"},
+                            {"name": "DB_PORT", "value": "${DB_PORT}"},
+                            {"name": "AWS_DEFAULT_REGION", "value": "${AWS_DEFAULT_REGION}"}
+                            // Add more environment variables here as needed
+                          ]
                         }
                       ]
                     }
@@ -154,11 +133,11 @@ pipeline {
         always {
             sh "docker system prune -f -a"
             script {
-                GIT_COMMIT_SHORT = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-                GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
-                GIT_USER = sh(returnStdout: true, script: 'git log -1 --pretty=format:"%an"').trim() // Last author
-                TOTAL_COMMITS = sh(returnStdout: true, script: 'git rev-list --count HEAD').trim()
-                JENKINS_USER = env.BUILD_USER_ID 
+                def GIT_COMMIT_SHORT = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
+                def GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
+                def GIT_USER = sh(returnStdout: true, script: 'git log -1 --pretty=format:"%an"').trim() // Last author
+                def TOTAL_COMMITS = sh(returnStdout: true, script: 'git rev-list --count HEAD').trim()
+                def JENKINS_USER = env.BUILD_USER_ID 
             }
         }
     }
