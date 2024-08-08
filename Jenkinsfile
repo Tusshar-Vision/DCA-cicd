@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         ecrRegistry = '496513254117.dkr.ecr.us-west-2.amazonaws.com/dca-visionias'
-        dockerImage = "${ecrRegistry}/dca-visionias"
+        dockerImage = "${ecrRegistry}"
         ecsCluster = 'dca-container'
         TaskDefName = 'dca-task'
         serviceName = 'dca-container'
