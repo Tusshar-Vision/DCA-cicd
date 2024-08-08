@@ -4,7 +4,6 @@ pipeline {
     environment {
         ecrRegistry = '496513254117.dkr.ecr.us-west-2.amazonaws.com/dca-visionias'
         dockerImage = "${ecrRegistry}/dca-visionias"
-        proxyImage = "${ecrRegistry}/dca-proxy"
         ecsCluster = 'dca-container'
         TaskDefName = 'dca-task'
         serviceName = 'dca-container'
@@ -73,8 +72,7 @@ pipeline {
         stage('Push PHP Docker Image') {
             steps {
                 script {
-                    // Correct the usage of 'command' by defining it here
-                   // def command = "aws ecr list-images --repository-name ${phpImage} --region us-west-2 --query 'imageIds[*].imageTag' --output text"
+                    def command = "aws ecr list-images --repository-name ${phpImage} --region us-west-2 --query 'imageIds[*].imageTag' --output text"
                     def currentVersion = sh(script: command, returnStdout: true).trim()
                     def newVersion = (currentVersion.tokenize().findAll { it.isInteger() }.collect { it.toInteger() }.max() ?: 0) + 1
 
@@ -93,11 +91,21 @@ pipeline {
                     def phpImageVersion = sh(script: command, returnStdout: true).trim().tokenize().findAll { it.isInteger() }.collect { it.toInteger() }.max() ?: 0
                     def phpImageWithTag = "${ecrRegistry}/${phpImage}:${phpImageVersion}"
 
-                    // Task definition and service details
-                        def taskDefFile = '/taskdefinitions.json'
-                        def command = "aws ecr list-images --repository-name $djangoImage --region us-west-2 --output text | grep IMAGEIDS | sed 's/IMAGEIDS\\t.*\\t//g' | grep -v latest | sort -nr | head -n1"
-                        def djangoImageVersion = sh(script: command, returnStdout: true).trim()
-                        
+                    def taskDefJson = """
+                    {
+                      "family": "${TaskDefName}",
+                      "containerDefinitions": [
+                        {
+                          "name": "dca-container",
+                          "image": "${phpImageWithTag}",
+                          "cpu": 512,
+                          "memory": 1024,
+                          "portMappings": [
+                            {
+                              "containerPort": 8000,
+                              "hostPort": 8000,
+                              "protocol": "tcp"
+                            }
                           ],
                           "essential": true,
                           "environment": [
