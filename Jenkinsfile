@@ -8,7 +8,7 @@ pipeline {
         TaskDefName = 'dca-task'
         serviceName = 'dca-container'
         phpDockerfile = 'Dockerfile'
-        phpImage = 'dca-visionias'
+        // phpImage = 'dca-visionias'
         APP_NAME = 'Current Affairs | Vision IAS'
         APP_ENV = 'local'
         BASE_URL = 'https://visionias.in'
