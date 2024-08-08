@@ -1,0 +1,155 @@
+{
+    "taskDefinitionArn": "arn:aws:ecs:us-west-2:496513254117:task-definition/dca-task:18",
+    "containerDefinitions": [
+        {
+            "name": "dca-container",
+            "image": "496513254117.dkr.ecr.us-west-2.amazonaws.com/dca-visionias",
+            "cpu": 512,
+            "memory": 1024,
+            "portMappings": [
+                {
+                    "name": "dca-8000-tcp",
+                    "containerPort": 8000,
+                    "hostPort": 8000,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "REDIS_PORT",
+                    "value": "6379"
+                },
+                {
+                    "name": "REDIS_HOST",
+                    "value": "redis-container"
+                },
+                {
+                    "name": "REDIS_PASSWORD",
+                    "value": "visionias=12w/slalKSaKA-=1@sj"
+                }
+            ],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/dca-task",
+                    "awslogs-create-group": "true",
+                    "awslogs-region": "us-west-2",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
+            "healthCheck": {
+                "command": [
+                    "CMD-SHELL",
+                    "curl -f http://localhost:8000/ || exit 1"
+                ],
+                "interval": 30,
+                "timeout": 5,
+                "retries": 3,
+                "startPeriod": 60
+            },
+            "systemControls": []
+        },
+        {
+            "name": "redis-container",
+            "image": "redis:latest",
+            "cpu": 256,
+            "memory": 512,
+            "portMappings": [
+                {
+                    "name": "redis-6379-tcp",
+                    "containerPort": 6379,
+                    "hostPort": 6379,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "command": [
+                "redis-server",
+                "--requirepass",
+                "visionias=12w/slalKSaKA-=1@sj"
+            ],
+            "environment": [
+                {
+                    "name": "REDIS_PORT",
+                    "value": "6379"
+                },
+                {
+                    "name": "REDIS_PASSWORD",
+                    "value": "visionias=12w/slalKSaKA-=1@sj"
+                }
+            ],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/dca-task",
+                    "awslogs-create-group": "true",
+                    "awslogs-region": "us-west-2",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
+            "systemControls": []
+        }
+    ],
+    "family": "dca-task",
+    "taskRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "revision": 18,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+            "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.task-iam-role"
+        },
+        {
+            "name": "ecs.capability.container-health-check"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "EC2"
+    ],
+    "cpu": "1024",
+    "memory": "3072",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "registeredAt": "2024-07-22T17:12:32.137Z",
+    "registeredBy": "arn:aws:iam::496513254117:user/aryan",
+    "tags": []
+}
