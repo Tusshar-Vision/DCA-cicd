@@ -97,19 +97,31 @@ pipeline {
         }
 
         stage('Push PHP Docker Image') {
-            steps {
-                script {
-                    def command = "aws ecr list-images --repository-name ${phpImage} --region us-west-2 --query 'imageIds[*].imageTag' --output text"
-                    def currentVersion = sh(script: command, returnStdout: true).trim()
-                    def newVersion = (currentVersion.tokenize().findAll { it.isInteger() }.collect { it.toInteger() }.max() ?: 0) + 1
+    steps {
+        script {
+            // Command to get the list of image tags from ECR
+            def command = "aws ecr list-images --repository-name ${phpImage} --region us-west-2 --query 'imageIds[*].imageTag' --output text"
+            def currentVersions = sh(script: command, returnStdout: true).trim().tokenize()
 
-                    sh "docker tag ${ecrRegistry}/${phpImage}:latest ${ecrRegistry}/${phpImage}:${newVersion}"
-                    sh "aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin ${ecrRegistry}"
-                    sh "docker push ${ecrRegistry}/${phpImage}:${newVersion}"
-                    sh "docker push ${ecrRegistry}/${phpImage}:latest"
-                }
+            // Use shell command to find the maximum version and increment it
+            def newVersion = sh(script: """
+                echo ${currentVersions.join(' ')} | tr ' ' '\\n' | grep -E '^[0-9]+$' | sort -n | tail -1 | awk '{print \$1+1}'
+            """, returnStdout: true).trim()
+
+            // If no version exists, start from version 1
+            if (!newVersion) {
+                newVersion = '1'
             }
+
+            // Tagging the Docker image
+            sh "docker tag ${ecrRegistry}/${phpImage}:latest ${ecrRegistry}/${phpImage}:${newVersion}"
+            sh "aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin ${ecrRegistry}"
+            sh "docker push ${ecrRegistry}/${phpImage}:${newVersion}"
+            sh "docker push ${ecrRegistry}/${phpImage}:latest"
         }
+    }
+}
+
 
         stage('Deploy to ECS') {
             steps {
