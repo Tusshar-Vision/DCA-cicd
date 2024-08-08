@@ -86,8 +86,8 @@ pipeline {
         stage('Deploy to ECS') {
             steps {
                 script {
-                    def command = "aws ecr list-images --repository-name ${phpImage} --region us-west-2 --query 'imageIds[*].imageTag' --output text"
-                    def phpImageVersion = sh(script: command, returnStdout: true).trim().tokenize().findAll { it.isInteger() }.collect { it.toInteger() }.max() ?: 0
+                    // def command = "aws ecr list-images --repository-name ${phpImage} --region us-west-2 --query 'imageIds[*].imageTag' --output text"
+                    // def phpImageVersion = sh(script: command, returnStdout: true).trim().tokenize().findAll { it.isInteger() }.collect { it.toInteger() }.max() ?: 0
                     def phpImageWithTag = "${ecrRegistry}/${phpImage}:${phpImageVersion}"
 
                     def taskDefJson = """
