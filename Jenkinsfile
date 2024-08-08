@@ -72,12 +72,12 @@ pipeline {
         stage('Push PHP Docker Image') {
             steps {
                 script {
-                    def currentVersion = sh(script: command, returnStdout: true).trim()
-                    def newVersion = (currentVersion.tokenize().findAll { it.isInteger() }.collect { it.toInteger() }.max() ?: 0) + 1
+                    // def currentVersion = sh(script: command, returnStdout: true).trim()
+                    // def newVersion = (currentVersion.tokenize().findAll { it.isInteger() }.collect { it.toInteger() }.max() ?: 0) + 1
 
-                    sh "docker tag ${ecrRegistry}/${phpImage}:latest ${ecrRegistry}/${phpImage}:${newVersion}"
+                    sh "docker tag ${ecrRegistry}/${phpImage}:latest ${ecrRegistry}/${phpImage}"
                     sh "aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin ${ecrRegistry}"
-                    sh "docker push ${ecrRegistry}/${phpImage}:${newVersion}"
+                    sh "docker push ${ecrRegistry}/${phpImage}"
                     sh "docker push ${ecrRegistry}/${phpImage}:latest"
                 }
             }
