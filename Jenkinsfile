@@ -8,7 +8,8 @@ pipeline {
         TaskDefName = 'dca-task'
         serviceName = 'dca-service'
         phpDockerfile = 'Dockerfile'
-        phpImage = 'dca-container'
+        phpImage = 'dca-visionias'
+        phpcontainer = 'dca-container'
         APP_NAME = 'Current Affairs | Vision IAS'
         APP_ENV = 'local'
         BASE_URL = 'https://visionias.in'
@@ -87,7 +88,7 @@ pipeline {
                         "family": "${TaskDefName}",
                         "containerDefinitions": [
                             {
-                                "name": "${phpImage}",
+                                "name": "${phpcontainer}",
                                 "image": "${ecrRegistry}/${phpImage}:latest",
                                 "essential": true,
                                 "memory": 512,
