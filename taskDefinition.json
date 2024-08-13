@@ -1,10 +1,10 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-west-2:496513254117:task-definition/dca-task:18",
+    "family": "dca-task",
     "containerDefinitions": [
         {
             "name": "dca-container",
             "image": "496513254117.dkr.ecr.us-west-2.amazonaws.com/dca-visionias",
-            "cpu": 512,
+            "cpu": 256,
             "memory": 1024,
             "portMappings": [
                 {
@@ -56,7 +56,7 @@
         {
             "name": "redis-container",
             "image": "redis:latest",
-            "cpu": 256,
+            "cpu": 128,
             "memory": 512,
             "portMappings": [
                 {
@@ -96,60 +96,16 @@
             "systemControls": []
         }
     ],
-    "family": "dca-task",
     "taskRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
     "executionRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 18,
-    "volumes": [],
-    "status": "ACTIVE",
-    "requiresAttributes": [
-        {
-            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
-        },
-        {
-            "name": "ecs.capability.execution-role-awslogs"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.ecr-auth"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.task-iam-role"
-        },
-        {
-            "name": "ecs.capability.container-health-check"
-        },
-        {
-            "name": "ecs.capability.execution-role-ecr-pull"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
-        },
-        {
-            "name": "ecs.capability.task-eni"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
-        }
-    ],
-    "placementConstraints": [],
-    "compatibilities": [
-        "EC2",
-        "FARGATE"
-    ],
     "requiresCompatibilities": [
         "EC2"
     ],
-    "cpu": "1024",
-    "memory": "3072",
+    "cpu": "512",
+    "memory": "2048",
     "runtimePlatform": {
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
-    },
-    "registeredAt": "2024-07-22T17:12:32.137Z",
-    "registeredBy": "arn:aws:iam::496513254117:user/aryan",
-    "tags": []
+    }
 }
