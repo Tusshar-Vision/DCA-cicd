@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([
-                       usernamePassword(credentialsId: 'b1ad4882-cdf4-4dd4-b18e-587141426d69', passwordVariable: 'APP_KEY', usernameVariable: 'APP_KEY_USERNAME'),
+                        usernamePassword(credentialsId: 'b1ad4882-cdf4-4dd4-b18e-587141426d69', passwordVariable: 'APP_KEY', usernameVariable: 'APP_KEY_USERNAME'),
                         usernamePassword(credentialsId: '4bf341bd-c67c-4eb1-ad5e-bfcf8e4a6773', passwordVariable: 'APP_NAME', usernameVariable: 'APP_NAME_USERNAME'),
                         usernamePassword(credentialsId: 'f72ce646-7aac-4182-b5ff-75f135a79526', passwordVariable: 'APP_DEBUG', usernameVariable: 'APP_DEBUG_USERNAME'),
                         usernamePassword(credentialsId: '3d940133-1cc3-4582-8bb5-506e9e6c9bb5', passwordVariable: 'VISION_URL', usernameVariable: 'VISION_URL_USERNAME'),
@@ -63,7 +63,7 @@ pipeline {
                     ]) {
                         sh 'mkdir -p ./storage/framework/views'
                         sh """
-                            docker build -t ${dockerImage}:latest -f ${phpDockerfile} .
+                            docker build -t ${ecrRegistry}/${phpImage}:latest -f ${phpDockerfile} .
                         """
                     }
                 }
@@ -73,13 +73,9 @@ pipeline {
         stage('Push PHP Docker Image') {
             steps {
                 script {
-                    withCredentials([
-                        usernamePassword(credentialsId: '254f8aa5-489e-4436-a918-0e8d6fa5c805', passwordVariable: 'AWS_ACCESS_KEY_ID'),
-                        usernamePassword(credentialsId: '36d147e1-526b-4192-8dac-7ebd65228f4d', passwordVariable: 'AWS_SECRET_ACCESS_KEY')
-                    ]) {
-                        sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${ecrRegistry}"
-                        sh "docker push ${dockerImage}:latest"
-                    }
+                    sh "docker tag ${ecrRegistry}/${phpImage}:latest ${ecrRegistry}/${phpImage}"
+                    sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${ecrRegistry}"
+                    sh "docker push ${ecrRegistry}/${phpImage}:latest"
                 }
             }
         }
@@ -87,49 +83,40 @@ pipeline {
         stage('Deploy to ECS') {
             steps {
                 script {
-                    withCredentials([
-                        usernamePassword(credentialsId: '254f8aa5-489e-4436-a918-0e8d6fa5c805', passwordVariable: 'AWS_ACCESS_KEY_ID'),
-                        usernamePassword(credentialsId: '36d147e1-526b-4192-8dac-7ebd65228f4d', passwordVariable: 'AWS_SECRET_ACCESS_KEY')
-                    ]) {
-                        def taskDefJson = """
-                        {
-                            "family": "${TaskDefName}",
-                            "networkMode": "awsvpc",
-                            "containerDefinitions": [
-                                {
-                                    "name": "${phpcontainer}",
-                                    "image": "${dockerImage}:latest",
-                                    "essential": true,
-                                    "memory": 512,
-                                    "cpu": 256,
-                                    "portMappings": [
-                                        {
-                                            "containerPort": 8000
-                                        }
-                                    ],
-                                    "environment": [
-                                        {"name": "APP_NAME", "value": "${APP_NAME}"},
-                                        {"name": "APP_ENV", "value": "${APP_ENV}"},
-                                        {"name": "BASE_URL", "value": "${BASE_URL}"},
-                                        {"name": "APP_URL", "value": "${APP_URL}"},
-                                        {"name": "VISION_API", "value": "${VISION_API}"},
-                                        {"name": "DB_HOST", "value": "${DB_HOST}"},
-                                        {"name": "DB_PORT", "value": "${DB_PORT}"},
-                                        {"name": "AWS_DEFAULT_REGION", "value": "${AWS_DEFAULT_REGION}"}
-                                    ]
-                                }
-                            ],
-                            "requiresCompatibilities": ["FARGATE"],
-                            "cpu": "256",
-                            "memory": "512",
-                            "executionRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole"
-                        }
-                        """
-
-                        writeFile file: 'task-def.json', text: taskDefJson
-                        sh "aws ecs register-task-definition --cli-input-json file://task-def.json --region ${AWS_DEFAULT_REGION}"
-                        sh "aws ecs update-service --cluster ${ecsCluster} --service ${serviceName} --task-definition ${TaskDefName} --force-new-deployment --region ${AWS_DEFAULT_REGION}"
+                    def taskDefJson = """
+                    {
+                        "family": "${TaskDefName}",
+                        "containerDefinitions": [
+                            {
+                                "name": "${phpcontainer}",
+                                "image": "${ecrRegistry}/${phpImage}:latest",
+                                "essential": true,
+                                "memory": 512,
+                                "cpu": 256,
+                                "portMappings": [
+                                    {
+                                        "containerPort": 80,
+                                        "hostPort": 80
+                                    }
+                                ],
+                                "environment": [
+                                    {"name": "APP_NAME", "value": "${APP_NAME}"},
+                                    {"name": "APP_ENV", "value": "${APP_ENV}"},
+                                    {"name": "BASE_URL", "value": "${BASE_URL}"},
+                                    {"name": "APP_URL", "value": "${APP_URL}"},
+                                    {"name": "VISION_API", "value": "${VISION_API}"},
+                                    {"name": "DB_HOST", "value": "${DB_HOST}"},
+                                    {"name": "DB_PORT", "value": "${DB_PORT}"},
+                                    {"name": "AWS_DEFAULT_REGION", "value": "${AWS_DEFAULT_REGION}"}
+                                ]
+                            }
+                        ]
                     }
+                    """
+
+                    writeFile file: 'task-def.json', text: taskDefJson
+                    sh "aws ecs register-task-definition --cli-input-json file://task-def.json --region ${AWS_DEFAULT_REGION}"
+                    sh "aws ecs update-service --cluster ${ecsCluster} --service ${serviceName} --task-definition ${TaskDefName} --force-new-deployment --region ${AWS_DEFAULT_REGION}"
                 }
             }
         }
