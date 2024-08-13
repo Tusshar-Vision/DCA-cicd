@@ -4,9 +4,9 @@ pipeline {
     environment {
         ecrRegistry = '496513254117.dkr.ecr.us-west-2.amazonaws.com'
         dockerImage = "${ecrRegistry}/dca-visionias"
-        ecsCluster = 'dca-contaioner'
+        ecsCluster = 'digital-ca'
         TaskDefName = 'dca-task'
-        serviceName = 'dca-container'
+        serviceName = 'dca-service'
         phpDockerfile = 'Dockerfile'
         phpImage = 'dca-visionias'
         APP_NAME = 'Current Affairs | Vision IAS'
