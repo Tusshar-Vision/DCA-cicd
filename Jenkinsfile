@@ -84,39 +84,38 @@ pipeline {
                 script {
                     def taskDefJson = """
                     {
-                      "family": "${TaskDefName}",
-                      "containerDefinitions": [
-                        {
-                          "name": "${phpImage}",
-                          "image": "${ecrRegistry}/${phpImage}:latest",
-                          "essential": true,
-                          "memory": 512,
-                          "cpu": 256,
-                          "portMappings": [
+                        "family": "${TaskDefName}",
+                        "containerDefinitions": [
                             {
-                              "containerPort": 80,
-                              "hostPort": 80
+                                "name": "${phpImage}",
+                                "image": "${ecrRegistry}/${phpImage}:latest",
+                                "essential": true,
+                                "memory": 512,
+                                "cpu": 256,
+                                "portMappings": [
+                                    {
+                                        "containerPort": 80,
+                                        "hostPort": 80
+                                    }
+                                ],
+                                "environment": [
+                                    {"name": "APP_NAME", "value": "${APP_NAME}"},
+                                    {"name": "APP_ENV", "value": "${APP_ENV}"},
+                                    {"name": "BASE_URL", "value": "${BASE_URL}"},
+                                    {"name": "APP_URL", "value": "${APP_URL}"},
+                                    {"name": "VISION_API", "value": "${VISION_API}"},
+                                    {"name": "DB_HOST", "value": "${DB_HOST}"},
+                                    {"name": "DB_PORT", "value": "${DB_PORT}"},
+                                    {"name": "AWS_DEFAULT_REGION", "value": "${AWS_DEFAULT_REGION}"}
+                                ]
                             }
-                          ],
-                          "environment": [
-                            {"name": "APP_NAME", "value": "${APP_NAME}"},
-                            {"name": "APP_ENV", "value": "${APP_ENV}"},
-                            {"name": "BASE_URL", "value": "${BASE_URL}"},
-                            {"name": "APP_URL", "value": "${APP_URL}"},
-                            {"name": "VISION_API", "value": "${VISION_API}"},
-                            {"name": "DB_HOST", "value": "${DB_HOST}"},
-                            {"name": "DB_PORT", "value": "${DB_PORT}"},
-                            {"name": "AWS_DEFAULT_REGION", "value": "${AWS_DEFAULT_REGION}"}
-                          ]
-                        }
-                      ]
+                        ]
                     }
                     """
-                    
+
                     writeFile file: 'task-def.json', text: taskDefJson
                     sh "aws ecs register-task-definition --cli-input-json file://task-def.json --region ${AWS_DEFAULT_REGION}"
-                    sh "aws ecs update-service --cluster digital-ca --service dca-service --task-definition dca-task --force-new-deployment --region us-west-2"
-"
+                    sh "aws ecs update-service --cluster ${ecsCluster} --service ${serviceName} --task-definition ${TaskDefName} --force-new-deployment --region ${AWS_DEFAULT_REGION}"
                 }
             }
         }
