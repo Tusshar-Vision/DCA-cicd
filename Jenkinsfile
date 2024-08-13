@@ -95,8 +95,8 @@ pipeline {
                                 "cpu": 256,
                                 "portMappings": [
                                     {
-                                        "containerPort": 80,
-                                        "hostPort": 80
+                                        "containerPort": 8000,
+                                        "hostPort": 8000
                                     }
                                 ],
                                 "environment": [
