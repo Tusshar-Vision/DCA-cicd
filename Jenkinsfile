@@ -115,7 +115,7 @@ pipeline {
                     
                     writeFile file: 'task-def.json', text: taskDefJson
                     sh "aws ecs register-task-definition --cli-input-json file://task-def.json --region ${AWS_DEFAULT_REGION}"
-                    sh "aws ecs update-service --cluster digital-ca --service dca-service --task-definition dca-task --force-new-deployment --region us-west-2
+                    sh "aws ecs update-service --cluster digital-ca --service dca-service --task-definition dca-task --force-new-deployment --region us-west-2"
 "
                 }
             }
