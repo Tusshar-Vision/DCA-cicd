@@ -99,7 +99,7 @@
     "family": "dca-task",
     "taskRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
     "executionRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
-    "networkMode": "awsvpc",
+    "networkMode": "bridge",
     "revision": 35,
     "volumes": [],
     "status": "ACTIVE",
