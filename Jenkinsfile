@@ -84,30 +84,31 @@ pipeline {
             steps {
                 script {
                     def taskDefJson = """
-                    {
-                        "family": "${TaskDefName}",
-                        "containerDefinitions": [
-                            {
-                                "name": "${phpcontainer}",
-                                "image": "${ecrRegistry}/${phpImage}:latest",
-                                "essential": true,
-                                "memory": 512,
-                                "cpu": 256,
-                                "portMappings": [
-                                    {
-                                        "containerPort": 8000,
-                                        "hostPort": 8000
-                                    }
-                                ],
-                                "environment": [
-                                    {"name": "APP_NAME", "value": "${APP_NAME}"},
-                                    {"name": "APP_ENV", "value": "${APP_ENV}"},
-                                    {"name": "BASE_URL", "value": "${BASE_URL}"},
-                                    {"name": "APP_URL", "value": "${APP_URL}"},
-                                    {"name": "VISION_API", "value": "${VISION_API}"},
-                                    {"name": "DB_HOST", "value": "${DB_HOST}"},
-                                    {"name": "DB_PORT", "value": "${DB_PORT}"},
-                                    {"name": "AWS_DEFAULT_REGION", "value": "${AWS_DEFAULT_REGION}"}
+{
+           "family": "${TaskDefName}",
+           "networkMode": "bridge",
+           "containerDefinitions": [
+        {
+                "name": "${phpcontainer}",
+                "image": "${ecrRegistry}/${phpImage}:latest",
+                "essential": true,
+                "memory": 512,
+                "cpu": 256,
+                "portMappings": [
+                {
+                       "containerPort": 8000,
+                       "hostPort": 8000
+                }
+            ],
+            "environment": [
+                {"name": "APP_NAME", "value": "${APP_NAME}"},
+                {"name": "APP_ENV", "value": "${APP_ENV}"},
+                {"name": "BASE_URL", "value": "${BASE_URL}"},
+                {"name": "APP_URL", "value": "${APP_URL}"},
+                {"name": "VISION_API", "value": "${VISION_API}"},
+                {"name": "DB_HOST", "value": "${DB_HOST}"},
+                {"name": "DB_PORT", "value": "${DB_PORT}"},
+                {"name": "AWS_DEFAULT_REGION", "value": "${AWS_DEFAULT_REGION}"}
                                 ]
                             }
                         ]
