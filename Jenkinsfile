@@ -86,7 +86,7 @@ pipeline {
                     def taskDefJson = """
 {
            "family": "${TaskDefName}",
-           "networkMode": "bridge",
+           "networkMode": "awsvpc",
            "containerDefinitions": [
         {
                 "name": "${phpcontainer}",
