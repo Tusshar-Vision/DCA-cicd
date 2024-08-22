@@ -24,7 +24,7 @@
                 <span>
                     <h5 class="text-gray-400 mt-2">{{ __('footer.email_us') }}</h5>
                     <p class="text-sm">
-                        <a href="mailto:enquiry@tusshar.in" class="hover:text-[#005FAF]">enquiry@tusshar.in</a>
+                        <a href="mailto:enquiry@gmail.in" class="hover:text-[#005FAF]">enquiry@gmail.in</a>
                     </p>
 
                 </span>
