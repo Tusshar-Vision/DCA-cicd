@@ -1,11 +1,16 @@
-# Stage 1: Composer dependencies
-FROM composer:2.7.6 AS composer
-# Set the working directory
+# Stage 1: Composer dependencies (minimal base image)
+FROM alpine:3.18 AS composer
+
 WORKDIR /app
 
-COPY composer.* ./
+COPY composer.json ./
+COPY composer.lock ./  # Include composer.lock for faster builds
 
-RUN composer install --no-scripts --no-interaction --prefer-dist --no-dev --ignore-platform-reqs
+RUN apk add --no-cache php8.1-cli \
+    php8.1-extensions[gd,exif,http,intl,zip] \
+    composer
+
+RUN composer install --no-dev --optimize-autoloader
 
 # Stage 2: Node.js dependencies and asset build
 FROM node:22-alpine3.18 AS node
@@ -13,26 +18,25 @@ FROM node:22-alpine3.18 AS node
 WORKDIR /app
 
 COPY package.json ./
-
-RUN npm install
-
-# Copy the required preset files
 COPY --from=composer /app/vendor ./vendor
+
+RUN npm install 
 
 COPY . .
 
 RUN npm run build
 
-# Stage 3: Final stage with combined application
-FROM dunglas/frankenphp
+# Stage 3: Final stage (multi-stage build)
+FROM dunglas/frankenphp-alpine AS final
 
-RUN apt update
-RUN apt install libgcrypt20-dev supervisor -y
+# Skip unnecessary package updates and install supervisor
+RUN apk add --no-cache supervisor
 
-RUN install-php-extensions pcntl memcached redis pdo_mysql intl zip gd exif http @composer-2.7.6
+# Install PHP extensions (leverage existing composer dependencies)
+COPY --from=composer /app/vendor/bin/php /usr/local/bin/php
 
-# Copy the application code from the composer and node stages
-COPY . .
+# Copy application code and assets (combine from previous stages)
+COPY --no-cache --from=composer /app .
 COPY --from=node /app/public ./public
 COPY --from=node /app/node_modules ./node_modules
 
@@ -40,8 +44,5 @@ COPY --from=node /app/node_modules ./node_modules
 COPY infrastructure/configuration/supervisor/*.conf /etc/supervisor/conf.d/
 COPY infrastructure/configuration/php/php-production.ini "$PHP_INI_DIR/php.ini"
 
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
-
-# Set executable permissions
-RUN chmod +x /app/infrastructure/scripts/entrypoint.sh
-RUN chmod +x /app/infrastructure/scripts/wait-for-it.sh
+# Set executable permissions (combine in one RUN)
+RUN chmod +x /app/infrastructure/scripts/*.sh
