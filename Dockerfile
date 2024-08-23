@@ -36,7 +36,7 @@ RUN apk add --no-cache supervisor
 COPY --from=composer /app/vendor/bin/php /usr/local/bin/php
 
 # Copy application code and assets (combine from previous stages)
-COPY --no-cache --from=composer /app .
+COPY --from=composer /app .
 COPY --from=node /app/public ./public
 COPY --from=node /app/node_modules ./node_modules
 
