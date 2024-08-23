@@ -19,7 +19,7 @@ RUN apt update
 RUN apt install libgcrypt20-dev supervisor -y
 RUN install-php-extensions pcntl memcached redis pdo_mysql intl zip gd exif http @composer-2.7.6
 # Copy the application code from the composer and node stages
-COPY --from=composer /app .
+COPY . .
 COPY --from=node /app/public ./public
 COPY --from=node /app/node_modules ./node_modules
 # Copy configuration files
