@@ -3,8 +3,7 @@ FROM alpine:3.18 AS composer
 
 WORKDIR /app
 
-COPY composer.json ./
-COPY composer.lock ./  # Include composer.lock for faster builds
+COPY composer.* ./  # Include composer.lock for faster builds
 
 RUN apk add --no-cache php8.1-cli \
     php8.1-extensions[gd,exif,http,intl,zip] \
