@@ -27,7 +27,7 @@ COPY . .
 RUN npm run build
 
 # Stage 3: Final stage (multi-stage build)
-FROM dunglas/frankenphp-alpine AS final
+FROM dunglas/frankenphp
 
 # Skip unnecessary package updates and install supervisor
 RUN apk add --no-cache supervisor
