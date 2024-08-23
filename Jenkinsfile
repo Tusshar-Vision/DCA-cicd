@@ -63,6 +63,7 @@ pipeline {
                     ]) {
                         sh 'mkdir -p ./storage/framework/views'
                         sh """
+                            docker build --no-cache -t
                             docker build -t ${ecrRegistry}/${phpImage}:latest -f ${phpDockerfile} .
                         """
                     }
