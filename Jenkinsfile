@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     environment {
         ecrRegistry = '496513254117.dkr.ecr.us-west-2.amazonaws.com'
         dockerImage = "${ecrRegistry}/dca-visionias"
@@ -29,7 +28,6 @@ pipeline {
         WWWGROUP = '1000'
         WWWUSER = '1000'
     }
-
     stages {
         stage('Build PHP Docker Image') {
             steps {
@@ -65,13 +63,11 @@ pipeline {
                         sh """
                             docker build -t ${ecrRegistry}/${phpImage}:latest -f ${phpDockerfile} .
                            
-
                         """
                     }
                 }
             }
         }
-
         stage('Push PHP Docker Image') {
             steps {
                 script {
@@ -81,10 +77,40 @@ pipeline {
                 }
             }
         }
-
         stage('Deploy to ECS') {
             steps {
                 script {
+                    def taskDefJson = """
+{
+           "family": "${TaskDefName}",
+           "networkMode": "awsvpc",
+           "containerDefinitions": [
+        {
+                "name": "${phpcontainer}",
+                "image": "${ecrRegistry}/${phpImage}:latest",
+                "essential": true,
+                "memory": 512,
+                "cpu": 256,
+                "portMappings": [
+                {
+                       "containerPort": 8000,
+                       "hostPort": 8000
+                }
+            ],
+            "environment": [
+                {"name": "APP_NAME", "value": "${APP_NAME}"},
+                {"name": "APP_ENV", "value": "${APP_ENV}"},
+                {"name": "BASE_URL", "value": "${BASE_URL}"},
+                {"name": "APP_URL", "value": "${APP_URL}"},
+                {"name": "VISION_API", "value": "${VISION_API}"},
+                {"name": "DB_HOST", "value": "${DB_HOST}"},
+                {"name": "DB_PORT", "value": "${DB_PORT}"},
+                {"name": "AWS_DEFAULT_REGION", "value": "${AWS_DEFAULT_REGION}"}
+                                ]
+                            }
+                        ]
+                    }
+                    """
                     writeFile file: 'task-def.json', text: taskDefJson
                     sh "aws ecs register-task-definition --cli-input-json file://taskDefinition.json --region ${AWS_DEFAULT_REGION}"
                     sh "aws ecs update-service --cluster ${ecsCluster} --service ${serviceName} --task-definition ${TaskDefName} --force-new-deployment --region ${AWS_DEFAULT_REGION}"
@@ -92,7 +118,6 @@ pipeline {
             }
         }
     }
-
     post {
         always {
             sh "docker system prune -f -a"
