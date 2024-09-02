@@ -1,5 +1,8 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-west-2:496513254117:task-definition/dca-task:35",
+    "family": "dca-task",
+    "taskRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
+    "networkMode": "bridge",
     "containerDefinitions": [
         {
             "name": "dca-container",
@@ -8,11 +11,9 @@
             "memory": 1024,
             "portMappings": [
                 {
-                    "name": "dca-8000-tcp",
                     "containerPort": 8000,
                     "hostPort": 8000,
-                    "protocol": "tcp",
-                    "appProtocol": "http"
+                    "protocol": "tcp"
                 }
             ],
             "essential": true,
@@ -30,8 +31,6 @@
                     "value": "visionias=12w/slalKSaKA-=1@sj"
                 }
             ],
-            "mountPoints": [],
-            "volumesFrom": [],
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
@@ -50,8 +49,7 @@
                 "timeout": 5,
                 "retries": 3,
                 "startPeriod": 60
-            },
-            "systemControls": []
+            }
         },
         {
             "name": "redis-container",
@@ -60,7 +58,6 @@
             "memory": 512,
             "portMappings": [
                 {
-                    "name": "redis-6379-tcp",
                     "containerPort": 6379,
                     "hostPort": 6379,
                     "protocol": "tcp"
@@ -82,8 +79,6 @@
                     "value": "visionias=12w/slalKSaKA-=1@sj"
                 }
             ],
-            "mountPoints": [],
-            "volumesFrom": [],
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
@@ -92,53 +87,8 @@
                     "awslogs-region": "us-west-2",
                     "awslogs-stream-prefix": "ecs"
                 }
-            },
-            "systemControls": []
+            }
         }
-    ],
-    "family": "dca-task",
-    "taskRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
-    "executionRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
-    "networkMode": "bridge",
-    "revision": 35,
-    "volumes": [],
-    "status": "ACTIVE",
-    "requiresAttributes": [
-        {
-            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
-        },
-        {
-            "name": "ecs.capability.execution-role-awslogs"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.ecr-auth"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.task-iam-role"
-        },
-        {
-            "name": "ecs.capability.container-health-check"
-        },
-        {
-            "name": "ecs.capability.execution-role-ecr-pull"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
-        },
-        {
-            "name": "ecs.capability.task-eni"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
-        }
-    ],
-    "placementConstraints": [],
-    "compatibilities": [
-        "EC2",
-        "FARGATE"
     ],
     "requiresCompatibilities": [
         "EC2"
@@ -148,8 +98,5 @@
     "runtimePlatform": {
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
-    },
-    "registeredAt": "2024-08-12T10:37:57.187Z",
-    "registeredBy": "arn:aws:iam::496513254117:user/Tusshar",
-    "tags": []
+    }
 }
