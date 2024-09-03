@@ -118,12 +118,24 @@ pipeline {
             }
         }
     }
-    post {
+     post {
         always {
+            // Clean up Docker resources
             sh "docker system prune -f -a"
+
+            // Delete ECR image
             script {
-                cleanWs()
+                def ecrRegistry = "496513254117.dkr.ecr.us-west-2.amazonaws.com"
+                def ecrRepository = "dca-visionias"
+                def imageTag = "latest" // Or specify the tag you want to delete
+
+                sh """
+                aws ecr batch-delete-image --repository-name ${ecrRepository} --image-ids imageTag=${imageTag} --region us-west-2
+                """
             }
+
+            // Clean up the workspace
+            cleanWs()
         }
     }
 }
