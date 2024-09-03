@@ -2,7 +2,7 @@
     "family": "dca-task",
     "taskRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
     "executionRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
-    "networkMode": "bridge",
+    "networkMode": "awsvpc",
     "containerDefinitions": [
         {
             "name": "dca-container",
