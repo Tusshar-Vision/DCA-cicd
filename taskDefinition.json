@@ -1,5 +1,8 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-west-2:496513254117:task-definition/dca-task:81",
+    "family": "dca-task",
+    "taskRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
+    "networkMode": "bridge",
     "containerDefinitions": [
         {
             "name": "dca-container",
@@ -131,11 +134,11 @@
             "systemControls": []
         }
     ],
-    "family": "dca-task",
-    "taskRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
-    "executionRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
-    "networkMode": "bridge",
-    "revision": 81,
+    "requiresCompatibilities": [
+        "EC2"
+    ],
+    "cpu": "1024",
+    "memory": "3072",
     "volumes": [
         {
             "name": "nginx-config",
@@ -144,47 +147,8 @@
             }
         }
     ],
-    "status": "ACTIVE",
-    "requiresAttributes": [
-        {
-            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
-        },
-        {
-            "name": "ecs.capability.execution-role-awslogs"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.ecr-auth"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.task-iam-role"
-        },
-        {
-            "name": "ecs.capability.container-health-check"
-        },
-        {
-            "name": "ecs.capability.execution-role-ecr-pull"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
-        }
-    ],
-    "placementConstraints": [],
-    "compatibilities": [
-        "EC2"
-    ],
-    "requiresCompatibilities": [
-        "EC2"
-    ],
-    "cpu": "1024",
-    "memory": "3072",
     "runtimePlatform": {
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
-    },
-    "registeredAt": "2024-09-04T11:50:44.847Z",
-    "registeredBy": "arn:aws:iam::496513254117:user/Aryan",
-    "tags": []
+    }
 }
