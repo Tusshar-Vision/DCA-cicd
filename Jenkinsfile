@@ -83,7 +83,7 @@ pipeline {
                     def taskDefJson = """
 {
            "family": "${TaskDefName}",
-           "networkMode": "awsvpc",
+           "networkMode": "bridge",
            "containerDefinitions": [
         {
                 "name": "${phpcontainer}",
@@ -94,7 +94,7 @@ pipeline {
                 "portMappings": [
                 {
                        "containerPort": 8000,
-                       "hostPort": 8000
+                       "hostPort": 0
                 }
             ],
             "environment": [
