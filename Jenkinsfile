@@ -5,7 +5,7 @@ pipeline {
         dockerImage = "${ecrRegistry}/dca-visionias"
         ecsCluster = 'dce-ecs-cluster'
         TaskDefName = 'dca-task'
-        serviceName = 'dce-service-2-'
+        serviceName = 'dce-service15'
         phpDockerfile = 'Dockerfile'
         phpImage = 'dca-visionias'
         phpcontainer = 'dca-container'
