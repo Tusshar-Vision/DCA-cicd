@@ -27,7 +27,7 @@ pipeline {
         MEILISEARCH_HOST = 'http://meilisearch:7700'
         WWWGROUP = '1000'
         WWWUSER = '1000'
-        existingTargetGroupArn = 'arn:aws:elasticloadbalancing:us-west-2:496513254117:targetgroup/dce-ca-alb/d901ad72428ef9fd' 
+        existing_Target_GroupArn = 'arn:aws:elasticloadbalancing:us-west-2:496513254117:targetgroup/dce-ca-alb/d901ad72428ef9fd' 
     }
     stages {
         stage('Build PHP Docker Image') {
@@ -116,7 +116,7 @@ pipeline {
                     sh """
                     aws ecs update-service --cluster ${ecsCluster} --service ${serviceName} \
                     --task-definition ${TaskDefName} --force-new-deployment --region ${AWS_DEFAULT_REGION} \
-                    --load-balancers targetGroupArn=${existingTargetGroupArn},containerName=${phpcontainer},containerPort=8000
+                    --load-balancers targetGroupArn=${existing_Target_GroupArn},containerName=${phpcontainer},containerPort=8000
                     """
                 }
             }
