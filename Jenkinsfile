@@ -27,6 +27,7 @@ pipeline {
         MEILISEARCH_HOST = 'http://meilisearch:7700'
         WWWGROUP = '1000'
         WWWUSER = '1000'
+        existingTargetGroupArn = 'arn:aws:elasticloadbalancing:us-west-2:496513254117:targetgroup/dce-ca-alb/d901ad72428ef9fd' 
     }
     stages {
         stage('Build PHP Docker Image') {
@@ -62,7 +63,6 @@ pipeline {
                         sh 'mkdir -p ./storage/framework/views'
                         sh """
                             docker build -t ${ecrRegistry}/${phpImage}:latest -f ${phpDockerfile} .
-                           
                         """
                     }
                 }
@@ -112,8 +112,12 @@ pipeline {
                     }
                     """
                     writeFile file: 'task-def.json', text: taskDefJson
-                    sh "aws ecs register-task-definition --cli-input-json file://taskDefinition.json --region ${AWS_DEFAULT_REGION}"
-                    sh "aws ecs update-service --cluster ${ecsCluster} --service ${serviceName} --task-definition ${TaskDefName} --force-new-deployment --region ${AWS_DEFAULT_REGION}"
+                    sh "aws ecs register-task-definition --cli-input-json file://task-def.json --region ${AWS_DEFAULT_REGION}"
+                    sh """
+                    aws ecs update-service --cluster ${ecsCluster} --service ${serviceName} \
+                    --task-definition ${TaskDefName} --force-new-deployment --region ${AWS_DEFAULT_REGION} \
+                    --load-balancers targetGroupArn=${existingTargetGroupArn},containerName=${phpcontainer},containerPort=8000
+                    """
                 }
             }
         }
