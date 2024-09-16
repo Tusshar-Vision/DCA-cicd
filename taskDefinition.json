@@ -1,11 +1,14 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-west-2:496513254117:task-definition/dca-task:101",
+    "taskDefinitionArn": "arn:aws:ecs:us-west-2:496513254117:task-definition/dca-task:111",
     "containerDefinitions": [
         {
             "name": "dca-container",
             "image": "496513254117.dkr.ecr.us-west-2.amazonaws.com/dca-visionias",
             "cpu": 512,
             "memory": 2048,
+            "links": [
+                "redis-container"
+            ],
             "portMappings": [
                 {
                     "name": "dca-8000-tcp",
@@ -26,8 +29,8 @@
                     "value": "redis-container"
                 },
                 {
-                    "name": "REDIS_PASSWORD",
-                    "value": "visionias=12w/slalKSaKA-=1@sj"
+                    "name": "FRANKENPHP_NO_TLS",
+                    "value": "1"
                 }
             ],
             "mountPoints": [],
@@ -50,6 +53,34 @@
                 "timeout": 5,
                 "retries": 3,
                 "startPeriod": 60
+            },
+            "systemControls": []
+        },
+        {
+            "name": "redis-container",
+            "image": "redis:latest",
+            "cpu": 128,
+            "memory": 512,
+            "portMappings": [
+                {
+                    "name": "redis-6379-tcp",
+                    "containerPort": 6379,
+                    "hostPort": 0,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/dca-task",
+                    "awslogs-create-group": "true",
+                    "awslogs-region": "us-west-2",
+                    "awslogs-stream-prefix": "ecs"
+                }
             },
             "systemControls": []
         },
@@ -93,7 +124,7 @@
     "taskRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
     "executionRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
     "networkMode": "bridge",
-    "revision": 101,
+    "revision": 111,
     "volumes": [
         {
             "name": "nginx-config",
@@ -142,7 +173,7 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2024-09-12T07:20:09.881Z",
+    "registeredAt": "2024-09-13T10:13:38.669Z",
     "registeredBy": "arn:aws:iam::496513254117:user/Aryan",
     "tags": []
 }
