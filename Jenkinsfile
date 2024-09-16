@@ -5,7 +5,7 @@ pipeline {
         dockerImage = "${ecrRegistry}/dca-visionias"
         ecsCluster = 'dce-app'
         taskDefName = 'dca-task'
-        serviceName = 'dce-service15'
+        serviceName = 'service1'
         phpDockerfile = 'Dockerfile'
         phpImage = 'dca-visionias'
         phpContainer = 'dca-container'
@@ -83,6 +83,21 @@ pipeline {
                     def taskDefFile = './taskDefinition.json'
                     def newTaskDefArn = sh(script: "aws ecs register-task-definition --cli-input-json file://${taskDefFile} --query 'taskDefinition.taskDefinitionArn' --output text", returnStdout: true).trim()
                     echo "New task definition registered: ${newTaskDefArn}"
+                    env.NEW_TASK_DEF_ARN = newTaskDefArn
+                }
+            }
+        }
+        stage('Update ECS Service') {
+            steps {
+                script {
+                    echo "Updating ECS service ${serviceName} in cluster ${ecsCluster} with task definition ${env.NEW_TASK_DEF_ARN}"
+                    
+                    sh """
+                        aws ecs update-service \
+                            --cluster ${ecsCluster} \
+                            --service ${serviceName} \
+                            --task-definition ${env.NEW_TASK_DEF_ARN}
+                    """
                 }
             }
         }
