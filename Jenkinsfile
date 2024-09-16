@@ -4,11 +4,11 @@ pipeline {
         ecrRegistry = '496513254117.dkr.ecr.us-west-2.amazonaws.com'
         dockerImage = "${ecrRegistry}/dca-visionias"
         ecsCluster = 'dce-app'
-        TaskDefName = 'dca-task'
+        taskDefName = 'dca-task'
         serviceName = 'dce-service15'
         phpDockerfile = 'Dockerfile'
         phpImage = 'dca-visionias'
-        phpcontainer = 'dca-container'
+        phpContainer = 'dca-container'
         APP_NAME = 'Current Affairs | Vision IAS'
         APP_ENV = 'local'
         BASE_URL = 'https://visionias.in'
@@ -22,12 +22,12 @@ pipeline {
         AWS_BUCKET = 'ca-test-bucket-2'
         AWS_PUBLIC_BUCKET = 'ca-test-bucket-2'
         COOKIE_DOMAIN = 'localhost'
-        COOKIE_VERSION = "VI_T1PAPSID"
+        COOKIE_VERSION = 'VI_T1PAPSID'
         SCOUT_DRIVER = 'meilisearch'
         MEILISEARCH_HOST = 'http://meilisearch:7700'
         WWWGROUP = '1000'
         WWWUSER = '1000'
-        existing_Target_GroupArn = 'arn:aws:elasticloadbalancing:us-west-2:496513254117:targetgroup/dce-ca-alb/d901ad72428ef9fd' 
+        existing_Target_GroupArn = 'arn:aws:elasticloadbalancing:us-west-2:496513254117:targetgroup/dce-ca-alb/d901ad72428ef9fd'
     }
     stages {
         stage('Build PHP Docker Image') {
@@ -77,57 +77,17 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to ECS') {
-            steps {
-                script {
-                    def taskDefJson = """
-{
-           "family": "${TaskDefName}",
-           "networkMode": "bridge",
-           "containerDefinitions": [
-        {
-                "name": "${phpcontainer}",
-                "image": "${ecrRegistry}/${phpImage}:latest",
-                "essential": true,
-                "memory": 512,
-                "cpu": 256,
-                "portMappings": [
-                {
-                       "containerPort": 8000,
-                       "hostPort": 0
-                }
-            ],
-            "environment": [
-                {"name": "APP_NAME", "value": "${APP_NAME}"},
-                {"name": "APP_ENV", "value": "${APP_ENV}"},
-                {"name": "BASE_URL", "value": "${BASE_URL}"},
-                {"name": "APP_URL", "value": "${APP_URL}"},
-                {"name": "VISION_API", "value": "${VISION_API}"},
-                {"name": "DB_HOST", "value": "${DB_HOST}"},
-                {"name": "DB_PORT", "value": "${DB_PORT}"},
-                {"name": "AWS_DEFAULT_REGION", "value": "${AWS_DEFAULT_REGION}"}
-                                ]
-                            }
-                        ]
-                    }
-                    """
-                    writeFile file: 'task-def.json', text: taskDefJson
-                    sh "aws ecs register-task-definition --cli-input-json file://task-def.json --region ${AWS_DEFAULT_REGION}"
-                    sh """
-                    aws ecs update-service --cluster ${ecsCluster} --service ${serviceName} \
-                    --task-definition ${TaskDefName} --force-new-deployment --region ${AWS_DEFAULT_REGION} \
-                    --load-balancers targetGroupArn=${existing_Target_GroupArn},containerName=${phpcontainer},containerPort=8000
-                    """
-                }
-            }
-        }
     }
+    
     post {
         always {
-            sh "docker system prune -f -a"
-            script {
-                cleanWs()
-            }
+            cleanWs()
+        }
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
