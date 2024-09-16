@@ -1,5 +1,8 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-west-2:496513254117:task-definition/dca-task:111",
+    "family": "dca-task",
+    "taskRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
+    "networkMode": "bridge",
     "containerDefinitions": [
         {
             "name": "dca-container",
@@ -11,11 +14,9 @@
             ],
             "portMappings": [
                 {
-                    "name": "dca-8000-tcp",
                     "containerPort": 8000,
                     "hostPort": 0,
-                    "protocol": "tcp",
-                    "appProtocol": "http"
+                    "protocol": "tcp"
                 }
             ],
             "essential": true,
@@ -63,7 +64,6 @@
             "memory": 512,
             "portMappings": [
                 {
-                    "name": "redis-6379-tcp",
                     "containerPort": 6379,
                     "hostPort": 0,
                     "protocol": "tcp"
@@ -120,11 +120,6 @@
             "systemControls": []
         }
     ],
-    "family": "dca-task",
-    "taskRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
-    "executionRoleArn": "arn:aws:iam::496513254117:role/ecsTaskExecutionRole",
-    "networkMode": "bridge",
-    "revision": 111,
     "volumes": [
         {
             "name": "nginx-config",
@@ -133,47 +128,13 @@
             }
         }
     ],
-    "status": "ACTIVE",
-    "requiresAttributes": [
-        {
-            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
-        },
-        {
-            "name": "ecs.capability.execution-role-awslogs"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.ecr-auth"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.task-iam-role"
-        },
-        {
-            "name": "ecs.capability.container-health-check"
-        },
-        {
-            "name": "ecs.capability.execution-role-ecr-pull"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
-        }
-    ],
-    "placementConstraints": [],
-    "compatibilities": [
-        "EC2"
-    ],
+    "cpu": "1024",
+    "memory": "3072",
     "requiresCompatibilities": [
         "EC2"
     ],
-    "cpu": "1024",
-    "memory": "3072",
     "runtimePlatform": {
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
-    },
-    "registeredAt": "2024-09-13T10:13:38.669Z",
-    "registeredBy": "arn:aws:iam::496513254117:user/Aryan",
-    "tags": []
+    }
 }
