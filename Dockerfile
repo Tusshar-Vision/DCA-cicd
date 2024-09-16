@@ -16,7 +16,7 @@ RUN npm run build
 # Stage 3: Final stage with combined application
 FROM dunglas/frankenphp
 ENV FRANKENPHP_NO_TLS=1
-ENV SERVER_NAME=dce-new.visionias.in
+
 RUN apt update
 RUN apt install libgcrypt20-dev supervisor -y
 RUN install-php-extensions pcntl memcached redis pdo_mysql intl zip gd exif http @composer-2.7.6
