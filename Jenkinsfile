@@ -78,8 +78,16 @@ pipeline {
             }
         }
     }
-    
-    post {
+    stage('Update ECS Task Definition') {
+    steps {
+        script {
+            def taskDefFile = './taskDefinition.json'
+            def newTaskDefArn = sh(script: "aws ecs register-task-definition --cli-input-json file://${taskDefFile} --query 'taskDefinition.taskDefinitionArn' --output text", returnStdout: true).trim()
+            echo "New task definition registered: ${newTaskDefArn}"
+        }
+    }
+}
+post {
         always {
             cleanWs()
         }
