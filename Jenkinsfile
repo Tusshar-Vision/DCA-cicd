@@ -33,7 +33,7 @@ pipeline {
         stage('Build PHP Docker Image') {
             steps {
                 script {
-                    withCredentials([
+                 withCredentials([
                         usernamePassword(credentialsId: 'b1ad4882-cdf4-4dd4-b18e-587141426d69', passwordVariable: 'APP_KEY', usernameVariable: 'APP_KEY_USERNAME'),
                         usernamePassword(credentialsId: '4bf341bd-c67c-4eb1-ad5e-bfcf8e4a6773', passwordVariable: 'APP_NAME', usernameVariable: 'APP_NAME_USERNAME'),
                         usernamePassword(credentialsId: 'f72ce646-7aac-4182-b5ff-75f135a79526', passwordVariable: 'APP_DEBUG', usernameVariable: 'APP_DEBUG_USERNAME'),
@@ -59,7 +59,8 @@ pipeline {
                         usernamePassword(credentialsId: '89c6c9e6-fd6b-4b3f-8dad-a15b0fd875d3', passwordVariable: 'AWS_BUCKET_SECRET_ACCESS_KEY', usernameVariable: 'AWS_BUCKET_SECRET_ACCESS_KEY_USERNAME'),
                         usernamePassword(credentialsId: 'f356416f-5294-407e-85f3-430ea69d03fa', passwordVariable: 'COGNITO_ENCRYPTION_KEY_V1', usernameVariable: 'COGNITO_ENCRYPTION_KEY_V1_USERNAME'),
                         usernamePassword(credentialsId: 'a112c082-9616-4262-b3e5-07e0e3f0a56d', passwordVariable: 'COGNITO_ENCRYPTION_KEY_V2', usernameVariable: 'COGNITO_ENCRYPTION_KEY_V2_USERNAME')
-                    ]) {
+                    ])
+                    {
                         sh 'mkdir -p ./storage/framework/views'
                         sh """
                             docker build -t ${ecrRegistry}/${phpImage}:latest -f ${phpDockerfile} .
@@ -71,8 +72,6 @@ pipeline {
         stage('Push PHP Docker Image') {
             steps {
                 script {
-                    sh "docker tag ${ecrRegistry}/${phpImage}:latest ${ecrRegistry}/${phpImage}"
-                    sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${ecrRegistry}"
                     sh "docker push ${ecrRegistry}/${phpImage}:latest"
                 }
             }
