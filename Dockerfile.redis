@@ -1,11 +1,7 @@
-# Dockerfile for Redis
 FROM redis:alpine
 
-# (Optional) Add any custom configuration or files if needed
 COPY ./infrastructure/configuration/redis/redis-production.conf /usr/local/etc/redis/redis-production.conf
 
-# Expose port 6379
 EXPOSE 6379
 
-# (Optional) Start Redis with a custom configuration file
 CMD ["redis-server", "/usr/local/etc/redis/redis-production.conf"]

@@ -37,6 +37,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if(config('app.env') === 'prod'){
+            \URL::forceScheme('https');
+        }
         Health::checks([
             OptimizedAppCheck::new(),
             DebugModeCheck::new(),

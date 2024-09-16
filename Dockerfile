@@ -1,10 +1,8 @@
-# Stage 1: Composer
 FROM composer:2.7.6 AS composer
 WORKDIR /app
 COPY composer.* ./
 RUN composer install --no-scripts --no-interaction --prefer-dist --no-dev --ignore-platform-reqs
 
-# Stage 2: Node
 FROM node:22-alpine3.18 AS node
 WORKDIR /app
 COPY package.json ./
@@ -13,43 +11,36 @@ COPY --from=composer /app/vendor ./vendor
 COPY . .
 RUN npm run build
 
-# Final Stage: FrankenPHP
 FROM dunglas/frankenphp
+
+ENV SERVER_NAME=dce-new.visionias.in
 
 ENV WWWGROUP=1000
 
-# Install required packages and PHP extensions
 RUN apt-get update && apt-get install -y \
     apt-utils \
     supervisor \
     && install-php-extensions pcntl memcached redis pdo_mysql intl zip gd exif @composer-2.7.6 \
     && rm -rf /var/lib/apt/lists/*
 
-# Create a new user and group
 RUN groupadd -g 1000 newusergroup && \
     useradd -u 1000 -g newusergroup -m newuser
 
-# Add the new user to the www-data group
 RUN usermod -a -G www-data newuser
 
-# Copy application files
 COPY . .
 COPY --from=node /app/public ./public
 COPY --from=node /app/node_modules ./node_modules
 COPY infrastructure/configuration/supervisor/*.conf /etc/supervisor/conf.d/
 COPY infrastructure/configuration/php/php-production.ini "$PHP_INI_DIR/php.ini"
 
-# Ensure required directories exist
 RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Set ownership and permissions
 RUN chown -R newuser:newusergroup /var/www/html/storage /var/www/html/bootstrap/cache && \
     chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Install Composer dependencies
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Make entrypoint scripts executable
 RUN chmod +x /app/infrastructure/scripts/entrypoint.sh
 RUN chmod +x /app/infrastructure/scripts/wait-for-it.sh
 

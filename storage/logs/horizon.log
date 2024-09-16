@@ -1661,3 +1661,696 @@ In Application.php line 855:
   32  artisan:35
       Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
 
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for dca-redis failed: Name or service not known [tcp://dca-redis:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for redis-container failed: Temporary failure in name resolution [tcp://redis-container:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for redis-container failed: Name or service not known [tcp://redis-container:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for redis-container failed: Name or service not known [tcp://redis-container:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Predis\Connection\ConnectionException 
+
+  php_network_getaddresses: getaddrinfo for redis-container failed: Name or service not known [tcp://redis-container:6379]
+
+  at vendor/predis/predis/src/Connection/AbstractConnection.php:144
+    140▕      */
+    141▕     protected function onConnectionError($message, $code = 0)
+    142▕     {
+    143▕         CommunicationException::handle(
+  ➜ 144▕             new ConnectionException($this, "$message [{$this->getParameters()}]", $code)
+    145▕         );
+    146▕     }
+    147▕ 
+    148▕     /**
+
+      [2m+31 vendor frames [22m
+
+  32  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+

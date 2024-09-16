@@ -44,11 +44,11 @@ build: build-nginx build-visionias
 # Run the nginx container
 .PHONY: run-nginx
 run-nginx:
-	docker run -it --name dca-proxy --network my-network --link dca-container -p 80:80 $(NGINX_IMAGE_NAME)
+	docker run -it --name dca-proxy --network dca-network --link dce-visionias -p 80:80 $(NGINX_IMAGE_NAME)
 
 .PHONY: run-visionias
 run-visionias:
-	docker run -d --name dca-container --network my-network d6e6d7338c7b $(VISIONIAS_IMAGE_NAME)
+	docker run -d --name dce-visionias --network dca-network $(VISIONIAS_IMAGE_NAME)
 
 .PHONY: remove-nginx-image
 remove-nginx-image:
