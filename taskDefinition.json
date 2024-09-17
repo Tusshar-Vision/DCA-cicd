@@ -6,7 +6,7 @@
     "containerDefinitions": [
         {
             "name": "dca-container",
-            "image": "496513254117.dkr.ecr.us-west-2.amazonaws.com/dca-visionias:latest",
+            "image": "496513254117.dkr.ecr.us-west-2.amazonaws.com/dca-visionias",
             "cpu": 512,
             "memory": 2048,
             "links": [
@@ -59,7 +59,7 @@
         },
         {
             "name": "redis-container",
-            "image": "redis:latest",
+            "image": "redis:alpine",
             "cpu": 128,
             "memory": 512,
             "portMappings": [
@@ -86,7 +86,7 @@
         },
         {
             "name": "nginx-container",
-            "image": "496513254117.dkr.ecr.us-west-2.amazonaws.com/dca-proxy:latest",
+            "image": "496513254117.dkr.ecr.us-west-2.amazonaws.com/dca-proxy",
             "cpu": 256,
             "memory": 512,
             "links": [
